@@ -2,11 +2,11 @@
 
 ## Top-level standalone demos (PR #7)
 
-All reference and participant apps use `demos/<id>/`. Inline React entries default-export from `index.tsx`; standalone `main.tsx` mounts the same component. Metadata has no custom loader. The generator, workspace links, Vite entries, MDX guides and type checking follow this layout.
+Every reference and generated demo is a private npm workspace package under `demos/<id>/`, with its own dev, build and preview commands. The gallery discovers metadata and links to independent app pages. There is one generator model and no inline presentation option.
 
-- `npm ci`, `npm run check`, and all eight app builds passed on Node 24.
-- All 19 Chrome journeys passed across the full run and targeted rerun. The failure-recovery test needed the renamed chunk filename; the generator test additionally verifies a plain JavaScript standalone entry with no React component.
-- Fallow doctor passed. Audit passed with advisory complexity warnings; two findings attributed as new are in the relocated D3 implementation, unchanged apart from its default export.
+- `npm run check` passed on Node 24, including generator/unit tests, TypeScript and the gallery build.
+- All 19 Chrome browser journeys passed in one full run, including generated React and plain JavaScript apps, independent worker assets, gallery navigation and failure recovery.
+- The changed-code Fallow audit passed with no introduced findings; inherited complexity and styling advisories remain.
 - No deployment or physical-device acceptance was performed.
 
 ## Reconciliation with onboarding changes

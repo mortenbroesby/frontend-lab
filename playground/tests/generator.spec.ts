@@ -25,11 +25,11 @@ test('the public generator command produces discoverable, editable independent b
     await symlink(join(source, 'node_modules'), join(root, 'node_modules'), 'dir');
     const registry = await readFile(join(root, 'playground/src/demo-registry.ts'), 'utf8');
     const starter = await readFile(join(root, 'playground/src/starters/BrowserStarter.tsx'), 'utf8');
-    for (const [name, id, track, presentation] of [
-      ['My circle', 'onboarding-circle', 'modern-web', 'standalone'],
-      ['My idea', 'onboarding-idea', 'experimental-projects', 'inline'],
+    for (const [name, id, track] of [
+      ['My circle', 'onboarding-circle', 'modern-web'],
+      ['My idea', 'onboarding-idea', 'experimental-projects'],
     ]) {
-      const { stdout } = await exec('npm', ['run', 'demo:new', '--', '--args', name, id, track, 'Test participant', 'Try my first change', presentation], { cwd: root, timeout: 30000 });
+      const { stdout } = await exec('npm', ['run', 'demo:new', '--', '--args', name, id, track, 'Test participant', 'Try my first change'], { cwd: root, timeout: 30000 });
       expect(stdout).toContain(`demos/${id}/index.tsx`);
       expect(stdout).toContain(`#/demo/${id}`);
       await exec('npm', ['run', 'build', '--workspace', `@lab/demo-${id}`], { cwd: root, timeout: 30000 });
@@ -37,7 +37,7 @@ test('the public generator command produces discoverable, editable independent b
     // A standalone entry needs no React component or mount helper.
     const vanilla = join(root, 'demos/vanilla');
     await mkdir(vanilla);
-    await writeFile(join(vanilla, 'demo.config.ts'), `export default { title: 'Plain browser', track: 'modern-web', description: 'No React entry', author: 'Test', presentation: 'standalone' };`);
+    await writeFile(join(vanilla, 'demo.config.ts'), `export default { title: 'Plain browser', track: 'modern-web', description: 'No React entry', author: 'Test' };`);
     await writeFile(join(vanilla, 'index.html'), '<div id="plain"></div><script type="module" src="./main.js"></script>');
     await writeFile(join(vanilla, 'main.js'), "document.getElementById('plain').textContent = 'Plain browser entry works';");
     const pkg = JSON.parse(await readFile(join(root, 'demos/onboarding-circle/package.json'), 'utf8'));
@@ -55,7 +55,7 @@ test('the public generator command produces discoverable, editable independent b
     await page.goto(url);
     await page.getByRole('link', { name: 'My circle', exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('My circle');
-    await page.getByRole('link', { name: 'Open standalone demo' }).click();
+    await expect(page).toHaveURL(/demos\/onboarding-circle\/index.html$/);
     await page.getByRole('slider', { name: 'Circle radius' }).fill('65');
     await expect(page.locator('.visual-stage circle')).toHaveAttribute('r', '65');
 

@@ -11,8 +11,7 @@ export function validateName(value) {
 }
 
 export async function createDemo(root, answers) {
-  const { id, track, presentation = 'standalone' } = answers;
-  if (!['standalone', 'inline'].includes(presentation)) throw new Error('Choose standalone or inline presentation.');
+  const { id, track } = answers;
   if (!validateName(answers.title)) throw new Error('Demo name is required: enter 1–240 characters on one line.');
   const name = answers.title.trim();
   if (!validateId(id)) throw new Error('Use a unique lowercase kebab-case ID, up to 60 characters; template and system names are reserved.');
@@ -70,7 +69,6 @@ Use npm run build --workspace @lab/demo-${id} for an independent dist/ build.
     const definition = `import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
-  presentation: ${JSON.stringify(presentation)},
   title: ${JSON.stringify(name)},
   track: ${JSON.stringify(track)},
   description: ${JSON.stringify(answers.description.trim())},

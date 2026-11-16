@@ -1,21 +1,17 @@
-import type { DemoComponent, DemoDefinition } from '@lab/demo-kit/types';
+import type { DemoDefinition } from '@lab/demo-kit/types';
 export type { DemoDefinition, TrackId } from '@lab/demo-kit/types';
 
-type DemoLoader = () => Promise<{ default: DemoComponent }>;
 
-export function discoverDemos(modules: Record<string, unknown>, components: Record<string, DemoLoader> = {}) {
+export function discoverDemos(modules: Record<string, unknown>) {
   return Object.entries(modules).sort(([a], [b]) => a.localeCompare(b)).map(([path, value]) => {
     const id = demoId(path);
     if (!value || typeof value !== 'object') throw new Error(`${path}: export a default DemoDefinition.`);
     const demo = value as Partial<DemoDefinition>;
     validateMetadata(demo, path);
-    if (!['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(demo.track ?? '') || ![undefined, 'inline', 'standalone'].includes(demo.presentation)) {
-      throw new Error(`${path}: provide a valid track and presentation.`);
+    if (!['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(demo.track ?? '')) {
+      throw new Error(`${path}: provide a valid named track.`);
     }
-    const entry = path.replace('demo.config.ts', 'index.tsx');
-    const load = demo.presentation === 'standalone' ? undefined : components[entry];
-    if (demo.presentation !== 'standalone' && !load) throw new Error(`${entry}: inline demos must export a default React component.`);
-    return { ...(demo as DemoDefinition), id, load };
+    return { ...(demo as DemoDefinition), id };
   });
 }
 

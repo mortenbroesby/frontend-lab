@@ -125,7 +125,7 @@ test('Modern Web generates an independent circle bootstrap, leaving the shared s
 });
 
 
-test('every generated demo has its own app and standalone is the default', async t => {
+test('every generated demo is its own app package', async t => {
   const root = await fixture(t);
   await createDemo(root, answers);
   const folder = join(root, 'demos/chapter-quiz');
@@ -133,9 +133,5 @@ test('every generated demo has its own app and standalone is the default', async
   assert.equal(pkg.name, '@lab/demo-chapter-quiz');
   assert.ok(pkg.scripts.dev && pkg.scripts.build && pkg.scripts.preview);
   assert.match(await readFile(join(folder, 'index.html'), 'utf8'), /main.tsx/);
-  assert.match(await readFile(join(folder, 'demo.config.ts'), 'utf8'), /presentation: "standalone"/);
-  await createDemo(root, { ...answers, id: 'inline-demo', presentation: 'inline' });
-  assert.match(await readFile(join(root, 'demos/inline-demo/demo.config.ts'), 'utf8'), /presentation: "inline"/);
-  assert.ok(await readFile(join(root, 'demos/inline-demo/package.json'), 'utf8'));
-  await assert.rejects(createDemo(root, { ...answers, id: 'bad-mode', presentation: 'invalid' }));
+  assert.doesNotMatch(await readFile(join(folder, 'demo.config.ts'), 'utf8'), /presentation|load:/);
 });
