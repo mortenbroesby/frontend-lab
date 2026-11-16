@@ -132,6 +132,12 @@
 .ideas-page {
   margin-bottom: 2rem;
 }
+.idea-grid + p {
+  margin: 1.5rem 0 0;
+  color: var(--lab-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
 .idea-grid,
 .demo-grid {
   display: grid;
