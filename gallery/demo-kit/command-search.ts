@@ -1,4 +1,5 @@
 export function matchesCommand(command: { label: string; group: string }, query: string) {
+  if (command.group === 'Demos' && !query.trim()) return false;
   const text = `${command.group} ${command.label}`.toLowerCase();
   return query
     .toLowerCase()
@@ -21,4 +22,22 @@ export function isCommandShortcut(
     !event.repeat &&
     !event.isComposing
   );
+}
+
+export function developerShortcut(
+  event: Pick<
+    KeyboardEvent,
+    'code' | 'altKey' | 'shiftKey' | 'ctrlKey' | 'metaKey' | 'repeat' | 'isComposing'
+  >,
+) {
+  if (
+    !event.altKey ||
+    !event.shiftKey ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.repeat ||
+    event.isComposing
+  )
+    return;
+  return ({ KeyD: 'debug', KeyG: 'gallery' } as const)[event.code as 'KeyD' | 'KeyG'];
 }

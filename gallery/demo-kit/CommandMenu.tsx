@@ -1,13 +1,15 @@
-import { useEffect, useState, type KeyboardEvent } from 'react';
-import { useTheme } from '@lab/ui/theme-control';
+import { useEffect, useState, type ComponentProps, type KeyboardEvent } from 'react';
+import { ThemeControl } from '@lab/ui/theme-control';
 import { Button } from '@lab/ui/button';
 import { Input } from '@lab/ui/input';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
 import { DebugInfo } from './DebugInfo';
-import { isCommandShortcut, matchesCommand } from './command-search';
+import { developerShortcut, isCommandShortcut, matchesCommand } from './command-search';
 
-type CommandLink = { label: string; group: string; href: string };
-type Command = { label: string; group: string; run: () => void; selected?: boolean };
+type View = 'commands' | 'debug' | 'appearance';
+
+type CommandLink = { label: string; group: string; href: string; shortcut?: string };
+type Command = { label: string; group: string; run: () => void; shortcut?: string };
 
 function moveCommandFocus(event: KeyboardEvent<HTMLDivElement>) {
   if (event.nativeEvent.isComposing || !['ArrowDown', 'ArrowUp'].includes(event.key)) return;
@@ -26,7 +28,7 @@ function CommandResults({ commands }: { commands: Command[] }) {
       <Input
         autoFocus
         aria-label="Search commands"
-        placeholder="Search demos, tracks, appearance…"
+        placeholder="Search demos or commands…"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={(event) => {
@@ -42,14 +44,9 @@ function CommandResults({ commands }: { commands: Command[] }) {
             {matches[index - 1]?.group !== command.group && (
               <p className="command-group">{command.group}</p>
             )}
-            <Button
-              variant="ghost"
-              className="command-item"
-              onClick={command.run}
-              aria-pressed={command.selected}
-            >
-              {command.label}
-              {command.selected && <span aria-hidden="true">✓</span>}
+            <Button variant="ghost" className="command-item" onClick={command.run}>
+              <span>{command.label}</span>
+              {command.shortcut && <kbd className="command-key">Alt ⇧ {command.shortcut}</kbd>}
             </Button>
           </div>
         ))}
@@ -67,43 +64,39 @@ function CommandResults({ commands }: { commands: Command[] }) {
 function MenuContents({
   links,
   close,
-  appearance,
+  view,
+  setView,
 }: {
   links: CommandLink[];
   close: () => void;
-  appearance: ReturnType<typeof useTheme>;
+  view: View;
+  setView: (view: View) => void;
 }) {
-  const [debug, setDebug] = useState(false);
   const commands: Command[] = [
-    ...(['light', 'dark', 'system'] as const).map((theme) => ({
-      label: theme === 'system' ? 'Use system theme' : `Use ${theme} mode`,
-      group: 'Appearance',
-      selected: appearance.theme === theme,
-      run: () => {
-        appearance.setTheme(theme);
-        close();
-      },
-    })),
-    ...links.map(({ label, group, href }) => ({
+    { label: 'Appearance', group: 'Preferences', run: () => setView('appearance') },
+    ...links.map(({ label, group, href, shortcut }) => ({
       label,
       group,
+      shortcut,
       run: () => {
         close();
         location.assign(href);
       },
     })),
-    { label: 'Show debug information', group: 'Developer', run: () => setDebug(true) },
+    { label: 'Debug information', group: 'Developer', shortcut: 'D', run: () => setView('debug') },
     { label: 'Reload page', group: 'Developer', run: () => location.reload() },
   ];
   return (
     <>
-      <DialogTitle>{debug ? 'Debug information' : 'Commands'}</DialogTitle>
-      {debug ? (
+      <DialogTitle>
+        {{ commands: '⌘K', debug: 'Debug information', appearance: 'Appearance' }[view]}
+      </DialogTitle>
+      {view !== 'commands' ? (
         <>
-          <Button autoFocus variant="outline" onClick={() => setDebug(false)}>
+          <Button autoFocus variant="outline" onClick={() => setView('commands')}>
             ← Back to commands
           </Button>
-          <DebugInfo />
+          {view === 'debug' ? <DebugInfo /> : <ThemeControl />}
         </>
       ) : (
         <CommandResults commands={commands} />
@@ -112,32 +105,89 @@ function MenuContents({
   );
 }
 
-export function CommandMenu({ links = [] }: { links?: CommandLink[] }) {
-  const [open, setOpen] = useState(false);
-  const appearance = useTheme();
+function usePaletteShortcuts(
+  open: boolean,
+  setOpen: (open: boolean) => void,
+  setView: (view: View) => void,
+  gallery?: string,
+) {
   useEffect(() => {
-    const toggle = (event: globalThis.KeyboardEvent) => {
-      if (!event.defaultPrevented && isCommandShortcut(event)) {
-        event.preventDefault();
-        setOpen((value) => !value);
-      }
+    const actions = new Map<string | undefined, () => void>([
+      [
+        'toggle',
+        () => {
+          setView('commands');
+          setOpen(!open);
+        },
+      ],
+      [
+        'debug',
+        () => {
+          setView('debug');
+          setOpen(true);
+        },
+      ],
+    ]);
+    if (gallery)
+      actions.set('gallery', () => {
+        setOpen(false);
+        location.assign(gallery);
+      });
+    const handleKey = (event: globalThis.KeyboardEvent) => {
+      const run = actions.get(isCommandShortcut(event) ? 'toggle' : developerShortcut(event));
+      if (event.defaultPrevented || !run) return;
+      event.preventDefault();
+      run();
     };
-    window.addEventListener('keydown', toggle);
-    return () => window.removeEventListener('keydown', toggle);
-  }, []);
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [open, setOpen, setView, gallery]);
+}
+
+export function CommandMenu({
+  links = [],
+  open: controlledOpen,
+  onOpenChange,
+  triggerClassName,
+  onCloseAutoFocus,
+}: {
+  links?: CommandLink[];
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  triggerClassName?: string;
+  onCloseAutoFocus?: ComponentProps<typeof DialogContent>['onCloseAutoFocus'];
+}) {
+  const [view, setView] = useState<View>('commands');
+  const [localOpen, setLocalOpen] = useState(false);
+  const open = controlledOpen ?? localOpen;
+  const setOpen = onOpenChange ?? setLocalOpen;
+  const gallery = links.find((link) => link.shortcut === 'G')?.href;
+  usePaletteShortcuts(open, setOpen, setView, gallery);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(value) => {
+        setView('commands');
+        setOpen(value);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           variant="outline"
+          className={triggerClassName}
           aria-label="Open command palette"
+          title="Command K (Ctrl K on Windows and Linux)"
           aria-keyshortcuts="Meta+K Control+K"
         >
-          Commands <kbd className="command-shortcut">⌘ / Ctrl K</kbd>
+          <span aria-hidden="true">⌘K</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="lab-command-menu" aria-describedby={undefined}>
-        <MenuContents appearance={appearance} links={links} close={() => setOpen(false)} />
+      <DialogContent
+        className="lab-command-menu"
+        aria-describedby={undefined}
+        onCloseAutoFocus={onCloseAutoFocus}
+      >
+        <MenuContents links={links} close={() => setOpen(false)} view={view} setView={setView} />
       </DialogContent>
     </Dialog>
   );

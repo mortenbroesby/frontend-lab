@@ -170,6 +170,8 @@ function TrackChoices() {
 }
 
 function LabNavigation({ route }: { route: string }) {
+  const [commandOpen, setCommandOpen] = useState(false);
+  const mobileTrigger = useRef<HTMLButtonElement>(null);
   const links = [
     ['/demos', 'Demos'],
     ['/create', 'Create a demo'],
@@ -178,14 +180,18 @@ function LabNavigation({ route }: { route: string }) {
   return (
     <nav aria-label="Lab">
       <CommandMenu
+        open={commandOpen}
+        onOpenChange={setCommandOpen}
+        triggerClassName="command-desktop-trigger"
+        onCloseAutoFocus={(event) => {
+          if (mobileTrigger.current?.getClientRects().length) {
+            event.preventDefault();
+            mobileTrigger.current.focus();
+          }
+        }}
         links={[
-          { label: 'All tracks', group: 'Navigation', href: '#/' },
-          ...links.map(([path, label]) => ({ label, group: 'Navigation', href: `#${path}` })),
-          ...tracks.map((track) => ({
-            label: track.title,
-            group: 'Tracks',
-            href: `#/track/${track.id}`,
-          })),
+          { label: 'All demos', group: 'Navigation', href: '#/demos', shortcut: 'G' },
+          { label: 'Create a demo', group: 'Navigation', href: '#/create' },
           ...demos.map((demo) => ({ label: demo.title, group: 'Demos', href: demo.href })),
         ]}
       />
@@ -204,6 +210,7 @@ function LabNavigation({ route }: { route: string }) {
       <Dialog key={route}>
         <DialogTrigger asChild>
           <Button
+            ref={mobileTrigger}
             className="mobile-nav-toggle"
             variant="ghost"
             size="lg"
@@ -225,6 +232,9 @@ function LabNavigation({ route }: { route: string }) {
         </DialogTrigger>
         <DialogContent
           className="mobile-navigation translate-x-0 translate-y-0"
+          onCloseAutoFocus={(event) => {
+            if (commandOpen) event.preventDefault();
+          }}
           showCloseButton={false}
           aria-describedby={undefined}
         >
@@ -251,6 +261,15 @@ function LabNavigation({ route }: { route: string }) {
               </DialogClose>
             ))}
           </nav>
+          <DialogClose asChild>
+            <Button
+              variant="outline"
+              onClick={() => setCommandOpen(true)}
+              aria-label="Open command palette"
+            >
+              ⌘K
+            </Button>
+          </DialogClose>
         </DialogContent>
       </Dialog>
     </nav>

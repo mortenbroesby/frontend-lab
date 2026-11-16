@@ -663,7 +663,8 @@ pre {
   outline: none;
 }
 @media (max-width: 600px) {
-  .desktop-nav {
+  .desktop-nav,
+  .command-desktop-trigger {
     display: none;
   }
   .mobile-nav-toggle {
@@ -1000,10 +1001,6 @@ pre {
   font-size: 0.8rem;
   margin: 0.75rem 0 0;
 }
-.command-shortcut {
-  color: var(--lab-muted);
-  font-size: 0.7rem;
-}
 .command-debug {
   margin: 1rem 0 0;
 }
@@ -1022,15 +1019,17 @@ pre {
   overflow-wrap: anywhere;
 }
 @media (max-width: 640px) {
-  .command-shortcut {
-    display: none;
-  }
-}
-@media (max-width: 640px) {
   .site-header {
     flex-wrap: wrap;
   }
   .site-header > .wordmark {
     flex-shrink: 0;
   }
+}
+
+.command-key {
+  margin-left: auto;
+  white-space: nowrap;
+  color: var(--lab-muted);
+  font-size: 0.75rem;
 }
