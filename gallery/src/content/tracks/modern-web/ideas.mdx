@@ -1,35 +1,51 @@
-# Ideas to explore
+# What could your browser do?
 
-Explore capabilities beyond everyday page UI. Pick one question, build a small interaction and see what the browser makes possible.
+Turn your phone into a controller for your laptop. Let two people draw together. Make a diagram respond to touch, or process a large set of data while the page stays usable. This track is about discovering capabilities you can bring into a React app beyond the interfaces you build every day.
+
+Choose an experience you want to try, then explore the browser API behind it. One message arriving on another screen, one animated interaction or one calculation running in the background is a worthwhile first result. Work alone or with someone else; a complete application can wait.
+
+## See what is possible
+
+Try an experience before choosing what to build:
+
+- **Connect your devices:** open [PairDrop](https://pairdrop.net/) on a phone and laptop and try sending a small test file or message. Its [source and explanation](https://github.com/schlagmichdoch/PairDrop) show how browser-to-browser sharing becomes a useful application. Your first version could simply send “hello”.
+- **Make data interactive:** explore the [D3 gallery](https://observablehq.com/@d3/gallery). Pick a visual interaction you like and imagine it with your own data. A handful of shapes is enough to begin.
+- **Make navigation feel fluid:** try the [View Transitions examples](https://view-transitions.chrome.dev/), from swapping cards to changing a whole view. The page identifies browser support for each example; start with one transition your browser supports.
+
+These are possibilities to borrow from, not finished products to reproduce. The directions below give you a smaller first experiment and somewhere to take it next.
 
 ## Devices talking to each other
 
-Turn a phone into a controller, send reactions between laptops or build a shared drawing surface. Investigate how peers find each other, exchange messages and recover after a connection drops.
+Make a phone change the colour of a laptop screen, send reactions between colleagues or draw a line that appears in another browser. The interesting moment is when an action here causes something to happen over there.
 
-Start with one message between two browsers. Then compare peer-to-peer communication with a server-mediated connection. WebRTC still needs signaling; WebSockets need a server. Choose the simplest arrangement that fits your experiment.
+Start by sending one text message. The [WebRTC transmit-text sample](https://webrtc.github.io/samples/src/content/datachannel/basic/) connects two peers within one page, so you can inspect the basics before connecting separate devices. Then try a shared button or slider. Stretch with a shared canvas or explore what should happen when someone disconnects and rejoins.
 
-Read: [MDN’s WebRTC guide](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API) and [WebSockets overview](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
+WebRTC data channels carry messages between peers, but peers still need signaling to establish the connection; some networks also need a relay. WebSockets offer two-way communication through a server, while Server-Sent Events (SSE) suit updates flowing from a server to a browser. Neither server is included in a newly generated demo. For a smaller local experiment, BroadcastChannel connects same-origin tabs in the same browser, not separate devices.
 
-## Interactive graphics
+Read: [WebRTC](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API), [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and [SSE](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events). Check the chosen example’s setup requirements before moving to phones: localhost and a plain LAN HTTP address are not equivalent for APIs that require a secure context.
 
-Make information respond to a pointer, a slider or a selection. Try a dependency map, a small simulation or an animated explanation. SVG, Canvas and D3 offer different ways to represent and manipulate a scene.
+## Graphics you can explore
 
-Start with a few shapes and one interaction. Add relationships or motion, then consider how somebody could use it with a keyboard or reduced motion.
+Make a map you can rearrange, a simulation you can influence or an explanation you can scrub through. SVG gives you individual elements to interact with; Canvas gives you a surface to draw on. D3 can help turn data into positions, colours and relationships.
+
+Start with a few shapes and one pointer or keyboard interaction. Then connect the shapes, animate a change or replace the sample data with something meaningful to you. Stretch by comparing SVG and Canvas for the same scene. Keep keyboard access and reduced motion in mind as it grows.
 
 Read: [Canvas tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial) and [getting started with D3](https://d3js.org/getting-started).
 
-## Computation without blocking the interface
+## Heavy work without a frozen page
 
-Move a calculation into a Worker and keep the page responsive while it runs. Explore progress, cancellation and the cost of transferring data. For another direction, investigate where WebAssembly could be useful.
+Imagine filtering a large dataset while controls still respond, or processing an image while showing progress. A Worker lets you move computation off the main thread; the experiment is whether the interface feels better while work happens.
 
-Compare the same bounded calculation on and off the main thread. Does interaction improve? What happens if the input changes before the result arrives? Off-thread work need not finish faster to feel better.
+Try [MDN’s small Worker example](https://mdn.github.io/dom-examples/web-workers/simple-web-worker/) to see messages and results moving between the page and a Worker. Then compare the same bounded calculation on and off the main thread while interacting with a control. Stretch with cancellation, progress updates or handling a new input before an old result arrives. Moving work need not make it finish faster to make the page more usable.
 
-Read: [using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) and [WebAssembly concepts](https://developer.mozilla.org/en-US/docs/WebAssembly).
+Read: [using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers). Curious about running compiled code in the browser? Explore [WebAssembly concepts](https://developer.mozilla.org/en-US/docs/WebAssembly/Concepts) as a further direction.
 
-## Browser-native experiences
+## An interface that feels at home in the browser
 
-Explore View Transitions or another browser API you rarely use. Try animating a change of view, working with local files or using a device capability in a small React interface.
+Animate a card into its detail view, preview a file someone selects or try a device capability you rarely use. Explore how much the platform already provides before adding a library.
 
-Start with one visible behaviour. Investigate browser support, permissions and a useful fallback before combining APIs.
+Start with one visible behaviour: transition between two states or display a selected image. Stretch by combining the two into a small photo explorer. Check browser support and permissions, and keep the basic interaction usable when an enhancement is unavailable.
 
 Read: [Using View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API/Using) and [reading files selected by the user](https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications).
+
+Pick the smallest interaction you want to see working. The **Get started** tab covers local setup and creating your own React demo, with a separate path for connecting two browsers.
