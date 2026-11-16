@@ -1,30 +1,64 @@
-# Developer Experience & Tooling worked example · What commands can I run in this project?
+# Worked example: find your shortest feedback loop
 
-## Problem
+**Friction:** running broad validation after every small edit interrupts your flow. **Alternative:** run the smallest relevant test while editing, then broaden validation before sharing.
 
-A developer joining an unfamiliar project wants to see its defined commands without searching a larger manifest. The [bootstrap](#/track/developer-experience/get-started) can identify a project; this finished example turns that into a sorted command inventory.
+[Open the command explorer](#/demo/tooling) to switch between targeted tests, watch mode, cached builds and affected-project plans. It shows real commands to run locally, not simulated timings.
 
-This is an illustrative onboarding problem, not a claim that participants need another tool. `npm run` already lists scripts in a project. Discovering that native feature may be a better outcome than maintaining this script.
+## 1. Establish a baseline
 
-## Experience it
-
-From the repository root, with Node 24.x and no package installation:
+From the repository root, with Node 24 (no install needed), run the completed command-inventory tests:
 
 ```sh
-node tracks/developer-experience/examples/commands.mjs gallery/package.json
 node --test tracks/developer-experience/examples/commands.test.mjs
 ```
 
-Expect alphabetically ordered script names and their actual commands, including `check`, `dev` and `test`. The report only reads the supplied manifest; it does not execute scripts, traverse the repository or contact a service.
+Expect four passing tests, including a real CLI failure case. Note the test count and reported duration. This is a file-level baseline, not the whole repository suite.
 
-## Approach and evidence
+## 2. Narrow the question
 
-`tracks/developer-experience/examples/commands.mjs` reads JSON, validates its shape, sorts the scripts and prints a report. Tests cover sorting, empty projects, malformed values and missing-file errors. The starter and this example are independent: no finished logic is imported into your starting script.
+If you are changing command ordering, select its behaviour by name:
 
-Compare its output with the `scripts` section in `gallery/package.json`. The tests demonstrate behaviour; they do not demonstrate time saved. Ask a peer which output helps them and whether `npm run` was enough before deciding to keep or expand it.
+```sh
+node --test --test-name-pattern="sorts commands" tracks/developer-experience/examples/commands.test.mjs
+```
 
-## Branch or stop
+Expect one passing test. A misspelled pattern can select zero tests: check the count. A smaller selection is not automatically faster on a tiny suite, and does not cover the CLI or invalid-input cases.
 
-Maybe your real need is clearer commands, documenting required environment variables or shortening a feedback loop. Build towards one useful result from your starter rather than adding every report. This script does not detect unused scripts, validate their safety or prove they work.
+## 3. Make feedback continuous
 
-[Your script bootstrap](#/track/developer-experience) · [Developer Experience & Tooling](#/track/developer-experience)
+```sh
+node --test --watch --test-name-pattern="sorts commands" tracks/developer-experience/examples/commands.test.mjs
+```
+
+On your experiment branch, open `tracks/developer-experience/examples/commands.mjs`. Temporarily reverse the comparator from `a.localeCompare(b)` to `b.localeCompare(a)`. Save: the ordering test should fail. Restore that single edit and save: it should pass. Stop watching with Ctrl+C, then rerun the full file. Keep unrelated edits intact.
+
+You have demonstrated that your editing loop catches the relevant regression. Compare it with your usual workflow; do not infer a benchmark from one run. No new wrapper script was necessary.
+
+## 4. Explore task selection and caching
+
+After the normal root install:
+
+```sh
+npm exec -- turbo run build --filter=@lab/demo-tooling --dry=json
+npm exec -- turbo run build --filter=@lab/demo-tooling
+npm exec -- turbo run build --filter=@lab/demo-tooling
+npm exec -- turbo run build --affected --dry=json
+```
+
+The dry runs describe tasks without building them. The explicit filter selects the tooling demo; inspect whether the second build uses its local cache. In our verification, both runs missed—an investigation opportunity, not a required speedup. Affected selection needs Git history and a usable comparison base; inspect the plan before executing it.
+
+**A real constraint to investigate:** this repository includes broad `globalDependencies` in `turbo.json`, including generated `dist` files and `.turbo` logs in the inspected dry-run plan. Those files can change during a build and invalidate the next run; unrelated source edits can also invalidate several cache keys. Affected selection and cache validity answer different questions. Inspect `globalCacheInputs.files` in the JSON. On your experiment branch, try excluding generated outputs from the inputs, run twice, then change a real source file and confirm it still invalidates the build. Compare the plans/hashes before deciding whether the input change is safe. The gallery bundles all demos; do not remove its real dependencies just to improve a cache number.
+
+**Demonstrate:** show the red → green test rerun, the selected task or an explained cache miss. A targeted pass does not replace the broader checks needed for your actual change.
+
+References: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) · [Turbo run options](https://turborepo.dev/docs/reference/run).
+
+## Optional completed tool: command inventory
+
+Compare the native `npm run` output with:
+
+```sh
+node tracks/developer-experience/examples/commands.mjs gallery/package.json
+```
+
+The example validates a manifest and prints sorted script names and commands. It does not execute them. Its source and four focused tests live together under `tracks/developer-experience/examples/`; the [optional starter](#/track/developer-experience/get-started) imports none of that finished solution. Keep the utility only if its output answers a real need.

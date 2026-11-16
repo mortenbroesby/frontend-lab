@@ -1,5 +1,5 @@
 import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
-  track: 'developer-experience', title: 'Know your commands', description: 'A read-only Node utility and a reason to keep it small.', author: 'Lab examples',
+  track: 'developer-experience', title: 'Find your shortest feedback loop', description: 'Try targeted tests, watch mode, cached builds and affected-project plans with native tools.', author: 'Lab examples',
 } satisfies DemoDefinition;
