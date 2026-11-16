@@ -62,7 +62,7 @@ Bootstraps live separately in `playground/src/starters/`, and HTML/mount templat
 
 Keep code, assets and optional `Demo.module.css` beside the component. Keep state inside the demo. Clean up timers, listeners, Workers and subscriptions when leaving. Only the selected demo runs; the app handles navigation, loading and React render-error feedback. This is not a sandbox: an infinite loop still blocks the page, and async/event errors need handling inside your demo.
 
-Try your demo, navigate away and back, and check the browser console. Run `npm run check`; add a meaningful test if you introduce nontrivial logic. For UI/browser changes, also run the browser journeys using the [browser setup](#/guide/setup).
+Try your demo, navigate away and back, and check the browser console. Use a focused test, type check or build if needed to verify your change. `npm run check` combines the existing logic tests, TypeScript and build. These are demos; extensive test suites are not expected.
 
 ## Share it through Git
 

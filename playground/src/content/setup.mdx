@@ -11,16 +11,9 @@ Open the address Vite prints. Choose a track and follow its Getting started page
 
 [Choose a track](#/) · [Create a demo](#/create) · [Build and share](#/guide/contributing)
 
-## Browser checks
+## Small checks
 
-For UI/browser changes, run these from `playground/` after the root install:
-
-```sh
-npx playwright install chromium
-npm run test:browser
-```
-
-Alternatively, use an existing Chrome installation by setting `PLAYWRIGHT_CHANNEL=chrome` in your shell, then run `npm run test:browser`. The tests build and serve the production bundle themselves on port 4173; stop any other server on that port first.
+Try the interaction you changed. Use `npm run check` for the existing logic tests, TypeScript and build when useful. There is no browser-test setup; a focused test is enough when you need to prove a specific point.
 
 ## Troubleshooting
 

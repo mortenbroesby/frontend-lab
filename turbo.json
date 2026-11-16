@@ -29,13 +29,6 @@
     },
     "test": {
       "outputs": []
-    },
-    "test:browser": {
-      "cache": false,
-      "passThroughEnv": [
-        "PLAYWRIGHT_CHANNEL",
-        "PLAYWRIGHT_PORT"
-      ]
     }
   },
   "globalEnv": [

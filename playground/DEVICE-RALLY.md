@@ -1,6 +1,6 @@
 # Device rally
 
-> **Experimental demo.** Automated browser tests pass, but this has not been tested on physical phones or the workshop network. Peer discovery and connections may fail on restrictive networks.
+> **Experimental demo.** This has not been tested on physical phones or the workshop network. Peer discovery and connections may fail on restrictive networks.
 
 Open the same room on two computers and send giant emoji cheers. This finished Modern Web Capabilities example uses **Trystero 0.27 and WebRTC data channels**. Trystero handles room discovery and connection negotiation; there is no custom relay server, host election or backend command.
 
@@ -47,15 +47,11 @@ Use your own app ID so incompatible experiments do not share messages. Validate 
 
 Read [Trystero’s getting-started guide](https://trystero.dev/docs/getting-started/) and [connection troubleshooting](https://trystero.dev/docs/connections/) for the library API and TURN options.
 
-## Verification
+## Try the interaction
 
-- `npm run check`: generator/unit tests, TypeScript and production build.
-- `npm run test:browser`: normal gallery journeys plus deterministic unsupported-browser and unreachable-signaling checks.
-- `npm run test:devices`: explicit live smoke test. Three independent browser contexts use real public signaling and WebRTC. Checks two-way cheers, room isolation, leaving and rejoining. Requires Chrome/Playwright browser installation and internet access; public relay availability can affect the result.
+Open the same room in two browsers, send a cheer in each direction, then leave and rejoin. Use a different room code to try isolation. This is a manual demo check, not a production acceptance checklist.
 
-The live test verifies separate software clients on one computer. It does not prove physical phone, cross-network NAT traversal or corporate Wi-Fi compatibility. Those require an on-site check.
-
-The standalone workspace build, generator/unit tests and TypeScript checks pass. The live test passes against the independent app: two-way cheers, room isolation, leaving and rejoining work between three browser contexts. Physical phones and the workshop network remain untested.
+Earlier automated checks exercised separate browser clients on one computer. Those browser tests have been removed. They did not establish physical-phone, cross-network NAT traversal or workshop-network compatibility.
 
 ## Independent app
 
@@ -67,4 +63,4 @@ npm run build --workspace @lab/demo-device-rally
 npm run preview --workspace @lab/demo-device-rally
 ```
 
-Deploy `demos/device-rally/dist/` for this app alone. The live WebRTC test runs against that independent build. The gallery lists this app and opens its standalone page.
+Deploy `demos/device-rally/dist/` for this app alone. The gallery lists this app and opens its standalone page.
