@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run analyze:baseline
-      - name: Audit introduced findings
+      - name: Audit new and worsened findings
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         env:
           FALLOW_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}

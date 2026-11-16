@@ -26,6 +26,6 @@
   },
   "audit": {
     "gate": "new-only",
-    "worsened": "warn"
+    "worsened": "error"
   }
 }
