@@ -7,8 +7,7 @@ export function Home() {
   return (
     <>
       <section className="mb-8" aria-label="Choose an experiment">
-        <p>Pick an idea, remix a demo or explore your own question.</p>
-        <Button asChild className="mt-4">
+        <Button asChild>
           <a
             href="#tracks-heading"
             onClick={(event) => {
