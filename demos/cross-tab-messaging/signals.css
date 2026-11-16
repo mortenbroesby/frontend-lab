@@ -1,0 +1,23 @@
+.density-preview {
+  padding: 1.5rem;
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+  background: var(--lab-surface);
+}
+.density-preview ul {
+  list-style: none;
+  padding: 0;
+}
+.density-preview li {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--lab-line);
+}
+.density-preview li span {
+  color: var(--lab-muted);
+  font-variant-numeric: tabular-nums;
+}
+.density-preview[data-density='compact'] li {
+  padding: 0.5rem 0;
+}

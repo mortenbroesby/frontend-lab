@@ -38,10 +38,8 @@ Stretch: use a spiral or data-driven sizes. Compare [SVG](https://developer.mozi
 
 Off-thread work does not guarantee faster execution. Stretch: add progress messages or image processing. Read [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
 
-### Let two tabs talk
+### Keep two tabs in step
 
-- **Try:** <DemoLink id="cross-tab-messaging">Open Signals</DemoLink>, open its second tab and send a message.
-- **Change:** Edit the channel name in `demos/cross-tab-messaging/index.tsx`; reload both tabs.
-- **Observe:** Only the other tab receives messages. Reopening loses history. Channel names and origins must match.
+<DemoLink id="cross-tab-messaging">Open One setting, two tabs</DemoLink>. Open a second tab and change the list density in either. Reload one tab and compare its state with the other.
 
-BroadcastChannel connects local tabs, not separate computers. Stretch: share a palette or drawing event. Read [Broadcast Channel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API).
+Follow [Synchronise a setting between tabs](#/track/modern-web/tab-settings) to investigate why live updates do not provide persistence.

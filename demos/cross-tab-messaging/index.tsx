@@ -1,95 +1,116 @@
-import { Input } from '@lab/ui/input';
-import { Label } from '@lab/ui/label';
 import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
+import './signals.css';
+
+type Density = 'comfortable' | 'compact';
 
 export default function Signals() {
-  const [text, setText] = useState('Hello from another corner of the lab!');
-  const [messages, setMessages] = useState<string[]>([]);
+  const [density, setDensity] = useState<Density>('comfortable');
+  const [received, setReceived] = useState(0);
   const [status, setStatus] = useState('Opening a local channel…');
-  const [ready, setReady] = useState(false);
   const channel = useRef<BroadcastChannel | null>(null);
 
   useEffect(() => {
     if (typeof BroadcastChannel !== 'function') {
-      setStatus('BroadcastChannel unavailable. Try a current browser or another demo.');
+      setStatus('BroadcastChannel unavailable. The setting still works in this tab.');
       return;
     }
     try {
-      const connection = new BroadcastChannel('front-end-lab-signals');
+      const connection = new BroadcastChannel('front-end-lab-density');
       channel.current = connection;
-      connection.onmessage = (event) => {
-        if (typeof event.data === 'string' && event.data.length <= 160 && event.data.trim()) {
-          setMessages((current) => [event.data, ...current].slice(0, 5));
-        }
+      connection.onmessage = ({ data }: MessageEvent<unknown>) => {
+        if (data !== 'comfortable' && data !== 'compact') return;
+        setDensity(data);
+        setReceived((value) => value + 1);
+        setStatus(`Received ${data} density from another tab. No message sent back.`);
       };
-      setReady(true);
-      setStatus('Ready. Open this address in another tab.');
+      setStatus('Ready. Open another tab, then change the density here.');
       return () => {
         connection.close();
         channel.current = null;
       };
     } catch {
-      setStatus('Cannot open a channel here. Try a normal local tab.');
+      setStatus('Cannot open a channel. The setting still works locally.');
     }
   }, []);
 
-  function send(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const message = text.trim();
-    if (!message || !channel.current) return;
-    channel.current.postMessage(message);
-    setStatus('Sent to other lab tabs; delivery is unconfirmed.');
+  function changeDensity(value: Density) {
+    setDensity(value);
+    if (!channel.current) return;
+    try {
+      channel.current.postMessage(value);
+      setStatus(`Sent ${value} density to other open tabs. Delivery is unconfirmed.`);
+    } catch {
+      setStatus('Changed locally, but sending failed. Reload to reconnect.');
+    }
   }
 
   return (
     <div className="experiment-grid">
-      <div className="signal-stage">
-        <p className="eyebrow">Incoming / last five signals</p>
-        {messages.length === 0 ? (
-          <p className="empty-note">No messages. Send one from the other tab.</p>
-        ) : (
-          <ul aria-live="polite" className="messages">
-            {messages.map((message, index) => (
-              <li key={index}>{message}</li>
-            ))}
-          </ul>
-        )}
-        <p className="small">Same-origin tabs only. No storage or server.</p>
-      </div>
+      <section className="density-preview" data-density={density} aria-label="Task list preview">
+        <p className="eyebrow">Your workspace · {density} view</p>
+        <h2>One preference. Every open tab.</h2>
+        <ul>
+          {[
+            'Review the proposal',
+            'Sketch an interaction',
+            'Try it with a teammate',
+            'Inspect the result',
+            'Make one improvement',
+          ].map((task, index) => (
+            <li key={task}>
+              <span aria-hidden="true">0{index + 1}</span>
+              {task}
+            </li>
+          ))}
+        </ul>
+        <p className="small">{received} updates received in this tab</p>
+      </section>
       <div className="controls">
-        <p className="eyebrow">03 / BroadcastChannel</p>
-        <h3>Two tabs. One conversation.</h3>
-        <p>Send events between local tabs—no backend, WebSockets or cross-device messaging.</p>
+        <p className="eyebrow">BroadcastChannel / shared preferences</p>
+        <h3>Change the view in two tabs.</h3>
+        <p>
+          Open a second tab, then choose Compact here. Its list changes too. Change it back from
+          either tab.
+        </p>
         <Button asChild variant="outline">
           <a href="./index.html" target="_blank" rel="noopener">
             Open another tab ↗
           </a>
         </Button>
-        <form onSubmit={send}>
-          <Label htmlFor="message">Your signal</Label>
-          <Input
-            id="message"
-            value={text}
-            maxLength={160}
-            onChange={(event) => setText(event.target.value)}
-          />
-          <Button disabled={!ready || !text.trim()} type="submit">
-            Send signal
-          </Button>
-        </form>
+        <div className="button-row" role="group" aria-label="List density">
+          {(['comfortable', 'compact'] as const).map((value) => (
+            <Button
+              key={value}
+              variant={density === value ? 'default' : 'outline'}
+              aria-pressed={density === value}
+              onClick={() => changeDensity(value)}
+            >
+              {value === 'comfortable' ? 'Comfortable' : 'Compact'}
+            </Button>
+          ))}
+        </div>
         <p role="status" className="small">
           {status}
         </p>
-        <p className="try-this">
-          <strong>What if…</strong> tabs shared a palette, quiz or drawing? What would cross-device
-          support need?
-        </p>
+        <h3>Messages are not saved preferences.</h3>
         <p>
-          Start with one event type; close the channel when leaving the demo.{' '}
-          <a href={galleryHref('/create')}>Create your own experiment</a>.
+          Reload one tab: it starts Comfortable, even if the other is Compact. Choose a density
+          again to send a new update. Late arrivals receive no history.
         </p>
+        <p className="small">
+          Same-origin tabs in the same browser storage partition only. No server, cross-device
+          connection or persistence. Simultaneous edits can disagree; this demo has no
+          conflict-resolution protocol.
+        </p>
+        {galleryHref('/track/modern-web/tab-settings') && (
+          <p>
+            <a href={galleryHref('/track/modern-web/tab-settings')}>
+              Understand this · Try it in your project
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

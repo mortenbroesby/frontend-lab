@@ -1,0 +1,33 @@
+## Synchronise a setting between tabs
+
+**Why does a preference update arrive immediately, but disappear on reload?** Open <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink> to separate live messaging from saved state.
+
+### Observe the change
+
+Open a second tab using the demo's button. Choose Compact in the first tab: both task lists should tighten their spacing. Choose Comfortable in the second tab: both should expand. The receiving tab's update count increases; the sender does not receive its own message.
+
+Now choose Compact and reload just one tab. It returns to Comfortable. The other remains Compact. Choose either density again to send a fresh update. This demo deliberately saves no preference and requests no initial state.
+
+BroadcastChannel is a message channel, not a database. New tabs do not replay earlier messages. Matching origin and browser storage partition matter; this does not connect a phone to a laptop.
+
+### Trace the small implementation
+
+After [local setup](#/guide/setup), open `demos/cross-tab-messaging/index.tsx`:
+
+- A local click updates this tab and posts the selected value.
+- A received message is validated against two allowed values, then updates this tab without broadcasting it again.
+- Leaving the page closes the channel.
+
+That second distinction prevents an endless echo between tabs. There is no server acknowledgement: “sent” is not proof that another tab received it. The receiver's counter supplies the visible evidence.
+
+### Apply it in your project
+
+Choose a preference with a clear owner and small payload. Define which messages are accepted and how the receiver updates state. Handle unavailable channels without breaking local interaction.
+
+If preferences must survive reloads, choose a persistence mechanism separately. Decide how a newly opened tab reads the current value and what happens if two tabs edit simultaneously. Do not mistake a latest-arriving message for a complete consistency policy.
+
+Start with two tabs and test updates in both directions, reload, and closing one tab. For cross-device synchronisation, investigate a server or peer connection instead; the [Device Rally guide](#/track/modern-web/devices) explores a different transport.
+
+Read: [Broadcast Channel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API).
+
+[All Modern Web guides](#/track/modern-web/guides)

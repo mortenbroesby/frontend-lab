@@ -19,6 +19,12 @@ export const tracks = [
         title: 'Keep the interface responsive',
         description: 'Separate calculation speed from the browser’s ability to respond.',
       },
+      {
+        slug: 'tab-settings',
+        title: 'Synchronise a setting between tabs',
+        description:
+          'Send a real preference change, then discover what a late-arriving tab misses.',
+      },
     ],
     title: 'Modern Web Capabilities',
     description: 'Connect devices, create interactive graphics or run work in the background.',

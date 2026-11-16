@@ -167,7 +167,6 @@
     height: auto;
   }
   .interaction-stage,
-  .signal-stage,
   .idea-stage {
     padding: 2.5rem;
     display: flex;
@@ -175,9 +174,6 @@
     justify-content: center;
     background: var(--lab-stage-interaction);
     min-height: 350px;
-  }
-  .signal-stage {
-    background: var(--lab-stage-signal);
   }
   .tap-pad {
     font: inherit;
@@ -215,23 +211,6 @@
     border-top: 1px solid var(--lab-line);
     padding-top: 1rem;
     margin-top: 1.4rem;
-  }
-  .empty-note {
-    font-size: 1.8rem;
-    letter-spacing: -0.03em;
-    max-width: 17rem;
-    line-height: 1.2;
-  }
-  .messages {
-    padding: 0;
-    list-style: none;
-  }
-  .messages li {
-    padding: 1rem;
-    background: var(--lab-surface);
-    margin-bottom: 0.6rem;
-    border-radius: 0.7rem;
-    overflow-wrap: anywhere;
   }
   .idea-stage h3 {
     font-size: clamp(2rem, 4vw, 3.5rem);
