@@ -18,7 +18,6 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `../demos/<your-idea>/` | Your component, assets and scoped styles |
 | `../demos/<id>/index.html` | Independently runnable app entry, also included in the gallery build |
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
-| `../shared/` | Framework-independent utilities shared through `@lab/shared` exports |
 | `demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Gallery metadata-discovery checks; demo tests live beside demo logic |
@@ -45,14 +44,13 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 | `npm run typecheck` | TypeScript check without producing files |
 | `npm test` | Gallery metadata-discovery tests |
 | `npm run test:watch` | Repeat those tests when source changes; stop with Ctrl+C |
-| `npm run build` | Type check and production bundle |
+| `npm run build` | Production bundle |
 | `npm run preview` | Serve an already built bundle locally |
 | `npm run check` | Type check and production bundle |
 | `npm ls --depth=0` | Inspect direct installed dependencies for a quality investigation |
 
-From the repository root, `npm run check:architecture` enforces import boundaries with dependency-cruiser. It also runs first in `npm run check` and CI. See [shared utilities](../shared/README.md) before extracting common helpers.
 
-From the repository root, `npm test` includes generator, script and demo-workspace tests; `npm run check` also type-checks and builds the gallery. Use `npm test --workspace @lab/demo-workers` for a focused demo check.
+From the repository root, `npm test` includes generator, script and demo-workspace tests; `npm run check` also formats-checks, checks hooks, type-checks each workspace and builds all apps. Use `npm test --workspace @lab/demo-workers` for a focused demo check.
 
 ## Internal repository and theme
 
@@ -65,3 +63,15 @@ See the [migration guide](docs/internal-migration.md) for GitHub Enterprise Clou
 [Design decisions and reasoning](docs/decisions/README.md) · [Verification evidence](docs/VERIFICATION.md) · [Hosting and removal](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
 
 Each demo has its own dev/build/preview commands: `npm run dev --workspace @lab/demo-art`, for example. The gallery includes their HTML entries and Open standalone demo links. See **Create a demo** in the app for the canonical standalone guide.
+
+## Independent checks and caching
+
+Every demo has `typecheck`, `build` and `check` commands. `check` runs both; `build` alone bundles without checking types. Turbo builds first run the selected workspace's type check, which depends on its shared kit's check. Tests remain optional and colocated.
+
+Toolchain dependencies live at the root. `tsconfig.base.json` holds shared compiler options; each workspace includes only its own files. The generator takes React's version from the demo kit; a workspace test catches drift across consumers.
+
+Turbo uses package-local inputs by default. The gallery's build also hashes demo source and root HTML; the dependency map also hashes the manifests it displays. Generated output is excluded. Inspect `tasks[].inputs` and `tasks[].dependencies` in `turbo run build --dry=json` when changing these rules. Changes to the root toolchain or shared compiler config can still invalidate all tasks.
+
+`npm run format` formats code and styles with Prettier. `npm run lint` runs only Oxlint's hooks-ordering and exhaustive-dependency checks. These do not replace TypeScript, Fallow or dependency-cruiser. MDX prose is kept as authored; no browser-test framework is installed.
+
+Optional `requirements` in `demo.config.ts` labels internet, secure-context or offline-after-setup needs before a demo is opened. These are information, not permission checks.

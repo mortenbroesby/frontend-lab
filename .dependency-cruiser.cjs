@@ -11,7 +11,7 @@ module.exports = {
     },
     {
       name: 'demos-stay-independent', severity: 'error',
-      comment: 'Move genuinely reusable utilities to @lab/shared instead of importing another demo.',
+      comment: 'Keep demo implementations independent; extract shared code only for a concrete need.',
       from: { path: '^demos/([^/]+)/' },
       to: { path: '^demos/', pathNot: '^demos/$1/' },
     },
@@ -34,16 +34,6 @@ module.exports = {
       name: 'kit-does-not-depend-on-apps', severity: 'error',
       from: { path: '^gallery/demo-kit/' },
       to: { path: '^(demos/|gallery/)', pathNot: '^gallery/demo-kit/' },
-    },
-    {
-      name: 'shared-utilities-stay-independent', severity: 'error',
-      from: { path: '^shared/' },
-      to: { path: '^(demos/|gallery/|node_modules/react(?:-dom)?/)' },
-    },
-    {
-      name: 'use-shared-package-exports', severity: 'error',
-      from: { pathNot: '^shared/' },
-      to: { path: '^shared/', dependencyTypes: ['local'] },
     },
     {
       name: 'use-kit-package-exports', severity: 'error',

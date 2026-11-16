@@ -6,10 +6,14 @@ export function commandReport(manifest) {
     throw new Error('Expected a package.json object.');
   }
   const scripts = manifest.scripts ?? {};
-  if (typeof scripts !== 'object' || Array.isArray(scripts)) throw new Error('Expected a scripts object.');
+  if (typeof scripts !== 'object' || Array.isArray(scripts))
+    throw new Error('Expected a scripts object.');
   const entries = Object.entries(scripts).sort(([a], [b]) => a.localeCompare(b));
-  if (entries.some(([, command]) => typeof command !== 'string')) throw new Error('Script commands must be strings.');
-  return entries.length ? entries.map(([name, command]) => `${name}: ${command}`).join('\n') : 'No npm scripts defined.';
+  if (entries.some(([, command]) => typeof command !== 'string'))
+    throw new Error('Script commands must be strings.');
+  return entries.length
+    ? entries.map(([name, command]) => `${name}: ${command}`).join('\n')
+    : 'No npm scripts defined.';
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

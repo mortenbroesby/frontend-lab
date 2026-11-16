@@ -13,7 +13,11 @@ export default function Workers() {
   useEffect(() => () => worker.current?.terminate(), []);
 
   function finish(result: Result) {
-    setStatus('error' in result ? result.error : `${result.count.toLocaleString()} primes · ${Math.round(result.milliseconds)} ms computation`);
+    setStatus(
+      'error' in result
+        ? result.error
+        : `${result.count.toLocaleString()} primes · ${Math.round(result.milliseconds)} ms computation`,
+    );
     setBusy(false);
     worker.current?.terminate();
     worker.current = null;
@@ -26,7 +30,8 @@ export default function Workers() {
       const next = new Worker(new URL('./compute.worker.ts', import.meta.url), { type: 'module' });
       worker.current = next;
       next.onmessage = (event: MessageEvent<Result>) => finish(event.data);
-      next.onerror = () => finish({ error: 'Worker failed to load. Check the console and local server.' });
+      next.onerror = () =>
+        finish({ error: 'Worker failed to load. Check the console and local server.' });
       next.postMessage(limit);
     } catch (error) {
       finish({ error: error instanceof Error ? error.message : 'Workers are unavailable here.' });
@@ -50,28 +55,57 @@ export default function Workers() {
       <div className="interaction-stage">
         <span className="orbit" aria-hidden="true" />
         <p className="eyebrow">Is the interface still listening?</p>
-        <button className="tap-pad" onClick={() => setTaps(value => value + 1)}>Interaction pad <strong>{taps}</strong></button>
+        <button className="tap-pad" onClick={() => setTaps((value) => value + 1)}>
+          Interaction pad <strong>{taps}</strong>
+        </button>
         <p>Click while work runs. Try changing focus with Tab too.</p>
-        <p role="status" className="result">{status}</p>
+        <p role="status" className="result">
+          {status}
+        </p>
       </div>
       <div className="controls">
         <p className="eyebrow">02 / Web Workers</p>
         <h3>Busy browser. Responsive interface.</h3>
-        <p>Run the same calculation in two places. A Worker protects interaction; it does not promise a faster calculation.</p>
+        <p>
+          Run the same calculation in two places. A Worker protects interaction; it does not promise
+          a faster calculation.
+        </p>
         <label htmlFor="workload">Count primes up to</label>
-        <select id="workload" disabled={busy} value={limit} onChange={event => setLimit(Number(event.target.value))}>
+        <select
+          id="workload"
+          disabled={busy}
+          value={limit}
+          onChange={(event) => setLimit(Number(event.target.value))}
+        >
           <option value="100000">100,000 · quick</option>
           <option value="500000">500,000 · medium</option>
           <option value="2000000">2,000,000 · heavier</option>
         </select>
         <div className="button-row">
-          <button disabled={busy} onClick={runWorker}>Run in Worker</button>
-          <button className="secondary" disabled={!busy} onClick={cancel}>Cancel Worker</button>
-          <button className="secondary" disabled={busy} onClick={runMain}>Compare on main thread</button>
+          <button disabled={busy} onClick={runWorker}>
+            Run in Worker
+          </button>
+          <button className="secondary" disabled={!busy} onClick={cancel}>
+            Cancel Worker
+          </button>
+          <button className="secondary" disabled={busy} onClick={runMain}>
+            Compare on main thread
+          </button>
         </div>
-        <p className="small">The main-thread comparison briefly blocks this page and cannot be cancelled. Start small. Duration varies by device; use DevTools to inspect the difference. The timer excludes Worker startup and messaging.</p>
-        <p className="try-this"><strong>What if…</strong> this processed an image, searched a dataset, or reported progress?</p>
-        <p>Try your own version: start with a Worker that receives one number and sends a result back. Add a status message, then cancellation. <a href={galleryHref('/create')}>Create an independent demo</a>.</p>
+        <p className="small">
+          The main-thread comparison briefly blocks this page and cannot be cancelled. Start small.
+          Duration varies by device; use DevTools to inspect the difference. The timer excludes
+          Worker startup and messaging.
+        </p>
+        <p className="try-this">
+          <strong>What if…</strong> this processed an image, searched a dataset, or reported
+          progress?
+        </p>
+        <p>
+          Try your own version: start with a Worker that receives one number and sends a result
+          back. Add a status message, then cancellation.{' '}
+          <a href={galleryHref('/create')}>Create an independent demo</a>.
+        </p>
       </div>
     </div>
   );

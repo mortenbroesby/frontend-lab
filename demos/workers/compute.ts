@@ -8,7 +8,10 @@ export function countPrimes(limit: number): number {
   for (let candidate = 3; candidate <= limit; candidate += 2) {
     let prime = true;
     for (let divisor = 3; divisor * divisor <= candidate; divisor += 2) {
-      if (candidate % divisor === 0) { prime = false; break; }
+      if (candidate % divisor === 0) {
+        prime = false;
+        break;
+      }
     }
     if (prime) count += 1;
   }

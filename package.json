@@ -9,8 +9,7 @@
   "workspaces": [
     "gallery",
     "demos/*",
-    "gallery/demo-kit",
-    "shared"
+    "gallery/demo-kit"
   ],
   "scripts": {
     "dev": "turbo run dev --filter=front-end-lab-gallery",
@@ -18,8 +17,8 @@
     "preview": "turbo run preview --filter=front-end-lab-gallery",
     "demo:new": "turbo gen demo",
     "test:generator": "node --test turbo/generators/create-demo.test.mjs",
-    "test": "npm run test:generator && npm run test:scripts && turbo run test",
-    "check": "npm run check:architecture && npm test && turbo run check",
+    "test": "npm run test:workspaces && npm run test:generator && npm run test:scripts && turbo run test",
+    "check": "npm run format:check && npm run lint && npm run check:architecture && npm test && turbo run typecheck build",
     "analyze": "fallow",
     "analyze:dead-code": "fallow dead-code",
     "analyze:dupes": "fallow dupes",
@@ -29,13 +28,29 @@
     "fallow:status": "fallow doctor && fallow hooks status",
     "analyze:changes": "fallow audit",
     "test:scripts": "node --test tracks/developer-experience/bootstrap/inspect.test.mjs tracks/developer-experience/examples/commands.test.mjs",
-    "check:architecture": "depcruise gallery/src gallery/demo-kit demos shared"
+    "check:architecture": "depcruise gallery/src gallery/demo-kit demos",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write \"{gallery,demos,tracks,turbo,tests}/**/*.{ts,tsx,js,mjs,css}\"",
+    "format:check": "prettier --check \"{gallery,demos,tracks,turbo,tests}/**/*.{ts,tsx,js,mjs,css}\"",
+    "lint": "oxlint gallery demos --deny-warnings",
+    "test:workspaces": "node --test tests/workspaces.test.mjs"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "3.1.1",
     "@swc/core": "1.16.22",
     "@turbo/gen": "2.11.11",
+    "@types/mdx": "2.0.14",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
     "dependency-cruiser": "18.7.2",
     "fallow": "3.43.1",
-    "turbo": "2.11.11"
+    "oxlint": "1.94.0",
+    "prettier": "3.10.1",
+    "remark-gfm": "4.0.1",
+    "turbo": "2.11.11",
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
   }
 }

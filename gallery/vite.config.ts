@@ -6,13 +6,21 @@ import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
 
 const root = resolve(import.meta.dirname, '..');
-const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map(path => {
+const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => {
   const entry = resolve(root, path.replace('demo.config.ts', 'index.html'));
-  if (!existsSync(entry)) throw new Error(`${path}: every demo needs an index.html entry. Use npm run demo:new.`);
+  if (!existsSync(entry))
+    throw new Error(`${path}: every demo needs an index.html entry. Use npm run demo:new.`);
   return entry;
 });
 export default defineConfig({
   root,
-  plugins: [{ enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) }, react({ include: /\.(jsx|js|mdx|tsx|ts)$/ })],
-  build: { outDir: resolve(import.meta.dirname, 'dist'), emptyOutDir: true, rollupOptions: { input: [resolve(root, 'index.html'), ...entries] } },
+  plugins: [
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
+    react({ include: /\.(jsx|js|mdx|tsx|ts)$/ }),
+  ],
+  build: {
+    outDir: resolve(import.meta.dirname, 'dist'),
+    emptyOutDir: true,
+    rollupOptions: { input: [resolve(root, 'index.html'), ...entries] },
+  },
 });

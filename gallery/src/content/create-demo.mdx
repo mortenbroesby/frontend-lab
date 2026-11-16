@@ -28,9 +28,11 @@ Replace `your-id` with the folder ID you chose:
 
 ```sh
 npm run dev --workspace @lab/demo-your-id
-npm run build --workspace @lab/demo-your-id
+npm run check --workspace @lab/demo-your-id
 ```
 
-The build goes into `demos/<your-id>/dist/` and runs independently of the gallery.
+This checks your demo’s types and builds it. Use `typecheck` or `build` separately for a shorter feedback loop. The build goes into `demos/<your-id>/dist/` and runs independently of the gallery.
 
 </details>
+
+Optional `requirements` in `demo.config.ts` can contain `offline`, `internet` or `secure-context`. These appear in the gallery so people know what they need before opening the demo.

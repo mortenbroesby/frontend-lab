@@ -1,15 +1,8 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "globalDependencies": [
-    "tracks/developer-experience/**/*.mjs",
-    "gallery/src/**",
-    "gallery/vite.demo.config.ts",
-    "gallery/demo-kit/**",
-    "demos/**",
-    "index.html",
-    "shared/**",
-    "!**/dist/**",
-    "!**/.turbo/**"
+    "tsconfig.base.json",
+    ".nvmrc"
   ],
   "tasks": {
     "dev": {
@@ -20,21 +13,33 @@
       "cache": false,
       "persistent": true
     },
-    "build": {
-      "outputs": [
-        "dist/**"
-      ]
+    "typecheck": {
+      "dependsOn": [
+        "^typecheck"
+      ],
+      "outputs": []
     },
-    "check": {
+    "build": {
+      "dependsOn": [
+        "typecheck"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/gallery/vite.demo.config.ts",
+        ".env*"
+      ],
       "outputs": [
         "dist/**"
+      ],
+      "env": [
+        "VITE_GALLERY_URL"
       ]
     },
     "test": {
+      "dependsOn": [
+        "^typecheck"
+      ],
       "outputs": []
     }
-  },
-  "globalEnv": [
-    "VITE_GALLERY_URL"
-  ]
+  }
 }

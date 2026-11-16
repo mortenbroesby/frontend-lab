@@ -13,7 +13,7 @@ npm run analyze
 
 The last command combines unused-code, duplication and health analysis. It reads local source and may write caches under ignored `.fallow/`. It does not apply fixes. No account, cloud connection or editor extension is needed. The gallery's **Investigate with Fallow** entry explains the journey; your terminal output is the current evidence.
 
-**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). The repository verification workflow also audits introduced findings on pull requests.
+**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). The repository verification workflow also audits introduced findings on pull requests and direct pushes to main.
 
 ## Set up agents and commit checks
 
@@ -23,7 +23,7 @@ Both **Codex and Copilot CLI** read the root `AGENTS.md` and the single skill in
 
 Agents run the same CLI commands as participants: `npm run analyze` and `npm run analyze:changes`. No repository MCP server configuration is needed.
 
-The **Git pre-commit hook** runs `fallow audit --staged` against HEAD and blocks new findings for either client or a manual commit. Existing findings remain visible without blocking unrelated changes. Run `npm run analyze:changes -- --staged` to inspect a failure. Agents are instructed to run `npm run analyze:changes` before pushing; there is **no automatic pre-push or per-agent tool hook**. PRs also run a changed-code audit in CI.
+The **Git pre-commit hook** runs `fallow audit --staged` against HEAD and blocks new findings for either client or a manual commit. Existing findings remain visible without blocking unrelated changes. Run `npm run analyze:changes -- --staged` to inspect a failure. Agents are instructed to run `npm run analyze:changes` before pushing; there is **no automatic pre-push or per-agent tool hook**. CI audits PRs against their base SHA and main pushes against the previous remote SHA.
 
 The Git hook is local, not branch protection; if Fallow is absent its official script warns and skips. Use the status command rather than assuming installation proves enforcement. Keep this setup small when updating Fallow: preserve the CLI and shared skill rather than rerunning `fallow agent install`, which regenerates the larger harness-specific integration.
 

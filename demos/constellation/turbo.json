@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "$TURBO_EXTENDS$",
+        "$TURBO_ROOT$/demos/*/package.json",
+        "$TURBO_ROOT$/gallery/package.json",
+        "$TURBO_ROOT$/gallery/demo-kit/package.json",
+        "$TURBO_ROOT$/package.json"
+      ]
+    }
+  }
+}

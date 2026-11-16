@@ -1,0 +1,32 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/index.html",
+        "$TURBO_ROOT$/demos/**",
+        "!$TURBO_ROOT$/demos/**/dist/**",
+        "!$TURBO_ROOT$/demos/**/.turbo/**",
+        "!demo-kit/**",
+        "!$TURBO_ROOT$/demos/**/node_modules/**",
+        "$TURBO_ROOT$/.env*"
+      ]
+    },
+    "typecheck": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/demos/*/demo.config.ts",
+        "!demo-kit/**"
+      ]
+    },
+    "test": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!demo-kit/**"
+      ]
+    }
+  }
+}

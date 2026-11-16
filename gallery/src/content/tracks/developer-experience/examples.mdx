@@ -47,7 +47,9 @@ npm exec -- turbo run build --affected --dry=json
 
 The dry runs describe tasks without building them. The explicit filter selects the tooling demo. Run the two builds without editing files: after a first cache miss, the second should report a cache hit (both can hit if already cached). Change a source file and run again; its build must miss. Restore your edit afterwards.
 
-Generated `dist` files and `.turbo` logs are excluded from the global inputs so a build does not invalidate itself. Inspect `globalCacheInputs.files` in the JSON to see the actual inputs. Source dependencies remain deliberately broad: an unrelated demo edit may invalidate this build too, because the gallery bundles all demos. Explore narrower inputs only after identifying which sources each build consumes.
+Generated `dist` files and `.turbo` logs are excluded. Inspect `tasks[].inputs` in the JSON: ordinary demos use their own files and shared kit dependencies; the gallery additionally tracks all demo source. The dependency map also tracks the manifests it displays.
+
+Try editing a different demo's component: the tooling build should keep its cache while the gallery rebuilds. Changing the shared kit should invalidate its consumers. Root compiler or toolchain changes may still invalidate everything. Compare hashes before removing any input; a cache hit is useful only when the output remains correct.
 
 Affected selection needs Git history and a usable comparison base; inspect the plan before executing it. Choosing tasks and reusing cached outputs are different decisions.
 

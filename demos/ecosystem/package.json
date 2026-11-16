@@ -11,6 +11,8 @@
     "dev": "vite --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
     "build": "vite build --config ../../gallery/vite.demo.config.ts",
     "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
-    "test": "node --test world.test.ts"
+    "test": "node --test world.test.ts",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run build"
   }
 }

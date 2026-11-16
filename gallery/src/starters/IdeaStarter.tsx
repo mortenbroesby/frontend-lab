@@ -14,11 +14,25 @@ export default function Demo() {
       <div className="controls">
         <p className="eyebrow">Your space / no prescribed outcome</p>
         <h3>Start with one small thing.</h3>
-        <p>In your generated <code>index.tsx</code>, change “An idea, taking shape” to your own heading and save. Refresh to confirm your code change stays. Then build one visible behaviour of your own.</p>
+        <p>
+          In your generated <code>index.tsx</code>, change “An idea, taking shape” to your own
+          heading and save. Refresh to confirm your code change stays. Then build one visible
+          behaviour of your own.
+        </p>
         <label htmlFor="idea">What are you curious about?</label>
-        <input id="idea" value={idea} maxLength={120} onChange={event => setIdea(event.target.value)} />
+        <input
+          id="idea"
+          value={idea}
+          maxLength={120}
+          onChange={(event) => setIdea(event.target.value)}
+        />
         <label htmlFor="colour">A colour to start with</label>
-        <input id="colour" type="color" value={colour} onChange={event => setColour(event.target.value)} />
+        <input
+          id="colour"
+          type="color"
+          value={colour}
+          onChange={(event) => setColour(event.target.value)}
+        />
         <p className="small">This preview resets when you refresh.</p>
       </div>
     </div>

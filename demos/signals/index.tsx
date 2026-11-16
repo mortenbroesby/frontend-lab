@@ -16,14 +16,17 @@ export default function Signals() {
     try {
       const connection = new BroadcastChannel('front-end-lab-signals');
       channel.current = connection;
-      connection.onmessage = event => {
+      connection.onmessage = (event) => {
         if (typeof event.data === 'string' && event.data.length <= 160 && event.data.trim()) {
-          setMessages(current => [event.data, ...current].slice(0, 5));
+          setMessages((current) => [event.data, ...current].slice(0, 5));
         }
       };
       setReady(true);
       setStatus('Ready. Open a second tab on the same address to exchange signals.');
-      return () => { connection.close(); channel.current = null; };
+      return () => {
+        connection.close();
+        channel.current = null;
+      };
     } catch {
       setStatus('This browser context could not open a channel. Try a normal local tab.');
     }
@@ -41,22 +44,53 @@ export default function Signals() {
     <div className="experiment-grid">
       <div className="signal-stage">
         <p className="eyebrow">Incoming / last five signals</p>
-        {messages.length === 0 ? <p className="empty-note">Nothing yet. Send a message from the second tab.</p> : <ul aria-live="polite" className="messages">{messages.map((message, index) => <li key={index}>{message}</li>)}</ul>}
-        <p className="small">Ephemeral, same-origin browser tabs only. Nothing is saved or sent to a server.</p>
+        {messages.length === 0 ? (
+          <p className="empty-note">Nothing yet. Send a message from the second tab.</p>
+        ) : (
+          <ul aria-live="polite" className="messages">
+            {messages.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
+        )}
+        <p className="small">
+          Ephemeral, same-origin browser tabs only. Nothing is saved or sent to a server.
+        </p>
       </div>
       <div className="controls">
         <p className="eyebrow">03 / BroadcastChannel</p>
         <h3>Two tabs. A shared conversation.</h3>
-        <p>Explore event-driven interfaces without setting up a backend. This is local tab communication, not WebSockets or messaging between laptops.</p>
-        <a className="button secondary" href="#/demo/signals" target="_blank" rel="noopener">Open second lab tab ↗</a>
+        <p>
+          Explore event-driven interfaces without setting up a backend. This is local tab
+          communication, not WebSockets or messaging between laptops.
+        </p>
+        <a className="button secondary" href="#/demo/signals" target="_blank" rel="noopener">
+          Open second lab tab ↗
+        </a>
         <form onSubmit={send}>
           <label htmlFor="message">Your signal</label>
-          <input id="message" value={text} maxLength={160} onChange={event => setText(event.target.value)} />
-          <button disabled={!ready || !text.trim()} type="submit">Send signal</button>
+          <input
+            id="message"
+            value={text}
+            maxLength={160}
+            onChange={(event) => setText(event.target.value)}
+          />
+          <button disabled={!ready || !text.trim()} type="submit">
+            Send signal
+          </button>
         </form>
-        <p role="status" className="small">{status}</p>
-        <p className="try-this"><strong>What if…</strong> two tabs shared a colour palette, a quiz question or a drawing? How would this change across computers?</p>
-        <p>Try sharing a colour or quiz answer between two same-origin tabs. Start with one event type and close the channel when leaving your demo. <a href={galleryHref('/create')}>Create your own experiment</a>.</p>
+        <p role="status" className="small">
+          {status}
+        </p>
+        <p className="try-this">
+          <strong>What if…</strong> two tabs shared a colour palette, a quiz question or a drawing?
+          How would this change across computers?
+        </p>
+        <p>
+          Try sharing a colour or quiz answer between two same-origin tabs. Start with one event
+          type and close the channel when leaving your demo.{' '}
+          <a href={galleryHref('/create')}>Create your own experiment</a>.
+        </p>
       </div>
     </div>
   );
