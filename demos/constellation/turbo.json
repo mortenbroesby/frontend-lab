@@ -9,7 +9,8 @@
         "$TURBO_ROOT$/demos/*/package.json",
         "$TURBO_ROOT$/gallery/package.json",
         "$TURBO_ROOT$/gallery/demo-kit/package.json",
-        "$TURBO_ROOT$/package.json"
+        "$TURBO_ROOT$/package.json",
+        "$TURBO_ROOT$/shared/*/package.json"
       ]
     }
   }

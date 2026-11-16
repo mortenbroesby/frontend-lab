@@ -16,6 +16,7 @@ const manifests = import.meta.glob<Manifest>(
   [
     '../*/package.json',
     '../../gallery/demo-kit/package.json',
+    '../../shared/*/package.json',
     '../../gallery/package.json',
     '../../package.json',
   ],

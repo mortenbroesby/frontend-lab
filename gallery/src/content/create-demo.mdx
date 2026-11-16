@@ -1,3 +1,6 @@
+import { Button } from '@lab/ui/button';
+import { Alert, AlertTitle, AlertDescription } from '@lab/ui/alert';
+
 # Create a demo
 
 From the repository root, after [local setup](#/guide/setup):
@@ -13,9 +16,17 @@ npm install
 npm run dev --workspace @lab/demo-your-id
 ```
 
-Run `npm install` once after generation to link the new workspace. Open the URL printed by Vite.
+<Alert role="note" className="my-6">
+  <AlertTitle>Install once after generation</AlertTitle>
+  <AlertDescription><p className="m-0">Run <code>npm install</code> to link the new workspace, then open the URL printed by Vite.</p></AlertDescription>
+</Alert>
 
-Prefer the gallery? Run `npm run dev` instead and open your demo there. It appears automatically—no registration needed.
+Prefer the gallery? Run `npm run dev` instead. Your demo appears automatically—no registration needed.
+
+<div className="my-6 flex flex-wrap gap-3">
+  <Button asChild><a href="#/">Explore tracks</a></Button>
+  <Button variant="outline" asChild><a href="#/guide/setup">Local setup</a></Button>
+</div>
 
 ## Make it yours
 

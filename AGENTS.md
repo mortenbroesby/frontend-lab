@@ -24,6 +24,7 @@ Apply [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architect
 
 - Keep gallery routing/composition in `gallery/src/app/`; discover only demo metadata and HTML entry URLs.
 - Each demo owns its UI, state, effects, helpers and focused tests. Do not import another demo’s implementation or gallery internals.
+- Reusable shadcn components and theme tokens live in `shared/ui` (`@lab/ui`). Import individual package exports; keep UI independent of gallery/demo logic. Tailwind runs in both Vite configs without Preflight.
 - Keep demo-specific helpers local. Add a shared utility package only when multiple consumers actually need it; do not reserve empty workspaces.
 - Run `npm run check:architecture` when changing imports or ownership. Dependency-cruiser enforces these boundaries locally and through `npm run check` in CI. Do not weaken a rule to accommodate a misplaced feature.
 - Import shared kit code through `@lab/demo-kit` exports. The kit must not import gallery app code or demos; shared UI stays free of demo-specific state and service calls.

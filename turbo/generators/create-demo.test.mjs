@@ -187,6 +187,7 @@ test('every generated demo is its own app package', async (t) => {
   const folder = join(root, 'demos/chapter-quiz');
   const pkg = JSON.parse(await readFile(join(folder, 'package.json'), 'utf8'));
   assert.equal(pkg.name, '@lab/demo-chapter-quiz');
+  assert.equal(pkg.dependencies['@lab/ui'], '*');
   assert.ok(pkg.scripts.dev && pkg.scripts.build && pkg.scripts.preview);
   assert.equal(pkg.scripts.typecheck, 'tsc --noEmit');
   const config = JSON.parse(await readFile(join(folder, 'tsconfig.json'), 'utf8'));

@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
+import tailwindcss from '@tailwindcss/vite';
 
 const root = resolve(import.meta.dirname, '..');
 const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => {
@@ -15,6 +16,7 @@ const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => 
 export default defineConfig({
   root,
   plugins: [
+    tailwindcss(),
     { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
     react({ include: /\.(jsx|js|mdx|tsx|ts)$/ }),
   ],

@@ -1,4 +1,4 @@
-@import './theme.css';
+@import '@lab/ui/theme.css';
 
 @layer base, layout, components;
 
@@ -912,21 +912,6 @@ pre {
   visibility: hidden;
   animation: reveal-guide 0s 180ms forwards;
 }
-.guide-skeleton span {
-  display: block;
-  height: 0.85rem;
-  margin-block: 1rem;
-  border-radius: 0.25rem;
-  background: var(--lab-line);
-}
-.guide-skeleton .skeleton-heading {
-  width: 55%;
-  height: 1.6rem;
-  margin-block: 2rem 1.5rem;
-}
-.guide-skeleton .skeleton-short {
-  width: 75%;
-}
 @keyframes reveal-guide {
   to {
     visibility: visible;
@@ -938,8 +923,7 @@ pre {
     visibility: visible;
   }
 }
-.guide-nav a,
-.demo-back-link {
+.guide-nav a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;

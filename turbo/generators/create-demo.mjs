@@ -77,7 +77,7 @@ export async function createDemo(root, answers) {
           private: true,
           version: '0.1.0',
           type: 'module',
-          dependencies: { '@lab/demo-kit': '*', react: kit.dependencies.react },
+          dependencies: { '@lab/demo-kit': '*', '@lab/ui': '*', react: kit.dependencies.react },
           scripts: {
             dev: 'vite --config ../../gallery/vite.demo.config.ts --host 127.0.0.1',
             typecheck: 'tsc --noEmit',

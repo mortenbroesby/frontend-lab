@@ -1,6 +1,9 @@
 import { Component, Suspense, type ReactNode } from 'react';
 
 import Guide from './Guide';
+import { Button } from '@lab/ui/button';
+import { Alert, AlertTitle, AlertDescription } from '@lab/ui/alert';
+import { Skeleton } from '@lab/ui/skeleton';
 
 class GuideBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
@@ -9,11 +12,19 @@ class GuideBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
   render() {
     return this.state.failed ? (
-      <div className="guide" role="alert">
-        <h2>This guide could not load</h2>
-        <p>Check your connection, then reload to try again.</p>
-        <button onClick={() => location.reload()}>Reload page</button>{' '}
-        <a href="#/">Return to tracks</a>
+      <div className="guide">
+        <Alert>
+          <AlertTitle>This guide could not load</AlertTitle>
+          <AlertDescription>
+            <p>Check your connection, then reload to try again.</p>
+            <div className="flex flex-wrap gap-3">
+              <Button onClick={() => location.reload()}>Reload page</Button>
+              <Button variant="outline" asChild>
+                <a href="#/">Return to tracks</a>
+              </Button>
+            </div>
+          </AlertDescription>
+        </Alert>
       </div>
     ) : (
       this.props.children
@@ -29,13 +40,13 @@ export function GuideView({ document }: { document: string }) {
         fallback={
           <div className="guide guide-loading" role="status" aria-label="Loading guide">
             <div className="guide-skeleton" aria-hidden="true">
-              <span className="skeleton-heading" />
-              <span />
-              <span />
-              <span className="skeleton-short" />
-              <span className="skeleton-heading" />
-              <span />
-              <span className="skeleton-short" />
+              <Skeleton className="my-6 h-6 w-1/2" />
+              <Skeleton className="my-4 h-3.5 w-full" />
+              <Skeleton className="my-4 h-3.5 w-full" />
+              <Skeleton className="my-4 h-3.5 w-3/4" />
+              <Skeleton className="my-6 h-6 w-1/2" />
+              <Skeleton className="my-4 h-3.5 w-full" />
+              <Skeleton className="my-4 h-3.5 w-3/4" />
             </div>
           </div>
         }

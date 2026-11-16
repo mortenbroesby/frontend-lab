@@ -2,6 +2,15 @@
 module.exports = {
   forbidden: [
     {
+      name: 'ui-stays-independent', severity: 'error',
+      from: { path: '^shared/ui/' }, to: { path: '^(gallery/|demos/)' },
+    },
+    {
+      name: 'use-ui-package-exports', severity: 'error',
+      from: { pathNot: '^shared/ui/' },
+      to: { path: '^shared/ui/', dependencyTypes: ['local'] },
+    },
+    {
       name: 'no-circular-dependencies', severity: 'error',
       from: {}, to: { circular: true },
     },

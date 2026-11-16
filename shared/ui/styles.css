@@ -1,0 +1,23 @@
+/* Shared utilities without a global reset. */
+@layer theme, base, layout, components, utilities;
+@import './theme.css';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@source "./src";
+
+@theme inline {
+  --color-background: var(--lab-surface);
+  --color-foreground: var(--lab-ink);
+  --color-card: var(--lab-surface);
+  --color-card-foreground: var(--lab-ink);
+  --color-primary: var(--lab-ink);
+  --color-primary-foreground: var(--lab-surface);
+  --color-secondary: var(--lab-paper);
+  --color-secondary-foreground: var(--lab-ink);
+  --color-muted-foreground: var(--lab-muted);
+  --color-accent: var(--lab-line);
+  --color-accent-foreground: var(--lab-ink);
+  --color-input: var(--lab-line);
+  --color-ring: #0070f3;
+  --color-destructive: #b91c1c;
+}

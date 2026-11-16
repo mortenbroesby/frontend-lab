@@ -1,0 +1,3 @@
+@import '@lab/ui/styles.css';
+@source './app';
+@source './content/create-demo.mdx';
