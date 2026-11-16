@@ -33,3 +33,24 @@ Cancellation returned the UI to “Cancelled. Ready to restart.” The bounded o
 ## Guide navigation — 2026-11-16
 
 At a 390 × 844 browser viewport, the mobile menu exposed Guides and navigated to the complete guide list, closing the menu. The desktop dependency guide → demo → guide path was also followed successfully. This is responsive-browser verification, not physical-phone evidence.
+
+## Learning journeys delivery audit — 2026-11-16
+
+Software and content were delivered through `6e27cc6`; the physical-device acceptance below remains incomplete. Four tracks and eight standalone demo packages remain.
+
+| Requirement | Evidence | Status |
+| --- | --- | --- |
+| Guide discovery | All-guides route, desktop/mobile navigation, command-palette entries and track-card guide counts are present. Mobile menu → Guides and desktop command-palette → rendering guide were followed. Code Quality’s empty demo list → its guides was followed. | Delivered |
+| Demo / guide connections | Worker, rendering, tab settings, dependency graph, postcard, ecosystem and devices link to focused guides; those guides link back with DemoLink. Gallery links are conditional on galleryHref. The Worker standalone build ran over LAN without a gallery link. | Delivered |
+| Missing-test exercise | Temporarily accepting Number(limit) passed the old suite; adding the numeric-string rejection test failed; restoring validation passed. Both temporary edits were removed. Current compute.ts still uses Number.isInteger(limit). | Verified exercise; no deliberate defect committed |
+| Tab preference synchronization | Two browser tabs exchanged Compact and Comfortable updates in both directions. Reloading one returned it to Comfortable with no received messages while the other remained Compact. The later card-layout change preserves the same messaging behaviour. | Delivered |
+| Focused guides | Rendering and terminal feedback are separate. The mixed browser experiments page was replaced by a dependency investigation; postcard and ecosystem each have their own guide. Guides include application outside this repo and official references. | Delivered |
+| Worker responsiveness | See measured values above. Observer test covers the final frame, hidden samples and cleanup. Following the layout change, both modes again returned 41,538 primes at 500,000; the table stayed within the phone-width page. | Delivered |
+| Reproducible postcard | Pure tests cover deterministic layouts. Browser SVG circle attributes matched after re-entering seed 123 with Spiral; restoring the starting composition matched the initial seed 42 / Scatter output. | Delivered |
+| Physical Device Rally | Three phone-to-laptop cheers observed over public HTTPS. No verified return delivery, deliberate rejoin, device/browser identification or network identification. Participant said they can test later. | Pending participant |
+
+The final layout pass completed all 20 check tasks. Fallow reported no dead code or duplication; estimated-coverage and CSS advisories remain. Browser checks used 390px and 1280px viewports, with dark-mode graph controls also inspected. No browser-test suite was added.
+
+### Resume physical-device acceptance
+
+Use a fresh or agreed room on trusted HTTPS with the phone page in the foreground. Confirm both peer counts, send a cheer each way, deliberately leave/rejoin and repeat. Record phone/browser and Wi-Fi/mobile data, plus whether it is the intended workshop network. Do not treat two laptop browser windows or the existing one-way evidence as completing this check.
