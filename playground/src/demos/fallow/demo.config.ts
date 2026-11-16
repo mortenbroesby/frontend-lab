@@ -1,5 +1,5 @@
-import type { DemoDefinition } from '../../demo-contract';
+import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
-  track: 'code-quality', title: 'Investigate with Fallow', description: 'Run real analysis, trace an unused export and question a complexity finding.', author: 'Lab examples', load: () => import('../../examples/Fallow'),
+  track: 'code-quality', title: 'Investigate with Fallow', description: 'Run real analysis, trace an unused export and question a complexity finding.', author: 'Lab examples', load: () => import('./Fallow'),
 } satisfies DemoDefinition;

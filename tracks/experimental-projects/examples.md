@@ -2,7 +2,7 @@
 
 **Experience:** In the running playground, open `/#/demo/art`. Change the dot count, remix the composition, then save an SVG. The same seed produces the same arrangement; the exported file can be opened in a browser independently.
 
-**How it works:** [art.ts](../../playground/src/examples/art.ts) produces repeatable points from a seed. [ArtStudio.tsx](../../playground/src/examples/ArtStudio.tsx) draws them with SVG, adds controls and serialises the picture for download. This is a completed reference, separate from your [creative starter](bootstrap.md).
+**How it works:** [art.ts](../../playground/src/demos/art/art.ts) produces repeatable points from a seed. [ArtStudio.tsx](../../playground/src/demos/art/ArtStudio.tsx) draws them with SVG, adds controls and serialises the picture for download. This is a completed reference, separate from your [creative starter](bootstrap.md).
 
 ## Build towards it, or branch
 

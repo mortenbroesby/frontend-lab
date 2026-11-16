@@ -1,15 +1,5 @@
-import type { ComponentType } from 'react';
-
-export type TrackId = 'modern-web' | 'code-quality' | 'developer-experience' | 'experimental-projects';
-
-/** A demo supplies its own state; the host never supplies required props. */
-export interface DemoDefinition {
-  title: string;
-  track: TrackId;
-  description: string;
-  author: string;
-  load: () => Promise<{ default: ComponentType }>;
-}
+import type { DemoDefinition } from '@lab/demo-kit/types';
+export type { DemoDefinition, TrackId } from '@lab/demo-kit/types';
 
 export function discoverDemos(modules: Record<string, unknown>): (DemoDefinition & { id: string })[] {
   return Object.entries(modules).sort(([a], [b]) => a.localeCompare(b)).map(([path, value]) => {
@@ -17,8 +7,8 @@ export function discoverDemos(modules: Record<string, unknown>): (DemoDefinition
     if (!value || typeof value !== 'object') throw new Error(`${path}: export a default DemoDefinition.`);
     const demo = value as Partial<DemoDefinition>;
     validateMetadata(demo, path);
-    if (!['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(demo.track ?? '') || typeof demo.load !== 'function') {
-      throw new Error(`${path}: provide a valid named track and a lazy load function.`);
+    if (!['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(demo.track ?? '') || !validPresentation(demo)) {
+      throw new Error(`${path}: provide a valid track and presentation; inline demos require a lazy load function.`);
     }
     return { ...(demo as DemoDefinition), id };
   });
@@ -39,4 +29,9 @@ function demoId(path: string): string {
     throw new Error(`Invalid demo folder: ${path}. Use a unique lowercase kebab-case ID (max 60 characters).`);
   }
   return id;
+}
+
+function validPresentation(demo: Partial<DemoDefinition>): boolean {
+  if (demo.presentation === 'standalone') return demo.load === undefined || typeof demo.load === 'function';
+  return (demo.presentation === undefined || demo.presentation === 'inline') && typeof demo.load === 'function';
 }

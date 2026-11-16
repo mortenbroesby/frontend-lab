@@ -1,0 +1,16 @@
+{
+  "name": "@lab/demo-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./types": "./types.ts",
+    "./mount": "./mount.tsx",
+    "./boundary": "./DemoBoundary.tsx",
+    "./styles.css": "./styles.css"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

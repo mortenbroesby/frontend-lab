@@ -29,7 +29,7 @@ Copy these prompts into your own notes:
 - **Decision:** Leave it alone, investigate further or try one small change on your own branch.
 - **Check:** What would demonstrate the change helped without breaking behaviour?
 
-**First result:** follow `d3-force` from `playground/package.json` to `playground/src/examples/Constellation.tsx`, or follow `Workers.tsx` → `compute.worker.ts` → `compute.ts` in that examples folder. Write one observation before opening the [worked example](examples.md).
+**First result:** follow `d3-force` from `playground/package.json` to `playground/src/demos/constellation/Constellation.tsx`, or follow `Workers.tsx` → `compute.worker.ts` → `compute.ts` in that examples folder. Write one observation before opening the [worked example](examples.md).
 
 **Success check:** your note names the dependency or behaviour, points to a real caller or test, and explains why you would keep it or investigate further. Passing checks alone are not the conclusion. Create a [contribution branch](../../CONTRIBUTING.md) before changing files.
 

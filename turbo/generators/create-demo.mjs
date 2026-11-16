@@ -11,7 +11,8 @@ export function validateName(value) {
 }
 
 export async function createDemo(root, answers) {
-  const { id, track } = answers;
+  const { id, track, presentation = 'standalone' } = answers;
+  if (!['standalone', 'inline'].includes(presentation)) throw new Error('Choose standalone or inline presentation.');
   if (!validateName(answers.title)) throw new Error('Demo name is required: enter 1–240 characters on one line.');
   const name = answers.title.trim();
   if (!validateId(id)) throw new Error('Use a unique lowercase kebab-case ID, up to 60 characters; template and system names are reserved.');
@@ -31,10 +32,24 @@ export async function createDemo(root, answers) {
   await mkdir(folder);
   try {
     await writeFile(join(folder, 'Demo.tsx'), component);
-    await writeFile(join(folder, 'README.md'), `# ${name}\n\nOpen #/demo/${id} in the lab. Edit Demo.tsx to build your experiment.\n\nRun npm run check from the repository root before sharing. Keep styles local (Demo.module.css), and clean up timers, listeners and Workers on unmount.\n\nRecord your question, what you tried and what you learned here.\n`);
-    const definition = `import type { DemoDefinition } from '../../demo-contract';
+    for (const file of ['index.html', 'main.tsx']) {
+      const source = await readFile(join(src, 'demos/template', `${file}.template`), 'utf8');
+      await writeFile(join(folder, file), source.replaceAll('__DEMO_ID__', id));
+    }
+    await writeFile(join(folder, 'package.json'), JSON.stringify({
+      name: `@lab/demo-${id}`, private: true, version: '0.1.0', type: 'module',
+      dependencies: { '@lab/demo-kit': '*', react: '19.3.1' },
+      scripts: {
+        dev: 'vite --config ../../../vite.demo.config.ts --host 127.0.0.1',
+        build: 'vite build --config ../../../vite.demo.config.ts',
+        preview: 'vite preview --config ../../../vite.demo.config.ts --host 127.0.0.1',
+      },
+    }, null, 2) + '\n');
+    await writeFile(join(folder, 'README.md'), `# ${name}\n\nOpen #/demo/${id} in the lab, or run npm run dev --workspace @lab/demo-${id} for this app alone. Build it with npm run build --workspace @lab/demo-${id}; deploy its dist/ folder. Run npm install after generation to refresh workspace links and the lockfile. Edit Demo.tsx to build your experiment.\n\nRun npm run check from the repository root before sharing. Keep styles local (Demo.module.css), and clean up timers, listeners and Workers on unmount.\n\nRecord your question, what you tried and what you learned here.\n`);
+    const definition = `import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
+  presentation: ${JSON.stringify(presentation)},
   title: ${JSON.stringify(name)},
   track: ${JSON.stringify(track)},
   description: ${JSON.stringify(answers.description.trim())},

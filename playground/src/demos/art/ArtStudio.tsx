@@ -41,7 +41,7 @@ export function Art() {
           <button className="secondary" onClick={download}>Save SVG</button>
         </div>
         <p className="try-this"><strong>What if…</strong> the dots followed a spiral, responded to a pointer, or became a tiny game?</p>
-        <p className="source">Make it yours: <code>src/examples/ArtStudio.tsx</code> + <code>art.ts</code></p>
+        <p className="source">Make it yours: <code>src/demos/art/ArtStudio.tsx</code> + <code>art.ts</code></p>
       </div>
     </div>
   );

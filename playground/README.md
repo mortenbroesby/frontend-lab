@@ -18,13 +18,13 @@ The gallery contains working references; **Create a demo** opens a separate mini
 | `src/demos/<your-idea>/demo.config.ts` | Demo metadata and component loader, discovered by the host |
 | `src/demos/template/` | Copyable bootstrap, separate from completed examples |
 | `src/demos/<your-idea>/` | Your component, assets and scoped styles |
-| `src/examples/` | Reference implementations and helpers; their discovery configs live in demo folders |
+| `src/demos/<id>/` | Independent app workspace, implementation, metadata and entry page |
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
-| `src/app/DemoBoundary.tsx` | Render-error fallback around the active demo |
-| `src/styles.css` | Shared shell, responsive layout and accessibility styles |
+| `../packages/demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
+| `../packages/demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Logic checks and browser journeys |
 
-[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates `Demo.tsx`, `demo.config.ts` and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. Metadata is discovered up front; components load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates an independently runnable workspace with `Demo.tsx`, `demo.config.ts`, an HTML/TypeScript entry and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. Metadata is discovered up front; components load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
 
 `demo.config.ts` default-exports an object satisfying `DemoDefinition` from `../../demo-contract`, with `title`, `track`, `description`, `author` and `load`. The loader imports a module whose default export is your React component. Use the generator and [technical demo guide](src/demos/template/README.md) for the exact file shape.
 
@@ -67,13 +67,13 @@ Alternatively, use an existing Chrome installation by setting `PLAYWRIGHT_CHANNE
 
 The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSocket server, WebRTC signalling server or WebAssembly toolchain is included. Those remain optional directions for participants to explore.
 
-The production build has one HTML entry and lazy demo chunks. Code Quality & Maintainability can use an existing codebase, and Developer Experience & Tooling's independent Node scripts under `tracks/developer-experience/` run without starting the app.
+The gallery production build includes an HTML entry for every demo. Each demo also has its own dev/build/preview commands and standalone `dist/`; see the [demo guide](src/demos/template/README.md#run-and-deploy-independently). Code Quality & Maintainability can use an existing codebase, and Developer Experience & Tooling's independent Node scripts under `tracks/developer-experience/` run without starting the app.
 
 ## Internal repository and theme
 
 See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally; the temporary [Vercel gallery](https://frontend-chapter-day.vercel.app) is documented in [hosting and removal](../docs/hosting.md).
 
-`src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Set optional `VITE_SOURCE_URL` in `playground/.env.local` using `.env.example` to link guides to your source repository. Without it, the app shows editor paths.
+`../packages/demo-kit/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Set optional `VITE_SOURCE_URL` in `playground/.env.local` using `.env.example` to link guides to your source repository. Without it, the app shows editor paths.
 
 ## Maintainer reference
 

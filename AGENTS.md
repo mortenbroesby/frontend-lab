@@ -4,7 +4,7 @@ A self-directed React playground: four tracks, small experiments and shared disc
 
 ## Working principles
 
-- Keep one Vite/React/TypeScript app in `playground/`, managed by npm workspaces and Turborepo. No package per demo or unnecessary infrastructure.
+- Keep the gallery in `playground/` and independently runnable demo workspaces in `playground/src/demos/<id>/`, managed by npm workspaces and Turborepo. Share the toolchain; each demo owns its entry page and build output.
 - Keep bootstraps separate from finished examples. Demos own their state, scoped styles and cleanup; adding one should not require editing the app shell.
 - Use `npm run demo:new`. Require a name first; preserve ID validation, overwrite protection and typed folder discovery.
 - Prefer existing code and browser APIs. Preserve accessibility, error handling and resource cleanup.

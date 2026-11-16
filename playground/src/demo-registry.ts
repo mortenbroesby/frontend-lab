@@ -5,5 +5,6 @@ import { discoverDemos } from './demo-contract';
 const definitions = import.meta.glob('./demos/*/demo.config.ts', { eager: true, import: 'default' });
 export const demos = discoverDemos(definitions).map(({ load, ...metadata }) => ({
   ...metadata,
-  Component: lazy(load),
+  href: `${import.meta.env.BASE_URL}src/demos/${metadata.id}/index.html`,
+  Component: load ? lazy(load) : undefined,
 }));

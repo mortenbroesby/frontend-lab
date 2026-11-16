@@ -8,8 +8,8 @@ For a second investigation using automated analysis, follow the [Fallow walkthro
 
 The Worker demo offers a workload up to two million. Before this investigation, tests checked known results up to 100,000 and rejected values above the supported maximum. The question was whether the **largest accepted input** had a verified result.
 
-1. Read [compute.ts](../../playground/src/examples/compute.ts): it counts primes inclusively and allows `MAX_LIMIT = 2_000_000`.
-2. Read [Workers.tsx](../../playground/src/examples/Workers.tsx): the largest menu option passes that same input.
+1. Read [compute.ts](../../playground/src/demos/workers/compute.ts): it counts primes inclusively and allows `MAX_LIMIT = 2_000_000`.
+2. Read [Workers.tsx](../../playground/src/demos/workers/Workers.tsx): the largest menu option passes that same input.
 3. Read the tests: rejecting values above the limit tests validation, not correctness at the limit.
 4. Independently calculate the result with a sieve rather than reuse the trial-division implementation: 148,933 primes.
 5. Add one assertion at the accepted boundary in [compute.test.ts](../../playground/tests/compute.test.ts).

@@ -15,7 +15,7 @@ Checked in `docs/participant-journeys`, based on `4ad159a`, with only Markdown c
 Implementation: `feat/typed-demo-discovery`, verified at `c49dd1d` on 16 November 2026. The subsequent merge from `main` reconciles documentation only; the checks below distinguish implementation verification from that reconciliation.
 
 - The generator writes only its own folder: `Demo.tsx`, `demo.config.ts` and `README.md`. The metadata filename avoids a macOS case-insensitive resolution collision with `Demo.tsx`.
-- Typed metadata, folder-derived IDs, alphabetical folder ordering and lazy component loading are implemented. Reference implementations remain in `src/examples/`, with discovered configs in demo folders. No participant edit to a central registry is needed.
+- Typed metadata, folder-derived IDs, alphabetical folder ordering and lazy component loading are implemented. Reference implementations and independent app entries live in `src/demos/<id>/`, alongside their discovered metadata. No participant edit to a central registry is needed.
 - Full track titles appear in the app and guides. IDs and documentation folders are `modern-web`, `code-quality`, `developer-experience` and `experimental-projects`.
 - Twenty unit/generator tests, TypeScript and the production build passed. Eleven Chrome journeys passed, including navigation through all four named tracks. A separate temporary generated-demo browser smoke check passed during discovery implementation.
 - Local Markdown targets resolved, and the Fallow changed-code gate passed with no introduced findings. Existing complexity and styling findings remain.

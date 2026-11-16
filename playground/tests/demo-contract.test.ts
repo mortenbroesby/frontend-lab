@@ -36,3 +36,12 @@ const invalidComponent: DemoDefinition = { ...demo,
 };
 void invalidTrack;
 void invalidComponent;
+
+
+test('standalone metadata needs no React loader, but inline demos do', () => {
+  const path = './demos/vanilla/demo.config.ts';
+  const standalone = { title: 'Vanilla', track: 'modern-web', description: 'No React', author: 'Lab', presentation: 'standalone' };
+  assert.equal(discoverDemos({ [path]: standalone })[0].id, 'vanilla');
+  assert.throws(() => discoverDemos({ [path]: { ...standalone, presentation: 'inline' } }));
+  assert.throws(() => discoverDemos({ [path]: { ...standalone, presentation: 'invalid' } }));
+});

@@ -95,3 +95,19 @@ test('every named track choice produces matching typed metadata', async t => {
     assert.ok(metadata.includes(`track: ${JSON.stringify(value)}`));
   }
 });
+
+
+test('every generated demo has its own app and standalone is the default', async t => {
+  const root = await fixture(t);
+  await createDemo(root, answers);
+  const folder = join(root, 'playground/src/demos/chapter-quiz');
+  const pkg = JSON.parse(await readFile(join(folder, 'package.json'), 'utf8'));
+  assert.equal(pkg.name, '@lab/demo-chapter-quiz');
+  assert.ok(pkg.scripts.dev && pkg.scripts.build && pkg.scripts.preview);
+  assert.match(await readFile(join(folder, 'index.html'), 'utf8'), /main.tsx/);
+  assert.match(await readFile(join(folder, 'demo.config.ts'), 'utf8'), /presentation: "standalone"/);
+  await createDemo(root, { ...answers, id: 'inline-demo', presentation: 'inline' });
+  assert.match(await readFile(join(root, 'playground/src/demos/inline-demo/demo.config.ts'), 'utf8'), /presentation: "inline"/);
+  assert.ok(await readFile(join(root, 'playground/src/demos/inline-demo/package.json'), 'utf8'));
+  await assert.rejects(createDemo(root, { ...answers, id: 'bad-mode', presentation: 'invalid' }));
+});

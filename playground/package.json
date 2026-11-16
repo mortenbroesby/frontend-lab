@@ -17,13 +17,12 @@
     "test:browser": "playwright test"
   },
   "dependencies": {
-    "d3-force": "3.0.1",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "@lab/demo-kit": "*"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1",
-    "@types/d3-force": "3.0.10",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
