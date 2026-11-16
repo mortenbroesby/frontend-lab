@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { requirementLabels } from '@lab/demo-kit/types';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
@@ -9,28 +9,33 @@ import { guides, GuideView } from './GuideView';
 const trackTitle = (id: TrackId) => tracks.find((track) => track.id === id)!.title;
 
 function Gallery({ track }: { track?: TrackId }) {
+  const entries = demos.filter((d) => !track || d.track === track);
+  if (!entries.length)
+    return (
+      <p>
+        No demos here yet. <a href="#/create">Create the first one</a> or explore the track’s ideas.
+      </p>
+    );
   return (
     <div className="journey-grid">
-      {demos
-        .filter((d) => !track || d.track === track)
-        .map((d) => (
-          <article className="journey-card" data-track={d.track} key={d.id}>
-            <p className="eyebrow">
-              {trackTitle(d.track)} · {d.author}
+      {entries.map((d) => (
+        <article className="journey-card" data-track={d.track} key={d.id}>
+          <p className="eyebrow">
+            {trackTitle(d.track)} · {d.author}
+          </p>
+          <h3>
+            <a className="demo-title-link" href={d.href}>
+              {d.title}
+            </a>
+          </h3>
+          <p>{d.description}</p>
+          {d.requirements && (
+            <p className="demo-requirements">
+              {d.requirements.map((id) => requirementLabels[id]).join(' · ')}
             </p>
-            <h3>
-              <a className="demo-title-link" href={d.href}>
-                {d.title}
-              </a>
-            </h3>
-            <p>{d.description}</p>
-            {d.requirements && (
-              <p className="demo-requirements">
-                {d.requirements.map((id) => requirementLabels[id]).join(' · ')}
-              </p>
-            )}
-          </article>
-        ))}
+          )}
+        </article>
+      ))}
     </div>
   );
 }
@@ -157,9 +162,23 @@ export function App() {
     window.addEventListener('hashchange', navigate);
     return () => window.removeEventListener('hashchange', navigate);
   }, []);
+  const previousRoute = useRef(route);
   useEffect(() => {
-    document.getElementById('content')?.focus();
-    window.scrollTo(0, 0);
+    const previousTrack = findTrack(previousRoute.current);
+    const currentTrack = findTrack(route);
+    if (previousRoute.current === route) return;
+    previousRoute.current = route;
+    const tab =
+      previousTrack === currentTrack
+        ? document.querySelector<HTMLElement>('.guide-nav [aria-current="page"]')
+        : null;
+    if (tab) {
+      tab.focus({ preventScroll: true });
+      tab.scrollIntoView({ block: 'nearest' });
+    } else {
+      document.getElementById('content')?.focus({ preventScroll: true });
+      window.scrollTo(0, 0);
+    }
   }, [route]);
   const track = findTrack(route);
   const guide = guides[route];

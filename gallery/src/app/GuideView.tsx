@@ -9,10 +9,12 @@ class GuideBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
   render() {
     return this.state.failed ? (
-      <p role="alert">
-        This guide could not load. <button onClick={() => location.reload()}>Reload</button> or
-        choose another page.
-      </p>
+      <div className="guide" role="alert">
+        <h2>This guide could not load</h2>
+        <p>Check your connection, then reload to try again.</p>
+        <button onClick={() => location.reload()}>Reload page</button>{' '}
+        <a href="#/">Return to tracks</a>
+      </div>
     ) : (
       this.props.children
     );
@@ -22,7 +24,22 @@ class GuideBoundary extends Component<{ children: ReactNode }, { failed: boolean
 export function GuideView({ document }: { document: string }) {
   return (
     <GuideBoundary key={document}>
-      <Suspense fallback={<p role="status">Loading guide…</p>}>
+      <Suspense
+        key={document}
+        fallback={
+          <div className="guide guide-loading" role="status" aria-label="Loading guide">
+            <div className="guide-skeleton" aria-hidden="true">
+              <span className="skeleton-heading" />
+              <span />
+              <span />
+              <span className="skeleton-short" />
+              <span className="skeleton-heading" />
+              <span />
+              <span className="skeleton-short" />
+            </div>
+          </div>
+        }
+      >
         <Guide document={document} />
       </Suspense>
     </GuideBoundary>
