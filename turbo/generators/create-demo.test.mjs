@@ -11,29 +11,30 @@ async function fixture(t) {
   t.after(() => rm(root, { recursive: true, force: true }));
   await mkdir(join(root, 'playground/src/demos'), { recursive: true });
   await cp(new URL('../../playground/src/demos/template', import.meta.url), join(root, 'playground/src/demos/template'), { recursive: true });
-  await cp(new URL('../../playground/src/demo-registry.ts', import.meta.url), join(root, 'playground/src/demo-registry.ts'));
+  await writeFile(join(root, 'playground/src/demo-registry.ts'), 'do not edit');
   return root;
 }
 const answers = { id: 'chapter-quiz', track: 'd', title: 'Quiz "hello" $&', author: 'Morten', description: 'One question\nTwo answers' };
 
-test('creates a working template and safely registers user-supplied text', async t => {
+test('creates a working template and typed metadata with safely escaped text', async t => {
   const root = await fixture(t);
   await createDemo(root, answers);
-  const registry = await readFile(join(root, 'playground/src/demo-registry.ts'), 'utf8');
+  const registry = await readFile(join(root, 'playground/src/demos/chapter-quiz/demo.config.ts'), 'utf8');
   assert.ok(registry.includes(`title: ${JSON.stringify(answers.title)}`));
   assert.ok(registry.includes(`description: ${JSON.stringify(answers.description)}`));
-  assert.ok(registry.includes("import('./demos/chapter-quiz/Demo')"));
+  assert.ok(registry.includes("import('./Demo')"));
   const component = await readFile(join(root, 'playground/src/demos/chapter-quiz/Demo.tsx'), 'utf8');
   assert.match(component, /export default function Demo/);
   assert.ok(component.includes(`useState(${JSON.stringify(answers.title)})`));
   assert.ok((await readFile(join(root, 'playground/src/demos/chapter-quiz/README.md'), 'utf8')).startsWith('# Quiz'));
 });
 
-test('rejects existing registry IDs and folders without modifying work', async t => {
+test('rejects existing demo folders without modifying work', async t => {
   const root = await fixture(t);
   const path = join(root, 'playground/src/demo-registry.ts');
   const before = await readFile(path, 'utf8');
-  await assert.rejects(createDemo(root, { ...answers, id: 'art' }), /already registered/);
+  await mkdir(join(root, 'playground/src/demos/art'));
+  await assert.rejects(createDemo(root, { ...answers, id: 'art' }), /exist/i);
   await mkdir(join(root, 'playground/src/demos/chapter-quiz'));
   await writeFile(join(root, 'playground/src/demos/chapter-quiz/keep.txt'), 'participant work');
   await assert.rejects(createDemo(root, answers), /exist/i);
@@ -49,13 +50,13 @@ test('invalid names, tracks and empty metadata cause no writes', async t => {
   assert.deepEqual(await readdir(join(root, 'playground/src/demos')), ['template']);
 });
 
-test('a missing registration marker fails before creating a demo', async t => {
+test('different demos can be generated concurrently without editing shared files', async t => {
   const root = await fixture(t);
-  const path = join(root, 'playground/src/demo-registry.ts');
-  await writeFile(path, 'changed registry');
-  await assert.rejects(createDemo(root, answers), /marker/);
-  assert.deepEqual(await readdir(join(root, 'playground/src/demos')), ['template']);
-  assert.equal(await readFile(path, 'utf8'), 'changed registry');
+  await Promise.all([createDemo(root, answers), createDemo(root, { ...answers, id: 'another-demo' })]);
+  assert.equal(await readFile(join(root, 'playground/src/demo-registry.ts'), 'utf8'), 'do not edit');
+  for (const id of ['chapter-quiz', 'another-demo']) {
+    assert.match(await readFile(join(root, 'playground/src/demos', id, 'demo.config.ts'), 'utf8'), /satisfies DemoDefinition/);
+  }
 });
 
 test('asks for a name first without a default and suggests an editable folder ID', () => {

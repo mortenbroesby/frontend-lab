@@ -1,8 +1,6 @@
 import { mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 
-export const marker = '  // Generated demos are inserted below this line.';
-
 export function validateId(id) {
   return typeof id === 'string' && /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(id)
     && id.length <= 60 && !/^(template|con|prn|aux|nul|com[0-9]|lpt[0-9])$/.test(id);
@@ -24,10 +22,6 @@ export async function createDemo(root, answers) {
     }
   }
   const src = join(root, 'playground/src');
-  const registryPath = join(src, 'demo-registry.ts');
-  const registry = await readFile(registryPath, 'utf8');
-  if (registry.split(marker).length !== 2) throw new Error('Expected exactly one generator marker in demo-registry.ts.');
-  if (new RegExp(`\\bid\\s*:\\s*['"]${id}['"]`).test(registry)) throw new Error(`Demo ${id} is already registered.`);
   const template = await readFile(join(src, 'demos/template/Demo.tsx'), 'utf8');
   const nameSlot = "useState('What if…')";
   if (template.split(nameSlot).length !== 2) throw new Error('Expected one initial idea in the demo template.');
@@ -38,10 +32,18 @@ export async function createDemo(root, answers) {
   try {
     await writeFile(join(folder, 'Demo.tsx'), component);
     await writeFile(join(folder, 'README.md'), `# ${name}\n\nOpen #/demo/${id} in the lab. Edit Demo.tsx to build your experiment.\n\nRun npm run check from the repository root before sharing. Keep styles local (Demo.module.css), and clean up timers, listeners and Workers on unmount.\n\nRecord your question, what you tried and what you learned here.\n`);
-    const entry = `  { id: '${id}', track: '${track}', title: ${JSON.stringify(answers.title.trim())}, description: ${JSON.stringify(answers.description.trim())}, author: ${JSON.stringify(answers.author.trim())}, Component: lazy(() => import('./demos/${id}/Demo')) },`;
-    // Fail if a manual edit occurred while we were generating files.
-    if (await readFile(registryPath, 'utf8') !== registry) throw new Error('Registry changed; retry after the other edit finishes.');
-    await writeFile(registryPath, registry.replace(marker, () => `${marker}\n${entry}`));
+    const definition = `import type { DemoDefinition } from '../../demo-contract';
+
+export default {
+  title: ${JSON.stringify(name)},
+  track: ${JSON.stringify(track)},
+  description: ${JSON.stringify(answers.description.trim())},
+  author: ${JSON.stringify(answers.author.trim())},
+  load: () => import('./Demo'),
+} satisfies DemoDefinition;
+`;
+    // Publish metadata last so discovery never sees a half-created component.
+    await writeFile(join(folder, 'demo.config.ts'), definition);
   } catch (error) {
     await rm(folder, { recursive: true, force: true });
     throw error;
