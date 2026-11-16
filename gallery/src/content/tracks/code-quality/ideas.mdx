@@ -1,35 +1,58 @@
-# Ideas to explore
+# What would make this code easier to change?
 
-Use this repository or your own. Investigate a health question, not a target score. Keeping code unchanged can be a useful outcome.
+You want to remove a package, but nobody knows why it is there. A small feature means touching five unrelated files. The tests pass, yet you are unsure whether they would catch the mistake you are worried about. This track is a chance to investigate those doubts and make a codebase easier to understand and work in.
 
-## Dependency health
+You could leave with one less dependency, a clearer function, a map of unexpected connections or a test you trust more. Use this repository or a project you know. Work alone or compare notes with someone from another squad; explaining unfamiliar code to each other is a useful experiment in itself.
 
-Ask why a dependency exists, where it is used and what maintenance costs. Look for unused packages, version drift or overlapping libraries.
+## See what is possible
 
-Trace callers before changing a package. Compare package-manager data with static analysis; dynamic loading or configuration may explain apparent non-use. Outdated does not mean harmful.
+Choose a question you would like to answer:
 
-Read: [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain) and [Knip’s unused-code and dependency analysis](https://knip.dev/).
+- **Why is this package here?** [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain/) traces why a dependency is installed. Pick a package you do not recognise and follow the chain back to something you do.
+- **What could we stop maintaining?** [Knip’s getting-started guide](https://knip.dev/overview/getting-started) introduces finding unused files, exports and dependencies. Compare its approach with Fallow, which is already available in this repository.
+- **What is connected to what?** [dependency-cruiser’s examples](https://github.com/sverweij/dependency-cruiser) show how imports can become diagrams and enforceable rules. Look for a surprising connection, then ask whether it makes changes harder.
+- **Why is this function difficult to follow?** [ESLint’s complexity examples](https://eslint.org/docs/latest/rules/complexity) illustrate how branches contribute to a metric. Compare the number with how easy the code is to explain.
 
-## Complexity and duplication
+You do not need to install every tool or produce a cleanup commit. Pick one question, gather evidence and try one small improvement. Discovering that the code should stay as it is can be just as useful.
 
-Pick a hard-to-explain function. Identify decisions, responsibilities and repetition. Compare simplifications with leaving it alone.
+## A dependency you can explain
 
-Try a small refactor with existing tests. Does extraction clarify intent or just move complexity?
+**“I would like to remove or update this package, but I do not know what depends on it.”** Explore unused dependencies, duplicate versions and libraries that solve overlapping problems. The interesting result is understanding the cost of keeping or changing something.
 
-Read: [ESLint’s complexity rule](https://eslint.org/docs/latest/rules/complexity) for what the metric measures, and [Fallow](https://fallow.tools/) for broader codebase analysis.
+Start with one dependency from a real `package.json`. In this repository, try `npm explain react` from the root and follow one dependency chain. Find the imports and configuration that use the package. For a removal candidate, compare that evidence with static analysis: dynamic loading, scripts or build configuration can explain apparent non-use.
 
-## Architecture and boundaries
+Stretch by comparing two libraries with overlapping responsibilities, or trying one warranted removal on your branch and running the affected checks. An outdated version is a reason to investigate, not proof that the package needs replacing.
 
-Trace relationships between features, packages and utilities. Which dependency boundaries are explicit, and which rely on convention?
+Read: [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain/) and [Knip’s getting-started guide](https://knip.dev/overview/getting-started). Knip is an optional tool to explore, not a required part of the Lab setup.
 
-Trace one behaviour through imports. Visualise dependencies, investigate a surprising edge or enforce an agreed boundary. Decide what a rule protects before adding it.
+## Code a colleague can follow
 
-Read: [dependency-cruiser’s documentation and examples](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md).
+**“This works, but I have to hold too much in my head to change it.”** Pick a function or component with several decisions, responsibilities or repeated pieces. Try explaining what it does without narrating every line.
 
-## Confidence in change
+Start by identifying its inputs, outcomes and one confusing branch. Compare the original with a small change: a better name, an early return or separating a calculation from an effect. Run the relevant tests and ask someone to read both versions. Did the change make the behaviour clearer, or merely move it into another file?
 
-Find the test that would catch a behaviour breaking. Does a pass prove what you assumed?
+Stretch by investigating repeated code. Do the copies represent the same rule, or could they reasonably change independently? Keeping two small pieces separate may be clearer than creating a shared abstraction. A lower complexity score is supporting evidence, not the goal.
 
-Test that assumption with a reversible change on your branch. Explore a boundary case or stronger assertion. Investigate automated findings before deleting code.
+Read: [ESLint’s complexity rule and examples](https://eslint.org/docs/latest/rules/complexity) and [Fallow](https://fallow.tools/) for broader codebase analysis.
 
-Read: [Node’s test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [Fallow’s analysis documentation](https://fallow.tools/).
+## Boundaries that make changes smaller
+
+**“Why does changing this feature affect that one?”** Follow the connections between a screen, its data and shared utilities. Explore whether the code’s dependencies match the boundaries people think they have.
+
+Start by tracing one behaviour through its imports. Sketch the few modules involved and mark any dependency you did not expect. In this repository, run `npm run check:architecture` and inspect one rule in `.dependency-cruiser.cjs`. The check uses dependency-cruiser, which is already installed; explain what the rule protects before changing it.
+
+Stretch by comparing two ways to remove an unwanted connection, or expressing an agreed boundary as a rule. Check that the rule catches the intended import without blocking legitimate use. A passing check only tells you that the inspected graph satisfies the configured rules.
+
+Read: [dependency-cruiser’s diagrams and examples](https://github.com/sverweij/dependency-cruiser) and [its rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md).
+
+## Tests that answer your actual question
+
+**“The tests are green. Would they notice this behaviour breaking?”** Choose one observable behaviour and find the assertion that protects it. Explore missing boundaries, weak assertions or tests that repeat the implementation’s assumptions.
+
+Start with a real test in this repository or your own project. Predict a small mistake it should catch, make that reversible change on your branch and run the test. If it still passes, investigate why. Restore the implementation before strengthening the test, then verify that your assertion distinguishes the intended behaviour from the mistake.
+
+Stretch with an edge case whose expected result you can establish independently, or compare what a unit test and an interaction test would tell you. You do not need a coverage target or a new test framework to learn something useful.
+
+Read: [Node’s test runner](https://nodejs.org/docs/latest-v24.x/api/test.html). Use the test runner already present in your chosen project.
+
+Choose one uncertainty you would like to replace with evidence.
