@@ -18,7 +18,7 @@ Open the local address printed by Vite (usually `http://127.0.0.1:5173`). Keep t
 To obtain the private repository first, use your preferred authenticated GitHub clone method. For SSH access:
 
 ```sh
-git clone git@github.com:mortenbroesby/frontend-chapter-day.git
+git clone <SSH-URL-FROM-THIS-REPOSITORY> frontend-chapter-day
 cd frontend-chapter-day
 ```
 
@@ -41,7 +41,7 @@ The home page opens four track pages and a shared demo gallery. Try the D3 const
 
 [Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates the folder and registry entry. No app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. Demos load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
 
-Hash routes such as `/#/track/a`, `/#/demo/constellation` and `/#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
+Hash routes such as `#/track/a`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
 
 ## Useful commands
 
@@ -79,3 +79,9 @@ The browser download takes extra space and bandwidth. Alternatively use an exist
 The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSocket server, WebRTC signalling server or WebAssembly toolchain is included. Those remain optional directions for participants to explore.
 
 The production build has one HTML entry and lazy demo chunks. Track B can use an existing codebase, and Track C's independent Node scripts under `tracks/c/` run without starting the app.
+
+## Internal hosting and theme
+
+See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud, Pages visibility, deployment and team access. The app uses relative assets and hash routes; append `#/demo/<id>` to the deployed base URL, preserving its trailing slash.
+
+`src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Set optional `VITE_SOURCE_URL` in `playground/.env.local` using `.env.example` to link guides to your source repository. Without it, the app shows editor paths.

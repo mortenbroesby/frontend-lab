@@ -14,7 +14,7 @@ For a fully specified invocation:
 npm run demo:new -- --args "Chapter Quiz" chapter-quiz d "Your team" "Test your browser knowledge"
 ```
 
-Run `npm run dev`, open the printed address followed by `/#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.
+Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.
 
 The generator is defined in `turbo/generators/config.js`; `create-demo.mjs` handles validation and file creation. No package or dependency is added per demo.
 
@@ -35,7 +35,7 @@ Add one entry to the array in `src/demo-registry.ts`:
 },
 ```
 
-`lazy` is already imported. Use a unique URL-safe lowercase ID and an existing track. The gallery and track page pick it up automatically; open `/#/demo/your-idea` at the local server address. No app-shell edit is required.
+`lazy` is already imported. Use a unique URL-safe lowercase ID and an existing track. The gallery and track page pick it up automatically; open `#/demo/your-idea` at the local server address. No app-shell edit is required.
 
 Keep code, assets and optional `Demo.module.css` beside the component. Keep state inside the demo. Clean up timers, listeners, Workers and subscriptions when leaving. Only the selected demo runs; the app handles navigation, loading and React render-error feedback. This is not a sandbox: an infinite loop still blocks the page, and async/event errors need handling inside your demo.
 

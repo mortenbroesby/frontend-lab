@@ -90,3 +90,10 @@ The existing platform and independent-participant limitations still apply.
 - A direct stdio MCP handshake initialized Fallow 3.43.1 and returned 44 tools. This proves the server can start locally, not that this existing Codex/Claude session has trusted and loaded it.
 - `npm run check` passed all 17 logic/generator tests, type checking and the production build. Browser code is unchanged from the preceding browser verification.
 - No global agent configuration, personal approval files, cloud connection or hosted CI was added. Generated hooks retain official fail-open behavior for documented missing-tool/runtime-error cases. Trust and GUI PATH behavior still require verification in each participant's client.
+
+## Internal migration preparation and lab theme — 16 November 2026
+
+- Shared shell colors now live in `src/theme.css`; track/gallery colors follow track IDs. Desktop (1440 px) and mobile (390 px) production screenshots were visually reviewed. Sapphire was not added.
+- `npm run check` passed 17 generator/logic tests, TypeScript and the build; all ten Chrome browser journeys passed with the updated theme and relative asset base.
+- A separate production build supplied a synthetic `VITE_SOURCE_URL` through root Turbo. A temporary static server mounted that build only at `/chapter-lab/`. Browser assertions verified the configured source link, direct demo URL and reload, lazy-loaded Worker demo, actual Worker computation (9,592 primes), and no page errors or horizontal mobile overflow. The server was closed; the normal local build was restored afterward.
+- GitHub Pages publication is opt-in through `PAGES_ENABLED`; the workflow and migration/access guide are prepared. No enterprise repository, membership, Pages visibility or deployment has been configured. Hosted verification and destination policy compatibility are separate from these local checks.

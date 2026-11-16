@@ -37,7 +37,7 @@ export async function createDemo(root, answers) {
   await mkdir(folder);
   try {
     await writeFile(join(folder, 'Demo.tsx'), component);
-    await writeFile(join(folder, 'README.md'), `# ${name}\n\nOpen /#/demo/${id} in the lab. Edit Demo.tsx to build your experiment.\n\nRun npm run check from the repository root before sharing. Keep styles local (Demo.module.css), and clean up timers, listeners and Workers on unmount.\n\nRecord your question, what you tried and what you learned here.\n`);
+    await writeFile(join(folder, 'README.md'), `# ${name}\n\nOpen #/demo/${id} in the lab. Edit Demo.tsx to build your experiment.\n\nRun npm run check from the repository root before sharing. Keep styles local (Demo.module.css), and clean up timers, listeners and Workers on unmount.\n\nRecord your question, what you tried and what you learned here.\n`);
     const entry = `  { id: '${id}', track: '${track}', title: ${JSON.stringify(answers.title.trim())}, description: ${JSON.stringify(answers.description.trim())}, author: ${JSON.stringify(answers.author.trim())}, Component: lazy(() => import('./demos/${id}/Demo')) },`;
     // Fail if a manual edit occurred while we were generating files.
     if (await readFile(registryPath, 'utf8') !== registry) throw new Error('Registry changed; retry after the other edit finishes.');
@@ -46,5 +46,5 @@ export async function createDemo(root, answers) {
     await rm(folder, { recursive: true, force: true });
     throw error;
   }
-  return `Created playground/src/demos/${id}. Open /#/demo/${id} at your dev server. Run npm run dev if it is not running.`;
+  return `Created playground/src/demos/${id}. Open #/demo/${id} at your dev server. Run npm run dev if it is not running.`;
 }

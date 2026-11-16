@@ -43,8 +43,10 @@ an unfinished experiment is a worthwhile outcome.
 You need **Node.js 24.x**, npm and access to this private repository.
 The workspace pins npm 11.6.2; `nvm use` selects Node 24 if you use nvm.
 
+Copy this repository’s SSH URL from **Code → SSH** (including after the internal move), then replace the placeholder:
+
 ```sh
-git clone git@github.com:mortenbroesby/frontend-chapter-day.git
+git clone <SSH-URL-FROM-THIS-REPOSITORY> frontend-chapter-day
 cd frontend-chapter-day
 npm ci
 npm run dev
@@ -94,7 +96,7 @@ For example, with all answers supplied:
 npm run demo:new -- --args "Chapter Quiz" chapter-quiz d "Your team" "Test your browser knowledge"
 ```
 
-Open `/#/demo/chapter-quiz` at your local server address and edit the generated
+Open `#/demo/chapter-quiz` at your local server address and edit the generated
 `Demo.tsx`. Vite updates the page as you work. Existing demo IDs and folders
 are protected from overwrites. See the [demo guide](playground/src/demos/template/README.md)
 for the full workflow and manual alternative.
@@ -119,6 +121,12 @@ to capture your question, what you tried and one surprise.
 
 **Show & tell:** 13:00 for India, with anyone ready welcome to present;
 14:30–15:00 for Denmark and wrap-up. All times are Danish local time.
+
+## 🏢 Internal Chapter Workspace
+
+The app is prepared for an internal GitHub Enterprise Cloud repository and GitHub Pages. Follow the [migration guide](docs/internal-migration.md) to configure team access, source links and private Pages hosting. Deployment is disabled until `PAGES_ENABLED` is set to `true` in the destination repository.
+
+Everyone contributes on a branch in the shared repository; see [CONTRIBUTING.md](CONTRIBUTING.md) for the complete journey.
 
 ## 🧱 Project Structure
 

@@ -1,0 +1,14 @@
+/* The lab identity. Keep demo-specific artwork and styling inside each demo. */
+:root {
+  --lab-paper: #f4f2eb;
+  --lab-surface: #fffdf7;
+  --lab-ink: #172d2b;
+  --lab-muted: #42564e;
+  --lab-line: #cdd3c8;
+  --lab-accent: #24483e;
+  --lab-accent-hover: #356052;
+  --lab-track-a: #e6ebdf;
+  --lab-track-b: #ece5d7;
+  --lab-track-c: #dfe8ed;
+  --lab-track-d: #ebe2e8;
+}
