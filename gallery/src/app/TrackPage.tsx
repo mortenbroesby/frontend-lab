@@ -22,40 +22,8 @@ export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; r
           </Button>
         </section>
       )}
-      <nav className="guide-nav" aria-label="Track guide">
-        {[
-          ['ideas', 'Ideas'],
-          ['examples', 'Demos'],
-          ['guides', 'Guides'],
-        ].map(([page, label]) => (
-          <a
-            key={page}
-            aria-current={section === page ? 'page' : undefined}
-            href={`#/track/${track.id}${page === 'ideas' ? '' : '/' + page}`}
-          >
-            {label}
-          </a>
-        ))}
-        {trackPage !== 'ideas' && (
-          <a className="track-build-link" href="#/create">
-            Start your experiment <span aria-hidden="true">↗</span>
-          </a>
-        )}
-      </nav>
-      {trackPage === 'examples' ? (
-        <DemoGallery track={track.id} />
-      ) : trackPage === 'guides' ? (
-        <section className="guide" aria-labelledby="guides-heading">
-          <h2 id="guides-heading">Guides</h2>
-          <p>Work through a real example. Learn what to look for and what to try next.</p>
-          <GuideList track={track} />
-        </section>
-      ) : (
-        <GuideView
-          document={`tracks/${track.id}/${trackPage}`}
-          layout={trackPage === 'ideas' ? 'ideas' : 'document'}
-        />
-      )}
+      <TrackNavigation track={track} page={trackPage} section={section} />
+      <TrackContent track={track} page={trackPage} />
     </>
   );
 }
@@ -68,5 +36,55 @@ export function findTrack(route: string) {
         (page) => `/track/${t.id}/${page}`,
       ),
     ].includes(route),
+  );
+}
+
+function TrackContent({ track, page }: { track: (typeof tracks)[number]; page: string }) {
+  return page === 'examples' ? (
+    <DemoGallery track={track.id} />
+  ) : page === 'guides' ? (
+    <section className="guide" aria-labelledby="guides-heading">
+      <h2 id="guides-heading">Guides</h2>
+      <p>Work through a real example. Learn what to look for and what to try next.</p>
+      <GuideList track={track} />
+    </section>
+  ) : (
+    <GuideView
+      document={`tracks/${track.id}/${page}`}
+      layout={page === 'ideas' ? 'ideas' : 'document'}
+    />
+  );
+}
+
+function TrackNavigation({
+  track,
+  page,
+  section,
+}: {
+  track: (typeof tracks)[number];
+  page: string;
+  section: string;
+}) {
+  return (
+    <nav className="guide-nav" aria-label="Track guide">
+      {[
+        ['ideas', 'Ideas'],
+        ['examples', 'Demos'],
+        ['guides', 'Guides'],
+      ].map(([page, label]) => (
+        <a
+          key={page}
+          aria-current={section === page ? 'page' : undefined}
+          href={`#/track/${track.id}${page === 'ideas' ? '' : '/' + page}`}
+        >
+          {label}
+        </a>
+      ))}
+      {page !== 'ideas' && (
+        <a className="track-build-link" href="#/create">
+          Start your experiment <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </nav>
   );
 }

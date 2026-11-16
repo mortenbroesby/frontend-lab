@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { makeDots } from './art.ts';
+import { makeDots, parseSeed } from './art.ts';
 
 test('a saved seed reproduces the same artwork while a remix changes it', () => {
   assert.deepEqual(makeDots(42, 90), makeDots(42, 90));
@@ -33,5 +33,18 @@ test('changing the position rule preserves seeded dot identities and can be reve
   assert.deepEqual(makeDots(42, 90, 'scatter'), scatter);
   for (const dot of makeDots(4294967295, 400, 'spiral')) {
     assert.ok(dot.x >= 20 && dot.x <= 620 && dot.y >= 20 && dot.y <= 400);
+  }
+});
+
+test('seed input accepts uint32 boundaries and rejects invalid submissions', () => {
+  for (const input of ['', '   ', '-1', '1.5', '4294967296', 'NaN', 'Infinity']) {
+    assert.equal(parseSeed(input), null, input);
+  }
+  for (const [input, expected] of [
+    ['0', 0],
+    ['4294967295', 4294967295],
+    [' 42 ', 42],
+  ] as const) {
+    assert.equal(parseSeed(input), expected);
   }
 });

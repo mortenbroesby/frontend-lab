@@ -31,48 +31,58 @@ export function DemoGallery({ track }: { track?: TrackId }) {
       </div>
       <div className="demo-grid">
         {entries.map((demo) => (
-          <a className="demo-card" data-track={demo.track} key={demo.id} href={demo.href}>
-            <div className="demo-preview" aria-hidden="true">
-              {demo.preview ? (
-                <img src={demo.preview} alt="" loading="lazy" width="600" height="300" />
-              ) : (
-                <TrackIllustration track={demo.track} />
-              )}
-            </div>
-            <div className="demo-identity">
-              <TrackSymbol track={demo.track} />
-              <span>{tracks.find((t) => t.id === demo.track)?.title}</span>
-            </div>
-            <h2>{demo.title}</h2>
-            <p className="demo-description">{demo.description}</p>
-            <p className="demo-author">By {demo.author}</p>
-            {demo.requirements && (
-              <ul className="requirement-list">
-                {demo.requirements.map((id) => (
-                  <li key={id}>{requirementLabels[id]}</li>
-                ))}
-              </ul>
-            )}
-            <span className="demo-open">
-              Open demo <span aria-hidden="true">↗</span>
-            </span>
-          </a>
+          <DemoCard key={demo.id} demo={demo} />
         ))}
       </div>
-      {!entries.length && (
-        <p className="empty-demos">
-          {track && !query.trim() ? (
-            <>
-              This track has practical guides to explore.{' '}
-              <a href={`#/track/${track}/guides`}>Open its guides</a>.
-            </>
-          ) : (
-            <>
-              No demos match. Try another search, or <a href="#/guides">explore the guides</a>.
-            </>
-          )}
-        </p>
-      )}
+      {!entries.length && <EmptyDemos track={track} searching={Boolean(query.trim())} />}
     </section>
+  );
+}
+
+function DemoCard({ demo }: { demo: (typeof demos)[number] }) {
+  return (
+    <a className="demo-card" data-track={demo.track} href={demo.href}>
+      <div className="demo-preview" aria-hidden="true">
+        {demo.preview ? (
+          <img src={demo.preview} alt="" loading="lazy" width="600" height="300" />
+        ) : (
+          <TrackIllustration track={demo.track} />
+        )}
+      </div>
+      <div className="demo-identity">
+        <TrackSymbol track={demo.track} />
+        <span>{tracks.find((t) => t.id === demo.track)?.title}</span>
+      </div>
+      <h2>{demo.title}</h2>
+      <p className="demo-description">{demo.description}</p>
+      <p className="demo-author">By {demo.author}</p>
+      {demo.requirements && (
+        <ul className="requirement-list">
+          {demo.requirements.map((id) => (
+            <li key={id}>{requirementLabels[id]}</li>
+          ))}
+        </ul>
+      )}
+      <span className="demo-open">
+        Open demo <span aria-hidden="true">↗</span>
+      </span>
+    </a>
+  );
+}
+
+function EmptyDemos({ track, searching }: { track?: TrackId; searching: boolean }) {
+  return (
+    <p className="empty-demos">
+      {track && !searching ? (
+        <>
+          This track has practical guides to explore.{' '}
+          <a href={`#/track/${track}/guides`}>Open its guides</a>.
+        </>
+      ) : (
+        <>
+          No demos match. Try another search, or <a href="#/guides">explore the guides</a>.
+        </>
+      )}
+    </p>
   );
 }

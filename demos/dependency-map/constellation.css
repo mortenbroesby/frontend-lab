@@ -20,7 +20,7 @@
   padding: 1.2rem;
   margin-bottom: 1rem;
   border: 1px solid var(--lab-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--lab-paper);
 }
 .impact-summary > div {

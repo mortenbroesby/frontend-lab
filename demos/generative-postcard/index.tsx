@@ -5,7 +5,7 @@ import { Slider } from '@lab/ui/slider';
 import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useRef, useState } from 'react';
-import { makeDots } from './art';
+import { makeDots, parseSeed } from './art';
 
 export default function Art() {
   const [seed, setSeed] = useState(42);
@@ -65,9 +65,8 @@ export default function Art() {
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            const value = Number(seedInput);
-            if (seedInput.trim() && Number.isInteger(value) && value >= 0 && value <= 4294967295)
-              setSeed(value);
+            const value = parseSeed(seedInput);
+            if (value !== null) setSeed(value);
           }}
         >
           <Label htmlFor="art-seed">Seed</Label>

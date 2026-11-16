@@ -321,22 +321,7 @@ export default function Constellation() {
           <p>
             Follow arrows backwards to consumers that may need checking, not necessarily fixing.
           </p>
-          {impact.size === 1 ? (
-            <p>No consumers are declared in this snapshot.</p>
-          ) : (
-            <ul>
-              {[...impact]
-                .filter(([, distance]) => distance > 0)
-                .map(([id, distance]) => (
-                  <li key={id}>
-                    <Button variant="link" onClick={() => setSelected(id)}>
-                      {id}
-                    </Button>
-                    <span>{distance === 1 ? 'direct' : `${distance} hops`}</span>
-                  </li>
-                ))}
-            </ul>
-          )}
+          <ConsumerList impact={impact} onSelect={setSelected} />
         </div>
         <div>
           <h4>Trace a change.</h4>
@@ -370,5 +355,30 @@ export default function Constellation() {
         </p>
       </div>
     </div>
+  );
+}
+
+function ConsumerList({
+  impact,
+  onSelect,
+}: {
+  impact: Map<string, number>;
+  onSelect: (id: string) => void;
+}) {
+  return impact.size === 1 ? (
+    <p>No consumers are declared in this snapshot.</p>
+  ) : (
+    <ul>
+      {[...impact]
+        .filter(([, distance]) => distance > 0)
+        .map(([id, distance]) => (
+          <li key={id}>
+            <Button variant="link" onClick={() => onSelect(id)}>
+              {id}
+            </Button>
+            <span>{distance === 1 ? 'direct' : `${distance} hops`}</span>
+          </li>
+        ))}
+    </ul>
   );
 }

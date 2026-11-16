@@ -26,9 +26,12 @@
   --color-input: var(--lab-control-border);
   --color-ring: var(--lab-focus);
   --color-destructive: var(--lab-danger);
+}
+
+/* Plain CSS consumers need these variables, not only inlined utilities. */
+@theme static {
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
-  --radius-xl: 0.5rem;
 }
 
 /* Reset only library elements; native demo controls keep their own defaults. */

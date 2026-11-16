@@ -164,7 +164,7 @@
   padding: clamp(1rem, 3vw, 2rem);
   background: var(--lab-surface);
   border: 1px solid var(--lab-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   overflow-wrap: anywhere;
 }
 .guide h3,
@@ -428,7 +428,7 @@
   display: grid;
   place-items: center;
   border: 1px solid var(--lab-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   font:
     500 1.1rem ui-monospace,
     SFMono-Regular,

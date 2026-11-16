@@ -96,7 +96,7 @@
   .experiment {
     margin-bottom: 2rem;
     border: 1px solid var(--lab-line);
-    border-radius: 0.5rem;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     background: var(--lab-surface);
   }
@@ -151,10 +151,6 @@
     gap: 0.7rem;
     flex-wrap: wrap;
     margin: 1.4rem 0;
-  }
-  .text-link {
-    font-size: 0.9rem;
-    font-weight: 650;
   }
   .small {
     font-size: 0.8rem;
@@ -328,7 +324,7 @@ pre {
   padding: 1rem;
   background: var(--lab-hover);
   border: 1px solid var(--lab-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
 }
 #content:focus {
   outline: none;

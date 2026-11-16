@@ -30,3 +30,11 @@ export function makeDots(
     };
   });
 }
+
+export function parseSeed(input: string): number | null {
+  const value = Number(input);
+  if (!input.trim()) return null;
+  if (!Number.isInteger(value)) return null;
+  if (value < 0 || value > 4294967295) return null;
+  return value;
+}
