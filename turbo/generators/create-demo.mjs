@@ -106,14 +106,22 @@ export async function createDemo(root, answers) {
       join(folder, 'README.md'),
       `# ${name}
 
-Edit index.tsx. ${firstChange} Save and refresh to see your change.
-The gallery discovers demo.config.ts automatically; no shared files need editing.
+From the repository root:
 
-Run npm install from the repository root, then npm run dev --workspace @lab/demo-${id}.
-Use npm run build --workspace @lab/demo-${id} for an independent dist/ build.
+\`\`\`sh
+npm install
+npm run dev --workspace @lab/demo-${id}
+\`\`\`
 
-Run npm run typecheck --workspace @lab/demo-${id} to check types in this demo.
-Add a test script only when you have logic worth testing.
+Install once after generation to link the new workspace. Open the URL printed by Vite.
+Edit demos/${id}/index.tsx and save; the browser updates automatically. ${firstChange}
+
+The gallery discovers demo.config.ts automatically; no registration needed.
+With npm run dev at the root, open the gallery URL followed by #/demo/${id}.
+
+Check this demo: npm run check --workspace @lab/demo-${id}.
+For types only: npm run typecheck --workspace @lab/demo-${id}.
+The build goes into demos/${id}/dist/. Add tests when you have logic worth testing.
 `,
     );
     const definition = `import type { DemoDefinition } from '@lab/demo-kit/types';
@@ -146,8 +154,15 @@ export default {
     throw error;
   }
   return `Created demos/${id}.
-1. Run npm run dev from the repository root, or keep your existing server running.
-2. Open its printed local address followed by #/demo/${id}.
-3. Edit demos/${id}/index.tsx. ${firstChange}
-4. Run npm run check --workspace @lab/demo-${id} to type-check and build your demo.`;
+
+From the repository root:
+  npm install
+  npm run dev --workspace @lab/demo-${id}
+
+Install once after generation to link the new workspace. Open the URL printed by Vite.
+Edit demos/${id}/index.tsx and save; the browser updates automatically.
+${firstChange}
+
+Gallery (optional): npm run dev, then its printed URL + #/demo/${id}.
+Check: npm run check --workspace @lab/demo-${id}.`;
 }

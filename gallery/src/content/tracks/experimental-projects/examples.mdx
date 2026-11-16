@@ -2,7 +2,9 @@
 
 ## Little world
 
-[Open the pond](#/demo/ecosystem). Plant food, change sensing distance and watch the creatures find it. Pause to place a trail, then play. What changes when they can only sense nearby food?
+- **Try:** [Open the pond](#/demo/ecosystem), pause, plant a food trail and press play.
+- **Change:** Adjust sensing distance using the controls, then try changing a movement rule in `demos/ecosystem/world.ts`.
+- **Observe:** Do creatures find the same food with a shorter sensing distance? Change one rule at a time.
 
 `demos/ecosystem/world.ts` contains the rules; `index.tsx` draws the SVG and supplies controls. Start your own version with one creature and one meal, or change a rule in the completed example. Try avoidance, food that regrows or different behaviours for different creatures.
 
@@ -10,7 +12,9 @@ The three logic tests check movement towards food, one-time consumption and stay
 
 ## Generative postcard
 
-**Experience:** In the running gallery, open `/#/demo/art`. Change the dot count, remix the composition, then save an SVG. The same seed produces the same arrangement; the exported file can be opened in a browser independently.
+- **Try:** [Open the postcard](#/demo/art), change the dot count, remix and save an SVG.
+- **Change:** Adjust the point distribution in `demos/art/art.ts` or colours in `index.tsx`.
+- **Observe:** Keep the seed fixed. Which parts repeat? Open the exported SVG independently.
 
 **How it works:** `demos/art/art.ts` produces repeatable points from a seed. `demos/art/index.tsx` draws them with SVG, adds controls and serialises the picture for download. This is a completed reference, separate from your [creative starter](#/track/experimental-projects).
 

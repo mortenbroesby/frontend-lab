@@ -1,70 +1,47 @@
-# Modern Web Capabilities worked examples · Browser capabilities
+# Browser experiments
 
-These are completed references, separate from your [bootstrap](#/track/modern-web/get-started). Choose one door below. You can experience the result first, rebuild a small version in your generated `demos/<your-idea>/index.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the gallery](#/guide/setup) if you want these examples.
+Choose a completed example below. These optional prompts give you one interaction, one change and something to notice. Rebuild a small version in [your own starter](#/track/modern-web/get-started), remix the reference locally or follow a different idea.
 
-## D3: follow a dependency ripple
+## Device Rally
 
-**Experience:** Open [Dependency ripple](#/demo/constellation). Compare `react-dom`, `react`, `d3-force` and `@lab/demo-kit`: which reaches the most workspaces? Select a package to highlight direct and indirect consumers. Switch between dependency layers and a force layout, drag nodes, or use arrow keys to pin them. The package selector and consumer list provide another way to explore. Reduced motion starts paused.
+- **Try:** [Open Device Rally](#/demo/device-rally) in two browsers, join the same room and send emoji cheers.
+- **Change:** In `demos/device-rally/index.tsx`, change a cheer button and the receive-side emoji allowlist; keep the same version open on both devices.
+- **Observe:** Leave and rejoin. How does the connected-peer count change, and do cheers sent while disconnected arrive later?
 
-**Learn:** Arrows point from consumer to dependency. Change impact travels backwards along those arrows. A highlighted consumer may need checking; it is not automatically broken. Layout affects where things appear, not their relationships.
+Discovery needs internet; the page needs localhost or trusted HTTPS. Restrictive networks may block WebRTC. Physical phones and the workshop network remain untested. [Connection setup](#/track/modern-web/devices).
 
-**Build towards it:** Start with three labelled SVG circles and two directed edges. Add one D3 force, then highlight the consumers of a selected node. `demos/constellation/graph.ts` contains the small traversal; `data.ts` reads this repository's manifests at build time. Add a dependency to a demo manifest, reload locally and find its new edge. Rebuild deployed output to refresh its snapshot.
+Stretch: exchange a shared colour or quiz answer. Trystero handles discovery; you decide what messages mean.
 
-**Understand the boundary:** This shows declared workspace dependencies and devDependencies, not source imports, versions or the complete transitive npm tree. External packages are leaves. D3 owns mutable simulation nodes; React renders position snapshots. Links are copied before D3 resolves endpoints into objects, and the simulation stops on unmount.
+## Dependency ripple
 
-**Remix:** Replace the manifest dataset with routes and components, services and callers, or characters and relationships. Keep one clear meaning for an edge. Optional stretch: distinguish runtime from development edges, or show the shortest path to an affected workspace.
+- **Try:** [Select a package](#/demo/constellation), then compare the consumers of `react`, `react-dom` and `d3-force`.
+- **Change:** In `demos/constellation/index.tsx`, change a layout setting or visual treatment; inspect `graph.ts` for the consumer traversal.
+- **Observe:** Switch layouts. Positions change, but the dependency relationships stay the same. Which consumers are direct and which are indirect?
 
-References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link forces](https://d3js.org/d3-force/link). D3 is a library on top of browser capabilities, not a native browser API. The completed demo is an optional destination, not a checklist to rebuild.
+Arrows point from consumer to dependency; possible change impact travels backwards. This is a snapshot of declared workspace dependencies, not source imports or proof of breakage. External packages are leaves. Rebuild hosted output to refresh the snapshot.
 
-## Door 1: draw something surprising
+Stretch: show the shortest path to an affected workspace. Read [D3 force simulations](https://d3js.org/d3-force/simulation).
 
-**Experience:** In the SVG example, adjust the dot count, remix and save an image. Notice that the same seed produces the same result.
+## Generative postcard
 
-**Build towards it:** Start with one SVG circle. Add an array of circles, then one control. If useful, borrow `makeDots` from `demos/art/art.ts`; alternatively invent your own distribution. The finished reference is `demos/art/index.tsx`.
+- **Try:** [Open the postcard](#/demo/art), change the dot count, remix and save an SVG.
+- **Change:** Adjust the point distribution in `demos/art/art.ts` or colours in `index.tsx`.
+- **Observe:** Keep the seed fixed while changing the count. What stays repeatable? Open the saved SVG separately.
 
-**Branch:** Spiral instead of random scatter; data-driven sizes; pointer interaction; a game of finding a dot; keyboard controls or reduced motion. Optional export is already demonstrated by serialising SVG into a downloadable Blob.
+Stretch: use a spiral or data-driven sizes. Compare [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) with Canvas for your idea.
 
-**Question worth keeping:** When would SVG suit this better than Canvas? What information would a person need if they could not see the image?
+## Keep the interface listening
 
-## Door 2: keep the interface listening
+- **Try:** [Run the calculation](#/demo/workers) in a Worker and use the interaction pad. Compare the main thread, starting with a small workload.
+- **Change:** Modify the computation in `demos/workers/compute.ts`; both modes use it. Keep the workload bounded.
+- **Observe:** Does interaction remain responsive? Compare the same workload; displayed computation time excludes Worker startup and messaging.
 
-**Experience:** Run the calculation in a Worker and use the interaction pad. Compare it on the main thread, starting small. A quick run may be hard to perceive; inspect a trace or increase the bounded workload.
+Off-thread work does not guarantee faster execution. Stretch: add progress messages or image processing. Read [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
 
-**Build towards it:** Start a Worker that receives a number and replies with a result. Then move one pure computation into it, show its status and add cancellation by terminating the Worker. References: `index.tsx`, `compute.worker.ts` and `compute.ts` under `demos/workers`.
+## Let two tabs talk
 
-**Branch:** Progress messages, image processing, search, or producing a large array of points for your SVG. Think about data-transfer cost, cancellation and stale results when inputs change.
+- **Try:** [Open Signals](#/demo/signals), open its second tab and send a message.
+- **Change:** Change the channel name in `demos/signals/index.tsx`; reload both tabs before trying again.
+- **Observe:** Only the other tab receives the message. Close and reopen a tab: history is not saved. Matching channel names and origins matter.
 
-**Evidence:** Record workload, browser/device and whether interaction remains available. The displayed time measures computation, not Worker startup or messaging. Off-thread work does not guarantee faster execution.
-
-## Door 3: let two tabs talk
-
-**Experience:** Open the second lab tab from the signals example. Send a message and observe that only the other tab receives it. Close and reopen a tab: there is no saved history.
-
-**Build towards it:** Create a `BroadcastChannel`, send a string, display received strings and close the channel when the component leaves. Reference: `demos/signals/index.tsx`. Keep both tabs on the exact same origin.
-
-**Branch:** Share a palette, quiz question or simple drawing event between tabs. Decide how to distinguish event types, handle invalid messages or avoid feedback loops.
-
-**Scope:** BroadcastChannel connects local tabs. For separate computers, try the next example.
-
-## Door 4: connect separate devices
-
-**Experience:** Open [Device Rally](#/demo/device-rally) in two browsers with the same room code and send emoji cheers. Leave and rejoin to see peer discovery in action.
-
-**Build towards it:** Use Trystero to join a room and exchange one event type. The finished reference lives in `demos/device-rally/`; `gallery/docs/DEVICE-RALLY.md` contains the setup and network details.
-
-**Boundary:** Discovery needs internet access; the page needs localhost or trusted HTTPS. No custom backend is required, but restrictive networks may block WebRTC. Physical phones and the workshop network remain untested.
-
-## Other doors remain open
-
-View Transitions, Canvas, browser scheduling, WebAssembly and other APIs are valid choices. Find a minimal documented example, establish browser support and keep the first result small. No one is expected to try every API.
-
-## References and a stopping point
-
-- [MDN SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial)
-- [MDN: using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
-- [MDN: Broadcast Channel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API)
-- [MDN: Web APIs](https://developer.mozilla.org/en-US/docs/Web/API)
-
-You can combine doors or jump to [your own project](#/track/experimental-projects).
-
-[Choose another track](#/)
+BroadcastChannel connects local tabs, not separate computers. Stretch: share a palette or drawing event. Read [Broadcast Channel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API).

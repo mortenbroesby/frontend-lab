@@ -6,28 +6,29 @@ From the repository root, after [local setup](#/guide/setup):
 npm run demo:new
 ```
 
-Give it a name, choose a track and follow the prompts. Then run:
+Give it a name, accept or edit the suggested folder ID, and choose a track. Add your name and a short description; you can change these later. Then, from the repository root (replace `your-id` with your folder ID):
 
 ```sh
 npm install
-npm run dev
+npm run dev --workspace @lab/demo-your-id
 ```
 
-Open your demo from the gallery. It appears automatically—no registration needed.
+Run `npm install` once after generation to link the new workspace. Open the URL printed by Vite.
+
+Prefer the gallery? Run `npm run dev` instead and open your demo there. It appears automatically—no registration needed.
 
 ## Make it yours
 
-Edit **`demos/<your-id>/index.tsx`** and save. Modern Web starts with a circle; the other tracks start with an idea card. Keep, change or replace the starter.
+Edit **`demos/<your-id>/index.tsx`** and save; the browser updates automatically. Modern Web starts with a circle; the other tracks start with an idea card. Keep, change or replace the starter.
 
 Your code, assets and notes belong in that folder. Change `demo.config.ts` to update the gallery title or description.
 
 <details>
-<summary>Run or build just your demo</summary>
+<summary>Check your demo</summary>
 
 Replace `your-id` with the folder ID you chose:
 
 ```sh
-npm run dev --workspace @lab/demo-your-id
 npm run check --workspace @lab/demo-your-id
 ```
 

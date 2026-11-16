@@ -6,7 +6,7 @@ export default function generator(plop) {
     (typeof value === 'string' && value.trim().length > 0 && value.length <= 240) ||
     'Enter 1–240 characters.';
   plop.setGenerator('demo', {
-    description: 'Create a React demo and register it in the shared lab',
+    description: 'Create a standalone React demo, discovered automatically by the gallery',
     prompts: [
       {
         type: 'input',

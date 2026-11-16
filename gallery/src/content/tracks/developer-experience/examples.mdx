@@ -2,7 +2,11 @@
 
 **Friction:** running broad validation after every small edit interrupts your flow. **Alternative:** run the smallest relevant test while editing, then broaden validation before sharing.
 
-[Open the command explorer](#/demo/tooling) to switch between targeted tests, watch mode, cached builds and affected-project plans. It shows real commands to run locally, not simulated timings.
+- **Try:** [Open the command explorer](#/demo/tooling), choose **One behaviour** and run its command from the repository root.
+- **Change:** Choose **Watch changes** and temporarily reverse the comparator in `tracks/developer-experience/examples/commands.mjs`. Restore that edit afterwards.
+- **Observe:** Does saving trigger a failing test, then a pass after restoring? Check test counts as well as timings.
+
+The explorer shows real commands to run locally, not simulated timings. The walkthrough below explains the limits and optional next steps.
 
 ## 1. Establish a baseline
 

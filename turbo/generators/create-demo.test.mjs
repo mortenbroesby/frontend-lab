@@ -157,12 +157,13 @@ test('every named track choice produces matching typed metadata', async (t) => {
 test('gives participants an exact route, editable file and persistent first change', async (t) => {
   const root = await fixture(t);
   const instructions = await createDemo(root, answers);
-  assert.match(instructions, /npm run dev/);
+  assert.match(instructions, /npm install[\s\S]*npm run dev --workspace @lab\/demo-chapter-quiz/);
+  assert.match(instructions, /URL printed/i);
   assert.match(instructions, /#\/demo\/chapter-quiz/);
   assert.match(instructions, /demos\/chapter-quiz\/index\.tsx/);
   const notes = await readFile(join(root, 'demos/chapter-quiz/README.md'), 'utf8');
   assert.match(notes, /npm run typecheck --workspace/);
-  assert.match(notes, /refresh/i);
+  assert.match(notes, /updates automatically/i);
   assert.match(notes, /demo\.config\.ts/);
   assert.match(notes, /npm run dev --workspace/);
 });

@@ -2,6 +2,20 @@
 
 The entries above are written investigations with commands to run locally, rather than live analysis in the browser. **A test gap, investigated** follows one real confidence improvement; **Investigate with Fallow** starts from current terminal output.
 
+## A test gap, investigated
+
+- **Try:** [Read the investigation](#/demo/quality), then run `npm test --workspace @lab/demo-workers` from the repository root.
+- **Change:** Choose another input in `demos/workers/compute.test.ts` and add an assertion with an independently checked expected value.
+- **Observe:** Does the assertion exercise a new boundary or repeat existing coverage? A passing test supports that case, not every possible input.
+
+## Investigate with Fallow
+
+- **Try:** [Open the walkthrough](#/demo/fallow) and run `npm run analyze:dead-code` locally after setup.
+- **Change:** If a finding warrants it, make one small cleanup after inspecting its callers. No findings is a valid outcome.
+- **Observe:** Rerun the analysis and relevant checks. Did the finding disappear without changing intended behaviour?
+
+Stretch: investigate a complexity finding instead. The walkthrough is guidance, not a live browser report.
+
 ## Another route: inspect an architecture boundary
 
 After local setup, run from the repository root:
