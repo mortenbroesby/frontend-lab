@@ -2,7 +2,7 @@
 
 An optional local starting point for [choosing a track](../README.md). Examples are reference destinations, not steps you have to complete.
 
-Participant setup and troubleshooting live in [the app](https://frontend-chapter-day.vercel.app/#/guide/setup); edit them in `src/content/setup.md`.
+Run `npm ci` and `npm run dev` from the repository root, then open the printed address. **Local setup** in the app contains participant setup and troubleshooting.
 
 ## Architecture and where to work
 
@@ -22,9 +22,9 @@ Participant setup and troubleshooting live in [the app](https://frontend-chapter
 | `src/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Logic checks and browser journeys |
 
-[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates `Demo.tsx`, `demo.config.ts` and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. Metadata is discovered up front; components load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+Open **Create a demo** in the app. Run `npm run demo:new` from the repository root; Turborepo creates `Demo.tsx`, `demo.config.ts` and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. Metadata is discovered up front; components load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
 
-`demo.config.ts` default-exports an object satisfying `DemoDefinition` from `../../demo-contract`, with `title`, `track`, `description`, `author` and `load`. The loader imports a module whose default export is your React component. Use the generator and [technical demo guide](src/demos/template/README.md) for the exact file shape.
+`demo.config.ts` default-exports an object satisfying `DemoDefinition` from `../../demo-contract`, with `title`, `track`, `description`, `author` and `load`. The loader imports a module whose default export is your React component. Use the generator and **Create a demo** page in the app for the exact file shape.
 
 Hash routes such as `#/track/modern-web`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
 
@@ -45,7 +45,7 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 
 ## Internal repository and theme
 
-See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally; the temporary [Vercel gallery](https://frontend-chapter-day.vercel.app) is documented in [hosting and removal](../docs/hosting.md).
+See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally. Temporary deployment settings are documented separately in `docs/hosting.md`.
 
 `src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant Markdown lives in `src/content/` and renders inside the app. Keep it canonical; do not duplicate track guides elsewhere.
 

@@ -8,13 +8,13 @@ A self-directed React playground: four tracks, small experiments and shared disc
 - Keep bootstraps separate from finished examples. Demos own their state, scoped styles and cleanup; adding one should not require editing the app shell.
 - Use `npm run demo:new`. Require a name first; preserve ID validation, overwrite protection and typed folder discovery.
 - Prefer existing code and browser APIs. Preserve accessibility, error handling and resource cleanup.
-- Keep this repository participant-focused. Prepare for an internal GitHub Enterprise Cloud repository. use the Front-End Lab theme without requiring Sapphire. Temporary Vercel hosting is enabled; keep the app portable and follow docs/hosting.md for settings and removal.
+- Keep this repository participant-focused. Prepare for an internal GitHub Enterprise Cloud repository. Use the Front-End Lab theme without requiring Sapphire. Keep temporary hosting out of participant instructions and links; the app must work locally or on any host. Deployment settings belong in docs/hosting.md.
 
 ## Delivery
 
 - Use Node 24 and the root npm lockfile. Run `npm ci` and `npm run check` from the root; UI/browser changes also require `npm run test:browser`.
 - Preserve unrelated work. Commit and push completed scoped changes; report verification and remaining limits accurately.
-- Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Keep participant guides in `playground/src/content/`, rendered in the app. Link to canonical guides instead of duplicating them here.
+- Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Keep participant guides in `playground/src/content/`, rendered in the app. The README is a local entry point, not a directory of guide files or hosted URLs.
 
 ## References
 
