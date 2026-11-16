@@ -99,6 +99,11 @@ interface Page {
 
 const pages: Record<string, Page> = {
   '/': { title: 'Choose your track.', content: <TrackChoices /> },
+  '/demos': {
+    title: 'Explore the demos.',
+    description: 'Every demo, across all four tracks.',
+    content: <Gallery />,
+  },
   '/create': { title: 'Create a demo.', content: <GuideView document="create-demo" /> },
   '/guide/setup': { title: 'Run the Lab locally', content: <GuideView document="setup" /> },
 };
@@ -169,6 +174,7 @@ function TrackChoices() {
 
 function LabNavigation({ route }: { route: string }) {
   const links = [
+    ['/demos', 'Demos'],
     ['/create', 'Create a demo'],
     ['/guide/setup', 'Local setup'],
   ];
