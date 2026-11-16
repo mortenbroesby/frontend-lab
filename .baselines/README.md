@@ -21,9 +21,9 @@ CRAP uses estimated coverage; these are static findings, not measured test cover
 Review findings first. Refresh after accepted changes or a Fallow upgrade, then review the baseline diff. Never regenerate merely to make a failing check pass. From the repo root:
 
 ```sh
-npm run analyze -- dead-code --save-baseline fallow-baselines/dead-code.json
-npm run analyze -- dupes --save-baseline fallow-baselines/dupes.json
-npm run analyze -- health --baseline-mode identity --save-baseline fallow-baselines/health.json
+npm run analyze -- dead-code --save-baseline .baselines/dead-code.json
+npm run analyze -- dupes --save-baseline .baselines/dupes.json
+npm run analyze -- health --baseline-mode identity --save-baseline .baselines/health.json
 npm run analyze:baseline
 ```
 

@@ -52,6 +52,6 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 
 ## Fallow
 
-Codex and Copilot CLI share `.agents/skills/fallow`; follow its installed-version instructions. Config: `.fallowrc.json`. Snapshot and refresh instructions: [fallow-baselines](fallow-baselines/README.md). Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. Do not refresh baselines to hide new findings. The official Git hook audits staged changes; CI audits PRs and direct pushes to main. See the [Fallow guide](gallery/src/content/tracks/code-quality/fallow.mdx).
+Codex and Copilot CLI share `.agents/skills/fallow`; follow its installed-version instructions. Config: `.fallowrc.json`. Snapshot and refresh instructions: [.baselines](.baselines/README.md). Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. Do not refresh baselines to hide new findings. The official Git hook audits staged changes; CI audits PRs and direct pushes to main. See the [Fallow guide](gallery/src/content/tracks/code-quality/fallow.mdx).
 
 Use the CLI. Keep one shared Fallow skill, no repo MCP entries, per-agent hooks or duplicate task maps.
