@@ -1,6 +1,6 @@
 # Move the lab into GitHub Enterprise Cloud
 
-This repository is prepared for migration; no destination repository or team permissions have been created. Participants run the app locally. Shared hosting is deferred.
+This repository is prepared for migration; no destination repository or team permissions have been created. Participants run the app locally. Temporary Vercel hosting is documented in [hosting and removal](hosting.md); reassess it before the internal migration.
 
 ## Repository and access
 
@@ -20,7 +20,7 @@ This variable is browser-visible: never include a token. Turbo includes it in ca
 
 ## Workshop identity
 
-The shell's palette is in `playground/src/theme.css`. Developer Experience & Toolingolors follow track IDs, not gallery position. Keep experimental demo artwork and scoped styles independent. The workshop uses the Front-End Lab identity and does not require Sapphire or an internal component package registry.
+The shell's palette is in `playground/src/theme.css`. Track colors follow track IDs, not gallery position. Keep experimental demo artwork and scoped styles independent. The workshop uses the Front-End Lab identity and does not require Sapphire or an internal component package registry.
 
 ## Acceptance before inviting participants
 
@@ -31,4 +31,4 @@ The shell's palette is in `playground/src/theme.css`. Developer Experience & Too
 - Optional bootstrap links open the internal repository; no app link assumes the original personal source repository.
 - Fallow's per-clone Git hook and agent trust/setup instructions work in the chosen clients.
 
-Still to decide: destination organization/repository, chapter team and maintainers, visibility, branch rules and any enterprise-specific registry/runner requirements. Hosting can be explored separately later.
+Still to decide: destination organization/repository, chapter team and maintainers, visibility, branch rules and any enterprise-specific registry/runner requirements. The temporary Vercel project can be removed or replaced independently.

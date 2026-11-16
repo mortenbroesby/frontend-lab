@@ -118,7 +118,7 @@ to capture your question, what you tried and one surprise.
 
 ## 🏢 Internal Chapter Workspace
 
-The workspace is prepared for an internal GitHub Enterprise Cloud repository. Follow the [migration guide](docs/internal-migration.md) to configure team access and source links. Participants run the app locally; hosting is deferred.
+The workspace is prepared for an internal GitHub Enterprise Cloud repository. Follow the [migration guide](docs/internal-migration.md) to configure team access and source links. Participants develop locally. A temporary [hosted gallery](https://frontend-chapter-day.vercel.app) is available on Vercel; see [hosting and removal](docs/hosting.md).
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the branch, checks and pull-request workflow.
 
