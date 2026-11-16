@@ -10,6 +10,10 @@ Checked in `docs/participant-journeys`, based on `4ad159a`, with only Markdown c
 - Fallow doctor passed seven checks with no warnings; `npm run analyze:changes` passed with no introduced issues.
 - Browser tests were not rerun: this revision changes no app code, UI behaviour, dependencies or configuration. Independent participant setup remains unobserved.
 
+## Folder-discovery documentation follow-up
+
+Participant guides now describe the agreed folder-discovery contract: generated `Demo.tsx`, `demo.ts` and `README.md`, a typed metadata/loader export and an ID derived from the folder. This follow-up is documentation-only; the implementation is owned by the separate discovery branch. The earlier checks above do not verify that implementation. Reconcile and rerun the relevant generator, discovery and browser checks when integrating it.
+
 ## Recorded baseline: `4ad159a` · 16 November 2026
 
 The latest recorded checks before the participant-guide revision are below. These are local technical evidence, not independent participant acceptance. Detailed results and retired setups are kept in [verification history](VERIFICATION-HISTORY.md).

@@ -14,7 +14,8 @@ The home page opens four track pages and a shared demo gallery. Try the D3 const
 | --- | --- |
 | `src/app/App.tsx` | Shared navigation, track pages and gallery |
 | `src/app/tracks.ts` | Four tracks and suggested starting points |
-| `src/demo-registry.ts` | Demo title, track, author and lazy import |
+| `src/demo-contract.ts` | Shared `DemoDefinition` type |
+| `src/demos/<your-idea>/demo.ts` | Demo metadata and component loader, discovered by the host |
 | `src/demos/template/` | Copyable bootstrap, separate from completed examples |
 | `src/demos/<your-idea>/` | Your component, assets and scoped styles |
 | `src/examples/` | Reference experiments and small pure functions |
@@ -23,7 +24,9 @@ The home page opens four track pages and a shared demo gallery. Try the D3 const
 | `src/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Logic checks and browser journeys |
 
-[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates the folder and registry entry. No app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. Demos load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates `Demo.tsx`, `demo.ts` and `README.md` in your demo folder. The host discovers `demo.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. Demos load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+
+`demo.ts` default-exports an object satisfying `DemoDefinition` from `../../demo-contract`, with `title`, `track`, `description`, `author` and `load`. The loader imports a module whose default export is your React component. Use the generator and [technical demo guide](src/demos/template/README.md) for the exact file shape.
 
 Hash routes such as `#/track/a`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
 

@@ -87,8 +87,9 @@ npm run demo:new
 ```
 
 **Give your demo a name first.** The generator asks for an ID, track, author
-and description, then creates and registers your React demo. Open the route
-it prints and edit `playground/src/demos/<id>/Demo.tsx`.
+and description, then creates `Demo.tsx`, `demo.ts` and `README.md` in
+`playground/src/demos/<id>/`. The host discovers `demo.ts` automatically;
+the folder name supplies the demo ID. Open the printed route and edit `Demo.tsx`.
 
 The [demo guide](playground/src/demos/template/README.md) covers the full workflow,
 a non-interactive command and the manual alternative. Investigations and tools
@@ -128,8 +129,8 @@ frontend-chapter-day/
 ├── playground/              # Vite + React + TypeScript app
 │   └── src/
 │       ├── app/             # Shell, track pages and navigation
-│       ├── demo-registry.ts # Gallery entries and lazy imports
-│       ├── demos/           # Shared template and participant demos
+│       ├── demo-contract.ts # Typed demo metadata and loader contract
+│       ├── demos/           # Participant folders with demo.ts + Demo.tsx
 │       └── examples/        # Working reference experiments
 ├── tracks/                  # Bootstrap guides, examples and findings
 ├── turbo/generators/        # Demo generator and its tests
@@ -148,7 +149,7 @@ The [app guide](playground/README.md#useful-commands) covers extra commands and 
 | Command | Purpose |
 | --- | --- |
 | `npm run dev` | Start the lab with fast refresh |
-| `npm run demo:new` | Create and register a named React demo |
+| `npm run demo:new` | Create a named React demo with discoverable metadata |
 | `npm run check` | Run generator tests, app checks and the production build |
 | `npm run build` | Build the app through Turbo |
 | `npm run preview` | Serve the built app locally |
