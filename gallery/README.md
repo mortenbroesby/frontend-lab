@@ -2,7 +2,7 @@
 
 A local starting point for [choosing a track](../README.md). Examples are optional references.
 
-From the repository root, run `npm ci` and `npm run dev`, then open the printed address. See **Local setup** in the app for troubleshooting.
+Follow the root README for first-time setup. In the app, use **Local setup**.
 
 ## Where to work
 

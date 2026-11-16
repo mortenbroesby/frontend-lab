@@ -1,29 +1,12 @@
-# Run the Lab locally
+You need repository access, **Node 24**, **npm 11.6.2** and an editor.
 
-**You need:** repository access, Node 24, npm 11.6.2 and an editor. Clone the repository, then run from its root:
+Clone the repository, then run from its root:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open Vite’s URL and a track’s Getting started page. Keep the server running; use another terminal for commands.
+Open the URL printed in the terminal. Keep the server running while you work.
 
-[Choose a track](#/) · [Create a demo](#/create)
-
-## Small checks
-
-Try the changed interaction. Use `npm run check` for existing checks when useful. There is no browser-test setup; add only focused tests that prove a specific point.
-
-## Troubleshooting
-
-- **Cannot clone / repository not found:** check your signed-in account and ask the organiser for private repository access. Never put tokens in commands or source.
-- **Node/npm not found or engine warning:** check `node --version` and `npm --version`; activate Node 24 and retry.
-- **Port already used:** use Vite’s printed URL or stop your previous process. Both signal tabs need the same origin.
-- **No signal arrives:** use the same scheme, host, port and browser profile/context in both tabs. Senders receive no echo; closed tabs replay nothing. Signals cannot cross computers.
-- **Worker finishes too quickly to observe:** increase the workload or inspect DevTools; timing depends on hardware. Start small: the main-thread comparison deliberately blocks interaction.
-- **Install failure:** save the error, check runtime and network/proxy access, and ask a peer. Pair or use an existing project if setup stalls.
-
-Examples use SVG, Workers, BroadcastChannel, D3 and Trystero. Device Rally uses public signaling; no custom backend is needed.
-
-The production build includes the gallery and standalone demo entries. Demos also build independently. Code Quality can use an existing codebase; Developer Experience scripts in `tracks/developer-experience/` need no running app.
+[Choose a track](#/) or [create a demo](#/create).
