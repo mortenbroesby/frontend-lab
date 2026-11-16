@@ -47,7 +47,7 @@ Native attributes and React 19 refs pass through. Radix controls support control
 
 ## Styling
 
-`theme.css` owns Lab tokens. Tailwind compiles in both Vite builds without Preflight. Scoped `data-slot` resets keep library elements consistent. Demo controls use these components; the worker interaction pad and native colour picker retain dedicated styling. Portals use the same global tokens. Reduced-motion preferences disable library transitions and animations.
+`theme.css` owns Lab tokens. The Geist-inspired styling uses neutral surfaces, quiet one-pixel borders, 6px control corners and flat 8px cards. Reserve shadows for floating overlays; keep primary actions dark, supporting actions outlined and keyboard focus clearly visible. Preserve 44px default button targets even when tightening visual spacing. Tailwind compiles in both Vite builds without Preflight. Scoped `data-slot` resets keep library elements consistent. Demo controls use these components; the worker interaction pad and native colour picker retain dedicated styling. Portals use the same global tokens. Reduced-motion preferences disable library transitions and animations.
 
 Shared styles scan the library source. For utility classes in your own demo, import local CSS containing:
 

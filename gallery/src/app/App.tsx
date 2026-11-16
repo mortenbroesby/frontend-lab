@@ -215,9 +215,11 @@ function LabNavigation({ route }: { route: string }) {
           aria-describedby={undefined}
         >
           <div className="mobile-navigation-header">
-            <DialogTitle>Navigation</DialogTitle>
+            <DialogTitle className="wordmark">
+              <span aria-hidden="true">↗</span>Front-End Lab
+            </DialogTitle>
             <DialogClose asChild>
-              <Button variant="outline" size="lg" aria-label="Close navigation menu">
+              <Button variant="ghost" size="lg" aria-label="Close navigation menu">
                 Close <span aria-hidden="true">×</span>
               </Button>
             </DialogClose>
@@ -226,7 +228,10 @@ function LabNavigation({ route }: { route: string }) {
             {[['/', 'All tracks'], ...links].map(([path, label]) => (
               <DialogClose key={path} asChild>
                 <a href={`#${path}`} aria-current={route === path ? 'page' : undefined}>
-                  {label}
+                  <span>{label}</span>
+                  <span className="mobile-navigation-arrow" aria-hidden="true">
+                    ↗
+                  </span>
                 </a>
               </DialogClose>
             ))}
