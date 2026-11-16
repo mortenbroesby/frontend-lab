@@ -81,3 +81,9 @@ Turbo uses package-local inputs by default. The gallery's build also hashes demo
 `npm run format` formats code and styles with Prettier. `npm run lint` runs only Oxlint's hooks-ordering and exhaustive-dependency checks. These complement TypeScript, Fallow and dependency-cruiser. MDX prose stays as authored. No browser-test framework is installed.
 
 Optional `requirements` in `demo.config.ts` labels internet, secure-context or offline-after-setup needs before opening a demo. Labels do not check permissions.
+
+### Demo inspector preview
+
+In a standalone demo, open the command palette and choose **Inspect this demo**. It shows the source folder and copyable dev/build/test commands from that demo's package scripts. Commands run from the repository root; copying never executes them. On plain LAN HTTP, use manual selection if clipboard access is unavailable.
+
+Both Vite configs derive this metadata during startup/build through `demo-inspections.ts`; restart the dev server after adding or changing scripts. Custom entries using `mountDemo` receive the inspector automatically when using these configs. No editor integration or source-code viewer is included in this preview.

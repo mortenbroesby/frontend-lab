@@ -1,3 +1,5 @@
+import { DemoInspector } from './DemoInspector';
+import type { DemoInspection } from './inspection';
 import { useEffect, useState, type ComponentProps, type KeyboardEvent } from 'react';
 import { ThemeControl, useTheme } from '@lab/ui/theme-control';
 import { Button } from '@lab/ui/button';
@@ -6,7 +8,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialo
 import { DebugInfo } from './DebugInfo';
 import { developerShortcut, isCommandShortcut, matchesCommand } from './command-search';
 
-type View = 'commands' | 'debug';
+type View = 'commands' | 'debug' | 'inspect';
 
 type CommandLink = { label: string; group: string; href: string; shortcut?: string };
 type Command = { label: string; group: string; run: () => void; shortcut?: string };
@@ -66,13 +68,19 @@ function MenuContents({
   close,
   view,
   setView,
+  inspection,
 }: {
   links: CommandLink[];
   close: () => void;
   view: View;
   setView: (view: View) => void;
+  inspection?: DemoInspection;
 }) {
+  const details = { debug: <DebugInfo />, inspect: <DemoInspector inspection={inspection} /> };
   const commands: Command[] = [
+    ...(inspection
+      ? [{ label: 'Inspect this demo', group: 'This demo', run: () => setView('inspect') }]
+      : []),
     ...links.map(({ label, group, href, shortcut }) => ({
       label,
       group,
@@ -87,13 +95,15 @@ function MenuContents({
   ];
   return (
     <>
-      <DialogTitle>{view === 'debug' ? 'Debug information' : '⌘K'}</DialogTitle>
+      <DialogTitle>
+        {{ commands: '⌘K', debug: 'Debug information', inspect: 'Inspect this demo' }[view]}
+      </DialogTitle>
       {view !== 'commands' ? (
         <>
           <Button autoFocus variant="outline" onClick={() => setView('commands')}>
             ← Back to commands
           </Button>
-          <DebugInfo />
+          {details[view]}
         </>
       ) : (
         <>
@@ -149,12 +159,14 @@ function usePaletteShortcuts(
 
 export function CommandMenu({
   links = [],
+  inspection,
   open: controlledOpen,
   onOpenChange,
   triggerClassName,
   onCloseAutoFocus,
 }: {
   links?: CommandLink[];
+  inspection?: DemoInspection;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   triggerClassName?: string;
@@ -192,7 +204,13 @@ export function CommandMenu({
         aria-describedby={undefined}
         onCloseAutoFocus={onCloseAutoFocus}
       >
-        <MenuContents links={links} close={() => setOpen(false)} view={view} setView={setView} />
+        <MenuContents
+          inspection={inspection}
+          links={links}
+          close={() => setOpen(false)}
+          view={view}
+          setView={setView}
+        />
       </DialogContent>
     </Dialog>
   );

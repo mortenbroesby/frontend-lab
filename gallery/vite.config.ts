@@ -1,3 +1,4 @@
+import { demoInspections } from './demo-inspections.ts';
 import { existsSync, globSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
@@ -15,6 +16,7 @@ const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => 
 });
 export default defineConfig({
   root,
+  define: { 'import.meta.env.LAB_DEMO_INSPECTIONS': demoInspections() },
   plugins: [
     tailwindcss(),
     { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },

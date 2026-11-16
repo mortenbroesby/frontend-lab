@@ -1,3 +1,4 @@
+import type { DemoInspection } from './inspection';
 import { CommandMenu } from './CommandMenu';
 import { LabMark } from './LabMark';
 import { StrictMode } from 'react';
@@ -11,9 +12,12 @@ import { Button } from '@lab/ui/button';
 import '@lab/ui/styles.css';
 import './styles.css';
 
+const inspections: Record<string, DemoInspection> = import.meta.env.LAB_DEMO_INSPECTIONS ?? {};
+
 /** Optional React starter; standalone apps may replace their entry with any framework. */
 export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: string) {
   document.title = demo.title;
+  const inspection = inspections[id];
   const trackHref = galleryHref(`/track/${demo.track}/examples`);
   const commands = [
     ['/demos', 'All demos'],
@@ -33,7 +37,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
             Front-End Lab
           </a>
           <nav aria-label="Lab">
-            <CommandMenu links={commands} />
+            <CommandMenu links={commands} inspection={inspection} />
             <Button variant="outline" asChild>
               <a href={trackHref}>← Back to track</a>
             </Button>
@@ -42,7 +46,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
       )}
       {!trackHref && (
         <div className="standalone-tools">
-          <CommandMenu />
+          <CommandMenu inspection={inspection} />
         </div>
       )}
       <main className="standalone-shell" id="content" tabIndex={-1}>
