@@ -1,46 +1,35 @@
-# What could you explore?
+# Ideas to explore
 
-Choose an idea, combine a few, or bring your own. Each is a starting point, not an assignment.
+Use a codebase you know, or investigate this repository. Start with a question about its health rather than a target score. A useful finding can be a reason to keep something as it is.
 
-<div className="journey-grid topic-grid">
-  <section className="journey-card" data-track="code-quality">
-    <h3>Dependency health</h3>
-    <p>Trace a dependency to its callers. Investigate unused or outdated packages before deciding what to change.</p>
-  </section>
-  <section className="journey-card" data-track="code-quality">
-    <h3>Complexity and duplication</h3>
-    <p>Compare two similar functions in a real codebase. Would a small simplification make the intent clearer?</p>
-  </section>
-  <section className="journey-card" data-track="code-quality">
-    <h3>Architecture and boundaries</h3>
-    <p>Follow imports across features. Find one surprising dependency and sketch a simpler boundary.</p>
-  </section>
-  <section className="journey-card" data-track="code-quality">
-    <h3>Automated discovery</h3>
-    <p>Try Fallow, or an analysis tool already used in your project. Validate a few findings against actual code.</p>
-    <a href="#/track/code-quality/fallow">Explore this idea →</a>
-  </section>
-</div>
+## Dependency health
 
-<details>
-<summary>More starting points and stretch goals</summary>
+Understand why a dependency exists, where it is used and what maintaining it costs. Look for unused packages, version drift or several libraries solving the same problem.
 
-## Explore further
+Trace one package to its callers before proposing a change. Compare package-manager information with static analysis; dynamic loading and configuration can explain an apparent unused dependency. Outdated does not automatically mean harmful.
 
-Pick one starting point; Fallow is optional for these investigations:
+Read: [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain) and [Knip’s unused-code and dependency analysis](https://knip.dev/).
 
-| Starting point | First observation | Optional stretch |
-| --- | --- | --- |
-| Dependency health | In this repository, run `npm explain d3-force` and follow its import into the constellation. In your own project, inspect one dependency’s callers and maintenance needs using its normal package-manager tools. | Use `npm outdated` to identify version drift, then read release notes before proposing an upgrade. Network/registry access is needed; outdated does not mean unsafe. |
-| Complexity | Read one component or function that is hard to explain. List its decisions and find the tests covering them; use existing editor/analyzer metrics if available. | Try one cohesive simplification on a branch and compare readability and behaviour with the baseline. A lower score alone is not proof of improvement. |
-| Architectural boundaries | Trace gallery discovery → `demo.config.ts` metadata → app URL, then the demo’s `main.tsx` → component → helper imports. Sketch the actual direction of dependencies. | State an intended boundary, search for imports crossing it and use existing lint rules if the project has them. Do not add rules before deciding what they protect. |
-| Test confidence | Choose a meaningful input or user behaviour and find the assertion that would catch it breaking. | Add one missing boundary test and show it detects the relevant failure; avoid duplicating the completed example. |
+## Complexity and duplication
 
-For this repository, run commands at its root after `npm ci`. In another repository, use its documented setup and checks. Keep private source and analysis within the permitted audience.
+Choose a function or component that is difficult to explain. Identify its decisions, responsibilities and repeated patterns. Compare two possible simplifications, including leaving the code alone.
 
-The [completed test-gap investigation](#/track/code-quality/examples) shows the reasoning; its fix is already present. The [Fallow guide](#/track/code-quality/fallow) offers optional local analysis and agent setup. Use your own tools if they fit.
+Try one small refactoring and use existing tests to check behaviour. Consider whether extracting shared code makes the intent clearer or simply moves the complexity elsewhere.
 
+Read: [ESLint’s complexity rule](https://eslint.org/docs/latest/rules/complexity) for what the metric measures, and [Fallow](https://fallow.tools/) for broader codebase analysis.
 
-</details>
+## Architecture and boundaries
 
-Bring your own idea too. [Create a demo](#/create) or use your own React project.
+Explore the relationships between features, packages and shared utilities. Where do dependencies point? Which boundaries are explicit, and which exist only by convention?
+
+Trace one user-facing behaviour through its imports. Visualise the dependencies, investigate a surprising edge or try a rule that expresses an agreed boundary. Avoid adding rules before deciding what they protect.
+
+Read: [dependency-cruiser’s documentation and examples](https://github.com/sverweij/dependency-cruiser).
+
+## Confidence in change
+
+Pick a behaviour you care about and find the test that would catch it breaking. Compare what a passing test actually proves with what you assumed it proved.
+
+Make a small, reversible change on your own branch to test that assumption. Explore a missing boundary case or a more meaningful assertion. Automated findings are starting points to investigate, not instructions to delete code.
+
+Read: [Node’s test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [Fallow’s analysis documentation](https://fallow.tools/).

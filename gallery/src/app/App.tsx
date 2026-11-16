@@ -72,7 +72,7 @@ export function App() {
   return <>
     <a className="skip-link" href="#content" onClick={event => { event.preventDefault(); document.getElementById('content')?.focus(); }}>Skip to content</a>
     <header className="site-header"><a className="wordmark" href="#/"><span aria-hidden="true">↗</span>Front-End Lab</a><LabNavigation route={route} /></header>
-    <main id="content" tabIndex={-1}>
+    <main id="content" className={route === "/" ? undefined : "reading-page"} tabIndex={-1}>
       <section className="starter-welcome"><p className="eyebrow welcome-eyebrow">{demo ? `${trackTitle(demo.track)} · ${demo.author}` : 'Four tracks. Shared discoveries.'}</p><h1>{title}</h1>
         <p className="welcome-description">{track?.description ?? demo?.description ?? 'Find something that sparks your curiosity. Try a demo or get straight to experimenting—solo or together.'}</p>
       </section>
