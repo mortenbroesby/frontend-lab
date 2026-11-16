@@ -1,6 +1,6 @@
 # Find your shortest feedback loop
 
-Run the smallest relevant test while editing; broaden checks before sharing.
+Run the smallest relevant test while editing; broaden checks before committing.
 
 - **Try:** [Open the command explorer](#/demo/tooling), choose **One behaviour** and run its command from the repository root.
 - **Change:** Choose **Watch changes** and temporarily reverse the comparator in `demos/tooling/examples/commands.mjs`. Restore that edit afterwards.
@@ -57,7 +57,7 @@ Edit another demo: tooling should keep its cache while gallery rebuilds. Kit cha
 
 Affected selection needs Git history and a comparison base. Inspect the plan first; task selection and cache reuse are separate decisions.
 
-**Show:** a red → green rerun, selected task or explained cache miss. Targeted passes do not replace broader checks your change needs.
+Targeted passes do not replace broader checks your change needs.
 
 References: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) · [Turbo run options](https://turborepo.dev/docs/reference/run).
 

@@ -12,9 +12,9 @@ const meta = {
         <AccordionTrigger>How do I run a demo?</AccordionTrigger>
         <AccordionContent>Run its workspace dev command from the repository root.</AccordionContent>
       </AccordionItem>
-      <AccordionItem value="share">
-        <AccordionTrigger>Can I share it?</AccordionTrigger>
-        <AccordionContent>Build and host the standalone app.</AccordionContent>
+      <AccordionItem value="build">
+        <AccordionTrigger>Can I build it separately?</AccordionTrigger>
+        <AccordionContent>Run the standalone workspace’s build command.</AccordionContent>
       </AccordionItem>
       <AccordionItem value="soon" disabled>
         <AccordionTrigger>Coming soon</AccordionTrigger>

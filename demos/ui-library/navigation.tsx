@@ -21,7 +21,7 @@ import {
 const pages = [
   'Start with one useful interaction.',
   'Try the keyboard before adding polish.',
-  'Share what you learned.',
+  'Try another variation.',
 ];
 
 export function Navigation() {

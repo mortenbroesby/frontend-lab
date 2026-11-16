@@ -1,6 +1,6 @@
 ---
 name: fallow
-description: Use Fallow to investigate unused code, duplication, complexity and architecture, or audit changed JavaScript/TypeScript before sharing.
+description: Use Fallow to investigate unused code, duplication, complexity and architecture, or audit changed JavaScript/TypeScript before committing.
 ---
 
 # Fallow

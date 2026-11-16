@@ -1,6 +1,6 @@
 export type Dot = { x: number; y: number; radius: number; hue: number };
 
-// A seed makes a discovery reproducible: share the number, not a screenshot alone.
+// A seed makes the same composition reproducible.
 export function makeDots(seed: number, count: number): Dot[] {
   if (!Number.isInteger(seed) || !Number.isInteger(count) || count < 0 || count > 400) {
     throw new RangeError('Use an integer seed and 0–400 dots.');

@@ -14,4 +14,4 @@ Project settings:
 
 The initial production deployment used commit `cb7e020`. An unauthenticated HTTP request and a Chrome smoke check verified the home page, named track navigation, D3 demo and Worker result. This is hosting verification, not participant-device or cross-device acceptance.
 
-To remove hosting, disconnect the Git repository and remove the Vercel project in its dashboard. Documentation must not depend on deployment links. Application code has no Vercel dependency. To migrate to GitHub Pages, publish the same static build and configure Vite's base path for the destination; retain hash routes. Recheck lazy assets and Workers on the new host before sharing it.
+To remove hosting, disconnect the Git repository and remove the Vercel project in its dashboard. Documentation must not depend on deployment links. Application code has no Vercel dependency. To migrate to GitHub Pages, publish the same static build and configure Vite's base path for the destination; retain hash routes. Recheck lazy assets and Workers on the new host before using it.

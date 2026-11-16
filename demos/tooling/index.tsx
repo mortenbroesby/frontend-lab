@@ -18,7 +18,7 @@ const experiments = [
       'node --test --watch --test-name-pattern="sorts commands" demos/tooling/examples/commands.test.mjs',
     expect:
       'Temporarily reverse a.localeCompare(b) in commands.mjs. Save to see failure; restore and save to see it pass.',
-    next: 'Stop with Ctrl+C; rerun all tests before sharing. Node watches tests and imports, not the browser.',
+    next: 'Stop with Ctrl+C; rerun all tests before committing. Node watches tests and imports, not the browser.',
   },
   {
     title: 'Build caching',
@@ -45,7 +45,7 @@ export default function Tooling() {
   const experiment = experiments[selected];
   return (
     <div className="controls">
-      <p className="eyebrow">Find friction → Compare → Experiment → Show</p>
+      <p className="eyebrow">Find friction → Compare → Experiment</p>
       <h2>Find your shortest feedback loop</h2>
       <p>
         Choose a question and run commands from the repo root. Tests need Node 24; Turbo also needs
@@ -72,7 +72,7 @@ export default function Tooling() {
         <p>{experiment.expect}</p>
         <p>{experiment.next}</p>
       </section>
-      <p>Show one difference and one limit. An existing native feature may be enough.</p>
+      <p>An existing native feature may be enough.</p>
       <details>
         <summary>Build a utility?</summary>
         <p>

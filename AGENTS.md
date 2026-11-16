@@ -1,6 +1,6 @@
 # The Front-End Lab
 
-Four tracks, standalone demos and shared discoveries. Help participants get started independently.
+Four tracks and standalone demos. Help participants get started independently.
 
 ## Scope
 

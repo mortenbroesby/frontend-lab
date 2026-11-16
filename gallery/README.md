@@ -25,7 +25,7 @@ Open **Create a demo** in the app for the generator and independent-app commands
 
 Root `index.html` opens the gallery. Vite uses the repository root so demo HTML entries work in development and production without copying or custom routing. Combined output goes to `gallery/dist/`; standalone builds to `demos/<id>/dist/`.
 
-Hash routes (`#/track/modern-web`, `#/demo/constellation`, `#/create`) support deep links without server rewrites. Share source through Git: merge, then pull locally. Device Rally demonstrates live peer messaging.
+Hash routes (`#/track/modern-web`, `#/demo/constellation`, `#/create`) support deep links without server rewrites. Device Rally demonstrates live peer messaging.
 
 ## Author a track page
 
