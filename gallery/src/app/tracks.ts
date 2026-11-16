@@ -27,9 +27,15 @@ export const tracks = [
         description: 'Trace a finding, check the evidence and decide what is worth changing.',
       },
       {
-        slug: 'experiments',
-        title: 'Investigate tests and boundaries',
-        description: 'Explore a test gap and the import rules that keep demos independent.',
+        slug: 'test-confidence',
+        title: 'Find a missing test',
+        description: 'Trace a behaviour, choose a boundary and justify the expected result.',
+      },
+      {
+        slug: 'architecture',
+        title: 'Protect an architecture boundary',
+        description:
+          'Turn an ownership decision into an import rule and prove it catches a violation.',
       },
     ],
     title: 'Code Quality & Maintainability',

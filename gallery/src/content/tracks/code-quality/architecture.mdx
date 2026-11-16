@@ -1,0 +1,76 @@
+## Protect an architecture boundary
+
+**Which dependency would make this code harder to change independently?** Agree on one ownership rule, express it as a dependency-cruiser check and prove the check detects a forbidden import.
+
+The tool enforces the rule you choose. It cannot decide whether that rule makes sense.
+
+### 1. See the Lab's boundary
+
+After [local setup](#/guide/setup), run from the repository root:
+
+```sh
+npm run check:architecture
+```
+
+Read `demos-stay-independent` in `.dependency-cruiser.cjs`. Each demo may import its own implementation and shared packages, but not another demo's implementation. This keeps demos independently runnable and changeable.
+
+Trace imports in `demos/web-worker-comparison/index.tsx`. Which belong to the demo, and which come from shared UI or the demo kit? Compare them with <DemoLink id="dependency-map">Dependency ripple</DemoLink>: its package relationships are a different view from dependency-cruiser's source-file imports.
+
+### 2. Prove the rule catches something
+
+On an experiment branch, create a temporary file at `demos/web-worker-comparison/boundary-probe.ts` containing:
+
+```ts
+import '../generative-postcard/art';
+```
+
+Run `npm run check:architecture` again. Expect a nonzero exit and a `demos-stay-independent` violation naming the probe's import. If the check passes, inspect the scanned paths and configuration before trusting the rule.
+
+Delete only the temporary `boundary-probe.ts` file and rerun. The check should pass again. This exercise tests the import graph; do not import the probe into the running demo or commit it.
+
+### 3. Apply one rule in your own repository
+
+Write the ownership decision in plain language first. For example: **“Shared utilities must not import feature implementations.”** Choose directories that actually represent those responsibilities; do not reorganise the project just to match this example.
+
+For an npm project, install locally and inspect the initializer:
+
+```sh
+npm install --save-dev --save-exact dependency-cruiser
+npx depcruise --init
+```
+
+Use your existing package manager and commit its manifest and lockfile. If you already have a configuration, edit it instead of replacing it. Review generated rules and resolver settings against your framework, TypeScript version and aliases.
+
+Merge this example into the configuration's `forbidden` array, adapting the paths:
+
+```js
+{
+  name: 'shared-does-not-import-features',
+  severity: 'error',
+  comment: 'Shared utilities must remain independent of feature implementations.',
+  from: { path: '^src/shared/' },
+  to: { path: '^src/features/' },
+}
+```
+
+Paths are regular expressions against module paths. With a config named `.dependency-cruiser.cjs` and sources under `src`, run:
+
+```sh
+npx depcruise --config .dependency-cruiser.cjs src
+```
+
+Use the actual config filename and source roots in your project. Create a temporary import that crosses your chosen boundary, confirm the named violation, then remove it and confirm the clean result. Also check an allowed import: a rule that rejects everything is not useful.
+
+### 4. Decide what a violation should mean
+
+When a real violation appears, ask which module should own the responsibility. Moving code or passing a value into a utility may be clearer than extracting another shared package. Sometimes the proposed boundary was wrong; revise it deliberately with a reason.
+
+Once the rule is trusted, add the checked command to your existing scripts and CI. Keep exceptions narrow. Do not weaken a rule merely to get a green run.
+
+The Lab uses SWC to parse TypeScript and checks static source imports. Its MDX content, Vite glob expansion and computed runtime imports still need review. Other projects need their own parser and resolution choices. A passing result only covers the graph and rules that were actually inspected.
+
+Finish with: **“This boundary protects …; this forbidden import proves the check works.”**
+
+Read: [official rules tutorial](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-tutorial.md), [rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md) and [CLI reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/cli.md).
+
+[All Code Quality guides](#/track/code-quality/guides)
