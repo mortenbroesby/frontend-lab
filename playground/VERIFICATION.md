@@ -7,7 +7,7 @@ Implementation baseline: optional local kit for the four agreed tracks. This rec
 - macOS on the organiser's Intel Mac.
 - Node.js 24.19.0; npm 11.6.2.
 - Google Chrome 157.0.8103.52, automated through Playwright 1.65.1.
-- Dependency versions are exact in `playground/package.json` and `package-lock.json`; `npm ci` is the reproducible install command.
+- Dependency versions are exact in `package.json` and `package-lock.json`; `npm ci` is the reproducible install command.
 
 ## Completed checks
 
@@ -18,6 +18,10 @@ Implementation baseline: optional local kit for the four agreed tracks. This rec
 - Live development edit: changing `YourLab.tsx` updated the running page, then the source was restored.
 - Desktop (1440 px) and mobile (390 px) screenshots visually inspected; the narrow-screen test also checks for horizontal overflow.
 - Official SVG, Worker, BroadcastChannel, Web APIs and optional Knip reference pages checked for availability.
+
+## Repository cleanup check
+
+After moving the app to `playground/` and consolidating participant guides under `tracks/`, local documentation links and old-path references were checked. `npm run check` and all six browser journeys passed from the new location. The package manifest, lockfile and example behaviour were unchanged.
 
 ## Limits and participant checks still needed
 
@@ -30,4 +34,4 @@ Implementation baseline: optional local kit for the four agreed tracks. This rec
 
 ## Recheck after changes
 
-From `exercises/playground`: run `npm ci`, then `npm run check`. For UI or browser behaviour changes, run `npm run test:browser` with the optional browser setup documented in its README. Keep results tied to the commit being checked; do not claim a new result from an old run.
+From `playground`: run `npm ci`, then `npm run check`. For UI or browser behaviour changes, run `npm run test:browser` with the optional browser setup documented in its README. Keep results tied to the commit being checked; do not claim a new result from an old run.

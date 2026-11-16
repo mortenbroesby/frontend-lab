@@ -1,4 +1,4 @@
-# D · Make something that sparks curiosity
+# Track D · Experimental Projects
 
 A game, interactive data story, generative art, chapter quiz, utility or an idea nobody has suggested yet. Use your preferred technologies or the optional [playground](../playground/README.md).
 
@@ -20,6 +20,8 @@ These are suggestions, not complete specifications. For the quiz, two local tabs
 
 ## Assemble your own combination
 
-Choose **an interest + a capability + a question**. For example: “generative art + Worker + can the controls remain responsive as I increase complexity?” Borrow a small part from [the browser journey](browser.md), then choose the next step from what you observe.
+Choose **an interest + a capability + a question**. For example: “generative art + Worker + can the controls remain responsive as I increase complexity?” Borrow a small part from [the browser journey](a-modern-web-capabilities.md), then choose the next step from what you observe.
 
-A useful stopping point is one visible result and one thing learned. Record a sketch, demo or failed attempt in [findings](../FINDINGS.md); polish and production readiness are optional.
+A useful stopping point is one visible result and one thing learned. Record a sketch, demo or failed attempt in [findings](findings.md); polish and production readiness are optional.
+
+[Choose another track](../README.md#choose-a-track)

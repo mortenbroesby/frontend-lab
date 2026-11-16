@@ -1,4 +1,4 @@
-# C · Improve a developer workflow
+# Track C · Developer Experience & Tooling
 
 Start with something that repeatedly costs you attention. The result can be an existing feature you discovered, a simpler command or a tiny script. A new tool is not a requirement.
 
@@ -25,6 +25,8 @@ Compare that with a one-off `npm test` and the broader `npm run check`. Ask whic
 
 ## Mix with another journey
 
-Use a finding from [code quality](quality.md) to identify a useful check. Or create a tiny UI for a workflow in [Experimental Projects](project.md). Avoid inventing a workflow problem just to justify a utility.
+Use a finding from [code quality](b-code-quality-maintainability.md) to identify a useful check. Or create a tiny UI for a workflow in [Experimental Projects](d-experimental-projects.md). Avoid inventing a workflow problem just to justify a utility.
 
-Share the original friction, your change, evidence that it helped and any limits. Use [findings](../FINDINGS.md). “The existing tool already does this” is a good outcome.
+Share the original friction, your change, evidence that it helped and any limits. Use [findings](findings.md). “The existing tool already does this” is a good outcome.
+
+[Choose another track](../README.md#choose-a-track)

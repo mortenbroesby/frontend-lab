@@ -1,15 +1,15 @@
 # The Front-End Lab playground
 
-An optional local starting point for [choosing your own journey](../README.md). Examples are reference destinations, not steps you have to complete.
+An optional local starting point for [choosing a track](../README.md). Examples are reference destinations, not steps you have to complete.
 
 ## First run
 
-Use **Node.js 24.x with npm** and a current browser. The baseline was chosen to keep one supported runtime for Vite and Node's built-in TypeScript test runner. The exact tested environment is recorded in [verification](../VERIFICATION.md). If you use nvm, `nvm use` reads `.nvmrc`; otherwise use your usual Node installation method. Keep your own project's runtime if you are not using this playground.
+Use **Node.js 24.x with npm** and a current browser. The baseline was chosen to keep one supported runtime for Vite and Node's built-in TypeScript test runner. The exact tested environment is recorded in [verification](VERIFICATION.md). If you use nvm, `nvm use` reads `.nvmrc`; otherwise use your usual Node installation method. Keep your own project's runtime if you are not using this playground.
 
 From the repository root:
 
 ```sh
-cd exercises/playground
+cd playground
 npm ci
 npm run dev
 ```
@@ -44,7 +44,7 @@ To start blank, replace the body of `YourLab` with your first component. You nee
 
 ## Useful commands
 
-Run these from `exercises/playground`:
+Run these from `playground`:
 
 | Command | What it does |
 | --- | --- |

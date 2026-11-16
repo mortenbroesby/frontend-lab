@@ -1,4 +1,4 @@
-# B · Investigate code quality
+# Track B · Code Quality & Maintainability
 
 Use a repository you know or this kit's small real [playground](../playground/README.md). No planted defects or prepared broken app are needed. There may be no worthwhile change to make; an evidence-backed finding is still useful.
 
@@ -12,7 +12,7 @@ Use a repository you know or this kit's small real [playground](../playground/RE
 
 ## First investigation: the dependency story
 
-From `exercises/playground`, after `npm ci`:
+From `playground`, after `npm ci`:
 
 ```sh
 npm ls --depth=0
@@ -33,4 +33,6 @@ If you choose a tool, note its version/configuration, understand whether it runs
 
 ## What could you share?
 
-A dependency explanation, a boundary diagram, one validated finding or a comparison of useful findings versus false positives. Record uncertainty and a practical next step in [findings](../FINDINGS.md). Avoid turning “improve quality” into an open-ended rewrite.
+A dependency explanation, a boundary diagram, one validated finding or a comparison of useful findings versus false positives. Record uncertainty and a practical next step in [findings](findings.md). Avoid turning “improve quality” into an open-ended rewrite.
+
+[Choose another track](../README.md#choose-a-track)

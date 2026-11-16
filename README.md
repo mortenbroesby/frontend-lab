@@ -1,50 +1,43 @@
 # The Front-End Lab
 
-Front-End Chapter Day · **Friday, 20 November 2026** · All agenda times are Danish local time.
+**Front-End Chapter Day · Friday, 20 November 2026**
 
-A hands-on day for front-end engineers across squads to explore, experiment, collaborate and learn. Pick a track, team up or go solo, and share something you discovered or built. Learning matters more than production-ready deliverables.
+Pick a track, go solo or team up, and explore something interesting. Try an example, build towards it, combine ideas or bring your own project. No polished deliverable required.
 
-## Agreed tracks
+## Choose a track
 
-| Track | Direction |
-| --- | --- |
-| 🌐 A · Modern Web Capabilities | Visual interaction, browser computing, real-time communication and other Web APIs |
-| 🔍 B · Code Quality & Maintainability | Technical debt, dependency health, complexity, architecture and automated analysis |
-| 🛠️ C · Developer Experience & Tooling | Identify real workflow friction and explore a practical improvement |
-| 🚀 D · Experimental Projects | Build a game, visualisation, generative art, quiz, utility or your own idea |
+| Track | What you can explore | First step |
+| --- | --- | --- |
+| [🌐 A · Modern Web Capabilities](tracks/a-modern-web-capabilities.md) | Browser APIs, visuals, background computation and communication | Try a browser example or choose one API |
+| [🔍 B · Code Quality & Maintainability](tracks/b-code-quality-maintainability.md) | Dependencies, complexity, architecture and automated analysis | Pick a question about your codebase or this playground |
+| [🛠️ C · Developer Experience & Tooling](tracks/c-developer-experience-tooling.md) | Faster feedback and less friction in everyday development | Choose one recurring annoyance or try the test feedback loop |
+| [🚀 D · Experimental Projects](tracks/d-experimental-projects.md) | Games, visualisations, generative art, quizzes or your own idea | Build one visible behaviour using your preferred tools |
 
-These four tracks are the agreed direction. Their experiments are suggestions, not prescribed exercises. Participants can use their own repositories, tools and technologies. An optional [exploration kit](exercises/README.md) now provides working examples and a space to build your own idea; using it is not required.
+Each guide has a starting point, optional directions and something you could share. You can switch tracks or mix them.
 
-## Workspace map
+## Get up and running
 
-- [Vision](planning/vision.md): participant experience and success criteria.
-- [Agenda](planning/agenda.md): flexible schedule, including India and Denmark show-and-tell.
-- [Tracks](planning/tracks.md): self-directed starting points and optional experiments.
-- [Preparation](planning/preparation.md): minimal preparation and remaining readiness gaps.
-- [Teams announcement](planning/announcement.md): concise draft for posting.
-- [Whiteboard specification](planning/whiteboard.md): native, editable Confluence board handoff.
-- [Workshop flow](whiteboard/structure.mmd): Mermaid overview.
-- [Choose your own journey](exercises/README.md): quick start, working examples and routes for all four tracks.
-- [Playground setup](exercises/playground/README.md): local Vite/React/TypeScript app and verified commands.
-- [Verification](exercises/VERIFICATION.md): tested behaviour and remaining limits.
-- [Agent context](AGENTS.md): confirmed decisions, conventions and priorities.
+**Using your own project?** Follow its normal setup and go straight to your track guide. Your preferred technologies are welcome.
 
-## Try the exploration kit
-
-With Node.js 24.x and npm, from this repository root:
+**Want a ready-made starting point?** The optional playground uses **Node.js 24.x and npm**. Clone this private repository using your usual authenticated GitHub method, then run from its root:
 
 ```sh
-cd exercises/playground
+cd playground
 npm ci
 npm run dev
 ```
 
-Open the address printed in the terminal. Remix generative SVG, experiment with a Worker, exchange local signals between two tabs, or edit `src/YourLab.tsx`. The [journey guide](exercises/README.md) explains how to build towards the examples, combine them or bring your own project.
+Open the local address printed in the terminal. Try the SVG composition, Worker experiment or messages between two browser tabs. Edit `src/YourLab.tsx` to start your own experiment.
 
-## Next steps
+[Playground setup and troubleshooting](playground/README.md) includes clone instructions, the source map and available commands. Initial installation needs internet; the examples run locally without a backend or API keys. Node 24 is required only for this playground, not for everyone's own projects.
 
-Make agenda and track details accessible to colleagues in India before 09:00 on Friday. Confirm venue/meeting links, board destination and edit access, a help contact and participant access to the optional kit. An optional morning presentation still needs a topic/speaker if included.
+## Make it your own
 
-Repository: https://github.com/mortenbroesby/frontend-chapter-day
+Choose **an interest + a capability + a question**, then try the smallest useful experiment. For example:
 
-Confluence whiteboard: **[WHITEBOARD_URL — not created]**.
+- SVG + Worker: can a larger pattern stay responsive?
+- SVG + local messages: can a second tab control a palette?
+- Your project + dependency analysis: what is actually used?
+- A repetitive task + a faster feedback loop: what would make it easier?
+
+Keep a demo, observation or useful failed attempt. The optional [findings template](tracks/findings.md) helps you record what you learned.
