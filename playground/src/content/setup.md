@@ -1,0 +1,36 @@
+# Run the Lab locally
+
+**You need:** repository access, Node 24, npm and an editor. The workspace pins npm 11.6.2. Clone the repository shared with you, then run from its root:
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the address Vite prints. Choose a track and follow its Getting started page. Keep the server running while editing; use another terminal for commands. Viewing the hosted Lab needs no installation, but commands and code changes run locally.
+
+[Choose a track](#/) · [Create a demo](#/create) · [Build and share](#/guide/contributing)
+
+## Browser checks
+
+For UI/browser changes, run these from `playground/` after the root install:
+
+```sh
+npx playwright install chromium
+npm run test:browser
+```
+
+Alternatively, use an existing Chrome installation by setting `PLAYWRIGHT_CHANNEL=chrome` in your shell, then run `npm run test:browser`. The tests build and serve the production bundle themselves on port 4173; stop any other server on that port first.
+
+## Troubleshooting
+
+- **Cannot clone / repository not found:** this is a private repository. Check the signed-in account and ask the organiser for access; no token should go into a command or source file.
+- **Node/npm not found or engine warning:** check `node --version` and `npm --version`; activate Node 24 in your terminal and retry.
+- **Port already used:** open the URL Vite actually prints, or stop your own previous process. Use that exact same origin in both signal tabs.
+- **No signal arrives:** both tabs must be open at the same scheme, host and port, in the same browser profile/context. The sending tab does not receive its own message; closed tabs do not replay messages. This is not cross-computer communication.
+- **Worker finishes too quickly to observe:** choose a larger workload or inspect DevTools. Timing depends on hardware. The main-thread comparison deliberately pauses interaction briefly; start with the small workload.
+- **Install failure:** retain the error, check runtime and network/proxy access, and ask a peer. Pair or use your own existing project rather than spending the day reinstalling tools.
+
+The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSocket server, WebRTC signalling server or WebAssembly toolchain is included. Those remain optional directions for participants to explore.
+
+The production build has one HTML entry and lazy demo chunks. Code Quality & Maintainability can use an existing codebase, and Developer Experience & Tooling's independent Node scripts under `tracks/developer-experience/` run without starting the app.

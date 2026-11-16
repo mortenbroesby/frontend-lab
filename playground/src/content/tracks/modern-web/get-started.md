@@ -1,0 +1,38 @@
+# Getting started
+
+Try a browser capability, then make one visible change in your own React demo.
+
+## 1. Run the Lab locally
+
+**You need:** Node 24, npm, an editor and a current browser. Clone the repository you were given access to, then run from its root:
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the address printed by Vite and choose **Modern Web Capabilities**. Viewing the hosted Lab lets you try examples; editing and generating demos happens in your local checkout. [Setup help](#/guide/setup).
+
+## 2. Try the starter
+
+Move the radius control in the circle starter below. The circle and displayed radius should change. This is a small preview, separate from the finished examples.
+
+## 3. Create your own demo
+
+On your own [contribution branch](#/guide/contributing), open another terminal at the repository root:
+
+```sh
+npm run demo:new
+```
+
+Give it a name, confirm its suggested ID and choose **Modern Web Capabilities**, then enter your author and description. Open the route printed by the generator using your local server address.
+
+Edit `playground/src/demos/<your-id>/Demo.tsx`. For the circle experiment, copy the JSX and state from `playground/src/starters/BrowserStarter.tsx` into your generated component, keeping its default export. Edit your copy so others can still use the shared starter.
+
+## 4. Make something happen
+
+**First result:** add a second circle or change how the control affects the shape. Save, open your demo and move the control. Navigate away and back; it should still work without console errors.
+
+Choose your next direction: pointer interaction, a Worker, a different API, or a few D3 nodes and one force. [Explore the options](#/track/modern-web/explore) or [open the D3 constellation](#/demo/constellation). The [worked examples](#/track/modern-web/examples) offer hints without requiring you to rebuild every control.
+
+Already have a React project? Use its usual setup and bring back a discovery. [Record what you learned](#/guide/findings).

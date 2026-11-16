@@ -186,6 +186,49 @@ test('all named tracks open their matching journey and guide', async ({ page }) 
     await page.getByRole('link', { name: `Explore ${title}` }).click();
     await expect(page).toHaveURL(new RegExp(`#/track/${id}$`));
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
-    await expect(page.locator('.source')).toContainText(`tracks/${id}/bootstrap.md`);
+    await expect(page.locator('.guide')).toContainText('First result');
+    await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+    await expect(page.locator('.guide table')).toBeVisible();
+    await page.getByRole('link', { name: 'Worked examples', exact: true }).click();
+    await expect(page.locator('.guide')).not.toBeEmpty();
+    await page.reload();
+    await expect(page.locator('.guide')).not.toBeEmpty();
+  }
+});
+
+test('participant guides stay in the app and fit a phone', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/track/modern-web');
+  await expect(page.locator('.guide')).toContainText('npm run demo:new');
+  await page.getByRole('link', { name: 'Setup help', exact: true }).click();
+  await expect(page).toHaveURL(/#\/guide\/setup$/);
+  await expect(page.locator('.guide')).toContainText('npm ci');
+  await page.goBack();
+  await expect(page.getByRole('link', { name: 'Getting started', exact: true })).toHaveAttribute('aria-current', 'page');
+  await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+  await expect(page.locator('.guide table')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.getByRole('link', { name: 'Record your findings', exact: true }).click();
+  await expect(page).toHaveURL(/#\/guide\/findings$/);
+  await expect(page.locator('.guide')).toContainText('What were we curious about?');
+});
+
+test('guide links resolve to real app pages', async ({ page }) => {
+  const routes = ['/create', '/guide/setup', '/guide/contributing', '/guide/findings',
+    ...['modern-web', 'code-quality', 'developer-experience', 'experimental-projects']
+      .flatMap(id => ['', '/explore', '/examples'].map(suffix => `/track/${id}${suffix}`)),
+    '/track/code-quality/fallow'];
+  const links = new Set<string>();
+  for (const route of routes) {
+    await page.goto('/#' + route);
+    await expect(page.locator('.guide')).not.toBeEmpty();
+    for (const href of await page.locator('.guide a').evaluateAll(anchors => anchors.map(a => a.getAttribute('href')!))) {
+      if (href.startsWith('#/')) links.add(href);
+      else expect(href).toMatch(/^https?:\/\//);
+    }
+  }
+  for (const href of links) {
+    await page.goto('/' + href);
+    await expect(page.getByRole('heading', { level: 1 })).not.toHaveText('Page not found');
   }
 });

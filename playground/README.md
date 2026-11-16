@@ -2,18 +2,16 @@
 
 An optional local starting point for [choosing a track](../README.md). Examples are reference destinations, not steps you have to complete.
 
-## First run
-
-Use Node 24 and follow [Run Locally](../README.md#start-here). Keep your own project’s runtime when working elsewhere.
-
-The gallery contains working references; **Create a demo** opens a separate minimal template. Demo inputs reset on refresh.
+Participant setup and troubleshooting live in [the app](https://frontend-chapter-day.vercel.app/#/guide/setup); edit them in `src/content/setup.md`.
 
 ## Architecture and where to work
 
 | File | Responsibility |
 | --- | --- |
 | `src/app/App.tsx` | Shared navigation, track pages and gallery |
-| `src/app/tracks.ts` | Four tracks and suggested starting points |
+| `src/app/tracks.ts` | Four track identities |
+| `src/content/` | Canonical participant guides, rendered as Markdown inside the app |
+| `src/app/Guide.tsx` | Lazy-loaded Markdown renderer with tables; raw HTML disabled |
 | `src/demo-contract.ts` | Shared `DemoDefinition` type |
 | `src/demos/<your-idea>/demo.config.ts` | Demo metadata and component loader, discovered by the host |
 | `src/demos/template/` | Copyable bootstrap, separate from completed examples |
@@ -45,35 +43,11 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 | `npm run check` | Type check, logic tests and production bundle |
 | `npm ls --depth=0` | Inspect direct installed dependencies for a quality investigation |
 
-## Browser checks
-
-For UI/browser changes, run these from `playground/` after the root install:
-
-```sh
-npx playwright install chromium
-npm run test:browser
-```
-
-Alternatively, use an existing Chrome installation by setting `PLAYWRIGHT_CHANNEL=chrome` in your shell, then run `npm run test:browser`. The tests build and serve the production bundle themselves on port 4173; stop any other server on that port first.
-
-## Troubleshooting
-
-- **Cannot clone / repository not found:** this is a private repository. Check the signed-in account and ask the organiser for access; no token should go into a command or source file.
-- **Node/npm not found or engine warning:** check `node --version` and `npm --version`; activate Node 24 in your terminal and retry.
-- **Port already used:** open the URL Vite actually prints, or stop your own previous process. Use that exact same origin in both signal tabs.
-- **No signal arrives:** both tabs must be open at the same scheme, host and port, in the same browser profile/context. The sending tab does not receive its own message; closed tabs do not replay messages. This is not cross-computer communication.
-- **Worker finishes too quickly to observe:** choose a larger workload or inspect DevTools. Timing depends on hardware. The main-thread comparison deliberately pauses interaction briefly; start with the small workload.
-- **Install failure:** retain the error, check runtime and network/proxy access, and ask a peer. Pair or use your own existing project rather than spending the day reinstalling tools.
-
-The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSocket server, WebRTC signalling server or WebAssembly toolchain is included. Those remain optional directions for participants to explore.
-
-The production build has one HTML entry and lazy demo chunks. Code Quality & Maintainability can use an existing codebase, and Developer Experience & Tooling's independent Node scripts under `tracks/developer-experience/` run without starting the app.
-
 ## Internal repository and theme
 
 See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally; the temporary [Vercel gallery](https://frontend-chapter-day.vercel.app) is documented in [hosting and removal](../docs/hosting.md).
 
-`src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Set optional `VITE_SOURCE_URL` in `playground/.env.local` using `.env.example` to link guides to your source repository. Without it, the app shows editor paths.
+`src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant Markdown lives in `src/content/` and renders inside the app. Keep it canonical; do not duplicate track guides elsewhere.
 
 ## Maintainer reference
 

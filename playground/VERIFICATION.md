@@ -1,5 +1,16 @@
 # Current verification status
 
+## In-app participant guides
+
+Branch `feat/in-app-track-guides`, based on `506a9a9`:
+
+- Participant guides moved to `src/content/`; track starts, exploration tables, worked examples, setup, demo creation, contributions and findings render in the app.
+- `npm ci` and `npm run check` passed on Node 24.19.0 / npm 11.6.2: 20 generator/unit tests, TypeScript and production build.
+- All 13 Chrome browser journeys passed, including all track guides, internal guide links, back/reload navigation and phone-width table scrolling.
+- Fallow doctor passed all seven applicable checks. Changed-code audit against `origin/main` passed; advisory complexity and styling findings remain. App cyclomatic complexity decreased from 21 to 16.
+- Markdown and GFM tables load in a separate guide chunk (approximately 66 kB gzip including content). Raw HTML is disabled. No new documentation server or source-link environment setting is needed.
+- Production deployment and independent participant acceptance are not claimed for this branch.
+
 ## Participant documentation revision · 16 November 2026
 
 Checked in `docs/participant-journeys`, based on `4ad159a`, with only Markdown changes:

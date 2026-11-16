@@ -30,10 +30,10 @@ and unfinished experiments are welcome.
 
 | Track | Explore |
 | --- | --- |
-| [🌐 Modern Web Capabilities](tracks/modern-web/README.md) | Browser APIs, interactive visuals, Workers and communication |
-| [🔍 Code Quality & Maintainability](tracks/code-quality/README.md) | Dependencies, complexity, architecture and test confidence |
-| [🛠️ Developer Experience & Tooling](tracks/developer-experience/README.md) | Feedback loops, development friction and workflow automation |
-| [🚀 Experimental Projects](tracks/experimental-projects/README.md) | Games, generative art, visualisations or your own experiment |
+| [🌐 Modern Web Capabilities](https://frontend-chapter-day.vercel.app/#/track/modern-web) | Browser APIs, interactive visuals, Workers and communication |
+| [🔍 Code Quality & Maintainability](https://frontend-chapter-day.vercel.app/#/track/code-quality) | Dependencies, complexity, architecture and test confidence |
+| [🛠️ Developer Experience & Tooling](https://frontend-chapter-day.vercel.app/#/track/developer-experience) | Feedback loops, development friction and workflow automation |
+| [🚀 Experimental Projects](https://frontend-chapter-day.vercel.app/#/track/experimental-projects) | Games, generative art, visualisations or your own experiment |
 
 Each track has starting points, worked examples and optional challenges.
 Use this playground or an existing project where it fits.
@@ -57,21 +57,22 @@ npm run demo:new
 ```
 
 Name your demo, choose a track, then edit `playground/src/demos/<id>/Demo.tsx`.
-It appears in the gallery automatically. See the [demo guide](playground/src/demos/template/README.md)
+It appears in the gallery automatically. See the [demo guide](https://frontend-chapter-day.vercel.app/#/create)
 for the typed contract and manual setup.
 
 ## 🤝 Share Your Work
 
 Open a pull request with something to try and a short note about what you learned.
 Code, tools and investigations all belong here. Run `npm run check` before sharing;
-the [contribution guide](CONTRIBUTING.md) covers the remaining checks.
+the [contribution guide](https://frontend-chapter-day.vercel.app/#/guide/contributing) covers the remaining checks.
 
 <a id="documentation"></a>
 ## 📚 Reference
 
-- [Track guides](#tracks) and [findings template](tracks/findings.md)
-- [Contributing](CONTRIBUTING.md)
-- [Setup, architecture and troubleshooting](playground/README.md)
+- [Track guides](#tracks) and [findings template](https://frontend-chapter-day.vercel.app/#/guide/findings)
+- [Contributing](https://frontend-chapter-day.vercel.app/#/guide/contributing)
+- [Setup and troubleshooting](https://frontend-chapter-day.vercel.app/#/guide/setup)
+- [App architecture](playground/README.md)
 
 ---
 

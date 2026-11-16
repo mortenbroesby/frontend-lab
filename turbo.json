@@ -1,7 +1,6 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "globalDependencies": ["tracks/developer-experience/**/*.mjs"],
-  "globalEnv": ["VITE_SOURCE_URL"],
   "tasks": {
     "dev": { "cache": false, "persistent": true },
     "preview": { "cache": false, "persistent": true },
