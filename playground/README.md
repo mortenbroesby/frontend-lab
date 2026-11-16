@@ -4,23 +4,7 @@ An optional local starting point for [choosing a track](../README.md). Examples 
 
 ## First run
 
-Use **Node.js 24.x with npm** and a current browser. Install dependencies from the repository root, where the npm workspace lockfile lives. The baseline was chosen to keep one supported runtime for Vite and Node's built-in TypeScript test runner. The exact tested environment is recorded in [verification](VERIFICATION.md). If you use nvm, `nvm use` reads `.nvmrc`; otherwise use your usual Node installation method. Keep your own project's runtime if you are not using this playground.
-
-From the repository root:
-
-```sh
-npm ci
-npm run dev
-```
-
-Open the local address printed by Vite (usually `http://127.0.0.1:5173`). Keep the terminal running. Stop with Ctrl+C. The server listens on loopback; no LAN exposure is needed.
-
-To obtain the private repository first, use your preferred authenticated GitHub clone method. For SSH access:
-
-```sh
-git clone <SSH-URL-FROM-THIS-REPOSITORY> frontend-chapter-day
-cd frontend-chapter-day
-```
+Follow the root [Start Here](../README.md#start-here) instructions for cloning, Node 24, installation and startup. Keep your own project’s runtime if you are not using this playground. The [verification record](VERIFICATION.md) distinguishes observed checks from untested environments.
 
 The home page opens four track pages and a shared demo gallery. Try the D3 constellation, SVG postcard, Worker comparison or local tab messaging; B and C include investigation/tool walkthroughs. **Create a demo** opens a separate minimal template. Inputs are ephemeral; save code and record findings you want to keep.
 
@@ -58,7 +42,9 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 | `npm run check` | Type check, logic tests and production bundle |
 | `npm ls --depth=0` | Inspect direct installed dependencies for a quality investigation |
 
-Browser checks are optional for participants. Maintainers can run:
+## Browser checks
+
+Trying examples does not require browser automation. For contributions that change UI/browser behaviour, run these from `playground/` after the root install:
 
 ```sh
 npx playwright install chromium

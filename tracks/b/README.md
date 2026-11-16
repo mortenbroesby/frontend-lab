@@ -1,12 +1,34 @@
 # Track B · Code Quality & Maintainability
 
-Investigate dependencies, complexity, architecture, test confidence or automated analysis in a codebase you can access.
+For you if you want stronger evidence for a dependency, test, complexity or architecture decision in a real React codebase.
 
-1. **[Start small: investigation bootstrap](bootstrap.md)** — choose a repository and one question; capture evidence before proposing changes.
-2. **[Read a worked investigation](examples.md)** — a real test-coverage gap in this kit, the evidence, a false-positive concern and a small verified improvement.
-3. **[Explore with Fallow](fallow.md)** — run the installed analyzer, trace a real finding and decide what it means.
-4. **Choose your next step:** investigate a different boundary, validate an analysis tool's findings or explore your own codebase.
+**You need:** An accessible repository, its documented runtime/checks and an editor. This working playground is the fallback; no deliberately broken app is required.
 
-Use the included Fallow commands or your preferred tools. The playground is a working codebase to investigate; no deliberately broken application is required.
+## Get a first result
+
+[Start an investigation](bootstrap.md). Choose one question and trace it to a file, caller or test before deciding whether to change anything.
+
+**Success check:** You can point to evidence, explain an alternative interpretation, and justify keeping the code or making one small change. If you change it, rerun the relevant checks.
+
+## Explore further
+
+Pick one starting point; Fallow is optional for these investigations:
+
+| Starting point | First observation | Optional stretch |
+| --- | --- | --- |
+| Dependency health | In this repository, run `npm explain d3-force` and follow its import into the constellation. In your own project, inspect one dependency’s callers and maintenance needs using its normal package-manager tools. | Use `npm outdated` to identify version drift, then read release notes before proposing an upgrade. Network/registry access is needed; outdated does not mean unsafe. |
+| Complexity | Read one component or function that is hard to explain. List its decisions and find the tests covering them; use existing editor/analyzer metrics if available. | Try one cohesive simplification on a branch and compare readability and behaviour with the baseline. A lower score alone is not proof of improvement. |
+| Architectural boundaries | Trace registry → lazy demo → helper imports in this app, or one feature in your own repository. Sketch the actual direction of dependencies. | State an intended boundary, search for imports crossing it and use existing lint rules if the project has them. Do not add rules before deciding what they protect. |
+| Test confidence | Choose a meaningful input or user behaviour and find the assertion that would catch it breaking. | Add one missing boundary test and show it detects the relevant failure; avoid duplicating the completed example. |
+
+For this repository, run commands at its root after `npm ci`. In another repository, use its documented setup and checks. Keep private source and analysis within the permitted audience.
+
+The [completed test-gap investigation](examples.md) shows the reasoning; its fix is already present. The [Fallow guide](fallow.md) offers optional local analysis and agent setup. Use your own tools if they fit.
+
+## Show what you discovered
+
+Show the question, one piece of evidence and your decision. A justified “leave it alone” is a useful result; no gallery demo is required.
+
+Capture a few [findings](../findings.md), then use the [contribution guide](../../CONTRIBUTING.md) to share code or notes. You may build towards a reference or pursue your own idea.
 
 [Choose another track](../../README.md#tracks)
