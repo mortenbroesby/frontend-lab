@@ -8,7 +8,8 @@
     "./mount": "./mount.tsx",
     "./boundary": "./DemoBoundary.tsx",
     "./styles.css": "./styles.css",
-    "./gallery-link": "./gallery-link.ts"
+    "./gallery-link": "./gallery-link.ts",
+    "./mark": "./LabMark.tsx"
   },
   "dependencies": {
     "react": "19.3.1",

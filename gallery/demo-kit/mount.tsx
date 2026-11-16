@@ -1,3 +1,4 @@
+import { LabMark } from './LabMark';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { requirementLabels } from './types';
@@ -18,6 +19,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
       {trackHref && (
         <header className="site-header">
           <a className="wordmark" href={galleryHref('/')}>
+            <LabMark />
             Front-End Lab
           </a>
           <nav aria-label="Lab">

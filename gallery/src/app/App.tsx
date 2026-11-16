@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button } from '@lab/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
+import { LabMark } from '@lab/demo-kit/mark';
 import { requirementLabels } from '@lab/demo-kit/types';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
@@ -216,7 +217,8 @@ function LabNavigation({ route }: { route: string }) {
         >
           <div className="mobile-navigation-header">
             <DialogTitle className="wordmark">
-              <span aria-hidden="true">↗</span>Front-End Lab
+              <LabMark />
+              Front-End Lab
             </DialogTitle>
             <DialogClose asChild>
               <Button variant="ghost" size="lg" aria-label="Close navigation menu">
@@ -292,7 +294,8 @@ export function App() {
       </a>
       <header className="site-header">
         <a className="wordmark" href="#/">
-          <span aria-hidden="true">↗</span>Front-End Lab
+          <LabMark />
+          Front-End Lab
         </a>
         <LabNavigation route={route} />
       </header>
