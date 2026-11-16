@@ -20,7 +20,7 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
 | `demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
-| `tests/` | Small logic checks |
+| `tests/` | Gallery metadata-discovery checks; demo tests live beside demo logic |
 
 Open **Create a demo** in the app for the generator and independent-app commands. Each demo owns its entry, state, styles and cleanup. The gallery reads metadata and links to the app; it does not import demo components.
 
@@ -42,12 +42,14 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 | --- | --- |
 | `npm run dev` | Local development with fast refresh |
 | `npm run typecheck` | TypeScript check without producing files |
-| `npm test` | Node tests for art, computation and Developer Experience & Tooling scripts |
+| `npm test` | Gallery metadata-discovery tests |
 | `npm run test:watch` | Repeat those tests when source changes; stop with Ctrl+C |
 | `npm run build` | Type check and production bundle |
 | `npm run preview` | Serve an already built bundle locally |
-| `npm run check` | Type check, logic tests and production bundle |
+| `npm run check` | Type check and production bundle |
 | `npm ls --depth=0` | Inspect direct installed dependencies for a quality investigation |
+
+From the repository root, `npm test` includes generator, script and demo-workspace tests; `npm run check` also type-checks and builds the gallery. Use `npm test --workspace @lab/demo-workers` for a focused demo check.
 
 ## Internal repository and theme
 
@@ -57,6 +59,6 @@ See the [migration guide](docs/internal-migration.md) for GitHub Enterprise Clou
 
 ## Maintainer reference
 
-[Verification evidence](docs/VERIFICATION.md) · [Hosting and removal](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
+[Architecture](docs/architecture.md) · [Verification evidence](docs/VERIFICATION.md) · [Hosting and removal](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
 
 Each demo has its own dev/build/preview commands: `npm run dev --workspace @lab/demo-art`, for example. The gallery includes their HTML entries and Open standalone demo links. See **Create a demo** in the app for the canonical standalone guide.

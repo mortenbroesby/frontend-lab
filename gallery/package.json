@@ -11,9 +11,9 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/art.test.ts tests/compute.test.ts tests/demo-contract.test.ts ../tracks/developer-experience/bootstrap/inspect.test.mjs ../tracks/developer-experience/examples/commands.test.mjs",
-    "test:watch": "node --test --watch tests/art.test.ts tests/compute.test.ts tests/demo-contract.test.ts ../tracks/developer-experience/bootstrap/inspect.test.mjs ../tracks/developer-experience/examples/commands.test.mjs",
-    "check": "npm run typecheck && npm test && vite build"
+    "test": "node --test tests/demo-contract.test.ts",
+    "test:watch": "node --test --watch tests/demo-contract.test.ts",
+    "check": "npm run typecheck && vite build"
   },
   "dependencies": {
     "react": "19.3.1",

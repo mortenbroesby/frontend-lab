@@ -18,6 +18,16 @@ A self-directed React gallery: four tracks, small experiments and shared discove
 - Prefer existing code and browser APIs. Preserve accessibility, error handling and resource cleanup.
 - Keep this repository participant-focused. Prepare for an internal GitHub Enterprise Cloud repository. Use the Front-End Lab theme without requiring Sapphire. Keep temporary hosting out of participant instructions and links; the app must work locally or on any host. Deployment settings belong in gallery/docs/hosting.md.
 
+## Architecture
+
+Apply [our EFA interpretation](gallery/docs/architecture.md) without adding ceremonial layers.
+
+- Keep gallery routing/composition in `gallery/src/app/`; discover only demo metadata and HTML entry URLs.
+- Each demo owns its UI, state, effects, helpers and focused tests. Do not import another demo’s implementation or gallery internals.
+- Import shared kit code through `@lab/demo-kit` exports. The kit must not import gallery app code or demos; shared UI stays free of demo-specific state and service calls.
+- Keep pure calculations separate from React and browser effects when useful. Colocate their existing tests; keep small demos flat. Extract abstractions only for a demonstrated shared need.
+- Entry files assemble dependencies; the root coordinates workspace commands. Do not make gallery tests responsible for demo logic.
+
 ## Delivery
 
 - Use Node 24 and the root npm lockfile. Install only when dependencies need it.
