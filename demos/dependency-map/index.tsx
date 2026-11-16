@@ -346,7 +346,7 @@ export default function Constellation() {
           </p>
           <p>
             Add a dependency to a demo’s <code>package.json</code>; reload to find its connection.{' '}
-            <code>demos/constellation/data.ts</code> turns manifests into nodes and edges;{' '}
+            <code>demos/dependency-map/data.ts</code> turns manifests into nodes and edges;{' '}
             <code>graph.ts</code> traces consumers.
           </p>
           {createHref && <a href={createHref}>Create a graph demo →</a>}

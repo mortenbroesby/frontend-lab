@@ -1,5 +1,5 @@
 {
-  "name": "@lab/demo-art",
+  "name": "@lab/demo-fallow-code-analysis",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -7,14 +7,11 @@
     "dev": "vite --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
     "build": "vite build --config ../../gallery/vite.demo.config.ts",
     "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
-    "test": "node --test art.test.ts",
-    "test:watch": "node --test --watch art.test.ts",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run build"
   },
   "dependencies": {
     "@lab/demo-kit": "*",
-    "react": "19.3.1",
-    "@lab/ui": "*"
+    "react": "19.3.1"
   }
 }

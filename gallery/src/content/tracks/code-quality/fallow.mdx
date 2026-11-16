@@ -49,7 +49,7 @@ Trace a real dependency from the repository root:
 npm run analyze:dead-code -- --trace-dependency d3-force
 ```
 
-Follow the result into `demos/constellation/index.tsx`. Compare imports with uses. What does the dependency provide, and what would replacing it cost? Keeping it can be justified.
+Follow the result into `demos/dependency-map/index.tsx`. Compare imports with uses. What does the dependency provide, and what would replacing it cost? Keeping it can be justified.
 
 Before trusting an unused-code finding, check discovery includes gallery metadata, demo HTML entries and Worker modules.
 

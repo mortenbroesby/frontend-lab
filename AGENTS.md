@@ -24,6 +24,7 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 
 ## Development
 
+- Name demo folders for the experiment, using descriptive kebab-case (for example `cross-tab-messaging`). Match the package name to `@lab/demo-<folder-id>`.
 - Use `npm run demo:new` and the [develop-demo skill](.agents/skills/develop-demo/SKILL.md). Require a name; preserve ID validation, overwrite protection and typed discovery. Keep starters separate from finished examples.
 - Use Node 24, npm workspaces, Turborepo and the root lockfile. Install only when dependencies change.
 - Each demo extends `tsconfig.base.json` and owns `typecheck`, `build` and `check` scripts; tests are optional. Preserve Turbo's kit type dependencies and the gallery/dependency-map cross-workspace inputs.

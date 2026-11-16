@@ -31,7 +31,7 @@ Edit `src/content/tracks/<track-id>/*.mdx`. Content compiles at build time and l
 - **Ideas:** `TrackPage` selects the `ideas` layout explicitly. Use `IdeaGrid` with `Idea` children, each with a `title`, short `summary`, and full explanation/resources inside. `Inspiration` holds reference examples; `IdeaNote` holds an optional closing sentence.
 - **Instructions:** the default `document` layout provides a narrow reading column. `GuideView` supplies loading and error states for both layouts.
 - **Internal links:** use hash routes such as `#/track/modern-web` and `#/guide/setup`.
-- **Demo links:** use `<DemoLink id="signals">Open Signals</DemoLink>`. The ID must be a literal matching a demo folder. The MDX compiler rejects invalid references; the link resolves through discovered metadata to the standalone entry.
+- **Demo links:** use `<DemoLink id="cross-tab-messaging">Open cross-tab messaging</DemoLink>`. The ID must be a literal matching a demo folder. The MDX compiler rejects invalid references; the link resolves through discovered metadata to the standalone entry.
 
 Keep full explanations and external references in the MDX. Do not link to temporary deployment domains or raw guide files.
 

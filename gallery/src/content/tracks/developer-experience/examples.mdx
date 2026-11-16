@@ -2,9 +2,9 @@
 
 ### React Render Detective
 
-<DemoLink id="render-detective">Open React Render Detective</DemoLink>. Update a parent in each panel and compare the tile commit counts. Why does `memo` fail to skip work when a prop is a new object? Then like one tile: local state still updates.
+<DemoLink id="react-render-detective">Open React Render Detective</DemoLink>. Update a parent in each panel and compare the tile commit counts. Why does `memo` fail to skip work when a prop is a new object? Then like one tile: local state still updates.
 
-Change the object spread in `demos/render-detective/experiment.tsx`, then inspect the difference with React Scan. Counts are observations, not a speed benchmark.
+Change the object spread in `demos/react-render-detective/experiment.tsx`, then inspect the difference with React Scan. Counts are observations, not a speed benchmark.
 
 ### Find your shortest feedback loop
 
@@ -47,9 +47,9 @@ This demonstrates regression detection without a wrapper. Compare your usual wor
 After the normal root install:
 
 ```sh
-npm exec -- turbo run build --filter=@lab/demo-render-detective --dry=json
-npm exec -- turbo run build --filter=@lab/demo-render-detective
-npm exec -- turbo run build --filter=@lab/demo-render-detective
+npm exec -- turbo run build --filter=@lab/demo-react-render-detective --dry=json
+npm exec -- turbo run build --filter=@lab/demo-react-render-detective
+npm exec -- turbo run build --filter=@lab/demo-react-render-detective
 npm exec -- turbo run build --affected --dry=json
 ```
 

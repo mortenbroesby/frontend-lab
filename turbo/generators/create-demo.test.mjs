@@ -54,8 +54,8 @@ test('rejects existing demo folders without modifying work', async (t) => {
   const root = await fixture(t);
   const path = join(root, 'gallery/src/demo-registry.ts');
   const before = await readFile(path, 'utf8');
-  await mkdir(join(root, 'demos/art'));
-  await assert.rejects(createDemo(root, { ...answers, id: 'art' }), /exist/i);
+  await mkdir(join(root, 'demos/generative-postcard'));
+  await assert.rejects(createDemo(root, { ...answers, id: 'generative-postcard' }), /exist/i);
   await mkdir(join(root, 'demos/chapter-quiz'));
   await writeFile(join(root, 'demos/chapter-quiz/keep.txt'), 'participant work');
   await assert.rejects(createDemo(root, answers), /exist/i);

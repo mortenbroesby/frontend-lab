@@ -1,8 +1,8 @@
 # React Render Detective
 
 ```sh
-npm run dev --workspace @lab/demo-render-detective
-npm run check --workspace @lab/demo-render-detective
+npm run dev --workspace @lab/demo-react-render-detective
+npm run check --workspace @lab/demo-react-render-detective
 ```
 
 Compare three identical tile collections: plain children, memoized children receiving new objects, and memoized children receiving stable objects. Type in a collection note or click **Update parent**, then inspect the tile commit counts and React Scan overlay. Click a tile’s Like button to see that local state still updates through memo. **Reset experiment** remounts all panels.

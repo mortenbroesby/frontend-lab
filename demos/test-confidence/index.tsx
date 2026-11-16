@@ -11,9 +11,10 @@ export default function Quality() {
       </p>
       <h3>Improvement</h3>
       <p>
-        <code>demos/workers/compute.test.ts</code> now checks <code>countPrimes(MAX_LIMIT)</code>.
-        Run <code>npm test --workspace @lab/demo-workers</code> from the repository root. This adds
-        confidence; no algorithm bug was found.
+        <code>demos/web-worker-comparison/compute.test.ts</code> now checks{' '}
+        <code>countPrimes(MAX_LIMIT)</code>. Run{' '}
+        <code>npm test --workspace @lab/demo-web-worker-comparison</code> from the repository root.
+        This adds confidence; no algorithm bug was found.
       </p>
       <h3>A false lead</h3>
       <p>Both buttons call the same pure calculation. Trace imports before proposing a refactor.</p>

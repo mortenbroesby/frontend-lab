@@ -17,7 +17,7 @@ export default function generator(plop) {
       {
         type: 'input',
         name: 'id',
-        message: 'Demo ID (folder and URL):',
+        message: 'Descriptive demo ID (folder and URL, e.g. cross-tab-messaging):',
         default: (answers) =>
           answers.title
             .trim()

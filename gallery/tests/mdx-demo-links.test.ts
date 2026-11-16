@@ -14,8 +14,11 @@ const link = (value: unknown) => ({
 });
 
 test('MDX demo links validate nested references and require a literal known ID', () => {
-  const validate = demoLinks(new Set(['signals']));
-  validate({ type: 'root', children: [{ type: 'paragraph', children: [link('signals')] }] }, file);
+  const validate = demoLinks(new Set(['cross-tab-messaging']));
+  validate(
+    { type: 'root', children: [{ type: 'paragraph', children: [link('cross-tab-messaging')] }] },
+    file,
+  );
   for (const value of [
     'typo',
     undefined,

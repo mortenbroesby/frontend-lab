@@ -2,4 +2,4 @@ import { mountDemo } from '@lab/demo-kit/mount';
 import Demo from './index';
 import definition from './demo.config';
 
-mountDemo(Demo, definition, 'fallow');
+mountDemo(Demo, definition, 'react-render-detective');

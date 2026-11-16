@@ -155,9 +155,9 @@ export default function Ecosystem() {
       <details>
         <summary>Change the rules</summary>
         <p>
-          In <code>demos/ecosystem/world.ts</code>, creatures seek the nearest food they sense or
-          wander. Try distant food, avoiding neighbours or predators. <code>index.tsx</code> draws
-          the world.
+          In <code>demos/ecosystem-simulation/world.ts</code>, creatures seek the nearest food they
+          sense or wander. Try distant food, avoiding neighbours or predators.{' '}
+          <code>index.tsx</code> draws the world.
         </p>
         <p>
           A toy, not a biological model: no reproduction, starvation or food regrowth. Reset repeats

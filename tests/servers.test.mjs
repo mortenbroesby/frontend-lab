@@ -8,7 +8,7 @@ const root = resolve(import.meta.dirname, '..');
 // HTTP smoke only: no browser installation or UI automation.
 for (const [name, directory, config] of [
   ['gallery', '.', 'gallery/vite.config.ts'],
-  ['standalone', 'demos/constellation', 'gallery/vite.demo.config.ts'],
+  ['standalone', 'demos/dependency-map', 'gallery/vite.demo.config.ts'],
 ]) {
   for (const mode of ['development', 'preview']) {
     test(`${name} ${mode} serves HTML and its entry module`, { timeout: 30_000 }, async (t) => {
