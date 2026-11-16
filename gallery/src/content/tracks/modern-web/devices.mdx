@@ -1,0 +1,28 @@
+# Devices talking to each other
+
+Turn two browsers into a shared experience: a cheer, a control panel, or the first move in a multiplayer game.
+
+<div className="button-row">
+  <a className="button" href="#/demo/device-rally">Try Device Rally</a>
+  <a className="button secondary" href="#/track/modern-web/get-started">Get started locally</a>
+</div>
+
+## Try it together
+
+Open Device Rally in two browsers. Join the same room code, wait for a peer connection, then send a cheer. Try leaving and rejoining: what happens to the connection and messages?
+
+Device Rally uses WebRTC with Trystero public signaling. It needs internet access and localhost or trusted HTTPS. A plain LAN HTTP address on your phone is not a supported setup for this demo. The workshop network and physical phones still need verification; if peers cannot connect, try two local browser windows first.
+
+## Make one change
+
+After [local setup](#/guide/setup), open `demos/device-rally/index.tsx`. Find the cheer interaction and change its presentation. Try it in both browsers before introducing a new message or shared state.
+
+Keep the finished example as a reference if you prefer to [create your own React demo](#/create). A new demo starts independently; it does not automatically include WebRTC or signaling.
+
+## Follow your curiosity
+
+- **Small:** invent a new reaction and see it arrive in the other browser.
+- **Further:** let a phone control one visual property on a laptop, using trusted HTTPS.
+- **Stretch:** design how peers recover shared state after reconnecting.
+
+Only need tabs in one browser? [Signals](#/demo/signals) explores BroadcastChannel without cross-device networking. WebSockets and SSE are other directions, but need a server; they are not supplied by this starter.

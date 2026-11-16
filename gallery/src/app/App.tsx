@@ -14,25 +14,25 @@ function Gallery({ track }: { track?: TrackId }) {
 }
 
 function TrackGuide({ track, route }: { track: typeof tracks[number]; route: string }) {
-  const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'get-started';
+  const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'overview';
   return <>
-        <nav className="guide-nav" aria-label="Track guide">
-          {[['get-started', 'Getting started'], ['explore', 'Explore further'], ['examples', 'Worked examples'], ...(track.id === 'code-quality' ? [['fallow', 'Fallow guide']] : [])].map(([page, label]) =>
-            <a key={page} aria-current={trackPage === page ? 'page' : undefined} href={`#/track/${track.id}${page === 'get-started' ? '' : '/' + page}`}>{label}</a>)}
-        </nav>
-        <GuideView document={`tracks/${track.id}/${trackPage}`} />
-        <h2>Reference examples</h2><Gallery track={track.id} /></>;
+    <nav className="guide-nav" aria-label="Track guide">
+      {[['overview', 'Overview'], ['examples', 'Explore demos'], ['get-started', 'Get started'], ['explore', 'Explore further'], ...(track.id === 'code-quality' ? [['fallow', 'Fallow guide']] : [])].map(([page, label]) =>
+        <a key={page} aria-current={trackPage === page ? 'page' : undefined} href={`#/track/${track.id}${page === 'overview' ? '' : '/' + page}`}>{label}</a>)}
+    </nav>
+    {trackPage === 'examples' ? <><Gallery track={track.id} /><GuideView document={`tracks/${track.id}/examples`} /></> : <GuideView document={`tracks/${track.id}/${trackPage}`} />}
+  </>;
 }
 
 function findTrack(route: string) {
-  return tracks.find(t => [`/track/${t.id}`, `/track/${t.id}/explore`, `/track/${t.id}/examples`, ...(t.id === 'code-quality' ? ['/track/code-quality/fallow'] : [])].includes(route));
+  return tracks.find(t => [`/track/${t.id}`, ...['get-started', 'explore', 'examples', ...(t.id === 'modern-web' ? ['devices'] : []), ...(t.id === 'code-quality' ? ['fallow'] : [])].map(page => `/track/${t.id}/${page}`)].includes(route));
 }
 
 function pageTitle(route: string, track?: typeof tracks[number], demo?: typeof demos[number]) {
   if (track) return track.title;
   if (demo) return demo.title;
   if (guides[route]) return guides[route].title;
-  if (route === '/') return 'Follow your what if.';
+  if (route === '/') return 'Choose your track.';
   if (route === '/create') return 'Make room for your idea.';
   return 'Page not found';
 }
@@ -58,11 +58,10 @@ export function App() {
     <header className="site-header"><a className="wordmark" href="#/">✳ THE FRONT-END LAB</a><nav aria-label="Lab"><a href="#/">All tracks</a><a href="#/create">Create a demo</a><a href="#/guide/setup">Local setup</a></nav></header>
     <main id="content" tabIndex={-1}>
       <section className="starter-welcome"><p className="eyebrow">{demo ? `${trackTitle(demo.track)} · ${demo.author}` : 'Four tracks. Shared discoveries.'}</p><h1>{title}</h1>
-        <p>{track?.description ?? demo?.description ?? 'Explore a reference, start your own experiment, and share what you discover. Go solo or team up.'}</p>
+        <p>{track?.description ?? demo?.description ?? 'Find something that sparks your curiosity. Try a demo or get straight to experimenting—solo or together.'}</p>
       </section>
       {route === '/' && <>
-        <div className="journey-grid">{tracks.map(t => <article className="journey-card" data-track={t.id} key={t.id}><h2>{t.title}</h2><p>{t.description}</p><a href={`#/track/${t.id}`}>Explore {t.title} →</a></article>)}</div>
-        <section className="examples-intro"><div><p className="eyebrow">Experience it. Take it apart. Make it yours.</p><h2>The shared gallery</h2><p>Reference examples live here alongside demos contributed through Git.</p></div></section><Gallery />
+        <div className="journey-grid">{tracks.map(t => <article className="journey-card" data-track={t.id} key={t.id}><h2>{t.title}</h2><p>{t.description}</p><a href={`#/track/${t.id}`}>Choose this track →</a></article>)}</div>
       </>}
       {track && <TrackGuide track={track} route={route} />}
       {guide && <GuideView document={guide.document} />}
