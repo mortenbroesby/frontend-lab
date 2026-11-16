@@ -63,7 +63,7 @@ The earlier unused `marker` export exercise depended on the manual demo registry
 
 The initial health report identified `App` in `playground/src/app/App.tsx` with cyclomatic complexity 21. Read its route selection and JSX conditions. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
 
-No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured test coverage**, and this app already has browser journeys. A high score does not establish a defect. If you try a refactor, keep routes and error handling intact and run `npm run check` plus the documented browser checks. A reasoned decision to leave the code alone is a valid outcome.
+No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured test coverage**, and the retained tests cover selected logic. A high score does not establish a defect. If you try a refactor, keep routes and error handling intact and choose a focused check for the behaviour you changed. A reasoned decision to leave the code alone is a valid outcome.
 
 ## How this repository is configured
 

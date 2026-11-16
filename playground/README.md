@@ -20,7 +20,7 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
 | `../packages/demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `../packages/demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
-| `tests/` | Logic checks and browser journeys |
+| `tests/` | Small logic checks |
 
 Open **Create a demo** in the app. Run `npm run demo:new` from the repository root; Turborepo creates an independent app workspace with `index.tsx`, `demo.config.ts`, HTML/TypeScript entries and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. The gallery reads metadata only. Demo components run in their own pages; each React starter has a render-error boundary and owns resource cleanup.
 

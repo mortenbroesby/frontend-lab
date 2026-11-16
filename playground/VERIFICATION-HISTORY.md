@@ -1,3 +1,5 @@
+> Historical record only. Browser tests and their tooling have since been removed; these are not current verification requirements. See [current guidance](VERIFICATION.md).
+
 # Historical verification record
 
 Earlier implementation checkpoints, retained as evidence rather than setup instructions. Some commands, paths and integrations below were subsequently removed. Use [current status](VERIFICATION.md), [Start Here](../README.md#start-here) and the [Fallow guide](src/content/tracks/code-quality/fallow.mdx) for current guidance.
@@ -38,7 +40,7 @@ After adding `d3-force`, `npm run check` passed and all eight browser journeys p
 
 ## Recheck after changes
 
-From the repository root: run `npm ci`, then `npm run check`. For UI or browser behaviour changes, run `npm run test:browser` with the optional browser setup documented in its README. Keep results tied to the commit being checked; do not claim a new result from an old run.
+From the repository root: run `npm ci`, then `npm run check`. Browser automation described here belonged to the earlier revision and has been removed. Keep results tied to the commit being checked; do not claim a new result from an old run.
 
 ## Shared lab SPA and contribution workflow — 16 November 2026
 

@@ -19,7 +19,6 @@
     "test:generator": "node --test turbo/generators/create-demo.test.mjs",
     "test": "npm run test:generator && turbo run test",
     "check": "npm run test:generator && turbo run check",
-    "test:browser": "turbo run test:browser",
     "analyze": "fallow",
     "analyze:dead-code": "fallow dead-code",
     "analyze:dupes": "fallow dupes",
@@ -27,8 +26,7 @@
     "analyze:architecture": "fallow architecture",
     "fallow:hooks": "fallow hooks install --target git",
     "fallow:status": "fallow doctor && fallow hooks status",
-    "analyze:changes": "fallow audit",
-    "test:devices": "npm run test:devices --workspace playground"
+    "analyze:changes": "fallow audit"
   },
   "devDependencies": {
     "@turbo/gen": "2.11.11",
