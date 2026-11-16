@@ -17,10 +17,16 @@
     "test:generator": "node --test turbo/generators/create-demo.test.mjs",
     "test": "npm run test:generator && turbo run test",
     "check": "npm run test:generator && turbo run check",
-    "test:browser": "turbo run test:browser"
+    "test:browser": "turbo run test:browser",
+    "analyze": "fallow",
+    "analyze:dead-code": "fallow dead-code",
+    "analyze:dupes": "fallow dupes",
+    "analyze:health": "fallow health",
+    "analyze:architecture": "fallow architecture"
   },
   "devDependencies": {
-    "turbo": "2.11.11",
-    "@turbo/gen": "2.11.11"
+    "@turbo/gen": "2.11.11",
+    "fallow": "3.43.1",
+    "turbo": "2.11.11"
   }
 }

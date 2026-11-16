@@ -2,6 +2,8 @@
 
 This is a completed investigation, separate from [your bootstrap](bootstrap.md). It examines the kit's actual code, not planted defects. The resulting test is already included; choose a different question rather than reproducing a known gap.
 
+For a second investigation using automated analysis, follow the [Fallow walkthrough](fallow.md).
+
 ## Problem and approach
 
 The Worker demo offers a workload up to two million. Before this investigation, tests checked known results up to 100,000 and rejected values above the supported maximum. The question was whether the **largest accepted input** had a verified result.

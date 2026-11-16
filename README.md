@@ -148,6 +148,7 @@ Run these from the repository root:
 | --- | --- |
 | `npm run dev` | Start the lab with fast refresh |
 | `npm run demo:new` | Create and register a named React demo |
+| `npm run analyze` | Explore code health with Fallow ([walkthrough](tracks/b/fallow.md)) |
 | `npm run check` | Run generator tests, app checks and the production build |
 | `npm run build` | Build the app through Turbo |
 | `npm run preview` | Serve the built app locally |
@@ -164,7 +165,7 @@ still need validation.
 - [App setup, architecture and troubleshooting](playground/README.md)
 - [Create and contribute a demo](playground/src/demos/template/README.md)
 - [Modern Web Capabilities](tracks/a/README.md)
-- [Code Quality & Maintainability](tracks/b/README.md)
+- [Code Quality & Maintainability](tracks/b/README.md) and [Fallow walkthrough](tracks/b/fallow.md)
 - [Developer Experience & Tooling](tracks/c/README.md)
 - [Experimental Projects](tracks/d/README.md)
 - [Findings and show-and-tell prompts](tracks/findings.md)

@@ -8,3 +8,6 @@ test-results/
 !.env.example
 
 .turbo/
+
+# Local Fallow caches and reports
+.fallow/

@@ -16,6 +16,10 @@ npm run check
 
 This uses Node 24.x and npm. Expect a dependency list, an explanation of why D3 is installed, and passing checks. None of these outputs proves that a dependency is unused or that a codebase has no problems.
 
+## Try automated analysis
+
+From the repository root, run `npm run analyze`. Fallow is installed by `npm ci`; no separate account or global installation is needed. Read the [Fallow walkthrough](fallow.md) for focused commands, expected findings and how to interpret an exit code of 1. You can investigate without creating a new demo.
+
 ## Make your investigation
 
 Copy these prompts into your own notes:
