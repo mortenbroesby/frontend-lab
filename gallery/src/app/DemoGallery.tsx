@@ -53,7 +53,16 @@ export function DemoGallery({ track }: { track?: TrackId }) {
       </div>
       {!entries.length && (
         <p className="empty-demos">
-          No demos match. Try another search, or <a href="#/create">create a demo</a>.
+          {track && !query.trim() ? (
+            <>
+              This track has practical guides to explore.{' '}
+              <a href={`#/track/${track}/guides`}>Open its guides</a>.
+            </>
+          ) : (
+            <>
+              No demos match. Try another search, or <a href="#/guides">explore the guides</a>.
+            </>
+          )}
         </p>
       )}
     </section>

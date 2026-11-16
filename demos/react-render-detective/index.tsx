@@ -1,3 +1,4 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useState } from 'react';
 import { Button } from '@lab/ui/button';
 import { Experiment } from './experiment';
@@ -26,6 +27,13 @@ export default function RenderDetective() {
         <Experiment mode="stable" />
       </div>
       <aside className="detective-notes">
+        {galleryHref('/track/developer-experience/rendering') && (
+          <p>
+            <a href={galleryHref('/track/developer-experience/rendering')}>
+              Understand this · Try it in your project
+            </a>
+          </p>
+        )}
         <h3>A render is a clue, not a bug.</h3>
         <p>
           These tiles are deliberately cheap. Fewer renders do not prove a faster application. Use

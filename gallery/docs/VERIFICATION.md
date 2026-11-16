@@ -4,7 +4,7 @@ Verify proportionally: use a focused existing test, type check or build to answe
 
 Browser tests, Playwright and browser CI are removed; no browser installation is needed. Reintroduce browser tests only when explicitly requested, such as for a testing demo.
 
-The standalone demo packages, gallery, generator and shared toolchain remain in place. Physical phones and the workshop network remain untested for Device Rally.
+The standalone demo packages, gallery, generator and shared toolchain remain in place. Device Rally has partial physical-device evidence; see the session below. Workshop-network acceptance remains unverified.
 
 [Verification history](VERIFICATION-HISTORY.md) records earlier revisions, not current coverage or requirements. Report only checks run for this change.
 
@@ -19,3 +19,7 @@ The standalone demo packages, gallery, generator and shared toolchain remain in 
 ## Windows
 
 [Windows compatibility](windows.md) records the scope, safeguards and remaining manual checks. CI runs native Windows and Linux in a checkout path containing spaces. `npm run test:servers` checks gallery and standalone HTTP startup after building; it does not run a browser.
+
+## Device Rally physical-device session — 2026-11-16
+
+On the public HTTPS deployment, the participant opened room `lab-check-1611` on a phone. The laptop browser observed three received cheers, ending with a heart. It subsequently showed zero connected peers. This confirms delivery to the laptop during that session, not bidirectional or reconnect acceptance. Phone/browser details, network type, return delivery and deliberate rejoin verification are still pending participant confirmation.

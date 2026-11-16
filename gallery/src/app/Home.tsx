@@ -34,6 +34,12 @@ function HomeJourneys() {
         </span>
         <span>See an experiment in action.</span>
       </a>
+      <a href="#/guides">
+        <span className="journey-label">
+          Follow guides <span aria-hidden="true">↗</span>
+        </span>
+        <span>Learn an approach you can reuse.</span>
+      </a>
       <a href="#/create">
         <span className="journey-label">
           Create a demo <span aria-hidden="true">↗</span>
@@ -65,7 +71,8 @@ function TrackChoices() {
             <div className="track-card-top">
               <TrackSymbol track={t.id} />
               <span className="track-number">
-                {demos.filter((demo) => demo.track === t.id).length} demos
+                {demos.filter((demo) => demo.track === t.id).length} demos · {t.guides.length}{' '}
+                guides
               </span>
             </div>
             <h3>{t.title}</h3>

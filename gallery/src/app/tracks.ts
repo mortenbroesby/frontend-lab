@@ -14,6 +14,11 @@ export const tracks = [
         title: 'Explore browser capabilities',
         description: 'Try workers, messaging and dependency graphs, then change one thing.',
       },
+      {
+        slug: 'workers',
+        title: 'Keep the interface responsive',
+        description: 'Separate calculation speed from the browser’s ability to respond.',
+      },
     ],
     title: 'Modern Web Capabilities',
     description: 'Connect devices, create interactive graphics or run work in the background.',
@@ -45,9 +50,14 @@ export const tracks = [
     id: 'developer-experience',
     guides: [
       {
-        slug: 'experiments',
+        slug: 'feedback-loop',
         title: 'Find your shortest feedback loop',
         description: 'Use real tests, watch mode and build caches to narrow your next check.',
+      },
+      {
+        slug: 'rendering',
+        title: 'Why did React render again?',
+        description: 'Compare prop identity and local state before deciding whether memo helps.',
       },
     ],
     title: 'Developer Experience & Tooling',

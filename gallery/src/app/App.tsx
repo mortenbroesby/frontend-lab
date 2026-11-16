@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { LabMark } from '@lab/demo-kit/mark';
 import { DemoGallery } from './DemoGallery';
+import { GuideGallery } from './GuideGallery';
 import { GuideView } from './GuideView';
 import { Home } from './Home';
 import { LabNavigation } from './LabNavigation';
@@ -23,6 +24,11 @@ const pages: Record<string, Page> = {
     title: 'Try a demo',
     description: 'Every demo, across all four tracks.',
     content: <DemoGallery />,
+  },
+  '/guides': {
+    title: 'Follow a guide',
+    description: 'Investigate a question here, then apply the lesson in your own project.',
+    content: <GuideGallery />,
   },
   '/create': {
     title: 'Create a demo',

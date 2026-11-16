@@ -1,0 +1,29 @@
+## Keep the interface responsive
+
+**Can the browser respond while a calculation runs?** Open <DemoLink id="web-worker-comparison">Room to think</DemoLink> and compare the same work on the main thread and in a Worker.
+
+### Observe two different outcomes
+
+Start with the small workload. Run in the Worker and use the interaction pad while it runs. Then compare on the main thread. Increase the workload if both complete too quickly to observe; devices differ.
+
+Look for delayed interaction, not just a shorter calculation time. A Worker can keep the interface responsive even when the calculation takes longer. Main-thread work blocks the page and cannot use the Worker’s cancellation button.
+
+### Trace the implementation
+
+After [local setup](#/guide/setup), compare `demos/web-worker-comparison/index.tsx` and `compute.worker.ts`. Both use `compute.ts`; the execution context changes, not the algorithm.
+
+Follow the request through `postMessage`, the result handler and Worker cleanup. Test cancellation, then start again. Computation timing excludes startup and messaging, so it is not end-to-end latency.
+
+For a separate investigation of the algorithm's input contract, follow [Find a missing test](#/track/code-quality/test-confidence).
+
+### Apply it in your project
+
+Profile an interaction that stalls. Confirm the costly work is computation you can move without accessing the DOM. Network waiting alone is not a reason to create a Worker.
+
+Start with one request and one result. Define the message shape, validate runtime input, handle errors and terminate abandoned work. Consider the cost of copying large inputs and the user's need to cancel or see progress.
+
+Measure the interaction again on a representative device. Compare responsiveness and total completion time separately. Moving work is useful only if the resulting behaviour improves the experience.
+
+Read: [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
+
+[All Modern Web guides](#/track/modern-web/guides)

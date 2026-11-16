@@ -1,0 +1,29 @@
+## Why did React render again?
+
+**Would memoisation skip this update, and would skipping it matter?** Use <DemoLink id="react-render-detective">React Render Detective</DemoLink> to separate parent updates, prop identity and local state.
+
+### Predict, then click
+
+The three panels use ordinary rendering, memo with a fresh object prop, and memo with a stable object prop. Before updating a parent, predict which tile commit counts will increase.
+
+Update each parent once. Compare the change from its starting count. The fresh object defeats the memo comparison even when its contents match. The stable object lets memo skip that parent-driven update. Now like a tile in the stable panel: its own state still changes.
+
+Reset and repeat with the collection-note input. Can you explain the result without looking at the outlines?
+
+### Inspect one change
+
+After [local setup](#/guide/setup), open `demos/react-render-detective/experiment.tsx`. Find the object spread in the unstable case. Replace that newly created object with the existing object reference, then repeat the parent update. Restore your edit after the experiment.
+
+Read `tile.tsx` to see where memo is applied. These counters observe commits, not every render attempt. Development Strict Mode may affect starting counts. React Scan adds instrumentation overhead; neither its outlines nor these cheap tiles prove a speed improvement.
+
+### Apply it in your project
+
+Start with a slow interaction someone can reproduce. Profile that interaction before changing code. Identify the expensive work, its inputs and the state update that triggers it.
+
+Check whether a prop changes by identity because the parent creates an object or function each time. Only stabilise it if doing so preserves its intended values and helps a measured problem. Memo is an optimisation, not a correctness guarantee. Moving state nearer the component that owns it may be simpler.
+
+Repeat the same interaction after the change and compare the relevant profiling evidence. “Fewer commits” and “faster interaction” are separate claims.
+
+Read: [React memo](https://react.dev/reference/react/memo) and [React Profiler](https://react.dev/reference/react/Profiler).
+
+[All Developer Experience guides](#/track/developer-experience/guides)

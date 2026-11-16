@@ -1,12 +1,4 @@
-## Developer tools to try
-
-### React Render Detective
-
-<DemoLink id="react-render-detective">Open React Render Detective</DemoLink>. Update a parent in each panel and compare the tile commit counts. Why does `memo` fail to skip work when a prop is a new object? Then like one tile: local state still updates.
-
-Change the object spread in `demos/react-render-detective/experiment.tsx`, then inspect the difference with React Scan. Counts are observations, not a speed benchmark.
-
-### Find your shortest feedback loop
+## Find your shortest feedback loop
 
 Run the smallest relevant test while editing; broaden checks before committing.
 
@@ -65,12 +57,10 @@ Targeted passes do not replace broader checks your change needs.
 
 References: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) · [Turbo run options](https://turborepo.dev/docs/reference/run).
 
-### Optional completed tool: command inventory
+### Apply it in your project
 
-Compare the native `npm run` output with:
+Choose a test for the behaviour you are editing, using your existing runner's filter and watch options. Confirm the filter actually selects tests. Keep a broader check before committing changes that cross module boundaries.
 
-```sh
-node gallery/exercises/tooling/commands.mjs gallery/package.json
-```
+If your project uses a task cache, inspect its inputs before trusting a hit. Change a dependency and confirm the affected consumer rebuilds. You do not need to adopt Turbo to use a focused test or watch mode.
 
-This validates a manifest and lists sorted scripts without executing them. Source and four tests live in `gallery/exercises/tooling/commands.mjs` and `commands.test.mjs`. The optional starter, `inspect.mjs` and `inspect.test.mjs` in the same folder, is independent. Keep the utility only if useful.
+[All Developer Experience guides](#/track/developer-experience/guides)

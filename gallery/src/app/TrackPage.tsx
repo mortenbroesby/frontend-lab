@@ -1,4 +1,5 @@
 import { DemoGallery } from './DemoGallery';
+import { GuideList } from './GuideGallery';
 import { GuideView } from './GuideView';
 import { tracks } from './tracks';
 
@@ -31,16 +32,7 @@ export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; r
         <section className="guide" aria-labelledby="guides-heading">
           <h2 id="guides-heading">Guides</h2>
           <p>Work through a real example. Learn what to look for and what to try next.</p>
-          <ul>
-            {track.guides.map((guide) => (
-              <li key={guide.slug}>
-                <h3>
-                  <a href={`#/track/${track.id}/${guide.slug}`}>{guide.title}</a>
-                </h3>
-                <p>{guide.description}</p>
-              </li>
-            ))}
-          </ul>
+          <GuideList track={track} />
         </section>
       ) : (
         <GuideView

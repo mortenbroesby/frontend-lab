@@ -103,6 +103,13 @@ export default function Workers() {
           Main-thread work blocks this page and cannot be cancelled. Start small; timings vary by
           device. Inspect with DevTools. Timing excludes Worker startup and messaging.
         </p>
+        {galleryHref('/track/modern-web/workers') && (
+          <p>
+            <a href={galleryHref('/track/modern-web/workers')}>
+              Understand this · Try it in your project
+            </a>
+          </p>
+        )}
         <p className="try-this">
           <strong>What if…</strong> this processed an image, searched a dataset, or reported
           progress?

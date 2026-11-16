@@ -9,7 +9,7 @@ The app helps participants explore ideas, try standalone demos and follow practi
 | `src/app/App.tsx` | Page routing, focus management and shell composition |
 | `src/app/LabNavigation.tsx` | Desktop navigation, mobile menu and command palette integration |
 | `src/app/Home.tsx`, `TrackPage.tsx` | Homepage and track-page composition |
-| `src/app/DemoGallery.tsx` | Searchable demo cards |
+| `src/app/DemoGallery.tsx`, `GuideGallery.tsx` | Demo search and guide listings |
 | `src/app/gallery.css` | Gallery layout, navigation and content styling |
 | `src/app/tracks.ts` | Four track identities and guide listings |
 | `src/app/Guide.tsx`, `GuideView.tsx` | Lazy MDX loading, shared components and loading/error states |
@@ -50,7 +50,7 @@ Turbo normally hashes package-local inputs. The gallery also hashes demo sources
 
 ## Command palette
 
-Open with **⌘K / Ctrl+K**, or **Menu → command palette** on mobile. Search navigation and demos; use arrows to move, Enter to select and Escape to close. Appearance controls choose light, dark or system mode.
+Open with **⌘K / Ctrl+K**, or **Menu → command palette** on mobile. Search navigation, demos and guides; use arrows to move, Enter to select and Escape to close. Appearance controls choose light, dark or system mode.
 
 **Ctrl+Enter** opens a local debug snapshot; **Shift+Enter** opens all demos. Reload clears unsaved in-memory state. The kit owns palette behavior in `demo-kit/CommandMenu.tsx`; the gallery supplies links from its metadata. Standalone demos use the same palette and link back when configured.
 

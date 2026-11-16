@@ -28,21 +28,37 @@ The tests cover small limits, invalid inputs and the maximum workload. The maxim
 
 That case is already in the suite. Keep it. A completed investigation is a useful example, not a reason to add the same test twice.
 
-### 3. Try one precise boundary
+### 3. Catch a regression the suite misses
 
-On an experiment branch, add this case to `demos/web-worker-comparison/compute.test.ts`:
+The calculation also receives values through a Worker message. TypeScript types do not validate messages at runtime. Should the string `"10"` be accepted as a number? The current function rejects it.
+
+On an experiment branch, temporarily change just this expression in `compute.ts`:
 
 ```ts
-test('does not count a prime square as prime', () => {
-  assert.equal(countPrimes(49), 16);
+Number.isInteger(limit)
+```
+
+to:
+
+```ts
+Number.isInteger(Number(limit))
+```
+
+This resembles a convenient coercion, but weakens validation: the function now accepts numeric strings. Run the existing tests. They still pass because their invalid-input cases contain numbers, not strings.
+
+Add this to `compute.test.ts`:
+
+```ts
+test('rejects numeric strings received at runtime', () => {
+  assert.throws(() => countPrimes('10' as unknown as number), RangeError);
 });
 ```
 
-Run the same command. **This deliberately wrong expectation should fail:** the primes through 49 are 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43 and 47. There are 15, and 49 is 7 × 7.
+The cast deliberately models untrusted runtime input; it is not an example of normal typed calling code. Run the tests again. The new test should fail because the modified implementation does not throw.
 
-Correct the expectation to `15` and rerun. It should pass. The initial failure confirms the new assertion is being executed; it does not demonstrate a bug in the implementation.
+Restore `Number.isInteger(limit)` and rerun with the new test present. All tests should pass. Restore only your deliberate implementation edit; keep any unrelated work. Do not commit the regression.
 
-Why choose 49? It makes the perfect-square boundary explicit. Inspect `divisor * divisor <= candidate`: equality matters. Larger existing cases may already detect the same mistake, so discuss whether the named case improves clarity enough to keep. A new test is not automatically new coverage of behaviour.
+You have now observed three distinct results: the old suite passed a defect, the added test detected it, and the restored implementation satisfied it. The expected error comes from the function's input contract, not a copy of its algorithm.
 
 ### 4. Apply it in your own repository
 
@@ -50,7 +66,7 @@ Choose one real input boundary, state transition or failure path. Trace it from 
 
 Derive the expected result from the requirement, a small hand-worked example or an independent method. Copying the implementation into the test can reproduce the same mistake twice. Use your project's existing runner; adopting Node's test runner is not part of this exercise.
 
-Run the focused test and verify that a deliberately wrong expectation fails. Restore the correct assertion, then run the relevant surrounding tests. Keep any wider checks needed by the change. Never leave a deliberate failure in the committed code.
+Verify that a small, plausible implementation regression fails the new test. Restore the correct implementation, then run the relevant surrounding tests. Keep any wider checks needed by the change. Never leave a deliberate failure in the committed code.
 
 Finish with: **“This test establishes …; it does not establish ….”** If the existing tests already answer the question, explain that and leave them alone.
 
