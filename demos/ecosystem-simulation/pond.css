@@ -1,4 +1,6 @@
 .pond-demo {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  min-width: 0;
   max-width: 960px;
   margin: auto;
 }

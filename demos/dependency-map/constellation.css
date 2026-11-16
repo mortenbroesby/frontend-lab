@@ -10,8 +10,8 @@
   margin: 1rem 0;
 }
 .impact-presets button[aria-pressed='true'] {
-  background: #24483e;
-  color: #fff;
+  background: var(--lab-accent);
+  color: var(--lab-surface);
 }
 .impact-summary {
   display: grid;
@@ -20,7 +20,7 @@
   padding: 1.2rem;
   margin-bottom: 1rem;
   border: 1px solid var(--lab-line);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   background: var(--lab-paper);
 }
 .impact-summary > div {

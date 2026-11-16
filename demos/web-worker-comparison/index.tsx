@@ -5,6 +5,7 @@ import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 import { countPrimes } from './compute';
 import { observeFrames } from './frames';
+import './workers.css';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@lab/ui/table';
 
 type Result = { count: number; milliseconds: number } | { error: string };
@@ -86,53 +87,7 @@ export default function Workers() {
   }
 
   return (
-    <div className="experiment-grid">
-      <div className="interaction-stage">
-        <span className="orbit" aria-hidden="true" />
-        <p className="eyebrow">Still responsive?</p>
-        <button className="tap-pad" onClick={() => setTaps((value) => value + 1)}>
-          Interaction pad <strong>{taps}</strong>
-        </button>
-        <p>Click or press Tab while work runs. Compare both modes at the same workload.</p>
-        <p role="status" className="result">
-          {status}
-        </p>
-        <h3>Measured on this device</h3>
-        {measurements.length === 0 ? (
-          <p>Run either mode to record your first result.</p>
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Latest run</TableHead>
-                <TableHead>Longest frame gap</TableHead>
-                <TableHead>Calculation</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {measurements.map((sample) => (
-                <TableRow key={sample.mode}>
-                  <TableCell>
-                    {sample.mode}
-                    <br />
-                    Up to {sample.limit.toLocaleString()}
-                  </TableCell>
-                  <TableCell>
-                    {sample.gap === null ? 'Hidden tab: rerun' : `${sample.gap.toFixed(1)} ms`}
-                  </TableCell>
-                  <TableCell>{sample.computation.toFixed(1)} ms</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-        <p className="small">
-          Frame gap: longest wait between animation callbacks, from starting work through the first
-          frame after completion. Includes normal frame spacing; this is not input latency.
-          Calculation time excludes Worker startup and messaging. These are live observations, not
-          benchmark claims.
-        </p>
-      </div>
+    <div className="experiment-grid workers-demo">
       <div className="controls">
         <p className="eyebrow">02 / Web Workers</p>
         <h3>Keep the interface responsive.</h3>
@@ -184,6 +139,51 @@ export default function Workers() {
         <p>
           Start with a Worker that takes a number and returns a result. Add status, then
           cancellation. <a href={galleryHref('/create')}>Create an independent demo</a>.
+        </p>
+      </div>
+      <div className="interaction-stage">
+        <p className="eyebrow">Still responsive?</p>
+        <button className="tap-pad" onClick={() => setTaps((value) => value + 1)}>
+          Interaction pad <strong>{taps}</strong>
+        </button>
+        <p>Click or press Tab while work runs. Compare both modes at the same workload.</p>
+        <p role="status" className="result">
+          {status}
+        </p>
+        <h3>Measured on this device</h3>
+        {measurements.length === 0 ? (
+          <p>Run either mode to record your first result.</p>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Latest run</TableHead>
+                <TableHead>Longest frame gap</TableHead>
+                <TableHead>Calculation</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {measurements.map((sample) => (
+                <TableRow key={sample.mode}>
+                  <TableCell>
+                    {sample.mode}
+                    <br />
+                    Up to {sample.limit.toLocaleString()}
+                  </TableCell>
+                  <TableCell>
+                    {sample.gap === null ? 'Hidden tab: rerun' : `${sample.gap.toFixed(1)} ms`}
+                  </TableCell>
+                  <TableCell>{sample.computation.toFixed(1)} ms</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+        <p className="small">
+          Frame gap: longest wait between animation callbacks, from starting work through the first
+          frame after completion. Includes normal frame spacing; this is not input latency.
+          Calculation time excludes Worker startup and messaging. These are live observations, not
+          benchmark claims.
         </p>
       </div>
     </div>

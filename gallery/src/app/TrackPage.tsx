@@ -36,9 +36,11 @@ export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; r
             {label}
           </a>
         ))}
-        <a className="track-build-link" href="#/create">
-          Start your experiment <span aria-hidden="true">↗</span>
-        </a>
+        {trackPage !== 'ideas' && (
+          <a className="track-build-link" href="#/create">
+            Start your experiment <span aria-hidden="true">↗</span>
+          </a>
+        )}
       </nav>
       {trackPage === 'examples' ? (
         <DemoGallery track={track.id} />

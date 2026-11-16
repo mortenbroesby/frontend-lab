@@ -1,0 +1,42 @@
+.workers-demo {
+  align-items: start;
+}
+.workers-demo .interaction-stage {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  min-height: 0;
+  background: var(--lab-surface);
+  border-left: 1px solid var(--lab-line);
+}
+.workers-demo .tap-pad {
+  flex-direction: row;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0 0 1rem;
+}
+.workers-demo .tap-pad strong {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.workers-demo .result {
+  min-height: 0;
+  padding-block: 0.75rem;
+  border-block: 1px solid var(--lab-line);
+}
+.workers-demo table {
+  margin-bottom: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.workers-demo th,
+.workers-demo td {
+  white-space: normal;
+}
+.workers-demo p:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 650px) {
+  .workers-demo .interaction-stage {
+    border-left: 0;
+    border-top: 1px solid var(--lab-line);
+  }
+}
