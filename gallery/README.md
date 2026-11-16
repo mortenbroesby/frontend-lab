@@ -58,7 +58,7 @@ From the repository root, `npm test` includes generator, script and demo-workspa
 
 See the [migration guide](docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally. Temporary deployment settings are documented separately in `gallery/docs/hosting.md`.
 
-`demo-kit/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant MDX lives in `src/content/` and compiles with the app. Keep it canonical; do not duplicate track guides elsewhere.
+`demo-kit/theme.css` owns the monochrome shell palette; `demo-kit/styles.css` owns shared layout and controls. See the [visual-style decision](docs/decisions/visual-style.md) for the Vercel-inspired direction and plain-CSS choice. Demo visuals stay independent; Sapphire is not required. Participant MDX lives in `src/content/` and compiles with the app. Keep it canonical; do not duplicate track guides elsewhere.
 
 ## Maintainer reference
 

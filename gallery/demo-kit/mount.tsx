@@ -9,7 +9,7 @@ import './styles.css';
 export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: string) {
   document.title = demo.title;
   createRoot(document.getElementById('root')!).render(<StrictMode>
-    <main id="content" tabIndex={-1}>
+    <main className="standalone-shell" id="content" tabIndex={-1}>
       <h1>{demo.title}</h1><p>{demo.description}</p>
       <section id={id} className="experiment"><DemoBoundary><Component /></DemoBoundary></section>
     </main>

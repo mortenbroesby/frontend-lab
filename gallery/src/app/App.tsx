@@ -9,7 +9,7 @@ const trackTitle = (id: TrackId) => tracks.find(track => track.id === id)!.title
 
 function Gallery({ track }: { track?: TrackId }) {
   return <div className="journey-grid">{demos.filter(d => !track || d.track === track).map(d => <article className="journey-card" data-track={d.track} key={d.id}>
-    <p className="eyebrow">{trackTitle(d.track)} · {d.author}</p><h3><a href={d.href}>{d.title}</a></h3><p>{d.description}</p>
+    <p className="eyebrow">{trackTitle(d.track)} · {d.author}</p><h3><a className="demo-title-link" href={d.href}>{d.title}</a></h3><p>{d.description}</p>
   </article>)}</div>;
 }
 
@@ -37,6 +37,22 @@ function pageTitle(route: string, track?: typeof tracks[number], demo?: typeof d
   return 'Page not found';
 }
 
+function TrackChoices() {
+  return <section aria-labelledby="tracks-heading">
+          <div className="track-heading"><h2 id="tracks-heading">Find your starting point</h2><p>04 tracks / Your own pace</p></div>
+          <div className="track-grid">{tracks.map((t, index) => <article className="track-card" key={t.id}>
+            <div className="track-card-top"><span className="track-symbol" aria-hidden="true">{['◇', '{ }', '>_', '✳'][index]}</span><span className="track-number" aria-hidden="true">0{index + 1}</span></div>
+            <h3>{t.title}</h3><p>{t.description}</p><a href={`#/track/${t.id}`} aria-label={`Explore ${t.title}`}>Explore track<span className="track-link-arrow" aria-hidden="true">↗</span></a>
+          </article>)}</div>
+        </section>;
+}
+
+function LabNavigation({ route }: { route: string }) {
+  return <nav aria-label="Lab">{[['/', 'All tracks'], ['/create', 'Create a demo'], ['/guide/setup', 'Local setup']].map(([path, label]) =>
+    <a className="site-nav-link" key={path} href={`#${path}`} aria-current={route === path ? 'page' : undefined}>{label}</a>
+  )}</nav>;
+}
+
 export function App() {
   const [route, setRoute] = useState(() => location.hash.slice(1) || '/');
   useEffect(() => {
@@ -55,14 +71,12 @@ export function App() {
   useEffect(() => { document.title = `${title} · The Front-End Lab`; }, [title]);
   return <>
     <a className="skip-link" href="#content" onClick={event => { event.preventDefault(); document.getElementById('content')?.focus(); }}>Skip to content</a>
-    <header className="site-header"><a className="wordmark" href="#/">✳ THE FRONT-END LAB</a><nav aria-label="Lab"><a href="#/">All tracks</a><a href="#/create">Create a demo</a><a href="#/guide/setup">Local setup</a></nav></header>
+    <header className="site-header"><a className="wordmark" href="#/"><span aria-hidden="true">↗</span>Front-End Lab</a><LabNavigation route={route} /></header>
     <main id="content" tabIndex={-1}>
-      <section className="starter-welcome"><p className="eyebrow">{demo ? `${trackTitle(demo.track)} · ${demo.author}` : 'Four tracks. Shared discoveries.'}</p><h1>{title}</h1>
-        <p>{track?.description ?? demo?.description ?? 'Find something that sparks your curiosity. Try a demo or get straight to experimenting—solo or together.'}</p>
+      <section className="starter-welcome"><p className="eyebrow welcome-eyebrow">{demo ? `${trackTitle(demo.track)} · ${demo.author}` : 'Four tracks. Shared discoveries.'}</p><h1>{title}</h1>
+        <p className="welcome-description">{track?.description ?? demo?.description ?? 'Find something that sparks your curiosity. Try a demo or get straight to experimenting—solo or together.'}</p>
       </section>
-      {route === '/' && <>
-        <div className="journey-grid">{tracks.map(t => <article className="journey-card" data-track={t.id} key={t.id}><h2>{t.title}</h2><p>{t.description}</p><a href={`#/track/${t.id}`}>Choose this track →</a></article>)}</div>
-      </>}
+      {route === '/' && <TrackChoices />}
       {track && <TrackGuide track={track} route={route} />}
       {guide && <GuideView document={guide.document} />}
       {demo && <p><a href={demo.href}>Open standalone demo ↗</a></p>}

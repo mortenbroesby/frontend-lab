@@ -1,14 +1,14 @@
-/* The lab identity. Keep demo-specific artwork and styling inside each demo. */
+/* Shared shell identity; demo artwork keeps its own palette. */
 :root {
-  --lab-paper: #f4f2eb;
-  --lab-surface: #fffdf7;
-  --lab-ink: #172d2b;
-  --lab-muted: #42564e;
-  --lab-line: #cdd3c8;
-  --lab-accent: #24483e;
-  --lab-accent-hover: #356052;
-  --lab-track-modern-web: #e6ebdf;
-  --lab-track-code-quality: #ece5d7;
-  --lab-track-developer-experience: #dfe8ed;
-  --lab-track-experimental-projects: #ebe2e8;
+  --lab-paper: #fafafa;
+  --lab-surface: #fff;
+  --lab-ink: #171717;
+  --lab-muted: #666;
+  --lab-line: #e5e5e5;
+  --lab-accent: #171717;
+  --lab-accent-hover: #383838;
+  --lab-track-modern-web: #fafafa;
+  --lab-track-code-quality: #fafafa;
+  --lab-track-developer-experience: #fafafa;
+  --lab-track-experimental-projects: #fafafa;
 }
