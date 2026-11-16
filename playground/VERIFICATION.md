@@ -103,3 +103,10 @@ The existing platform and independent-participant limitations still apply.
 - At the user's request, removed Pages publishing, deployment permissions, enablement variables and hosting instructions. Reverted the hosting-specific relative asset base. The GitHub workflow only verifies code; the migration guide covers repository/team access and local participation.
 - The first Linux GitHub verification exposed a pre-existing platform-specific lockfile: TypeScript's Linux binary was absent. Regenerated the lockfile from the pinned manifests in an empty temporary directory. Existing dependency versions were unchanged; missing optional platform packages are now recorded. A fresh local `npm ci` and `npm run check` passed.
 - The earlier nested-hosting smoke test is historical evidence only; shared hosting is deferred and no site was published.
+
+## Lean Codex and Copilot CLI integration — 16 November 2026
+
+- Removed Claude configuration/skills and both generated 974-line agent gate scripts. Both supported clients now share AGENTS.md and one short `.agents/skills/fallow` pointer to the installed official skill. MCP configuration is limited to `.codex/config.toml` and `.github/mcp.json`.
+- The official Git pre-commit hook remains the shared automatic commit gate. In a temporary repository it allowed a clean staged change and rejected a newly staged unused file. Pre-push checks are instructions, not an automatic hook. PR CI remains enabled.
+- Fallow doctor reported ready; `npm run check` passed all 17 tests, type checking and build. The shared MCP binary initialized and returned 44 tools. Browser code was unchanged, so browser tests were not repeated.
+- Copilot CLI is not installed in this environment. Its configuration follows GitHub's documented project MCP, AGENTS.md and `.agents/skills` formats; discovery and tool use in an actual trusted Copilot session remain unverified. Codex also needs a fresh trusted session to load its project configuration.

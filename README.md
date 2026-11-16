@@ -156,16 +156,15 @@ Run these from the repository root:
 | --- | --- |
 | `npm run dev` | Start the lab with fast refresh |
 | `npm run demo:new` | Create and register a named React demo |
-| `npm run fallow:setup` | Install/update official agent skills, MCP and agent hooks |
 | `npm run fallow:hooks` | Install the local Git pre-commit hook once per clone |
-| `npm run fallow:status` | Inspect agent and Git hook installation |
+| `npm run fallow:status` | Check Fallow readiness and Git hook installation |
 | `npm run analyze` | Explore code health with Fallow ([walkthrough](tracks/b/fallow.md)) |
 | `npm run check` | Run generator tests, app checks and the production build |
 | `npm run build` | Build the app through Turbo |
 | `npm run preview` | Serve the built app locally |
 | `npm run test:browser` | Run the optional browser journeys |
 
-Fallow agent trust and per-clone hook setup are explained in the [integration guide](tracks/b/fallow.md#set-up-agents-and-commit-checks).
+Codex/Copilot CLI setup and the shared Git hook are explained in the [integration guide](tracks/b/fallow.md#set-up-agents-and-commit-checks).
 
 Browser tests require the [documented browser setup](playground/README.md).
 See [verification evidence and limits](playground/VERIFICATION.md) for what

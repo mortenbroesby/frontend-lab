@@ -1,11 +1,14 @@
 {
   "mcpServers": {
     "fallow": {
-      "type": "stdio",
+      "type": "local",
       "command": "npx",
       "args": [
         "--no",
         "fallow-mcp"
+      ],
+      "tools": [
+        "*"
       ]
     }
   }

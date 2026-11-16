@@ -18,26 +18,22 @@ The last command combines unused-code, duplication and health analysis. It reads
 
 ## Set up agents and commit checks
 
-After `npm ci`, from the root of a fresh clone:
+After `npm ci`, run `npm run fallow:status`. If the Git hook is absent, run `npm run fallow:hooks` once per clone. This uses Fallow’s official installer; it refuses to overwrite existing hooks. Keep Node/npm available to your terminal and Git client.
 
-```sh
-npm run fallow:setup
-npm run fallow:hooks
-npm run fallow:status
-```
+Both **Codex and Copilot CLI** read the root `AGENTS.md` and the single skill in `.agents/skills/fallow`. The skill points to the full official instructions bundled with our pinned Fallow dependency. No copying of the full task map or per-agent hook scripts is needed.
 
-These commands use Fallow’s official installers, not a custom hook framework:
+| Client | MCP configuration | Confirm in a trusted project session |
+| --- | --- | --- |
+| Codex | `.codex/config.toml` | Check `/mcp` and the available Fallow skill |
+| Copilot CLI | `.github/mcp.json` | Check `/mcp`, `/instructions` and `/skills info fallow` (or `/skills reload`) |
 
-- `fallow:setup` installs the version-matched `fallow` and `fallow-setup` skills, MCP registrations and PreToolUse commit/push gates for Codex and Claude Code. The generated agent files are committed; rerunning setup keeps them current. The official task map lives in the managed AGENTS.md block; CLAUDE.md imports it.
-- `fallow:hooks` installs the Git pre-commit hook **locally in each clone**. Git does not copy `.git/hooks` when cloning. The installer refuses to overwrite an existing hook, including its own: check `fallow:status` first and preserve any existing hook rather than forcing replacement.
-- Codex must trust this project and its hooks through `/hooks`. Claude Code asks to approve the project MCP server. Installation status does not prove your running agent loaded the integration; reload/start a trusted session and check its tools/hooks. We do not change global agent configuration or pre-approve trust on your behalf.
-- Node/npm must be on the agent or Git client’s PATH. The generated scripts use the installed Fallow binary; Windows needs Git Bash or WSL for the Bash agent hooks. If launched from a GUI, verify the runtime is available there too.
+Both MCP entries launch the locally installed `fallow-mcp` through `npx --no`; no global installation or credentials are needed. Restart the client after changing configuration. Client trust and tool permissions still apply. Copilot CLI support follows its documented repository formats; an actual Copilot session still needs participant verification.
 
-The Git hook runs `fallow audit --staged`, comparing the staged snapshot with HEAD. Agent hooks check before commit/push. The default `new-only` gate blocks introduced findings, while inherited findings remain visible without blocking unrelated work. A full `npm run analyze` can therefore exit 1 while a changed-code audit passes.
+The **Git pre-commit hook** runs `fallow audit --staged` against HEAD and blocks new findings for either client or a manual commit. Existing findings remain visible without blocking unrelated changes. Run `npm run analyze:changes -- --staged` to inspect a failure. Agents are instructed to run `npm run analyze:changes` before pushing; there is **no automatic pre-push or per-agent tool hook**. PRs also run a changed-code audit in CI.
 
-To inspect a failure, run `npm run analyze:changes -- --staged` before a commit, or `npm run analyze:changes -- --base origin/main` for your branch. Review the report, fix the introduced finding or justify a narrow configuration change, then rerun. Agent failure reports are saved under `.fallow/gate-report.json`. These are local checks, not enforced GitHub branch protection. Official hooks have documented fail-open cases: the Git hook skips if Fallow is absent, and agent hooks allow runtime errors with a diagnostic. Verify status and diagnostics rather than assuming every command was checked.
+The Git hook is local, not branch protection; if Fallow is absent its official script warns and skips. Use the status command and check client discovery rather than assuming installation proves enforcement. Keep this setup small when updating Fallow: preserve the shared skill and two MCP entries rather than rerunning `fallow agent install`, which regenerates the larger harness-specific integration.
 
-References: [official agent installer](https://fallow.tools/docs/cli/agent/), [official hooks](https://fallow.tools/docs/cli/hooks/).
+References: [official Git hooks](https://fallow.tools/docs/cli/hooks/), [Copilot shared skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills), [Copilot repository MCP](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers).
 
 ## Choose a lens
 
