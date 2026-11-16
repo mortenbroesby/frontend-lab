@@ -10,9 +10,16 @@ Checked in `docs/participant-journeys`, based on `4ad159a`, with only Markdown c
 - Fallow doctor passed seven checks with no warnings; `npm run analyze:changes` passed with no introduced issues.
 - Browser tests were not rerun: this revision changes no app code, UI behaviour, dependencies or configuration. Independent participant setup remains unobserved.
 
-## Folder-discovery documentation follow-up
+## Folder discovery and named tracks · PR #2
 
-Participant guides now describe the agreed folder-discovery contract: generated `Demo.tsx`, `demo.config.ts` and `README.md`, a typed metadata/loader export and an ID derived from the folder. This follow-up is documentation-only; the implementation is owned by the separate discovery branch. The earlier checks above do not verify that implementation. Reconcile and rerun the relevant generator, discovery and browser checks when integrating it.
+Implementation: `feat/typed-demo-discovery`, verified at `c49dd1d` on 16 November 2026. The subsequent merge from `main` reconciles documentation only; the checks below distinguish implementation verification from that reconciliation.
+
+- The generator writes only its own folder: `Demo.tsx`, `demo.config.ts` and `README.md`. The metadata filename avoids a macOS case-insensitive resolution collision with `Demo.tsx`.
+- Typed metadata, folder-derived IDs, alphabetical folder ordering and lazy component loading are implemented. Reference implementations remain in `src/examples/`, with discovered configs in demo folders. No participant edit to a central registry is needed.
+- Full track titles appear in the app and guides. IDs and documentation folders are `modern-web`, `code-quality`, `developer-experience` and `experimental-projects`.
+- Twenty unit/generator tests, TypeScript and the production build passed. Eleven Chrome journeys passed, including navigation through all four named tracks. A separate temporary generated-demo browser smoke check passed during discovery implementation.
+- Local Markdown targets resolved, and the Fallow changed-code gate passed with no introduced findings. Existing complexity and styling findings remain.
+- The documentation reconciliation reran `npm run check`; browser tests were not repeated for the documentation-only conflict resolution. Independent participant acceptance remains unobserved.
 
 ## Recorded baseline: `4ad159a` · 16 November 2026
 
