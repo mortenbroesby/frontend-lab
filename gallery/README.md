@@ -22,7 +22,7 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Small logic checks |
 
-Open **Create a demo** in the app for the generator, metadata contract and independent-app commands. Each demo owns its entry, state, styles and cleanup. The gallery reads metadata and links to the app; it does not import demo components.
+Open **Create a demo** in the app for the generator and independent-app commands. Each demo owns its entry, state, styles and cleanup. The gallery reads metadata and links to the app; it does not import demo components.
 
 The repository-root `index.html` opens the gallery. Its Vite config uses the repository as root so `demos/<id>/index.html` works in development and production without copying files or custom routing. The combined output stays in `gallery/dist/`; individual workspace builds stay in `demos/<id>/dist/`.
 

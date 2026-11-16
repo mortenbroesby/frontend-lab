@@ -32,7 +32,7 @@ A self-directed React gallery: four tracks, small experiments and shared discove
 
 - [README](README.md): tracks, quick start and contribution workflow.
 - [App guide](gallery/README.md): architecture, commands and troubleshooting.
-- [Demo guide](gallery/src/content/create-demo.mdx): generator and registration contract.
+- [Demo guide](gallery/src/content/create-demo.mdx): participant quick start.
 - [Verification](gallery/docs/VERIFICATION.md): evidence and known limits.
 
 ## Fallow

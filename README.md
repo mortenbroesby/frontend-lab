@@ -60,8 +60,8 @@ npm run demo:new
 Name your demo and choose a track. Modern Web starts with a circle; other tracks
 start with an idea card. All demos live in `demos/<your-id>/`; edit `index.tsx`.
 The generator prints your local route.
-It appears in the gallery automatically. **Create a demo** in the app explains
-the typed contract and manual setup.
+It appears in the gallery automatically. **Create a demo** in the app has the
+quick start.
 
 ## 🤝 Share Your Work
 

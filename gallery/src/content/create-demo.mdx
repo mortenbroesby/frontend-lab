@@ -1,85 +1,38 @@
-import Template from '../starters/IdeaStarter';
-import { DemoBoundary } from '@lab/demo-kit/boundary';
+# Create a demo
 
-# Add your experiment to the lab
-
-Create your branch using [the contribution guide](#/guide/contributing) before editing. From the repository root, after `npm ci`:
+From the repository root, after [local setup](#/guide/setup):
 
 ```sh
 npm run demo:new
 ```
 
-Give your demo a name first (required, with no default). Confirm or edit the suggested folder/URL ID, then choose the track, author and description. The name is used in the gallery, starter and findings README. The Turborepo generator creates `demos/<id>/index.tsx` plus typed `demo.config.ts` metadata, `index.html`, `main.tsx`, a workspace `package.json` and a findings README, and prints the demo route. Existing folders and IDs are rejected without overwriting them.
-
-For a fully specified invocation:
+Give it a name, choose a track and follow the prompts. Then run:
 
 ```sh
-npm run demo:new -- --args "Chapter Quiz" chapter-quiz experimental-projects "Your team" "Test your browser knowledge"
+npm install
+npm run dev
 ```
 
-Run `npm run dev`, open your new demo from the gallery, and edit its `index.tsx`. Modern Web Capabilities generates an independent circle with a radius control; other tracks generate the minimal idea/colour interaction. These are bootstraps, separate from completed reference examples.
+Open your demo from the gallery. It appears automatically—no registration needed.
 
-## Your first change
+## Make it yours
 
-Edit `demos/<id>/index.tsx`. For Modern Web, change the circle fill colour. For other tracks, change “An idea, taking shape” to your own heading. Save and refresh: the code change stays while temporary input resets. The generator prints the exact file and local route; no shared files need editing.
+Edit **`demos/<your-id>/index.tsx`** and save. Modern Web starts with a circle; the other tracks start with an idea card. Keep, change or replace the starter.
 
-## Try the starting point
+Your code, assets and notes belong in that folder. Change `demo.config.ts` to update the gallery title or description.
 
-This is the idea-card starter used by tracks other than Modern Web. For the circle starter, open [Modern Web Capabilities](#/track/modern-web). Change the idea and colour, then make your own version in your generated folder.
+<details>
+<summary>Run or build just your demo</summary>
 
-<DemoBoundary>
-  <section className="experiment">
-    <Template />
-  </section>
-</DemoBoundary>
-
-The generator is defined in `turbo/generators/config.js`; `create-demo.mjs` handles validation and file creation. Each demo is an npm workspace sharing the repository toolchain. Run `npm install` after generation to update workspace links and the lockfile.
-
-## Manual alternative
-
-Prefer the generator, which also creates the runnable app entry and package. For manually authored metadata, use this contract:
-
-Add `demo.config.ts` inside your copied folder:
-
-```ts
-import type { DemoDefinition } from '@lab/demo-kit/types';
-
-export default {
-  track: 'experimental-projects',
-  title: 'Your experiment',
-  description: 'What can someone try or learn?',
-  author: 'Your name or group',
-} satisfies DemoDefinition;
-```
-
-The gallery discovers `demos/*/demo.config.ts`, validates the metadata and links to each app’s HTML entry in folder-ID order. Keep metadata free of side effects and retain `satisfies DemoDefinition`. Folder IDs use lowercase kebab-case, up to 60 characters; template and system names are reserved.
-
-The React starter’s `main.tsx` mounts the default component from `index.tsx`. Starters live in `gallery/src/starters/`; entry templates live in `turbo/generators/templates/`. Reload the gallery after adding a demo, and rebuild for static hosting.
-
-Keep code, assets and optional `Demo.module.css` beside the component. Keep state inside the demo. Clean up timers, listeners, Workers and subscriptions when leaving. Each demo runs in its own page; the shared React mount provides render-error feedback. This is not a sandbox: an infinite loop still blocks the page, and async/event errors need handling inside your demo.
-
-Try your demo, navigate away and back, and check the browser console. Use a focused test, type check or build if needed to verify your change. `npm run check` combines the existing logic tests, TypeScript and build. These are demos; extensive test suites are not expected.
-
-## Share it through Git
-
-Follow [the contribution guide](#/guide/contributing) for checks, staging, pushing and the pull request. Include the track, what to try and what you learned. Keep dependency additions small and explain them.
-
-For work in another repository, share a permitted findings note or a gallery component with an appropriate link or walkthrough. Do not copy source, credentials or private data outside its permitted audience. Unfinished experiments and useful negative results are welcome.
-
-## Run and deploy independently
-
-Every demo is its own local npm workspace package:
+Replace `your-id` with the folder ID you chose:
 
 ```sh
-npm run dev --workspace @lab/demo-chapter-quiz
-npm run build --workspace @lab/demo-chapter-quiz
-npm run preview --workspace @lab/demo-chapter-quiz
+npm run dev --workspace @lab/demo-your-id
+npm run build --workspace @lab/demo-your-id
 ```
 
-Run these from the repository root after installation. Each app owns its `index.html` and `main.tsx`, uses the shared Vite config, and builds into its own `dist/`. Deploy that folder alone to a static host; its relative asset URLs work at a domain root or under a subpath. The source workspace still uses the repository's shared toolchain and starter styles; the generated build has no gallery runtime dependency.
+The build goes into `demos/<your-id>/dist/` and runs independently of the gallery.
 
-The root gallery build also includes every demo's entry page, so **Open standalone demo** works on the shared site. Root `npm run dev` starts only the gallery server; root `npm run build` builds the gallery and individual apps.
+</details>
 
-For a non-React experiment, replace `main.tsx` and its HTML script reference with your own entry. Keep `demo.config.ts` free of side effects. Add any framework dependencies to that demo's package, and configure any required compiler plugins in both the demo and gallery Vite builds. The gallery reads only metadata and links to the entry page; it does not import a standalone app's runtime.
-
-Independent builds omit links back to gallery guides by default. Set `VITE_GALLERY_URL` to your hosted gallery URL when building a demo to enable those links.
+Ready to share? [Open the contribution guide](#/guide/contributing).
