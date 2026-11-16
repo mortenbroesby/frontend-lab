@@ -2,37 +2,57 @@
 
 **Which code can we simplify, and what evidence would justify changing it?** Fallow helps you find places to investigate: unused code, repeated logic, complex functions and import relationships. A finding starts a conversation; it does not decide the change.
 
-By the end, you should be able to explain one finding, choose an action and name the check that supports your decision. You need a local checkout and a terminal; this page does not run analysis.
+By the end, you should be able to explain one finding, choose an action and name the check that supports your decision. Use this workflow in your own JavaScript or TypeScript repository, or practise in the Lab. You need a local checkout and a terminal; this page does not run analysis.
+
+### Set up in your own repository
+
+From your project root, install Fallow as a development dependency. For an npm project:
+
+```sh
+npm install --save-dev --save-exact fallow
+npx fallow --version
+npx fallow
+```
+
+Use your project's existing package manager and commit its manifest and lockfile. The exact version makes local and CI runs reproducible. The commands below use `npx` to invoke that installed dependency.
+
+Start with automatic discovery. If you need configuration, run `npx fallow init`, review its generated config and `.gitignore` changes, and commit the relevant files. Do not copy the Lab’s workspace paths or thresholds into a different project. See the [official quick start](https://fallow.tools/docs/quickstart/) and [configuration reference](https://fallow.tools/docs/configuration/).
+
+**Using the Lab instead?** Follow [local setup](#/guide/setup); Fallow is already installed and configured. Its `npm run analyze` script runs the same CLI. For example, `npm run analyze -- dead-code` is equivalent to `npx fallow dead-code`.
 
 ### 1. Start with one question
 
-After [local setup](#/guide/setup), run commands from the **repository root**. The lockfile pins Fallow; check your installed version:
-
-```sh
-npm run analyze -- --version
-```
+Run commands from your repository root.
 
 Choose the question closest to the work you are doing:
 
 | Question | Root command |
 | --- | --- |
-| Can we remove something unused? | `npm run analyze:dead-code` |
-| Are we maintaining the same logic twice? | `npm run analyze:dupes` |
-| Which function is difficult to reason about? | `npm run analyze:health` |
-| Where do imports form a cycle? | `npm run analyze:architecture` |
+| Can we remove something unused? | `npx fallow dead-code` |
+| Are we maintaining the same logic twice? | `npx fallow dupes` |
+| Which function is difficult to reason about? | `npx fallow health` |
+| Where do imports form a cycle? | `npx fallow architecture` |
 
-For a first overview, `npm run analyze` combines checks. Start with one finding near code you understand. No findings is a valid result; there is no cleanup quota.
+For a first overview, `npx fallow` combines checks. Start with one finding near code you understand. No findings is a valid result; there is no cleanup quota.
 
 These analysis commands do not apply fixes. A completed scan can exit 1 because findings exceed thresholds; distinguish that from configuration, parsing or installation errors.
 
-Read the [official quick start](https://fallow.tools/docs/quickstart/) for the general workflow. Web documentation may be newer than this repository: check flags with `npm run analyze -- --help` or the relevant subcommand’s `--help`.
+Read the [official quick start](https://fallow.tools/docs/quickstart/) for the general workflow. Web documentation may be newer than your installed version: check flags with `npx fallow --help` or the relevant subcommand’s `--help`.
 
 ### 2. Trace a real dependency
 
-Ask: **why do we depend on `d3-force`?**
+Pick a dependency from your `package.json` and ask what it contributes. Replace `PACKAGE_NAME` below with its actual name:
 
 ```sh
-npm run analyze:dead-code -- --trace-dependency d3-force
+npx fallow dead-code --trace-dependency PACKAGE_NAME
+```
+
+Follow the reported imports into your code. Is the dependency doing useful work? Does a framework or runtime load it indirectly? An empty trace alone is not permission to uninstall it.
+
+**Lab example:** why do we depend on `d3-force`?
+
+```sh
+npx fallow dead-code --trace-dependency d3-force
 ```
 
 Follow the reported imports into `demos/dependency-map/index.tsx`. Find the simulation setup and the forces it uses. Then open <DemoLink id="dependency-map">Dependency ripple</DemoLink> and compare its layouts.
@@ -51,12 +71,12 @@ Explain what the dependency contributes and what replacing it would require. Kee
 For unexpected unused-code results, inspect discovery:
 
 ```sh
-npm run analyze -- list --entry-points --plugins --workspaces
+npx fallow list --entry-points --plugins --workspaces
 ```
 
-Check that demo HTML entries, metadata and Worker modules are represented. Search for callers and inspect the source before deleting anything. An inaccurate project model needs a narrow discovery correction, not a broad ignore rule.
+Check your application entries, CLI scripts, framework routes and dynamically loaded modules. For a published package, account for consumers outside the repository: an export with no local caller may be its public API. In the Lab, check demo HTML entries, metadata and Worker modules. Search for callers and inspect the source before deleting anything. An inaccurate project model needs a narrow discovery correction, not a broad ignore rule.
 
-Fallow is static analysis: reachability is not evidence of production use. This repo supplies no coverage file, so a coverage-related risk estimate is **not measured test coverage**. A score does not prove a defect, and a clean report does not prove correctness.
+Fallow is static analysis: reachability is not evidence of production use. Without an actual coverage file, a coverage-related risk estimate is **not measured test coverage**. The Lab supplies no coverage file; your project may have one. A score does not prove a defect, and a clean report does not prove correctness.
 
 Read [dead-code findings explained](https://fallow.tools/docs/explanations/dead-code/) and [health metrics explained](https://fallow.tools/docs/explanations/health/) for the tool’s reasoning and limits.
 
@@ -66,23 +86,48 @@ Choose one:
 
 - **Change the code:** remove a genuinely unused export or simplify a confusing function. Preserve the intended behaviour.
 - **Correct discovery:** add the missing entry narrowly in `.fallowrc.json`, then rerun analysis before touching the reported code.
-- **Keep it:** explain why the dependency, repetition or complexity serves this demo. Do not extract a shared abstraction just to improve a score.
+- **Keep it:** explain why the dependency, repetition or complexity serves your project. Do not extract a shared abstraction just to improve a score.
 
 Rerun the same analysis, then the smallest check that could catch your mistake: a relevant test, type check or build. Broaden verification when the change crosses workspace boundaries. Preview any automatic fix before applying it.
 
-Before committing:
+In a Git repository, inspect staged changes before committing:
 
 ```sh
-npm run analyze:changes
+npx fallow audit --staged
 ```
+
+This checks the staged changes against HEAD; it does not replace a full-repository investigation.
 
 Finish with a short note: **“I investigated …; the evidence was …; I chose …; I checked ….”** That explanation is more useful than a before-and-after finding count.
 
-### How this repository is configured
+### Adopt it with your team
+
+Make the first scan a review exercise. Agree which findings should block work, which should warn, and which exceptions reflect the project’s public API or generated code. Resolve discovery errors before treating counts as a cleanup backlog. The [official adoption guide](https://fallow.tools/docs/adoption/) explains policy and triage in detail.
+
+For repeatable commands, merge these entries into your existing `package.json` scripts; keep the scripts you already have:
+
+```json
+{
+  "scripts": {
+    "analyze": "fallow",
+    "analyze:changes": "fallow audit"
+  }
+}
+```
+
+Start CI as an advisory job while reviewing its output. When ready to block changes, install from the committed lockfile and run the audit against the intended comparison commit. For example, `npx fallow audit --base origin/main` requires that ref and enough Git history to find the merge base; replace it if your default branch differs. On a direct push to main, compare against the previous commit supplied by CI, not the newly updated main ref. Check the installed CLI’s gate behaviour before enforcing it.
+
+A reviewed baseline can track accepted debt; it is not a licence to regenerate the snapshot whenever a check fails. Give exceptions a reason and revisit them when the code changes. Read the [CI integration guide](https://fallow.tools/docs/integrations/ci/) before choosing your provider’s setup.
+
+Agents can use the same CLI and project policy. Tell them to verify findings, preview fixes and run relevant checks. An editor integration or MCP server is optional. Add hooks only when they fit the team’s workflow; existing hooks should be preserved.
+
+### Lab-specific configuration
+
+The following choices describe this workshop repository, not defaults to copy into your own project.
 
 - `.fallowrc.json` declares workspace patterns, TypeScript app entries and the existing thresholds. Built-in discovery adds package exports, Vite, tests, generators and Workers. Recheck it when entries move.
 - Root scripts scan the current workspace outside Turbo’s cache. New error-level findings and worsening existing enforceable complexity findings fail the audit, commit hook and CI. Unchanged inherited findings remain allowed; estimated-coverage-only findings, test complexity and CSS suggestions stay advisory.
-- `.baselines/` records reviewed findings. Run `npm run analyze:baseline` to compare the whole repo; `npm run analyze:health` shows current metrics and advisories. Read the baseline README before refreshing.
+- `.baselines/` records reviewed findings. Run `npm run analyze:baseline` to compare the whole repo; `npx fallow health` shows current metrics and advisories. Read the baseline README before refreshing.
 - No Fallow boundary rules or rule packs. `npm run check:architecture` separately enforces dependency-cruiser rules; a clean Fallow result says nothing about that policy.
 - `.fallow/` holds ignored generated data. Never commit caches or machine-specific reports.
 
@@ -90,8 +135,7 @@ If discovery misses an entry, inspect it before adding a narrow `entry` pattern 
 
 Keep sensitive source and reports within the repository's permitted audience.
 
-
-### Set up agents and commit checks
+### Lab-specific agents and commit checks
 
 After `npm ci`, check `npm run fallow:status`. Install missing hooks once per clone with `npm run fallow:hooks`; the official installer refuses to overwrite hooks. Your terminal and Git client need Node/npm.
 
