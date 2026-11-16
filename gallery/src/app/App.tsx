@@ -15,9 +15,8 @@ interface Page {
 
 const pages: Record<string, Page> = {
   '/': {
-    title: 'Explore. Try. Build.',
-    description:
-      'A playground for front-end experiments. Find an idea, try a working example or create something of your own.',
+    title: 'Build one small experiment.',
+    description: 'Pick a track, then use a suggested idea, remix a demo or bring your own idea.',
     content: <Home />,
   },
   '/demos': {

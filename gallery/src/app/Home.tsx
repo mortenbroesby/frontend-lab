@@ -1,3 +1,4 @@
+import { Button } from '@lab/ui/button';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
 import { TrackIllustration } from './TrackIllustration';
@@ -5,6 +6,25 @@ import { TrackIllustration } from './TrackIllustration';
 export function Home() {
   return (
     <>
+      <section className="mb-8" aria-label="Your assignment">
+        <p>
+          The suggestions are starting points—you do not need to complete them all. Aim for
+          something you can show and explain: what you tried, what happened and what you learned.
+        </p>
+        <Button asChild className="mt-4">
+          <a
+            href="#tracks-heading"
+            onClick={(event) => {
+              event.preventDefault();
+              const heading = document.getElementById('tracks-heading');
+              heading?.focus({ preventScroll: true });
+              heading?.scrollIntoView({ block: 'start' });
+            }}
+          >
+            Choose a track ↓
+          </a>
+        </Button>
+      </section>
       <HomeJourneys />
       <TrackChoices />
     </>
@@ -13,21 +33,7 @@ export function Home() {
 
 function HomeJourneys() {
   return (
-    <nav className="home-journeys" aria-label="Choose a journey">
-      <a
-        href="#tracks-heading"
-        onClick={(event) => {
-          event.preventDefault();
-          const heading = document.getElementById('tracks-heading');
-          heading?.focus({ preventScroll: true });
-          heading?.scrollIntoView({ block: 'start' });
-        }}
-      >
-        <span className="journey-label">
-          Explore tracks <span aria-hidden="true">↓</span>
-        </span>
-        <span>Find an idea worth trying.</span>
-      </a>
+    <nav className="home-journeys" aria-label="Resources for your experiment">
       <a href="#/demos">
         <span className="journey-label">
           Try demos <span aria-hidden="true">↗</span>
@@ -40,12 +46,6 @@ function HomeJourneys() {
         </span>
         <span>Learn an approach you can reuse.</span>
       </a>
-      <a href="#/create">
-        <span className="journey-label">
-          Create a demo <span aria-hidden="true">↗</span>
-        </span>
-        <span>Start with a small React app.</span>
-      </a>
     </nav>
   );
 }
@@ -55,9 +55,9 @@ function TrackChoices() {
     <section aria-labelledby="tracks-heading">
       <div className="track-heading">
         <h2 id="tracks-heading" tabIndex={-1}>
-          Explore tracks
+          Choose a track
         </h2>
-        <p>Choose a direction. Follow your curiosity.</p>
+        <p>Pick the direction that interests you. You can bring your own idea.</p>
       </div>
       <div className="track-grid">
         {tracks.map((t) => (

@@ -1,3 +1,4 @@
+import { Button } from '@lab/ui/button';
 import { DemoGallery } from './DemoGallery';
 import { GuideList } from './GuideGallery';
 import { GuideView } from './GuideView';
@@ -8,6 +9,20 @@ export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; r
   const section = ['ideas', 'examples'].includes(trackPage) ? trackPage : 'guides';
   return (
     <>
+      {trackPage === 'ideas' && (
+        <section className="mb-8" aria-labelledby="starting-point-heading">
+          <h2 id="starting-point-heading">Choose your starting point</h2>
+          <p>
+            Use an idea below, adapt an existing demo or explore your own question within this
+            track. Choose one small experiment; the ideas are not a checklist. Guides are here to
+            help when you need them.
+          </p>
+          <p>Be ready to explain what you tried, what happened and what you learned.</p>
+          <Button asChild className="mt-4">
+            <a href="#/create">Start your experiment →</a>
+          </Button>
+        </section>
+      )}
       <nav className="guide-nav" aria-label="Track guide">
         {[
           ['ideas', 'Ideas'],
@@ -23,7 +38,7 @@ export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; r
           </a>
         ))}
         <a className="track-build-link" href="#/create">
-          Create a demo <span aria-hidden="true">↗</span>
+          Start your experiment <span aria-hidden="true">↗</span>
         </a>
       </nav>
       {trackPage === 'examples' ? (
