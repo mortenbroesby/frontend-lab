@@ -24,20 +24,18 @@ export function isCommandShortcut(
   );
 }
 
+export function commandLabel(platform: string) {
+  return /Mac|iPhone|iPad|iPod/.test(platform) ? '⌘K' : 'Ctrl K';
+}
+
 export function developerShortcut(
   event: Pick<
     KeyboardEvent,
-    'code' | 'altKey' | 'shiftKey' | 'ctrlKey' | 'metaKey' | 'repeat' | 'isComposing'
+    'key' | 'altKey' | 'shiftKey' | 'ctrlKey' | 'metaKey' | 'repeat' | 'isComposing'
   >,
 ) {
-  if (
-    !event.altKey ||
-    !event.shiftKey ||
-    event.ctrlKey ||
-    event.metaKey ||
-    event.repeat ||
-    event.isComposing
-  )
+  if (event.key !== 'Enter' || event.altKey || event.metaKey || event.repeat || event.isComposing)
     return;
-  return ({ KeyD: 'debug', KeyG: 'gallery' } as const)[event.code as 'KeyD' | 'KeyG'];
+  if (event.ctrlKey === event.shiftKey) return;
+  return event.ctrlKey ? 'debug' : 'gallery';
 }

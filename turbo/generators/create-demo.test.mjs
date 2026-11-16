@@ -8,7 +8,7 @@ import { createDemo } from './create-demo.mjs';
 import configureGenerator from './config.js';
 
 async function fixture(t) {
-  const root = await mkdtemp(join(tmpdir(), 'lab-generator-'));
+  const root = await mkdtemp(join(tmpdir(), 'Front End Lab – '));
   t.after(() => rm(root, { recursive: true, force: true }));
   await cp(new URL('../../.prettierrc.json', import.meta.url), join(root, '.prettierrc.json'));
   await mkdir(join(root, 'demos'), { recursive: true });
@@ -72,7 +72,9 @@ test('invalid names, tracks and empty metadata cause no writes', async (t) => {
     { id: '../escape' },
     { id: 'Bad Name' },
     { id: 'template' },
-    { id: 'con' },
+    ...['con', 'prn', 'aux', 'nul', 'com1', 'lpt9', 'trailing.', 'with space'].map((id) => ({
+      id,
+    })),
     { track: 'e' },
     { track: 'a' },
     { track: 'b' },

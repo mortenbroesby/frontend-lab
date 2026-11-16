@@ -184,7 +184,7 @@ export default function DeviceRally() {
             id="rally-room"
             value={roomCode}
             disabled={joined !== null}
-            pattern="[a-z0-9-]{1,24}"
+            pattern={'[a-z0-9\\-]{1,24}'}
             maxLength={24}
             required
             onChange={(event) => setRoomCode(event.target.value.toLowerCase())}

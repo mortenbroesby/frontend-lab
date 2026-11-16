@@ -15,3 +15,7 @@ The standalone demo packages, gallery, generator and shared toolchain remain in 
 - Cache probes: demo source invalidates that demo and the combined gallery; kit source invalidates consumers; a demo manifest also invalidates the dependency map. An unchanged repeat build hit cache. Generated output is excluded; Vite env files are explicit build inputs.
 - Fallow doctor passed. The audit has no introduced findings. A bounded route and dependency-map cleanup cleared the four recorded health findings; full checks and browser navigation/keyboard selection passed. Large-function and CSS advisories remain. The reviewed snapshot now lives in `.baselines/`; its comparison passes and rejects a temporary unused-file probe. No suppressions were added.
 - Gallery runtime-requirement labels were inspected in the browser. The shared skill is installed as repository instructions; fresh Codex/Copilot invocation remains untested.
+
+## Windows
+
+[Windows compatibility](windows.md) records the scope, safeguards and remaining manual checks. CI runs native Windows and Linux in a checkout path containing spaces. `npm run test:servers` checks gallery and standalone HTTP startup after building; it does not run a browser.

@@ -17,6 +17,7 @@
     "build": "turbo run build",
     "preview": "turbo run preview --filter=front-end-lab-gallery",
     "demo:new": "turbo gen demo",
+    "test:servers": "node --test tests/servers.test.mjs",
     "test:generator": "node --test turbo/generators/create-demo.test.mjs",
     "test": "npm run test:workspaces && npm run test:generator && turbo run test",
     "check": "npm run format:check && npm run lint && npm run check:architecture && npm test && turbo run typecheck build",

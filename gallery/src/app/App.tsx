@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { CommandMenu } from '@lab/demo-kit/command-menu';
+import { CommandMenu, commandMenuLabel } from '@lab/demo-kit/command-menu';
 import { Button } from '@lab/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
 import { LabMark } from '@lab/demo-kit/mark';
@@ -267,7 +267,7 @@ function LabNavigation({ route }: { route: string }) {
               onClick={() => setCommandOpen(true)}
               aria-label="Open command palette"
             >
-              ⌘K
+              {commandMenuLabel}
             </Button>
           </DialogClose>
         </DialogContent>

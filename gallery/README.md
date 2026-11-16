@@ -29,9 +29,9 @@ Hash routes (`#/track/modern-web`, `#/demo/constellation`, `#/create`) support d
 
 ## Command palette
 
-Use **⌘K** (inside **Menu** on mobile) or press **⌘K / Ctrl+K** for appearance, navigation and developer actions; type to find individual demos. Arrow keys move through results; Enter selects and Escape closes. The standard demo mount also includes the palette, with gallery links when configured. **Debug information** displays a local runtime snapshot; **Reload page** restarts the current app and clears unsaved in-memory state.
+Use **Ctrl K** (**⌘K** on Apple devices; inside **Menu** on mobile) or press **⌘K / Ctrl+K** for appearance, navigation and developer actions; type to find individual demos. Arrow keys move through results; Enter selects and Escape closes. The standard demo mount also includes the palette, with gallery links when configured. **Debug information** displays a local runtime snapshot; **Reload page** restarts the current app and clears unsaved in-memory state.
 
-Shortcuts work outside the palette too: **Alt+Shift+D** opens debug information; **Alt+Shift+G** opens all demos when a gallery is available (Alt is Option on Mac).
+Inside the palette, **Ctrl+Enter** opens debug information; **Shift+Enter** opens all demos when a gallery is available. These avoid the Windows Alt+Shift keyboard-layout shortcut.
 
 The kit owns the palette and developer commands in `demo-kit/CommandMenu.tsx`; the gallery supplies navigation from its existing metadata. Add commands there without coupling the UI library to app routes.
 

@@ -4,7 +4,16 @@ import { Button } from '@lab/ui/button';
 import { Input } from '@lab/ui/input';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
 import { DebugInfo } from './DebugInfo';
-import { developerShortcut, isCommandShortcut, matchesCommand } from './command-search';
+import {
+  commandLabel,
+  developerShortcut,
+  isCommandShortcut,
+  matchesCommand,
+} from './command-search';
+
+export const commandMenuLabel = commandLabel(navigator.platform);
+
+const shortcutLabels: Record<string, string> = { D: 'Ctrl Enter', G: 'Shift Enter' };
 
 type View = 'commands' | 'debug';
 
@@ -32,7 +41,7 @@ function CommandResults({ commands }: { commands: Command[] }) {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={(event) => {
-          if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+          if (!event.defaultPrevented && event.key === 'Enter' && !event.nativeEvent.isComposing) {
             event.preventDefault();
             matches[0]?.run();
           }
@@ -46,7 +55,9 @@ function CommandResults({ commands }: { commands: Command[] }) {
             )}
             <Button variant="ghost" className="command-item" onClick={command.run}>
               <span>{command.label}</span>
-              {command.shortcut && <kbd className="command-key">Alt ⇧ {command.shortcut}</kbd>}
+              {command.shortcut && (
+                <kbd className="command-key">{shortcutLabels[command.shortcut]}</kbd>
+              )}
             </Button>
           </div>
         ))}
@@ -87,7 +98,7 @@ function MenuContents({
   ];
   return (
     <>
-      <DialogTitle>{view === 'debug' ? 'Debug information' : '⌘K'}</DialogTitle>
+      <DialogTitle>{view === 'debug' ? 'Debug information' : commandMenuLabel}</DialogTitle>
       {view !== 'commands' ? (
         <>
           <Button autoFocus variant="outline" onClick={() => setView('commands')}>
@@ -106,45 +117,6 @@ function MenuContents({
       )}
     </>
   );
-}
-
-function usePaletteShortcuts(
-  open: boolean,
-  setOpen: (open: boolean) => void,
-  setView: (view: View) => void,
-  gallery?: string,
-) {
-  useEffect(() => {
-    const actions = new Map<string | undefined, () => void>([
-      [
-        'toggle',
-        () => {
-          setView('commands');
-          setOpen(!open);
-        },
-      ],
-      [
-        'debug',
-        () => {
-          setView('debug');
-          setOpen(true);
-        },
-      ],
-    ]);
-    if (gallery)
-      actions.set('gallery', () => {
-        setOpen(false);
-        location.assign(gallery);
-      });
-    const handleKey = (event: globalThis.KeyboardEvent) => {
-      const run = actions.get(isCommandShortcut(event) ? 'toggle' : developerShortcut(event));
-      if (event.defaultPrevented || !run) return;
-      event.preventDefault();
-      run();
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [open, setOpen, setView, gallery]);
 }
 
 export function CommandMenu({
@@ -167,7 +139,28 @@ export function CommandMenu({
   const open = controlledOpen ?? localOpen;
   const setOpen = onOpenChange ?? setLocalOpen;
   const gallery = links.find((link) => link.shortcut === 'G')?.href;
-  usePaletteShortcuts(open, setOpen, setView, gallery);
+  useEffect(() => {
+    const handleKey = (event: globalThis.KeyboardEvent) => {
+      if (event.defaultPrevented || !isCommandShortcut(event)) return;
+      event.preventDefault();
+      setView('commands');
+      setOpen(!open);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [open, setOpen]);
+  const handleAction = (event: KeyboardEvent<HTMLDivElement>) => {
+    const action = developerShortcut(event.nativeEvent);
+    if (action === 'debug') {
+      event.preventDefault();
+      setView('debug');
+    }
+    if (action === 'gallery' && gallery) {
+      event.preventDefault();
+      setOpen(false);
+      location.assign(gallery);
+    }
+  };
   return (
     <Dialog
       open={open}
@@ -181,14 +174,15 @@ export function CommandMenu({
           variant="outline"
           className={triggerClassName}
           aria-label="Open command palette"
-          title="Command K (Ctrl K on Windows and Linux)"
+          title={`Open commands (${commandMenuLabel})`}
           aria-keyshortcuts="Meta+K Control+K"
         >
-          <span aria-hidden="true">⌘K</span>
+          <span aria-hidden="true">{commandMenuLabel}</span>
         </Button>
       </DialogTrigger>
       <DialogContent
         className="lab-command-menu"
+        onKeyDownCapture={handleAction}
         aria-describedby={undefined}
         onCloseAutoFocus={onCloseAutoFocus}
       >
