@@ -9,6 +9,10 @@ Four tracks and standalone demos. Help participants get started independently.
 - No backwards compatibility: update callers and delete obsolete paths. No aliases, adapters or dual modes for legacy behaviour.
 - Prefer deletion, direct code, existing dependencies and browser APIs. Preserve accessibility, input safety, error handling and resource cleanup; never expose secrets.
 
+## Agent skills
+
+Use the shared [skill index](.agents/skills/README.md) for demo development, Lab UI, UI review, Turborepo and Fallow. Load only the skill relevant to the task; keep one copy for Codex and Copilot. Update affected skill references when commands, paths or contracts change.
+
 ## Architecture
 
 Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architecture.md); keep small demos flat.
@@ -35,11 +39,11 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 - Use bounded checks that answer a concrete question: an existing test, type check or build. Add a small test only for an important point or nontrivial logic. No extensive suites, coverage targets, exhaustive matrices or redundant checks. Documentation and mechanical edits rarely need tests.
 - `npm run check` combines format, hooks, architecture, logic, type and build checks; it need not run for every edit.
 - No browser tests or infrastructure unless explicitly requested. A future browser-testing demo belongs in its own package.
-- Work directly on `main`: fetch and integrate remote changes, preserve unrelated work, commit and push. Open PRs only when requested. Report checks and remaining limits; tests are not production acceptance.
+- Work directly on `main`: fetch and integrate remote changes before editing and check again before pushing. Other sessions may be changing the same files; inspect overlapping changes, preserve their behaviour and rerun affected checks after integration. Commit and push scoped work. Open PRs only when requested. Report checks and remaining limits; tests are not production acceptance.
 
 ## Documentation
 
-- Write concise, participant-focused copy without event dates or schedules. Say each thing once; link canonical guidance. Keep the README a local starting point, not a guide directory.
+- Write concise, participant-focused copy without event dates or schedules. Prefer concrete actions and useful examples. Avoid sales language, compulsory presentations, reflection prompts and instructions to report what participants learned. Say each thing once; do not repeat setup or onboarding on every page. Link canonical guidance. Keep the README a local starting point, not a guide directory.
 - Participant MDX lives in `gallery/src/content/` and track subfolders. Generator templates live in `turbo/generators/templates/`. Treat MDX as trusted app code, never remote or user-supplied content.
 - Keep meaningful choices and tradeoffs in `gallery/docs/decisions/`.
 - Use the Front-End Lab theme; do not require Sapphire. Support local or hosted use and internal GitHub Enterprise Cloud migration. Keep temporary hosting out of participant copy; use [hosting notes](gallery/docs/hosting.md).
