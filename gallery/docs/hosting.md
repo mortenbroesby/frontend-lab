@@ -7,7 +7,7 @@ Vercel project: `frontend-chapter-day` in `morten-broesbyolsens-projects`, conne
 Project settings:
 
 - Repository root; framework preset Vite; Node 24.x.
-- Install: `npm ci`.
+- Install: `npx --yes npm@11.6.2 ci`, pinned in `vercel.json` to match `packageManager` and GitHub CI. Vercel’s default npm version may validate optional lockfile dependencies differently.
 - Build: `npm run build`.
 - Output: `gallery/dist`, set in the repository’s `vercel.json`.
 - Production domain is public; preview and deployment-specific URLs use Vercel authentication. Repository source remains private.

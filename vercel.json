@@ -1,3 +1,4 @@
 {
-  "outputDirectory": "gallery/dist"
+  "outputDirectory": "gallery/dist",
+  "installCommand": "npx --yes npm@11.6.2 ci"
 }
