@@ -6,11 +6,8 @@ import { TrackIllustration } from './TrackIllustration';
 export function Home() {
   return (
     <>
-      <section className="mb-8" aria-label="Your assignment">
-        <p>
-          The suggestions are starting points—you do not need to complete them all. Aim for
-          something you can show and explain: what you tried, what happened and what you learned.
-        </p>
+      <section className="mb-8" aria-label="Choose an experiment">
+        <p>Pick an idea, remix a demo or explore your own question.</p>
         <Button asChild className="mt-4">
           <a
             href="#tracks-heading"

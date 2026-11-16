@@ -2,7 +2,7 @@
 
 **Which code can we simplify, and what evidence would justify changing it?** Fallow helps you find places to investigate: unused code, repeated logic, complex functions and import relationships. A finding starts a conversation; it does not decide the change.
 
-By the end, you should be able to explain one finding, choose an action and name the check that supports your decision. Use this workflow in your own JavaScript or TypeScript repository, or practise in the Lab. You need a local checkout and a terminal; this page does not run analysis.
+Use this workflow in your own JavaScript or TypeScript repository, or practise in the Lab. You need a local checkout and a terminal; this page does not run analysis.
 
 ### Set up in your own repository
 
@@ -57,7 +57,7 @@ npx fallow dead-code --trace-dependency d3-force
 
 Follow the reported imports into `demos/dependency-map/index.tsx`. Find the simulation setup and the forces it uses. Then open <DemoLink id="dependency-map">Dependency ripple</DemoLink> and compare its layouts.
 
-Explain what the dependency contributes and what replacing it would require. Keeping a useful dependency is a successful investigation. This exercise uses your checkout’s actual output; it does not assume an unused dependency will appear.
+Check what the dependency contributes and what replacing it would require. Keeping a useful dependency is a successful investigation. This exercise uses your checkout’s actual output; it does not assume an unused dependency will appear.
 
 ### 3. Check what the finding means
 
@@ -86,7 +86,7 @@ Choose one:
 
 - **Change the code:** remove a genuinely unused export or simplify a confusing function. Preserve the intended behaviour.
 - **Correct discovery:** add the missing entry narrowly in `.fallowrc.json`, then rerun analysis before touching the reported code.
-- **Keep it:** explain why the dependency, repetition or complexity serves your project. Do not extract a shared abstraction just to improve a score.
+- **Keep it:** the dependency, repetition or complexity may serve a useful purpose. Do not extract a shared abstraction just to improve a score.
 
 Rerun the same analysis, then the smallest check that could catch your mistake: a relevant test, type check or build. Broaden verification when the change crosses workspace boundaries. Preview any automatic fix before applying it.
 
@@ -97,8 +97,6 @@ npx fallow audit --staged
 ```
 
 This checks the staged changes against HEAD; it does not replace a full-repository investigation.
-
-Finish with a short note: **“I investigated …; the evidence was …; I chose …; I checked ….”** That explanation is more useful than a before-and-after finding count.
 
 ### Adopt it with your team
 

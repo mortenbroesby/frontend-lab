@@ -17,7 +17,6 @@ export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; r
             track. Choose one small experiment; the ideas are not a checklist. Guides are here to
             help when you need them.
           </p>
-          <p>Be ready to explain what you tried, what happened and what you learned.</p>
           <Button asChild className="mt-4">
             <a href="#/create">Start your experiment →</a>
           </Button>

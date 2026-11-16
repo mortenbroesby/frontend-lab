@@ -30,7 +30,7 @@ Choose a shared package you expect to change. You do not need a graph UI:
 3. Check actual imports and calls along one path. Separate build tools from browser runtime dependencies.
 4. Run a focused test, type check or build for that consumer using your repository’s scripts. Expand checks when the evidence calls for it.
 
-Your outcome is a short explanation: “This workspace depends on the changed package through this path; this check exercises the behaviour I changed.” For enforcing source-import boundaries, use [Protect an architecture boundary](#/track/code-quality/architecture).
+For enforcing source-import boundaries, use [Protect an architecture boundary](#/track/code-quality/architecture).
 
 To adapt this demo, replace the manifest glob in `data.ts` with your workspace locations. Rebuild hosted output after manifest changes; it is a build-time snapshot.
 

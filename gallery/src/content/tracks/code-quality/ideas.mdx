@@ -41,7 +41,7 @@ Read: [ESLint’s complexity rule and examples](https://eslint.org/docs/latest/r
 
 **“Why does changing this feature affect that one?”** Follow the connections between a screen, its data and shared utilities. Explore whether the code’s dependencies match the boundaries people think they have.
 
-Start by tracing one behaviour through its imports. Sketch the few modules involved and mark any dependency you did not expect. In this repository, run `npm run check:architecture` and inspect one rule in `.dependency-cruiser.cjs`. The check uses dependency-cruiser, which is already installed; explain what the rule protects before changing it.
+Start by tracing one behaviour through its imports. Sketch the few modules involved and mark any dependency you did not expect. In this repository, run `npm run check:architecture` and inspect one rule in `.dependency-cruiser.cjs`. The check uses dependency-cruiser, which is already installed; check what the rule protects before changing it.
 
 Stretch by comparing two ways to remove an unwanted connection, or expressing an agreed boundary as a rule. Check that the rule catches the intended import without blocking legitimate use. A passing check only tells you that the inspected graph satisfies the configured rules.
 

@@ -1,6 +1,6 @@
 ## Find a missing test
 
-**What behaviour matters, and what evidence do our tests actually provide?** Start with one question about code people use. Finish with a test you can explain, not a coverage target.
+**What behaviour matters, and what evidence do our tests actually provide?** Start with one question about code people use.
 
 Use the Lab exercise below after [local setup](#/guide/setup), or follow the same steps in your own repository with its existing test runner.
 
@@ -62,13 +62,13 @@ You have now observed three distinct results: the old suite passed a defect, the
 
 ### 4. Apply it in your own repository
 
-Choose one real input boundary, state transition or failure path. Trace it from a caller to the logic and then to its tests. Write down what is already checked before adding anything.
+Choose one real input boundary, state transition or failure path. Trace it from a caller to the logic and then to its tests. Check existing coverage before adding a test.
 
 Derive the expected result from the requirement, a small hand-worked example or an independent method. Copying the implementation into the test can reproduce the same mistake twice. Use your project's existing runner; adopting Node's test runner is not part of this exercise.
 
 Verify that a small, plausible implementation regression fails the new test. Restore the correct implementation, then run the relevant surrounding tests. Keep any wider checks needed by the change. Never leave a deliberate failure in the committed code.
 
-Finish with: **“This test establishes …; it does not establish ….”** If the existing tests already answer the question, explain that and leave them alone.
+If the existing tests already cover the behaviour, there is no need to add another.
 
 Read: [Node test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html).
 
