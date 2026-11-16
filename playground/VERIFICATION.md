@@ -10,9 +10,14 @@ Checked in `docs/participant-journeys`, based on `4ad159a`, with only Markdown c
 - Fallow doctor passed seven checks with no warnings; `npm run analyze:changes` passed with no introduced issues.
 - Browser tests were not rerun: this revision changes no app code, UI behaviour, dependencies or configuration. Independent participant setup remains unobserved.
 
-## Folder-discovery documentation follow-up
+## Folder discovery · separate branch, pending integration
 
-Participant guides now describe the agreed folder-discovery contract: generated `Demo.tsx`, `demo.config.ts` and `README.md`, a typed metadata/loader export and an ID derived from the folder. This follow-up is documentation-only; the implementation is owned by the separate discovery branch. The earlier checks above do not verify that implementation. Reconcile and rerun the relevant generator, discovery and browser checks when integrating it.
+Implementation: `feat/typed-demo-discovery` at `45247b2fc9b959bb23d55adc7c21554ff898f7bd`, reported pushed on 16 November 2026 and not yet merged into `main`. Participant guides describe this contract for integration; it is not a claim that the current `main` checkout already supports it.
+
+- The generator writes only its own folder: `Demo.tsx`, `demo.config.ts` and `README.md`. The metadata filename avoids a macOS case-insensitive resolution collision with `Demo.tsx`.
+- Source inspection of that commit confirms typed metadata, folder-derived IDs, alphabetical folder ordering and lazy component loading. Reference implementations remain in `src/examples/`, with discovered configs in demo folders. No participant edit to a central registry is needed.
+- The implementation session reported 19 unit/generator tests, TypeScript and build passing; ten Chrome journeys and a separate generated-demo browser smoke check passing; and no introduced Fallow findings. These results belong to that branch and were not rerun by this documentation session.
+- The implementation commit also owns the technical template README and AGENTS.md updates. Reconcile those with the participant documentation and verify the combined result before merging; independent participant acceptance remains unobserved.
 
 ## Recorded baseline: `4ad159a` · 16 November 2026
 
