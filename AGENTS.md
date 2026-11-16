@@ -37,7 +37,7 @@ Apply [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architect
 - Add a small test only when it proves an important point or protects nontrivial demo logic. `npm run check` is the available combined logic/type/build check, not a requirement to rerun every check for every edit.
 - There are no browser tests or browser-test infrastructure for now. Do not reintroduce them unless explicitly requested; a later browser-testing demo should be scoped as its own demo.
 - Report what was checked and what remains untested without turning demo delivery into production acceptance.
-- Preserve unrelated work. Commit and push completed scoped changes; report verification and remaining limits accurately.
+- Work directly on `main`: fetch and integrate the latest remote changes, preserve unrelated work, then commit and push completed scoped changes. Do not open pull requests unless explicitly requested. Report verification and remaining limits accurately.
 - Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Author participant pages in `gallery/src/content/*.mdx` and track subfolders. Embed starters beside instructions; keep finished examples separate. MDX is trusted app code, never remote or user-supplied content. The README is a local entry point, not a directory of guide files or hosted URLs.
 
 ## References
