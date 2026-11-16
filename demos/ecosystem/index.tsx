@@ -1,3 +1,6 @@
+import { Button } from '@lab/ui/button';
+import { Label } from '@lab/ui/label';
+import { Slider } from '@lab/ui/slider';
 import { useEffect, useState } from 'react';
 import { makeWorld, stepWorld, type Point } from './world';
 import './pond.css';
@@ -32,32 +35,32 @@ export default function Ecosystem() {
         <p>Plant a meal. Watch who finds it. What changes when creatures can see further?</p>
       </header>
       <div className="pond-controls">
-        <button type="button" onClick={() => setRunning(!running)}>
+        <Button type="button" onClick={() => setRunning(!running)}>
           {running ? 'Pause' : 'Play'}
-        </button>
-        <button type="button" className="secondary" onClick={() => setWorld(makeWorld())}>
+        </Button>
+        <Button type="button" variant="outline" onClick={() => setWorld(makeWorld())}>
           Reset pond
-        </button>
-        <label>
-          Speed{' '}
-          <input
-            type="range"
-            min="10"
-            max="100"
-            value={speed}
-            onChange={(event) => setSpeed(Number(event.target.value))}
+        </Button>
+        <div className="pond-control">
+          <Label id="pond-speed-label">Speed</Label>
+          <Slider
+            aria-labelledby="pond-speed-label"
+            min={10}
+            max={100}
+            value={[speed]}
+            onValueChange={([value]) => setSpeed(value)}
           />
-        </label>
-        <label>
-          Sensing distance{' '}
-          <input
-            type="range"
-            min="20"
-            max="350"
-            value={sight}
-            onChange={(event) => setSight(Number(event.target.value))}
+        </div>
+        <div className="pond-control">
+          <Label id="pond-sight-label">Sensing distance</Label>
+          <Slider
+            aria-labelledby="pond-sight-label"
+            min={20}
+            max={350}
+            value={[sight]}
+            onValueChange={([value]) => setSight(value)}
           />
-        </label>
+        </div>
       </div>
       <svg
         className="pond"
@@ -141,9 +144,9 @@ export default function Ecosystem() {
         <span>
           16 creatures · {world.food.length} meals available · {world.eaten} eaten
         </span>
-        <button type="button" className="secondary" onClick={() => plant(cursor)}>
+        <Button type="button" variant="outline" onClick={() => plant(cursor)}>
           Plant at marker
-        </button>
+        </Button>
       </div>
       <p id="pond-help">
         Click to plant food, or focus the pond, move with arrow keys and press Enter. After 120

@@ -1,3 +1,5 @@
+import { Input } from '@lab/ui/input';
+import { Label } from '@lab/ui/label';
 import { useState } from 'react';
 
 // Keep, replace or delete this starter.
@@ -18,14 +20,14 @@ export default function Demo() {
           Edit the heading in your generated <code>index.tsx</code>. Save and refresh to confirm it
           persists, then add an interaction.
         </p>
-        <label htmlFor="idea">What are you curious about?</label>
-        <input
+        <Label htmlFor="idea">What are you curious about?</Label>
+        <Input
           id="idea"
           value={idea}
           maxLength={120}
           onChange={(event) => setIdea(event.target.value)}
         />
-        <label htmlFor="colour">Colour</label>
+        <Label htmlFor="colour">Colour</Label>
         <input
           id="colour"
           type="color"

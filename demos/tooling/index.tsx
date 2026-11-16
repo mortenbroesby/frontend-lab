@@ -1,3 +1,4 @@
+import { Button } from '@lab/ui/button';
 import { useState } from 'react';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 
@@ -52,15 +53,15 @@ export default function Tooling() {
       </p>
       <div className="button-row" role="group" aria-label="Feedback experiments">
         {experiments.map((item, index) => (
-          <button
+          <Button
             key={item.title}
             type="button"
-            className={selected === index ? '' : 'secondary'}
+            variant={selected === index ? 'default' : 'outline'}
             aria-pressed={selected === index}
             onClick={() => setSelected(index)}
           >
             {item.title}
-          </button>
+          </Button>
         ))}
       </div>
       <section aria-live="polite" aria-atomic="true">

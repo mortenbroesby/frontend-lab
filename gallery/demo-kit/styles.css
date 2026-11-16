@@ -44,52 +44,9 @@
     color: inherit;
     text-underline-offset: 0.25em;
   }
-  button,
-  input,
-  select {
-    font: inherit;
-  }
-  button,
-  .button {
-    cursor: pointer;
-    border: 1px solid var(--lab-accent);
-    border-radius: 0.3rem;
-    background: var(--lab-accent);
-    color: #fff;
-    padding: 0.75rem 1.2rem;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 650;
-    line-height: 1.4;
-  }
-  button:hover,
-  .button:hover {
-    background: var(--lab-accent-hover);
-  }
-  button:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
   :focus-visible {
     outline: 3px solid #0070f3;
     outline-offset: 4px;
-  }
-  input:not([type='range']):not([type='color']),
-  select {
-    display: block;
-    width: 100%;
-    padding: 0.6rem 0.8rem;
-    color: var(--lab-ink);
-    border: 1px solid #a3a3a3;
-    border-radius: 0.5rem;
-    background: var(--lab-surface);
-    margin-bottom: 1rem;
-  }
-  input[type='range'] {
-    width: 100%;
-    accent-color: var(--lab-accent);
   }
   input[type='color'] {
     width: 5rem;
@@ -97,11 +54,6 @@
     border: 0;
     padding: 0;
     cursor: pointer;
-  }
-  label {
-    display: block;
-    font-weight: 650;
-    margin: 1rem 0 0.4rem;
   }
   output {
     float: right;
@@ -267,13 +219,6 @@
     flex-wrap: wrap;
     margin: 1.4rem 0;
   }
-  .secondary {
-    background: transparent;
-    color: var(--lab-accent);
-  }
-  .secondary:hover {
-    background: #f2f2f2;
-  }
   .text-link {
     font-size: 0.9rem;
     font-weight: 650;
@@ -379,6 +324,14 @@
     background: #eee4d7;
   }
   .tap-pad {
+    font: inherit;
+    cursor: pointer;
+    border: 1px solid var(--lab-accent);
+    background: var(--lab-accent);
+    color: var(--lab-surface);
+    align-items: center;
+    justify-content: center;
+    font-weight: 650;
     display: flex;
     flex-direction: column;
     border-radius: 1.2rem;
@@ -521,8 +474,8 @@
   min-width: 180px;
   flex: 1;
 }
-.graph-controls select {
-  margin-bottom: 0;
+.graph-controls [data-slot='select-trigger'] {
+  width: 100%;
 }
 .graph-notes {
   font-size: 0.9rem;
@@ -926,4 +879,18 @@ pre {
 }
 .guide-nav a {
   white-space: nowrap;
+}
+
+/* Demo form layout; component appearance belongs to @lab/ui. */
+.controls [data-slot='label'],
+.graph-controls [data-slot='label'] {
+  margin: 1rem 0 0.4rem;
+}
+.controls [data-slot='input'],
+.controls [data-slot='select-trigger'] {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.controls [data-slot='slider'] {
+  margin-block: 1rem;
 }

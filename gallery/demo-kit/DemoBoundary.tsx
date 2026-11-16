@@ -1,3 +1,4 @@
+import { Button } from '@lab/ui/button';
 import { Component } from 'react';
 import type { ReactNode } from 'react';
 
@@ -12,7 +13,7 @@ export class DemoBoundary extends Component<{ children: ReactNode }, { failed: b
       <div role="alert">
         <h2>Could not open this demo.</h2>
         <p>Check the console and source, or try another demo.</p>
-        <button onClick={() => location.reload()}>Reload the lab</button>
+        <Button onClick={() => location.reload()}>Reload the lab</Button>
       </div>
     ) : (
       this.props.children

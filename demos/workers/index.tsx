@@ -1,3 +1,6 @@
+import { Button } from '@lab/ui/button';
+import { Label } from '@lab/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@lab/ui/select';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 import { countPrimes } from './compute';
@@ -70,27 +73,31 @@ export default function Workers() {
           Compare the same calculation on the main thread and in a Worker. Workers protect
           responsiveness, not calculation speed.
         </p>
-        <label htmlFor="workload">Count primes up to</label>
-        <select
-          id="workload"
+        <Label htmlFor="workload">Count primes up to</Label>
+        <Select
           disabled={busy}
-          value={limit}
-          onChange={(event) => setLimit(Number(event.target.value))}
+          value={String(limit)}
+          onValueChange={(value) => setLimit(Number(value))}
         >
-          <option value="100000">100,000 · quick</option>
-          <option value="500000">500,000 · medium</option>
-          <option value="2000000">2,000,000 · heavier</option>
-        </select>
+          <SelectTrigger id="workload">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="100000">100,000 · quick</SelectItem>
+            <SelectItem value="500000">500,000 · medium</SelectItem>
+            <SelectItem value="2000000">2,000,000 · heavier</SelectItem>
+          </SelectContent>
+        </Select>
         <div className="button-row">
-          <button disabled={busy} onClick={runWorker}>
+          <Button disabled={busy} onClick={runWorker}>
             Run in Worker
-          </button>
-          <button className="secondary" disabled={!busy} onClick={cancel}>
+          </Button>
+          <Button variant="outline" disabled={!busy} onClick={cancel}>
             Cancel Worker
-          </button>
-          <button className="secondary" disabled={busy} onClick={runMain}>
+          </Button>
+          <Button variant="outline" disabled={busy} onClick={runMain}>
             Compare on main thread
-          </button>
+          </Button>
         </div>
         <p className="small">
           Main-thread work blocks this page and cannot be cancelled. Start small; timings vary by

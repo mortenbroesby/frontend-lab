@@ -1,3 +1,6 @@
+import { Input } from '@lab/ui/input';
+import { Label } from '@lab/ui/label';
+import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 
@@ -59,20 +62,22 @@ export default function Signals() {
         <p className="eyebrow">03 / BroadcastChannel</p>
         <h3>Two tabs. One conversation.</h3>
         <p>Send events between local tabs—no backend, WebSockets or cross-device messaging.</p>
-        <a className="button secondary" href="#/demo/signals" target="_blank" rel="noopener">
-          Open another tab ↗
-        </a>
+        <Button asChild variant="outline">
+          <a href="#/demo/signals" target="_blank" rel="noopener">
+            Open another tab ↗
+          </a>
+        </Button>
         <form onSubmit={send}>
-          <label htmlFor="message">Your signal</label>
-          <input
+          <Label htmlFor="message">Your signal</Label>
+          <Input
             id="message"
             value={text}
             maxLength={160}
             onChange={(event) => setText(event.target.value)}
           />
-          <button disabled={!ready || !text.trim()} type="submit">
+          <Button disabled={!ready || !text.trim()} type="submit">
             Send signal
-          </button>
+          </Button>
         </form>
         <p role="status" className="small">
           {status}

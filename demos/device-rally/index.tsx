@@ -1,3 +1,6 @@
+import { Input } from '@lab/ui/input';
+import { Label } from '@lab/ui/label';
+import { Button } from '@lab/ui/button';
 import { useEffect, useRef, useState } from 'react';
 import type { MessageAction, Room } from 'trystero';
 import './device-rally.css';
@@ -152,15 +155,15 @@ export default function DeviceRally() {
         </p>
         <p data-testid="rally-peers">{peers} other devices connected</p>
         <div className="rally-buttons">
-          <button disabled={!peers} aria-label="Send rocket" onClick={() => void cheer('🚀')}>
+          <Button disabled={!peers} aria-label="Send rocket" onClick={() => void cheer('🚀')}>
             🚀
-          </button>
-          <button disabled={!peers} aria-label="Send sparkle" onClick={() => void cheer('✨')}>
+          </Button>
+          <Button disabled={!peers} aria-label="Send sparkle" onClick={() => void cheer('✨')}>
             ✨
-          </button>
-          <button disabled={!peers} aria-label="Send heart" onClick={() => void cheer('💜')}>
+          </Button>
+          <Button disabled={!peers} aria-label="Send heart" onClick={() => void cheer('💜')}>
             💜
-          </button>
+          </Button>
         </div>
         <p className="small">Live cheers, no saved history. Late arrivals start at zero.</p>
       </div>
@@ -176,8 +179,8 @@ export default function DeviceRally() {
           trusted HTTPS. A phone cannot reach another computer’s localhost.
         </p>
         <form onSubmit={join}>
-          <label htmlFor="rally-room">Room code</label>
-          <input
+          <Label htmlFor="rally-room">Room code</Label>
+          <Input
             id="rally-room"
             value={roomCode}
             disabled={joined !== null}
@@ -186,12 +189,12 @@ export default function DeviceRally() {
             required
             onChange={(event) => setRoomCode(event.target.value.toLowerCase())}
           />
-          <button disabled={joined !== null} type="submit">
+          <Button disabled={joined !== null} type="submit">
             Join room
-          </button>
+          </Button>
         </form>
         <p className="small">Joining reloads the page with the room code in its URL.</p>
-        <button
+        <Button
           disabled={joined === null}
           type="button"
           onClick={() => {
@@ -201,7 +204,7 @@ export default function DeviceRally() {
           }}
         >
           Leave room
-        </button>
+        </Button>
         <p role="status">{status}</p>
         <p className="small">
           Up to 12 people. Room codes are public labels, not passwords. Nostr relays carry

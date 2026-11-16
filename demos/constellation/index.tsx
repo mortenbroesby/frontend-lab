@@ -1,3 +1,6 @@
+import { Button } from '@lab/ui/button';
+import { Label } from '@lab/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@lab/ui/select';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 import type { PointerEvent, KeyboardEvent } from 'react';
@@ -141,14 +144,14 @@ export default function Constellation() {
       <div className="impact-presets" aria-label="Try a comparison">
         <span>Try this:</span>
         {['react-dom', 'react', 'd3-force', '@lab/demo-kit'].map((id) => (
-          <button
+          <Button
             key={id}
-            className="secondary"
+            variant="outline"
             aria-pressed={selected === id}
             onClick={() => setSelected(id)}
           >
             {id}
-          </button>
+          </Button>
         ))}
       </div>
       <div className="impact-summary" aria-live="polite">
@@ -278,36 +281,38 @@ export default function Constellation() {
       </div>
       <div className="graph-controls">
         <div>
-          <label htmlFor="graph-package">Inspect a package</label>
-          <select
-            id="graph-package"
-            value={selected}
-            onChange={(event) => setSelected(event.target.value)}
-          >
-            {modules.map((node) => (
-              <option key={node.id} value={node.id}>
-                {node.id}
-              </option>
-            ))}
-          </select>
+          <Label htmlFor="graph-package">Inspect a package</Label>
+          <Select value={selected} onValueChange={setSelected}>
+            <SelectTrigger id="graph-package">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {modules.map((node) => (
+                <SelectItem key={node.id} value={node.id}>
+                  {node.id}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div>
-          <label htmlFor="graph-layout">Layout</label>
-          <select
-            id="graph-layout"
-            value={layout}
-            onChange={(event) => setLayout(event.target.value)}
-          >
-            <option value="layers">Workspaces → runtime → tooling</option>
-            <option value="constellation">Let the forces decide</option>
-          </select>
+          <Label htmlFor="graph-layout">Layout</Label>
+          <Select value={layout} onValueChange={setLayout}>
+            <SelectTrigger id="graph-layout">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="layers">Workspaces → runtime → tooling</SelectItem>
+              <SelectItem value="constellation">Let the forces decide</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <button className="secondary" onClick={() => setPaused((value) => !value)}>
+        <Button variant="outline" onClick={() => setPaused((value) => !value)}>
           {paused ? 'Resume motion' : 'Pause motion'}
-        </button>
-        <button className="secondary" onClick={release}>
+        </Button>
+        <Button variant="outline" onClick={release}>
           Release pinned packages
-        </button>
+        </Button>
       </div>
       <div className="impact-insight">
         <div>
@@ -323,7 +328,9 @@ export default function Constellation() {
                 .filter(([, distance]) => distance > 0)
                 .map(([id, distance]) => (
                   <li key={id}>
-                    <button onClick={() => setSelected(id)}>{id}</button>
+                    <Button variant="link" onClick={() => setSelected(id)}>
+                      {id}
+                    </Button>
                     <span>{distance === 1 ? 'direct' : `${distance} hops`}</span>
                   </li>
                 ))}

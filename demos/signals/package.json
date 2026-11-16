@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@lab/demo-kit": "*",
-    "react": "19.3.1"
+    "react": "19.3.1",
+    "@lab/ui": "*"
   }
 }

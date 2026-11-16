@@ -1,3 +1,5 @@
+import { Label } from '@lab/ui/label';
+import { Slider } from '@lab/ui/slider';
 import { useState } from 'react';
 
 // A place to try an API, not a finished visualisation.
@@ -16,16 +18,15 @@ export function BrowserStarter() {
           Change a value, then try a browser API. This starter has no finished graph, Worker or
           messaging solution.
         </p>
-        <label htmlFor="radius">
+        <Label id="radius-label">
           Circle radius <output>{radius}</output>
-        </label>
-        <input
-          id="radius"
-          type="range"
-          min="10"
-          max="90"
-          value={radius}
-          onChange={(event) => setRadius(Number(event.target.value))}
+        </Label>
+        <Slider
+          aria-labelledby="radius-label"
+          min={10}
+          max={90}
+          value={[radius]}
+          onValueChange={([value]) => setRadius(value)}
         />
         <p>
           To get your own copy, run <code>npm run demo:new</code> and choose Modern Web

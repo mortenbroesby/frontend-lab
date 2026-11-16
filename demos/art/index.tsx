@@ -1,3 +1,6 @@
+import { Label } from '@lab/ui/label';
+import { Slider } from '@lab/ui/slider';
+import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useRef, useState } from 'react';
 import { makeDots } from './art';
@@ -51,25 +54,24 @@ export default function Art() {
         <p className="eyebrow">01 / SVG + deterministic randomness</p>
         <h3>Repeatable randomness.</h3>
         <p>Remix, save, then change the rules.</p>
-        <label htmlFor="density">
+        <Label id="density-label">
           Dots <output>{count}</output>
-        </label>
-        <input
-          id="density"
-          type="range"
-          min="10"
-          max="200"
-          value={count}
-          onChange={(event) => setCount(Number(event.target.value))}
+        </Label>
+        <Slider
+          aria-labelledby="density-label"
+          min={10}
+          max={200}
+          value={[count]}
+          onValueChange={([value]) => setCount(value)}
         />
         <p className="small">
           Seed <strong data-testid="seed">{seed}</strong> · same seed, same composition
         </p>
         <div className="button-row">
-          <button onClick={() => setSeed((value) => value + 1)}>Remix composition</button>
-          <button className="secondary" onClick={download}>
+          <Button onClick={() => setSeed((value) => value + 1)}>Remix composition</Button>
+          <Button variant="outline" onClick={download}>
             Save SVG
-          </button>
+          </Button>
         </div>
         <p className="try-this">
           <strong>What if…</strong> dots spiralled, followed a pointer or became a game?

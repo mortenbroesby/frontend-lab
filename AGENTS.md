@@ -15,7 +15,7 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 
 - `gallery/src/app/` owns routing and composition. The gallery reads demo metadata and HTML URLs, never demo components.
 - Each `demos/<id>/` npm workspace owns its entry, build output, UI, state, scoped styles, effects, helpers and focused tests. No imports from other demos or gallery internals. Adding a demo must not require shell edits.
-- Reusable shadcn components and tokens live in `shared/ui` (`@lab/ui`). Use individual exports; keep UI independent of app logic. Both Vite configs run Tailwind without Preflight. Follow the [UI guide](shared/ui/README.md); demonstrate new components in `demos/ui-library` and preserve keyboard, focus, labels and reduced-motion behavior.
+- Reusable shadcn components and tokens live in `shared/ui` (`@lab/ui`). Use individual exports for ordinary controls; keep UI independent of app logic. Keep native controls only for a concrete demo-specific interaction (such as the worker tap pad or colour picker). Both Vite configs run Tailwind without Preflight. Follow the [UI guide](shared/ui/README.md); demonstrate new components in `demos/ui-library` and preserve keyboard, focus, labels and reduced-motion behavior.
 - Import shared kit code through `@lab/demo-kit` exports. The kit cannot import apps or contain demo-specific state or service calls.
 - Keep pure calculations separate from React/effects when useful, with tests beside them. Extract shared utilities only for multiple real consumers; no empty workspaces or speculative abstractions.
 - Entry files assemble dependencies; root scripts coordinate workspaces. Gallery tests must not own demo logic.
