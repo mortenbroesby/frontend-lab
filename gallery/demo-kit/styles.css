@@ -33,7 +33,7 @@
   .hero h1 { font-size: clamp(4rem, 8vw, 7.5rem); font-weight: 600; line-height: .96; margin-bottom: 2rem; }
   .hero em { font-family: Georgia, serif; font-weight: 400; color: #446d51; }
   .intro { font-size: 1.12rem; max-width: 38rem; }
-  .section-heading, .examples-intro { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+  .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
   .section-heading > p { color: var(--lab-muted); font-size: .95rem; }
   .journey-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin: 1.5rem 0 5rem; }
   .experiment { margin-bottom: 2rem; border: 1px solid var(--lab-line); border-radius: 1.4rem; overflow: hidden; background: var(--lab-surface); }
@@ -41,10 +41,9 @@
   .controls { padding: clamp(1.4rem, 3vw, 3rem); }
   .controls h3 { font-size: 2rem; }
   .controls p { color: var(--lab-muted); }
-  .examples-intro { margin-bottom: 1.7rem; }
   footer { display: flex; justify-content: space-between; padding-top: 2rem; padding-bottom: 2rem; border-top: 1px solid var(--lab-line); font-size: .8rem; gap: 1rem; }
   @media (max-width: 950px) { .journey-grid { grid-template-columns: repeat(2, 1fr); } .hero { gap: 1rem; } }
-  @media (max-width: 650px) { .hero { grid-template-columns: 1fr; padding: 3rem 0; } .hero-art { display: none; } .journey-grid, .experiment-grid { grid-template-columns: 1fr; } .section-heading, .examples-intro { align-items: start; flex-direction: column; gap: .4rem; } .edition { display: none; } footer { flex-direction: column; } }
+  @media (max-width: 650px) { .hero { grid-template-columns: 1fr; padding: 3rem 0; } .hero-art { display: none; } .journey-grid, .experiment-grid { grid-template-columns: 1fr; } .section-heading { align-items: start; flex-direction: column; gap: .4rem; } .edition { display: none; } footer { flex-direction: column; } }
 }
 
 @layer components {
@@ -129,3 +128,8 @@ pre { overflow-x: auto; max-width: 100%; padding: 1rem; background: #eeeae1; bor
 .guide-table { overflow-x: auto; }
 .guide table { border-collapse: collapse; width: 100%; font-size: .9rem; }
 .guide th, .guide td { padding: .8rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--lab-line); min-width: 150px; }
+
+@layer layout {
+  .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 2rem; }
+  @media (max-width: 650px) { .topic-grid { grid-template-columns: 1fr; } }
+}
