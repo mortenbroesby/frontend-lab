@@ -1,44 +1,35 @@
-# What could you explore?
+# Ideas to explore
 
-Choose an idea, combine a few, or bring your own. Each is a starting point, not an assignment.
+Explore capabilities beyond everyday page UI. Pick one question, build a small interaction and see what the browser makes possible.
 
-<div className="journey-grid topic-grid">
-  <section className="journey-card" data-track="modern-web">
-    <h3>Devices talking to each other</h3>
-    <p>Send a reaction from one browser to another. Explore rooms, connection state and shared controls.</p>
-    <a href="#/track/modern-web/devices">Explore this idea →</a>
-  </section>
-  <section className="journey-card" data-track="modern-web">
-    <h3>Interactive graphics</h3>
-    <p>Make data respond to a pointer. Start with SVG or Canvas; stretch into a D3 dependency map.</p>
-  </section>
-  <section className="journey-card" data-track="modern-web">
-    <h3>Work beyond the main thread</h3>
-    <p>Send work to a Worker and keep controls responsive. Try progress, cancellation or a bounded comparison.</p>
-  </section>
-  <section className="journey-card" data-track="modern-web">
-    <h3>Browser-native experiences</h3>
-    <p>Try an animated View Transition or a browser API you rarely use. Investigate its permissions and fallback.</p>
-  </section>
-</div>
+## Devices talking to each other
 
-<details>
-<summary>More starting points and stretch goals</summary>
+Turn a phone into a controller, send reactions between laptops or build a shared drawing surface. Investigate how peers find each other, exchange messages and recover after a connection drops.
 
-## Explore further
+Start with one message between two browsers. Then compare peer-to-peer communication with a server-mediated connection. WebRTC still needs signaling; WebSockets need a server. Choose the simplest arrangement that fits your experiment.
 
-| Starting point | First observation | Optional stretch |
-| --- | --- | --- |
-| Visual interaction | Change one SVG shape with a control or pointer. | Add a few D3 nodes and one force, or compare SVG with Canvas. |
-| Responsive computation | Send a small value to a Worker and render its reply. | Add progress or cancellation; compare interaction responsiveness under a bounded workload. |
-| Local real-time messages | Open Signals between tabs in two same-origin tabs and send a message. | Share a palette or quiz event without a feedback loop. |
-| Cross-device messages | Open [Device Rally](#/demo/device-rally) in two browsers using the same room code. | Send cheers, leave and rejoin, or invent a shared interaction. |
+Read: [MDN’s WebRTC guide](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API) and [WebSockets overview](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
 
-**Communication boundary:** Signals uses BroadcastChannel within one browser context. Device Rally uses Trystero public signaling and WebRTC between peers; it needs internet access and localhost or trusted HTTPS. No custom server is required. Physical phones and the workshop network remain untested.
+## Interactive graphics
 
-[Worked references](#/track/modern-web/examples) cover D3, SVG, Workers and tab messages. Start with one small piece; the completed examples are separate from your bootstrap.
+Make information respond to a pointer, a slider or a selection. Try a dependency map, a small simulation or an animated explanation. SVG, Canvas and D3 offer different ways to represent and manipulate a scene.
 
+Start with a few shapes and one interaction. Add relationships or motion, then consider how somebody could use it with a keyboard or reduced motion.
 
-</details>
+Read: [Canvas tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial) and [getting started with D3](https://d3js.org/getting-started).
 
-Bring your own idea too. [Create a demo](#/create) or use your own React project.
+## Computation without blocking the interface
+
+Move a calculation into a Worker and keep the page responsive while it runs. Explore progress, cancellation and the cost of transferring data. For another direction, investigate where WebAssembly could be useful.
+
+Compare the same bounded calculation on and off the main thread. Does interaction improve? What happens if the input changes before the result arrives? Off-thread work need not finish faster to feel better.
+
+Read: [using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) and [WebAssembly concepts](https://developer.mozilla.org/en-US/docs/WebAssembly).
+
+## Browser-native experiences
+
+Explore View Transitions or another browser API you rarely use. Try animating a change of view, working with local files or using a device capability in a small React interface.
+
+Start with one visible behaviour. Investigate browser support, permissions and a useful fallback before combining APIs.
+
+Read: [View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API). Follow the related API references to choose your next experiment.

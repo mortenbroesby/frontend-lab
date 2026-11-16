@@ -1,42 +1,39 @@
-# What would make development easier?
+# Ideas to explore
 
-**Identify friction → Explore alternatives → Experiment → Demonstrate results.**
+Identify friction → Explore alternatives → Experiment → Demonstrate results.
 
-Pick something that interrupts your actual work. Finding an existing solution is just as useful as building a tool. Work in this Lab or a repository you already know.
+Choose something that interrupts your actual work. Discovering an existing solution is just as useful as building a new tool. Use this repository or a project you already know.
 
-<div className="journey-grid topic-grid">
-  <section className="journey-card" data-track="developer-experience">
-    <h3>Faster Feedback Loops</h3>
-    <p>Targeted tests, watch modes, build caching, affected projects and faster validation.</p>
-    <p><strong>Try:</strong> compare a whole test file with one named test, then watch it respond to a change. Inspect which tasks Turbo selects before running them.</p>
-    <p><strong>Stretch:</strong> explain a cache miss or find a smaller validation set that still catches the behaviour you changed.</p>
-    <a href="#/track/developer-experience/examples">Try the feedback-loop walkthrough →</a>
-  </section>
-  <section className="journey-card" data-track="developer-experience">
-    <h3>Developer Tools</h3>
-    <p>Small CLIs, Git utilities, debugging helpers and repetitive-task automation.</p>
-    <p><strong>Try:</strong> compare npm run with the command inventory example. Or use git diff --stat and git diff --check before writing a change-report utility.</p>
-    <p><strong>Stretch:</strong> add one useful observation to the optional Node starter, or use your editor’s debugger to replace a recurring console-log hunt.</p>
-    <a href="#/track/developer-experience/get-started">Choose a first experiment →</a>
-  </section>
-  <section className="journey-card" data-track="developer-experience">
-    <h3>Development Workflows</h3>
-    <p>Local API mocking, monorepo tooling, development environments and alternative build workflows.</p>
-    <p><strong>Try:</strong> use browser DevTools request blocking and throttling to inspect a real loading/error state. Compare this with a local response override or a fetch stub in a demo you own.</p>
-    <p><strong>Stretch:</strong> compare a standalone demo build with a Turbo-filtered build. Or document the smallest reproducible environment for your project and have a peer try it.</p>
-    <a href="#/track/developer-experience/get-started">Start without a backend →</a>
-  </section>
-  <section className="journey-card" data-track="developer-experience">
-    <h3>Agentic Workflows</h3>
-    <p>Reusable Codex/Copilot skills, bounded development tasks and automated review workflows.</p>
-    <p><strong>Try:</strong> compare a one-off review prompt with a reusable skill that names its scope, checks and expected evidence. Use a tool you already have access to, or rehearse the workflow manually.</p>
-    <p><strong>Stretch:</strong> compare an agent’s review with git diff --check and local Fallow output. Which useful findings does each catch or miss?</p>
-    <a href="#/track/developer-experience/get-started">Try a bounded agent task →</a>
-  </section>
-</div>
+## Faster Feedback Loops
 
-## Show the difference
+Explore targeted tests, watch modes, build caching, affected-project detection and faster validation. The question is how quickly you can get useful evidence about the change you are making.
 
-Demonstrate the original friction, the alternative you tried and one observable result: a test rerun, a clearer error, fewer steps or a useful review finding. Mention one limitation. No report or polished tool required.
+Compare a whole test file with one named test, then watch it respond to an edit. Inspect which tasks a monorepo tool selects before running them. As a stretch, explain a cache miss or find a smaller validation set that still catches the relevant regression. A smaller selection is not a replacement for every broader check.
 
-[Get started](#/track/developer-experience/get-started) · [Open the feedback-loop example](#/demo/tooling)
+Read: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) and [Turborepo’s task-selection and dry-run options](https://turborepo.dev/docs/reference/run).
+
+## Developer Tools
+
+Build or discover a small CLI, Git utility, debugging helper or automation for a repetitive task. Start with a real question the current workflow makes awkward to answer.
+
+Compare native commands such as `npm run`, `git diff --stat` and `git diff --check` with a custom report. Or replace a recurring console-log investigation with a debugger feature. If you write a utility, begin with read-only output and handle one real edge case before expanding it.
+
+Read: [Git diff options](https://git-scm.com/docs/git-diff) and [Node’s native argument parser](https://nodejs.org/docs/latest-v24.x/api/util.html#utilparseargsconfig).
+
+## Development Workflows
+
+Explore local API mocking, monorepo tooling, development environments and alternative build workflows. Look for a way to work independently of a slow service, unclear setup or unnecessarily broad command.
+
+Use request blocking, throttling or a local response override to investigate loading and error states. Compare that approach with a fetch stub in an app you own. Alternatively, compare a standalone package build with a filtered monorepo build, or have a peer try your smallest reproducible environment.
+
+Read: [Chrome DevTools local overrides](https://developer.chrome.com/docs/devtools/overrides) and [Turborepo run reference](https://turborepo.dev/docs/reference/run).
+
+## Agentic Workflows
+
+Explore reusable Codex/Copilot skills, bounded development tasks and automated review workflows. Use an agent you already have access to; you can also rehearse the workflow manually.
+
+Compare a one-off prompt with a skill that specifies the task, boundaries, checks and expected evidence. Try reviewing one small change without editing files, then compare the findings with your own inspection and existing checks. Investigate what becomes repeatable and where human judgement is still needed.
+
+Read: [Codex skills](https://developers.openai.com/codex/skills) and [Copilot CLI skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills).
+
+A useful result might be fewer steps, clearer feedback or a reason to keep your existing approach. Show the difference and one limitation; no polished tool or report is required.
