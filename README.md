@@ -12,8 +12,6 @@
 </p>
 
 <p align="center">
-  <a href="https://frontend-chapter-day.vercel.app"><strong>Open the Lab →</strong></a>
-  <span> | </span>
   <a href="#start-here">Run locally</a>
   <span> | </span>
   <a href="#create-a-demo">Create a demo</a>
@@ -30,10 +28,10 @@ and unfinished experiments are welcome.
 
 | Track | Explore |
 | --- | --- |
-| [🌐 Modern Web Capabilities](tracks/modern-web/README.md) | Browser APIs, interactive visuals, Workers and communication |
-| [🔍 Code Quality & Maintainability](tracks/code-quality/README.md) | Dependencies, complexity, architecture and test confidence |
-| [🛠️ Developer Experience & Tooling](tracks/developer-experience/README.md) | Feedback loops, development friction and workflow automation |
-| [🚀 Experimental Projects](tracks/experimental-projects/README.md) | Games, generative art, visualisations or your own experiment |
+| 🌐 Modern Web Capabilities | Browser APIs, interactive visuals, Workers and communication |
+| 🔍 Code Quality & Maintainability | Dependencies, complexity, architecture and test confidence |
+| 🛠️ Developer Experience & Tooling | Feedback loops, development friction and workflow automation |
+| 🚀 Experimental Projects | Games, generative art, visualisations or your own experiment |
 
 Each track has starting points, worked examples and optional challenges.
 Use this playground or an existing project where it fits.
@@ -49,6 +47,9 @@ npm ci
 npm run dev
 ```
 
+Open the address printed in your terminal. Choose a track in the app for
+getting started, experiments and worked examples.
+
 <a id="create-a-demo"></a>
 ## 🛠️ Create a Demo
 
@@ -56,25 +57,16 @@ npm run dev
 npm run demo:new
 ```
 
-Name your demo and choose a track. The generator prints the local route, exact
-file to edit and a first change to try. Modern Web gets a circle starter; other
-tracks get an idea card. Each has its own README with a success check.
-
-Edit `playground/src/demos/<id>/Demo.tsx`; it appears in your local gallery automatically. See the [demo guide](playground/src/demos/template/README.md)
-for the typed contract and manual setup.
+Name your demo and choose a track. Modern Web starts with a circle; other tracks
+start with an idea card. The generator prints the route and file to edit.
+It appears in the gallery automatically. **Create a demo** in the app explains
+the typed contract and manual setup.
 
 ## 🤝 Share Your Work
 
 Open a pull request with something to try and a short note about what you learned.
-Code, tools and investigations all belong here. Run `npm run check` before sharing;
-the [contribution guide](CONTRIBUTING.md) covers the remaining checks.
-
-<a id="documentation"></a>
-## 📚 Reference
-
-- [Track guides](#tracks) and [findings template](tracks/findings.md)
-- [Contributing](CONTRIBUTING.md)
-- [Setup, architecture and troubleshooting](playground/README.md)
+Code, tools and investigations all belong here. Run `npm run check` before sharing.
+Open **Share your work** in the app for contribution instructions.
 
 ---
 

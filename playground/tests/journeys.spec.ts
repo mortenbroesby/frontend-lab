@@ -175,8 +175,7 @@ test('a failed lazy demo leaves navigation usable', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
 });
 
-test('all named tracks provide actionable onboarding without opening Markdown files', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+test('all named tracks open their matching journey and guide', async ({ page }) => {
   for (const [id, title] of [
     ['modern-web', 'Modern Web Capabilities'],
     ['code-quality', 'Code Quality & Maintainability'],
@@ -187,19 +186,92 @@ test('all named tracks provide actionable onboarding without opening Markdown fi
     await page.getByRole('link', { name: `Explore ${title}` }).click();
     await expect(page).toHaveURL(new RegExp(`#/track/${id}$`));
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
-    await expect(page.getByRole('heading', { name: 'Your first result', exact: true })).toBeVisible();
-    await expect(page.getByText('Success check:', { exact: false })).toBeVisible();
-    await expect(page.locator('main')).not.toContainText(/\.md\b|in your editor|Local guide:/);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect(page.locator('.guide')).toContainText('First result');
+    await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+    await expect(page.locator('.guide table')).toBeVisible();
+    await page.getByRole('link', { name: 'Worked examples', exact: true }).click();
+    await expect(page.locator('.guide')).not.toBeEmpty();
+    await page.reload();
+    await expect(page.locator('.guide')).not.toBeEmpty();
   }
 });
 
+test('participant guides stay in the app and fit a phone', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/track/modern-web');
+  await expect(page.locator('.guide')).toContainText('npm run demo:new');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.getByRole('link', { name: 'Setup help', exact: true }).click();
+  await expect(page).toHaveURL(/#\/guide\/setup$/);
+  await expect(page.locator('.guide')).toContainText('npm ci');
+  await page.goBack();
+  await expect(page.getByRole('link', { name: 'Getting started', exact: true })).toHaveAttribute('aria-current', 'page');
+  await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+  await expect(page.locator('.guide table')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.getByRole('link', { name: 'Record your findings', exact: true }).click();
+  await expect(page).toHaveURL(/#\/guide\/findings$/);
+  await expect(page.locator('.guide')).toContainText('What were we curious about?');
+});
 
-test('create and reference pages explain next steps without editor-only documentation pointers', async ({ page }) => {
+test('guide links resolve to real app pages', async ({ page }) => {
+  const routes = ['/create', '/guide/setup', '/guide/contributing', '/guide/findings',
+    ...['modern-web', 'code-quality', 'developer-experience', 'experimental-projects']
+      .flatMap(id => ['', '/explore', '/examples'].map(suffix => `/track/${id}${suffix}`)),
+    '/track/code-quality/fallow'];
+  const links = new Set<string>();
+  for (const route of routes) {
+    await page.goto('/#' + route);
+    await expect(page.locator('.guide')).not.toBeEmpty();
+    for (const href of await page.locator('.guide a').evaluateAll(anchors => anchors.map(a => a.getAttribute('href')!))) {
+      if (href.startsWith('#/')) links.add(href);
+      else expect(href).toMatch(/^https?:\/\//);
+    }
+  }
+  for (const href of links) {
+    await page.goto('/' + href);
+    await expect(page.getByRole('heading', { level: 1 })).not.toHaveText('Page not found');
+  }
+});
+
+test('the Modern Web guide owns its interactive starter', async ({ page }) => {
+  await page.goto('/#/track/modern-web');
+  const guide = page.locator('.guide');
+  const slider = guide.getByRole('slider');
+  await expect(slider).toBeVisible();
+  await slider.fill('70');
+  await expect(guide.locator('circle')).toHaveAttribute('r', '70');
+  const starter = guide.locator('.experiment');
+  expect(await starter.evaluate(element => {
+    const headings = [...element.parentElement!.children];
+    return headings.indexOf(element) < headings.findIndex(child => child.textContent === '3. Create your own demo');
+  })).toBe(true);
+  await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+  await expect(page.getByRole('slider')).toHaveCount(0);
+  await page.goBack();
+  await expect(guide.getByRole('slider')).toBeVisible();
+});
+
+test('a failed MDX page leaves track and demo navigation usable', async ({ page }) => {
+  await page.route('**/assets/get-started-*.js', route => route.abort());
+  await page.goto('/#/track/modern-web');
+  await expect(page.getByRole('alert')).toContainText('This guide could not load');
+  await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+  await expect(page.locator('.guide table')).toBeVisible();
+  await page.getByRole('link', { name: 'All tracks', exact: true }).click();
+  await page.getByRole('link', { name: 'Generative postcard', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
+});
+
+
+test('reference pages keep practical next steps in the app on mobile', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/', '/create', '/demo/art', '/demo/constellation', '/demo/workers', '/demo/signals', '/demo/fallow', '/demo/quality', '/demo/tooling']) {
-    await page.goto(`/#${route}`);
-    await expect(page.locator('main')).not.toContainText(/\.md\b|in your editor|Local guide:/);
+    await page.goto('/#' + route);
+    if (route === '/create') await expect(page.locator('.guide')).not.toBeEmpty();
+    if (route.startsWith('/demo/')) await expect(page.locator('.experiment > :not([role=status])').first()).toBeVisible();
+    await expect(page.locator('main')).not.toContainText(/in your editor|Local guide:/);
+    await expect(page.locator('main a[href$=".md"], main a[href$=".mdx"]')).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
   await page.goto('/#/create');

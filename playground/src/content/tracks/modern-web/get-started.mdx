@@ -1,0 +1,49 @@
+import { BrowserStarter } from '../../../starters/BrowserStarter';
+import { DemoBoundary } from '../../../app/DemoBoundary';
+
+# Getting started
+
+Try a browser capability, then make one visible change in your own React demo.
+
+## 1. Run the Lab locally
+
+**You need:** Node 24, npm, an editor and a current browser. Clone the repository you were given access to, then run from its root:
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the address printed by Vite and choose **Modern Web Capabilities**. [Setup help](#/guide/setup).
+
+## 2. Try the starter
+
+Move the radius control in this circle starter. The circle and displayed radius should change. This is a small preview, separate from the finished examples.
+
+<DemoBoundary>
+  <section className="experiment">
+    <BrowserStarter />
+  </section>
+</DemoBoundary>
+
+## 3. Create your own demo
+
+On your own [contribution branch](#/guide/contributing), open another terminal at the repository root:
+
+```sh
+npm run demo:new
+```
+
+Give it a name, confirm its suggested ID and choose **Modern Web Capabilities**, then enter your author and description. Open the route printed by the generator using your local server address.
+
+The generator creates an independent circle starter in `playground/src/demos/<your-id>/Demo.tsx`. No copying or shared-file edits are needed.
+
+## 4. Make something happen
+
+**First result:** change the circle fill colour in your generated `Demo.tsx` and save. Open your demo and move the radius control.
+
+**Success check:** refresh: the saved colour remains while the radius resets. Navigate away and back; it should still work without console errors. Then add another shape or try your own interaction.
+
+Choose your next direction: pointer interaction, a Worker, a different API, or a few D3 nodes and one force. [Explore the options](#/track/modern-web/explore) or [open the D3 constellation](#/demo/constellation). The [worked examples](#/track/modern-web/examples) offer hints without requiring you to rebuild every control.
+
+Already have a React project? Use its usual setup and bring back a discovery. [Record what you learned](#/guide/findings).

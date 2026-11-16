@@ -42,11 +42,9 @@
   .controls h3 { font-size: 2rem; }
   .controls p { color: var(--lab-muted); }
   .examples-intro { margin-bottom: 1.7rem; }
-  .inspect-panel > div { min-width: 0; overflow-wrap: anywhere; }
-  .inspect-panel { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 2rem; border-top: 1px solid #b9c7b9; border-bottom: 1px solid #b9c7b9; padding: 3rem 0; margin: 4rem 0; }
   .takeaway { text-align: center; padding: 3rem 0 5rem; }
   footer { display: flex; justify-content: space-between; padding-top: 2rem; padding-bottom: 2rem; border-top: 1px solid var(--lab-line); font-size: .8rem; gap: 1rem; }
-  @media (max-width: 950px) { .journey-grid { grid-template-columns: repeat(2, 1fr); } .hero { gap: 1rem; } .inspect-panel { grid-template-columns: 1fr; gap: 1rem; } }
+  @media (max-width: 950px) { .journey-grid { grid-template-columns: repeat(2, 1fr); } .hero { gap: 1rem; } }
   @media (max-width: 650px) { .hero { grid-template-columns: 1fr; padding: 3rem 0; } .hero-art { display: none; } .journey-grid, .experiment-grid { grid-template-columns: 1fr; } .section-heading, .examples-intro { align-items: start; flex-direction: column; gap: .4rem; } .edition { display: none; } footer { flex-direction: column; } }
 }
 
@@ -121,3 +119,14 @@ pre { overflow-x: auto; max-width: 100%; padding: 1rem; background: #eeeae1; bor
 #content:focus { outline: none; }
 @media (max-width: 600px) { .site-header { flex-wrap: wrap; gap: 1rem; } }
 .journey-card h3 a { font: inherit; }
+
+.guide-nav { display: flex; flex-wrap: wrap; gap: .7rem 1.5rem; margin: 1.5rem 0; }
+.guide-nav a { padding: .4rem 0; }
+.guide-nav [aria-current="page"] { font-weight: 750; text-decoration-thickness: 3px; text-underline-offset: .4rem; }
+.guide { max-width: 850px; margin: 1.5rem 0 2.5rem; padding: clamp(1rem, 3vw, 2rem); background: var(--lab-surface); border: 1px solid var(--lab-line); border-radius: 1rem; overflow-wrap: anywhere; }
+.guide h3, .guide h4 { margin-top: 1.8rem; }
+.guide li { margin-bottom: .6rem; }
+.guide pre { white-space: pre; overflow-wrap: normal; }
+.guide-table { overflow-x: auto; }
+.guide table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+.guide th, .guide td { padding: .8rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--lab-line); min-width: 150px; }

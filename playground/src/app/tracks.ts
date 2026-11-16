@@ -1,28 +1,8 @@
 import type { TrackId } from '../demo-contract';
 
 export const tracks = [
-  { id: 'modern-web',
-    needs: "Node 24, npm and a local clone of the lab. You can try the circle below before installing anything.",
-    steps: ["Run these commands from your local repository root. Give your demo a name and choose Modern Web Capabilities when prompted.", "Open the generated route at the address printed by Vite. Edit playground/src/demos/<id>/Demo.tsx and change the circle fill colour."],
-    commands: "npm ci\nnpm run demo:new\nnpm run dev",
-    success: "Move the radius control, then refresh. Your saved colour change stays; the radius resets.",
-    title: 'Modern Web Capabilities', description: 'Explore visuals, computation, communication and unfamiliar browser APIs.', start: 'Choose one capability and one visible behaviour. Try the circle starter, or begin with your own browser experiment.', ideas: ['Respond to a pointer with Canvas or SVG.', 'Move a calculation to a Worker.', 'Explore a browser-native communication API.'] },
-  { id: 'code-quality',
-    needs: "An accessible repository and its normal tools. For this lab, use Node 24 and npm; no new demo is required.",
-    steps: ["Choose one dependency or behaviour you want to understand. In a local clone of this lab, run the commands below from the repository root.", "Follow d3-force into playground/src/examples/Constellation.tsx. Note what it provides, where it is used and whether you would keep it. Use your own project’s checks if working elsewhere."],
-    commands: "npm ci\nnpm explain d3-force\nnpm run check",
-    success: "You can point to a real caller or test, explain another possible interpretation and justify your decision. A reason to keep the code is a result.",
-    title: 'Code Quality & Maintainability', description: 'Investigate code health, dependencies, complexity and architecture.', start: 'Choose one question in your own repository or this playground. Gather evidence before proposing a change. No specially prepared broken app needed.', ideas: ['Run npm run analyze from the repository root and investigate a Fallow finding.', 'Find a meaningful test gap and verify it.', 'Map one boundary and investigate coupling.'] },
-  { id: 'developer-experience',
-    needs: "Node 24 and a local clone for the script route. It needs no dependency install or running app.",
-    steps: ["Name one repeated annoyance in your workflow. Try an existing command first: npm run lists the project’s scripts.", "For a small script experiment, run the commands below from the repository root. Change describeProject in tracks/developer-experience/bootstrap/inspect.mjs and update its adjacent test to report one useful observation."],
-    commands: "node tracks/developer-experience/bootstrap/inspect.mjs playground/package.json\nnode --test tracks/developer-experience/bootstrap/inspect.test.mjs",
-    success: "Initially you see Project: front-end-lab-playground and two passing tests. After your change, verify the new output against the manifest and rerun the tests.",
-    title: 'Developer Experience & Tooling', description: 'Find a recurring frustration and try a practical improvement.', start: 'Describe a real source of friction. Try the small Node script below, or use your existing tools. Check whether a native command already solves it.', ideas: ['Shorten a feedback loop.', 'Automate one repetitive task.', 'Make an error or test result easier to act on.'] },
-  { id: 'experimental-projects',
-    needs: "Node 24, npm and a local clone of the lab, or the normal setup for your own React project.",
-    steps: ["Run these commands from the repository root. Name your demo and choose Experimental Projects.", "Open the generated route at your local server. In playground/src/demos/<id>/Demo.tsx, change “An idea, taking shape” to your own heading and save. Then try one interaction of your own."],
-    commands: "npm ci\nnpm run demo:new\nnpm run dev",
-    success: "Refresh: your saved heading remains while temporary input resets. Let someone try your interaction with one sentence of instructions.",
-    title: 'Experimental Projects', description: 'Build a game, a visual story, a quiz—or something entirely your own.', start: 'Pick one thing you want to see happen. Generate a React demo or use an existing React project. An unfinished experiment is a useful outcome.', ideas: ['Make one playable interaction.', 'Tell a story with a visualisation.', 'Create generative art or a chapter quiz.'] },
-] satisfies { id: TrackId; title: string; description: string; start: string; needs: string; steps: string[]; commands: string; success: string; ideas: string[] }[];
+  { id: 'modern-web', title: 'Modern Web Capabilities', description: 'Explore visuals, computation, communication and unfamiliar browser APIs.' },
+  { id: 'code-quality', title: 'Code Quality & Maintainability', description: 'Investigate code health, dependencies, complexity and architecture.' },
+  { id: 'developer-experience', title: 'Developer Experience & Tooling', description: 'Find a recurring frustration and try a practical improvement.' },
+  { id: 'experimental-projects', title: 'Experimental Projects', description: 'Build a game, a visual story, a quiz—or something entirely your own.' },
+] satisfies { id: TrackId; title: string; description: string }[];

@@ -6,7 +6,7 @@ For you if you have a “what if” that does not need a prescribed exercise: a 
 
 ## Get a first result
 
-[Start a creative experiment](bootstrap.md). Choose one thing you want to see happen and build one visible interaction in your own demo.
+[Start a creative experiment](#/track/experimental-projects). Choose one thing you want to see happen and build one visible interaction in your own demo.
 
 **Success check:** Someone can open your demo and try that interaction without you editing code for them. A button changing a score or revealing an answer is enough.
 
@@ -22,12 +22,12 @@ Choose an idea that fits your curiosity and group; these are invitations, not as
 
 Start with a local interaction before adding persistence, accounts or networking. Invented data makes experimentation easier. You can ignore every suggestion and bring your own React idea.
 
-The [generative postcard](examples.md) is an optional destination. Borrow one technique or ignore it; the starter contains no finished postcard or game.
+The [generative postcard](#/track/experimental-projects/examples) is an optional destination. Borrow one technique or ignore it; the starter contains no finished postcard or game.
 
 ## Show what you discovered
 
 Let someone try the result and share one surprise or next question. An unfinished experiment counts; a production-ready product is not expected.
 
-Capture a few [findings](../findings.md), then use the [contribution guide](../../CONTRIBUTING.md) to share code or notes. You may build towards a reference or pursue your own idea.
+Capture a few [findings](#/guide/findings), then use the [contribution guide](#/guide/contributing) to share code or notes. You may build towards a reference or pursue your own idea.
 
-[Choose another track](../../README.md#tracks)
+[Choose another track](#/)
