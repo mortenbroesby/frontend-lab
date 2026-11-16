@@ -4,7 +4,9 @@
     "tracks/developer-experience/**/*.mjs",
     "playground/src/**",
     "playground/vite.demo.config.ts",
-    "packages/demo-kit/**"
+    "packages/demo-kit/**",
+    "demos/**",
+    "index.html"
   ],
   "tasks": {
     "dev": {

@@ -55,7 +55,7 @@ Trace a real dependency from the repository root:
 npm run analyze:dead-code -- --trace-dependency d3-force
 ```
 
-Follow the result into `playground/src/demos/constellation/Constellation.tsx`. Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
+Follow the result into `demos/constellation/index.tsx`. Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
 
 The earlier unused `marker` export exercise depended on the manual demo registry. Folder discovery removes that registration mechanism; do not recreate the marker to reproduce an old finding. For unused-code investigation, run a fresh scan and follow a current finding instead. Check that discovery sees `demo.config.ts` loaders before trusting a report that calls a demo unused.
 
@@ -67,7 +67,7 @@ No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured te
 
 ## How this repository is configured
 
-- We use Fallow's built-in discovery without a custom config. Earlier verification covered the npm workspace, Vite entry, Turbo generator, tests, lazy demo imports and Worker module. Recheck the discovery command above after changes to folder discovery or when using another repository; previous evidence does not prove the new entry paths are understood.
+- We use Fallow's built-in discovery without a custom config. Earlier verification covered the npm workspace, Vite entry, Turbo generator, tests, independent demo entries and Worker module. Recheck the discovery command above after changes to folder discovery or when using another repository; previous evidence does not prove the new entry paths are understood.
 - Scripts run once at the repository root, outside Turbo's task cache, so the report reflects the current whole workspace. There is no analyzer wrapper or per-demo configuration.
 - No findings are suppressed and no baseline hides existing issues. We keep the defaults so participants can inspect their meaning before proposing thresholds.
 - No architecture boundary rules or rule packs have been configured. Cycle checks still run; zero boundary violations means that no boundary policy was measured, not that the architecture is proven correct.

@@ -29,7 +29,7 @@ Room codes are grouping labels, not passwords. Anyone using this app and room ca
 
 ## Build an independent experiment
 
-Keep `src/demos/device-rally/Demo.tsx` as the finished reference. Use `npm run demo:new` to create your own demo under **Modern Web Capabilities**. Try a local interaction first, then use Trystero’s small API:
+Keep `../demos/device-rally/index.tsx` as the finished reference. Use `npm run demo:new` to create your own demo under **Modern Web Capabilities**. Try a local interaction first, then use Trystero’s small API:
 
 ```ts
 import { joinRoom } from 'trystero';
@@ -55,7 +55,7 @@ Read [Trystero’s getting-started guide](https://trystero.dev/docs/getting-star
 
 The live test verifies separate software clients on one computer. It does not prove physical phone, cross-network NAT traversal or corporate Wi-Fi compatibility. Those require an on-site check.
 
-Verified on 16 November 2026 with Node 24.13.0 and Chrome: 20 generator/unit tests, 13 regular browser tests, the live peer smoke test and the Fallow new-findings audit passed. Immediate same-page rejoining failed in the initial implementation; joining now creates a fresh page session, and the live rejoin assertion passes.
+The standalone workspace build, generator/unit tests and TypeScript checks pass. The live test passes against the independent app: two-way cheers, room isolation, leaving and rejoining work between three browser contexts. Physical phones and the workshop network remain untested.
 
 ## Independent app
 
@@ -67,4 +67,4 @@ npm run build --workspace @lab/demo-device-rally
 npm run preview --workspace @lab/demo-device-rally
 ```
 
-Deploy `playground/src/demos/device-rally/dist/` for this app alone. The live WebRTC test runs against that independent build. The gallery still offers both its inline view and an Open standalone demo link.
+Deploy `demos/device-rally/dist/` for this app alone. The live WebRTC test runs against that independent build. The gallery lists this app and opens its standalone page.

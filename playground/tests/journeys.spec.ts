@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('remix, export and begin an independent idea', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/#/demo/art');
+  await page.goto('/demos/art/index.html');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Generative postcard');
   await page.getByRole('button', { name: 'Remix composition' }).click();
   await expect(page.getByTestId('seed')).toHaveText('43');
@@ -26,7 +26,7 @@ test('remix, export and begin an independent idea', async ({ page }) => {
 });
 
 test('real Worker returns the same result as the main-thread computation', async ({ page }) => {
-  await page.goto('/#/demo/workers');
+  await page.goto('/demos/workers/index.html');
   await page.getByLabel('Count primes up to').selectOption('100000');
   await page.getByRole('button', { name: 'Run in Worker', exact: true }).click();
   await expect(page.locator('#workers [role=status]')).toContainText('9,592 primes');
@@ -45,7 +45,7 @@ test('interaction and cancellation remain available while a Worker is pending', 
       }
     };
   });
-  await page.goto('/#/demo/workers');
+  await page.goto('/demos/workers/index.html');
   await page.getByRole('button', { name: 'Run in Worker', exact: true }).click();
   await page.getByRole('button', { name: /Interaction pad/ }).click();
   await expect(page.getByRole('button', { name: /Interaction pad/ })).toContainText('1');
@@ -55,7 +55,7 @@ test('interaction and cancellation remain available while a Worker is pending', 
 });
 
 test('two tabs exchange local signals without reflecting HTML or keeping more than five', async ({ page, context }) => {
-  await page.goto('/#/demo/signals');
+  await page.goto('/demos/signals/index.html');
   const popupPromise = page.waitForEvent('popup');
   await page.getByRole('link', { name: 'Open second lab tab' }).click();
   const second = await popupPromise;
@@ -80,8 +80,9 @@ test('two tabs exchange local signals without reflecting HTML or keeping more th
 test('narrow screen and reduced-motion preference remain usable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/#/demo/art');
+  await page.goto('/demos/art/index.html');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.goto('/#/create');
   await expect(page.locator('#content')).toBeFocused();
   await page.getByRole('link', { name: 'Skip to content' }).focus();
   await page.keyboard.press('Enter');
@@ -93,7 +94,7 @@ test('narrow screen and reduced-motion preference remain usable', async ({ page 
 
 test('unsupported browser capability has a readable fallback', async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(window, 'BroadcastChannel', { value: undefined, configurable: true }); });
-  await page.goto('/#/demo/signals');
+  await page.goto('/demos/signals/index.html');
   await expect(page.locator('#signals [role=status]')).toContainText('unavailable here');
   await expect(page.getByRole('button', { name: 'Send signal' })).toBeDisabled();
 });
@@ -101,7 +102,7 @@ test('unsupported browser capability has a readable fallback', async ({ page }) 
 test('D3 graph supports filtering, layout changes, dragging and keyboard pinning', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/#/demo/constellation');
+  await page.goto('/demos/constellation/index.html');
   const graph = page.locator('#constellation');
   await expect(graph.locator('[data-node]')).toHaveCount(20);
   await graph.getByRole('button', { name: 'Pause motion' }).click();
@@ -128,7 +129,7 @@ test('D3 graph supports filtering, layout changes, dragging and keyboard pinning
   await expect(graph.locator('svg')).toBeVisible();
   await page.getByLabel('Explore a cluster').selectOption('all');
   await expect(graph.locator('[data-node]')).toHaveCount(20);
-  await page.getByRole('link', { name: 'All tracks', exact: true }).click();
+  await page.goto('/');
   await expect(graph).toHaveCount(0);
   await page.goBack();
   await expect(graph.locator('[data-node]')).toHaveCount(20);
@@ -138,7 +139,7 @@ test('D3 graph supports filtering, layout changes, dragging and keyboard pinning
 test('D3 graph starts still with reduced motion and remains usable on mobile', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/#/demo/constellation');
+  await page.goto('/demos/constellation/index.html');
   const graph = page.locator('#constellation');
   await expect(graph.getByRole('button', { name: 'Resume motion' })).toBeVisible();
   const before = await graph.locator('[data-node="0-0"]').getAttribute('transform');
@@ -147,7 +148,7 @@ test('D3 graph starts still with reduced motion and remains usable on mobile', a
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test('tracks, reference demos and bootstrap are distinct SPA journeys', async ({ page }) => {
+test('gallery launches independent apps and keeps guides navigable', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Follow your what if.');
   await page.evaluate(() => { (window as unknown as { labNavigation: boolean }).labNavigation = true; });
@@ -155,22 +156,26 @@ test('tracks, reference demos and bootstrap are distinct SPA journeys', async ({
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Code Quality & Maintainability');
   await page.getByRole('link', { name: 'A test gap, investigated' }).click();
   await expect(page.getByText('148,933', { exact: false }).first()).toBeVisible();
-  await page.getByRole('link', { name: 'Create a demo', exact: true }).click();
+  await expect(page).toHaveURL(/demos\/quality\/index.html$/);
+  await page.goto('/#/create');
   await expect(page.locator('#art')).toHaveCount(0);
   await page.getByLabel('What are you curious about?').fill('My own experiment');
   await expect(page.locator('.idea-stage')).toContainText('My own experiment');
-  expect(await page.evaluate(() => (window as unknown as { labNavigation: boolean }).labNavigation)).toBe(true);
+  expect(await page.evaluate(() => (window as unknown as { labNavigation: boolean }).labNavigation)).toBeUndefined();
   await page.reload();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Make room for your idea.');
   await page.goto('/#/demo/missing');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Page not found');
 });
 
-test('a failed lazy demo leaves navigation usable', async ({ page }) => {
-  await page.route('**/assets/Tooling-*.js', route => route.abort());
+test('catalogue remains usable without loading demo scripts', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', request => { if (/\/assets\/(art|tooling)-/.test(request.url())) requests.push(request.url()); });
   await page.goto('/#/demo/tooling');
-  await expect(page.getByRole('alert')).toContainText('This experiment could not open');
+  await expect(page.getByRole('link', { name: 'Open standalone demo' })).toBeVisible();
+  await expect(page.locator('#tooling')).toHaveCount(0);
   await page.getByRole('link', { name: 'All tracks', exact: true }).click();
+  expect(requests).toEqual([]);
   await page.getByRole('link', { name: 'Generative postcard', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
 });
@@ -267,7 +272,7 @@ test('a failed MDX page leaves track and demo navigation usable', async ({ page 
 test('reference pages keep practical next steps in the app on mobile', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/', '/create', '/demo/art', '/demo/constellation', '/demo/workers', '/demo/signals', '/demo/fallow', '/demo/quality', '/demo/tooling']) {
-    await page.goto('/#' + route);
+    await page.goto(route.startsWith('/demo/') ? `/demos/${route.slice(6)}/index.html` : '/#' + route);
     if (route === '/create') await expect(page.locator('.guide')).not.toBeEmpty();
     if (route.startsWith('/demo/')) await expect(page.locator('.experiment > :not([role=status])').first()).toBeVisible();
     await expect(page.locator('main')).not.toContainText(/in your editor|Local guide:/);

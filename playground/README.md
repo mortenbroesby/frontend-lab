@@ -12,19 +12,21 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `src/app/tracks.ts` | Four track identities |
 | `src/content/` | MDX participant pages with embedded React starters |
 | `src/app/Guide.tsx` | Lazy MDX page loading and shared heading/table styles |
-| `src/demo-contract.ts` | Shared `DemoDefinition` type |
-| `src/demos/<your-idea>/demo.config.ts` | Demo metadata and component loader, discovered by the host |
-| `src/demos/template/` | Copyable bootstrap, separate from completed examples |
-| `src/demos/<your-idea>/` | Your component, assets and scoped styles |
-| `src/demos/<id>/index.html` | Independently runnable app entry, also included in the gallery build |
+| `src/demo-contract.ts` | Folder discovery and metadata validation |
+| `../demos/<your-idea>/demo.config.ts` | Typed gallery metadata, discovered by the host |
+| `src/starters/` | Copyable bootstrap, separate from completed examples |
+| `../demos/<your-idea>/` | Your component, assets and scoped styles |
+| `../demos/<id>/index.html` | Independently runnable app entry, also included in the gallery build |
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
 | `../packages/demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `../packages/demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Logic checks and browser journeys |
 
-Open **Create a demo** in the app. Run `npm run demo:new` from the repository root; Turborepo creates an independent app workspace with `Demo.tsx`, `demo.config.ts`, HTML/TypeScript entries and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. Metadata is discovered up front; components load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+Open **Create a demo** in the app. Run `npm run demo:new` from the repository root; Turborepo creates an independent app workspace with `index.tsx`, `demo.config.ts`, HTML/TypeScript entries and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. The gallery reads metadata only. Demo components run in their own pages; each React starter has a render-error boundary and owns resource cleanup.
 
-`demo.config.ts` default-exports an object satisfying `DemoDefinition` from `@lab/demo-kit/types`, with `title`, `track`, `description`, `author` and optional `load` for standalone entries. Inline entries require `load`. The loader imports a module whose default export is your React component. Use the generator and **Create a demo** page in the app for the exact file shape.
+`demo.config.ts` default-exports metadata satisfying `DemoDefinition` from `@lab/demo-kit/types`. The gallery reads metadata and links to the app; it does not load demo components. The generated React starter uses `main.tsx` to mount `index.tsx` inside its own HTML entry.
+
+The repository-root `index.html` opens the gallery. Its Vite config uses the repository as root so `demos/<id>/index.html` works in development and production without copying files or custom routing. The combined output stays in `playground/dist/`; individual workspace builds stay in `demos/<id>/dist/`.
 
 Hash routes such as `#/track/modern-web`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
 

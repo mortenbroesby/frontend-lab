@@ -1,5 +1,14 @@
 # Current verification status
 
+## Top-level standalone demos (PR #7)
+
+Every reference and generated demo is a private npm workspace package under `demos/<id>/`, with its own dev, build and preview commands. The gallery discovers metadata and links to independent app pages. There is one generator model and no inline presentation option.
+
+- `npm run check` passed on Node 24, including generator/unit tests, TypeScript and the gallery build.
+- All 19 Chrome browser journeys passed in one full run, including generated React and plain JavaScript apps, independent worker assets, gallery navigation and failure recovery.
+- The changed-code Fallow audit passed with no introduced findings; inherited complexity and styling advisories remain.
+- No deployment or physical-device acceptance was performed.
+
 ## Reconciliation with onboarding changes
 
 Merged `origin/main` at `cc5f54d` into `feat/in-app-track-guides`. Preserved the track-specific generator, its end-to-end test, reference-page instructions and CI browser checks. MDX now describes the generated circle directly, without manual copying; deployment links remain absent.

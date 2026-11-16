@@ -16,7 +16,6 @@ export default function generator(plop) {
       ] },
       { type: 'input', name: 'author', message: 'Your name or group:', validate: required },
       { type: 'input', name: 'description', message: 'What can someone try or learn?', validate: required },
-      { type: 'list', name: 'presentation', message: 'Gallery presentation (both have their own app):', default: 'standalone', choices: [{ name: 'Standalone — open the demo app', value: 'standalone' }, { name: 'Inline — also render inside the gallery (React)', value: 'inline' }] },
     ],
     actions: [answers => createDemo(answers.turbo.paths.root, answers)],
   });
