@@ -97,3 +97,9 @@ The existing platform and independent-participant limitations still apply.
 - `npm run check` passed 17 generator/logic tests, TypeScript and the build; all ten Chrome browser journeys passed with the updated theme and relative asset base.
 - A separate production build supplied a synthetic `VITE_SOURCE_URL` through root Turbo. A temporary static server mounted that build only at `/chapter-lab/`. Browser assertions verified the configured source link, direct demo URL and reload, lazy-loaded Worker demo, actual Worker computation (9,592 primes), and no page errors or horizontal mobile overflow. The server was closed; the normal local build was restored afterward.
 - GitHub Pages publication is opt-in through `PAGES_ENABLED`; the workflow and migration/access guide are prepared. No enterprise repository, membership, Pages visibility or deployment has been configured. Hosted verification and destination policy compatibility are separate from these local checks.
+
+## Scope update: local workshop, no hosting — 16 November 2026
+
+- At the user's request, removed Pages publishing, deployment permissions, enablement variables and hosting instructions. Reverted the hosting-specific relative asset base. The GitHub workflow only verifies code; the migration guide covers repository/team access and local participation.
+- The first Linux GitHub verification exposed a pre-existing platform-specific lockfile: TypeScript's Linux binary was absent. Regenerated the lockfile from the pinned manifests in an empty temporary directory. Existing dependency versions were unchanged; missing optional platform packages are now recorded. A fresh local `npm ci` and `npm run check` passed.
+- The earlier nested-hosting smoke test is historical evidence only; shared hosting is deferred and no site was published.

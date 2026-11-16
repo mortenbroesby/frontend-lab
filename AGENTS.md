@@ -8,7 +8,7 @@ A self-directed React workshop for 20 November 2026: four tracks, small experime
 - Keep bootstraps separate from finished examples. Demos own their state, scoped styles and cleanup; adding one should not require editing the app shell.
 - Use `npm run demo:new`. Require a name first; preserve ID validation, overwrite protection and registry registration.
 - Prefer existing code and browser APIs. Preserve accessibility, error handling and resource cleanup.
-- Keep this repository participant-focused. Prepare for internal GitHub Enterprise Cloud and opt-in GitHub Pages hosting. Keep destination links configurable; use the Front-End Lab theme without requiring Sapphire.
+- Keep this repository participant-focused. Prepare for an internal GitHub Enterprise Cloud repository. Keep source links configurable; use the Front-End Lab theme without requiring Sapphire. Hosting is deferred.
 
 ## Delivery
 

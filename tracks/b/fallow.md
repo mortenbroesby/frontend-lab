@@ -14,7 +14,7 @@ npm run analyze
 
 The last command combines unused-code, duplication and health analysis. It reads local source and may write caches under ignored `.fallow/`. It does not apply fixes. No account, cloud connection or editor extension is needed. The gallery's **Investigate with Fallow** entry explains the journey; your terminal output is the current evidence.
 
-**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Our initial report does this. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). There is no hosted CI gate.
+**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Our initial report does this. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). The repository verification workflow also audits introduced findings on pull requests.
 
 ## Set up agents and commit checks
 

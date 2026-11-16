@@ -8,7 +8,7 @@ Use the shared internal repository. Everyone participating should have **Write**
 4. Run `npm run demo:new`, give your demo a name and choose a unique ID. Run `npm run dev` and follow the printed address.
 5. Keep code, scoped styles and notes in your demo directory. Share useful discoveries even if the experiment is unfinished.
 6. Run `npm run check`. For browser behavior changes, also run `npm run test:browser` with the [browser setup](playground/README.md). Commit your scoped files and push your branch with `git push -u origin HEAD`.
-7. Open a pull request describing what to try and what you learned. Once merged, the enabled Pages workflow publishes the shared gallery; local users pull `main`.
+7. Open a pull request describing what to try and what you learned. Once merged, everyone pulls `main` and runs the app locally to see the shared gallery.
 
 The registry is shared. If two demos conflict in `playground/src/demo-registry.ts`, retain both entries with unique IDs, preserve the generator marker, and rerun checks. Do not overwrite someone else's demo to resolve a conflict.
 

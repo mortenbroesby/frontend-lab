@@ -5,7 +5,7 @@ import { DemoBoundary } from './DemoBoundary';
 
 const Template = lazy(() => import('../demos/template/Demo'));
 const BrowserStarter = lazy(() => import('../starters/BrowserStarter').then(m => ({ default: m.BrowserStarter })));
-// Deployment supplies the repository's /blob/<ref> URL; local use needs no remote.
+// Optional source-repository link; local use needs no remote.
 const sourceUrl = import.meta.env.VITE_SOURCE_URL?.replace(/\/$/, '');
 
 function BootstrapLink({ track }: { track: string }) {

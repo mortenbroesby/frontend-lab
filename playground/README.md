@@ -80,8 +80,8 @@ The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSoc
 
 The production build has one HTML entry and lazy demo chunks. Track B can use an existing codebase, and Track C's independent Node scripts under `tracks/c/` run without starting the app.
 
-## Internal hosting and theme
+## Internal repository and theme
 
-See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud, Pages visibility, deployment and team access. The app uses relative assets and hash routes; append `#/demo/<id>` to the deployed base URL, preserving its trailing slash.
+See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants run the app locally; shared hosting is deferred.
 
 `src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Set optional `VITE_SOURCE_URL` in `playground/.env.local` using `.env.example` to link guides to your source repository. Without it, the app shows editor paths.
