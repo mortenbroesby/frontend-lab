@@ -12,9 +12,9 @@ The Worker demo offers a workload up to two million. Before this investigation, 
 2. Read `demos/workers/index.tsx`: the largest menu option passes that same input.
 3. Read the tests: rejecting values above the limit tests validation, not correctness at the limit.
 4. Independently calculate the result with a sieve rather than reuse the trial-division implementation: 148,933 primes.
-5. Add one assertion at the accepted boundary in `playground/tests/compute.test.ts`.
+5. Add one assertion at the accepted boundary in `gallery/tests/compute.test.ts`.
 
-The new test is named **“the largest selectable workload has a known correct result”**. From `playground`, `npm test` runs it alongside the smaller cases. It passes with the existing implementation: we found a confidence gap, not a demonstrated calculation bug.
+The new test is named **“the largest selectable workload has a known correct result”**. From `gallery`, `npm test` runs it alongside the smaller cases. It passes with the existing implementation: we found a confidence gap, not a demonstrated calculation bug.
 
 ## Modern Web Capabilities concern that did not justify a rewrite
 

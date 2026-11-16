@@ -9,7 +9,7 @@ Project settings:
 - Repository root; framework preset Vite; Node 24.x.
 - Install: `npm ci`.
 - Build: `npm run build`.
-- Output: `playground/dist`.
+- Output: `gallery/dist`, set in the repository’s `vercel.json`.
 - Production domain is public; preview and deployment-specific URLs use Vercel authentication. Repository source remains private.
 
 The initial production deployment used commit `cb7e020`. An unauthenticated HTTP request and a Chrome smoke check verified the home page, named track navigation, D3 demo and Worker result. This is hosting verification, not participant-device or cross-device acceptance.

@@ -1,10 +1,10 @@
 # Modern Web Capabilities worked examples · Browser capabilities
 
-These are completed references, separate from your [bootstrap](#/track/modern-web). Choose one door below. You can experience the result first, rebuild a small version in your generated `demos/<your-idea>/index.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the playground](#/guide/setup) if you want these examples.
+These are completed references, separate from your [bootstrap](#/track/modern-web). Choose one door below. You can experience the result first, rebuild a small version in your generated `demos/<your-idea>/index.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the gallery](#/guide/setup) if you want these examples.
 
 ## D3: build an atlas of ideas
 
-**Experience:** Open the playground's D3 constellation. Drag an idea and watch its neighbours follow, switch between one constellation and four islands, or filter to one cluster. Nodes stay pinned after dragging; release them with the button. Keyboard users can focus a node and move it with arrow keys. Pause motion to inspect it; reduced-motion preference starts paused.
+**Experience:** Open the gallery's D3 constellation. Drag an idea and watch its neighbours follow, switch between one constellation and four islands, or filter to one cluster. Nodes stay pinned after dragging; release them with the button. Keyboard users can focus a node and move it with arrow keys. Pause motion to inspect it; reduced-motion preference starts paused.
 
 **Build towards it:** In your generated `demos/<your-idea>/index.tsx`, draw three labelled SVG circles from an array. Add a few source/target connections, then use D3's force simulation to calculate positions. Start with one force, inspect the result, and add links or collision avoidance only when useful. The completed reference is `demos/constellation/index.tsx`; it uses the focused `d3-force` package rather than the whole D3 bundle.
 
@@ -50,7 +50,7 @@ References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link 
 
 **Experience:** Open [Device Rally](#/demo/device-rally) in two browsers with the same room code and send emoji cheers. Leave and rejoin to see peer discovery in action.
 
-**Build towards it:** Use Trystero to join a room and exchange one event type. The finished reference lives in `demos/device-rally/`; `playground/DEVICE-RALLY.md` contains the setup and network details.
+**Build towards it:** Use Trystero to join a room and exchange one event type. The finished reference lives in `demos/device-rally/`; `gallery/DEVICE-RALLY.md` contains the setup and network details.
 
 **Boundary:** Discovery needs internet access; the page needs localhost or trusted HTTPS. No custom backend is required, but restrictive networks may block WebRTC. Physical phones and the workshop network remain untested.
 

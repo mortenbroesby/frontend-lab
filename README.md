@@ -19,7 +19,7 @@
 
 ---
 
-A shared React playground for front-end engineers. Take apart a working example,
+A shared React gallery for front-end engineers. Take apart a working example,
 follow a track or bring your own idea. Go solo or team up; useful discoveries
 and unfinished experiments are welcome.
 
@@ -34,7 +34,7 @@ and unfinished experiments are welcome.
 | 🚀 Experimental Projects | Games, generative art, visualisations or your own experiment |
 
 Each track has starting points, worked examples and optional challenges.
-Use this playground or an existing project where it fits.
+Use this gallery or an existing project where it fits.
 
 <a id="start-here"></a>
 ## 🚀 Run Locally

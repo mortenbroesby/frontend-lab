@@ -7,11 +7,11 @@ First name a recurring annoyance in your actual workflow and what would improve 
 If a small script would help, create a [contribution branch](#/guide/contributing), then try this independent starter from the repository root:
 
 ```sh
-node tracks/developer-experience/bootstrap/inspect.mjs playground/package.json
+node tracks/developer-experience/bootstrap/inspect.mjs gallery/package.json
 node --test tracks/developer-experience/bootstrap/inspect.test.mjs
 ```
 
-Expect `Project: front-end-lab-playground` and two passing tests. `tracks/developer-experience/bootstrap/inspect.mjs` only reads the named file and identifies the project. It does not contain the finished command-inventory solution.
+Expect `Project: front-end-lab-gallery` and two passing tests. `tracks/developer-experience/bootstrap/inspect.mjs` only reads the named file and identifies the project. It does not contain the finished command-inventory solution.
 
 **First result:** decide one useful observation about a project you work on, then change `describeProject` and its test. You can pass another package.json path (quote paths containing spaces). It never runs commands from that file.
 

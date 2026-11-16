@@ -55,7 +55,7 @@ For unused-code investigation, follow a current finding. Check that discovery se
 
 ## Worked investigation: complexity is a clue
 
-Run `npm run analyze:health` and choose a current finding. For example, inspect the route selection and JSX conditions in `playground/src/app/App.tsx`. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
+Run `npm run analyze:health` and choose a current finding. For example, inspect the route selection and JSX conditions in `gallery/src/app/App.tsx`. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
 
 No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured test coverage**, and the retained tests cover selected logic. A high score does not establish a defect. If you try a refactor, keep routes and error handling intact and choose a focused check for the behaviour you changed. A reasoned decision to leave the code alone is a valid outcome.
 

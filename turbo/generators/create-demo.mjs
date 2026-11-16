@@ -21,7 +21,7 @@ export async function createDemo(root, answers) {
       throw new Error(`${key} must contain 1–240 characters.`);
     }
   }
-  const src = join(root, 'playground/src');
+  const src = join(root, 'gallery/src');
   const modernWeb = track === 'modern-web';
   const templatePath = modernWeb ? 'starters/BrowserStarter.tsx' : 'starters/IdeaStarter.tsx';
   const template = await readFile(join(src, templatePath), 'utf8');
@@ -47,9 +47,9 @@ export async function createDemo(root, answers) {
       name: `@lab/demo-${id}`, private: true, version: '0.1.0', type: 'module',
       dependencies: { '@lab/demo-kit': '*', react: '19.3.1' },
       scripts: {
-        dev: 'vite --config ../../playground/vite.demo.config.ts --host 127.0.0.1',
-        build: 'vite build --config ../../playground/vite.demo.config.ts',
-        preview: 'vite preview --config ../../playground/vite.demo.config.ts --host 127.0.0.1',
+        dev: 'vite --config ../../gallery/vite.demo.config.ts --host 127.0.0.1',
+        build: 'vite build --config ../../gallery/vite.demo.config.ts',
+        preview: 'vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1',
       },
     }, null, 2) + '\n');
     await writeFile(join(folder, 'README.md'), `# ${name}

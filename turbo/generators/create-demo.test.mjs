@@ -11,8 +11,8 @@ async function fixture(t) {
   t.after(() => rm(root, { recursive: true, force: true }));
   await mkdir(join(root, 'demos'), { recursive: true });
   await cp(new URL('./templates', import.meta.url), join(root, 'turbo/generators/templates'), { recursive: true });
-  await cp(new URL('../../playground/src/starters', import.meta.url), join(root, 'playground/src/starters'), { recursive: true });
-  await writeFile(join(root, 'playground/src/demo-registry.ts'), 'do not edit');
+  await cp(new URL('../../gallery/src/starters', import.meta.url), join(root, 'gallery/src/starters'), { recursive: true });
+  await writeFile(join(root, 'gallery/src/demo-registry.ts'), 'do not edit');
   return root;
 }
 const answers = { id: 'chapter-quiz', track: 'experimental-projects', title: 'Quiz "hello" $&', author: 'Morten', description: 'One question\nTwo answers' };
@@ -32,7 +32,7 @@ test('creates a working template and typed metadata with safely escaped text', a
 
 test('rejects existing demo folders without modifying work', async t => {
   const root = await fixture(t);
-  const path = join(root, 'playground/src/demo-registry.ts');
+  const path = join(root, 'gallery/src/demo-registry.ts');
   const before = await readFile(path, 'utf8');
   await mkdir(join(root, 'demos/art'));
   await assert.rejects(createDemo(root, { ...answers, id: 'art' }), /exist/i);
@@ -54,7 +54,7 @@ test('invalid names, tracks and empty metadata cause no writes', async t => {
 test('different demos can be generated concurrently without editing shared files', async t => {
   const root = await fixture(t);
   await Promise.all([createDemo(root, answers), createDemo(root, { ...answers, id: 'another-demo' })]);
-  assert.equal(await readFile(join(root, 'playground/src/demo-registry.ts'), 'utf8'), 'do not edit');
+  assert.equal(await readFile(join(root, 'gallery/src/demo-registry.ts'), 'utf8'), 'do not edit');
   for (const id of ['chapter-quiz', 'another-demo']) {
     assert.match(await readFile(join(root, 'demos', id, 'demo.config.ts'), 'utf8'), /satisfies DemoDefinition/);
   }
@@ -74,7 +74,7 @@ test('asks for a name first without a default and suggests an editable folder ID
 
 test('missing, whitespace-only and multiline names leave all files untouched', async t => {
   const root = await fixture(t);
-  const registry = join(root, 'playground/src/demo-registry.ts');
+  const registry = join(root, 'gallery/src/demo-registry.ts');
   const before = await readFile(registry, 'utf8');
   for (const title of [undefined, '', '  ', 'Two\nlines']) {
     await assert.rejects(createDemo(root, { ...answers, title }), /name/i);
@@ -113,7 +113,7 @@ test('gives participants an exact route, editable file and persistent first chan
 
 test('Modern Web generates an independent circle bootstrap, leaving the shared starter unchanged', async t => {
   const root = await fixture(t);
-  const starter = join(root, 'playground/src/starters/BrowserStarter.tsx');
+  const starter = join(root, 'gallery/src/starters/BrowserStarter.tsx');
   const before = await readFile(starter, 'utf8');
   await createDemo(root, { ...answers, track: 'modern-web' });
   const component = await readFile(join(root, 'demos/chapter-quiz/index.tsx'), 'utf8');

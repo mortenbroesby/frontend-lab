@@ -2,9 +2,9 @@
   "$schema": "https://turborepo.dev/schema.json",
   "globalDependencies": [
     "tracks/developer-experience/**/*.mjs",
-    "playground/src/**",
-    "playground/vite.demo.config.ts",
-    "packages/demo-kit/**",
+    "gallery/src/**",
+    "gallery/vite.demo.config.ts",
+    "gallery/demo-kit/**",
     "demos/**",
     "index.html"
   ],

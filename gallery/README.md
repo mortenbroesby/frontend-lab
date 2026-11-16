@@ -1,4 +1,4 @@
-# The Front-End Lab playground
+# The Front-End Lab gallery
 
 An optional local starting point for [choosing a track](../README.md). Examples are reference destinations, not steps you have to complete.
 
@@ -18,13 +18,13 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `../demos/<your-idea>/` | Your component, assets and scoped styles |
 | `../demos/<id>/index.html` | Independently runnable app entry, also included in the gallery build |
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
-| `../packages/demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
-| `../packages/demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
+| `demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
+| `demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Small logic checks |
 
 Open **Create a demo** in the app for the generator, metadata contract and independent-app commands. Each demo owns its entry, state, styles and cleanup. The gallery reads metadata and links to the app; it does not import demo components.
 
-The repository-root `index.html` opens the gallery. Its Vite config uses the repository as root so `demos/<id>/index.html` works in development and production without copying files or custom routing. The combined output stays in `playground/dist/`; individual workspace builds stay in `demos/<id>/dist/`.
+The repository-root `index.html` opens the gallery. Its Vite config uses the repository as root so `demos/<id>/index.html` works in development and production without copying files or custom routing. The combined output stays in `gallery/dist/`; individual workspace builds stay in `demos/<id>/dist/`.
 
 Hash routes such as `#/track/modern-web`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. Source changes are shared through Git; Device Rally separately demonstrates live peer messaging.
 
@@ -36,7 +36,7 @@ Keep completed examples in their demo routes. Link between app pages with `#/tra
 
 ## Useful commands
 
-Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the repository root. Turbo coordinates the workspace tasks. The following app-specific commands also work from `playground` after the root install:
+Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the repository root. Turbo coordinates the workspace tasks. The following app-specific commands also work from `gallery` after the root install:
 
 | Command | What it does |
 | --- | --- |
@@ -53,7 +53,7 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 
 See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally. Temporary deployment settings are documented separately in `docs/hosting.md`.
 
-`../packages/demo-kit/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant MDX lives in `src/content/` and compiles with the app. Keep it canonical; do not duplicate track guides elsewhere.
+`demo-kit/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant MDX lives in `src/content/` and compiles with the app. Keep it canonical; do not duplicate track guides elsewhere.
 
 ## Maintainer reference
 

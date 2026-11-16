@@ -54,7 +54,7 @@ export default {
 
 The gallery discovers `demos/*/demo.config.ts`, validates the metadata and links to each app’s HTML entry in folder-ID order. Keep metadata free of side effects and retain `satisfies DemoDefinition`. Folder IDs use lowercase kebab-case, up to 60 characters; template and system names are reserved.
 
-The React starter’s `main.tsx` mounts the default component from `index.tsx`. Starters live in `playground/src/starters/`; entry templates live in `turbo/generators/templates/`. Reload the gallery after adding a demo, and rebuild for static hosting.
+The React starter’s `main.tsx` mounts the default component from `index.tsx`. Starters live in `gallery/src/starters/`; entry templates live in `turbo/generators/templates/`. Reload the gallery after adding a demo, and rebuild for static hosting.
 
 Keep code, assets and optional `Demo.module.css` beside the component. Keep state inside the demo. Clean up timers, listeners, Workers and subscriptions when leaving. Each demo runs in its own page; the shared React mount provides render-error feedback. This is not a sandbox: an infinite loop still blocks the page, and async/event errors need handling inside your demo.
 

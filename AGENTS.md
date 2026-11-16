@@ -1,6 +1,6 @@
 # The Front-End Lab
 
-A self-directed React playground: four tracks, small experiments and shared discoveries. Optimise for getting participants started independently.
+A self-directed React gallery: four tracks, small experiments and shared discoveries. Optimise for getting participants started independently.
 
 ## Scope and simplicity
 
@@ -12,7 +12,7 @@ A self-directed React playground: four tracks, small experiments and shared disc
 
 ## Working principles
 
-- Keep the gallery in `playground/` and independently runnable demo workspaces in `demos/<id>/`, managed by npm workspaces and Turborepo. Every demo is standalone; the gallery only reads metadata and links to apps. Share the toolchain; each demo owns its entry page and build output.
+- Keep the gallery in `gallery/` and independently runnable demo workspaces in `demos/<id>/`, managed by npm workspaces and Turborepo. Every demo is standalone; the gallery only reads metadata and links to apps. Share the toolchain; each demo owns its entry page and build output.
 - Keep bootstraps separate from finished examples. Demos own their state, scoped styles and cleanup; adding one should not require editing the app shell.
 - Use `npm run demo:new`. Require a name first; preserve ID validation, overwrite protection and typed folder discovery.
 - Prefer existing code and browser APIs. Preserve accessibility, error handling and resource cleanup.
@@ -26,15 +26,15 @@ A self-directed React playground: four tracks, small experiments and shared disc
 - There are no browser tests or browser-test infrastructure for now. Do not reintroduce them unless explicitly requested; a later browser-testing demo should be scoped as its own demo.
 - Report what was checked and what remains untested without turning demo delivery into production acceptance.
 - Preserve unrelated work. Commit and push completed scoped changes; report verification and remaining limits accurately.
-- Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Author participant pages in `playground/src/content/*.mdx` and track subfolders. Embed starters beside instructions; keep finished examples separate. MDX is trusted app code, never remote or user-supplied content. The README is a local entry point, not a directory of guide files or hosted URLs.
+- Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Author participant pages in `gallery/src/content/*.mdx` and track subfolders. Embed starters beside instructions; keep finished examples separate. MDX is trusted app code, never remote or user-supplied content. The README is a local entry point, not a directory of guide files or hosted URLs.
 
 ## References
 
 - [README](README.md): tracks, quick start and contribution workflow.
-- [App guide](playground/README.md): architecture, commands and troubleshooting.
-- [Demo guide](playground/src/content/create-demo.mdx): generator and registration contract.
-- [Verification](playground/VERIFICATION.md): evidence and known limits.
+- [App guide](gallery/README.md): architecture, commands and troubleshooting.
+- [Demo guide](gallery/src/content/create-demo.mdx): generator and registration contract.
+- [Verification](gallery/VERIFICATION.md): evidence and known limits.
 
 ## Fallow
 
-Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](playground/src/content/tracks/code-quality/fallow.mdx) for setup. Use the CLI directly; keep one shared skill, no repository MCP server entries and no per-agent hook scripts.
+Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](gallery/src/content/tracks/code-quality/fallow.mdx) for setup. Use the CLI directly; keep one shared skill, no repository MCP server entries and no per-agent hook scripts.

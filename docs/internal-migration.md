@@ -14,11 +14,11 @@ This repository is prepared for migration; no destination repository or team per
 
 Use Node 24, run `npm ci` and `npm run dev` at the repository root, then open the printed URL. After a contribution merges, pull `main` and restart/install dependencies when needed. There is no live synchronization between colleagues' apps.
 
-Participant guides are bundled from `playground/src/content/` and use in-app routes. No source-repository environment variable is required. Repository entry documents describe local startup and do not depend on a deployment URL.
+Participant guides are bundled from `gallery/src/content/` and use in-app routes. No source-repository environment variable is required. Repository entry documents describe local startup and do not depend on a deployment URL.
 
 ## Workshop identity
 
-The shell's palette is in `packages/demo-kit/theme.css`. Track colors follow track IDs, not gallery position. Keep experimental demo artwork and scoped styles independent. The workshop uses the Front-End Lab identity and does not require Sapphire or an internal component package registry.
+The shell's palette is in `gallery/demo-kit/theme.css`. Track colors follow track IDs, not gallery position. Keep experimental demo artwork and scoped styles independent. The workshop uses the Front-End Lab identity and does not require Sapphire or an internal component package registry.
 
 ## Acceptance before inviting participants
 

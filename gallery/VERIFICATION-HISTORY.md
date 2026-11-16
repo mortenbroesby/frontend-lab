@@ -23,7 +23,7 @@ Earlier implementation checkpoints, retained as evidence rather than setup instr
 
 ## Repository cleanup check
 
-After moving the app to `playground/` and consolidating participant guides under `tracks/`, local documentation links and old-path references were checked. `npm run check` and all six browser journeys passed from the new location. The package manifest, lockfile and example behaviour were unchanged.
+After moving the app to `gallery/` and consolidating participant guides under `tracks/`, local documentation links and old-path references were checked. `npm run check` and all six browser journeys passed from the new location. The package manifest, lockfile and example behaviour were unchanged.
 
 ## D3 constellation check
 
@@ -55,7 +55,7 @@ The earlier clean-install evidence remains historical. Independent participant s
 
 ## Turborepo and demo generator — 16 November 2026
 
-- Added npm workspaces with `playground/` as the first app workspace, one root lockfile, pinned Turbo/@turbo/gen 2.11.11, root task scripts and the `demo` generator. No per-demo packages or remote cache.
+- Added npm workspaces with `gallery/` as the first app workspace, one root lockfile, pinned Turbo/@turbo/gen 2.11.11, root task scripts and the `demo` generator. No per-demo packages or remote cache.
 - `npm run check` passed through Turbo: four generator tests, 11 app/script tests, TypeScript and production build. All ten existing Chrome browser journeys also passed through the root Turbo command.
 - A temporary copy without node_modules/build/cache output passed root `npm ci` and checks. The actual `npm run demo:new -- --args ...` command generated a demo; its production build loaded in Chrome, appeared in the gallery and Experimental Projects, and responded to input. The interactive five-prompt flow was separately completed successfully.
 - The npm script uses `turbo gen demo`. On the installed version the `turbo gen run demo` spelling opened an extra picker; the tested shorthand selects the generator directly. Its action uses Turbo's injected root path, so it does not rely on module URLs after generator compilation.
