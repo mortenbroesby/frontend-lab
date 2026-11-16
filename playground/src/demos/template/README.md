@@ -6,12 +6,12 @@ From the repository root, after `npm ci`:
 npm run demo:new
 ```
 
-Answer the prompts for ID (e.g. `chapter-quiz`), track, title, author and description. The Turborepo generator creates `playground/src/demos/<id>/Demo.tsx` and a findings README, adds a lazy entry to the registry, and prints the demo route. Existing folders and IDs are rejected without overwriting them.
+Give your demo a name first (required, with no default). Confirm or edit the suggested folder/URL ID, then choose the track, author and description. The name is used in the gallery, starter and findings README. The Turborepo generator creates `playground/src/demos/<id>/Demo.tsx` and a findings README, adds a lazy entry to the registry, and prints the demo route. Existing folders and IDs are rejected without overwriting them.
 
 For a fully specified invocation:
 
 ```sh
-npm run demo:new -- --args chapter-quiz d "Chapter Quiz" "Your team" "Test your browser knowledge"
+npm run demo:new -- --args "Chapter Quiz" chapter-quiz d "Your team" "Test your browser knowledge"
 ```
 
 Run `npm run dev`, open the printed address followed by `/#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.

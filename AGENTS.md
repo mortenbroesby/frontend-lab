@@ -39,3 +39,7 @@ Do not recreate organiser planning folders or duplicate track descriptions. Earl
 Remaining validation: independent participant setup, repository access and browsers/platforms beyond the recorded local checks. Do not claim those have passed without evidence.
 
 Confirmed scope: React for this chapter day. Ignore prototypes.danske.net for now. Root generator config lives in `turbo/generators/config.js`; its file-writing logic has Node tests. Preserve the registry insertion marker and validation against duplicate IDs, invalid paths and existing folders.
+
+The generator asks for a required demo name first (registry field `title`), with no default. It suggests an editable folder ID, then asks for track, author and description. Keep positional CLI examples aligned with that order. Names appear in the gallery, generated starter and README.
+
+README style follows the owner’s Astrograph and Everyday Assistants repositories: centered introduction and concise navigation, factual badges where useful, emoji section headings, early quick start, deeper-doc links and the author/footer treatment. Keep claims grounded; do not add a license or CI badge without actual repository support.

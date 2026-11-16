@@ -8,4 +8,4 @@ Build a game, visual story, generative art, quiz, utility or something nobody ha
 
 All tracks share the app shell; your copied demo stays independent of the reference examples. You do not need to build a production-ready product.
 
-[Choose another track](../../README.md#choose-a-track)
+[Choose another track](../../README.md#tracks)

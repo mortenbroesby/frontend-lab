@@ -8,4 +8,4 @@ Choose recurring workflow friction and explore a practical improvement. The outc
 
 There is no package installation or app server for this route. Avoid building tools for their own sake.
 
-[Choose another track](../../README.md#choose-a-track)
+[Choose another track](../../README.md#tracks)

@@ -8,4 +8,4 @@ Explore browser APIs, visual interaction, background computation or communicatio
 
 The starter does not contain the finished solution. Use React for the interface while exploring native browser capabilities. Record one discovery in [findings](../findings.md).
 
-[Choose another track](../../README.md#choose-a-track)
+[Choose another track](../../README.md#tracks)

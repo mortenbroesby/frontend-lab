@@ -61,3 +61,12 @@ The earlier clean-install evidence remains historical. Independent participant s
 - The phone preview remains a local-network HTTP preview of the built app. No external deployment or prototypes.danske.net integration was added. React-only scope is recorded in the participant docs and AGENTS.md.
 
 Independent participant setup and other operating systems remain unverified. Earlier verification sections describe their historical layouts; use the current root setup instructions.
+
+## Required demo names and README presentation — 16 November 2026
+
+- The first generator prompt is now the demo name, with no default. It suggests an editable folder ID afterward. Missing, whitespace-only and multiline names are rejected before writes, including through the generator action. The name becomes the gallery title, initial starter idea and generated README heading.
+- `npm run check` passed: six generator tests, 11 app/script tests, TypeScript and production build. All ten Chrome browser journeys passed.
+- In a temporary copy, the interactive prompt rejected an empty name, then accepted a name and suggested its ID. The updated positional CLI example also generated successfully. Both generated demos built, and their names were checked in the rendered headings and starter fields in Chrome.
+- The root README follows the owner's Astrograph and Everyday Assistants presentation: centered introduction, factual badges, section navigation, emoji headings, quick start, documentation links and author footer. GitHub's Markdown renderer accepted it; a styled browser preview was visually inspected, navigation anchors and local links were checked. The preview is a layout check, not a claim of pixel-identical GitHub styling.
+
+The existing platform and independent-participant limitations still apply.

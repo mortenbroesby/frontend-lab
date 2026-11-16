@@ -59,4 +59,4 @@ View Transitions, Canvas, browser scheduling, WebAssembly and other APIs are val
 
 Stop when you have a discovery worth explaining. Capture your question, one piece of evidence and a next possibility in [findings](../findings.md). You can combine doors or jump to [your own project](../d/README.md).
 
-[Choose another track](../../README.md#choose-a-track)
+[Choose another track](../../README.md#tracks)

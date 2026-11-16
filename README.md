@@ -1,53 +1,192 @@
-# The Front-End Lab
+<h1 align="center">🧪 The Front-End Lab</h1>
 
-**Front-End Chapter Day · Friday, 20 November 2026**
+<p align="center">
+  Four tracks. Different challenges. One day to experiment, learn and build.
+</p>
 
-Choose a track, start small, then follow your curiosity. Each track has a **bootstrap** you can build on and **separate worked examples** you can experience, inspect or remix. Go solo or team up; bring a React project or use the shared lab.
+<p align="center">
+  <strong>Front-End Chapter Day · Friday, 20 November 2026</strong>
+</p>
 
-## Choose a track
+<p align="center">
+  <img alt="Node 24.x" src="https://img.shields.io/badge/node-24.x-6366f1">
+  <img alt="React" src="https://img.shields.io/badge/React-19-149eca">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178c6">
+  <img alt="Turborepo" src="https://img.shields.io/badge/Turborepo-0f172a">
+</p>
 
-| Track | Bootstrap | Worked example |
-| --- | --- | --- |
-| [🌐 A · Modern Web Capabilities](tracks/a/README.md) | One browser interaction in a minimal app | Interactive D3 idea constellation; additional browser examples |
-| [🔍 B · Code Quality & Maintainability](tracks/b/README.md) | A repeatable investigation in your repo or our sample | Evidence, a confidence gap, a false-positive concern and a small test improvement |
-| [🛠️ C · Developer Experience & Tooling](tracks/c/README.md) | A small Node script and test | A read-only command inventory, its tests and trade-offs |
-| [🚀 D · Experimental Projects](tracks/d/README.md) | A clean creative page with one visible interaction | A generative postcard with controls and SVG export |
+<p align="center">
+  <a href="#start-here">Start here</a>
+  <span> | </span>
+  <a href="#tracks">Choose a track</a>
+  <span> | </span>
+  <a href="#create-a-demo">Create a demo</a>
+  <span> | </span>
+  <a href="#documentation">Documentation</a>
+</p>
 
-## Get started
+---
 
-**Shared lab app (all tracks):** with Node.js 24.x and npm, from this repository root:
+## 🔬 Follow Your What If
+
+The Front-End Lab brings front-end engineers from different squads together
+for a day of hands-on exploration. Pick a track, team up or go solo, and
+build something that sparks your curiosity.
+
+Explore a working example, rebuild one small part, change a rule or follow
+your own idea. This chapter day focuses on **React**. A useful discovery or
+an unfinished experiment is a worthwhile outcome.
+
+<a id="start-here"></a>
+## 🚀 Start Here
+
+You need **Node.js 24.x**, npm and access to this private repository.
+The workspace pins npm 11.6.2; `nvm use` selects Node 24 if you use nvm.
 
 ```sh
+git clone git@github.com:mortenbroesby/frontend-chapter-day.git
+cd frontend-chapter-day
 npm ci
 npm run dev
 ```
 
-Open the printed address. Choose a track, experience its reference demos, then choose **Create a demo** for a minimal bootstrap. All tracks share one app and toolchain; the template contains no finished solution. [Setup and troubleshooting](playground/README.md).
+Open the address printed by Vite. Choose a track, try a reference demo, then
+use **Create a demo** when you are ready to build. All commands above run
+from the repository root.
 
-**B:** open the [investigation bootstrap](tracks/b/bootstrap.md). Bring a codebase or inspect the actual playground as a small fallback; no specially broken app is needed.
+Already cloned it? Start with `npm ci`. For access, environment or browser
+issues, see [setup and troubleshooting](playground/README.md).
 
-**C:** open the [script bootstrap](tracks/c/bootstrap.md). It runs with Node 24.x, without installing packages or starting an app server.
+<a id="tracks"></a>
+## 🧭 Choose a Track
 
-## Choose your next step
+| Track | Explore | Starting point |
+| --- | --- | --- |
+| [🌐 A · Modern Web Capabilities](tracks/a/README.md) | Browser APIs, visuals, computation and communication | D3 constellation, SVG, Workers and tab messaging |
+| [🔍 B · Code Quality & Maintainability](tracks/b/README.md) | Dependencies, complexity, architecture and test confidence | Investigate this app or an existing React codebase |
+| [🛠️ C · Developer Experience & Tooling](tracks/c/README.md) | Faster feedback and less everyday workflow friction | A small Node script and a worked command inventory |
+| [🚀 D · Experimental Projects](tracks/d/README.md) | Games, visual stories, art, quizzes and your own ideas | Generative postcard or a fresh React demo |
 
-Experience an example → rebuild one small part → change a rule → combine ideas. Or skip the examples and follow your own question. There is no required sequence or production-ready outcome.
+Each track has a short **bootstrap guide** and separate **worked examples**.
+Follow your curiosity; there is no required sequence. Track B can use an
+existing codebase, and Track C's script starter runs with Node alone.
 
-Keep a demo, observation or useful failed attempt. The optional [findings template](tracks/findings.md) helps you record what you learned.
+<a id="create-a-demo"></a>
+## 🛠️ Create a Demo
 
-## Add your work to the shared gallery
+From the repository root:
 
-Run `npm run demo:new` from the repository root. The Turborepo generator asks for an ID, track, title, author and description, creates your React demo, and registers it in the gallery automatically. Follow the [demo guide](playground/src/demos/template/README.md).
+```sh
+npm run demo:new
+```
 
-Contribute on your own Git branch and open a pull request. After merge, everyone pulls the latest version to see your demo. A contribution can be an interactive experiment, a tool walkthrough or evidence from a code-quality investigation. This chapter day uses React; existing React repositories remain welcome.
+**Give your demo a name first.** There is no default name, and blank names
+are rejected. The generator suggests an editable folder/URL ID, then asks
+for your track, author or group, and a short description.
 
-## Workspace layout
+It creates your React component and findings README under
+`playground/src/demos/<id>/`, and adds the demo to the shared gallery.
+The demo name appears in the gallery, the starter and its README.
 
-This is an npm-workspaces Turborepo with one app workspace, `playground/`. Root scripts run tasks through Turbo; the root `package-lock.json` is the only install lockfile. Demos remain React components inside the app, not separate packages.
+For example, with all answers supplied:
 
-- `npm ci` — install from the repository root.
-- `npm run dev` — start the lab.
-- `npm run demo:new` — generate and register a demo.
-- `npm run check` — generator tests, app checks and build.
-- `npm run test:browser` — optional browser verification.
+```sh
+npm run demo:new -- --args "Chapter Quiz" chapter-quiz d "Your team" "Test your browser knowledge"
+```
 
-No remote cache or external hosting is configured. `prototypes.danske.net` is out of scope for now.
+Open `/#/demo/chapter-quiz` at your local server address and edit the generated
+`Demo.tsx`. Vite updates the page as you work. Existing demo IDs and folders
+are protected from overwrites. See the [demo guide](playground/src/demos/template/README.md)
+for the full workflow and manual alternative.
+
+## ✨ What You Get
+
+- 🧭 **Four self-directed tracks** — short guides and room to choose your own challenge.
+- 🎨 **Working references** — D3, SVG, Workers, local messages and practical investigations.
+- 🧩 **Independent React demos** — local state and a shared gallery, with demos loaded when opened.
+- ⚡ **A quick bootstrap** — one command creates and registers your named experiment.
+- 🤝 **A shared collection** — contribute through Git so everyone can explore the results.
+
+## 🤝 Share What You Discover
+
+Work on your own branch, make a small experiment, and open a pull request.
+Include what someone can try and what you learned. After merge, others pull
+the latest version to see your contribution in the gallery.
+
+A contribution can be interactive, a tool walkthrough or evidence from a
+code-quality investigation. Use the [findings template](tracks/findings.md)
+to capture your question, what you tried and one surprise.
+
+**Show & tell:** 13:00 for India, with anyone ready welcome to present;
+14:30–15:00 for Denmark and wrap-up. All times are Danish local time.
+
+## 🧱 Project Structure
+
+```text
+frontend-chapter-day/
+├── playground/              # Vite + React + TypeScript app
+│   └── src/
+│       ├── app/             # Shell, track pages and navigation
+│       ├── demo-registry.ts # Gallery entries and lazy imports
+│       ├── demos/           # Shared template and participant demos
+│       └── examples/        # Working reference experiments
+├── tracks/                  # Bootstrap guides, examples and findings
+├── turbo/generators/        # Demo generator and its tests
+├── turbo.json               # Workspace tasks and local caching
+└── package-lock.json        # One root npm lockfile
+```
+
+Turborepo coordinates one app workspace, `playground/`. Demos stay small
+React components inside that app. The shell handles navigation, loading and
+render-error feedback; each demo owns its behaviour and cleanup.
+
+## 🧪 Development and Verification
+
+Run these from the repository root:
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the lab with fast refresh |
+| `npm run demo:new` | Create and register a named React demo |
+| `npm run check` | Run generator tests, app checks and the production build |
+| `npm run build` | Build the app through Turbo |
+| `npm run preview` | Serve the built app locally |
+| `npm run test:browser` | Run the optional browser journeys |
+
+Browser tests require the [documented browser setup](playground/README.md).
+See [verification evidence and limits](playground/VERIFICATION.md) for what
+has been checked; independent participant setup and other operating systems
+still need validation.
+
+<a id="documentation"></a>
+## 📚 Documentation
+
+- [App setup, architecture and troubleshooting](playground/README.md)
+- [Create and contribute a demo](playground/src/demos/template/README.md)
+- [Modern Web Capabilities](tracks/a/README.md)
+- [Code Quality & Maintainability](tracks/b/README.md)
+- [Developer Experience & Tooling](tracks/c/README.md)
+- [Experimental Projects](tracks/d/README.md)
+- [Findings and show-and-tell prompts](tracks/findings.md)
+- [Technical verification](playground/VERIFICATION.md)
+
+## 🙏 Acknowledgements
+
+- React, TypeScript, Vite and Turborepo for the shared lab foundation.
+- D3 and the browser platform for experiments worth taking apart.
+- Everyone in the chapter who brings a question, shares a discovery or helps a colleague get started.
+
+---
+
+## 👤 Author
+
+**Morten Broesby-Olsen** (mortenbroesby)
+
+- GitHub: [@mortenbroesby](https://github.com/mortenbroesby)
+- LinkedIn: [mortenbroesby](https://www.linkedin.com/in/morten-broesby-olsen/)
+
+---
+
+<p align="center">
+  Made with ☕ and ⚡️ by Morten Broesby-Olsen
+</p>

@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, readFile, writeFile, cp, rm, readdir } from 'node:fs/pr
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createDemo } from './create-demo.mjs';
+import configureGenerator from './config.js';
 
 async function fixture(t) {
   const root = await mkdtemp(join(tmpdir(), 'lab-generator-'));
@@ -22,7 +23,10 @@ test('creates a working template and safely registers user-supplied text', async
   assert.ok(registry.includes(`title: ${JSON.stringify(answers.title)}`));
   assert.ok(registry.includes(`description: ${JSON.stringify(answers.description)}`));
   assert.ok(registry.includes("import('./demos/chapter-quiz/Demo')"));
-  assert.match(await readFile(join(root, 'playground/src/demos/chapter-quiz/Demo.tsx'), 'utf8'), /export default function Demo/);
+  const component = await readFile(join(root, 'playground/src/demos/chapter-quiz/Demo.tsx'), 'utf8');
+  assert.match(component, /export default function Demo/);
+  assert.ok(component.includes(`useState(${JSON.stringify(answers.title)})`));
+  assert.ok((await readFile(join(root, 'playground/src/demos/chapter-quiz/README.md'), 'utf8')).startsWith('# Quiz'));
 });
 
 test('rejects existing registry IDs and folders without modifying work', async t => {
@@ -52,4 +56,27 @@ test('a missing registration marker fails before creating a demo', async t => {
   await assert.rejects(createDemo(root, answers), /marker/);
   assert.deepEqual(await readdir(join(root, 'playground/src/demos')), ['template']);
   assert.equal(await readFile(path, 'utf8'), 'changed registry');
+});
+
+test('asks for a name first without a default and suggests an editable folder ID', () => {
+  let config;
+  configureGenerator({ setGenerator: (_name, value) => { config = value; } });
+  const [name, id] = config.prompts;
+  assert.equal(name.name, 'title');
+  assert.match(name.message, /Demo name/);
+  assert.equal(name.default, undefined);
+  for (const value of ['', '   ', undefined, 'Two\nlines']) assert.notEqual(name.validate(value), true);
+  assert.equal(name.validate('Chapter Quiz'), true);
+  assert.equal(id.default({ title: 'Chapter Quiz!' }), 'chapter-quiz');
+});
+
+test('missing, whitespace-only and multiline names leave all files untouched', async t => {
+  const root = await fixture(t);
+  const registry = join(root, 'playground/src/demo-registry.ts');
+  const before = await readFile(registry, 'utf8');
+  for (const title of [undefined, '', '  ', 'Two\nlines']) {
+    await assert.rejects(createDemo(root, { ...answers, title }), /name/i);
+  }
+  assert.equal(await readFile(registry, 'utf8'), before);
+  assert.deepEqual(await readdir(join(root, 'playground/src/demos')), ['template']);
 });

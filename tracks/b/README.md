@@ -8,4 +8,4 @@ Investigate dependencies, complexity, architecture, test confidence or automated
 
 No deliberately broken application or mandatory analysis tool is required. Fallow remains an optional candidate to identify and evaluate; it is not installed or verified here.
 
-[Choose another track](../../README.md#choose-a-track)
+[Choose another track](../../README.md#tracks)
