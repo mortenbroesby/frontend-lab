@@ -40,7 +40,11 @@ an unfinished experiment is a worthwhile outcome.
 <a id="start-here"></a>
 ## 🚀 Start Here
 
-You need **Node.js 24.x**, npm and access to this private repository.
+1. **[Choose a track](#tracks)** based on the question you want to explore. Its guide gives you a first result and a success check.
+2. **Set up only what you need.** For the shared gallery, follow the commands below. Track B can use an existing repository; Track C’s Node script needs no dependency install.
+3. **[Create your branch](CONTRIBUTING.md)** before editing, follow your track’s bootstrap, then share one discovery.
+
+For the gallery you need **Node.js 24.x**, npm and access to this private repository.
 The workspace pins npm 11.6.2; `nvm use` selects Node 24 if you use nvm.
 
 Copy this repository’s SSH URL from **Code → SSH** (including after the internal move), then replace the placeholder:
@@ -52,9 +56,9 @@ npm ci
 npm run dev
 ```
 
-Open the address printed by Vite. Choose a track, try a reference demo, then
-use **Create a demo** when you are ready to build. All commands above run
-from the repository root.
+Open the address printed by Vite and keep the terminal running (Ctrl+C stops it).
+Follow your chosen track’s guide; reference demos are optional destinations.
+All commands above run from the repository root.
 
 Already cloned it? Start with `npm ci`. For access, environment or browser
 issues, see [setup and troubleshooting](playground/README.md).
@@ -82,24 +86,14 @@ From the repository root:
 npm run demo:new
 ```
 
-**Give your demo a name first.** There is no default name, and blank names
-are rejected. The generator suggests an editable folder/URL ID, then asks
-for your track, author or group, and a short description.
+**Give your demo a name first.** The generator asks for an ID, track, author
+and description, then creates `Demo.tsx`, `demo.config.ts` and `README.md` in
+`playground/src/demos/<id>/`. The host discovers `demo.config.ts` automatically;
+the folder name supplies the demo ID. Open the printed route and edit `Demo.tsx`.
 
-It creates your React component and findings README under
-`playground/src/demos/<id>/`, and adds the demo to the shared gallery.
-The demo name appears in the gallery, the starter and its README.
-
-For example, with all answers supplied:
-
-```sh
-npm run demo:new -- --args "Chapter Quiz" chapter-quiz d "Your team" "Test your browser knowledge"
-```
-
-Open `#/demo/chapter-quiz` at your local server address and edit the generated
-`Demo.tsx`. Vite updates the page as you work. Existing demo IDs and folders
-are protected from overwrites. See the [demo guide](playground/src/demos/template/README.md)
-for the full workflow and manual alternative.
+The [demo guide](playground/src/demos/template/README.md) covers the full workflow,
+a non-interactive command and the manual alternative. Investigations and tools
+can be shared as notes or scripts without creating a gallery demo.
 
 ## ✨ What You Get
 
@@ -126,7 +120,7 @@ to capture your question, what you tried and one surprise.
 
 The workspace is prepared for an internal GitHub Enterprise Cloud repository. Follow the [migration guide](docs/internal-migration.md) to configure team access and source links. Participants run the app locally; hosting is deferred.
 
-Everyone contributes on a branch in the shared repository; see [CONTRIBUTING.md](CONTRIBUTING.md) for the complete journey.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the branch, checks and pull-request workflow.
 
 ## 🧱 Project Structure
 
@@ -135,8 +129,8 @@ frontend-chapter-day/
 ├── playground/              # Vite + React + TypeScript app
 │   └── src/
 │       ├── app/             # Shell, track pages and navigation
-│       ├── demo-registry.ts # Gallery entries and lazy imports
-│       ├── demos/           # Shared template and participant demos
+│       ├── demo-contract.ts # Typed demo metadata and loader contract
+│       ├── demos/           # Participant folders with demo.config.ts + Demo.tsx
 │       └── examples/        # Working reference experiments
 ├── tracks/                  # Bootstrap guides, examples and findings
 ├── turbo/generators/        # Demo generator and its tests
@@ -150,19 +144,16 @@ render-error feedback; each demo owns its behaviour and cleanup.
 
 ## 🧪 Development and Verification
 
-Run these from the repository root:
+The [app guide](playground/README.md#useful-commands) covers extra commands and browser setup. Run these from the repository root:
 
 | Command | Purpose |
 | --- | --- |
 | `npm run dev` | Start the lab with fast refresh |
-| `npm run demo:new` | Create and register a named React demo |
-| `npm run fallow:hooks` | Install the local Git pre-commit hook once per clone |
-| `npm run fallow:status` | Check Fallow readiness and Git hook installation |
-| `npm run analyze` | Explore code health with Fallow ([walkthrough](tracks/b/fallow.md)) |
+| `npm run demo:new` | Create a named React demo with discoverable metadata |
 | `npm run check` | Run generator tests, app checks and the production build |
 | `npm run build` | Build the app through Turbo |
 | `npm run preview` | Serve the built app locally |
-| `npm run test:browser` | Run the optional browser journeys |
+| `npm run test:browser` | Verify UI/browser changes (requires browser setup) |
 
 Codex/Copilot CLI setup and the shared Git hook are explained in the [integration guide](tracks/b/fallow.md#set-up-agents-and-commit-checks).
 

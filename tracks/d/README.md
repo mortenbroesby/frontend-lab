@@ -1,11 +1,33 @@
 # Track D · Experimental Projects
 
-Build a game, visual story, generative art, quiz, utility or something nobody has suggested. Choose your own idea and a small first result, using React.
+For you if you have a “what if” that does not need a prescribed exercise: a game, story, quiz, artwork or useful little tool.
 
-1. **[Start small: creative bootstrap](bootstrap.md)** — a separate template view in the shared app with a tiny idea/colour interaction, ready to replace.
-2. **[Experience a finished postcard](examples.md)** — generative SVG with controls and export; a possible destination, not the starter.
-3. **Choose your next step:** rebuild one piece, add a playful rule, combine it with another example or follow your own idea.
+**You need:** Node 24, npm, an editor and a browser for the shared app, or the normal setup for your existing React project.
 
-All tracks share the app shell; your copied demo stays independent of the reference examples. You do not need to build a production-ready product.
+## Get a first result
+
+[Start a creative experiment](bootstrap.md). Choose one thing you want to see happen and build one visible interaction in your own demo.
+
+**Success check:** Someone can open your demo and try that interaction without you editing code for them. A button changing a score or revealing an answer is enough.
+
+## Explore further
+
+Choose an idea that fits your curiosity and group; these are invitations, not assignments:
+
+| Scale | Possible first result | Optional stretch |
+| --- | --- | --- |
+| Small / solo | A one-question quiz that reveals an answer, a mood postcard with one control, or a button that changes a playful score. | Add keyboard interaction, a reset or a shareable SVG using the postcard reference. |
+| Medium / solo or pair | A tiny reaction game, an interactive story with two branches, or a visual map of invented ideas. | Add one rule, compare two layouts, or make the experience work with reduced motion. |
+| Open-ended / small group | Combine visuals and sound, prototype a collaborative drawing concept, or make an unusual tool for your squad. Split work by one observable behaviour per person. | Combine components in one demo and explore the hardest constraint. For communication, current tab signals work only within the same browser context; separate devices need additional infrastructure. |
+
+Start with a local interaction before adding persistence, accounts or networking. Invented data makes experimentation easier. You can ignore every suggestion and bring your own React idea.
+
+The [generative postcard](examples.md) is an optional destination. Borrow one technique or ignore it; the starter contains no finished postcard or game.
+
+## Show what you discovered
+
+Let someone try the result and share one surprise or next question. An unfinished experiment counts; a production-ready product is not expected.
+
+Capture a few [findings](../findings.md), then use the [contribution guide](../../CONTRIBUTING.md) to share code or notes. You may build towards a reference or pursue your own idea.
 
 [Choose another track](../../README.md#tracks)
