@@ -1,4 +1,4 @@
-# See what is possible
+<Inspiration>
 
 Choose a question you would like to answer:
 
@@ -9,7 +9,11 @@ Choose a question you would like to answer:
 
 You do not need to install every tool or produce a cleanup commit. Pick one question, gather evidence and try one small improvement. Discovering that the code should stay as it is can be just as useful.
 
-# A dependency you can explain
+</Inspiration>
+
+<IdeaGrid>
+
+<Idea title="A dependency you can explain" summary="Trace why a package is installed and decide whether it still earns its place.">
 
 **“I would like to remove or update this package, but I do not know what depends on it.”** Explore unused dependencies, duplicate versions and libraries that solve overlapping problems. The interesting result is understanding the cost of keeping or changing something.
 
@@ -19,7 +23,9 @@ Stretch by comparing two libraries with overlapping responsibilities, or trying 
 
 Read: [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain/) and [Knip’s getting-started guide](https://knip.dev/overview/getting-started). Knip is an optional tool to explore, not a required part of the Lab setup.
 
-# Code a colleague can follow
+</Idea>
+
+<Idea title="Code a colleague can follow" summary="Simplify one confusing function and compare how easily a colleague can explain it.">
 
 **“This works, but I have to hold too much in my head to change it.”** Pick a function or component with several decisions, responsibilities or repeated pieces. Try explaining what it does without narrating every line.
 
@@ -29,7 +35,9 @@ Stretch by investigating repeated code. Do the copies represent the same rule, o
 
 Read: [ESLint’s complexity rule and examples](https://eslint.org/docs/latest/rules/complexity) and [Fallow](https://fallow.tools/) for broader codebase analysis.
 
-# Boundaries that make changes smaller
+</Idea>
+
+<Idea title="Boundaries that make changes smaller" summary="Map imports, investigate unexpected coupling and try a rule that protects a useful boundary.">
 
 **“Why does changing this feature affect that one?”** Follow the connections between a screen, its data and shared utilities. Explore whether the code’s dependencies match the boundaries people think they have.
 
@@ -39,7 +47,9 @@ Stretch by comparing two ways to remove an unwanted connection, or expressing an
 
 Read: [dependency-cruiser’s diagrams and examples](https://github.com/sverweij/dependency-cruiser) and [its rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md).
 
-# Tests that answer your actual question
+</Idea>
+
+<Idea title="Tests that answer your actual question" summary="Find out whether a real test catches the mistake you are worried about.">
 
 **“The tests are green. Would they notice this behaviour breaking?”** Choose one observable behaviour and find the assertion that protects it. Explore missing boundaries, weak assertions or tests that repeat the implementation’s assumptions.
 
@@ -48,5 +58,9 @@ Start with a real test in this repository or your own project. Predict a small m
 Stretch with an edge case whose expected result you can establish independently, or compare what a unit test and an interaction test would tell you. You do not need a coverage target or a new test framework to learn something useful.
 
 Read: [Node’s test runner](https://nodejs.org/docs/latest-v24.x/api/test.html). Use the test runner already present in your chosen project.
+
+</Idea>
+
+</IdeaGrid>
 
 Choose one uncertainty you would like to replace with evidence.

@@ -1,0 +1,298 @@
+/* Gallery composition; standalone demo artwork stays independent. */
+[data-track='modern-web'] {
+  --track-colour: #2563eb;
+}
+[data-track='code-quality'] {
+  --track-colour: #16834b;
+}
+[data-track='developer-experience'] {
+  --track-colour: #946000;
+}
+[data-track='experimental-projects'] {
+  --track-colour: #8b46c3;
+}
+:root[data-theme='dark'] [data-track='modern-web'] {
+  --track-colour: #79aaff;
+}
+:root[data-theme='dark'] [data-track='code-quality'] {
+  --track-colour: #65c993;
+}
+:root[data-theme='dark'] [data-track='developer-experience'] {
+  --track-colour: #e5b85a;
+}
+:root[data-theme='dark'] [data-track='experimental-projects'] {
+  --track-colour: #c199ed;
+}
+
+.home-page .starter-welcome {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+.home-page h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+.home-journeys {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--lab-line);
+  border: 1px solid var(--lab-line);
+  border-top: 0;
+}
+.home-journeys a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: var(--lab-surface);
+  text-decoration: none;
+  color: var(--lab-muted);
+  font-size: 0.9rem;
+}
+.home-journeys a:hover {
+  background: var(--lab-hover);
+}
+.journey-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--lab-ink);
+  font-size: 1rem;
+  font-weight: 600;
+}
+.track-heading p {
+  text-transform: none;
+  letter-spacing: 0;
+  font: inherit;
+  font-size: 0.85rem;
+}
+.track-card-top {
+  margin-bottom: 1.25rem;
+}
+.track-symbol {
+  width: 42px;
+  height: 42px;
+  padding: 7px;
+  color: var(--track-colour, var(--lab-ink));
+  border-color: color-mix(in srgb, var(--track-colour, var(--lab-line)) 25%, var(--lab-line));
+  background: color-mix(in srgb, var(--track-colour, var(--lab-surface)) 5%, var(--lab-surface));
+}
+.track-card {
+  border-top: 2px solid var(--track-colour);
+}
+.gallery-page {
+  max-width: 1160px;
+  padding-inline: clamp(1.2rem, 4vw, 3rem);
+  padding-bottom: 3rem;
+}
+.gallery-page .starter-welcome {
+  padding: 2rem 0 1rem;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+.page-intro::before {
+  display: none;
+}
+.page-intro > * {
+  max-width: none;
+}
+.gallery-page h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.045em;
+  margin-bottom: 1rem;
+}
+.gallery-page .welcome-description {
+  font-size: 1rem;
+  max-width: 44rem;
+  margin-left: 0;
+}
+.page-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding-top: 1.5rem;
+  color: var(--lab-muted);
+  font-size: 0.8rem;
+}
+.page-path a {
+  color: var(--lab-ink);
+}
+.guide-nav {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+.guide-nav [aria-current='page'] {
+  border-bottom-color: var(--track-colour, var(--lab-ink));
+}
+.guide-nav .track-build-link {
+  margin-left: auto;
+  gap: 0.35rem;
+  color: var(--lab-ink);
+}
+.ideas-page {
+  margin-bottom: 2rem;
+}
+.idea-grid,
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+.idea-card,
+.demo-card {
+  min-width: 0;
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+  background: var(--lab-surface);
+  padding: 1.5rem;
+}
+.idea-card {
+  border-top: 2px solid color-mix(in srgb, var(--track-colour) 55%, var(--lab-line));
+}
+.idea-card h2,
+.demo-card h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.75rem;
+}
+.idea-summary,
+.demo-description {
+  color: var(--lab-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.idea-card [data-slot='accordion-trigger'] {
+  min-height: 44px;
+  padding-block: 0.75rem;
+  font-size: 0.85rem;
+}
+.idea-details {
+  overflow-wrap: anywhere;
+  color: var(--lab-ink);
+  line-height: 1.7;
+}
+.idea-details > :last-child {
+  margin-bottom: 0;
+}
+.idea-details h3,
+.idea-details h4 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 1.5rem 0 0.75rem;
+}
+.idea-details ul {
+  padding-left: 1.2rem;
+}
+.idea-details li {
+  margin-bottom: 0.75rem;
+}
+.idea-details a {
+  text-decoration: underline;
+}
+.idea-inspiration {
+  padding: 0 1.25rem;
+  margin: 0 0 1.25rem;
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+}
+.demo-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.demo-toolbar [data-slot='input'] {
+  max-width: 26rem;
+}
+.demo-toolbar p {
+  margin: 0;
+  color: var(--lab-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+.demo-grid {
+  align-items: stretch;
+}
+.demo-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+.demo-card:hover {
+  border-color: var(--lab-control-border);
+  background: var(--lab-hover);
+}
+.demo-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--lab-muted);
+}
+.demo-identity .track-symbol {
+  flex-shrink: 0;
+}
+.demo-author {
+  color: var(--lab-muted);
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+.requirement-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  list-style: none;
+}
+.requirement-list li {
+  border: 1px solid var(--lab-line);
+  border-radius: 4px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--lab-muted);
+}
+.demo-open {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--lab-line);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.demo-notes {
+  margin-top: 2rem;
+  padding: 0 1.25rem;
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+}
+.demo-notes .guide {
+  border: 0;
+  padding: 1rem 0;
+  margin: 0 auto;
+}
+.empty-demos {
+  padding: 2rem 0;
+}
+@media (max-width: 650px) {
+  .home-journeys,
+  .idea-grid,
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+  .home-journeys a {
+    padding: 1.1rem 1.25rem;
+  }
+  .idea-card,
+  .demo-card {
+    padding: 1.25rem;
+  }
+  .page-path span {
+    display: none;
+  }
+}

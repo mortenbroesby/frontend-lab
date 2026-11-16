@@ -4,13 +4,13 @@ These written investigations use local commands, not live browser analysis. **A 
 
 ## A test gap, investigated
 
-- **Try:** [Read the investigation](#/demo/quality), then run `npm test --workspace @lab/demo-workers` from the repository root.
+- **Try:** <DemoLink id="quality">Read the investigation</DemoLink>, then run `npm test --workspace @lab/demo-workers` from the repository root.
 - **Change:** Add an input to `demos/workers/compute.test.ts` with an independently checked expected value.
 - **Observe:** Does it cover a new boundary? A pass supports that case, not all inputs.
 
 ## Investigate with Fallow
 
-- **Try:** [Open the walkthrough](#/demo/fallow) and run `npm run analyze:dead-code` locally after setup.
+- **Try:** <DemoLink id="fallow">Open the walkthrough</DemoLink> and run `npm run analyze:dead-code` locally after setup.
 - **Change:** Inspect callers before making a warranted cleanup. No findings is valid.
 - **Observe:** Rerun the analysis and relevant checks. Did the finding disappear without changing intended behaviour?
 

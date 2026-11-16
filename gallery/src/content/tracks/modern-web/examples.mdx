@@ -4,7 +4,7 @@ Try, change and observe an example. Rebuild it in [your own demo](#/create), rem
 
 ## Device Rally
 
-- **Try:** [Open Device Rally](#/demo/device-rally) in two browsers, join the same room and send emoji cheers.
+- **Try:** <DemoLink id="device-rally">Open Device Rally</DemoLink> in two browsers, join the same room and send emoji cheers.
 - **Change:** Change a cheer button and receive-side emoji allowlist in `demos/device-rally/index.tsx`. Both devices need the same version.
 - **Observe:** Leave and rejoin. Does the peer count change? Do disconnected cheers arrive later?
 
@@ -14,7 +14,7 @@ Stretch: share a colour or quiz answer. Trystero handles discovery; you define m
 
 ## Dependency ripple
 
-- **Try:** [Select a package](#/demo/constellation), then compare the consumers of `react`, `react-dom` and `d3-force`.
+- **Try:** <DemoLink id="constellation">Select a package</DemoLink>, then compare the consumers of `react`, `react-dom` and `d3-force`.
 - **Change:** Change layout or visuals in `demos/constellation/index.tsx`; find consumer traversal in `graph.ts`.
 - **Observe:** Switch layouts: positions change, relationships do not. Which consumers are direct or indirect?
 
@@ -24,7 +24,7 @@ Stretch: show the shortest path to an affected workspace. Read [D3 force simulat
 
 ## Generative postcard
 
-- **Try:** [Open the postcard](#/demo/art), change the dot count, remix and save an SVG.
+- **Try:** <DemoLink id="art">Open the postcard</DemoLink>, change the dot count, remix and save an SVG.
 - **Change:** Adjust the point distribution in `demos/art/art.ts` or colours in `index.tsx`.
 - **Observe:** Keep the seed fixed while changing the count. What stays repeatable? Open the saved SVG separately.
 
@@ -32,7 +32,7 @@ Stretch: use a spiral or data-driven sizes. Compare [SVG](https://developer.mozi
 
 ## Keep the interface listening
 
-- **Try:** [Run the calculation](#/demo/workers) in a Worker and use the interaction pad. Compare the main thread, starting with a small workload.
+- **Try:** <DemoLink id="workers">Run the calculation</DemoLink> in a Worker and use the interaction pad. Compare the main thread, starting with a small workload.
 - **Change:** Edit `demos/workers/compute.ts`, shared by both modes. Keep workloads bounded.
 - **Observe:** Compare responsiveness at the same workload. Times exclude Worker startup and messaging.
 
@@ -40,7 +40,7 @@ Off-thread work does not guarantee faster execution. Stretch: add progress messa
 
 ## Let two tabs talk
 
-- **Try:** [Open Signals](#/demo/signals), open its second tab and send a message.
+- **Try:** <DemoLink id="signals">Open Signals</DemoLink>, open its second tab and send a message.
 - **Change:** Edit the channel name in `demos/signals/index.tsx`; reload both tabs.
 - **Observe:** Only the other tab receives messages. Reopening loses history. Channel names and origins must match.
 

@@ -63,7 +63,7 @@ export default function Signals() {
         <h3>Two tabs. One conversation.</h3>
         <p>Send events between local tabs—no backend, WebSockets or cross-device messaging.</p>
         <Button asChild variant="outline">
-          <a href="#/demo/signals" target="_blank" rel="noopener">
+          <a href="./index.html" target="_blank" rel="noopener">
             Open another tab ↗
           </a>
         </Button>

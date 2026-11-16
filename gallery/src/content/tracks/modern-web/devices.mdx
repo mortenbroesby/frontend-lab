@@ -5,7 +5,7 @@ import { Button } from '@lab/ui/button';
 Connect two browsers for cheers, a control panel or a multiplayer game.
 
 <div className="button-row">
-  <Button asChild><a href="#/demo/device-rally">Try Device Rally</a></Button>
+  <Button asChild><DemoLink id="device-rally">Try Device Rally</DemoLink></Button>
   <Button asChild variant="outline"><a href="#/guide/setup">Local setup</a></Button>
 </div>
 
@@ -27,4 +27,4 @@ Or [create your own React demo](#/create), using this as reference. New demos in
 - **Further:** let a phone control one visual property on a laptop, using trusted HTTPS.
 - **Stretch:** design how peers recover shared state after reconnecting.
 
-For tabs in one browser, try [Signals](#/demo/signals) and BroadcastChannel. WebSockets/SSE need a server, which this starter does not supply.
+For tabs in one browser, try <DemoLink id="signals">Signals</DemoLink> and BroadcastChannel. WebSockets/SSE need a server, which this starter does not supply.

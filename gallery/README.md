@@ -25,7 +25,7 @@ Open **Create a demo** in the app for the generator and independent-app commands
 
 Root `index.html` opens the gallery. Vite uses the repository root so demo HTML entries work in development and production without copying or custom routing. Combined output goes to `gallery/dist/`; standalone builds to `demos/<id>/dist/`.
 
-Hash routes (`#/track/modern-web`, `#/demo/constellation`, `#/create`) support deep links without server rewrites. Device Rally demonstrates live peer messaging.
+Hash routes (`#/track/modern-web`, `#/demos`, `#/create`) support deep links without server rewrites. Device Rally demonstrates live peer messaging.
 
 ## Command palette
 
@@ -39,7 +39,7 @@ The kit owns the palette and developer commands in `demo-kit/CommandMenu.tsx`; t
 
 Edit `src/content/tracks/<track-id>/*.mdx`. Tracks have Ideas and Demos tabs; shared setup and demo creation are in the main navigation.
 
-Keep completed examples in their demo routes. Link between app pages with `#/track/...`, `#/demo/...` or `#/guide/...`; do not link to a deployment domain or raw guide file. MDX compiles at build time and loads on demand. Its imports and JSX are trusted code; never load remote or user-authored MDX at runtime.
+Link between app pages with `#/track/...` or `#/guide/...`. In MDX, use `<DemoLink id="constellation">Open the demo</DemoLink>` for a direct link to a discovered standalone demo; do not link to a deployment domain or raw guide file. MDX compiles at build time and loads on demand. Its imports and JSX are trusted code; never load remote or user-authored MDX at runtime.
 
 ## Useful commands
 
@@ -81,3 +81,5 @@ Turbo uses package-local inputs by default. The gallery's build also hashes demo
 `npm run format` formats code and styles with Prettier. `npm run lint` runs only Oxlint's hooks-ordering and exhaustive-dependency checks. These complement TypeScript, Fallow and dependency-cruiser. MDX prose stays as authored. No browser-test framework is installed.
 
 Optional `requirements` in `demo.config.ts` labels internet, secure-context or offline-after-setup needs before opening a demo. Labels do not check permissions.
+
+Track ideas use the existing MDX pipeline with `IdeaGrid`, `Idea` (title and short summary) and `Inspiration`. Keep the full explanation and external resources inside each idea; the shared accordion reveals them on demand. Instructions retain the narrow document layout. Demo cards use metadata, a track symbol and explicit runtime requirements; they open the standalone HTML entry directly. No screenshot service or second content registry is involved.

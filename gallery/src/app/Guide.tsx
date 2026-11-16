@@ -1,4 +1,6 @@
-import { lazy, type ComponentType } from 'react';
+import { Idea, IdeaGrid, Inspiration } from './Ideas';
+import { demos } from '../demo-registry';
+import { lazy, type ComponentType, type ComponentProps } from 'react';
 import type { MDXComponents, MDXProps } from 'mdx/types';
 
 // Compile trusted repository pages at build time; load only the selected page.
@@ -6,6 +8,19 @@ const modules = import.meta.glob<{ default: ComponentType<MDXProps> }>('../conte
 const pages = Object.fromEntries(Object.entries(modules).map(([path, load]) => [path, lazy(load)]));
 
 const components: MDXComponents = {
+  Idea,
+  IdeaGrid,
+  Inspiration,
+  DemoLink: ({ id, children, ...props }: ComponentProps<'a'> & { id: string }) => {
+    const demo = demos.find((entry) => entry.id === id);
+    return demo ? (
+      <a {...props} href={demo.href}>
+        {children}
+      </a>
+    ) : (
+      <span>{children}</span>
+    );
+  },
   h1: ({ children }) => <h2>{children}</h2>,
   h2: ({ children }) => <h3>{children}</h3>,
   h3: ({ children }) => <h4>{children}</h4>,
@@ -21,7 +36,7 @@ export default function Guide({ document }: { document: string }) {
   if (!Page)
     return <p role="alert">This guide is unavailable. Choose another track or reload the page.</p>;
   return (
-    <article className="guide">
+    <article className={document.endsWith('/ideas') ? 'ideas-page' : 'guide'}>
       <Page components={components} />
     </article>
   );

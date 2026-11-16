@@ -2,7 +2,7 @@
 
 ## React Render Detective
 
-[Open React Render Detective](#/demo/render-detective). Update a parent in each panel and compare the tile commit counts. Why does `memo` fail to skip work when a prop is a new object? Then like one tile: local state still updates.
+<DemoLink id="render-detective">Open React Render Detective</DemoLink>. Update a parent in each panel and compare the tile commit counts. Why does `memo` fail to skip work when a prop is a new object? Then like one tile: local state still updates.
 
 Change the object spread in `demos/render-detective/experiment.tsx`, then inspect the difference with React Scan. Counts are observations, not a speed benchmark.
 
@@ -10,7 +10,7 @@ Change the object spread in `demos/render-detective/experiment.tsx`, then inspec
 
 Run the smallest relevant test while editing; broaden checks before committing.
 
-- **Try:** [Open the command explorer](#/demo/tooling), choose **One behaviour** and run its command from the repository root.
+- **Try:** <DemoLink id="tooling">Open the command explorer</DemoLink>, choose **One behaviour** and run its command from the repository root.
 - **Change:** Choose **Watch changes** and temporarily reverse the comparator in `demos/tooling/examples/commands.mjs`. Restore that edit afterwards.
 - **Observe:** Does saving trigger a failing test, then a pass after restoring? Check test counts as well as timings.
 

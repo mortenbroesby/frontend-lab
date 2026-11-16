@@ -3,46 +3,13 @@ import { CommandMenu, commandMenuLabel } from '@lab/demo-kit/command-menu';
 import { Button } from '@lab/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
 import { LabMark } from '@lab/demo-kit/mark';
-import { requirementLabels } from '@lab/demo-kit/types';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@lab/ui/accordion';
+import { DemoGallery } from './DemoGallery';
+import { TrackSymbol } from './TrackSymbol';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
-import type { TrackId } from '../demo-contract';
 
 import { GuideView } from './GuideView';
-
-const trackTitle = (id: TrackId) => tracks.find((track) => track.id === id)!.title;
-
-function Gallery({ track }: { track?: TrackId }) {
-  const entries = demos.filter((d) => !track || d.track === track);
-  if (!entries.length)
-    return (
-      <p>
-        No demos yet. <a href="#/create">Create the first one</a> or try a track idea.
-      </p>
-    );
-  return (
-    <div className="journey-grid">
-      {entries.map((d) => (
-        <article className="journey-card" data-track={d.track} key={d.id}>
-          <p className="eyebrow">
-            {trackTitle(d.track)} · {d.author}
-          </p>
-          <h3>
-            <a className="demo-title-link" href={d.href}>
-              {d.title}
-            </a>
-          </h3>
-          <p>{d.description}</p>
-          {d.requirements && (
-            <p className="demo-requirements">
-              {d.requirements.map((id) => requirementLabels[id]).join(' · ')}
-            </p>
-          )}
-        </article>
-      ))}
-    </div>
-  );
-}
 
 function TrackGuide({ track, route }: { track: (typeof tracks)[number]; route: string }) {
   const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'ideas';
@@ -61,11 +28,21 @@ function TrackGuide({ track, route }: { track: (typeof tracks)[number]; route: s
             {label}
           </a>
         ))}
+        <a className="track-build-link" href="#/create">
+          Create a demo <span aria-hidden="true">↗</span>
+        </a>
       </nav>
       {trackPage === 'examples' ? (
         <>
-          <Gallery track={track.id} />
-          <GuideView document={`tracks/${track.id}/examples`} />
+          <DemoGallery track={track.id} />
+          <Accordion className="demo-notes" type="single" collapsible>
+            <AccordionItem value="notes">
+              <AccordionTrigger>Experiments to try with these demos</AccordionTrigger>
+              <AccordionContent>
+                <GuideView document={`tracks/${track.id}/examples`} />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </>
       ) : (
         <GuideView document={`tracks/${track.id}/${trackPage}`} />
@@ -90,19 +67,36 @@ function findTrack(route: string) {
 interface Page {
   title: string;
   description?: string;
-  attribution?: string;
   content: ReactNode;
 }
 
 const pages: Record<string, Page> = {
-  '/': { title: 'Choose your track.', content: <TrackChoices /> },
-  '/demos': {
-    title: 'Explore the demos.',
-    description: 'Every demo, across all four tracks.',
-    content: <Gallery />,
+  '/': {
+    title: 'Explore. Try. Build.',
+    description:
+      'A playground for front-end experiments. Find an idea, try a working example or create something of your own.',
+    content: (
+      <>
+        <HomeJourneys />
+        <TrackChoices />
+      </>
+    ),
   },
-  '/create': { title: 'Create a demo.', content: <GuideView document="create-demo" /> },
-  '/guide/setup': { title: 'Run the Lab locally', content: <GuideView document="setup" /> },
+  '/demos': {
+    title: 'Try a demo',
+    description: 'Every demo, across all four tracks.',
+    content: <DemoGallery />,
+  },
+  '/create': {
+    title: 'Create a demo',
+    description: 'Start with a small React app. Make it your own.',
+    content: <GuideView document="create-demo" />,
+  },
+  '/guide/setup': {
+    title: 'Run the Lab locally',
+    description: 'Install the workspace and start experimenting.',
+    content: <GuideView document="setup" />,
+  },
 };
 const notFound: Page = {
   title: 'Page not found',
@@ -116,42 +110,64 @@ const notFound: Page = {
 function resolvePage(route: string): Page {
   const track = findTrack(route);
   if (track) return { ...track, content: <TrackGuide track={track} route={route} /> };
-  const demo = demos.find((entry) => route === `/demo/${entry.id}`);
-  if (demo)
-    return {
-      title: demo.title,
-      description: demo.description,
-      attribution: `${trackTitle(demo.track)} · ${demo.author}`,
-      content: (
-        <p>
-          <a href={demo.href}>Open standalone demo ↗</a>
-        </p>
-      ),
-    };
   return pages[route] ?? notFound;
+}
+
+function HomeJourneys() {
+  return (
+    <nav className="home-journeys" aria-label="Choose a journey">
+      <a
+        href="#tracks-heading"
+        onClick={(event) => {
+          event.preventDefault();
+          const heading = document.getElementById('tracks-heading');
+          heading?.focus({ preventScroll: true });
+          heading?.scrollIntoView({ block: 'start' });
+        }}
+      >
+        <span className="journey-label">
+          Explore tracks <span aria-hidden="true">↓</span>
+        </span>
+        <span>Find an idea worth trying.</span>
+      </a>
+      <a href="#/demos">
+        <span className="journey-label">
+          Try demos <span aria-hidden="true">↗</span>
+        </span>
+        <span>See an experiment in action.</span>
+      </a>
+      <a href="#/create">
+        <span className="journey-label">
+          Create a demo <span aria-hidden="true">↗</span>
+        </span>
+        <span>Start with a small React app.</span>
+      </a>
+    </nav>
+  );
 }
 
 function TrackChoices() {
   return (
     <section aria-labelledby="tracks-heading">
       <div className="track-heading">
-        <h2 id="tracks-heading">Pick a starting point</h2>
-        <p>04 tracks / Your own pace</p>
+        <h2 id="tracks-heading" tabIndex={-1}>
+          Explore tracks
+        </h2>
+        <p>Choose a direction. Follow your curiosity.</p>
       </div>
       <div className="track-grid">
-        {tracks.map((t, index) => (
+        {tracks.map((t) => (
           <a
             className="track-card"
+            data-track={t.id}
             key={t.id}
             href={`#/track/${t.id}`}
             aria-label={`Explore ${t.title}`}
           >
             <div className="track-card-top">
-              <span className="track-symbol" aria-hidden="true">
-                {['◇', '{ }', '>_', '✳'][index]}
-              </span>
-              <span className="track-number" aria-hidden="true">
-                0{index + 1}
+              <TrackSymbol track={t.id} />
+              <span className="track-number">
+                {demos.filter((demo) => demo.track === t.id).length} demos
               </span>
             </div>
             <h3>{t.title}</h3>
@@ -173,6 +189,7 @@ function LabNavigation({ route }: { route: string }) {
   const [commandOpen, setCommandOpen] = useState(false);
   const mobileTrigger = useRef<HTMLButtonElement>(null);
   const links = [
+    ['/', 'Tracks'],
     ['/demos', 'Demos'],
     ['/create', 'Create a demo'],
     ['/guide/setup', 'Local setup'],
@@ -250,7 +267,7 @@ function LabNavigation({ route }: { route: string }) {
             </DialogClose>
           </div>
           <nav aria-label="Mobile navigation" className="mobile-navigation-links">
-            {[['/', 'All tracks'], ...links].map(([path, label]) => (
+            {links.map(([path, label]) => (
               <DialogClose key={path} asChild>
                 <a href={`#${path}`} aria-current={route === path ? 'page' : undefined}>
                   <span>{label}</span>
@@ -306,6 +323,30 @@ function useRoute() {
   return route;
 }
 
+function PageHeading({ page, track, plain }: { page: Page; track: boolean; plain: boolean }) {
+  return (
+    <>
+      {track && (
+        <nav className="page-path" aria-label="Breadcrumb">
+          <a href="#/">Tracks</a>
+          <span aria-hidden="true">/</span>
+          <span>{page.title}</span>
+        </nav>
+      )}
+      <section className={`starter-welcome ${plain ? 'page-intro' : ''}`}>
+        <h1>{page.title}</h1>
+        {page.description && <p className="welcome-description">{page.description}</p>}
+      </section>
+    </>
+  );
+}
+
+const pageLayouts: Record<string, string> = {
+  '/': 'home-page',
+  '/create': 'reading-page',
+  '/guide/setup': 'reading-page',
+};
+
 export function App() {
   const route = useRoute();
   const page = resolvePage(route);
@@ -331,14 +372,13 @@ export function App() {
         </a>
         <LabNavigation route={route} />
       </header>
-      <main id="content" className={route === '/' ? undefined : 'reading-page'} tabIndex={-1}>
-        <section className="starter-welcome">
-          {page.attribution && <p className="eyebrow welcome-eyebrow">{page.attribution}</p>}
-          <h1>{page.title}</h1>
-          <p className="welcome-description">
-            {page.description ?? 'Try a demo or build your own—solo or together.'}
-          </p>
-        </section>
+      <main
+        id="content"
+        className={pageLayouts[route] ?? 'gallery-page'}
+        data-track={findTrack(route)?.id}
+        tabIndex={-1}
+      >
+        <PageHeading page={page} track={Boolean(findTrack(route))} plain={route !== '/'} />
         {page.content}
       </main>
     </>

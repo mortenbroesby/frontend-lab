@@ -13,7 +13,7 @@ npm ci
 npm run dev
 ```
 
-Open the printed localhost URL and choose **Device rally** in the gallery, or append `/#/demo/device-rally`. Everyone joins `friday-lab` automatically. Once another device connects, tap 🚀, ✨ or 💜 to animate its screen. Buttons stay disabled until connected.
+Open the printed localhost URL and choose **Device rally** in the gallery, or open `/demos/device-rally/index.html`. Everyone joins `friday-lab` automatically. Once another device connects, tap 🚀, ✨ or 💜 to animate its screen. Buttons stay disabled until connected.
 
 For a separate group, **Leave room**, enter the same code on each device, then **Join room**. Joining reloads the page for a fresh peer session and adds the code to the shareable URL. Codes allow up to 24 lowercase letters, digits or hyphens. Rooms allow 12 members with ephemeral browser-session identities. Counters track cheers seen this visit, not a synchronized score. Late joiners start at zero; missed cheers are not replayed.
 
