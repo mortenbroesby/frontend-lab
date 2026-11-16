@@ -5,6 +5,7 @@ import { demos } from '../demo-registry';
 import type { TrackId } from '../demo-contract';
 import { tracks } from './tracks';
 import { TrackSymbol } from './TrackSymbol';
+import { TrackIllustration } from './TrackIllustration';
 
 export function DemoGallery({ track }: { track?: TrackId }) {
   const [query, setQuery] = useState('');
@@ -31,6 +32,13 @@ export function DemoGallery({ track }: { track?: TrackId }) {
       <div className="demo-grid">
         {entries.map((demo) => (
           <a className="demo-card" data-track={demo.track} key={demo.id} href={demo.href}>
+            <div className="demo-preview" aria-hidden="true">
+              {demo.preview ? (
+                <img src={demo.preview} alt="" loading="lazy" width="600" height="300" />
+              ) : (
+                <TrackIllustration track={demo.track} />
+              )}
+            </div>
             <div className="demo-identity">
               <TrackSymbol track={demo.track} />
               <span>{tracks.find((t) => t.id === demo.track)?.title}</span>

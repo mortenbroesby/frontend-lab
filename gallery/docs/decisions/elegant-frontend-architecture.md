@@ -13,7 +13,7 @@ Keep small demos flat. Dependency-cruiser enforces import boundaries. Demo-speci
 | Owner | Responsibility | Allowed connections |
 | --- | --- | --- |
 | `gallery/src/app/` | Routes, guide composition and catalogue UI | Gallery modules and public kit exports |
-| `gallery/src/demo-registry.ts` | Discover titles, descriptions and app URLs | Demo metadata only; never demo components |
+| `gallery/src/demo-registry.ts` | Discover titles, descriptions and app URLs | Demo metadata and optional static posters; never demo components |
 | `demos/<id>/` | One independent experience, including state, effects, helpers and focused tests | Its own files, declared dependencies and public kit exports |
 | `gallery/demo-kit/` | Shared types, presentation, mounting and gallery-link configuration | Own files and declared dependencies; never gallery app or demos |
 | Root scripts and Vite configs | Development, builds and checks across packages | Workspace configuration and app entry points |

@@ -1,6 +1,6 @@
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
-import { TrackSymbol } from './TrackSymbol';
+import { TrackIllustration } from './TrackIllustration';
 
 export function Home() {
   return (
@@ -69,7 +69,7 @@ function TrackChoices() {
             aria-label={`Explore ${t.title}`}
           >
             <div className="track-card-top">
-              <TrackSymbol track={t.id} />
+              <TrackIllustration track={t.id} />
               <span className="track-number">
                 {demos.filter((demo) => demo.track === t.id).length} demos · {t.guides.length}{' '}
                 guides

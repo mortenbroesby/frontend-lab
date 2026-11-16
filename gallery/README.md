@@ -57,3 +57,5 @@ Open with **⌘K / Ctrl+K**, or **Menu → command palette** on mobile. Search n
 ## Maintainer references
 
 [Design decisions](docs/decisions/README.md) · [Shared UI](../shared/ui/README.md) · [Verification](docs/VERIFICATION.md) · [Hosting](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
+
+Demo cards automatically use an optional `demos/<id>/preview.svg` poster (2:1 aspect ratio). Keep it small and self-contained, with no external assets. Demos without a poster use their track illustration; no gallery registration is needed.
