@@ -1,0 +1,12 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "globalDependencies": ["tracks/c/**/*.mjs"],
+  "tasks": {
+    "dev": { "cache": false, "persistent": true },
+    "preview": { "cache": false, "persistent": true },
+    "build": { "outputs": ["dist/**"] },
+    "check": { "outputs": ["dist/**"] },
+    "test": { "outputs": [] },
+    "test:browser": { "cache": false, "passThroughEnv": ["PLAYWRIGHT_CHANNEL"] }
+  }
+}

@@ -4,12 +4,11 @@ An optional local starting point for [choosing a track](../README.md). Examples 
 
 ## First run
 
-Use **Node.js 24.x with npm** and a current browser. The baseline was chosen to keep one supported runtime for Vite and Node's built-in TypeScript test runner. The exact tested environment is recorded in [verification](VERIFICATION.md). If you use nvm, `nvm use` reads `.nvmrc`; otherwise use your usual Node installation method. Keep your own project's runtime if you are not using this playground.
+Use **Node.js 24.x with npm** and a current browser. Install dependencies from the repository root, where the npm workspace lockfile lives. The baseline was chosen to keep one supported runtime for Vite and Node's built-in TypeScript test runner. The exact tested environment is recorded in [verification](VERIFICATION.md). If you use nvm, `nvm use` reads `.nvmrc`; otherwise use your usual Node installation method. Keep your own project's runtime if you are not using this playground.
 
 From the repository root:
 
 ```sh
-cd playground
 npm ci
 npm run dev
 ```
@@ -40,13 +39,13 @@ The home page opens four track pages and a shared demo gallery. Try the D3 const
 | `src/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Logic checks and browser journeys |
 
-[Create and contribute a demo](src/demos/template/README.md). Copy a folder and add one registry entry; do not edit the app shell. Use local component state, optional CSS modules and effect cleanup. Demos load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates the folder and registry entry. No app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. Demos load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
 
 Hash routes such as `/#/track/a`, `/#/demo/constellation` and `/#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
 
 ## Useful commands
 
-Run these from `playground`:
+Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the repository root. Turbo coordinates the workspace tasks. The following app-specific commands also work from `playground` after the root install:
 
 | Command | What it does |
 | --- | --- |

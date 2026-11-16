@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // Add one entry per demo. Keep its implementation and styles in its own folder.
 // Lazy imports keep inactive experiments out of the running page.
 export const demos = [
+  // Generated demos are inserted below this line.
   { id: 'constellation', track: 'a', title: 'D3 idea constellation', description: 'Shape a network of ideas with forces, filters and pinned nodes.', author: 'Lab examples', Component: lazy(() => import('./examples/Constellation').then(m => ({ default: m.Constellation }))) },
   { id: 'workers', track: 'a', title: 'Room to think', description: 'Compare a calculation on the main thread and in a Worker.', author: 'Lab examples', Component: lazy(() => import('./examples/Workers').then(m => ({ default: m.Workers }))) },
   { id: 'signals', track: 'a', title: 'Signals between tabs', description: 'Send local messages using BroadcastChannel.', author: 'Lab examples', Component: lazy(() => import('./examples/Signals').then(m => ({ default: m.Signals }))) },

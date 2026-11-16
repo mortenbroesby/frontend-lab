@@ -5,12 +5,11 @@
 From the repository root:
 
 ```sh
-cd playground
 npm ci
 npm run dev
 ```
 
-Open the printed server address with `/#/track/a` (normally `http://127.0.0.1:5173/#/track/a`). You should see one circle and a radius control, alongside links to separate reference demos. Move the control, then choose **Create a demo** to copy a template into your own folder. You can borrow the small circle component from `playground/src/starters/BrowserStarter.tsx`.
+Open the printed server address with `/#/track/a` (normally `http://127.0.0.1:5173/#/track/a`). You should see one circle and a radius control, alongside links to separate reference demos. Move the control, then choose **Create a demo** and run `npm run demo:new` from the repository root. You can borrow the small circle component from `playground/src/starters/BrowserStarter.tsx`.
 
 **Pick a small next step:** add a second shape; react to a pointer; move one calculation to a Worker; or replace the circle with another browser API experiment. You decide the direction.
 

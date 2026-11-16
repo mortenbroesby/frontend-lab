@@ -7,8 +7,8 @@
 From the repository root:
 
 ```sh
-cd playground
 npm ci
+cd playground
 npm ls --depth=0
 npm explain d3-force
 npm run check

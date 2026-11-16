@@ -1,6 +1,26 @@
 # Add your experiment to the lab
 
-From `playground`, copy this directory to `src/demos/your-idea` (choose a unique name). Edit the copied `Demo.tsx`; it exports one React component. The original template stays available to everyone.
+From the repository root, after `npm ci`:
+
+```sh
+npm run demo:new
+```
+
+Answer the prompts for ID (e.g. `chapter-quiz`), track, title, author and description. The Turborepo generator creates `playground/src/demos/<id>/Demo.tsx` and a findings README, adds a lazy entry to the registry, and prints the demo route. Existing folders and IDs are rejected without overwriting them.
+
+For a fully specified invocation:
+
+```sh
+npm run demo:new -- --args chapter-quiz d "Chapter Quiz" "Your team" "Test your browser knowledge"
+```
+
+Run `npm run dev`, open the printed address followed by `/#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.
+
+The generator is defined in `turbo/generators/config.js`; `create-demo.mjs` handles validation and file creation. No package or dependency is added per demo.
+
+## Manual alternative
+
+From `playground`, copy this directory to `src/demos/your-idea` and edit the copied component. The shared template stays available to everyone.
 
 Add one entry to the array in `src/demo-registry.ts`:
 

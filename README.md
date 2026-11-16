@@ -2,7 +2,7 @@
 
 **Front-End Chapter Day · Friday, 20 November 2026**
 
-Choose a track, start small, then follow your curiosity. Each track has a **bootstrap** you can build on and **separate worked examples** you can experience, inspect or remix. Go solo or team up; your own repository and technologies are welcome.
+Choose a track, start small, then follow your curiosity. Each track has a **bootstrap** you can build on and **separate worked examples** you can experience, inspect or remix. Go solo or team up; bring a React project or use the shared lab.
 
 ## Choose a track
 
@@ -18,7 +18,6 @@ Choose a track, start small, then follow your curiosity. Each track has a **boot
 **Shared lab app (all tracks):** with Node.js 24.x and npm, from this repository root:
 
 ```sh
-cd playground
 npm ci
 npm run dev
 ```
@@ -37,6 +36,18 @@ Keep a demo, observation or useful failed attempt. The optional [findings templa
 
 ## Add your work to the shared gallery
 
-Copy `playground/src/demos/template` into your own demo folder and add one entry to `playground/src/demo-registry.ts`. The app discovers your entry in the gallery and its track page. Follow the [copy-and-register guide](playground/src/demos/template/README.md).
+Run `npm run demo:new` from the repository root. The Turborepo generator asks for an ID, track, title, author and description, creates your React demo, and registers it in the gallery automatically. Follow the [demo guide](playground/src/demos/template/README.md).
 
-Contribute on your own Git branch and open a pull request. After merge, everyone pulls the latest version to see your demo. A contribution can be an interactive experiment, a tool walkthrough or evidence from a code-quality investigation. Your own technologies and repositories remain welcome.
+Contribute on your own Git branch and open a pull request. After merge, everyone pulls the latest version to see your demo. A contribution can be an interactive experiment, a tool walkthrough or evidence from a code-quality investigation. This chapter day uses React; existing React repositories remain welcome.
+
+## Workspace layout
+
+This is an npm-workspaces Turborepo with one app workspace, `playground/`. Root scripts run tasks through Turbo; the root `package-lock.json` is the only install lockfile. Demos remain React components inside the app, not separate packages.
+
+- `npm ci` — install from the repository root.
+- `npm run dev` — start the lab.
+- `npm run demo:new` — generate and register a demo.
+- `npm run check` — generator tests, app checks and build.
+- `npm run test:browser` — optional browser verification.
+
+No remote cache or external hosting is configured. `prototypes.danske.net` is out of scope for now.

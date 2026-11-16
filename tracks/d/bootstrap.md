@@ -1,16 +1,15 @@
 # D bootstrap · One visible behaviour
 
-**You need:** Node 24.x, npm, an editor and a browser for this optional starter. Your own technologies are equally welcome.
+**You need:** Node 24.x, npm, an editor and a browser for this optional starter. We are using React for this chapter day.
 
 From the repository root:
 
 ```sh
-cd playground
 npm ci
 npm run dev
 ```
 
-Open the printed address with `/#/create` (normally `http://127.0.0.1:5173/#/create`). You should see an editable idea and colour, without the finished examples. Change them, then follow the [copy-and-register guide](../../playground/src/demos/template/README.md) to create your own folder. Edit the copy, leaving the shared template available.
+Open the printed address with `/#/create` (normally `http://127.0.0.1:5173/#/create`). You should see an editable idea and colour, without the finished examples. Change them, then follow the [demo generator guide](../../playground/src/demos/template/README.md) to create your own folder. Edit the copy, leaving the shared template available.
 
 **Pick your first result:** one playable interaction, a quiz question, a drawing or a useful button. It does not need to resemble our example. Inputs reset on refresh; save code and record discoveries you want to keep.
 

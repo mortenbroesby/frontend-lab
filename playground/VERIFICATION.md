@@ -38,7 +38,7 @@ After adding `d3-force`, `npm run check` passed and all eight browser journeys p
 
 ## Recheck after changes
 
-From `playground`: run `npm ci`, then `npm run check`. For UI or browser behaviour changes, run `npm run test:browser` with the optional browser setup documented in its README. Keep results tied to the commit being checked; do not claim a new result from an old run.
+From the repository root: run `npm ci`, then `npm run check`. For UI or browser behaviour changes, run `npm run test:browser` with the optional browser setup documented in its README. Keep results tied to the commit being checked; do not claim a new result from an old run.
 
 ## Shared lab SPA and contribution workflow — 16 November 2026
 
@@ -50,3 +50,14 @@ From `playground`: run `npm ci`, then `npm run check`. For UI or browser behavio
 - Track guides now separate minimal bootstraps from worked examples. Git branches/PRs and pulling merged contributions are documented; no backend, deployment or new dependency was added.
 
 The earlier clean-install evidence remains historical. Independent participant setup, access and other operating systems/browsers remain unverified.
+
+## Turborepo and demo generator — 16 November 2026
+
+- Added npm workspaces with `playground/` as the first app workspace, one root lockfile, pinned Turbo/@turbo/gen 2.11.11, root task scripts and the `demo` generator. No per-demo packages or remote cache.
+- `npm run check` passed through Turbo: four generator tests, 11 app/script tests, TypeScript and production build. All ten existing Chrome browser journeys also passed through the root Turbo command.
+- A temporary copy without node_modules/build/cache output passed root `npm ci` and checks. The actual `npm run demo:new -- --args ...` command generated a demo; its production build loaded in Chrome, appeared in the gallery and Track D, and responded to input. The interactive five-prompt flow was separately completed successfully.
+- The npm script uses `turbo gen demo`. On the installed version the `turbo gen run demo` spelling opened an extra picker; the tested shorthand selects the generator directly. Its action uses Turbo's injected root path, so it does not rely on module URLs after generator compilation.
+- Tests reject invalid path-like IDs, reserved names, invalid tracks, empty metadata, duplicate registered IDs and existing folders. Text containing quotes/newlines/replacement tokens is safely encoded in the registry. A missing marker fails before creating files.
+- The phone preview remains a local-network HTTP preview of the built app. No external deployment or prototypes.danske.net integration was added. React-only scope is recorded in the participant docs and AGENTS.md.
+
+Independent participant setup and other operating systems remain unverified. Earlier verification sections describe their historical layouts; use the current root setup instructions.

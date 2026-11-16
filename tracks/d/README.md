@@ -1,6 +1,6 @@
 # Track D · Experimental Projects
 
-Build a game, visual story, generative art, quiz, utility or something nobody has suggested. Choose your own technologies and a small first result.
+Build a game, visual story, generative art, quiz, utility or something nobody has suggested. Choose your own idea and a small first result, using React.
 
 1. **[Start small: creative bootstrap](bootstrap.md)** — a separate template view in the shared app with a tiny idea/colour interaction, ready to replace.
 2. **[Experience a finished postcard](examples.md)** — generative SVG with controls and export; a possible destination, not the starter.
