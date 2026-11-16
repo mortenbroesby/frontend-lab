@@ -1,8 +1,8 @@
-# Investigate with Fallow
+## Investigate with Fallow
 
 Pick a question, run analysis and verify a finding in this repository. The root lockfile pins Fallow 3.43.1 as a development dependency.
 
-## Get a first result
+### Get a first result
 
 After [local setup](#/guide/setup), run these from the **repository root**:
 
@@ -15,7 +15,7 @@ npm run analyze
 
 **Exit codes matter:** completed scans can exit 1 when findings exceed thresholds. Read findings and gate messages; missing binaries, invalid configuration and parse errors need separate investigation. Analysis runs outside `npm run check`; hooks and CI gate new findings as described below.
 
-## Set up agents and commit checks
+### Set up agents and commit checks
 
 After `npm ci`, check `npm run fallow:status`. Install missing hooks once per clone with `npm run fallow:hooks`; the official installer refuses to overwrite hooks. Your terminal and Git client need Node/npm.
 
@@ -29,7 +29,7 @@ Hooks are local, not branch protection. Without Fallow, the hook warns and skips
 
 References: [official Git hooks](https://fallow.tools/docs/cli/hooks/), [Copilot shared skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills).
 
-## Choose a lens
+### Choose a lens
 
 | Root command | Question |
 | --- | --- |
@@ -41,7 +41,7 @@ References: [official Git hooks](https://fallow.tools/docs/cli/hooks/), [Copilot
 
 Pass options after `--`: `npm run analyze:health -- --report-only` gives advisory results. For JSON without npm’s banner, create `.fallow/` if needed, then run `npm run --silent analyze:dead-code -- --format json --output-file .fallow/dead-code.json`.
 
-## Worked investigation: why is this dependency here?
+### Worked investigation: why is this dependency here?
 
 Trace a real dependency from the repository root:
 
@@ -53,13 +53,13 @@ Follow the result into `demos/constellation/index.tsx`. Compare imports with use
 
 Before trusting an unused-code finding, check discovery includes gallery metadata, demo HTML entries and Worker modules.
 
-## Worked investigation: complexity is a clue
+### Worked investigation: complexity is a clue
 
 Run `npm run analyze:health` and review its metrics. The reviewed baseline currently has no complexity findings; if you find one in your own codebase, trace the decisions it measures. In this repo, compare route selection with rendering in `gallery/src/app/App.tsx`: does the separation clarify intent? Do not manufacture a problem just to produce a finding.
 
 Fallow receives no coverage file: its CRAP/risk score is **not measured test coverage**. Tests cover selected logic; high scores do not prove defects. Preserve routes and error handling during refactors, and check changed behaviour. Leaving code alone can be reasonable.
 
-## How this repository is configured
+### How this repository is configured
 
 - `.fallowrc.json` declares workspace patterns, TypeScript app entries and the existing thresholds. Built-in discovery adds package exports, Vite, tests, generators and Workers. Recheck it when entries move.
 - Root scripts scan the current workspace outside Turbo’s cache. New error-level findings and worsening existing enforceable complexity findings fail the audit, commit hook and CI. Unchanged inherited findings remain allowed; estimated-coverage-only findings, test complexity and CSS suggestions stay advisory.

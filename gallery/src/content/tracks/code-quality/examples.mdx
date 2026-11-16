@@ -1,14 +1,14 @@
-# Investigations to explore
+## Investigations to explore
 
 These written investigations use local commands, not live browser analysis. **A test gap, investigated** traces one confidence improvement; **Investigate with Fallow** uses current terminal output.
 
-## A test gap, investigated
+### A test gap, investigated
 
 - **Try:** <DemoLink id="quality">Read the investigation</DemoLink>, then run `npm test --workspace @lab/demo-workers` from the repository root.
 - **Change:** Add an input to `demos/workers/compute.test.ts` with an independently checked expected value.
 - **Observe:** Does it cover a new boundary? A pass supports that case, not all inputs.
 
-## Investigate with Fallow
+### Investigate with Fallow
 
 - **Try:** <DemoLink id="fallow">Open the walkthrough</DemoLink> and run `npm run analyze:dead-code` locally after setup.
 - **Change:** Inspect callers before making a warranted cleanup. No findings is valid.
@@ -16,7 +16,7 @@ These written investigations use local commands, not live browser analysis. **A 
 
 Stretch: investigate a complexity finding.
 
-## Inspect an architecture boundary
+### Inspect an architecture boundary
 
 After local setup, run from the repository root:
 

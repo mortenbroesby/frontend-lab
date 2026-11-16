@@ -32,7 +32,13 @@ class GuideBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
 }
 
-export function GuideView({ document }: { document: string }) {
+export function GuideView({
+  document,
+  layout = 'document',
+}: {
+  document: string;
+  layout?: 'ideas' | 'document';
+}) {
   return (
     <GuideBoundary key={document}>
       <Suspense
@@ -51,7 +57,7 @@ export function GuideView({ document }: { document: string }) {
           </div>
         }
       >
-        <Guide document={document} />
+        <Guide document={document} layout={layout} />
       </Suspense>
     </GuideBoundary>
   );

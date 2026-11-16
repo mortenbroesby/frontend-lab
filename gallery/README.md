@@ -1,85 +1,58 @@
 # The Front-End Lab gallery
 
-A local starting point for [choosing a track](../README.md). Examples are optional references.
-
-Follow the root README for first-time setup. In the app, use **Local setup**.
+The app helps participants explore tracks, try standalone demos and create their own. Use the [root README](../README.md) for setup; participant instructions live in the app.
 
 ## Where to work
 
-| File | Responsibility |
+| Location | Responsibility |
 | --- | --- |
-| `src/app/App.tsx` | Shared navigation, track pages and gallery |
+| `src/app/App.tsx` | Page routing, focus management and shell composition |
+| `src/app/LabNavigation.tsx` | Desktop navigation, mobile menu and command palette integration |
+| `src/app/Home.tsx`, `TrackPage.tsx` | Homepage and track-page composition |
+| `src/app/DemoGallery.tsx` | Searchable demo cards |
+| `src/app/gallery.css` | Gallery layout, navigation and content styling |
 | `src/app/tracks.ts` | Four track identities |
-| `src/content/` | MDX participant pages |
-| `src/app/Guide.tsx` | Lazy MDX page loading and shared heading/table styles |
-| `src/demo-contract.ts` | Folder discovery and metadata validation |
-| `../demos/<your-idea>/demo.config.ts` | Discovered gallery metadata |
-| `../turbo/generators/templates/` | Templates copied into new demos |
-| `../demos/<your-idea>/` | Your component, assets and scoped styles |
-| `../demos/<id>/index.html` | Standalone entry, included in the gallery build |
-| `demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
-| `demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
-| `tests/` | Gallery metadata-discovery checks; demo tests live beside demo logic |
+| `src/app/Guide.tsx`, `GuideView.tsx` | Lazy MDX loading, shared components and loading/error states |
+| `src/content/` | Participant MDX pages |
+| `mdx-demo-links.ts` | Build-time validation of MDX demo references |
+| `src/demo-contract.ts` | Metadata discovery and validation |
+| `../demos/<id>/` | Independent demo source, metadata, assets and tests |
+| `../turbo/generators/templates/` | New-demo templates |
+| `demo-kit/` | Shared demo mount, error boundary, command palette and shell styles |
+| `../shared/ui/` | Reusable controls and theme tokens |
 
-Open **Create a demo** in the app for the generator and independent-app commands. Each demo owns its entry, state, styles and cleanup. The gallery reads metadata and links to the app; it does not import demo components.
-
-Root `index.html` opens the gallery. Vite uses the repository root so demo HTML entries work in development and production without copying or custom routing. Combined output goes to `gallery/dist/`; standalone builds to `demos/<id>/dist/`.
-
-Hash routes (`#/track/modern-web`, `#/demos`, `#/create`) support deep links without server rewrites. Device Rally demonstrates live peer messaging.
-
-## Command palette
-
-Use **Ctrl K** (**⌘K** on Apple devices; inside **Menu** on mobile) or press **⌘K / Ctrl+K** for appearance, navigation and developer actions; type to find individual demos. Arrow keys move through results; Enter selects and Escape closes. The standard demo mount also includes the palette, with gallery links when configured. **Debug information** displays a local runtime snapshot; **Reload page** restarts the current app and clears unsaved in-memory state.
-
-Inside the palette, **Ctrl+Enter** opens debug information; **Shift+Enter** opens all demos when a gallery is available. These avoid the Windows Alt+Shift keyboard-layout shortcut.
-
-The kit owns the palette and developer commands in `demo-kit/CommandMenu.tsx`; the gallery supplies navigation from its existing metadata. Add commands there without coupling the UI library to app routes.
+The gallery reads demo metadata and links to HTML entries; it never imports demo components. Each demo owns its UI, state, styles and cleanup. Follow the [architecture decision](docs/decisions/elegant-frontend-architecture.md).
 
 ## Author a track page
 
-Edit `src/content/tracks/<track-id>/*.mdx`. Tracks have Ideas and Demos tabs; shared setup and demo creation are in the main navigation.
+Edit `src/content/tracks/<track-id>/*.mdx`. Content compiles at build time and loads on demand. MDX is trusted repository code; never load remote or user-authored MDX at runtime.
 
-Link between app pages with `#/track/...` or `#/guide/...`. In MDX, use `<DemoLink id="constellation">Open the demo</DemoLink>` for a direct link to a discovered standalone demo; do not link to a deployment domain or raw guide file. MDX compiles at build time and loads on demand. Its imports and JSX are trusted code; never load remote or user-authored MDX at runtime.
+- **Headings:** the app owns the page's `h1`. Markdown heading levels render unchanged: start sections at `##`, then use `###` for subsections.
+- **Ideas:** `TrackPage` selects the `ideas` layout explicitly. Use `IdeaGrid` with `Idea` children, each with a `title`, short `summary`, and full explanation/resources inside. `Inspiration` holds reference examples; `IdeaNote` holds an optional closing sentence.
+- **Instructions:** the default `document` layout provides a narrow reading column. `GuideView` supplies loading and error states for both layouts.
+- **Internal links:** use hash routes such as `#/track/modern-web` and `#/guide/setup`.
+- **Demo links:** use `<DemoLink id="signals">Open Signals</DemoLink>`. The ID must be a literal matching a demo folder. The MDX compiler rejects invalid references; the link resolves through discovered metadata to the standalone entry.
 
-## Useful commands
+Keep full explanations and external references in the MDX. Do not link to temporary deployment domains or raw guide files.
 
-Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` at the root; Turbo coordinates workspaces. After installation, these commands also work from `gallery`:
+## Build and verification
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Local development with fast refresh |
-| `npm run typecheck` | Type-check without emitting files |
-| `npm test` | Gallery metadata-discovery tests |
-| `npm run test:watch` | Watch tests; Ctrl+C to stop |
-| `npm run build` | Production bundle |
-| `npm run preview` | Serve an already built bundle locally |
-| `npm run check` | Type check and production bundle |
-| `npm ls --depth=0` | List installed direct dependencies |
+Run root commands from the [README](../README.md); Turbo coordinates workspaces. For gallery-only work, use `npm run typecheck`, `npm test`, `npm run build` or `npm run dev` from this directory. `npm run preview` serves the built gallery. See **Create a demo** in the app for standalone commands.
 
-From the repository root, `npm test` includes generator and workspace tests; `npm run check` also formats-checks, checks hooks, type-checks each workspace and builds all apps. Use `npm test --workspace @lab/demo-workers` for a focused demo check.
+Vite uses the repository root: root `index.html` opens the gallery and `demos/<id>/index.html` opens a demo. Combined output goes to `gallery/dist/`; independent demo builds go to `demos/<id>/dist/`. Hash routes need no server rewrites.
 
-## Internal repository and theme
+`npm run check` at the root checks formatting, hooks, architecture, tests, types and builds. Run `npm run analyze:changes` before committing. Gallery tests cover metadata discovery and MDX link validation; demo tests belong beside their logic. No browser-testing framework is installed.
 
-See the [migration guide](docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally. Temporary deployment settings live in [hosting](docs/hosting.md).
+Every demo owns `typecheck`, `build` and `check`. Turbo builds run type checks first; a direct workspace build only bundles. Tests are optional. Root dependencies and `tsconfig.base.json` provide shared tooling, and the generator takes React's version from the demo kit.
 
-`../shared/ui/theme.css` owns the monochrome shell palette; `demo-kit/styles.css` owns shared layout and controls. See the [visual-style decision](docs/decisions/visual-style.md) for the Vercel-inspired direction and [shared UI decision](docs/decisions/shared-ui.md) for Tailwind usage. Demo visuals stay independent; Sapphire is not required. Keep participant guides canonical in `src/content/`.
+Turbo normally hashes package-local inputs. The gallery also hashes demo sources and root HTML; the dependency map hashes the manifests it displays. Use `turbo run build --dry=json` to inspect inputs and dependencies when changing these rules. Generated output is excluded.
 
-## Maintainer reference
+## Command palette
 
-[Design decisions and reasoning](docs/decisions/README.md) · [Verification evidence](docs/VERIFICATION.md) · [Hosting and removal](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
+Open with **⌘K / Ctrl+K**, or **Menu → command palette** on mobile. Search navigation and demos; use arrows to move, Enter to select and Escape to close. Appearance controls choose light, dark or system mode.
 
-Each demo has its own dev/build/preview commands: `npm run dev --workspace @lab/demo-art`, for example. The gallery includes their HTML entries and Open standalone demo links. See **Create a demo** in the app for the canonical standalone guide.
+**Ctrl+Enter** opens a local debug snapshot; **Shift+Enter** opens all demos. Reload clears unsaved in-memory state. The kit owns palette behavior in `demo-kit/CommandMenu.tsx`; the gallery supplies links from its metadata. Standalone demos use the same palette and link back when configured.
 
-## Independent checks and caching
+## Maintainer references
 
-Every demo has `typecheck`, `build` and `check`; `check` runs both. Direct `build` only bundles; Turbo builds type-check first, after checking kit dependencies. Tests are optional and colocated.
-
-Toolchain dependencies live at the root. `tsconfig.base.json` holds shared compiler options; each workspace includes only its own files. The generator takes React's version from the demo kit; a workspace test catches drift across consumers.
-
-Turbo uses package-local inputs by default. The gallery's build also hashes demo source and root HTML; the dependency map also hashes the manifests it displays. Generated output is excluded. Inspect `tasks[].inputs` and `tasks[].dependencies` in `turbo run build --dry=json` when changing these rules. Changes to the root toolchain or shared compiler config can still invalidate all tasks.
-
-`npm run format` formats code and styles with Prettier. `npm run lint` runs only Oxlint's hooks-ordering and exhaustive-dependency checks. These complement TypeScript, Fallow and dependency-cruiser. MDX prose stays as authored. No browser-test framework is installed.
-
-Optional `requirements` in `demo.config.ts` labels internet, secure-context or offline-after-setup needs before opening a demo. Labels do not check permissions.
-
-Track ideas use the existing MDX pipeline with `IdeaGrid`, `Idea` (title and short summary) and `Inspiration`. Keep the full explanation and external resources inside each idea; the shared accordion reveals them on demand. Instructions retain the narrow document layout. Demo cards use metadata, a track symbol and explicit runtime requirements; they open the standalone HTML entry directly. No screenshot service or second content registry is involved.
+[Design decisions](docs/decisions/README.md) · [Shared UI](../shared/ui/README.md) · [Verification](docs/VERIFICATION.md) · [Hosting](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)

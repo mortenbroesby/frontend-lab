@@ -1,6 +1,6 @@
 import { Button } from '@lab/ui/button';
 
-# Devices talking to each other
+## Devices talking to each other
 
 Connect two browsers for cheers, a control panel or a multiplayer game.
 
@@ -9,19 +9,19 @@ Connect two browsers for cheers, a control panel or a multiplayer game.
   <Button asChild variant="outline"><a href="#/guide/setup">Local setup</a></Button>
 </div>
 
-## Try it together
+### Try it together
 
 Join the same Device Rally room in two browsers. Wait for a peer, send a cheer, then leave and rejoin. What happens to connections and messages?
 
 Device Rally uses WebRTC and Trystero public signaling. It requires internet and localhost or trusted HTTPS; phone access over plain LAN HTTP is unsupported. Phones and the workshop network remain unverified. If connection fails, try two local browser windows.
 
-## Make one change
+### Make one change
 
 After [local setup](#/guide/setup), change the cheer presentation in `demos/device-rally/index.tsx`. Try both browsers before adding messages or shared state.
 
 Or [create your own React demo](#/create), using this as reference. New demos include no WebRTC or signaling.
 
-## Follow your curiosity
+### Follow your curiosity
 
 - **Small:** invent a new reaction and see it arrive in the other browser.
 - **Further:** let a phone control one visual property on a laptop, using trusted HTTPS.

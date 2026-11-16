@@ -44,3 +44,7 @@ export function Inspiration({ children }: { children: ReactNode }) {
     </Accordion>
   );
 }
+
+export function IdeaNote({ children }: { children: ReactNode }) {
+  return <p className="idea-note">{children}</p>;
+}

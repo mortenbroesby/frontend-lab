@@ -1,8 +1,8 @@
-# Browser experiments
+## Browser experiments
 
 Try, change and observe an example. Rebuild it in [your own demo](#/create), remix locally or follow another idea.
 
-## Device Rally
+### Device Rally
 
 - **Try:** <DemoLink id="device-rally">Open Device Rally</DemoLink> in two browsers, join the same room and send emoji cheers.
 - **Change:** Change a cheer button and receive-side emoji allowlist in `demos/device-rally/index.tsx`. Both devices need the same version.
@@ -12,7 +12,7 @@ Discovery needs internet; the page needs localhost or trusted HTTPS. Restrictive
 
 Stretch: share a colour or quiz answer. Trystero handles discovery; you define messages.
 
-## Dependency ripple
+### Dependency ripple
 
 - **Try:** <DemoLink id="constellation">Select a package</DemoLink>, then compare the consumers of `react`, `react-dom` and `d3-force`.
 - **Change:** Change layout or visuals in `demos/constellation/index.tsx`; find consumer traversal in `graph.ts`.
@@ -22,7 +22,7 @@ Arrows go from consumer to dependency; potential impact travels backwards. This 
 
 Stretch: show the shortest path to an affected workspace. Read [D3 force simulations](https://d3js.org/d3-force/simulation).
 
-## Generative postcard
+### Generative postcard
 
 - **Try:** <DemoLink id="art">Open the postcard</DemoLink>, change the dot count, remix and save an SVG.
 - **Change:** Adjust the point distribution in `demos/art/art.ts` or colours in `index.tsx`.
@@ -30,7 +30,7 @@ Stretch: show the shortest path to an affected workspace. Read [D3 force simulat
 
 Stretch: use a spiral or data-driven sizes. Compare [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) with Canvas for your idea.
 
-## Keep the interface listening
+### Keep the interface listening
 
 - **Try:** <DemoLink id="workers">Run the calculation</DemoLink> in a Worker and use the interaction pad. Compare the main thread, starting with a small workload.
 - **Change:** Edit `demos/workers/compute.ts`, shared by both modes. Keep workloads bounded.
@@ -38,7 +38,7 @@ Stretch: use a spiral or data-driven sizes. Compare [SVG](https://developer.mozi
 
 Off-thread work does not guarantee faster execution. Stretch: add progress messages or image processing. Read [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
 
-## Let two tabs talk
+### Let two tabs talk
 
 - **Try:** <DemoLink id="signals">Open Signals</DemoLink>, open its second tab and send a message.
 - **Change:** Edit the channel name in `demos/signals/index.tsx`; reload both tabs.

@@ -1,12 +1,12 @@
-# Developer tools to try
+## Developer tools to try
 
-## React Render Detective
+### React Render Detective
 
 <DemoLink id="render-detective">Open React Render Detective</DemoLink>. Update a parent in each panel and compare the tile commit counts. Why does `memo` fail to skip work when a prop is a new object? Then like one tile: local state still updates.
 
 Change the object spread in `demos/render-detective/experiment.tsx`, then inspect the difference with React Scan. Counts are observations, not a speed benchmark.
 
-## Find your shortest feedback loop
+### Find your shortest feedback loop
 
 Run the smallest relevant test while editing; broaden checks before committing.
 
@@ -16,7 +16,7 @@ Run the smallest relevant test while editing; broaden checks before committing.
 
 The visual timeline uses illustrative steps, not measured timings. Select a task to inspect its dependencies; use the real commands below to test the model on your machine.
 
-## 1. Establish a baseline
+### 1. Establish a baseline
 
 From the root with Node 24, no install needed:
 
@@ -26,7 +26,7 @@ node --test demos/tooling/examples/commands.test.mjs
 
 Expect four passes, including a CLI failure case. Note count and duration; this baseline covers one file, not the repository.
 
-## 2. Narrow the question
+### 2. Narrow the question
 
 Select the ordering test by name:
 
@@ -36,7 +36,7 @@ node --test --test-name-pattern="sorts commands" demos/tooling/examples/commands
 
 Expect one pass; a misspelled pattern may select none. Check the count. Fewer tests may not run faster and omit CLI/invalid-input coverage.
 
-## 3. Make feedback continuous
+### 3. Make feedback continuous
 
 ```sh
 node --test --watch --test-name-pattern="sorts commands" demos/tooling/examples/commands.test.mjs
@@ -46,7 +46,7 @@ On your experiment branch, open `demos/tooling/examples/commands.mjs`. Change `a
 
 This demonstrates regression detection without a wrapper. Compare your usual workflow; one run is not a benchmark.
 
-## 4. Explore task selection and caching
+### 4. Explore task selection and caching
 
 After the normal root install:
 
@@ -69,7 +69,7 @@ Targeted passes do not replace broader checks your change needs.
 
 References: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) · [Turbo run options](https://turborepo.dev/docs/reference/run).
 
-## Optional completed tool: command inventory
+### Optional completed tool: command inventory
 
 Compare the native `npm run` output with:
 

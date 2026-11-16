@@ -1,10 +1,11 @@
 import { existsSync, globSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { basename, dirname, resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
 import tailwindcss from '@tailwindcss/vite';
+import { demoLinks } from './mdx-demo-links';
 
 const root = resolve(import.meta.dirname, '..');
 const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => {
@@ -17,7 +18,15 @@ export default defineConfig({
   root,
   plugins: [
     tailwindcss(),
-    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
+    {
+      enforce: 'pre',
+      ...mdx({
+        remarkPlugins: [
+          remarkGfm,
+          [demoLinks, new Set(entries.map((entry) => basename(dirname(entry))))],
+        ],
+      }),
+    },
     react({ include: /\.(jsx|js|mdx|tsx|ts)$/ }),
   ],
   build: {
