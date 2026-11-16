@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { CommandMenu } from '@lab/demo-kit/command-menu';
-import { ThemeControl } from '@lab/ui/theme-control';
 import { Button } from '@lab/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
 import { LabMark } from '@lab/demo-kit/mark';
@@ -201,7 +200,6 @@ function LabNavigation({ route }: { route: string }) {
             {label}
           </a>
         ))}
-        <ThemeControl />
       </div>
       <Dialog key={route}>
         <DialogTrigger asChild>
@@ -253,10 +251,6 @@ function LabNavigation({ route }: { route: string }) {
               </DialogClose>
             ))}
           </nav>
-          <div className="mobile-theme-control">
-            <span>Appearance</span>
-            <ThemeControl />
-          </div>
         </DialogContent>
       </Dialog>
     </nav>

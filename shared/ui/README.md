@@ -56,7 +56,7 @@ Shared styles scan the library source. For utility classes in your own demo, imp
 @source '.';
 ```
 
-Use `className` for local adjustments; `cn` resolves conflicting Tailwind utilities. Default buttons have 44px targets; compact variants need appropriate surrounding space. Checkbox/radio controls should have clickable labels. `ThemeControl` from `@lab/ui/theme-control` offers Light, Dark and System. It applies `data-theme` to the document, follows the device by default and remembers explicit choices locally. Import it in custom entry points; the gallery and standard demo mount already include it. Use Lab colour tokens for UI surfaces so portals and controls follow the same theme; artwork can keep its own palette.
+Use `className` for local adjustments; `cn` resolves conflicting Tailwind utilities. Default buttons have 44px targets; compact variants need appropriate surrounding space. Checkbox/radio controls should have clickable labels. `ThemeControl` from `@lab/ui/theme-control` offers Light, Dark and System. It applies `data-theme` to the document, follows the device by default and remembers explicit choices locally. The gallery and standard demo mount expose these choices in the command menu using `useTheme` from the same module. Custom entry points can use the hook or the standalone selector. Use Lab colour tokens for UI surfaces so portals and controls follow the same theme; artwork can keep its own palette.
 
 ## Maintain
 

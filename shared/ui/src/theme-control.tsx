@@ -61,12 +61,17 @@ function setTheme(value: string) {
   window.dispatchEvent(new Event('lab-theme-change'));
 }
 
-export function ThemeControl() {
+export function useTheme() {
   const theme = useSyncExternalStore(
     subscribe,
     () => preference,
     () => 'system' as Theme,
   );
+  return { theme, setTheme };
+}
+
+export function ThemeControl() {
+  const { theme, setTheme } = useTheme();
   return (
     <Select value={theme} onValueChange={setTheme}>
       <SelectTrigger aria-label="Colour theme" className="min-h-11 min-w-28">

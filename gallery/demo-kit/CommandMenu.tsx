@@ -1,4 +1,5 @@
 import { useEffect, useState, type KeyboardEvent } from 'react';
+import { useTheme } from '@lab/ui/theme-control';
 import { Button } from '@lab/ui/button';
 import { Input } from '@lab/ui/input';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
@@ -6,7 +7,7 @@ import { DebugInfo } from './DebugInfo';
 import { isCommandShortcut, matchesCommand } from './command-search';
 
 type CommandLink = { label: string; group: string; href: string };
-type Command = { label: string; group: string; run: () => void };
+type Command = { label: string; group: string; run: () => void; selected?: boolean };
 
 function moveCommandFocus(event: KeyboardEvent<HTMLDivElement>) {
   if (event.nativeEvent.isComposing || !['ArrowDown', 'ArrowUp'].includes(event.key)) return;
@@ -25,7 +26,7 @@ function CommandResults({ commands }: { commands: Command[] }) {
       <Input
         autoFocus
         aria-label="Search commands"
-        placeholder="Search demos, tracks, developer tools…"
+        placeholder="Search demos, tracks, appearance…"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={(event) => {
@@ -41,8 +42,14 @@ function CommandResults({ commands }: { commands: Command[] }) {
             {matches[index - 1]?.group !== command.group && (
               <p className="command-group">{command.group}</p>
             )}
-            <Button variant="ghost" className="command-item" onClick={command.run}>
+            <Button
+              variant="ghost"
+              className="command-item"
+              onClick={command.run}
+              aria-pressed={command.selected}
+            >
               {command.label}
+              {command.selected && <span aria-hidden="true">✓</span>}
             </Button>
           </div>
         ))}
@@ -57,9 +64,26 @@ function CommandResults({ commands }: { commands: Command[] }) {
   );
 }
 
-function MenuContents({ links, close }: { links: CommandLink[]; close: () => void }) {
+function MenuContents({
+  links,
+  close,
+  appearance,
+}: {
+  links: CommandLink[];
+  close: () => void;
+  appearance: ReturnType<typeof useTheme>;
+}) {
   const [debug, setDebug] = useState(false);
   const commands: Command[] = [
+    ...(['light', 'dark', 'system'] as const).map((theme) => ({
+      label: theme === 'system' ? 'Use system theme' : `Use ${theme} mode`,
+      group: 'Appearance',
+      selected: appearance.theme === theme,
+      run: () => {
+        appearance.setTheme(theme);
+        close();
+      },
+    })),
     ...links.map(({ label, group, href }) => ({
       label,
       group,
@@ -90,6 +114,7 @@ function MenuContents({ links, close }: { links: CommandLink[]; close: () => voi
 
 export function CommandMenu({ links = [] }: { links?: CommandLink[] }) {
   const [open, setOpen] = useState(false);
+  const appearance = useTheme();
   useEffect(() => {
     const toggle = (event: globalThis.KeyboardEvent) => {
       if (!event.defaultPrevented && isCommandShortcut(event)) {
@@ -112,7 +137,7 @@ export function CommandMenu({ links = [] }: { links?: CommandLink[] }) {
         </Button>
       </DialogTrigger>
       <DialogContent className="lab-command-menu" aria-describedby={undefined}>
-        <MenuContents links={links} close={() => setOpen(false)} />
+        <MenuContents appearance={appearance} links={links} close={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

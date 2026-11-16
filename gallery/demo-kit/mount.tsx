@@ -1,5 +1,4 @@
 import { CommandMenu } from './CommandMenu';
-import { ThemeControl } from '@lab/ui/theme-control';
 import { LabMark } from './LabMark';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -33,7 +32,6 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
           </a>
           <nav aria-label="Lab">
             <CommandMenu links={commands} />
-            <ThemeControl />
             <Button variant="outline" asChild>
               <a href={trackHref}>← Back to track</a>
             </Button>
@@ -41,9 +39,8 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
         </header>
       )}
       {!trackHref && (
-        <div className="standalone-theme-control">
+        <div className="standalone-tools">
           <CommandMenu />
-          <ThemeControl />
         </div>
       )}
       <main className="standalone-shell" id="content" tabIndex={-1}>

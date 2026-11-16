@@ -967,16 +967,7 @@ pre {
   margin-block: 1rem;
 }
 
-.mobile-theme-control {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: auto;
-  padding-top: 1.5rem;
-  color: var(--lab-muted);
-}
-.standalone-theme-control {
+.standalone-tools {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
