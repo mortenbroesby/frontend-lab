@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
+import { ToggleGroup, ToggleGroupItem } from './toggle-group';
 
 const storageKey = 'front-end-lab-theme';
 type Theme = 'system' | 'light' | 'dark';
@@ -73,15 +73,16 @@ export function useTheme() {
 export function ThemeControl() {
   const { theme, setTheme } = useTheme();
   return (
-    <Select value={theme} onValueChange={setTheme}>
-      <SelectTrigger aria-label="Colour theme" className="min-h-11 min-w-28">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-        <SelectItem value="system">System</SelectItem>
-      </SelectContent>
-    </Select>
+    <ToggleGroup
+      type="single"
+      value={theme}
+      onValueChange={setTheme}
+      variant="outline"
+      aria-label="Colour theme"
+    >
+      <ToggleGroupItem value="light">Light</ToggleGroupItem>
+      <ToggleGroupItem value="dark">Dark</ToggleGroupItem>
+      <ToggleGroupItem value="system">System</ToggleGroupItem>
+    </ToggleGroup>
   );
 }

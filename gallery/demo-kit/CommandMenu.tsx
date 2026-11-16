@@ -1,12 +1,12 @@
 import { useEffect, useState, type ComponentProps, type KeyboardEvent } from 'react';
-import { ThemeControl } from '@lab/ui/theme-control';
+import { ThemeControl, useTheme } from '@lab/ui/theme-control';
 import { Button } from '@lab/ui/button';
 import { Input } from '@lab/ui/input';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
 import { DebugInfo } from './DebugInfo';
 import { developerShortcut, isCommandShortcut, matchesCommand } from './command-search';
 
-type View = 'commands' | 'debug' | 'appearance';
+type View = 'commands' | 'debug';
 
 type CommandLink = { label: string; group: string; href: string; shortcut?: string };
 type Command = { label: string; group: string; run: () => void; shortcut?: string };
@@ -73,7 +73,6 @@ function MenuContents({
   setView: (view: View) => void;
 }) {
   const commands: Command[] = [
-    { label: 'Appearance', group: 'Preferences', run: () => setView('appearance') },
     ...links.map(({ label, group, href, shortcut }) => ({
       label,
       group,
@@ -88,18 +87,22 @@ function MenuContents({
   ];
   return (
     <>
-      <DialogTitle>
-        {{ commands: '⌘K', debug: 'Debug information', appearance: 'Appearance' }[view]}
-      </DialogTitle>
+      <DialogTitle>{view === 'debug' ? 'Debug information' : '⌘K'}</DialogTitle>
       {view !== 'commands' ? (
         <>
           <Button autoFocus variant="outline" onClick={() => setView('commands')}>
             ← Back to commands
           </Button>
-          {view === 'debug' ? <DebugInfo /> : <ThemeControl />}
+          <DebugInfo />
         </>
       ) : (
-        <CommandResults commands={commands} />
+        <>
+          <CommandResults commands={commands} />
+          <div className="command-appearance">
+            <span>Appearance</span>
+            <ThemeControl />
+          </div>
+        </>
       )}
     </>
   );
@@ -157,6 +160,8 @@ export function CommandMenu({
   triggerClassName?: string;
   onCloseAutoFocus?: ComponentProps<typeof DialogContent>['onCloseAutoFocus'];
 }) {
+  // Follow device theme changes even while the palette is closed.
+  useTheme();
   const [view, setView] = useState<View>('commands');
   const [localOpen, setLocalOpen] = useState(false);
   const open = controlledOpen ?? localOpen;
