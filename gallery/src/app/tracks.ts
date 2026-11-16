@@ -10,9 +10,9 @@ export const tracks = [
         description: 'Set up Device Rally, check its connection limits and try a small change.',
       },
       {
-        slug: 'experiments',
-        title: 'Explore browser capabilities',
-        description: 'Try workers, messaging and dependency graphs, then change one thing.',
+        slug: 'dependencies',
+        title: 'Trace a dependency’s reach',
+        description: 'Follow consumers to choose where to investigate a package change.',
       },
       {
         slug: 'workers',

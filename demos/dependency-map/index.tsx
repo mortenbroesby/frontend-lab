@@ -122,6 +122,7 @@ export default function Constellation() {
   }
 
   const createHref = galleryHref('/create');
+  const guideHref = galleryHref('/track/modern-web/dependencies');
   return (
     <div className="constellation-example dependency-map">
       <div className="constellation-heading">
@@ -349,6 +350,11 @@ export default function Constellation() {
             <code>demos/dependency-map/data.ts</code> turns manifests into nodes and edges;{' '}
             <code>graph.ts</code> traces consumers.
           </p>
+          {guideHref && (
+            <p>
+              <a href={guideHref}>Understand this: trace a dependency’s reach →</a>
+            </p>
+          )}
           {createHref && <a href={createHref}>Create a graph demo →</a>}
         </div>
       </div>
