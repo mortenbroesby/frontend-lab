@@ -37,4 +37,4 @@ A self-directed React playground: four tracks, small experiments and shared disc
 
 ## Fallow
 
-Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](playground/src/content/tracks/code-quality/fallow.mdx) for setup. Keep one shared skill and no per-agent hook scripts.
+Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](playground/src/content/tracks/code-quality/fallow.mdx) for setup. Use the CLI directly; keep one shared skill, no repository MCP server entries and no per-agent hook scripts.
