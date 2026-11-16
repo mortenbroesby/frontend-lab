@@ -20,7 +20,7 @@ A self-directed React gallery: four tracks, small experiments and shared discove
 
 ## Architecture
 
-Apply [our EFA interpretation](gallery/docs/architecture.md) without adding ceremonial layers.
+Apply [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architecture.md) without adding ceremonial layers.
 
 - Keep gallery routing/composition in `gallery/src/app/`; discover only demo metadata and HTML entry URLs.
 - Each demo owns its UI, state, effects, helpers and focused tests. Do not import another demo’s implementation or gallery internals.
@@ -39,6 +39,8 @@ Apply [our EFA interpretation](gallery/docs/architecture.md) without adding cere
 - Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Author participant pages in `gallery/src/content/*.mdx` and track subfolders. Embed starters beside instructions; keep finished examples separate. MDX is trusted app code, never remote or user-supplied content. The README is a local entry point, not a directory of guide files or hosted URLs.
 
 ## References
+
+Record meaningful design choices and their tradeoffs in `gallery/docs/decisions/`; keep notes short and link existing guidance instead of duplicating it.
 
 - [README](README.md): tracks, quick start and contribution workflow.
 - [App guide](gallery/README.md): architecture, commands and troubleshooting.

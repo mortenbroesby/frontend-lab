@@ -59,6 +59,6 @@ See the [migration guide](docs/internal-migration.md) for GitHub Enterprise Clou
 
 ## Maintainer reference
 
-[Architecture](docs/architecture.md) · [Verification evidence](docs/VERIFICATION.md) · [Hosting and removal](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
+[Design decisions and reasoning](docs/decisions/README.md) · [Verification evidence](docs/VERIFICATION.md) · [Hosting and removal](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
 
 Each demo has its own dev/build/preview commands: `npm run dev --workspace @lab/demo-art`, for example. The gallery includes their HTML entries and Open standalone demo links. See **Create a demo** in the app for the canonical standalone guide.

@@ -1,6 +1,12 @@
-# Architecture for this demo repository
+# Use EFA principles with flat demo packages
 
 We use ideas from Michal Zalecki’s [Elegant Frontend Architecture](https://michalzalecki.com/elegant-frontend-architecture/) and its [reference structure](https://github.com/MichalZalecki/elegant-frontend-architecture): directional dependencies, feature ownership, explicit public interfaces and colocated supporting code. EFA allows small features to stay flat. This is a practical adaptation, not a claim that our folders implement every EFA layer.
+
+## Why this approach
+
+Participants need examples they can run and understand independently. We considered EFA to clarify ownership as the gallery and demo collection grow. Self-contained demo packages and a small shared kit give us useful boundaries while keeping the workshop approachable.
+
+We chose to keep small demos flat instead of introducing the full set of architectural layer folders. The tradeoff is that import boundaries rely on review; we have not added custom enforcement. Reconsider that only if cross-demo coupling becomes a recurring problem.
 
 ## Our boundaries
 
