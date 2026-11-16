@@ -2,19 +2,19 @@
 
 These are completed references, separate from your [bootstrap](#/track/modern-web). Choose one door below. You can experience the result first, rebuild a small version in your generated `demos/<your-idea>/index.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the gallery](#/guide/setup) if you want these examples.
 
-## D3: build an atlas of ideas
+## D3: follow a dependency ripple
 
-**Experience:** Open the gallery's D3 constellation. Drag an idea and watch its neighbours follow, switch between one constellation and four islands, or filter to one cluster. Nodes stay pinned after dragging; release them with the button. Keyboard users can focus a node and move it with arrow keys. Pause motion to inspect it; reduced-motion preference starts paused.
+**Experience:** Open [Dependency ripple](#/demo/constellation). Compare `react-dom`, `react`, `d3-force` and `@lab/demo-kit`: which reaches the most workspaces? Select a package to highlight direct and indirect consumers. Switch between dependency layers and a force layout, drag nodes, or use arrow keys to pin them. The package selector and consumer list provide another way to explore. Reduced motion starts paused.
 
-**Build towards it:** In your generated `demos/<your-idea>/index.tsx`, draw three labelled SVG circles from an array. Add a few source/target connections, then use D3's force simulation to calculate positions. Start with one force, inspect the result, and add links or collision avoidance only when useful. The completed reference is `demos/constellation/index.tsx`; it uses the focused `d3-force` package rather than the whole D3 bundle.
+**Learn:** Arrows point from consumer to dependency. Change impact travels backwards along those arrows. A highlighted consumer may need checking; it is not automatically broken. Layout affects where things appear, not their relationships.
 
-**Understand the boundary:** D3 owns mutable simulation nodes; React receives position snapshots and renders SVG. Copy links before passing them to D3 because the simulation resolves their endpoints into node objects. Stop its timer when leaving the example. D3 is a library on top of browser capabilities, not a native browser API.
+**Build towards it:** Start with three labelled SVG circles and two directed edges. Add one D3 force, then highlight the consumers of a selected node. `demos/constellation/graph.ts` contains the small traversal; `data.ts` reads this repository's manifests at build time. Add a dependency to a demo manifest, reload locally and find its new edge. Rebuild deployed output to refresh its snapshot.
 
-**Make it yours:** Replace the illustrative topics with technologies you use, dependencies in a small project, characters in a story or a dataset you are curious about. Decide what a connection means before styling it. The included edges are invented for exploration, not evidence about actual relationships.
+**Understand the boundary:** This shows declared workspace dependencies and devDependencies, not source imports, versions or the complete transitive npm tree. External packages are leaves. D3 owns mutable simulation nodes; React renders position snapshots. Links are copied before D3 resolves endpoints into objects, and the simulation stops on unmount.
 
-**Branch:** Change force strengths, add a search, expose meaningful connection weights, or compare a force layout with a static diagram. Ask whether motion helps explain the data. The mobile graph scrolls horizontally to keep labels usable; filter to reduce clutter.
+**Remix:** Replace the manifest dataset with routes and components, services and callers, or characters and relationships. Keep one clear meaning for an edge. Optional stretch: distinguish runtime from development edges, or show the shortest path to an affected workspace.
 
-References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link forces](https://d3js.org/d3-force/link), [collision forces](https://d3js.org/d3-force/collide). The completed example is an optional destination, not a requirement to rebuild every control.
+References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link forces](https://d3js.org/d3-force/link). D3 is a library on top of browser capabilities, not a native browser API. The completed demo is an optional destination, not a checklist to rebuild.
 
 ## Door 1: draw something surprising
 

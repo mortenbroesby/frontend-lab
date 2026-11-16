@@ -1,5 +1,5 @@
 import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
-  track: 'modern-web', title: 'D3 idea constellation', description: 'Shape a network of ideas with forces, filters and pinned nodes.', author: 'Lab examples',
+  track: 'modern-web', title: 'Dependency ripple', description: 'Change one package. Trace its reach through this repository with an interactive D3 dependency map.', author: 'Lab examples',
 } satisfies DemoDefinition;
