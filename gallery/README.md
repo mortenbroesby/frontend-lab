@@ -51,12 +51,12 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 
 ## Internal repository and theme
 
-See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally. Temporary deployment settings are documented separately in `docs/hosting.md`.
+See the [migration guide](docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally. Temporary deployment settings are documented separately in `gallery/docs/hosting.md`.
 
 `demo-kit/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant MDX lives in `src/content/` and compiles with the app. Keep it canonical; do not duplicate track guides elsewhere.
 
 ## Maintainer reference
 
-[Verification evidence](VERIFICATION.md) · [Hosting and removal](../docs/hosting.md) · [Internal repository migration](../docs/internal-migration.md)
+[Verification evidence](docs/VERIFICATION.md) · [Hosting and removal](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
 
 Each demo has its own dev/build/preview commands: `npm run dev --workspace @lab/demo-art`, for example. The gallery includes their HTML entries and Open standalone demo links. See **Create a demo** in the app for the canonical standalone guide.

@@ -2,7 +2,7 @@
 
 # Historical verification record
 
-Earlier implementation checkpoints, retained as evidence rather than setup instructions. Some commands, paths and integrations below were subsequently removed. Use [current status](VERIFICATION.md), [Start Here](../README.md#start-here) and the [Fallow guide](src/content/tracks/code-quality/fallow.mdx) for current guidance.
+Earlier implementation checkpoints, retained as evidence rather than setup instructions. Some commands, paths and integrations below were subsequently removed. Use [current status](VERIFICATION.md), [Start Here](../../README.md#start-here) and the [Fallow guide](../src/content/tracks/code-quality/fallow.mdx) for current guidance.
 
 ## Environment
 
@@ -77,7 +77,7 @@ The existing platform and independent-participant limitations still apply.
 
 - Fallow 3.43.1 installed from the root lockfile with `npm ci` on Intel macOS / Node 24.19.0 / npm 11.6.2. The CLI reports a verified signed binary.
 - Built-in discovery identified the app workspace and 11 entry points, including Vite, the Turbo generator and tests. No custom configuration or blanket ignores were needed.
-- Combined analysis and dead-code analysis exit 1 with the existing unused `marker` export; health exits 1 with the existing App complexity finding. These are expected findings, not passing gates. They remain available for the participant investigations in [the guide](src/content/tracks/code-quality/fallow.mdx).
+- Combined analysis and dead-code analysis exit 1 with the existing unused `marker` export; health exits 1 with the existing App complexity finding. These are expected findings, not passing gates. They remain available for the participant investigations in [the guide](../src/content/tracks/code-quality/fallow.mdx).
 - Duplication and architecture scans exit 0; duplication skips six files under its default ignores. Architecture boundaries and rule packs are not configured, so their absence is not evidence of policy compliance.
 - Symbol tracing, the `d3-force` dependency trace, discovery, advisory health mode and JSON report output were exercised. The dependency trace points to `Constellation.tsx`. Local reports remain ignored.
 - `npm run check` passed: six generator tests, eleven app/script tests, type checking and production build. All ten Chrome browser journeys passed.

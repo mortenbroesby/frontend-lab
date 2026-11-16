@@ -125,7 +125,7 @@ export default function DeviceRally() {
       <button disabled={joined === null} type="button" onClick={() => { setJoined(null); setPeers(0); setStatus('You left the room. Choose a code and join again.'); }}>Leave room</button>
       <p role="status">{status}</p>
       <p className="small">Up to 12 participants. Room codes are public grouping labels, not passwords. Public Nostr relays carry signaling; cheers travel over WebRTC. Only use playful signals.</p>
-      <p className="source">Setup and remix: <code>gallery/DEVICE-RALLY.md</code></p>
+      <p className="source">Setup and remix: <code>gallery/docs/DEVICE-RALLY.md</code></p>
     </div>
   </div>;
 }

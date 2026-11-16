@@ -29,7 +29,7 @@ Room codes are grouping labels, not passwords. Anyone using this app and room ca
 
 ## Build an independent experiment
 
-Keep `../demos/device-rally/index.tsx` as the finished reference. Use `npm run demo:new` to create your own demo under **Modern Web Capabilities**. Try a local interaction first, then use Trystero’s small API:
+Keep `../../demos/device-rally/index.tsx` as the finished reference. Use `npm run demo:new` to create your own demo under **Modern Web Capabilities**. Try a local interaction first, then use Trystero’s small API:
 
 ```ts
 import { joinRoom } from 'trystero';

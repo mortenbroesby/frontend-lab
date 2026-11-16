@@ -16,7 +16,7 @@ A self-directed React gallery: four tracks, small experiments and shared discove
 - Keep bootstraps separate from finished examples. Demos own their state, scoped styles and cleanup; adding one should not require editing the app shell.
 - Use `npm run demo:new`. Require a name first; preserve ID validation, overwrite protection and typed folder discovery.
 - Prefer existing code and browser APIs. Preserve accessibility, error handling and resource cleanup.
-- Keep this repository participant-focused. Prepare for an internal GitHub Enterprise Cloud repository. Use the Front-End Lab theme without requiring Sapphire. Keep temporary hosting out of participant instructions and links; the app must work locally or on any host. Deployment settings belong in docs/hosting.md.
+- Keep this repository participant-focused. Prepare for an internal GitHub Enterprise Cloud repository. Use the Front-End Lab theme without requiring Sapphire. Keep temporary hosting out of participant instructions and links; the app must work locally or on any host. Deployment settings belong in gallery/docs/hosting.md.
 
 ## Delivery
 
@@ -33,7 +33,7 @@ A self-directed React gallery: four tracks, small experiments and shared discove
 - [README](README.md): tracks, quick start and contribution workflow.
 - [App guide](gallery/README.md): architecture, commands and troubleshooting.
 - [Demo guide](gallery/src/content/create-demo.mdx): generator and registration contract.
-- [Verification](gallery/VERIFICATION.md): evidence and known limits.
+- [Verification](gallery/docs/VERIFICATION.md): evidence and known limits.
 
 ## Fallow
 
