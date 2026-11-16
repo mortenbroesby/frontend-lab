@@ -18,13 +18,13 @@ The home page opens four track pages and a shared demo gallery. Try the D3 const
 | `src/demos/<your-idea>/demo.config.ts` | Demo metadata and component loader, discovered by the host |
 | `src/demos/template/` | Copyable bootstrap, separate from completed examples |
 | `src/demos/<your-idea>/` | Your component, assets and scoped styles |
-| `src/examples/` | Reference experiments and small pure functions |
+| `src/examples/` | Reference implementations and helpers; their discovery configs live in demo folders |
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Track A |
 | `src/app/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `src/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Logic checks and browser journeys |
 
-[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates `Demo.tsx`, `demo.config.ts` and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. Demos load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+[Create and contribute a demo](src/demos/template/README.md). Run `npm run demo:new` from the repository root; Turborepo creates `Demo.tsx`, `demo.config.ts` and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. Metadata is discovered up front; components load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
 
 `demo.config.ts` default-exports an object satisfying `DemoDefinition` from `../../demo-contract`, with `title`, `track`, `description`, `author` and `load`. The loader imports a module whose default export is your React component. Use the generator and [technical demo guide](src/demos/template/README.md) for the exact file shape.
 
