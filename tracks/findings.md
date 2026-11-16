@@ -10,4 +10,3 @@ Copy this template into your own notes, branch or whiteboard area. Do not overwr
 - **What surprised us? What did not work?**
 - **What remains uncertain?**
 - **What might someone else reuse or explore next?**
-- **Show & tell:** 13:00 India (anyone ready welcome), or 14:30–15:00 Denmark and wrap-up; all times Danish local time. An asynchronous note is welcome too.

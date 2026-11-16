@@ -1,6 +1,6 @@
 # The Front-End Lab
 
-A self-directed React workshop for 20 November 2026: four tracks, small experiments and shared discoveries. Optimise for getting participants started independently.
+A self-directed React playground: four tracks, small experiments and shared discoveries. Optimise for getting participants started independently.
 
 ## Working principles
 
@@ -14,7 +14,7 @@ A self-directed React workshop for 20 November 2026: four tracks, small experime
 
 - Use Node 24 and the root npm lockfile. Run `npm ci` and `npm run check` from the root; UI/browser changes also require `npm run test:browser`.
 - Preserve unrelated work. Commit and push completed scoped changes; report verification and remaining limits accurately.
-- Keep documentation concise and follow the existing README style. Link to canonical guides instead of duplicating them here.
+- Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Link to canonical guides instead of duplicating them here.
 
 ## References
 

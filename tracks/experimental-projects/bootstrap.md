@@ -1,6 +1,6 @@
 # Experimental Projects bootstrap · One visible behaviour
 
-**You need:** Node 24.x, npm, an editor and a browser for this optional starter. We are using React for this chapter day.
+**You need:** Node 24.x, npm, an editor and a browser for this optional starter. The shared playground uses React.
 
 Follow the root [gallery setup](../../README.md#start-here) and create a [contribution branch](../../CONTRIBUTING.md) before editing.
 

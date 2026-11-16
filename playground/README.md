@@ -4,9 +4,9 @@ An optional local starting point for [choosing a track](../README.md). Examples 
 
 ## First run
 
-Follow the root [Start Here](../README.md#start-here) instructions for cloning, Node 24, installation and startup. Keep your own project’s runtime if you are not using this playground. The [verification record](VERIFICATION.md) distinguishes observed checks from untested environments.
+Use Node 24 and follow [Run Locally](../README.md#start-here). Keep your own project’s runtime when working elsewhere.
 
-The home page opens four track pages and a shared demo gallery. Try the D3 constellation, SVG postcard, Worker comparison or local tab messaging; B and C include investigation/tool walkthroughs. **Create a demo** opens a separate minimal template. Inputs are ephemeral; save code and record findings you want to keep.
+The gallery contains working references; **Create a demo** opens a separate minimal template. Demo inputs reset on refresh.
 
 ## Architecture and where to work
 
@@ -47,14 +47,14 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 
 ## Browser checks
 
-Trying examples does not require browser automation. For contributions that change UI/browser behaviour, run these from `playground/` after the root install:
+For UI/browser changes, run these from `playground/` after the root install:
 
 ```sh
 npx playwright install chromium
 npm run test:browser
 ```
 
-The browser download takes extra space and bandwidth. Alternatively use an existing Chrome installation by setting `PLAYWRIGHT_CHANNEL=chrome` in your shell, then run `npm run test:browser`. The tests build and serve the production bundle themselves on port 4173; stop any other server on that port first. Do not install a browser just to try the workshop examples.
+Alternatively, use an existing Chrome installation by setting `PLAYWRIGHT_CHANNEL=chrome` in your shell, then run `npm run test:browser`. The tests build and serve the production bundle themselves on port 4173; stop any other server on that port first.
 
 ## Troubleshooting
 
@@ -74,3 +74,7 @@ The production build has one HTML entry and lazy demo chunks. Code Quality & Mai
 See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally; the temporary [Vercel gallery](https://frontend-chapter-day.vercel.app) is documented in [hosting and removal](../docs/hosting.md).
 
 `src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Set optional `VITE_SOURCE_URL` in `playground/.env.local` using `.env.example` to link guides to your source repository. Without it, the app shows editor paths.
+
+## Maintainer reference
+
+[Verification evidence](VERIFICATION.md) · [Hosting and removal](../docs/hosting.md) · [Internal repository migration](../docs/internal-migration.md)
