@@ -14,7 +14,9 @@ For a fully specified invocation:
 npm run demo:new -- --args "Chapter Quiz" chapter-quiz experimental-projects "Your team" "Test your browser knowledge"
 ```
 
-Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.
+Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. Modern Web Capabilities generates an independent circle with a radius control; other tracks generate the minimal idea/colour interaction. These are bootstraps, separate from completed reference examples.
+
+**First change:** follow your generated README: change the circle fill colour or the idea card heading in your own `Demo.tsx`, save, and refresh. The code change should remain; temporary form inputs may reset. The terminal prints the exact file and route. Open the route on your local dev server, not the hosted gallery.
 
 The generator is defined in `turbo/generators/config.js`; `create-demo.mjs` handles validation and file creation. No package or dependency is added per demo.
 

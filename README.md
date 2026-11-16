@@ -56,8 +56,11 @@ npm run dev
 npm run demo:new
 ```
 
-Name your demo, choose a track, then edit `playground/src/demos/<id>/Demo.tsx`.
-It appears in the gallery automatically. See the [demo guide](playground/src/demos/template/README.md)
+Name your demo and choose a track. The generator prints the local route, exact
+file to edit and a first change to try. Modern Web gets a circle starter; other
+tracks get an idea card. Each has its own README with a success check.
+
+Edit `playground/src/demos/<id>/Demo.tsx`; it appears in your local gallery automatically. See the [demo guide](playground/src/demos/template/README.md)
 for the typed contract and manual setup.
 
 ## 🤝 Share Your Work

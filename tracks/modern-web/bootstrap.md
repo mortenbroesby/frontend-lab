@@ -6,9 +6,9 @@ Follow the root [gallery setup](../../README.md#start-here) and create a [contri
 
 Open the printed server address followed by `/#/track/modern-web`. Move the radius control: the circle and displayed radius should change. This shared starter is a preview, not your contribution.
 
-Use the [demo generator](../../playground/src/demos/template/README.md) to create your own named demo. For a circle experiment, copy the JSX and state from [BrowserStarter.tsx](../../playground/src/starters/BrowserStarter.tsx) into your generated `Demo.tsx`, keeping a default-exported component. Edit your copy, not the shared starter.
+Use the [demo generator](../../playground/src/demos/template/README.md), give your demo a name and choose **Modern Web Capabilities**. It creates an independent circle starter in your own folder, with no manual copying or shared-file edits.
 
-**First result:** add a second circle or change how the control affects the shape. Open your generated route and move the control; check that your new behaviour appears. Navigate away and back and check the console for errors.
+**First result:** open the route printed by the generator at your local server. Edit `playground/src/demos/<id>/Demo.tsx`, change the circle fill colour and save. Move the radius control, then refresh: the colour change remains while the radius resets. Your generated README has the exact paths and sharing steps.
 
 **Pick a small next step:** add a second shape; react to a pointer; move one calculation to a Worker; or replace the circle with another browser API experiment. You decide the direction.
 
