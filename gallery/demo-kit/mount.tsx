@@ -15,12 +15,19 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
   const trackHref = galleryHref(`/track/${demo.track}/examples`);
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
+      {trackHref && (
+        <header className="site-header">
+          <a className="wordmark" href={galleryHref('/')}>
+            Front-End Lab
+          </a>
+          <nav aria-label="Lab">
+            <Button variant="outline" asChild>
+              <a href={trackHref}>← Back to track</a>
+            </Button>
+          </nav>
+        </header>
+      )}
       <main className="standalone-shell" id="content" tabIndex={-1}>
-        {trackHref && (
-          <Button variant="outline" asChild>
-            <a href={trackHref}>← Back to track demos</a>
-          </Button>
-        )}
         <h1>{demo.title}</h1>
         <p>{demo.description}</p>
         {demo.requirements && (
