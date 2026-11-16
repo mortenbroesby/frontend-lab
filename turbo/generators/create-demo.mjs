@@ -38,10 +38,9 @@ export async function createDemo(root, answers) {
     }
   }
   const kit = JSON.parse(await readFile(join(root, 'gallery/demo-kit/package.json'), 'utf8'));
-  const src = join(root, 'gallery/src');
   const modernWeb = track === 'modern-web';
-  const templatePath = modernWeb ? 'starters/BrowserStarter.tsx' : 'starters/IdeaStarter.tsx';
-  const template = await readFile(join(src, templatePath), 'utf8');
+  const templatePath = modernWeb ? 'BrowserStarter.tsx.template' : 'IdeaStarter.tsx.template';
+  const template = await readFile(join(root, 'turbo/generators/templates', templatePath), 'utf8');
   const nameSlot = modernWeb ? 'One shape. Your next question.' : "useState('What if…')";
   if (template.split(nameSlot).length !== 2)
     throw new Error('Expected one name slot in the demo template.');

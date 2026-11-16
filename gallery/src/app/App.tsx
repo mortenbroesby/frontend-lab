@@ -48,7 +48,6 @@ function TrackGuide({ track, route }: { track: (typeof tracks)[number]; route: s
         {[
           ['ideas', 'Ideas'],
           ['examples', 'Demos'],
-          ['get-started', 'Get started'],
         ].map(([page, label]) => (
           <a
             key={page}
@@ -76,7 +75,6 @@ function findTrack(route: string) {
     [
       `/track/${t.id}`,
       ...[
-        'get-started',
         'examples',
         ...(t.id === 'modern-web' ? ['devices'] : []),
         ...(t.id === 'code-quality' ? ['fallow'] : []),

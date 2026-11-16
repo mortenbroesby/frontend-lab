@@ -20,11 +20,7 @@ async function fixture(t) {
   await cp(new URL('./templates', import.meta.url), join(root, 'turbo/generators/templates'), {
     recursive: true,
   });
-  await cp(
-    new URL('../../gallery/src/starters', import.meta.url),
-    join(root, 'gallery/src/starters'),
-    { recursive: true },
-  );
+  await mkdir(join(root, 'gallery/src'), { recursive: true });
   await writeFile(join(root, 'gallery/src/demo-registry.ts'), 'do not edit');
   return root;
 }
@@ -170,7 +166,7 @@ test('gives participants an exact route, editable file and persistent first chan
 
 test('Modern Web generates an independent circle bootstrap, leaving the shared starter unchanged', async (t) => {
   const root = await fixture(t);
-  const starter = join(root, 'gallery/src/starters/BrowserStarter.tsx');
+  const starter = join(root, 'turbo/generators/templates/BrowserStarter.tsx.template');
   const before = await readFile(starter, 'utf8');
   await createDemo(root, { ...answers, track: 'modern-web' });
   const component = await readFile(join(root, 'demos/chapter-quiz/index.tsx'), 'utf8');

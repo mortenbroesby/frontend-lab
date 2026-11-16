@@ -39,7 +39,7 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 ## Documentation
 
 - Write concise, participant-focused copy without event dates or schedules. Say each thing once; link canonical guidance. Keep the README a local starting point, not a guide directory.
-- Participant MDX lives in `gallery/src/content/` and track subfolders, with starters beside instructions. Treat MDX as trusted app code, never remote or user-supplied content.
+- Participant MDX lives in `gallery/src/content/` and track subfolders. Generator templates live in `turbo/generators/templates/`. Treat MDX as trusted app code, never remote or user-supplied content.
 - Keep meaningful choices and tradeoffs in `gallery/docs/decisions/`.
 - Use the Front-End Lab theme; do not require Sapphire. Support local or hosted use and internal GitHub Enterprise Cloud migration. Keep temporary hosting out of participant copy; use [hosting notes](gallery/docs/hosting.md).
 

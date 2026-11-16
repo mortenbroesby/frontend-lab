@@ -10,14 +10,13 @@ Follow the root README for first-time setup. In the app, use **Local setup**.
 | --- | --- |
 | `src/app/App.tsx` | Shared navigation, track pages and gallery |
 | `src/app/tracks.ts` | Four track identities |
-| `src/content/` | MDX participant pages with embedded React starters |
+| `src/content/` | MDX participant pages |
 | `src/app/Guide.tsx` | Lazy MDX page loading and shared heading/table styles |
 | `src/demo-contract.ts` | Folder discovery and metadata validation |
 | `../demos/<your-idea>/demo.config.ts` | Discovered gallery metadata |
-| `src/starters/` | Copyable bootstrap, separate from completed examples |
+| `../turbo/generators/templates/` | Templates copied into new demos |
 | `../demos/<your-idea>/` | Your component, assets and scoped styles |
 | `../demos/<id>/index.html` | Standalone entry, included in the gallery build |
-| `src/starters/BrowserStarter.tsx` | One-circle Modern Web starter |
 | `demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Gallery metadata-discovery checks; demo tests live beside demo logic |
@@ -30,7 +29,7 @@ Hash routes (`#/track/modern-web`, `#/demo/constellation`, `#/create`) support d
 
 ## Author a track page
 
-Edit `src/content/tracks/<track-id>/*.mdx`. Place existing React starters beside their instructions, as in Modern Web’s getting-started page.
+Edit `src/content/tracks/<track-id>/*.mdx`. Tracks have Ideas and Demos tabs; shared setup and demo creation are in the main navigation.
 
 Keep completed examples in their demo routes. Link between app pages with `#/track/...`, `#/demo/...` or `#/guide/...`; do not link to a deployment domain or raw guide file. MDX compiles at build time and loads on demand. Its imports and JSX are trusted code; never load remote or user-authored MDX at runtime.
 
