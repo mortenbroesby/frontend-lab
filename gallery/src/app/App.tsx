@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button } from '@lab/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@lab/ui/dropdown-menu';
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
 import { requirementLabels } from '@lab/demo-kit/types';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
@@ -192,12 +187,12 @@ function LabNavigation({ route }: { route: string }) {
           </a>
         ))}
       </div>
-      <DropdownMenu key={route}>
-        <DropdownMenuTrigger asChild>
+      <Dialog key={route}>
+        <DialogTrigger asChild>
           <Button
             className="mobile-nav-toggle"
             variant="ghost"
-            size="icon"
+            size="lg"
             aria-label="Open navigation menu"
           >
             <svg
@@ -211,18 +206,33 @@ function LabNavigation({ route }: { route: string }) {
             >
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
+            Menu
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {links.map(([path, label]) => (
-            <DropdownMenuItem key={path} asChild>
-              <a href={`#${path}`} aria-current={route === path ? 'page' : undefined}>
-                {label}
-              </a>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DialogTrigger>
+        <DialogContent
+          className="mobile-navigation translate-x-0 translate-y-0"
+          showCloseButton={false}
+          aria-describedby={undefined}
+        >
+          <div className="mobile-navigation-header">
+            <DialogTitle>Navigation</DialogTitle>
+            <DialogClose asChild>
+              <Button variant="outline" size="lg" aria-label="Close navigation menu">
+                Close <span aria-hidden="true">×</span>
+              </Button>
+            </DialogClose>
+          </div>
+          <nav aria-label="Mobile navigation" className="mobile-navigation-links">
+            {[['/', 'All tracks'], ...links].map(([path, label]) => (
+              <DialogClose key={path} asChild>
+                <a href={`#${path}`} aria-current={route === path ? 'page' : undefined}>
+                  {label}
+                </a>
+              </DialogClose>
+            ))}
+          </nav>
+        </DialogContent>
+      </Dialog>
     </nav>
   );
 }
