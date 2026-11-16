@@ -6,15 +6,15 @@ const experiments = [
     title: 'One behaviour',
     question: 'Does command ordering still work?',
     command:
-      'node --test --test-name-pattern="sorts commands" tracks/developer-experience/examples/commands.test.mjs',
+      'node --test --test-name-pattern="sorts commands" demos/tooling/examples/commands.test.mjs',
     expect: 'Expect one passing test; zero matches prove nothing.',
-    next: 'Compare all four tests: node --test tracks/developer-experience/examples/commands.test.mjs. The narrow pattern skips CLI and invalid-input checks.',
+    next: 'Compare all four tests: node --test demos/tooling/examples/commands.test.mjs. The narrow pattern skips CLI and invalid-input checks.',
   },
   {
     title: 'Watch changes',
     question: 'Can I see a regression as soon as I save?',
     command:
-      'node --test --watch --test-name-pattern="sorts commands" tracks/developer-experience/examples/commands.test.mjs',
+      'node --test --watch --test-name-pattern="sorts commands" demos/tooling/examples/commands.test.mjs',
     expect:
       'Temporarily reverse a.localeCompare(b) in commands.mjs. Save to see failure; restore and save to see it pass.',
     next: 'Stop with Ctrl+C; rerun all tests before sharing. Node watches tests and imports, not the browser.',
@@ -78,11 +78,11 @@ export default function Tooling() {
           Compare <code>npm run</code> with the completed inventory:
         </p>
         <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
-          <code>node tracks/developer-experience/examples/commands.mjs gallery/package.json</code>
+          <code>node demos/tooling/examples/commands.mjs gallery/package.json</code>
         </pre>
         <p>
-          Edit the starter at <code>tracks/developer-experience/bootstrap/inspect.mjs</code> and its
-          test. The finished inventory stays separate.
+          Edit the starter at <code>demos/tooling/starter/inspect.mjs</code> and its test. The
+          finished inventory stays separate.
         </p>
       </details>
       <p>

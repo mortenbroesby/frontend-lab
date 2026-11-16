@@ -49,7 +49,7 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` at the root;
 | `npm run check` | Type check and production bundle |
 | `npm ls --depth=0` | List installed direct dependencies |
 
-From the repository root, `npm test` includes generator, script and demo-workspace tests; `npm run check` also formats-checks, checks hooks, type-checks each workspace and builds all apps. Use `npm test --workspace @lab/demo-workers` for a focused demo check.
+From the repository root, `npm test` includes generator and workspace tests; `npm run check` also formats-checks, checks hooks, type-checks each workspace and builds all apps. Use `npm test --workspace @lab/demo-workers` for a focused demo check.
 
 ## Internal repository and theme
 

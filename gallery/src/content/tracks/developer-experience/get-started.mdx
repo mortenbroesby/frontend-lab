@@ -30,8 +30,8 @@ Compare `npm run analyze:changes` evidence with the agent review. No new hooks o
 This independent starter identifies a project:
 
 ```sh
-node tracks/developer-experience/bootstrap/inspect.mjs gallery/package.json
-node --test tracks/developer-experience/bootstrap/inspect.test.mjs
+node demos/tooling/starter/inspect.mjs gallery/package.json
+node --test demos/tooling/starter/inspect.test.mjs
 ```
 
 Expect `Project: front-end-lab-gallery` and two passes. Change `describeProject` and its test to answer a question. Try other manifests and invalid input. The starter reads the named file without executing scripts.
