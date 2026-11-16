@@ -1,10 +1,56 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react"],
-  "categories": { "correctness": "off" },
+  "plugins": [
+    "react",
+    "typescript"
+  ],
+  "categories": {
+    "correctness": "off"
+  },
   "rules": {
     "react/rules-of-hooks": "error",
-    "react/exhaustive-deps": "error"
+    "react/exhaustive-deps": "error",
+    "eslint/no-async-promise-executor": "error",
+    "eslint/no-promise-executor-return": "error",
+    "eslint/no-constant-binary-expression": "error",
+    "eslint/no-unsafe-optional-chaining": "error",
+    "eslint/valid-typeof": "error",
+    "eslint/use-isnan": "error",
+    "react/jsx-key": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": "error"
   },
-  "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/.turbo/**", "playground/**"]
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/.turbo/**",
+    "playground/**"
+  ],
+  "options": {
+    "typeAware": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.test.mjs"
+      ],
+      "rules": {
+        "typescript/no-floating-promises": [
+          "error",
+          {
+            "allowForKnownSafeCalls": [
+              {
+                "from": "package",
+                "name": "test",
+                "package": "node"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

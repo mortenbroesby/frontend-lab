@@ -54,3 +54,11 @@ The final layout pass completed all 20 check tasks. Fallow reported no dead code
 ### Resume physical-device acceptance
 
 Use a fresh or agreed room on trusted HTTPS with the phone page in the foreground. Confirm both peer counts, send a cheer each way, deliberately leave/rejoin and repeat. Record phone/browser and Wi-Fi/mobile data, plus whether it is the intended workshop network. Do not treat two laptop browser windows or the existing one-way evidence as completing this check.
+
+## Focused lint rules
+
+`npm run lint` uses the root Oxlint config for React hooks, a small explicit correctness baseline and type-aware `no-floating-promises` / `no-misused-promises` checks. The pinned `oxlint-tsgolint` companion resolves workspace TypeScript types; normal workspace typechecking remains separate. CI already runs lint through `npm run check`.
+
+Only imported Node `test()` registrations are allowlisted in test files, because the test runner owns their outcome. Other Promises in those files remain checked. Await, return or handle rejection as appropriate; `void` marks intentional detachment but does not handle a rejection by itself.
+
+Temporary fixtures verified that unhandled Promises, async callbacks passed to `forEach`, missing JSX keys, constant object comparisons and async Promise executors fail. Awaited/caught Promises and Node test registrations pass; an unrelated async function named `test` still fails. The fixtures were removed after verification. No accessibility rules or additional lint directories were added.
