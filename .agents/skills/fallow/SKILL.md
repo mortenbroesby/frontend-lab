@@ -10,3 +10,5 @@ Read the installed instructions at `node_modules/fallow/skills/fallow/SKILL.md`.
 Use `npm run analyze -- <command>`; check flags with `--help`. Validate findings and preview fixes before editing. Run `npm run analyze:changes` before commits/pushes; resolve introduced findings. The Git hook audits staged changes; CI audits PRs and main pushes.
 
 Setup and examples: `gallery/src/content/tracks/code-quality/fallow.mdx`. Use this shared skill and AGENTS.md for Codex and Copilot CLI. No per-agent hooks or duplicate task maps.
+
+Repository settings: `.fallowrc.json`. Run `npm run analyze:baseline` to compare the whole repo with the committed snapshot. See `fallow-baselines/README.md` before refreshing it.

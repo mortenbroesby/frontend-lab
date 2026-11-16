@@ -1,0 +1,46 @@
+{
+  "kind": "health",
+  "finding_counts": {
+    "demos/constellation/index.tsx": {
+      "crap_moderate": {
+        "count": 2
+      }
+    },
+    "gallery/src/app/App.tsx": {
+      "crap_critical": {
+        "count": 1
+      },
+      "crap_moderate": {
+        "count": 1
+      }
+    }
+  },
+  "identity_finding_counts": {
+    "demos/constellation/index.tsx\u0000<arrow>": {
+      "crap_moderate": {
+        "count": 1
+      }
+    },
+    "demos/constellation/index.tsx\u0000keyboard": {
+      "crap_moderate": {
+        "count": 1
+      }
+    },
+    "gallery/src/app/App.tsx\u0000App": {
+      "crap_critical": {
+        "count": 1
+      }
+    },
+    "gallery/src/app/App.tsx\u0000pageTitle": {
+      "crap_moderate": {
+        "count": 1
+      }
+    }
+  },
+  "runtime_coverage_findings": [],
+  "target_keys": [
+    "gallery/src/app/App.tsx:hidden coupling",
+    "gallery/src/demo-contract.ts:high impact",
+    "gallery/demo-kit/gallery-link.ts:high impact"
+  ]
+}

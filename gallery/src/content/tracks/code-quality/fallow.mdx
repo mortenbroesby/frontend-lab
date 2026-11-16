@@ -61,9 +61,9 @@ Fallow receives no coverage file: its CRAP/risk score is **not measured test cov
 
 ## How this repository is configured
 
-- Built-in discovery, no custom config. Earlier checks covered npm workspaces, Vite entries, the Turbo generator, tests, demo entries and a Worker. Recheck discovery after moving entries or switching repositories.
+- `.fallowrc.json` declares workspace patterns, TypeScript app entries and the existing thresholds. Built-in discovery adds package exports, Vite, tests, generators and Workers. Recheck it when entries move.
 - Root scripts scan the current workspace outside Turbo’s cache. No wrapper or per-demo configuration.
-- No suppressions or baseline. Inspect default findings before proposing thresholds.
+- `fallow-baselines/` records reviewed findings. Run `npm run analyze:baseline` to compare the whole repo; `npm run analyze:health` still shows existing findings. Read the baseline README before refreshing.
 - No Fallow boundary rules or rule packs. `npm run check:architecture` separately enforces dependency-cruiser rules; a clean Fallow result says nothing about that policy.
 - `.fallow/` holds ignored generated data. Never commit caches or machine-specific reports.
 

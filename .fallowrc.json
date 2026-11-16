@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "entry": [
+    "gallery/src/main.tsx",
+    "demos/*/main.tsx"
+  ],
+  "workspaces": {
+    "patterns": [
+      "gallery",
+      "demos/*",
+      "gallery/demo-kit",
+      "shared/*"
+    ]
+  },
+  "duplicates": {
+    "mode": "mild",
+    "minTokens": 50,
+    "minLines": 5,
+    "minOccurrences": 2
+  },
+  "health": {
+    "maxCyclomatic": 20,
+    "maxCognitive": 15,
+    "maxCrap": 30,
+    "maxUnitSize": 60
+  },
+  "audit": {
+    "gate": "new-only",
+    "worsened": "warn"
+  }
+}

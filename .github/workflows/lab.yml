@@ -27,6 +27,7 @@ jobs:
       - run: npm install --global npm@11.6.2
       - run: npm ci
       - run: npm run check
+      - run: npm run analyze:baseline
       - name: Audit introduced findings
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         env:
