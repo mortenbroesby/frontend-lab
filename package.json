@@ -37,7 +37,8 @@
     "test:workspaces": "node --test tests/workspaces.test.mjs",
     "analyze:baseline": "fallow dead-code --baseline .baselines/dead-code.json && fallow dupes --baseline .baselines/dupes.json --fail-on-issues && fallow health --baseline .baselines/health.json --baseline-mode identity",
     "storybook": "npm run storybook --workspace @lab/ui",
-    "storybook:build": "npm run storybook:build --workspace @lab/ui"
+    "storybook:build": "npm run storybook:build --workspace @lab/ui",
+    "storybook:tools": "npm run storybook:tools --workspace @lab/ui --"
   },
   "devDependencies": {
     "@mdx-js/rollup": "3.1.1",

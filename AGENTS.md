@@ -11,7 +11,7 @@ Four tracks and standalone demos. Help participants get started independently.
 
 ## Agent skills
 
-Use the shared [skill index](.agents/skills/README.md) for demo development, Lab UI, UI review, Turborepo and Fallow. Load only the skill relevant to the task; keep one copy for Codex and Copilot. Update affected skill references when commands, paths or contracts change.
+Use the shared [skill index](.agents/skills/README.md) for demo development, Lab UI, UI review, debugging, CI, Turborepo and Fallow. Load only the skill relevant to the task; keep one copy for Codex and Copilot. Update affected skill references when commands, paths or contracts change.
 
 ## Architecture
 

@@ -4,6 +4,15 @@
 
 Run `npm run storybook` from the repository root to inspect individual components, edit controls and browse state examples on port 6006. `npm run storybook:build` produces a static site in `shared/ui/dist/storybook`.
 
+Agents can query component documentation without starting a server:
+
+```sh
+npm run storybook:tools -- docs list --withStoryIds
+npm run storybook:tools -- docs show --id <id-from-list>
+```
+
+Use `docs show-story --storyId <story-id-from-list>` for a specific example, or append `--json` for structured output. The shared `lab-storybook` skill explains the workflow. Generated metadata can omit inherited props or inferred unions; component source and TypeScript remain authoritative. These commands inspect documentation; they do not test browser behaviour.
+
 For components working together, open **UI library** in the gallery or run `npm run dev --workspace @lab/demo-ui-library`.
 
 | Use | Package exports |
