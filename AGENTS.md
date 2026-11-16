@@ -14,15 +14,15 @@ A self-directed React playground: four tracks, small experiments and shared disc
 
 - Use Node 24 and the root npm lockfile. Run `npm ci` and `npm run check` from the root; UI/browser changes also require `npm run test:browser`.
 - Preserve unrelated work. Commit and push completed scoped changes; report verification and remaining limits accurately.
-- Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Keep participant guides in `playground/src/content/`, rendered in the app. The README is a local entry point, not a directory of guide files or hosted URLs.
+- Keep documentation concise, participant-focused and free of event dates or schedules. Follow the existing README style. Author participant pages in `playground/src/content/*.mdx` and track subfolders. Embed starters beside instructions; keep finished examples separate. MDX is trusted app code, never remote or user-supplied content. The README is a local entry point, not a directory of guide files or hosted URLs.
 
 ## References
 
 - [README](README.md): tracks, quick start and contribution workflow.
 - [App guide](playground/README.md): architecture, commands and troubleshooting.
-- [Demo guide](playground/src/content/create-demo.md): generator and registration contract.
+- [Demo guide](playground/src/content/create-demo.mdx): generator and registration contract.
 - [Verification](playground/VERIFICATION.md): evidence and known limits.
 
 ## Fallow
 
-Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](playground/src/content/tracks/code-quality/fallow.md) for setup. Keep one shared skill and no per-agent hook scripts.
+Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](playground/src/content/tracks/code-quality/fallow.mdx) for setup. Keep one shared skill and no per-agent hook scripts.

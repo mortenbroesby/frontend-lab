@@ -1,6 +1,9 @@
+import Template from '../demos/template/Demo';
+import { DemoBoundary } from '../app/DemoBoundary';
+
 # Add your experiment to the lab
 
-Create your branch using [CONTRIBUTING.md](#/guide/contributing) before editing. From the repository root, after `npm ci`:
+Create your branch using [the contribution guide](#/guide/contributing) before editing. From the repository root, after `npm ci`:
 
 ```sh
 npm run demo:new
@@ -16,11 +19,21 @@ npm run demo:new -- --args "Chapter Quiz" chapter-quiz experimental-projects "Yo
 
 Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.
 
+## Try the starting point
+
+This is the small interaction your generated demo starts with. Change the idea and colour, then make your own version in your generated folder.
+
+<DemoBoundary>
+  <section className="experiment">
+    <Template />
+  </section>
+</DemoBoundary>
+
 The generator is defined in `turbo/generators/config.js`; `create-demo.mjs` handles validation and file creation. No package or dependency is added per demo.
 
 ## Manual alternative
 
-From `playground`, copy this directory to `src/demos/your-idea` and edit the copied component. The shared template stays available to everyone.
+From `playground`, copy `src/demos/template` to `src/demos/your-idea` and edit the copied component. The shared template stays available to everyone.
 
 Add `demo.config.ts` inside your copied folder:
 
@@ -48,7 +61,7 @@ Try your demo, navigate away and back, and check the browser console. Run `npm r
 
 ## Share it through Git
 
-Follow [CONTRIBUTING.md](#/guide/contributing) for checks, staging, pushing and the pull request. Include the track, what to try and what you learned. Keep dependency additions small and explain them.
+Follow [the contribution guide](#/guide/contributing) for checks, staging, pushing and the pull request. Include the track, what to try and what you learned. Keep dependency additions small and explain them.
 
 Different demo folders do not edit a shared registration file; choose a unique folder ID.
 

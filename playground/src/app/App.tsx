@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
 import type { TrackId } from '../demo-contract';
@@ -8,8 +8,6 @@ import { guides, GuideView } from './GuideView';
 
 const trackTitle = (id: TrackId) => tracks.find(track => track.id === id)!.title;
 
-const Template = lazy(() => import('../demos/template/Demo'));
-const BrowserStarter = lazy(() => import('../starters/BrowserStarter').then(m => ({ default: m.BrowserStarter })));
 function Gallery({ track }: { track?: TrackId }) {
   return <div className="journey-grid">{demos.filter(d => !track || d.track === track).map(d => <article className="journey-card" data-track={d.track} key={d.id}>
     <p className="eyebrow">{trackTitle(d.track)} · {d.author}</p><h3><a href={`#/demo/${d.id}`}>{d.title}</a></h3><p>{d.description}</p>
@@ -24,7 +22,6 @@ function TrackGuide({ track, route }: { track: typeof tracks[number]; route: str
             <a key={page} aria-current={trackPage === page ? 'page' : undefined} href={`#/track/${track.id}${page === 'get-started' ? '' : '/' + page}`}>{label}</a>)}
         </nav>
         <GuideView document={`tracks/${track.id}/${trackPage}`} />
-        {track.id === 'modern-web' && trackPage === 'get-started' && <section className="experiment"><DemoBoundary><Suspense fallback={<p role="status">Loading starter…</p>}><BrowserStarter /></Suspense></DemoBoundary></section>}
         <h2>Reference examples</h2><Gallery track={track.id} /></>;
 }
 
@@ -71,8 +68,7 @@ export function App() {
       {track && <TrackGuide track={track} route={route} />}
       {guide && <GuideView document={guide.document} />}
       {demo && <><section id={demo.id} className="experiment"><DemoBoundary key={demo.id}><Suspense fallback={<p role="status">Loading experiment…</p>}><demo.Component /></Suspense></DemoBoundary></section><p><a href={`#/track/${demo.track}`}>Back to {trackTitle(demo.track)}</a> · <a href="#/create">Build your own version</a></p></>}
-      {route === '/create' && <><GuideView document="create-demo" />
-        <section className="experiment"><DemoBoundary><Suspense fallback={<p role="status">Loading template…</p>}><Template /></Suspense></DemoBoundary></section></>}
+      {route === '/create' && <GuideView document="create-demo" />}
       {!track && !demo && !guide && route !== '/' && route !== '/create' && <p><a href="#/">Return to the tracks</a></p>}
       <section className="takeaway"><h2>Leave a small trail.</h2><p>Your question, what you tried, one discovery. <a href="#/guide/findings">Record your findings</a> and <a href="#/guide/contributing">share your work</a>.</p></section>
     </main><footer><span>THE FRONT-END LAB</span><span>No perfect outcome required. Just curiosity.</span></footer>

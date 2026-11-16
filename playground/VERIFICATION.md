@@ -1,6 +1,16 @@
 # Current verification status
 
-## In-app participant guides
+## MDX participant experience
+
+Branch `feat/in-app-track-guides` replaces the earlier Markdown viewer with build-time MDX pages. The Modern Web starter, Experimental Projects starter and Create a demo preview are embedded beside their instructions. Completed examples remain separate. Repository-wide tracked-file scanning found no deployment URLs; the README introduces local startup without raw guide links.
+
+- `npm ci` and `npm run check` passed: 20 generator/unit tests, TypeScript and the production build.
+- All 15 Chrome journeys passed, including the interactive MDX starter, all guide links, phone-width layout and recovery from a failed MDX chunk.
+- Fallow doctor and the changed-code audit passed; advisory complexity and styling warnings remain.
+- MDX compiles as trusted repository code. The runtime Markdown parser is removed; individual guide chunks range from about 0.6 to 4.4 kB gzip.
+- Production deployment and independent participant acceptance remain unverified.
+
+## Earlier in-app participant guides
 
 Branch `feat/in-app-track-guides`, based on `506a9a9`:
 

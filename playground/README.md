@@ -10,8 +10,8 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | --- | --- |
 | `src/app/App.tsx` | Shared navigation, track pages and gallery |
 | `src/app/tracks.ts` | Four track identities |
-| `src/content/` | Canonical participant guides, rendered as Markdown inside the app |
-| `src/app/Guide.tsx` | Lazy-loaded Markdown renderer with tables; raw HTML disabled |
+| `src/content/` | MDX participant pages with embedded React starters |
+| `src/app/Guide.tsx` | Lazy MDX page loading and shared heading/table styles |
 | `src/demo-contract.ts` | Shared `DemoDefinition` type |
 | `src/demos/<your-idea>/demo.config.ts` | Demo metadata and component loader, discovered by the host |
 | `src/demos/template/` | Copyable bootstrap, separate from completed examples |
@@ -27,6 +27,12 @@ Open **Create a demo** in the app. Run `npm run demo:new` from the repository ro
 `demo.config.ts` default-exports an object satisfying `DemoDefinition` from `../../demo-contract`, with `title`, `track`, `description`, `author` and `load`. The loader imports a module whose default export is your React component. Use the generator and **Create a demo** page in the app for the exact file shape.
 
 Hash routes such as `#/track/modern-web`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
+
+## Author a track page
+
+Edit the track's `src/content/tracks/<track-id>/*.mdx` page. Write prose and code blocks normally, import an existing React starter, and place it beside the instruction that uses it. The Modern Web getting-started page demonstrates this pattern.
+
+Keep completed examples in their demo routes. Link between app pages with `#/track/...`, `#/demo/...` or `#/guide/...`; do not link to a deployment domain or raw guide file. Each MDX page is compiled at build time and loaded on demand. Imports and JSX are trusted application code, so do not load remote or user-authored MDX at runtime.
 
 ## Useful commands
 
@@ -47,7 +53,7 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 
 See the [migration guide](../docs/internal-migration.md) for GitHub Enterprise Cloud repository access and team contributions. Participants develop locally. Temporary deployment settings are documented separately in `docs/hosting.md`.
 
-`src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant Markdown lives in `src/content/` and renders inside the app. Keep it canonical; do not duplicate track guides elsewhere.
+`src/theme.css` owns the shell palette. Demo visuals stay independent; Sapphire is not required. Participant MDX lives in `src/content/` and compiles with the app. Keep it canonical; do not duplicate track guides elsewhere.
 
 ## Maintainer reference
 

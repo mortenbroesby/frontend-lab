@@ -1,10 +1,31 @@
+import Template from '../../../demos/template/Demo';
+import { DemoBoundary } from '../../../app/DemoBoundary';
+
 # Getting started
 
 **You need:** Node 24.x, npm, an editor and a browser for this optional starter. The shared playground uses React.
 
 Follow the root [gallery setup](#/guide/setup) and create a [contribution branch](#/guide/contributing) before editing.
 
-Open the printed address followed by `/#/create`. Try the editable idea and colour, then follow the [demo generator guide](#/create) to create your own named folder. Open its printed route and edit its `Demo.tsx`, leaving the shared template available.
+## Try an idea
+
+Change the idea and colour in this starter. This preview is separate from the finished examples.
+
+<DemoBoundary>
+  <section className="experiment">
+    <Template />
+  </section>
+</DemoBoundary>
+
+## Make it yours
+
+In another terminal at the repository root, run:
+
+```sh
+npm run demo:new
+```
+
+Give your demo a name and choose **Experimental Projects**. Open its printed route on your local server and edit `playground/src/demos/<your-id>/Demo.tsx`. The [demo guide](#/create) explains the contract if you need it.
 
 **First result:** one playable interaction, a quiz question, a drawing or a useful button. It does not need to resemble our example. Inputs reset on refresh; save code and record discoveries you want to keep.
 

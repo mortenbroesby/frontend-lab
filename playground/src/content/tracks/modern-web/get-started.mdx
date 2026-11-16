@@ -1,3 +1,6 @@
+import { BrowserStarter } from '../../../starters/BrowserStarter';
+import { DemoBoundary } from '../../../app/DemoBoundary';
+
 # Getting started
 
 Try a browser capability, then make one visible change in your own React demo.
@@ -11,11 +14,17 @@ npm ci
 npm run dev
 ```
 
-Open the address printed by Vite and choose **Modern Web Capabilities**. Viewing the hosted Lab lets you try examples; editing and generating demos happens in your local checkout. [Setup help](#/guide/setup).
+Open the address printed by Vite and choose **Modern Web Capabilities**. [Setup help](#/guide/setup).
 
 ## 2. Try the starter
 
-Move the radius control in the circle starter below. The circle and displayed radius should change. This is a small preview, separate from the finished examples.
+Move the radius control in this circle starter. The circle and displayed radius should change. This is a small preview, separate from the finished examples.
+
+<DemoBoundary>
+  <section className="experiment">
+    <BrowserStarter />
+  </section>
+</DemoBoundary>
 
 ## 3. Create your own demo
 

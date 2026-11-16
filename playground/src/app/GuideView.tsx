@@ -1,6 +1,6 @@
-import { Component, lazy, Suspense, type ReactNode } from 'react';
+import { Component, Suspense, type ReactNode } from 'react';
 
-const Guide = lazy(() => import('./Guide'));
+import Guide from './Guide';
 
 class GuideBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };

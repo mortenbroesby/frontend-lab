@@ -200,6 +200,7 @@ test('participant guides stay in the app and fit a phone', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/track/modern-web');
   await expect(page.locator('.guide')).toContainText('npm run demo:new');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.getByRole('link', { name: 'Setup help', exact: true }).click();
   await expect(page).toHaveURL(/#\/guide\/setup$/);
   await expect(page.locator('.guide')).toContainText('npm ci');
@@ -231,4 +232,33 @@ test('guide links resolve to real app pages', async ({ page }) => {
     await page.goto('/' + href);
     await expect(page.getByRole('heading', { level: 1 })).not.toHaveText('Page not found');
   }
+});
+
+test('the Modern Web guide owns its interactive starter', async ({ page }) => {
+  await page.goto('/#/track/modern-web');
+  const guide = page.locator('.guide');
+  const slider = guide.getByRole('slider');
+  await expect(slider).toBeVisible();
+  await slider.fill('70');
+  await expect(guide.locator('circle')).toHaveAttribute('r', '70');
+  const starter = guide.locator('.experiment');
+  expect(await starter.evaluate(element => {
+    const headings = [...element.parentElement!.children];
+    return headings.indexOf(element) < headings.findIndex(child => child.textContent === '3. Create your own demo');
+  })).toBe(true);
+  await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+  await expect(page.getByRole('slider')).toHaveCount(0);
+  await page.goBack();
+  await expect(guide.getByRole('slider')).toBeVisible();
+});
+
+test('a failed MDX page leaves track and demo navigation usable', async ({ page }) => {
+  await page.route('**/assets/get-started-*.js', route => route.abort());
+  await page.goto('/#/track/modern-web');
+  await expect(page.getByRole('alert')).toContainText('This guide could not load');
+  await page.getByRole('link', { name: 'Explore further', exact: true }).click();
+  await expect(page.locator('.guide table')).toBeVisible();
+  await page.getByRole('link', { name: 'All tracks', exact: true }).click();
+  await page.getByRole('link', { name: 'Generative postcard', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
 });
