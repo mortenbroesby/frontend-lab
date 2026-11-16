@@ -9,7 +9,7 @@
     "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run build",
-    "test": "node --test starter/inspect.test.mjs examples/commands.test.mjs"
+    "test": "node --test workflow.test.ts starter/inspect.test.mjs examples/commands.test.mjs"
   },
   "dependencies": {
     "@lab/demo-kit": "*",
