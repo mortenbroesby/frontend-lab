@@ -4,21 +4,22 @@ export const tracks = [
   {
     id: 'modern-web',
     title: 'Modern Web Capabilities',
-    description: 'Explore browser APIs for visuals, computation and communication.',
+    description: 'Connect devices, create interactive graphics or run work in the background.',
   },
   {
     id: 'code-quality',
     title: 'Code Quality & Maintainability',
-    description: 'Investigate code health, dependencies, complexity and architecture.',
+    description: 'Explore dependencies, simplify confusing code or improve a test.',
   },
   {
     id: 'developer-experience',
     title: 'Developer Experience & Tooling',
-    description: 'Find friction. Try an improvement.',
+    description:
+      'Explore faster tests, useful scripts, local development tools or agent workflows.',
   },
   {
     id: 'experimental-projects',
     title: 'Experimental Projects',
-    description: 'Build a game, visual story, quiz—or your own idea.',
+    description: 'Make a game, an instrument, a visualisation or something of your own.',
   },
 ] satisfies { id: TrackId; title: string; description: string }[];
