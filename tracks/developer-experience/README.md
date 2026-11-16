@@ -1,4 +1,4 @@
-# Track C · Developer Experience & Tooling
+# Developer Experience & Tooling
 
 For you if repeated setup, unclear commands or slow feedback gets in the way of working on React projects.
 

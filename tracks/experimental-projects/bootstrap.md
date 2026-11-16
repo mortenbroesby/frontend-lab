@@ -1,4 +1,4 @@
-# D bootstrap · One visible behaviour
+# Experimental Projects bootstrap · One visible behaviour
 
 **You need:** Node 24.x, npm, an editor and a browser for this optional starter. We are using React for this chapter day.
 
@@ -12,4 +12,4 @@ Open the printed address followed by `/#/create`. Try the editable idea and colo
 
 **Want a destination?** Open `/#/demo/art` separately for the generative postcard. Read the [worked example](examples.md) only when you want a reference or hint. No generator or export implementation is hidden in your starter.
 
-[Setup help](../../playground/README.md) · [Back to Track D](README.md)
+[Setup help](../../playground/README.md) · [Back to Experimental Projects](README.md)

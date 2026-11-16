@@ -131,7 +131,7 @@ export function Constellation() {
         <button className="secondary" onClick={() => setPaused(value => !value)}>{paused ? 'Resume motion' : 'Pause motion'}</button>
         <button className="secondary" onClick={release}>Release pinned ideas</button>
       </div>
-      <div className="graph-notes"><p id="graph-help">Drag an idea to pin it, or focus it and use arrow keys. Shift moves further. Filtering or changing layout starts a fresh arrangement. Reduced-motion preference starts paused.</p><p role="status">{active ? `${active.name} · ${groups[active.category].name}${active.fx != null ? ' · pinned' : ''}` : 'Choose an idea to inspect it.'}</p><p className="small">Illustrative connections, not measured data. D3 calculates the forces; React draws the SVG. Try replacing these ideas with your own dataset.</p><p className="source">Start here: <code>src/examples/Constellation.tsx</code> · Build towards it with Track A or D.</p></div>
+      <div className="graph-notes"><p id="graph-help">Drag an idea to pin it, or focus it and use arrow keys. Shift moves further. Filtering or changing layout starts a fresh arrangement. Reduced-motion preference starts paused.</p><p role="status">{active ? `${active.name} · ${groups[active.category].name}${active.fx != null ? ' · pinned' : ''}` : 'Choose an idea to inspect it.'}</p><p className="small">Illustrative connections, not measured data. D3 calculates the forces; React draws the SVG. Try replacing these ideas with your own dataset.</p><p className="source">Start here: <code>src/examples/Constellation.tsx</code> · Build towards it with Modern Web Capabilities or Experimental Projects.</p></div>
     </div>
   );
 }

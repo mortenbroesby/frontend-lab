@@ -1,6 +1,6 @@
 # Historical verification record
 
-Earlier implementation checkpoints, retained as evidence rather than setup instructions. Some commands, paths and integrations below were subsequently removed. Use [current status](VERIFICATION.md), [Start Here](../README.md#start-here) and the [Fallow guide](../tracks/b/fallow.md) for current guidance.
+Earlier implementation checkpoints, retained as evidence rather than setup instructions. Some commands, paths and integrations below were subsequently removed. Use [current status](VERIFICATION.md), [Start Here](../README.md#start-here) and the [Fallow guide](../tracks/code-quality/fallow.md) for current guidance.
 
 ## Environment
 
@@ -43,9 +43,9 @@ From the repository root: run `npm ci`, then `npm run check`. For UI or browser 
 ## Shared lab SPA and contribution workflow — 16 November 2026
 
 - One HTML entry, hash navigation for four tracks, a gallery and a separate copyable demo template. Reference demos are lazy-loaded and unmount on navigation.
-- `npm run check` passed: TypeScript, 11 Node tests (including the maximum prime-count workload and Track C scripts), and the production build.
+- `npm run check` passed: TypeScript, 11 Node tests (including the maximum prime-count workload and Developer Experience & Tooling scripts), and the production build.
 - All 10 Chrome browser journeys passed against the production build. Coverage includes existing SVG/D3/Worker/messaging behaviour, navigation without a document reload, direct-route refresh, unknown-route fallback, keyboard entry and a failed lazy import that leaves navigation usable.
-- In an isolated temporary copy, copied the demo template and added one registry entry. The new contribution appeared in the shared gallery and Track C, opened and accepted input, without editing the shell. Temporary files and server were removed afterward. This reused installed dependencies; it was not a new participant install.
+- In an isolated temporary copy, copied the demo template and added one registry entry. The new contribution appeared in the shared gallery and Developer Experience & Tooling, opened and accepted input, without editing the shell. Temporary files and server were removed afterward. This reused installed dependencies; it was not a new participant install.
 - Desktop and mobile screenshots were reviewed. Home, all four track pages and the create view were checked for horizontal overflow at 390 px.
 - Track guides now separate minimal bootstraps from worked examples. Git branches/PRs and pulling merged contributions are documented; no backend, deployment or new dependency was added.
 
@@ -55,7 +55,7 @@ The earlier clean-install evidence remains historical. Independent participant s
 
 - Added npm workspaces with `playground/` as the first app workspace, one root lockfile, pinned Turbo/@turbo/gen 2.11.11, root task scripts and the `demo` generator. No per-demo packages or remote cache.
 - `npm run check` passed through Turbo: four generator tests, 11 app/script tests, TypeScript and production build. All ten existing Chrome browser journeys also passed through the root Turbo command.
-- A temporary copy without node_modules/build/cache output passed root `npm ci` and checks. The actual `npm run demo:new -- --args ...` command generated a demo; its production build loaded in Chrome, appeared in the gallery and Track D, and responded to input. The interactive five-prompt flow was separately completed successfully.
+- A temporary copy without node_modules/build/cache output passed root `npm ci` and checks. The actual `npm run demo:new -- --args ...` command generated a demo; its production build loaded in Chrome, appeared in the gallery and Experimental Projects, and responded to input. The interactive five-prompt flow was separately completed successfully.
 - The npm script uses `turbo gen demo`. On the installed version the `turbo gen run demo` spelling opened an extra picker; the tested shorthand selects the generator directly. Its action uses Turbo's injected root path, so it does not rely on module URLs after generator compilation.
 - Tests reject invalid path-like IDs, reserved names, invalid tracks, empty metadata, duplicate registered IDs and existing folders. Text containing quotes/newlines/replacement tokens is safely encoded in the registry. A missing marker fails before creating files.
 - The phone preview remains a local-network HTTP preview of the built app. No external deployment or prototypes.danske.net integration was added. React-only scope is recorded in the participant docs and AGENTS.md.
@@ -75,11 +75,11 @@ The existing platform and independent-participant limitations still apply.
 
 - Fallow 3.43.1 installed from the root lockfile with `npm ci` on Intel macOS / Node 24.19.0 / npm 11.6.2. The CLI reports a verified signed binary.
 - Built-in discovery identified the app workspace and 11 entry points, including Vite, the Turbo generator and tests. No custom configuration or blanket ignores were needed.
-- Combined analysis and dead-code analysis exit 1 with the existing unused `marker` export; health exits 1 with the existing App complexity finding. These are expected findings, not passing gates. They remain available for the participant investigations in [the guide](../tracks/b/fallow.md).
+- Combined analysis and dead-code analysis exit 1 with the existing unused `marker` export; health exits 1 with the existing App complexity finding. These are expected findings, not passing gates. They remain available for the participant investigations in [the guide](../tracks/code-quality/fallow.md).
 - Duplication and architecture scans exit 0; duplication skips six files under its default ignores. Architecture boundaries and rule packs are not configured, so their absence is not evidence of policy compliance.
 - Symbol tracing, the `d3-force` dependency trace, discovery, advisory health mode and JSON report output were exercised. The dependency trace points to `Constellation.tsx`. Local reports remain ignored.
 - `npm run check` passed: six generator tests, eleven app/script tests, type checking and production build. All ten Chrome browser journeys passed.
-- Separate browser smoke check followed Track B → Investigate with Fallow at 390 px width, checked the command was visible, and found no page errors or horizontal document overflow. The full-page screenshot was visually inspected. The walkthrough is explanatory content, not a live browser-side analyzer.
+- Separate browser smoke check followed Code Quality & Maintainability → Investigate with Fallow at 390 px width, checked the command was visible, and found no page errors or horizontal document overflow. The full-page screenshot was visually inspected. The walkthrough is explanatory content, not a live browser-side analyzer.
 - Windows, Linux, Apple Silicon and participant proxy policies have not been tested. No automatic fixes, hooks, cloud integration or CI gate were enabled.
 
 ## Official Fallow agent and Git integration — 16 November 2026

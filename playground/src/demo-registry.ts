@@ -1,14 +1,9 @@
 import { lazy } from 'react';
+import { discoverDemos } from './demo-contract';
 
-// Add one entry per demo. Keep its implementation and styles in its own folder.
-// Lazy imports keep inactive experiments out of the running page.
-export const demos = [
-  // Generated demos are inserted below this line.
-  { id: 'constellation', track: 'a', title: 'D3 idea constellation', description: 'Shape a network of ideas with forces, filters and pinned nodes.', author: 'Lab examples', Component: lazy(() => import('./examples/Constellation').then(m => ({ default: m.Constellation }))) },
-  { id: 'workers', track: 'a', title: 'Room to think', description: 'Compare a calculation on the main thread and in a Worker.', author: 'Lab examples', Component: lazy(() => import('./examples/Workers').then(m => ({ default: m.Workers }))) },
-  { id: 'signals', track: 'a', title: 'Signals between tabs', description: 'Send local messages using BroadcastChannel.', author: 'Lab examples', Component: lazy(() => import('./examples/Signals').then(m => ({ default: m.Signals }))) },
-  { id: 'fallow', track: 'b', title: 'Investigate with Fallow', description: 'Run real analysis, trace an unused export and question a complexity finding.', author: 'Lab examples', Component: lazy(() => import('./examples/Fallow')) },
-  { id: 'quality', track: 'b', title: 'A test gap, investigated', description: 'Follow evidence from a question to a small confidence improvement.', author: 'Lab examples', Component: lazy(() => import('./examples/Quality')) },
-  { id: 'tooling', track: 'c', title: 'Know your commands', description: 'A read-only Node utility and a reason to keep it small.', author: 'Lab examples', Component: lazy(() => import('./examples/Tooling')) },
-  { id: 'art', track: 'd', title: 'Generative postcard', description: 'Remix a repeatable composition and take it home as SVG.', author: 'Lab examples', Component: lazy(() => import('./examples/ArtStudio').then(m => ({ default: m.Art }))) },
-];
+// Metadata is eager; implementations remain behind each definition's load().
+const definitions = import.meta.glob('./demos/*/demo.config.ts', { eager: true, import: 'default' });
+export const demos = discoverDemos(definitions).map(({ load, ...metadata }) => ({
+  ...metadata,
+  Component: lazy(load),
+}));

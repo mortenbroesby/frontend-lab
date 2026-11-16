@@ -1,4 +1,4 @@
-# B bootstrap · One question, evidence first
+# Code Quality & Maintainability bootstrap · One question, evidence first
 
 **You need:** an accessible codebase, editor and its usual tools. Use your own repository or the working `playground/` as a small fallback. Do not upload private source to an external service without permission.
 
@@ -35,4 +35,4 @@ Copy these prompts into your own notes:
 
 **Use your own repository:** replace these commands with its documented setup/checks. No need to copy the playground into it. If you choose automated analysis, record the tool/version/configuration and validate a few findings manually; an outdated dependency is not automatically harmful.
 
-[Back to Track B](README.md)
+[Back to Code Quality & Maintainability](README.md)

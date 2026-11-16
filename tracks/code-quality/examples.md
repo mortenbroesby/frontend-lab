@@ -1,4 +1,4 @@
-# B worked example · Does the largest workload have a trustworthy result?
+# Code Quality & Maintainability worked example · Does the largest workload have a trustworthy result?
 
 This is a completed investigation, separate from [your bootstrap](bootstrap.md). It examines the kit's actual code, not planted defects. The resulting test is already included; choose a different question rather than reproducing a known gap.
 
@@ -16,7 +16,7 @@ The Worker demo offers a workload up to two million. Before this investigation, 
 
 The new test is named **“the largest selectable workload has a known correct result”**. From `playground`, `npm test` runs it alongside the smaller cases. It passes with the existing implementation: we found a confidence gap, not a demonstrated calculation bug.
 
-## A concern that did not justify a rewrite
+## Modern Web Capabilities concern that did not justify a rewrite
 
 Both UI and Worker paths call the calculation. That might initially look like duplicated implementation. Following imports shows that they share `compute.ts`; running it in two places is the deliberate comparison. Removing one caller would remove the learning experience. “Two callers” is not “two implementations”.
 
@@ -26,4 +26,4 @@ The improvement is one meaningful boundary test, without changing runtime behavi
 
 This does not prove every input correct, establish performance on participant machines or suggest all code needs maximum-size tests. Use the question and evidence pattern on another part of this kit or your own repository.
 
-[Your investigation bootstrap](bootstrap.md) · [Track B](README.md)
+[Your investigation bootstrap](bootstrap.md) · [Code Quality & Maintainability](README.md)

@@ -1,4 +1,4 @@
-# A worked examples · Browser capabilities
+# Modern Web Capabilities worked examples · Browser capabilities
 
 These are completed references, separate from your [bootstrap](bootstrap.md). Choose one door below. You can experience the result first, rebuild a small version in your generated `playground/src/demos/<your-idea>/Demo.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the playground](../../playground/README.md) if you want these examples.
 
@@ -57,6 +57,6 @@ View Transitions, Canvas, browser scheduling, WebAssembly and other APIs are val
 - [MDN: Broadcast Channel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API)
 - [MDN: Web APIs](https://developer.mozilla.org/en-US/docs/Web/API)
 
-Stop when you have a discovery worth explaining. Capture your question, one piece of evidence and a next possibility in [findings](../findings.md). You can combine doors or jump to [your own project](../d/README.md).
+Stop when you have a discovery worth explaining. Capture your question, one piece of evidence and a next possibility in [findings](../findings.md). You can combine doors or jump to [your own project](../experimental-projects/README.md).
 
 [Choose another track](../../README.md#tracks)

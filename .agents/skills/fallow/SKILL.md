@@ -9,4 +9,4 @@ Read `node_modules/fallow/skills/fallow/SKILL.md` from the repository root for t
 
 Run the pinned CLI via `npm run analyze -- <command>`. Check current flags with `--help`. Validate findings before edits; preview automatic fixes first. Before committing or pushing, run `npm run analyze:changes` and resolve introduced findings. The shared Git pre-commit hook audits staged changes; PRs also run an audit in CI.
 
-Setup and worked examples: `tracks/b/fallow.md`. Keep agent configuration limited to Codex and Copilot CLI, with this shared skill and AGENTS.md. Do not regenerate per-agent hook scripts or duplicate task maps.
+Setup and worked examples: `tracks/code-quality/fallow.md`. Keep agent configuration limited to Codex and Copilot CLI, with this shared skill and AGENTS.md. Do not regenerate per-agent hook scripts or duplicate task maps.

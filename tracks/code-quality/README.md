@@ -1,4 +1,4 @@
-# Track B · Code Quality & Maintainability
+# Code Quality & Maintainability
 
 For you if you want stronger evidence for a dependency, test, complexity or architecture decision in a real React codebase.
 

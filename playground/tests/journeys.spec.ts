@@ -151,7 +151,7 @@ test('tracks, reference demos and bootstrap are distinct SPA journeys', async ({
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Follow your what if.');
   await page.evaluate(() => { (window as unknown as { labNavigation: boolean }).labNavigation = true; });
-  await page.getByRole('link', { name: 'Explore Track B' }).click();
+  await page.getByRole('link', { name: 'Explore Code Quality & Maintainability' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Code Quality & Maintainability');
   await page.getByRole('link', { name: 'A test gap, investigated' }).click();
   await expect(page.getByText('148,933', { exact: false }).first()).toBeVisible();
@@ -173,4 +173,19 @@ test('a failed lazy demo leaves navigation usable', async ({ page }) => {
   await page.getByRole('link', { name: 'All tracks', exact: true }).click();
   await page.getByRole('link', { name: 'Generative postcard', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
+});
+
+test('all named tracks open their matching journey and guide', async ({ page }) => {
+  for (const [id, title] of [
+    ['modern-web', 'Modern Web Capabilities'],
+    ['code-quality', 'Code Quality & Maintainability'],
+    ['developer-experience', 'Developer Experience & Tooling'],
+    ['experimental-projects', 'Experimental Projects'],
+  ]) {
+    await page.goto('/');
+    await page.getByRole('link', { name: `Explore ${title}` }).click();
+    await expect(page).toHaveURL(new RegExp(`#/track/${id}$`));
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+    await expect(page.locator('.source')).toContainText(`tracks/${id}/bootstrap.md`);
+  }
 });
