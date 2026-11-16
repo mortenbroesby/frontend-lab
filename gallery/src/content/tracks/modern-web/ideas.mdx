@@ -1,0 +1,44 @@
+# What could you explore?
+
+Choose an idea, combine a few, or bring your own. Each is a starting point, not an assignment.
+
+<div className="journey-grid topic-grid">
+  <section className="journey-card" data-track="modern-web">
+    <h3>Devices talking to each other</h3>
+    <p>Send a reaction from one browser to another. Explore rooms, connection state and shared controls.</p>
+    <a href="#/track/modern-web/devices">Explore this idea →</a>
+  </section>
+  <section className="journey-card" data-track="modern-web">
+    <h3>Interactive graphics</h3>
+    <p>Make data respond to a pointer. Start with SVG or Canvas; stretch into a D3 dependency map.</p>
+  </section>
+  <section className="journey-card" data-track="modern-web">
+    <h3>Work beyond the main thread</h3>
+    <p>Send work to a Worker and keep controls responsive. Try progress, cancellation or a bounded comparison.</p>
+  </section>
+  <section className="journey-card" data-track="modern-web">
+    <h3>Browser-native experiences</h3>
+    <p>Try an animated View Transition or a browser API you rarely use. Investigate its permissions and fallback.</p>
+  </section>
+</div>
+
+<details>
+<summary>More starting points and stretch goals</summary>
+
+## Explore further
+
+| Starting point | First observation | Optional stretch |
+| --- | --- | --- |
+| Visual interaction | Change one SVG shape with a control or pointer. | Add a few D3 nodes and one force, or compare SVG with Canvas. |
+| Responsive computation | Send a small value to a Worker and render its reply. | Add progress or cancellation; compare interaction responsiveness under a bounded workload. |
+| Local real-time messages | Open Signals between tabs in two same-origin tabs and send a message. | Share a palette or quiz event without a feedback loop. |
+| Cross-device messages | Open [Device Rally](#/demo/device-rally) in two browsers using the same room code. | Send cheers, leave and rejoin, or invent a shared interaction. |
+
+**Communication boundary:** Signals uses BroadcastChannel within one browser context. Device Rally uses Trystero public signaling and WebRTC between peers; it needs internet access and localhost or trusted HTTPS. No custom server is required. Physical phones and the workshop network remain untested.
+
+[Worked references](#/track/modern-web/examples) cover D3, SVG, Workers and tab messages. Start with one small piece; the completed examples are separate from your bootstrap.
+
+
+</details>
+
+Bring your own idea too. [Create a demo](#/create) or use your own React project.
