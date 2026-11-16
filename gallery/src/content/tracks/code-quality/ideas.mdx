@@ -1,14 +1,29 @@
-# Code Quality & Maintainability
+# What could you explore?
 
-For you if you want stronger evidence for a dependency, test, complexity or architecture decision in a real React codebase.
+Choose an idea, combine a few, or bring your own. Each is a starting point, not an assignment.
 
-**You need:** An accessible repository, its documented runtime/checks and an editor. This working gallery is the fallback; no deliberately broken app is required.
+<div className="journey-grid topic-grid">
+  <section className="journey-card" data-track="code-quality">
+    <h3>Dependency health</h3>
+    <p>Trace a dependency to its callers. Investigate unused or outdated packages before deciding what to change.</p>
+  </section>
+  <section className="journey-card" data-track="code-quality">
+    <h3>Complexity and duplication</h3>
+    <p>Compare two similar functions in a real codebase. Would a small simplification make the intent clearer?</p>
+  </section>
+  <section className="journey-card" data-track="code-quality">
+    <h3>Architecture and boundaries</h3>
+    <p>Follow imports across features. Find one surprising dependency and sketch a simpler boundary.</p>
+  </section>
+  <section className="journey-card" data-track="code-quality">
+    <h3>Automated discovery</h3>
+    <p>Try Fallow, or an analysis tool already used in your project. Validate a few findings against actual code.</p>
+    <a href="#/track/code-quality/fallow">Explore this idea →</a>
+  </section>
+</div>
 
-## Get a first result
-
-[Start an investigation](#/track/code-quality). Choose one question and trace it to a file, caller or test before deciding whether to change anything.
-
-**Success check:** You can point to evidence, explain an alternative interpretation, and justify keeping the code or making one small change. If you change it, rerun the relevant checks.
+<details>
+<summary>More starting points and stretch goals</summary>
 
 ## Explore further
 
@@ -25,8 +40,7 @@ For this repository, run commands at its root after `npm ci`. In another reposit
 
 The [completed test-gap investigation](#/track/code-quality/examples) shows the reasoning; its fix is already present. The [Fallow guide](#/track/code-quality/fallow) offers optional local analysis and agent setup. Use your own tools if they fit.
 
-## Show what you discovered
 
-Show the question, one piece of evidence and your decision. A justified “leave it alone” is a useful result; no gallery demo is required.
+</details>
 
-[Choose another track](#/)
+Bring your own idea too. [Create a demo](#/create) or use your own React project.

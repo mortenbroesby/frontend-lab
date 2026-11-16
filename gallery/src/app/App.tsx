@@ -14,18 +14,18 @@ function Gallery({ track }: { track?: TrackId }) {
 }
 
 function TrackGuide({ track, route }: { track: typeof tracks[number]; route: string }) {
-  const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'overview';
+  const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'ideas';
   return <>
     <nav className="guide-nav" aria-label="Track guide">
-      {[['overview', 'Overview'], ['examples', 'Explore demos'], ['get-started', 'Get started'], ['explore', 'Explore further'], ...(track.id === 'code-quality' ? [['fallow', 'Fallow guide']] : [])].map(([page, label]) =>
-        <a key={page} aria-current={trackPage === page ? 'page' : undefined} href={`#/track/${track.id}${page === 'overview' ? '' : '/' + page}`}>{label}</a>)}
+      {[['ideas', 'Ideas'], ['examples', 'Demos'], ['get-started', 'Get started']].map(([page, label]) =>
+        <a key={page} aria-current={trackPage === page ? 'page' : undefined} href={`#/track/${track.id}${page === 'ideas' ? '' : '/' + page}`}>{label}</a>)}
     </nav>
     {trackPage === 'examples' ? <><Gallery track={track.id} /><GuideView document={`tracks/${track.id}/examples`} /></> : <GuideView document={`tracks/${track.id}/${trackPage}`} />}
   </>;
 }
 
 function findTrack(route: string) {
-  return tracks.find(t => [`/track/${t.id}`, ...['get-started', 'explore', 'examples', ...(t.id === 'modern-web' ? ['devices'] : []), ...(t.id === 'code-quality' ? ['fallow'] : [])].map(page => `/track/${t.id}/${page}`)].includes(route));
+  return tracks.find(t => [`/track/${t.id}`, ...['get-started', 'examples', ...(t.id === 'modern-web' ? ['devices'] : []), ...(t.id === 'code-quality' ? ['fallow'] : [])].map(page => `/track/${t.id}/${page}`)].includes(route));
 }
 
 function pageTitle(route: string, track?: typeof tracks[number], demo?: typeof demos[number]) {

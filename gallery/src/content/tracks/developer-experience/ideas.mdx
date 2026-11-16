@@ -1,0 +1,48 @@
+# What could you explore?
+
+Choose an idea, combine a few, or bring your own. Each is a starting point, not an assignment.
+
+<div className="journey-grid topic-grid">
+  <section className="journey-card" data-track="developer-experience">
+    <h3>Faster test feedback</h3>
+    <p>Run one test in watch mode. Change a small function and see how quickly feedback reaches you.</p>
+    <a href="#/track/developer-experience/get-started">Explore this idea →</a>
+  </section>
+  <section className="journey-card" data-track="developer-experience">
+    <h3>Build performance</h3>
+    <p>Measure an existing build, then try one small change. Compare cold and warm runs before drawing conclusions.</p>
+  </section>
+  <section className="journey-card" data-track="developer-experience">
+    <h3>Local development friction</h3>
+    <p>Find a confusing command or repetitive setup step. Improve its discoverability with an existing tool first.</p>
+    <a href="#/track/developer-experience/get-started">Explore this idea →</a>
+  </section>
+  <section className="journey-card" data-track="developer-experience">
+    <h3>Workflow automation</h3>
+    <p>Extend the manifest inspector to answer one useful question. Keep it read-only; add a focused test.</p>
+    <a href="#/track/developer-experience/get-started">Explore this idea →</a>
+  </section>
+</div>
+
+<details>
+<summary>More starting points and stretch goals</summary>
+
+## Explore further
+
+Choose a problem you actually encounter; each route can stop after one useful discovery:
+
+| Starting point | Try one small improvement | Optional stretch |
+| --- | --- | --- |
+| Test feedback | From `gallery/` after the root install, run `npm run test:watch`. Change relevant code or a test, observe the result, then restore any deliberate failure. Compare this loop with your usual full check. | Find the smallest meaningful test selection in your own project and document when the full suite is still needed. |
+| Build performance | From the repository root after installation, run `npm run build` twice. Read Turbo’s cache/task output; distinguish a build from a cache hit. | Change a relevant source file, rebuild and explain invalidation. Record conditions before claiming a speedup. |
+| Local development friction | Use the app’s [troubleshooting guide](#/guide/setup) to investigate one actual setup problem: runtime, access, port or confusing error. Write the shortest reproducible fix. | Have a peer follow the fix without coaching and revise the unclear step. |
+| Workflow automation | Start with `npm run` to discover project commands. If you still need a specific observation, adapt the [read-only script starter](#/track/developer-experience/get-started) and its test. | Handle one real edge case, or replace a script with a native feature that already solves the task. |
+
+Use your own project’s equivalent commands where appropriate. Stop the watch process with Ctrl+C; keep deliberate failures out of your contribution. A useful command or clearer instruction can be the whole result.
+
+The [command inventory example](#/track/developer-experience/examples) is a completed reference, independent of the starter. Compare it with `npm run` before deciding another script is worthwhile.
+
+
+</details>
+
+Bring your own idea too. [Create a demo](#/create) or use your own React project.
