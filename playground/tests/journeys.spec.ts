@@ -262,3 +262,21 @@ test('a failed MDX page leaves track and demo navigation usable', async ({ page 
   await page.getByRole('link', { name: 'Generative postcard', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
 });
+
+
+test('reference pages keep practical next steps in the app on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ['/', '/create', '/demo/art', '/demo/constellation', '/demo/workers', '/demo/signals', '/demo/fallow', '/demo/quality', '/demo/tooling']) {
+    await page.goto('/#' + route);
+    if (route === '/create') await expect(page.locator('.guide')).not.toBeEmpty();
+    if (route.startsWith('/demo/')) await expect(page.locator('.experiment > :not([role=status])').first()).toBeVisible();
+    await expect(page.locator('main')).not.toContainText(/in your editor|Local guide:/);
+    await expect(page.locator('main a[href$=".md"], main a[href$=".mdx"]')).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  await page.goto('/#/create');
+  await expect(page.getByRole('heading', { name: 'Your first change', exact: true })).toBeVisible();
+  await expect(page.locator('main')).toContainText('npm ci');
+  await expect(page.locator('main')).toContainText('npm run demo:new');
+  await expect(page.locator('main')).toContainText('npm run check');
+});

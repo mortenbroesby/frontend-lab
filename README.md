@@ -57,7 +57,8 @@ getting started, experiments and worked examples.
 npm run demo:new
 ```
 
-Name your demo, choose a track, then edit `playground/src/demos/<id>/Demo.tsx`.
+Name your demo and choose a track. Modern Web starts with a circle; other tracks
+start with an idea card. The generator prints the route and file to edit.
 It appears in the gallery automatically. **Create a demo** in the app explains
 the typed contract and manual setup.
 

@@ -57,8 +57,7 @@
   .secondary { background: transparent; color: var(--lab-accent); }
   .secondary:hover { background: #e7ede2; }
   .text-link { font-size: .9rem; font-weight: 650; }
-  .small, .source { font-size: .8rem; }
-  .source { margin: 1rem 0 0; color: var(--lab-muted); }
+  .small { font-size: .8rem; }
   .journey-card { display: flex; flex-direction: column; background: var(--track-color, var(--lab-track-modern-web)); border: 1px solid var(--lab-line); border-top: 4px solid var(--lab-ink); padding: 1.4rem; border-radius: .9rem; }
   .journey-card[data-track="code-quality"] { --track-color: var(--lab-track-code-quality); }
   .journey-card[data-track="developer-experience"] { --track-color: var(--lab-track-developer-experience); }
@@ -66,7 +65,6 @@
   .journey-card h3 { font-size: 1.4rem; }
   .journey-card p { font-size: .9rem; }
   .journey-card a { margin-top: auto; font-size: .8rem; font-weight: 650; }
-  .journey-card .source { font-size: .7rem; margin-bottom: 0; }
   .hero-art { position: relative; height: 390px; overflow: hidden; border-radius: 50% 50% 1rem 1rem; background: #dbe6d5; }
   .art-ring { position: absolute; width: 240px; height: 240px; border: 1px solid #678770; border-radius: 50%; top: 30px; left: 50%; transform: translateX(-50%); }
   .ring-two { top: 75px; width: 285px; height: 240px; border-color: #305743; }

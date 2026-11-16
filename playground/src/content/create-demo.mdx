@@ -17,11 +17,15 @@ For a fully specified invocation:
 npm run demo:new -- --args "Chapter Quiz" chapter-quiz experimental-projects "Your team" "Test your browser knowledge"
 ```
 
-Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.
+Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. Modern Web Capabilities generates an independent circle with a radius control; other tracks generate the minimal idea/colour interaction. These are bootstraps, separate from completed reference examples.
+
+## Your first change
+
+Edit `playground/src/demos/<id>/Demo.tsx`. For Modern Web, change the circle fill colour. For other tracks, change “An idea, taking shape” to your own heading. Save and refresh: the code change stays while temporary input resets. The generator prints the exact file and local route; no shared files need editing.
 
 ## Try the starting point
 
-This is the small interaction your generated demo starts with. Change the idea and colour, then make your own version in your generated folder.
+This is the idea-card starter used by tracks other than Modern Web. For the circle starter, open [Modern Web Capabilities](#/track/modern-web). Change the idea and colour, then make your own version in your generated folder.
 
 <DemoBoundary>
   <section className="experiment">

@@ -15,7 +15,7 @@ export function BrowserStarter() {
         <p>Change a value, then try a browser capability. This starting page contains no completed D3 graph, Worker or messaging solution.</p>
         <label htmlFor="radius">Circle radius <output>{radius}</output></label>
         <input id="radius" type="range" min="10" max="90" value={radius} onChange={event => setRadius(Number(event.target.value))} />
-        <p>Copy this starting point into your generated demo. Draw more shapes, respond to input, or try a different browser API.</p>
+        <p>To get your own copy, run <code>npm run demo:new</code> and choose Modern Web Capabilities. In your generated <code>Demo.tsx</code>, change the circle fill colour and save. Refresh to confirm your code change stays, then try a new interaction.</p>
       </div>
     </div>
   );

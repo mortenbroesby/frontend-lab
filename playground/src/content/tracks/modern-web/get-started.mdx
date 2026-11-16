@@ -36,11 +36,13 @@ npm run demo:new
 
 Give it a name, confirm its suggested ID and choose **Modern Web Capabilities**, then enter your author and description. Open the route printed by the generator using your local server address.
 
-Edit `playground/src/demos/<your-id>/Demo.tsx`. For the circle experiment, copy the JSX and state from `playground/src/starters/BrowserStarter.tsx` into your generated component, keeping its default export. Edit your copy so others can still use the shared starter.
+The generator creates an independent circle starter in `playground/src/demos/<your-id>/Demo.tsx`. No copying or shared-file edits are needed.
 
 ## 4. Make something happen
 
-**First result:** add a second circle or change how the control affects the shape. Save, open your demo and move the control. Navigate away and back; it should still work without console errors.
+**First result:** change the circle fill colour in your generated `Demo.tsx` and save. Open your demo and move the radius control.
+
+**Success check:** refresh: the saved colour remains while the radius resets. Navigate away and back; it should still work without console errors. Then add another shape or try your own interaction.
 
 Choose your next direction: pointer interaction, a Worker, a different API, or a few D3 nodes and one force. [Explore the options](#/track/modern-web/explore) or [open the D3 constellation](#/demo/constellation). The [worked examples](#/track/modern-web/examples) offer hints without requiring you to rebuild every control.
 

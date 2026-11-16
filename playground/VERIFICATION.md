@@ -1,5 +1,14 @@
 # Current verification status
 
+## Reconciliation with onboarding changes
+
+Merged `origin/main` at `cc5f54d` into `feat/in-app-track-guides`. Preserved the track-specific generator, its end-to-end test, reference-page instructions and CI browser checks. MDX now describes the generated circle directly, without manual copying; deployment links remain absent.
+
+- `npm run check` passed: 22 unit/generator tests, TypeScript and build.
+- Sixteen browser cases passed in the full run; the remaining mobile reference-page case passed on a targeted rerun after correcting its selector for the D3 layout (17 total).
+- Fallow changed-code audit against `origin/main` passed with advisory warnings. No unresolved Git conflict entries or conflict markers remain.
+
+
 ## MDX participant experience
 
 Branch `feat/in-app-track-guides` replaces the earlier Markdown viewer with build-time MDX pages. The Modern Web starter, Experimental Projects starter and Create a demo preview are embedded beside their instructions. Completed examples remain separate. Repository-wide tracked-file scanning found no deployment URLs; the README introduces local startup without raw guide links.
