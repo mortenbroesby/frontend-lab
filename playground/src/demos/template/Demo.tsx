@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // This is your starting point. Keep, replace or delete anything here.
-export function YourLab() {
+export default function Demo() {
   const [idea, setIdea] = useState('What if…');
   const [colour, setColour] = useState('#b4e5c4');
 
@@ -14,7 +14,7 @@ export function YourLab() {
       <div className="controls">
         <p className="eyebrow">Your space / no prescribed outcome</p>
         <h3>Start with one small thing.</h3>
-        <p>Edit <code>src/YourLab.tsx</code> and watch this area change. Keep the examples as references, borrow a piece, or replace this completely.</p>
+        <p>Edit <code>your copied Demo.tsx</code> and watch this area change. Build one visible behaviour here. Visit a reference demo when you want inspiration.</p>
         <label htmlFor="idea">What are you curious about?</label>
         <input id="idea" value={idea} maxLength={120} onChange={event => setIdea(event.target.value)} />
         <label htmlFor="colour">A colour to start with</label>

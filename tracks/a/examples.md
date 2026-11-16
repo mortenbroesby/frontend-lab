@@ -1,12 +1,12 @@
-# Track A · Modern Web Capabilities
+# A worked examples · Browser capabilities
 
-Choose one door below. You can experience the result first, rebuild a small version in `YourLab.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the playground](../playground/README.md) if you want these examples.
+These are completed references, separate from your [bootstrap](bootstrap.md). Choose one door below. You can experience the result first, rebuild a small version in your copied `src/demos/<your-idea>/Demo.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the playground](../../playground/README.md) if you want these examples.
 
 ## D3: build an atlas of ideas
 
 **Experience:** Open the playground's D3 constellation. Drag an idea and watch its neighbours follow, switch between one constellation and four islands, or filter to one cluster. Nodes stay pinned after dragging; release them with the button. Keyboard users can focus a node and move it with arrow keys. Pause motion to inspect it; reduced-motion preference starts paused.
 
-**Build towards it:** In `YourLab.tsx`, draw three labelled SVG circles from an array. Add a few source/target connections, then use D3's force simulation to calculate positions. Start with one force, inspect the result, and add links or collision avoidance only when useful. The completed reference is `src/examples/Constellation.tsx`; it uses the focused `d3-force` package rather than the whole D3 bundle.
+**Build towards it:** In your copied `src/demos/<your-idea>/Demo.tsx`, draw three labelled SVG circles from an array. Add a few source/target connections, then use D3's force simulation to calculate positions. Start with one force, inspect the result, and add links or collision avoidance only when useful. The completed reference is `src/examples/Constellation.tsx`; it uses the focused `d3-force` package rather than the whole D3 bundle.
 
 **Understand the boundary:** D3 owns mutable simulation nodes; React receives position snapshots and renders SVG. Copy links before passing them to D3 because the simulation resolves their endpoints into node objects. Stop its timer when leaving the example. D3 is a library on top of browser capabilities, not a native browser API.
 
@@ -57,6 +57,6 @@ View Transitions, Canvas, browser scheduling, WebAssembly and other APIs are val
 - [MDN: Broadcast Channel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API)
 - [MDN: Web APIs](https://developer.mozilla.org/en-US/docs/Web/API)
 
-Stop when you have a discovery worth explaining. Capture your question, one piece of evidence and a next possibility in [findings](findings.md). You can combine doors or jump to [your own project](d-experimental-projects.md).
+Stop when you have a discovery worth explaining. Capture your question, one piece of evidence and a next possibility in [findings](../findings.md). You can combine doors or jump to [your own project](../d/README.md).
 
-[Choose another track](../README.md#choose-a-track)
+[Choose another track](../../README.md#choose-a-track)

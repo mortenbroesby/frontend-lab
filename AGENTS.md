@@ -9,19 +9,23 @@ The latest user direction is a participant-focused repository. Keep navigation s
 ## Source of truth
 
 - `README.md`: participant entry point and shared quick start.
-- `tracks/a-modern-web-capabilities.md`: Track A — visual/browser APIs, computing and communication.
-- `tracks/b-code-quality-maintainability.md`: Track B — dependency health, complexity, architecture and analysis.
-- `tracks/c-developer-experience-tooling.md`: Track C — practical improvements to real workflow friction.
-- `tracks/d-experimental-projects.md`: Track D — open-ended projects and technologies.
+- `tracks/a/README.md`: Track A — visual/browser APIs, computing and communication.
+- `tracks/b/README.md`: Track B — dependency health, complexity, architecture and analysis.
+- `tracks/c/README.md`: Track C — practical improvements to real workflow friction.
+- `tracks/d/README.md`: Track D — open-ended projects and technologies.
 - `tracks/findings.md`: optional notes and show-and-tell prompts.
 - `playground/README.md`: optional app setup, source map and troubleshooting.
 - `playground/VERIFICATION.md`: technical evidence and known limits.
 
 There is no fifth track. Do not add deliberately broken applications or require the organiser to facilitate every challenge. Fallow is an optional investigation candidate, not installed or validated here.
 
+Each track directory has a `README.md` entry, `bootstrap.md` and separate `examples.md`. C also has independent starter/example scripts and tests. Keep starting code separate from finished solutions. B uses the actual app as a fallback and a documented evidence-based investigation.
+
 ## Implementation conventions
 
-- Keep one small optional Vite/React/TypeScript app with plain CSS. Existing examples cover SVG, a D3 force-directed constellation, Workers and local BroadcastChannel messages; `src/YourLab.tsx` is the participant's starting point.
+- Keep one optional Vite/React/TypeScript SPA with plain CSS. `src/app/App.tsx` owns hash navigation; `src/demo-registry.ts` registers lazy demo components. Each demo owns its local state and cleanup. New demos live under `src/demos/<name>/`; copy `src/demos/template/` and register one entry. No app-shell edit should be required.
+- The four track pages lead to reference demos and a separate bootstrap. B/C may contribute findings and tool walkthroughs. Shared contributions use branches and pull requests; others pull after merge. No realtime backend or deployment is implied.
+- Keep demo CSS scoped, keep identifiers unique, and preserve loading, render-error feedback and navigation. React boundaries are not sandboxes for blocking code or async errors.
 - Participants can experience, rebuild, remix or combine examples. Do not turn these into mandatory exercises or a complex shared application.
 - Prefer native APIs and existing code. Avoid monorepo infrastructure, unnecessary dependencies and new abstractions.
 - Baseline: Node 24.x, npm, exact dependency versions and lockfile. Run `npm ci` and `npm run check` in `playground`; UI/browser changes also use `npm run test:browser` with the documented optional browser setup.

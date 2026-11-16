@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
 
-test('remix, export, hide examples and begin an independent idea', async ({ page }) => {
+test('remix, export and begin an independent idea', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Follow your');
+  await page.goto('/#/demo/art');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Generative postcard');
   await page.getByRole('button', { name: 'Remix composition' }).click();
   await expect(page.getByTestId('seed')).toHaveText('43');
   await page.getByRole('slider', { name: 'Dots' }).fill('120');
@@ -19,17 +19,14 @@ test('remix, export, hide examples and begin an independent idea', async ({ page
   const exported = Buffer.concat(chunks).toString();
   expect(exported).toContain('http://www.w3.org/2000/svg');
   expect(exported.match(/<circle/g)).toHaveLength(120);
-  await page.getByRole('button', { name: 'Hide examples' }).click();
-  await expect(page.locator('#examples')).toBeHidden();
-  await page.getByRole('link', { name: 'Try the browser examples' }).click();
-  await expect(page.locator('#examples')).toBeVisible();
+  await page.goto('/#/create');
   await page.getByLabel('What are you curious about?').fill('Can I build a chapter quiz?');
   await expect(page.locator('.idea-stage')).toContainText('Can I build a chapter quiz?');
   expect(errors).toEqual([]);
 });
 
 test('real Worker returns the same result as the main-thread computation', async ({ page }) => {
-  await page.goto('/#workers');
+  await page.goto('/#/demo/workers');
   await page.getByLabel('Count primes up to').selectOption('100000');
   await page.getByRole('button', { name: 'Run in Worker', exact: true }).click();
   await expect(page.locator('#workers [role=status]')).toContainText('9,592 primes');
@@ -48,7 +45,7 @@ test('interaction and cancellation remain available while a Worker is pending', 
       }
     };
   });
-  await page.goto('/#workers');
+  await page.goto('/#/demo/workers');
   await page.getByRole('button', { name: 'Run in Worker', exact: true }).click();
   await page.getByRole('button', { name: /Interaction pad/ }).click();
   await expect(page.getByRole('button', { name: /Interaction pad/ })).toContainText('1');
@@ -58,7 +55,7 @@ test('interaction and cancellation remain available while a Worker is pending', 
 });
 
 test('two tabs exchange local signals without reflecting HTML or keeping more than five', async ({ page, context }) => {
-  await page.goto('/#signals');
+  await page.goto('/#/demo/signals');
   const popupPromise = page.waitForEvent('popup');
   await page.getByRole('link', { name: 'Open second lab tab' }).click();
   const second = await popupPromise;
@@ -83,18 +80,20 @@ test('two tabs exchange local signals without reflecting HTML or keeping more th
 test('narrow screen and reduced-motion preference remain usable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
+  await page.goto('/#/demo/art');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await expect(page.locator('.orbit')).toHaveCSS('animation-name', 'none');
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('link', { name: 'Skip to your journey' })).toBeFocused();
+  await expect(page.locator('#content')).toBeFocused();
+  await page.getByRole('link', { name: 'Skip to content' }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#content')).toBeFocused();
+  await page.goto('/#/create');
   await page.getByLabel('What are you curious about?').fill('My own mobile experiment');
   await expect(page.locator('.idea-stage')).toContainText('My own mobile experiment');
 });
 
 test('unsupported browser capability has a readable fallback', async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(window, 'BroadcastChannel', { value: undefined, configurable: true }); });
-  await page.goto('/#signals');
+  await page.goto('/#/demo/signals');
   await expect(page.locator('#signals [role=status]')).toContainText('unavailable here');
   await expect(page.getByRole('button', { name: 'Send signal' })).toBeDisabled();
 });
@@ -102,7 +101,7 @@ test('unsupported browser capability has a readable fallback', async ({ page }) 
 test('D3 graph supports filtering, layout changes, dragging and keyboard pinning', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/#constellation');
+  await page.goto('/#/demo/constellation');
   const graph = page.locator('#constellation');
   await expect(graph.locator('[data-node]')).toHaveCount(20);
   await graph.getByRole('button', { name: 'Pause motion' }).click();
@@ -129,9 +128,9 @@ test('D3 graph supports filtering, layout changes, dragging and keyboard pinning
   await expect(graph.locator('svg')).toBeVisible();
   await page.getByLabel('Explore a cluster').selectOption('all');
   await expect(graph.locator('[data-node]')).toHaveCount(20);
-  await page.getByRole('button', { name: 'Hide examples' }).click();
+  await page.getByRole('link', { name: 'All tracks', exact: true }).click();
   await expect(graph).toHaveCount(0);
-  await page.getByRole('button', { name: 'Show examples' }).click();
+  await page.goBack();
   await expect(graph.locator('[data-node]')).toHaveCount(20);
   expect(errors).toEqual([]);
 });
@@ -139,11 +138,39 @@ test('D3 graph supports filtering, layout changes, dragging and keyboard pinning
 test('D3 graph starts still with reduced motion and remains usable on mobile', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/#constellation');
+  await page.goto('/#/demo/constellation');
   const graph = page.locator('#constellation');
   await expect(graph.getByRole('button', { name: 'Resume motion' })).toBeVisible();
   const before = await graph.locator('[data-node="0-0"]').getAttribute('transform');
   await page.getByLabel('Explore a cluster').focus();
   await expect(graph.locator('[data-node="0-0"]')).toHaveAttribute('transform', before!);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('tracks, reference demos and bootstrap are distinct SPA journeys', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Follow your what if.');
+  await page.evaluate(() => { (window as unknown as { labNavigation: boolean }).labNavigation = true; });
+  await page.getByRole('link', { name: 'Explore Track B' }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Code Quality & Maintainability');
+  await page.getByRole('link', { name: 'A test gap, investigated' }).click();
+  await expect(page.getByText('148,933', { exact: false }).first()).toBeVisible();
+  await page.getByRole('link', { name: 'Create a demo', exact: true }).click();
+  await expect(page.locator('#art')).toHaveCount(0);
+  await page.getByLabel('What are you curious about?').fill('My own experiment');
+  await expect(page.locator('.idea-stage')).toContainText('My own experiment');
+  expect(await page.evaluate(() => (window as unknown as { labNavigation: boolean }).labNavigation)).toBe(true);
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Make room for your idea.');
+  await page.goto('/#/demo/missing');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Page not found');
+});
+
+test('a failed lazy demo leaves navigation usable', async ({ page }) => {
+  await page.route('**/assets/Tooling-*.js', route => route.abort());
+  await page.goto('/#/demo/tooling');
+  await expect(page.getByRole('alert')).toContainText('This experiment could not open');
+  await page.getByRole('link', { name: 'All tracks', exact: true }).click();
+  await page.getByRole('link', { name: 'Generative postcard', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
 });

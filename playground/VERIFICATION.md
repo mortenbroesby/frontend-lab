@@ -15,7 +15,7 @@ Implementation baseline: optional local kit for the four agreed tracks. This rec
 - `npm run check`: TypeScript, four Node logic tests and a production build.
 - Six browser journeys against the production bundle: SVG remix/export and independent idea input; real Worker/main-thread results; interaction/cancellation while a Worker is pending; two-tab messaging and safe text rendering; narrow-screen/reduced-motion/keyboard entry; unsupported-capability fallback.
 - The cancellation test delays Worker message delivery to make the pending state deterministic. The separate real-Worker test verifies the actual bundle and calculation path.
-- Live development edit: changing `YourLab.tsx` updated the running page, then the source was restored.
+- Live development edit: changing `src/starters/ProjectStarter.tsx` updated the running page, then the source was restored.
 - Desktop (1440 px) and mobile (390 px) screenshots visually inspected; the narrow-screen test also checks for horizontal overflow.
 - Official SVG, Worker, BroadcastChannel, Web APIs and optional Knip reference pages checked for availability.
 
@@ -39,3 +39,14 @@ After adding `d3-force`, `npm run check` passed and all eight browser journeys p
 ## Recheck after changes
 
 From `playground`: run `npm ci`, then `npm run check`. For UI or browser behaviour changes, run `npm run test:browser` with the optional browser setup documented in its README. Keep results tied to the commit being checked; do not claim a new result from an old run.
+
+## Shared lab SPA and contribution workflow — 16 November 2026
+
+- One HTML entry, hash navigation for four tracks, a gallery and a separate copyable demo template. Reference demos are lazy-loaded and unmount on navigation.
+- `npm run check` passed: TypeScript, 11 Node tests (including the maximum prime-count workload and Track C scripts), and the production build.
+- All 10 Chrome browser journeys passed against the production build. Coverage includes existing SVG/D3/Worker/messaging behaviour, navigation without a document reload, direct-route refresh, unknown-route fallback, keyboard entry and a failed lazy import that leaves navigation usable.
+- In an isolated temporary copy, copied the demo template and added one registry entry. The new contribution appeared in the shared gallery and Track C, opened and accepted input, without editing the shell. Temporary files and server were removed afterward. This reused installed dependencies; it was not a new participant install.
+- Desktop and mobile screenshots were reviewed. Home, all four track pages and the create view were checked for horizontal overflow at 390 px.
+- Track guides now separate minimal bootstraps from worked examples. Git branches/PRs and pulling merged contributions are documented; no backend, deployment or new dependency was added.
+
+The earlier clean-install evidence remains historical. Independent participant setup, access and other operating systems/browsers remain unverified.

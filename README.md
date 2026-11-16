@@ -2,24 +2,20 @@
 
 **Front-End Chapter Day · Friday, 20 November 2026**
 
-Pick a track, go solo or team up, and explore something interesting. Try an example, build towards it, combine ideas or bring your own project. No polished deliverable required.
+Choose a track, start small, then follow your curiosity. Each track has a **bootstrap** you can build on and **separate worked examples** you can experience, inspect or remix. Go solo or team up; your own repository and technologies are welcome.
 
 ## Choose a track
 
-| Track | What you can explore | First step |
+| Track | Bootstrap | Worked example |
 | --- | --- | --- |
-| [🌐 A · Modern Web Capabilities](tracks/a-modern-web-capabilities.md) | Browser APIs, visuals, background computation and communication | Try a browser example or choose one API |
-| [🔍 B · Code Quality & Maintainability](tracks/b-code-quality-maintainability.md) | Dependencies, complexity, architecture and automated analysis | Pick a question about your codebase or this playground |
-| [🛠️ C · Developer Experience & Tooling](tracks/c-developer-experience-tooling.md) | Faster feedback and less friction in everyday development | Choose one recurring annoyance or try the test feedback loop |
-| [🚀 D · Experimental Projects](tracks/d-experimental-projects.md) | Games, visualisations, generative art, quizzes or your own idea | Build one visible behaviour using your preferred tools |
+| [🌐 A · Modern Web Capabilities](tracks/a/README.md) | One browser interaction in a minimal app | Interactive D3 idea constellation; additional browser examples |
+| [🔍 B · Code Quality & Maintainability](tracks/b/README.md) | A repeatable investigation in your repo or our sample | Evidence, a confidence gap, a false-positive concern and a small test improvement |
+| [🛠️ C · Developer Experience & Tooling](tracks/c/README.md) | A small Node script and test | A read-only command inventory, its tests and trade-offs |
+| [🚀 D · Experimental Projects](tracks/d/README.md) | A clean creative page with one visible interaction | A generative postcard with controls and SVG export |
 
-Each guide has a starting point, optional directions and something you could share. You can switch tracks or mix them.
+## Get started
 
-## Get up and running
-
-**Using your own project?** Follow its normal setup and go straight to your track guide. Your preferred technologies are welcome.
-
-**Want a ready-made starting point?** The optional playground uses **Node.js 24.x and npm**. Clone this private repository using your usual authenticated GitHub method, then run from its root:
+**Shared lab app (all tracks):** with Node.js 24.x and npm, from this repository root:
 
 ```sh
 cd playground
@@ -27,17 +23,20 @@ npm ci
 npm run dev
 ```
 
-Open the local address printed in the terminal. Try the interactive D3 constellation, SVG composition, Worker experiment or messages between two browser tabs. Edit `src/YourLab.tsx` to start your own experiment.
+Open the printed address. Choose a track, experience its reference demos, then choose **Create a demo** for a minimal bootstrap. All tracks share one app and toolchain; the template contains no finished solution. [Setup and troubleshooting](playground/README.md).
 
-[Playground setup and troubleshooting](playground/README.md) includes clone instructions, the source map and available commands. Initial installation needs internet; the examples run locally without a backend or API keys. Node 24 is required only for this playground, not for everyone's own projects.
+**B:** open the [investigation bootstrap](tracks/b/bootstrap.md). Bring a codebase or inspect the actual playground as a small fallback; no specially broken app is needed.
 
-## Make it your own
+**C:** open the [script bootstrap](tracks/c/bootstrap.md). It runs with Node 24.x, without installing packages or starting an app server.
 
-Choose **an interest + a capability + a question**, then try the smallest useful experiment. For example:
+## Choose your next step
 
-- SVG + Worker: can a larger pattern stay responsive?
-- SVG + local messages: can a second tab control a palette?
-- Your project + dependency analysis: what is actually used?
-- A repetitive task + a faster feedback loop: what would make it easier?
+Experience an example → rebuild one small part → change a rule → combine ideas. Or skip the examples and follow your own question. There is no required sequence or production-ready outcome.
 
 Keep a demo, observation or useful failed attempt. The optional [findings template](tracks/findings.md) helps you record what you learned.
+
+## Add your work to the shared gallery
+
+Copy `playground/src/demos/template` into your own demo folder and add one entry to `playground/src/demo-registry.ts`. The app discovers your entry in the gallery and its track page. Follow the [copy-and-register guide](playground/src/demos/template/README.md).
+
+Contribute on your own Git branch and open a pull request. After merge, everyone pulls the latest version to see your demo. A contribution can be an interactive experiment, a tool walkthrough or evidence from a code-quality investigation. Your own technologies and repositories remain welcome.

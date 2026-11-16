@@ -23,25 +23,26 @@ git clone git@github.com:mortenbroesby/frontend-chapter-day.git
 cd frontend-chapter-day
 ```
 
-In the page, try the **D3 constellation**, **Remix composition**, **Run in Worker** or **Open second lab tab**. For your own idea, edit `src/YourLab.tsx` and save. Vite updates the page. Inputs are ephemeral; refresh resets them, so save code and record findings you want to keep.
+The home page opens four track pages and a shared demo gallery. Try the D3 constellation, SVG postcard, Worker comparison or local tab messaging; B and C include investigation/tool walkthroughs. **Create a demo** opens a separate minimal template. Inputs are ephemeral; save code and record findings you want to keep.
 
-## Where to work
+## Architecture and where to work
 
-| File | Purpose / first useful change |
+| File | Responsibility |
 | --- | --- |
-| `src/YourLab.tsx` | Your independent experiment; replace the small input/colour example |
-| `src/examples/Constellation.tsx` | D3 force layout, SVG nodes, cluster filtering and pointer/keyboard pinning |
-| `src/examples/ArtStudio.tsx` | SVG composition, controls and export; change a visual rule |
-| `src/examples/art.ts` | Repeatable point generation; change the distribution |
-| `src/examples/Workers.tsx` | Responsive interaction, Worker lifecycle and cancellation |
-| `src/examples/compute.worker.ts` | Off-main-thread entry point; delegates to a pure function |
-| `src/examples/compute.ts` | Bounded computation shared by Worker and main-thread comparison |
-| `src/examples/Signals.tsx` | Local, same-origin tab messages and lifecycle cleanup |
-| `src/main.tsx` | Page and example sections; remove examples from here if you want a smaller page |
-| `src/styles.css` | Plain CSS, responsive layout, focus styles and reduced-motion handling |
-| `tests/` | Small logic checks and optional browser journeys |
+| `src/app/App.tsx` | Shared navigation, track pages and gallery |
+| `src/app/tracks.ts` | Four tracks and suggested starting points |
+| `src/demo-registry.ts` | Demo title, track, author and lazy import |
+| `src/demos/template/` | Copyable bootstrap, separate from completed examples |
+| `src/demos/<your-idea>/` | Your component, assets and scoped styles |
+| `src/examples/` | Reference experiments and small pure functions |
+| `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Track A |
+| `src/app/DemoBoundary.tsx` | Render-error fallback around the active demo |
+| `src/styles.css` | Shared shell, responsive layout and accessibility styles |
+| `tests/` | Logic checks and browser journeys |
 
-To start blank, replace the body of `YourLab` with your first component. You need not modify the gallery, tests or other examples. To borrow a piece, import the pure point generator or copy an interaction into your component. Keep each experiment easy to understand rather than introducing a shared framework.
+[Create and contribute a demo](src/demos/template/README.md). Copy a folder and add one registry entry; do not edit the app shell. Use local component state, optional CSS modules and effect cleanup. Demos load only when opened and unmount when leaving. The render boundary protects navigation from React render failures; it cannot isolate blocking code or catch arbitrary async errors.
+
+Hash routes such as `/#/track/a`, `/#/demo/constellation` and `/#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
 
 ## Useful commands
 
@@ -51,7 +52,7 @@ Run these from `playground`:
 | --- | --- |
 | `npm run dev` | Local development with fast refresh |
 | `npm run typecheck` | TypeScript check without producing files |
-| `npm test` | Node tests for deterministic art and bounded computation |
+| `npm test` | Node tests for art, computation and Track C scripts |
 | `npm run test:watch` | Repeat those tests when source changes; stop with Ctrl+C |
 | `npm run build` | Type check and production bundle |
 | `npm run preview` | Serve an already built bundle locally |
@@ -77,3 +78,5 @@ The browser download takes extra space and bandwidth. Alternatively use an exist
 - **Install failure:** retain the error, check runtime and network/proxy access, and ask a peer. Pair or use your own existing project rather than spending the day reinstalling tools.
 
 The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSocket server, WebRTC signalling server or WebAssembly toolchain is included. Those remain optional directions for participants to explore.
+
+The production build has one HTML entry and lazy demo chunks. Track B can use an existing codebase, and Track C's independent Node scripts under `tracks/c/` run without starting the app.

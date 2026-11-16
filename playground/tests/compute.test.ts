@@ -13,3 +13,7 @@ test('rejects invalid and unbounded workloads', () => {
     assert.throws(() => countPrimes(value), RangeError);
   }
 });
+
+test('the largest selectable workload has a known correct result', () => {
+  assert.equal(countPrimes(MAX_LIMIT), 148933);
+});

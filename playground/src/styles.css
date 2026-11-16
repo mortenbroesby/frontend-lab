@@ -110,3 +110,11 @@
 .graph-controls select { margin-bottom: 0; }
 .graph-notes { font-size: .9rem; color: #42564e; }
 @media (max-width: 650px) { .constellation-heading { flex-direction: column; } .graph-count { margin-bottom: 1rem; } .constellation-stage { overflow-x: auto; } .constellation-stage svg { min-width: 560px; } }
+.starter-welcome { padding: 3.5rem 0 2rem; max-width: 780px; }
+.starter-welcome h1 { font-size: clamp(2.4rem, 5vw, 4.5rem); }
+.journey-card h2 { font-size: 1.5rem; }
+.site-header nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+pre { overflow-x: auto; max-width: 100%; padding: 1rem; background: #eeeae1; border-radius: 8px; }
+#content:focus { outline: none; }
+@media (max-width: 600px) { .site-header { flex-wrap: wrap; gap: 1rem; } }
+.journey-card h3 a { font: inherit; }

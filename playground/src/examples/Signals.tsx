@@ -47,7 +47,7 @@ export function Signals() {
         <p className="eyebrow">03 / BroadcastChannel</p>
         <h3>Two tabs. A shared conversation.</h3>
         <p>Explore event-driven interfaces without setting up a backend. This is local tab communication, not WebSockets or messaging between laptops.</p>
-        <a className="button secondary" href="#signals" target="_blank" rel="noopener">Open second lab tab ↗</a>
+        <a className="button secondary" href="#/demo/signals" target="_blank" rel="noopener">Open second lab tab ↗</a>
         <form onSubmit={send}>
           <label htmlFor="message">Your signal</label>
           <input id="message" value={text} maxLength={160} onChange={event => setText(event.target.value)} />
