@@ -2,7 +2,9 @@
 
 30 component families for the gallery and standalone demos, adapted from [shadcn/ui’s New York v4 registry](https://ui.shadcn.com/docs/components) with focused Radix primitives. MIT attribution is in [LICENSE.md](LICENSE.md).
 
-Try **UI library** in the gallery, or run `npm run dev --workspace @lab/demo-ui-library`.
+Run `npm run storybook` from the repository root to inspect individual components, edit controls and browse state examples on port 6006. `npm run storybook:build` produces a static site in `shared/ui/dist/storybook`.
+
+For components working together, open **UI library** in the gallery or run `npm run dev --workspace @lab/demo-ui-library`.
 
 | Use | Package exports |
 | --- | --- |

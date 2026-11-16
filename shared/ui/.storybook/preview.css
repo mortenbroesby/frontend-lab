@@ -1,0 +1,8 @@
+@import '../styles.css';
+@source '../stories';
+
+body {
+  color: var(--lab-ink);
+  background: var(--lab-surface);
+  font-family: var(--lab-font-body, system-ui, sans-serif);
+}
