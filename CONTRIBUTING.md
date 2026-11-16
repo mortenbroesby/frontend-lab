@@ -10,7 +10,7 @@ Use the shared internal repository. Everyone participating should have **Write**
 6. Run `npm run check`. For browser behavior changes, also run `npm run test:browser` with the [browser setup](playground/README.md). Run `npm run analyze:changes` and resolve introduced findings (see the [Fallow guide](tracks/b/fallow.md)). Review `git diff`, stage only your contribution, commit your scoped files and push your branch with `git push -u origin HEAD`.
 7. Open a pull request describing what to try and what you learned. Once merged, everyone pulls `main` and runs the app locally to see the shared gallery.
 
-Each demo lives in its own uniquely named folder with `Demo.tsx`, `demo.ts` and `README.md`. The host discovers `demo.ts` automatically, so adding a demo requires no central registry edit. Include all three files in your contribution. If another participant chose the same folder ID, choose a different ID for your own demo; do not overwrite theirs.
+Each demo lives in its own uniquely named folder with `Demo.tsx`, `demo.config.ts` and `README.md`. The host discovers `demo.config.ts` automatically, so adding a demo requires no central registry edit. Include all three files in your contribution. If another participant chose the same folder ID, choose a different ID for your own demo; do not overwrite theirs.
 
 Keep example data synthetic. Internal repository access does not authorize copying another project's source, credentials or participant data. Shared shell changes should remain useful to all four tracks. The shell uses the Front-End Lab theme; Sapphire is not required for this workshop.
 

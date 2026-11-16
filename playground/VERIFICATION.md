@@ -12,7 +12,7 @@ Checked in `docs/participant-journeys`, based on `4ad159a`, with only Markdown c
 
 ## Folder-discovery documentation follow-up
 
-Participant guides now describe the agreed folder-discovery contract: generated `Demo.tsx`, `demo.ts` and `README.md`, a typed metadata/loader export and an ID derived from the folder. This follow-up is documentation-only; the implementation is owned by the separate discovery branch. The earlier checks above do not verify that implementation. Reconcile and rerun the relevant generator, discovery and browser checks when integrating it.
+Participant guides now describe the agreed folder-discovery contract: generated `Demo.tsx`, `demo.config.ts` and `README.md`, a typed metadata/loader export and an ID derived from the folder. This follow-up is documentation-only; the implementation is owned by the separate discovery branch. The earlier checks above do not verify that implementation. Reconcile and rerun the relevant generator, discovery and browser checks when integrating it.
 
 ## Recorded baseline: `4ad159a` · 16 November 2026
 

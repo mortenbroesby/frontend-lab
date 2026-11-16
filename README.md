@@ -87,8 +87,8 @@ npm run demo:new
 ```
 
 **Give your demo a name first.** The generator asks for an ID, track, author
-and description, then creates `Demo.tsx`, `demo.ts` and `README.md` in
-`playground/src/demos/<id>/`. The host discovers `demo.ts` automatically;
+and description, then creates `Demo.tsx`, `demo.config.ts` and `README.md` in
+`playground/src/demos/<id>/`. The host discovers `demo.config.ts` automatically;
 the folder name supplies the demo ID. Open the printed route and edit `Demo.tsx`.
 
 The [demo guide](playground/src/demos/template/README.md) covers the full workflow,
@@ -130,7 +130,7 @@ frontend-chapter-day/
 │   └── src/
 │       ├── app/             # Shell, track pages and navigation
 │       ├── demo-contract.ts # Typed demo metadata and loader contract
-│       ├── demos/           # Participant folders with demo.ts + Demo.tsx
+│       ├── demos/           # Participant folders with demo.config.ts + Demo.tsx
 │       └── examples/        # Working reference experiments
 ├── tracks/                  # Bootstrap guides, examples and findings
 ├── turbo/generators/        # Demo generator and its tests

@@ -57,7 +57,7 @@ npm run analyze:dead-code -- --trace-dependency d3-force
 
 Follow the result into [Constellation.tsx](../../playground/src/examples/Constellation.tsx). Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
 
-The earlier unused `marker` export exercise depended on the manual demo registry. Folder discovery removes that registration mechanism; do not recreate the marker to reproduce an old finding. For unused-code investigation, run a fresh scan and follow a current finding instead. Check that discovery sees `demo.ts` loaders before trusting a report that calls a demo unused.
+The earlier unused `marker` export exercise depended on the manual demo registry. Folder discovery removes that registration mechanism; do not recreate the marker to reproduce an old finding. For unused-code investigation, run a fresh scan and follow a current finding instead. Check that discovery sees `demo.config.ts` loaders before trusting a report that calls a demo unused.
 
 ## Worked investigation: complexity is a clue
 
@@ -79,7 +79,7 @@ If discovery misses a real entry in your own project, inspect it first and add a
 
 - **Dependency detective:** `npm run analyze:dead-code -- --trace-dependency d3-force`. Follow the result into the constellation demo. Would you keep this dependency?
 - **Duplication:** run the duplication command. The initial default scan found no clone groups and skipped six files under its default duplication ignores. Use `npm run analyze:dupes -- --explain-skipped` to inspect that scope. Compare the template and examples manually; a clean report is not proof that every repeated idea is detected or should be shared.
-- **Architecture:** trace how host discovery finds `demo.ts` and loads a component. Propose one useful dependency boundary before writing any rules.
+- **Architecture:** trace how host discovery finds `demo.config.ts` and loads a component. Propose one useful dependency boundary before writing any rules.
 - **Your own repository:** use its normal setup and obtain permission where needed. Start with discovery, record the Fallow version/config and manually check a few findings before adopting gates or fixes.
 
 Share your question, command/version, file or symbol, alternative explanation, decision and verification in [findings](../findings.md). Keep sensitive source and reports within the repository's permitted audience.
