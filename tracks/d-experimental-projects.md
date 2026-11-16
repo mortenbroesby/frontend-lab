@@ -8,10 +8,11 @@ Open `src/YourLab.tsx`. It contains only a small idea/colour interaction. Replac
 
 If React is not the technology you want to explore, use your own setup and keep the journey prompts. The point is the experiment.
 
-## Three possible destinations
+## Possible destinations
 
 | Idea | First visible result | Borrow if useful | Possible next branch |
 | --- | --- | --- | --- |
+| Interactive idea atlas | Draw three connected ideas, then let D3 arrange them | [D3 build-towards guide](a-modern-web-capabilities.md#d3-build-an-atlas-of-ideas) and the constellation example | Replace the dataset, explore clusters or add meaningful weights |
 | Generative postcard | Draw one shape using a rule you choose | SVG scene, seeded points, save-image behaviour | Add data, text or a new composition rule |
 | Chapter quiz | Show one question and reveal an answer | Local signals to change a question in a second tab | Invent scoring or investigate a real multi-device design |
 | Tiny browser game | One input changes a visible object | SVG controls and React state | Add a win condition, keyboard access or a different mechanic |

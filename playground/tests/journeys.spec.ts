@@ -98,3 +98,52 @@ test('unsupported browser capability has a readable fallback', async ({ page }) 
   await expect(page.locator('#signals [role=status]')).toContainText('unavailable here');
   await expect(page.getByRole('button', { name: 'Send signal' })).toBeDisabled();
 });
+
+test('D3 graph supports filtering, layout changes, dragging and keyboard pinning', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/#constellation');
+  const graph = page.locator('#constellation');
+  await expect(graph.locator('[data-node]')).toHaveCount(20);
+  await graph.getByRole('button', { name: 'Pause motion' }).click();
+  const node = graph.locator('[data-node="0-0"]');
+  const before = await node.getAttribute('transform');
+  await node.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(node).not.toHaveAttribute('transform', before!);
+  await expect(graph.getByRole('status')).toContainText('SVG · Browser · pinned');
+  const circle = node.locator('circle').last();
+  const box = await circle.boundingBox();
+  const afterKeyboard = await node.getAttribute('transform');
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box!.x + 60, box!.y + 40, { steps: 5 });
+  await page.mouse.up();
+  await expect(node).not.toHaveAttribute('transform', afterKeyboard!);
+  await graph.getByRole('button', { name: 'Release pinned ideas' }).click();
+  await expect(graph.getByRole('status')).not.toContainText('pinned');
+  await page.getByLabel('Explore a cluster').selectOption('1');
+  await expect(graph.locator('[data-node]')).toHaveCount(5);
+  await expect(graph.locator('.graph-count')).toHaveText('5 ideas · 5 connections');
+  await page.getByLabel('Shape the network').selectOption('clusters');
+  await expect(graph.locator('svg')).toBeVisible();
+  await page.getByLabel('Explore a cluster').selectOption('all');
+  await expect(graph.locator('[data-node]')).toHaveCount(20);
+  await page.getByRole('button', { name: 'Hide examples' }).click();
+  await expect(graph).toHaveCount(0);
+  await page.getByRole('button', { name: 'Show examples' }).click();
+  await expect(graph.locator('[data-node]')).toHaveCount(20);
+  expect(errors).toEqual([]);
+});
+
+test('D3 graph starts still with reduced motion and remains usable on mobile', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#constellation');
+  const graph = page.locator('#constellation');
+  await expect(graph.getByRole('button', { name: 'Resume motion' })).toBeVisible();
+  const before = await graph.locator('[data-node="0-0"]').getAttribute('transform');
+  await page.getByLabel('Explore a cluster').focus();
+  await expect(graph.locator('[data-node="0-0"]')).toHaveAttribute('transform', before!);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});

@@ -21,7 +21,7 @@ There is no fifth track. Do not add deliberately broken applications or require 
 
 ## Implementation conventions
 
-- Keep one small optional Vite/React/TypeScript app with plain CSS. Existing examples cover SVG, Workers and local BroadcastChannel messages; `src/YourLab.tsx` is the participant's starting point.
+- Keep one small optional Vite/React/TypeScript app with plain CSS. Existing examples cover SVG, a D3 force-directed constellation, Workers and local BroadcastChannel messages; `src/YourLab.tsx` is the participant's starting point.
 - Participants can experience, rebuild, remix or combine examples. Do not turn these into mandatory exercises or a complex shared application.
 - Prefer native APIs and existing code. Avoid monorepo infrastructure, unnecessary dependencies and new abstractions.
 - Baseline: Node 24.x, npm, exact dependency versions and lockfile. Run `npm ci` and `npm run check` in `playground`; UI/browser changes also use `npm run test:browser` with the documented optional browser setup.

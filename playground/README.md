@@ -23,13 +23,14 @@ git clone git@github.com:mortenbroesby/frontend-chapter-day.git
 cd frontend-chapter-day
 ```
 
-In the page, try **Remix composition**, **Run in Worker** or **Open second lab tab**. For your own idea, edit `src/YourLab.tsx` and save. Vite updates the page. Inputs are ephemeral; refresh resets them, so save code and record findings you want to keep.
+In the page, try the **D3 constellation**, **Remix composition**, **Run in Worker** or **Open second lab tab**. For your own idea, edit `src/YourLab.tsx` and save. Vite updates the page. Inputs are ephemeral; refresh resets them, so save code and record findings you want to keep.
 
 ## Where to work
 
 | File | Purpose / first useful change |
 | --- | --- |
 | `src/YourLab.tsx` | Your independent experiment; replace the small input/colour example |
+| `src/examples/Constellation.tsx` | D3 force layout, SVG nodes, cluster filtering and pointer/keyboard pinning |
 | `src/examples/ArtStudio.tsx` | SVG composition, controls and export; change a visual rule |
 | `src/examples/art.ts` | Repeatable point generation; change the distribution |
 | `src/examples/Workers.tsx` | Responsive interaction, Worker lifecycle and cancellation |

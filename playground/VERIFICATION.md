@@ -23,6 +23,10 @@ Implementation baseline: optional local kit for the four agreed tracks. This rec
 
 After moving the app to `playground/` and consolidating participant guides under `tracks/`, local documentation links and old-path references were checked. `npm run check` and all six browser journeys passed from the new location. The package manifest, lockfile and example behaviour were unchanged.
 
+## D3 constellation check
+
+After adding `d3-force`, `npm run check` passed and all eight browser journeys passed in Chrome. The new checks cover cluster filtering, switching layouts, pointer dragging, keyboard pinning, releasing pins, hide/show lifecycle, reduced-motion startup and narrow-screen overflow. The rendered desktop graph was visually reviewed. The graph uses illustrative data, not real participant or repository relationships.
+
 ## Limits and participant checks still needed
 
 - Independent participant setup has not been observed. Windows, Linux, Safari, Firefox and organisation-specific proxy/device policies have not been tested.

@@ -2,6 +2,20 @@
 
 Choose one door below. You can experience the result first, rebuild a small version in `YourLab.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the playground](../playground/README.md) if you want these examples.
 
+## D3: build an atlas of ideas
+
+**Experience:** Open the playground's D3 constellation. Drag an idea and watch its neighbours follow, switch between one constellation and four islands, or filter to one cluster. Nodes stay pinned after dragging; release them with the button. Keyboard users can focus a node and move it with arrow keys. Pause motion to inspect it; reduced-motion preference starts paused.
+
+**Build towards it:** In `YourLab.tsx`, draw three labelled SVG circles from an array. Add a few source/target connections, then use D3's force simulation to calculate positions. Start with one force, inspect the result, and add links or collision avoidance only when useful. The completed reference is `src/examples/Constellation.tsx`; it uses the focused `d3-force` package rather than the whole D3 bundle.
+
+**Understand the boundary:** D3 owns mutable simulation nodes; React receives position snapshots and renders SVG. Copy links before passing them to D3 because the simulation resolves their endpoints into node objects. Stop its timer when leaving the example. D3 is a library on top of browser capabilities, not a native browser API.
+
+**Make it yours:** Replace the illustrative topics with technologies you use, dependencies in a small project, characters in a story or a dataset you are curious about. Decide what a connection means before styling it. The included edges are invented for exploration, not evidence about actual relationships.
+
+**Branch:** Change force strengths, add a search, expose meaningful connection weights, or compare a force layout with a static diagram. Ask whether motion helps explain the data. The mobile graph scrolls horizontally to keep labels usable; filter to reduce clutter.
+
+References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link forces](https://d3js.org/d3-force/link), [collision forces](https://d3js.org/d3-force/collide). The completed example is an optional destination, not a requirement to rebuild every control.
+
 ## Door 1: draw something surprising
 
 **Experience:** In the SVG example, adjust the dot count, remix and save an image. Notice that the same seed produces the same result.

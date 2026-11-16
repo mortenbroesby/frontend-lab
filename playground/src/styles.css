@@ -92,3 +92,21 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; } }
 }
+
+/* D3 computes positions; the graph remains ordinary, inspectable SVG. */
+.constellation-example { padding: clamp(1.2rem, 3vw, 2.5rem); }
+.constellation-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.constellation-heading h3 { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+.graph-count { white-space: nowrap; font-size: .8rem; color: #526a57; }
+.constellation-stage { background: #11272d; border-radius: 1rem; }
+.constellation-stage svg { display: block; width: 100%; max-height: 600px; }
+.graph-node { cursor: grab; touch-action: none; }
+.graph-node:active { cursor: grabbing; }
+.graph-node:focus-visible { outline: none; }
+.graph-node:focus-visible .node-halo { stroke: #fff; stroke-width: 3; opacity: .7; }
+.graph-node text { pointer-events: none; }
+.graph-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+.graph-controls > div { min-width: 180px; flex: 1; }
+.graph-controls select { margin-bottom: 0; }
+.graph-notes { font-size: .9rem; color: #42564e; }
+@media (max-width: 650px) { .constellation-heading { flex-direction: column; } .graph-count { margin-bottom: 1rem; } .constellation-stage { overflow-x: auto; } .constellation-stage svg { min-width: 560px; } }

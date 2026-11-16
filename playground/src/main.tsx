@@ -1,5 +1,6 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Constellation } from './examples/Constellation';
 import { Art } from './examples/ArtStudio';
 import { Workers } from './examples/Workers';
 import { Signals } from './examples/Signals';
@@ -38,10 +39,11 @@ function App() {
           </div>
         </section>
         <section className="examples-intro" aria-labelledby="examples-heading">
-          <div><p className="eyebrow">Touch it. Take it apart. Make it yours.</p><h2 id="examples-heading">Three small possibilities.</h2><p>These work already. Rebuild one, change one rule, combine them—or start elsewhere.</p></div>
+          <div><p className="eyebrow">Touch it. Take it apart. Make it yours.</p><h2 id="examples-heading">Four ways to spark an idea.</h2><p>These work already. Rebuild one, change one rule, combine them—or start elsewhere.</p></div>
           <button className="secondary" aria-expanded={showExamples} aria-controls="examples" onClick={() => setShowExamples(value => !value)}>{showExamples ? 'Hide examples' : 'Show examples'}</button>
         </section>
         <div id="examples" hidden={!showExamples}>
+          {showExamples && <section id="constellation" className="experiment" aria-label="D3 constellation example"><Constellation /></section>}
           <section id="art" className="experiment" aria-label="Generative art example"><Art /></section>
           <section id="workers" className="experiment" aria-label="Worker example"><Workers /></section>
           <section id="signals" className="experiment" aria-label="Local signals example"><Signals /></section>

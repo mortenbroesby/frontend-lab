@@ -27,7 +27,7 @@ npm ci
 npm run dev
 ```
 
-Open the local address printed in the terminal. Try the SVG composition, Worker experiment or messages between two browser tabs. Edit `src/YourLab.tsx` to start your own experiment.
+Open the local address printed in the terminal. Try the interactive D3 constellation, SVG composition, Worker experiment or messages between two browser tabs. Edit `src/YourLab.tsx` to start your own experiment.
 
 [Playground setup and troubleshooting](playground/README.md) includes clone instructions, the source map and available commands. Initial installation needs internet; the examples run locally without a backend or API keys. Node 24 is required only for this playground, not for everyone's own projects.
 
