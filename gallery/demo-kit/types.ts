@@ -1,5 +1,4 @@
 export const requirementLabels = {
-  offline: 'Works offline after setup',
   internet: 'Internet required',
   'secure-context': 'Localhost or trusted HTTPS',
 } as const;
