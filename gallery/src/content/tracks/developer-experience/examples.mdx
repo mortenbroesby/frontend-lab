@@ -1,4 +1,12 @@
-# Find your shortest feedback loop
+# Developer tools to try
+
+## React Render Detective
+
+[Open React Render Detective](#/demo/render-detective). Update a parent in each panel and compare the tile commit counts. Why does `memo` fail to skip work when a prop is a new object? Then like one tile: local state still updates.
+
+Change the object spread in `demos/render-detective/experiment.tsx`, then inspect the difference with React Scan. Counts are observations, not a speed benchmark.
+
+## Find your shortest feedback loop
 
 Run the smallest relevant test while editing; broaden checks before committing.
 

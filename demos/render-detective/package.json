@@ -1,0 +1,19 @@
+{
+  "name": "@lab/demo-render-detective",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@lab/demo-kit": "*",
+    "@lab/ui": "*",
+    "react": "19.3.1",
+    "react-scan": "0.5.7"
+  },
+  "scripts": {
+    "dev": "vite --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run build",
+    "build": "vite build --config ../../gallery/vite.demo.config.ts",
+    "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1"
+  }
+}
