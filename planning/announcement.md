@@ -28,6 +28,6 @@ Still working out the final details, so ideas, feedback and help with preparatio
 | 13:00 | India show & tell — anyone else ready is welcome too! |
 | 14:30–15:00 | Denmark show & tell and wrap-up |
 
-Bring your laptop, charger and curiosity. Use your own repository, tools and technologies if you like; no extensive preparation or polished deliverable needed. Check access to the [planning repository](https://github.com/mortenbroesby/frontend-chapter-day) and, if using an existing project, make sure its usual setup works.
+Bring your laptop, charger and curiosity. Use your own repository, tools and technologies if you like; no extensive preparation or polished deliverable needed. Check access to the [planning repository](https://github.com/mortenbroesby/frontend-chapter-day) and, if using an existing project, make sure its usual setup works. Want a starting point? The [optional exploration kit](https://github.com/mortenbroesby/frontend-chapter-day/blob/main/exercises/README.md) has working examples to try, remix or build towards, plus space for your own idea. Its setup uses Node.js 24.x and npm.
 
 Location / meeting link: **[TO CONFIRM]** · Whiteboard: **[WHITEBOARD_URL]** · Help: **[HELP_CONTACT]**

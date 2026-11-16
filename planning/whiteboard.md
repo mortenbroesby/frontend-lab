@@ -51,7 +51,7 @@ Link to the planning repository and its preparation guide:
 - https://github.com/mortenbroesby/frontend-chapter-day
 - https://github.com/mortenbroesby/frontend-chapter-day/blob/main/planning/preparation.md
 
-Display this start route: **choose a question → choose an existing project or minimal example → try one small thing → record what happened**. No starter or workshop installation is required. An optional Vite/React/TypeScript starter is only under consideration; add a link later if it actually exists and is tested.
+Display this start route: **choose a question → choose an existing project or minimal example → try one small thing → record what happened**. No shared starter is required. Link the [optional exploration kit](../exercises/README.md), [setup guide](../exercises/playground/README.md) and [findings template](../exercises/FINDINGS.md). Offer four routes: experience an example, rebuild towards it, combine ideas, or bring your own project. Include an editable “My route” card with interest, first small result, chosen starting point and next question.
 
 Include browser/editor/access checks, own-project setup instructions and permission to use preferred tools/technologies. Keep special API, server or toolchain requirements local to the chosen experiment. The board must enable India colleagues to start before the welcome, without waiting for the organiser.
 
@@ -94,7 +94,7 @@ Each area should work on its own without a spoken briefing. Include an introduct
 - Real-Time Communication: WebSockets, SSE or WebRTC.
 - Other Web APIs: choose another capability that interests you.
 
-**Starting points:** Your own app, a minimal browser example or an optional tested starter if later provided. For real-time experiments, establish the local server/peer/signalling needs of the chosen example; no shared backend is promised. Add checked API documentation links when selected, without invented commands.
+**Starting points:** Your own app, a minimal browser example or the optional playground with SVG, Worker and local-tab signals examples. For real-time experiments, establish the local server/peer/signalling needs of the chosen example; no shared backend is promised. Use the checked official references and build-towards prompts in the [browser journey](../exercises/journeys/browser.md), without invented commands.
 
 **Stretch:** Browser fallback, cancellation, keyboard use or reduced motion as appropriate.
 
@@ -108,7 +108,7 @@ Each area should work on its own without a spoken briefing. Include an introduct
 
 **Challenge cards:** Technical debt discovery (investigate tools such as Fallow); dependency health; duplication/complexity; architecture/boundaries/coupling; automated quality checks.
 
-**Starting points:** An existing codebase and its current tooling, or a suitable public sample with verified setup. Add **[VERIFIED_SAMPLE_LINK — pending selection]** as an optional fallback, not a prerequisite. Fallow is a tool candidate, not required or validated here; check its documentation before use. Private source should not be uploaded to an external service without permission.
+**Starting points:** An existing codebase and its current tooling, or a suitable public sample with verified setup. Use this actual [playground](../exercises/playground/README.md) as the optional small fallback, with the [quality journey](../exercises/journeys/quality.md). It has no deliberately planted defects. Fallow is a tool candidate, not required or validated here; check its documentation before use. Private source should not be uploaded to an external service without permission.
 
 **Stretch:** Validate a finding against actual use, test a small improvement on an isolated branch or turn a useful check into repeatable analysis.
 
@@ -122,7 +122,7 @@ Each area should work on its own without a spoken briefing. Include an introduct
 
 **Challenge cards:** Faster feedback loops; local tooling; simpler workflows; repetitive-task automation; build/test/debugging improvements; small practical utilities.
 
-**Starting points:** Your own working environment, existing scripts/configuration and one concrete input/output example. A new tool is unnecessary if an existing feature solves the problem.
+**Starting points:** Your own working environment, existing scripts/configuration and one concrete input/output example. A new tool is unnecessary if an existing feature solves the problem. Link the [tooling journey](../exercises/journeys/tooling.md) for a working watch/check feedback loop.
 
 **Stretch:** Ask a peer to try the change, improve failure feedback or check an important failure case.
 
@@ -136,7 +136,7 @@ Each area should work on its own without a spoken briefing. Include an introduct
 
 **Challenge cards:** Browser game; interactive data visualisation; generative art; chapter quiz; developer utility; your own idea.
 
-**Starting points:** Familiar tools, a plain browser page, local/synthetic data or an optional app starter if useful. There is no prescribed stack or required finished product.
+**Starting points:** Familiar tools, a plain browser page, local/synthetic data or the [YourLab component](../exercises/playground/src/YourLab.tsx) and [project journey](../exercises/journeys/project.md) if useful. There is no prescribed stack or required finished product.
 
 **Stretch:** Add a playful interaction, consider accessibility or let a peer try it.
 

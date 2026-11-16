@@ -1,6 +1,6 @@
 # Preparation and getting started
 
-The aim is minimal setup, not a common stack for everyone. The four tracks are self-directed; participants can use existing repositories, preferred technologies and tools. No full exercises or starter have been implemented here.
+The aim is minimal setup, not a common stack for everyone. The four tracks are self-directed; participants can use existing repositories, preferred technologies and tools. An optional [exploration kit](../exercises/README.md) now provides a working starter, small examples and self-directed journey guides.
 
 ## Participant checklist
 
@@ -11,20 +11,20 @@ The aim is minimal setup, not a common stack for everyone. The four tracks are s
 - Install only what your chosen experiment requires. Git is useful for repository work; Node.js or specialist toolchains are not universal prerequisites.
 - Record blockers on the board or contact **[HELP_CONTACT — to confirm]**. You can pair with someone or choose a simpler browser experiment if setup gets in the way.
 
-No workshop install/run commands are published because no starter exists. Own-project participants should use their project's instructions. Do not wait for an optional starter to begin with tools you already have.
+For the optional kit, use Node.js 24.x and npm, then follow the [tested setup instructions](../exercises/playground/README.md). Own-project participants should use their project's instructions; Node 24 is a kit baseline, not a workshop-wide requirement. No specialist toolchain or browser-test installation is needed just to explore.
 
 ## Minimal preparation assessment
 
-Reviewing the track entry paths suggests that access, a clear first question and a usable existing environment are more valuable than four prepared applications. This is a planning assessment, not participant-tested setup evidence.
+Reviewing the track entry paths suggests that access, a clear first question and a usable existing environment are more valuable than four prepared applications. Automated/local verification of the kit is recorded in [verification](../exercises/VERIFICATION.md); independent participant setup remains to be checked.
 
 | Track | Smallest useful preparation | Avoid |
 | --- | --- | --- |
 | A | Choose an API, find its documentation/minimal example and check browser/setup needs | Installing every specialist toolchain or provisioning a shared service |
-| B | An accessible existing project; optionally one verified public sample fallback and tool documentation | A deliberately problematic app or a mandatory analysis tool |
+| B | An accessible existing project or this actual playground as a small fallback, with the quality journey | A deliberately problematic app or a mandatory analysis tool |
 | C | One real friction point and the existing workflow that reproduces it | Building utilities without a user/problem |
 | D | A small idea, familiar environment or minimal starting example | A prescribed stack or elaborate shared app |
 
-One optional Vite + React + TypeScript starter could help people beginning a new UI. First check whether anyone needs it and whether an existing minimal template is sufficient. See [bootstrap plan](../exercises/README.md). There is no need to make the rest of the workshop depend on that decision.
+One optional Vite + React + TypeScript playground is available. Participants can experience the examples, rebuild towards them, combine ideas or use `YourLab.tsx`. The [journey map](../exercises/README.md) also supports own-project work; the rest of the day does not depend on using the kit.
 
 ## Readiness gaps and next actions
 
@@ -33,8 +33,8 @@ One optional Vite + React + TypeScript starter could help people beginning a new
 | India colleagues' independent start | Publish agenda, track details and access instructions before 09:00 Danish local time on Friday; preferably earlier | A colleague can reach the material and choose a starting point without the welcome session |
 | Venue and remote access | Confirm venue/meeting link and how both show-and-tell sessions are joined | Participant-facing details are available |
 | Planning repository and board access | Confirm intended audience, contribution approach, Confluence destination and edit permissions | Participant access is verified, not only owner access |
-| Starting resources | Select/check a small set of useful API/tool references and a suitable public sample fallback for B | Links and setup guidance have been checked; no bespoke exercise needed |
-| Optional app starter | Establish demand; if useful, agree a minimal baseline and verify setup | One clean setup works with documented versions, or explicitly use existing participant environments |
+| Starting resources | Use the journey guides and checked official references; B can inspect the playground itself | Participant can choose a question without a bespoke exercise |
+| Optional kit participant check | Ask a participant to follow the documented setup independently | They can run an example and edit their own experiment; report any platform-specific blockers |
 | Optional morning presentation | Decide whether to include it; identify topic/speaker if so | Status communicated without inventing a slot |
 | Help and demonstrations | Identify a help contact and invite demo sign-ups for both sessions | Participants can seek help and record which session suits them |
 
@@ -42,6 +42,6 @@ Owner assignments, attendance and demo volume remain open. The title, track stru
 
 ## Verification before Friday
 
-Check material access with a participant, including someone in India where practical. Verify board editing once it exists. If a starter is added later, test its real instructions from a clean checkout; if a public sample is offered, check its documented setup. Do not describe any of these checks as complete until evidence is recorded.
+Check material access with a participant, including someone in India where practical. Verify board editing once it exists. Use the kit's recorded checks as a baseline, then have a participant test its instructions on their own machine; if another sample is offered, check its documented setup. Do not describe any of these checks as complete until evidence is recorded.
 
 A plain browser example, own project or peer pairing is a fallback. The organiser should not need to build or troubleshoot every participant's chosen challenge. Keep useful discoveries and setup tips on the shared board for others to reuse.

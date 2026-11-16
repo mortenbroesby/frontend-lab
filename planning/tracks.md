@@ -1,6 +1,6 @@
 # Four agreed tracks
 
-Pick a track, go solo or team up, and follow your curiosity. The track structure is agreed; the ideas below are optional starting points. Use your own repository, tools and technologies where appropriate. No bespoke exercise or organiser-led technical walkthrough is required.
+Pick a track, go solo or team up, and follow your curiosity. The track structure is agreed; the ideas below are optional starting points. Use your own repository, tools and technologies where appropriate. The [optional exploration kit](../exercises/README.md) provides working examples, build-towards prompts and a separate space for your own experiment; no organiser-led technical walkthrough is required.
 
 For any track: choose one question, try the smallest useful experiment, record what happened and share a discovery. Capture **question → approach → evidence → learning → possible next step** in your board area. You can change scope or track along the way.
 
@@ -15,7 +15,7 @@ For any track: choose one question, try the smallest useful experiment, record w
 - Real-Time Communication: WebSockets, Server-Sent Events (SSE) and WebRTC.
 - Other Web APIs: any browser-native capability that interests you.
 
-**Start independently:** Pick one API and a question it could answer. Open its documentation, check browser support and begin with its smallest example in a browser page or your own app. An optional Vite/React/TypeScript starter may help later, but is not required. Choose the smallest interaction that demonstrates the capability.
+**Start independently:** Pick one API and a question it could answer. Open its documentation, check browser support and begin with its smallest example in a browser page or your own app. The [Vite/React/TypeScript playground](../exercises/playground/README.md) and [browser journey](../exercises/journeys/browser.md) are available if useful, but are not required. Choose the smallest interaction that demonstrates the capability.
 
 **Suggested experiments:** Animate a state transition; compare a small calculation on the main thread and in a Worker; try a local real-time message experiment; or explore another API of your choice. For real-time work, first establish what server, peer or signalling setup your chosen example needs; use a runnable local example or choose a simpler API if setup dominates. No shared communication service is promised.
 
@@ -39,7 +39,7 @@ For any track: choose one question, try the smallest useful experiment, record w
 
 **Suggested experiments:** Evaluate an analysis tool on a small scope; trace one dependency boundary; investigate duplicated logic; or prototype a repeatable quality check. Fallow is a candidate to investigate, not a required installation or an endorsed tool with verified capabilities. Consult the selected tool's documentation before running it. Check a few findings against actual usage before deciding they represent debt; an outdated dependency is not automatically a problem.
 
-**Fallback:** If you cannot use a work repository, use a small project you already know or a suitable public sample with setup instructions. A shared sample link still needs selection and a setup check; this must not block own-project exploration. Do not upload private source to external analysis services without permission.
+**Fallback:** If you cannot use a work repository, use a small project you already know or a suitable public sample with setup instructions. The [playground itself](../exercises/playground/README.md) is a small, working fallback. Follow the [quality journey](../exercises/journeys/quality.md); no deliberately broken sample is needed. Do not upload private source to external analysis services without permission.
 
 **Optional stretch:** Test whether a validated finding can become a useful automated check, or try one small improvement on an isolated branch.
 
@@ -53,7 +53,7 @@ For any track: choose one question, try the smallest useful experiment, record w
 
 **Start independently:** Write down one task you repeat, what makes it awkward and what a useful improvement would look like. Reproduce it in your existing environment. Check existing scripts and native tool features before building anything.
 
-**Suggested experiments:** Shorten the path to a focused test; simplify a local setup step; automate a repetitive edit or report; improve debugging feedback; or make a small utility for an actual need. Keep one concrete input/output example and compare the workflow before and after.
+**Suggested experiments:** Shorten the path to a focused test; simplify a local setup step; automate a repetitive edit or report; improve debugging feedback; or make a small utility for an actual need. Keep one concrete input/output example and compare the workflow before and after. The [tooling journey](../exercises/journeys/tooling.md) offers an existing watch/check feedback loop to explore.
 
 **Optional stretch:** Ask a peer to try the improvement, improve error messages or add a meaningful check for an important failure case.
 
@@ -65,7 +65,7 @@ For any track: choose one question, try the smallest useful experiment, record w
 
 **Possible ideas:** A browser game, interactive data visualisation, generative art, chapter quiz, small developer utility or any other interesting experiment.
 
-**Start independently:** Choose your own idea, technologies and approach. Reduce it to one visible or demonstrable behaviour, using familiar tools or a minimal example for a technology you want to explore. A plain page, existing project or optional app starter can all work.
+**Start independently:** Choose your own idea, technologies and approach. Reduce it to one visible or demonstrable behaviour, using familiar tools or a minimal example for a technology you want to explore. A plain page, existing project or [YourLab starting point](../exercises/playground/src/YourLab.tsx) can all work; the [project journey](../exercises/journeys/project.md) suggests small destinations and combinations.
 
 **Suggested experiments:** Create one playable interaction; visualise a small dataset; generate a visual pattern; prototype a quiz question flow; or follow an idea of your own. Use local or synthetic assets if gathering data would slow you down.
 

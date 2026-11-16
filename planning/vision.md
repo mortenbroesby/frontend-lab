@@ -15,7 +15,7 @@ We value learning over production-ready deliverables: a prototype, useful analys
 - Every track offers a first step that does not require the organiser to explain or facilitate each challenge.
 - Use existing projects or simple starting points; extensive preparation and deliberately broken applications are unnecessary.
 - Respect different experience levels and allow solo work, pairs or groups without fixed sizes.
-- Make tools optional where possible. A shared starter is a convenience, not an entry requirement.
+- Make tools optional where possible. The optional exploration kit is a convenience, not an entry requirement. Participants can experience working examples, build towards them, combine pieces or create their own journey.
 - Keep show-and-tell lightweight and capture evidence and discoveries for colleagues across locations.
 
 ## Success criteria
