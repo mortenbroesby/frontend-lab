@@ -175,7 +175,8 @@ test('a failed lazy demo leaves navigation usable', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
 });
 
-test('all named tracks open their matching journey and guide', async ({ page }) => {
+test('all named tracks provide actionable onboarding without opening Markdown files', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   for (const [id, title] of [
     ['modern-web', 'Modern Web Capabilities'],
     ['code-quality', 'Code Quality & Maintainability'],
@@ -186,6 +187,24 @@ test('all named tracks open their matching journey and guide', async ({ page }) 
     await page.getByRole('link', { name: `Explore ${title}` }).click();
     await expect(page).toHaveURL(new RegExp(`#/track/${id}$`));
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
-    await expect(page.locator('.source')).toContainText(`tracks/${id}/bootstrap.md`);
+    await expect(page.getByRole('heading', { name: 'Your first result', exact: true })).toBeVisible();
+    await expect(page.getByText('Success check:', { exact: false })).toBeVisible();
+    await expect(page.locator('main')).not.toContainText(/\.md\b|in your editor|Local guide:/);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
+});
+
+
+test('create and reference pages explain next steps without editor-only documentation pointers', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ['/', '/create', '/demo/art', '/demo/constellation', '/demo/workers', '/demo/signals', '/demo/fallow', '/demo/quality', '/demo/tooling']) {
+    await page.goto(`/#${route}`);
+    await expect(page.locator('main')).not.toContainText(/\.md\b|in your editor|Local guide:/);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  await page.goto('/#/create');
+  await expect(page.getByRole('heading', { name: 'Your first change', exact: true })).toBeVisible();
+  await expect(page.locator('main')).toContainText('npm ci');
+  await expect(page.locator('main')).toContainText('npm run demo:new');
+  await expect(page.locator('main')).toContainText('npm run check');
 });
