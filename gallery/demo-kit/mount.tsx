@@ -1,3 +1,4 @@
+import { CommandMenu } from './CommandMenu';
 import { ThemeControl } from '@lab/ui/theme-control';
 import { LabMark } from './LabMark';
 import { StrictMode } from 'react';
@@ -15,6 +16,13 @@ import './styles.css';
 export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: string) {
   document.title = demo.title;
   const trackHref = galleryHref(`/track/${demo.track}/examples`);
+  const commands = [
+    ['/demos', 'All demos'],
+    [`/track/${demo.track}/examples`, 'Back to track'],
+  ].flatMap(([route, label]) => {
+    const href = galleryHref(route);
+    return href ? [{ label, group: 'Navigation', href }] : [];
+  });
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       {trackHref && (
@@ -24,6 +32,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
             Front-End Lab
           </a>
           <nav aria-label="Lab">
+            <CommandMenu links={commands} />
             <ThemeControl />
             <Button variant="outline" asChild>
               <a href={trackHref}>← Back to track</a>
@@ -33,6 +42,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
       )}
       {!trackHref && (
         <div className="standalone-theme-control">
+          <CommandMenu />
           <ThemeControl />
         </div>
       )}

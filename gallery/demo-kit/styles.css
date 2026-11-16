@@ -978,6 +978,68 @@ pre {
 }
 .standalone-theme-control {
   display: flex;
+  gap: 0.5rem;
   justify-content: flex-end;
   padding: 1rem;
+}
+
+.lab-command-menu[data-slot='dialog-content'] {
+  gap: 1rem;
+}
+.command-results {
+  max-height: min(50dvh, 26rem);
+  overflow-y: auto;
+  margin: 0.75rem -0.25rem;
+  padding: 0.25rem;
+}
+.command-group {
+  color: var(--lab-muted);
+  font-size: 0.75rem;
+  margin: 1rem 0 0.25rem;
+}
+.command-item[data-slot='button'] {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  white-space: normal;
+  height: auto;
+}
+.command-hint {
+  color: var(--lab-muted);
+  font-size: 0.8rem;
+  margin: 0.75rem 0 0;
+}
+.command-shortcut {
+  color: var(--lab-muted);
+  font-size: 0.7rem;
+}
+.command-debug {
+  margin: 1rem 0 0;
+}
+.command-debug > div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--lab-line);
+}
+.command-debug dt {
+  color: var(--lab-muted);
+}
+.command-debug dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .command-shortcut {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .site-header {
+    flex-wrap: wrap;
+  }
+  .site-header > .wordmark {
+    flex-shrink: 0;
+  }
 }

@@ -27,6 +27,12 @@ Root `index.html` opens the gallery. Vite uses the repository root so demo HTML 
 
 Hash routes (`#/track/modern-web`, `#/demo/constellation`, `#/create`) support deep links without server rewrites. Device Rally demonstrates live peer messaging.
 
+## Command palette
+
+Use **Commands** or **⌘K / Ctrl+K** to search demos, tracks and guides. Arrow keys move through results; Enter selects and Escape closes. The standard demo mount also includes the palette, with gallery links when configured. **Show debug information** displays a local runtime snapshot; **Reload page** restarts the current app and clears unsaved in-memory state.
+
+The kit owns the palette and developer commands in `demo-kit/CommandMenu.tsx`; the gallery supplies navigation from its existing metadata. Add commands there without coupling the UI library to app routes.
+
 ## Author a track page
 
 Edit `src/content/tracks/<track-id>/*.mdx`. Tracks have Ideas and Demos tabs; shared setup and demo creation are in the main navigation.

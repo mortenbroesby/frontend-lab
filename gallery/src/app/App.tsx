@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { CommandMenu } from '@lab/demo-kit/command-menu';
 import { ThemeControl } from '@lab/ui/theme-control';
 import { Button } from '@lab/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
@@ -177,6 +178,18 @@ function LabNavigation({ route }: { route: string }) {
   ];
   return (
     <nav aria-label="Lab">
+      <CommandMenu
+        links={[
+          { label: 'All tracks', group: 'Navigation', href: '#/' },
+          ...links.map(([path, label]) => ({ label, group: 'Navigation', href: `#${path}` })),
+          ...tracks.map((track) => ({
+            label: track.title,
+            group: 'Tracks',
+            href: `#/track/${track.id}`,
+          })),
+          ...demos.map((demo) => ({ label: demo.title, group: 'Demos', href: demo.href })),
+        ]}
+      />
       <div className="desktop-nav">
         {links.map(([path, label]) => (
           <a
