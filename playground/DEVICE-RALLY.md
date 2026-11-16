@@ -1,5 +1,7 @@
 # Device rally
 
+> **Experimental demo.** Automated browser tests pass, but this has not been tested on physical phones or the workshop network. Peer discovery and connections may fail on restrictive networks.
+
 Open the same room on two computers and send giant emoji cheers. This finished Modern Web Capabilities example uses **Trystero 0.27 and WebRTC data channels**. Trystero handles room discovery and connection negotiation; there is no custom relay server, host election or backend command.
 
 ## Try it together
