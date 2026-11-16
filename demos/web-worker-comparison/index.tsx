@@ -4,53 +4,85 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 import { countPrimes } from './compute';
+import { observeFrames } from './frames';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@lab/ui/table';
 
 type Result = { count: number; milliseconds: number } | { error: string };
 
+type Mode = 'Worker' | 'Main thread';
+type Measurement = { mode: Mode; limit: number; computation: number; gap: number | null };
+
 export default function Workers() {
   const [limit, setLimit] = useState(500_000);
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState<Mode | null>(null);
+  const [measurements, setMeasurements] = useState<Measurement[]>([]);
   const [status, setStatus] = useState('Ready.');
   const [taps, setTaps] = useState(0);
   const worker = useRef<Worker | null>(null);
-  useEffect(() => () => worker.current?.terminate(), []);
+  const frames = useRef<ReturnType<typeof observeFrames> | null>(null);
+  useEffect(
+    () => () => {
+      worker.current?.terminate();
+      frames.current?.dispose();
+    },
+    [],
+  );
 
-  function finish(result: Result) {
-    setStatus(
-      'error' in result
-        ? result.error
-        : `${result.count.toLocaleString()} primes · ${Math.round(result.milliseconds)} ms computation`,
-    );
-    setBusy(false);
+  function finish(result: Result, mode: Mode) {
     worker.current?.terminate();
     worker.current = null;
+    if ('error' in result) {
+      frames.current?.dispose();
+      setBusy(null);
+      setStatus(result.error);
+      return;
+    }
+    frames.current?.finish((gap) => {
+      setMeasurements((previous) => [
+        ...previous.filter((sample) => sample.mode !== mode),
+        { mode, limit, computation: result.milliseconds, gap },
+      ]);
+      setStatus(`${mode}: ${result.count.toLocaleString()} primes. Compare the frame gaps below.`);
+      setBusy(null);
+    });
+  }
+
+  function begin(mode: Mode) {
+    setBusy(mode);
+    frames.current?.dispose();
+    frames.current = observeFrames();
+    setStatus(`${mode} running. Try the interaction pad.`);
   }
 
   function runWorker() {
-    setBusy(true);
-    setStatus('Worker running. Try the interaction pad.');
+    begin('Worker');
     try {
       const next = new Worker(new URL('./compute.worker.ts', import.meta.url), { type: 'module' });
       worker.current = next;
-      next.onmessage = (event: MessageEvent<Result>) => finish(event.data);
+      next.onmessage = (event: MessageEvent<Result>) => finish(event.data, 'Worker');
       next.onerror = () =>
-        finish({ error: 'Worker failed to load. Check the console and local server.' });
+        finish({ error: 'Worker failed to load. Check the console and local server.' }, 'Worker');
       next.postMessage(limit);
     } catch (error) {
-      finish({ error: error instanceof Error ? error.message : 'Workers are unavailable here.' });
+      finish(
+        { error: error instanceof Error ? error.message : 'Workers are unavailable here.' },
+        'Worker',
+      );
     }
   }
 
   function cancel() {
     worker.current?.terminate();
     worker.current = null;
-    setBusy(false);
+    frames.current?.dispose();
+    setBusy(null);
     setStatus('Cancelled. Ready to restart.');
   }
 
   function runMain() {
+    begin('Main thread');
     const started = performance.now();
-    finish({ count: countPrimes(limit), milliseconds: performance.now() - started });
+    finish({ count: countPrimes(limit), milliseconds: performance.now() - started }, 'Main thread');
   }
 
   return (
@@ -61,9 +93,44 @@ export default function Workers() {
         <button className="tap-pad" onClick={() => setTaps((value) => value + 1)}>
           Interaction pad <strong>{taps}</strong>
         </button>
-        <p>Click or press Tab while work runs.</p>
+        <p>Click or press Tab while work runs. Compare both modes at the same workload.</p>
         <p role="status" className="result">
           {status}
+        </p>
+        <h3>Measured on this device</h3>
+        {measurements.length === 0 ? (
+          <p>Run either mode to record your first result.</p>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Latest run</TableHead>
+                <TableHead>Longest frame gap</TableHead>
+                <TableHead>Calculation</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {measurements.map((sample) => (
+                <TableRow key={sample.mode}>
+                  <TableCell>
+                    {sample.mode}
+                    <br />
+                    Up to {sample.limit.toLocaleString()}
+                  </TableCell>
+                  <TableCell>
+                    {sample.gap === null ? 'Hidden tab: rerun' : `${sample.gap.toFixed(1)} ms`}
+                  </TableCell>
+                  <TableCell>{sample.computation.toFixed(1)} ms</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+        <p className="small">
+          Frame gap: longest wait between animation callbacks, from starting work through the first
+          frame after completion. Includes normal frame spacing; this is not input latency.
+          Calculation time excludes Worker startup and messaging. These are live observations, not
+          benchmark claims.
         </p>
       </div>
       <div className="controls">
@@ -75,7 +142,7 @@ export default function Workers() {
         </p>
         <Label htmlFor="workload">Count primes up to</Label>
         <Select
-          disabled={busy}
+          disabled={busy !== null}
           value={String(limit)}
           onValueChange={(value) => setLimit(Number(value))}
         >
@@ -89,19 +156,19 @@ export default function Workers() {
           </SelectContent>
         </Select>
         <div className="button-row">
-          <Button disabled={busy} onClick={runWorker}>
+          <Button disabled={busy !== null} onClick={runWorker}>
             Run in Worker
           </Button>
-          <Button variant="outline" disabled={!busy} onClick={cancel}>
+          <Button variant="outline" disabled={busy !== 'Worker'} onClick={cancel}>
             Cancel Worker
           </Button>
-          <Button variant="outline" disabled={busy} onClick={runMain}>
+          <Button variant="outline" disabled={busy !== null} onClick={runMain}>
             Compare on main thread
           </Button>
         </div>
         <p className="small">
-          Main-thread work blocks this page and cannot be cancelled. Start small; timings vary by
-          device. Inspect with DevTools. Timing excludes Worker startup and messaging.
+          Start small; main-thread work cannot be cancelled. Keep this tab visible. Run both modes
+          at the same workload, then repeat: results vary by device and other browser work.
         </p>
         {galleryHref('/track/modern-web/workers') && (
           <p>

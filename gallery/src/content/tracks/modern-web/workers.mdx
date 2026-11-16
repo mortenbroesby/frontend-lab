@@ -6,6 +6,10 @@
 
 Start with the small workload. Run in the Worker and use the interaction pad while it runs. Then compare on the main thread. Increase the workload if both complete too quickly to observe; devices differ.
 
+Compare the latest results at the same workload. **Longest frame gap** measures the largest wait between animation callbacks, starting when work begins and ending on the first frame after completion. **Calculation** measures only the prime calculation. Neither number is simulated.
+
+Frame gaps include normal display refresh spacing and other work in the browser; they are not input latency or an isolated benchmark of the algorithm. Keep the tab visible—hidden-tab samples are discarded because browsers can pause animation callbacks. Repeat each mode and look for a consistent difference, rather than treating one run as a verdict.
+
 Look for delayed interaction, not just a shorter calculation time. A Worker can keep the interface responsive even when the calculation takes longer. Main-thread work blocks the page and cannot use the Worker’s cancellation button.
 
 ### Trace the implementation
@@ -24,6 +28,6 @@ Start with one request and one result. Define the message shape, validate runtim
 
 Measure the interaction again on a representative device. Compare responsiveness and total completion time separately. Moving work is useful only if the resulting behaviour improves the experience.
 
-Read: [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
+Read: [Animation frame callbacks](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) · [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
 
 [All Modern Web guides](#/track/modern-web/guides)

@@ -23,3 +23,9 @@ The standalone demo packages, gallery, generator and shared toolchain remain in 
 ## Device Rally physical-device session — 2026-11-16
 
 On the public HTTPS deployment, the participant opened room `lab-check-1611` on a phone. The laptop browser observed three received cheers, ending with a heart. It subsequently showed zero connected peers. This confirms delivery to the laptop during that session, not bidirectional or reconnect acceptance. Phone/browser details, network type, return delivery and deliberate rejoin verification are still pending participant confirmation.
+
+## Worker responsiveness — 2026-11-16
+
+The built gallery was checked in the laptop browser over the LAN preview. At the same limit of 2,000,000, both modes returned 148,933 primes. One Worker run measured 631.2 ms calculation / 21.1 ms longest animation-callback gap; one main-thread run measured 406.5 ms calculation / 409.3 ms gap. These are individual observations, not portable benchmarks. The metric includes normal frame spacing and is not input latency.
+
+Cancellation returned the UI to “Cancelled. Ready to restart.” The bounded observer test verifies the post-computation frame is included, hidden-tab samples are rejected, and disposed observers do not publish results. No browser-test infrastructure was added.
