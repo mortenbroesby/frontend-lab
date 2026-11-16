@@ -1,35 +1,35 @@
 # Ideas to explore
 
-Use a codebase you know, or investigate this repository. Start with a question about its health rather than a target score. A useful finding can be a reason to keep something as it is.
+Use this repository or your own. Investigate a health question, not a target score. Keeping code unchanged can be a useful outcome.
 
 ## Dependency health
 
-Understand why a dependency exists, where it is used and what maintaining it costs. Look for unused packages, version drift or several libraries solving the same problem.
+Ask why a dependency exists, where it is used and what maintenance costs. Look for unused packages, version drift or overlapping libraries.
 
-Trace one package to its callers before proposing a change. Compare package-manager information with static analysis; dynamic loading and configuration can explain an apparent unused dependency. Outdated does not automatically mean harmful.
+Trace callers before changing a package. Compare package-manager data with static analysis; dynamic loading or configuration may explain apparent non-use. Outdated does not mean harmful.
 
 Read: [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain) and [Knip’s unused-code and dependency analysis](https://knip.dev/).
 
 ## Complexity and duplication
 
-Choose a function or component that is difficult to explain. Identify its decisions, responsibilities and repeated patterns. Compare two possible simplifications, including leaving the code alone.
+Pick a hard-to-explain function. Identify decisions, responsibilities and repetition. Compare simplifications with leaving it alone.
 
-Try one small refactoring and use existing tests to check behaviour. Consider whether extracting shared code makes the intent clearer or simply moves the complexity elsewhere.
+Try a small refactor with existing tests. Does extraction clarify intent or just move complexity?
 
 Read: [ESLint’s complexity rule](https://eslint.org/docs/latest/rules/complexity) for what the metric measures, and [Fallow](https://fallow.tools/) for broader codebase analysis.
 
 ## Architecture and boundaries
 
-Explore the relationships between features, packages and shared utilities. Where do dependencies point? Which boundaries are explicit, and which exist only by convention?
+Trace relationships between features, packages and utilities. Which dependency boundaries are explicit, and which rely on convention?
 
-Trace one user-facing behaviour through its imports. Visualise the dependencies, investigate a surprising edge or try a rule that expresses an agreed boundary. Avoid adding rules before deciding what they protect.
+Trace one behaviour through imports. Visualise dependencies, investigate a surprising edge or enforce an agreed boundary. Decide what a rule protects before adding it.
 
 Read: [dependency-cruiser’s documentation and examples](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md).
 
 ## Confidence in change
 
-Pick a behaviour you care about and find the test that would catch it breaking. Compare what a passing test actually proves with what you assumed it proved.
+Find the test that would catch a behaviour breaking. Does a pass prove what you assumed?
 
-Make a small, reversible change on your own branch to test that assumption. Explore a missing boundary case or a more meaningful assertion. Automated findings are starting points to investigate, not instructions to delete code.
+Test that assumption with a reversible change on your branch. Explore a boundary case or stronger assertion. Investigate automated findings before deleting code.
 
 Read: [Node’s test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [Fallow’s analysis documentation](https://fallow.tools/).

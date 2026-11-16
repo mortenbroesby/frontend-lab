@@ -311,10 +311,9 @@ export default function Constellation() {
       </div>
       <div className="impact-insight">
         <div>
-          <h4>What could feel the change?</h4>
+          <h4>Who depends on this?</h4>
           <p>
-            Follow arrows backwards from the selected package. These consumers may need checking—not
-            necessarily fixing.
+            Follow arrows backwards to consumers that may need checking, not necessarily fixing.
           </p>
           {impact.size === 1 ? (
             <p>No consumers are declared in this snapshot.</p>
@@ -332,29 +331,29 @@ export default function Constellation() {
           )}
         </div>
         <div>
-          <h4>Make one change. See the ripple.</h4>
+          <h4>Trace a change.</h4>
           <p>
-            Compare <strong>d3-force</strong> with <strong>react</strong>, then select{' '}
-            <strong>@lab/demo-kit</strong>. Try react-dom to reveal consumers two hops away. Which
-            package connects the most workspaces?
+            Compare <strong>d3-force</strong>, <strong>react</strong> and{' '}
+            <strong>@lab/demo-kit</strong>. Try react-dom for consumers two hops away. Which package
+            reaches most workspaces?
           </p>
           <p>
-            Remix: add a real dependency to a demo’s <code>package.json</code>, reload this page,
-            and find the new connection. <code>demos/constellation/data.ts</code> turns manifests
-            into nodes and edges; <code>graph.ts</code> traces consumers.
+            Add a dependency to a demo’s <code>package.json</code>; reload to find its connection.{' '}
+            <code>demos/constellation/data.ts</code> turns manifests into nodes and edges;{' '}
+            <code>graph.ts</code> traces consumers.
           </p>
-          {createHref && <a href={createHref}>Create your own graph experiment →</a>}
+          {createHref && <a href={createHref}>Create a graph demo →</a>}
         </div>
       </div>
       <div className="graph-notes">
         <p id="graph-help">
-          Drag a package to pin it, or focus a node and use arrow keys. Shift moves further.
-          Changing layout resets pins. Reduced-motion preference starts paused.
+          Drag to pin, or focus a node and use arrows; Shift moves further. Layout changes reset
+          pins. Reduced motion starts paused.
         </p>
         <p className="small">
           Build-time snapshot of workspace dependencies and devDependencies. External packages are
-          leaves: transitive npm dependencies, imports, versions and actual runtime usage are not
-          analysed. D3 controls positions; the graph connections determine impact.
+          leaves; transitive npm dependencies, imports, versions and runtime use are excluded. D3
+          positions nodes; connections determine impact.
         </p>
       </div>
     </div>

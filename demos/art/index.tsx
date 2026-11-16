@@ -49,8 +49,8 @@ export default function Art() {
       </div>
       <div className="controls">
         <p className="eyebrow">01 / SVG + deterministic randomness</p>
-        <h3>A little chaos. A repeatable result.</h3>
-        <p>Change the composition, save one you like, then make the rules your own.</p>
+        <h3>Repeatable randomness.</h3>
+        <p>Remix, save, then change the rules.</p>
         <label htmlFor="density">
           Dots <output>{count}</output>
         </label>
@@ -72,12 +72,10 @@ export default function Art() {
           </button>
         </div>
         <p className="try-this">
-          <strong>What if…</strong> the dots followed a spiral, responded to a pointer, or became a
-          tiny game?
+          <strong>What if…</strong> dots spiralled, followed a pointer or became a game?
         </p>
         <p>
-          Build a small version: draw one SVG circle, add a few shapes from your own rule, then add
-          a control. Saving an image can come later.{' '}
+          Start with one SVG circle, add shapes using a rule, then add a control. Save images later.{' '}
           <a href={galleryHref('/create')}>Create your own artwork</a>.
         </p>
       </div>

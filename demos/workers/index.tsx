@@ -7,7 +7,7 @@ type Result = { count: number; milliseconds: number } | { error: string };
 export default function Workers() {
   const [limit, setLimit] = useState(500_000);
   const [busy, setBusy] = useState(false);
-  const [status, setStatus] = useState('Ready when you are.');
+  const [status, setStatus] = useState('Ready.');
   const [taps, setTaps] = useState(0);
   const worker = useRef<Worker | null>(null);
   useEffect(() => () => worker.current?.terminate(), []);
@@ -25,7 +25,7 @@ export default function Workers() {
 
   function runWorker() {
     setBusy(true);
-    setStatus('Working away from the main thread. Try the interaction pad.');
+    setStatus('Worker running. Try the interaction pad.');
     try {
       const next = new Worker(new URL('./compute.worker.ts', import.meta.url), { type: 'module' });
       worker.current = next;
@@ -42,7 +42,7 @@ export default function Workers() {
     worker.current?.terminate();
     worker.current = null;
     setBusy(false);
-    setStatus('Cancelled. You can start another experiment.');
+    setStatus('Cancelled. Ready to restart.');
   }
 
   function runMain() {
@@ -54,21 +54,21 @@ export default function Workers() {
     <div className="experiment-grid">
       <div className="interaction-stage">
         <span className="orbit" aria-hidden="true" />
-        <p className="eyebrow">Is the interface still listening?</p>
+        <p className="eyebrow">Still responsive?</p>
         <button className="tap-pad" onClick={() => setTaps((value) => value + 1)}>
           Interaction pad <strong>{taps}</strong>
         </button>
-        <p>Click while work runs. Try changing focus with Tab too.</p>
+        <p>Click or press Tab while work runs.</p>
         <p role="status" className="result">
           {status}
         </p>
       </div>
       <div className="controls">
         <p className="eyebrow">02 / Web Workers</p>
-        <h3>Busy browser. Responsive interface.</h3>
+        <h3>Keep the interface responsive.</h3>
         <p>
-          Run the same calculation in two places. A Worker protects interaction; it does not promise
-          a faster calculation.
+          Compare the same calculation on the main thread and in a Worker. Workers protect
+          responsiveness, not calculation speed.
         </p>
         <label htmlFor="workload">Count primes up to</label>
         <select
@@ -93,18 +93,16 @@ export default function Workers() {
           </button>
         </div>
         <p className="small">
-          The main-thread comparison briefly blocks this page and cannot be cancelled. Start small.
-          Duration varies by device; use DevTools to inspect the difference. The timer excludes
-          Worker startup and messaging.
+          Main-thread work blocks this page and cannot be cancelled. Start small; timings vary by
+          device. Inspect with DevTools. Timing excludes Worker startup and messaging.
         </p>
         <p className="try-this">
           <strong>What if…</strong> this processed an image, searched a dataset, or reported
           progress?
         </p>
         <p>
-          Try your own version: start with a Worker that receives one number and sends a result
-          back. Add a status message, then cancellation.{' '}
-          <a href={galleryHref('/create')}>Create an independent demo</a>.
+          Start with a Worker that takes a number and returns a result. Add status, then
+          cancellation. <a href={galleryHref('/create')}>Create an independent demo</a>.
         </p>
       </div>
     </div>

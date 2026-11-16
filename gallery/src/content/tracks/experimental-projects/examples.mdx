@@ -3,12 +3,12 @@
 ## Little world
 
 - **Try:** [Open the pond](#/demo/ecosystem), pause, plant a food trail and press play.
-- **Change:** Adjust sensing distance using the controls, then try changing a movement rule in `demos/ecosystem/world.ts`.
+- **Change:** Adjust sensing distance, then change a movement rule in `demos/ecosystem/world.ts`.
 - **Observe:** Do creatures find the same food with a shorter sensing distance? Change one rule at a time.
 
-`demos/ecosystem/world.ts` contains the rules; `index.tsx` draws the SVG and supplies controls. Start your own version with one creature and one meal, or change a rule in the completed example. Try avoidance, food that regrows or different behaviours for different creatures.
+`world.ts` owns rules; `index.tsx` draws SVG and controls. Start with one creature and meal, or remix the example. Try avoidance, regrowing food or differing behaviours.
 
-The three logic tests check movement towards food, one-time consumption and staying inside the pond. This is a toy habitat, not a biological simulation: there is no reproduction, starvation or persistence.
+Three tests cover movement towards food, one-time consumption and pond boundaries. This toy omits reproduction, starvation and persistence.
 
 ## Generative postcard
 
@@ -16,13 +16,13 @@ The three logic tests check movement towards food, one-time consumption and stay
 - **Change:** Adjust the point distribution in `demos/art/art.ts` or colours in `index.tsx`.
 - **Observe:** Keep the seed fixed. Which parts repeat? Open the exported SVG independently.
 
-**How it works:** `demos/art/art.ts` produces repeatable points from a seed. `demos/art/index.tsx` draws them with SVG, adds controls and serialises the picture for download. This is a completed reference, separate from your [creative starter](#/track/experimental-projects).
+`demos/art/art.ts` generates repeatable seeded points; `index.tsx` draws SVG, adds controls and exports it. This reference is separate from your [creative starter](#/track/experimental-projects).
 
 ## Build towards it, or branch
 
 1. Draw one shape in your starter.
 2. Generate a few shapes from a rule you choose.
 3. Add one control that changes the result.
-4. If useful, add reproducibility or saving; neither is necessary for a first discovery.
+4. Optionally add reproducibility or saving.
 
-Try a spiral, a title, data-driven sizes or a tiny game. Borrow the generator when you want to focus on interaction instead of rebuilding every piece.
+Try spirals, titles, data-driven sizes or a tiny game. Borrow the generator to focus on interaction.

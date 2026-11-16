@@ -6,14 +6,13 @@ export default function generator(plop) {
     (typeof value === 'string' && value.trim().length > 0 && value.length <= 240) ||
     'Enter 1–240 characters.';
   plop.setGenerator('demo', {
-    description: 'Create a standalone React demo, discovered automatically by the gallery',
+    description: 'Create a standalone React demo with automatic gallery discovery',
     prompts: [
       {
         type: 'input',
         name: 'title',
         message: 'Demo name (shown in the gallery):',
-        validate: (value) =>
-          validateName(value) || 'Give your demo a name: 1–240 characters on one line.',
+        validate: (value) => validateName(value) || 'Enter a name: 1–240 characters, one line.',
       },
       {
         type: 'input',

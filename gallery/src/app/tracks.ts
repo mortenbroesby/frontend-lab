@@ -4,7 +4,7 @@ export const tracks = [
   {
     id: 'modern-web',
     title: 'Modern Web Capabilities',
-    description: 'Explore visuals, computation, communication and unfamiliar browser APIs.',
+    description: 'Explore browser APIs for visuals, computation and communication.',
   },
   {
     id: 'code-quality',
@@ -14,11 +14,11 @@ export const tracks = [
   {
     id: 'developer-experience',
     title: 'Developer Experience & Tooling',
-    description: 'Find a recurring frustration and try a practical improvement.',
+    description: 'Find friction. Try an improvement.',
   },
   {
     id: 'experimental-projects',
     title: 'Experimental Projects',
-    description: 'Build a game, a visual story, a quiz—or something entirely your own.',
+    description: 'Build a game, visual story, quiz—or your own idea.',
   },
 ] satisfies { id: TrackId; title: string; description: string }[];

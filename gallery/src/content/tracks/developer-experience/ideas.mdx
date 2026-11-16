@@ -2,48 +2,48 @@
 
 Identify friction → Explore alternatives → Experiment → Demonstrate results.
 
-Choose something that interrupts your actual work. Discovering an existing solution is just as useful as building a new tool. Use this repository or a project you already know.
+Use this repository or your own to address real friction. Finding an existing solution is as useful as building one.
 
 ## Faster Feedback Loops
 
-Explore targeted tests, watch modes, build caching, affected-project detection and faster validation. The question is how quickly you can get useful evidence about the change you are making.
+Explore targeted tests, watch modes, caching and affected-project detection. How quickly can you get useful evidence about your change?
 
-Compare a whole test file with one named test, then watch it respond to an edit. Inspect which tasks a monorepo tool selects before running them. As a stretch, explain a cache miss or find a smaller validation set that still catches the relevant regression. A smaller selection is not a replacement for every broader check.
+Compare a test file with one named test; watch it respond to edits. Inspect selected monorepo tasks before running them. Explain a cache miss or find fewer checks that catch the regression; broader checks may still be needed.
 
 Read: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) and [Turborepo’s task-selection and dry-run options](https://turborepo.dev/docs/reference/run).
 
 ## Developer Tools
 
-Build or discover a small CLI, Git utility, debugging helper or automation for a repetitive task. Start with a real question the current workflow makes awkward to answer.
+Find or build a CLI, Git utility, debugger aid or automation that answers an awkward question.
 
-Compare native commands such as `npm run`, `git diff --stat` and `git diff --check` with a custom report. Or replace a recurring console-log investigation with a debugger feature. If you write a utility, begin with read-only output and handle one real edge case before expanding it.
+Compare `npm run`, `git diff --stat` and `git diff --check` with a custom report. Replace recurring console logs with a debugger feature. New utilities should start read-only and handle one real edge case before expanding.
 
 Read: [Git diff options](https://git-scm.com/docs/git-diff) and [Node’s native argument parser](https://nodejs.org/docs/latest-v24.x/api/util.html#utilparseargsconfig).
 
 ### Idea: a Sapphire usage inspector
 
-Explore a developer tool that helps engineers review how they use Sapphire React components. It could highlight a potential issue, point to the relevant code and explain what to investigate.
+Explore a Sapphire React usage inspector that locates potential issues and explains what to investigate.
 
-Possible questions include whether a component or prop is deprecated, whether required setup is present, and whether composition or accessibility guidance is being followed. These are candidate checks, not confirmed Sapphire rules.
+Candidates include deprecated components/props, missing setup, composition and accessibility guidance. These are not confirmed Sapphire rules.
 
-Start by defining what a useful finding would look like. Once Sapphire documentation, types or examples are available, choose one documented rule and investigate whether an existing lint rule, a small source-analysis script or browser inspection could check it. Show the evidence and a suggested next step rather than claiming the entire implementation is correct.
+Define a useful finding. When Sapphire docs, types or examples are available, choose one documented rule. Could lint, source analysis or browser inspection check it? Show evidence and a next step without claiming overall correctness.
 
-This is an exploration idea only: we do not yet have Sapphire’s package, repository or documentation. No integration or library-specific checks are implemented.
+Idea only: Sapphire’s package, repository and docs are unavailable; no integration or checks exist.
 
 ## Development Workflows
 
-Explore local API mocking, monorepo tooling, development environments and alternative build workflows. Look for a way to work independently of a slow service, unclear setup or unnecessarily broad command.
+Explore API mocking, monorepo tools, environments or builds to escape slow services, unclear setup or broad commands.
 
-Use request blocking, throttling or a local response override to investigate loading and error states. Compare that approach with a fetch stub in an app you own. Alternatively, compare a standalone package build with a filtered monorepo build, or have a peer try your smallest reproducible environment.
+Compare request blocking, throttling or response overrides with a fetch stub for loading/error states. Compare standalone and filtered monorepo builds, or have a peer try your minimal environment.
 
 Read: [Chrome DevTools local overrides](https://developer.chrome.com/docs/devtools/overrides) and [Turborepo run reference](https://turborepo.dev/docs/reference/run).
 
 ## Agentic Workflows
 
-Explore reusable Codex/Copilot skills, bounded development tasks and automated review workflows. Use an agent you already have access to; you can also rehearse the workflow manually.
+Explore Codex/Copilot skills, bounded tasks and automated reviews with an existing agent, or rehearse manually.
 
-Compare a one-off prompt with a skill that specifies the task, boundaries, checks and expected evidence. Try reviewing one small change without editing files, then compare the findings with your own inspection and existing checks. Investigate what becomes repeatable and where human judgement is still needed.
+Compare a prompt with a skill specifying task, boundaries, checks and evidence. Review one change without edits; compare findings with your inspection and checks. What becomes repeatable, and where is judgement needed?
 
 Read: [Codex skills](https://developers.openai.com/codex/skills) and [Copilot CLI skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills).
 
-A useful result might be fewer steps, clearer feedback or a reason to keep your existing approach. Show the difference and one limitation; no polished tool or report is required.
+Show fewer steps, clearer feedback or a reason to keep your approach, plus one limitation. No polished tool or report needed.

@@ -5,8 +5,8 @@ description: Use Fallow to investigate unused code, duplication, complexity and 
 
 # Fallow
 
-Read `node_modules/fallow/skills/fallow/SKILL.md` from the repository root for the official, installed-version instructions. Use `npm ci` if it is missing.
+Read the installed instructions at `node_modules/fallow/skills/fallow/SKILL.md`. Run `npm ci` if missing.
 
-Run the pinned CLI via `npm run analyze -- <command>`. Check current flags with `--help`. Validate findings before edits; preview automatic fixes first. Before committing or pushing, run `npm run analyze:changes` and resolve introduced findings. The shared Git pre-commit hook audits staged changes; PRs and direct pushes to main also run an audit in CI.
+Use `npm run analyze -- <command>`; check flags with `--help`. Validate findings and preview fixes before editing. Run `npm run analyze:changes` before commits/pushes; resolve introduced findings. The Git hook audits staged changes; CI audits PRs and main pushes.
 
-Setup and worked examples: `gallery/src/content/tracks/code-quality/fallow.mdx`. Keep agent configuration limited to Codex and Copilot CLI, with this shared skill and AGENTS.md. Do not regenerate per-agent hook scripts or duplicate task maps.
+Setup and examples: `gallery/src/content/tracks/code-quality/fallow.mdx`. Use this shared skill and AGENTS.md for Codex and Copilot CLI. No per-agent hooks or duplicate task maps.

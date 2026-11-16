@@ -10,7 +10,7 @@ export default function Signals() {
 
   useEffect(() => {
     if (typeof BroadcastChannel !== 'function') {
-      setStatus('BroadcastChannel is unavailable here. Try a current browser or another example.');
+      setStatus('BroadcastChannel unavailable. Try a current browser or another demo.');
       return;
     }
     try {
@@ -22,13 +22,13 @@ export default function Signals() {
         }
       };
       setReady(true);
-      setStatus('Ready. Open a second tab on the same address to exchange signals.');
+      setStatus('Ready. Open this address in another tab.');
       return () => {
         connection.close();
         channel.current = null;
       };
     } catch {
-      setStatus('This browser context could not open a channel. Try a normal local tab.');
+      setStatus('Cannot open a channel here. Try a normal local tab.');
     }
   }, []);
 
@@ -37,7 +37,7 @@ export default function Signals() {
     const message = text.trim();
     if (!message || !channel.current) return;
     channel.current.postMessage(message);
-    setStatus('Sent to other open lab tabs. This is not a delivery receipt.');
+    setStatus('Sent to other lab tabs; delivery is unconfirmed.');
   }
 
   return (
@@ -45,7 +45,7 @@ export default function Signals() {
       <div className="signal-stage">
         <p className="eyebrow">Incoming / last five signals</p>
         {messages.length === 0 ? (
-          <p className="empty-note">Nothing yet. Send a message from the second tab.</p>
+          <p className="empty-note">No messages. Send one from the other tab.</p>
         ) : (
           <ul aria-live="polite" className="messages">
             {messages.map((message, index) => (
@@ -53,19 +53,14 @@ export default function Signals() {
             ))}
           </ul>
         )}
-        <p className="small">
-          Ephemeral, same-origin browser tabs only. Nothing is saved or sent to a server.
-        </p>
+        <p className="small">Same-origin tabs only. No storage or server.</p>
       </div>
       <div className="controls">
         <p className="eyebrow">03 / BroadcastChannel</p>
-        <h3>Two tabs. A shared conversation.</h3>
-        <p>
-          Explore event-driven interfaces without setting up a backend. This is local tab
-          communication, not WebSockets or messaging between laptops.
-        </p>
+        <h3>Two tabs. One conversation.</h3>
+        <p>Send events between local tabs—no backend, WebSockets or cross-device messaging.</p>
         <a className="button secondary" href="#/demo/signals" target="_blank" rel="noopener">
-          Open second lab tab ↗
+          Open another tab ↗
         </a>
         <form onSubmit={send}>
           <label htmlFor="message">Your signal</label>
@@ -83,12 +78,11 @@ export default function Signals() {
           {status}
         </p>
         <p className="try-this">
-          <strong>What if…</strong> two tabs shared a colour palette, a quiz question or a drawing?
-          How would this change across computers?
+          <strong>What if…</strong> tabs shared a palette, quiz or drawing? What would cross-device
+          support need?
         </p>
         <p>
-          Try sharing a colour or quiz answer between two same-origin tabs. Start with one event
-          type and close the channel when leaving your demo.{' '}
+          Start with one event type; close the channel when leaving the demo.{' '}
           <a href={galleryHref('/create')}>Create your own experiment</a>.
         </p>
       </div>

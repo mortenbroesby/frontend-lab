@@ -4,6 +4,6 @@ export default {
   requirements: ['offline'],
   title: 'Little world',
   track: 'experimental-projects',
-  description: 'Plant food, change the rules and watch a tiny pond come alive.',
+  description: 'Plant food and change the rules of a tiny pond.',
   author: 'Lab examples',
 } satisfies DemoDefinition;

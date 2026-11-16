@@ -19,9 +19,8 @@
 
 ---
 
-A shared React gallery for front-end engineers. Take apart a working example,
-follow a track or bring your own idea. Go solo or team up; useful discoveries
-and unfinished experiments are welcome.
+A React gallery for front-end experiments. Explore a demo, follow a track or
+bring your own idea—solo or together. Unfinished work is welcome.
 
 <a id="tracks"></a>
 ## 🧭 Choose a Track
@@ -33,22 +32,19 @@ and unfinished experiments are welcome.
 | 🛠️ Developer Experience & Tooling | Feedback loops, development friction and workflow automation |
 | 🚀 Experimental Projects | Games, generative art, visualisations or your own experiment |
 
-Each track has starting points, worked examples and optional challenges.
-Use this gallery or an existing project where it fits.
+Each track has ideas, demos and a starting point. Use this repo or your own project.
 
 <a id="start-here"></a>
 ## 🚀 Run Locally
 
-Clone this repository and run these commands from its root. Requires **Node 24**
-and npm (the workspace pins npm 11.6.2).
+Clone the repo. With **Node 24** and npm 11.6.2, run from its root:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the address printed in your terminal. Choose a track in the app for
-getting started, experiments and worked examples.
+Open the printed address and choose a track.
 
 <a id="create-a-demo"></a>
 ## 🛠️ Create a Demo
@@ -57,11 +53,9 @@ getting started, experiments and worked examples.
 npm run demo:new
 ```
 
-Name your demo and choose a track. Modern Web starts with a circle; other tracks
-start with an idea card. All demos live in `demos/<your-id>/`; edit `index.tsx`.
-The generator prints your local route.
-It appears in the gallery automatically. **Create a demo** in the app has the
-quick start.
+Name it and choose a track: Modern Web starts with a circle; others with an idea
+card. Edit `demos/<your-id>/index.tsx`. The generator prints the route and the
+gallery discovers your demo automatically. See **Create a demo** in the app.
 
 ---
 

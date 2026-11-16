@@ -4,6 +4,6 @@ export default {
   requirements: ['offline'],
   track: 'modern-web',
   title: 'Room to think',
-  description: 'Compare a calculation on the main thread and in a Worker.',
+  description: 'Compare main-thread and Worker calculations.',
   author: 'Lab examples',
 } satisfies DemoDefinition;

@@ -1,8 +1,8 @@
 # Device rally
 
-> **Experimental demo.** This has not been tested on physical phones or the workshop network. Peer discovery and connections may fail on restrictive networks.
+> **Experimental demo.** Untested on physical phones and the workshop network. Restrictive networks may block discovery or connections.
 
-Open the same room on two computers and send giant emoji cheers. This finished Modern Web Capabilities example uses **Trystero 0.27 and WebRTC data channels**. Trystero handles room discovery and connection negotiation; there is no custom relay server, host election or backend command.
+Open the same room on two computers and send giant emoji cheers. This Modern Web example uses **Trystero 0.27 and WebRTC data channels**. Trystero handles discovery and connection negotiation. No custom relay, host election or backend command is needed.
 
 ## Try it together
 
@@ -13,23 +13,23 @@ npm ci
 npm run dev
 ```
 
-Open the printed localhost URL and choose **Device rally** in the gallery, or append `/#/demo/device-rally`. Everyone automatically joins `friday-lab`. Wait for the other-device count to rise, then tap 🚀, ✨ or 💜. The other screens react immediately. The buttons stay disabled until a peer actually connects.
+Open the printed localhost URL and choose **Device rally** in the gallery, or append `/#/demo/device-rally`. Everyone joins `friday-lab` automatically. Once another device connects, tap 🚀, ✨ or 💜 to animate its screen. Buttons stay disabled until connected.
 
-For a separate group, select **Leave room**, enter the same short room code on each device, then **Join room**. Joining refreshes the page to create a fresh peer session and puts the code in the URL so you can share it. Codes accept lowercase letters, digits and hyphens, up to 24 characters. This example caps room membership at 12 and uses an ephemeral browser-session identity. Its counter counts cheers seen during this visit, not a globally synchronized score. Late joiners start at zero; missed cheers are not replayed.
+For a separate group, **Leave room**, enter the same code on each device, then **Join room**. Joining reloads the page for a fresh peer session and adds the code to the shareable URL. Codes allow up to 24 lowercase letters, digits or hyphens. Rooms allow 12 members with ephemeral browser-session identities. Counters track cheers seen this visit, not a synchronized score. Late joiners start at zero; missed cheers are not replayed.
 
 ## Network requirements
 
-- Internet access is required for discovery through Trystero’s default public Nostr signaling relays. Same room means same peers even if each computer serves the app from its own localhost port. This is not offline LAN discovery.
-- Cheers use peer-to-peer WebRTC once connected. Participants can be on different networks; they do not have to share Wi-Fi. Public signaling availability and direct peer connectivity are separate requirements.
-- Trystero needs Web Crypto: use **localhost or trusted HTTPS**. Plain `http://192.168.…` on a phone is not a secure context and the demo explains this. A phone cannot use your laptop’s localhost URL. Phone access needs a trusted HTTPS URL for the gallery; hosting and local certificate setup are outside this example.
-- Corporate firewalls, VPNs, guest Wi-Fi isolation and some NAT configurations can prevent peers from connecting. Trystero has default STUN support; this demo does **not** configure a TURN fallback. Test the actual workshop network beforehand. If it blocks connections, use an approved alternative network. Do not paste TURN secrets into browser source.
-- No special development-server mode is needed. A static build also works when served on localhost or trusted HTTPS, provided the network permits signaling and WebRTC.
+- Discovery requires internet access to Trystero’s default public Nostr signaling relays. Matching rooms connect even across separate localhost ports. This is not offline LAN discovery.
+- Cheers travel over peer-to-peer WebRTC. Peers can use different networks; public signaling and direct connectivity are separate requirements.
+- Web Crypto requires **localhost or trusted HTTPS**. Phones cannot use your laptop’s localhost or plain `http://192.168.…`; the demo explains the secure-context requirement. Phone access needs trusted HTTPS; hosting and certificate setup are outside this example.
+- Firewalls, VPNs, guest Wi-Fi isolation and some NAT configurations can block peers. Trystero supplies STUN; this demo has **no TURN fallback**. Test the workshop network; use an approved alternative if blocked. Never put TURN secrets in browser source.
+- No special dev-server mode is needed. Static builds work on localhost or trusted HTTPS if signaling and WebRTC are allowed.
 
-Room codes are grouping labels, not passwords. Anyone using this app and room can join. Signaling uses third-party public relays; peers exchange connection information and may learn each other’s IP addresses. Use playful signals only. There are no camera/microphone permissions, accounts or saved cheer history. If immediate rejoining stalls, refresh both pages and join the same room again. Leaving or navigating away closes the room; Trystero manages connection discovery and teardown. No device becomes an authoritative server.
+Room codes group peers; they are not passwords. Anyone using this app and room can join. Public third-party relays exchange connection information; peers may learn each other’s IP addresses. Use playful signals only. No camera/microphone permissions or accounts are needed; cheer history is not saved. If rejoining stalls, refresh both pages and rejoin. Leaving or navigating away closes the room. Trystero handles discovery and teardown; no device becomes an authoritative server.
 
 ## Build an independent experiment
 
-Keep `../../demos/device-rally/index.tsx` as the finished reference. Use `npm run demo:new` to create your own demo under **Modern Web Capabilities**. Try a local interaction first, then use Trystero’s small API:
+Keep `../../demos/device-rally/index.tsx` as the finished reference. Use `npm run demo:new` under **Modern Web Capabilities**. Start with a local interaction, then try Trystero:
 
 ```ts
 import { joinRoom } from 'trystero';
@@ -43,7 +43,7 @@ await cheer.send('🚀');
 await room.leave();
 ```
 
-Use your own app ID so incompatible experiments do not share messages. Validate received values, handle `room.onError`, and wait for previous teardown before joining the same room again. The finished React example handles these lifecycle details, including Strict Mode.
+Use a unique app ID to isolate incompatible experiments. Validate messages, handle `room.onError`, and await teardown before rejoining. The React example handles this lifecycle, including Strict Mode.
 
 Read [Trystero’s getting-started guide](https://trystero.dev/docs/getting-started/) and [connection troubleshooting](https://trystero.dev/docs/connections/) for the library API and TURN options.
 
@@ -51,7 +51,7 @@ Read [Trystero’s getting-started guide](https://trystero.dev/docs/getting-star
 
 Open the same room in two browsers, send a cheer in each direction, then leave and rejoin. Use a different room code to try isolation. This is a manual demo check, not a production acceptance checklist.
 
-Earlier automated checks exercised separate browser clients on one computer. Those browser tests have been removed. They did not establish physical-phone, cross-network NAT traversal or workshop-network compatibility.
+Removed browser tests checked separate clients on one computer. They did not establish physical-phone, cross-network NAT or workshop-network compatibility.
 
 ## Independent app
 

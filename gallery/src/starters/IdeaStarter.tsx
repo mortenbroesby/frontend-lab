@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-// This is your starting point. Keep, replace or delete anything here.
+// Keep, replace or delete this starter.
 export default function Demo() {
   const [idea, setIdea] = useState('What if…');
   const [colour, setColour] = useState('#b4e5c4');
@@ -12,12 +12,11 @@ export default function Demo() {
         <h3>{idea || 'Your next experiment'}</h3>
       </div>
       <div className="controls">
-        <p className="eyebrow">Your space / no prescribed outcome</p>
-        <h3>Start with one small thing.</h3>
+        <p className="eyebrow">Your experiment</p>
+        <h3>Start small.</h3>
         <p>
-          In your generated <code>index.tsx</code>, change “An idea, taking shape” to your own
-          heading and save. Refresh to confirm your code change stays. Then build one visible
-          behaviour of your own.
+          Edit the heading in your generated <code>index.tsx</code>. Save and refresh to confirm it
+          persists, then add an interaction.
         </p>
         <label htmlFor="idea">What are you curious about?</label>
         <input
@@ -26,14 +25,14 @@ export default function Demo() {
           maxLength={120}
           onChange={(event) => setIdea(event.target.value)}
         />
-        <label htmlFor="colour">A colour to start with</label>
+        <label htmlFor="colour">Colour</label>
         <input
           id="colour"
           type="color"
           value={colour}
           onChange={(event) => setColour(event.target.value)}
         />
-        <p className="small">This preview resets when you refresh.</p>
+        <p className="small">Refresh resets this preview.</p>
       </div>
     </div>
   );

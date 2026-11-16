@@ -1,6 +1,6 @@
 # Investigate with Fallow
 
-Pick a question, run an analysis and verify one finding. You can use this repository as-is; no new demo or deliberately broken application is needed. Fallow 3.43.1 is pinned as a root development dependency and installed through the root lockfile.
+Pick a question, run analysis and verify a finding in this repository. The root lockfile pins Fallow 3.43.1 as a development dependency.
 
 ## Get a first result
 
@@ -11,21 +11,21 @@ npm run analyze -- --version
 npm run analyze
 ```
 
-The last command combines unused-code, duplication and health analysis. It reads local source and may write caches under ignored `.fallow/`. It does not apply fixes. No account, cloud connection or editor extension is needed. The gallery's **Investigate with Fallow** entry explains the journey; your terminal output is the current evidence.
+`analyze` checks unused code, duplication and health. It reads local source and may cache in ignored `.fallow/`; it applies no fixes and needs no account, cloud connection or extension. The gallery explains the investigation; terminal output supplies current evidence.
 
-**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). The repository verification workflow also audits introduced findings on pull requests and direct pushes to main.
+**Exit codes matter:** completed scans can exit 1 when findings exceed thresholds. Read findings and gate messages; missing binaries, invalid configuration and parse errors need separate investigation. Analysis runs outside `npm run check`; hooks and CI gate new findings as described below.
 
 ## Set up agents and commit checks
 
-After `npm ci`, run `npm run fallow:status`. If the Git hook is absent, run `npm run fallow:hooks` once per clone. This uses Fallow’s official installer; it refuses to overwrite existing hooks. Keep Node/npm available to your terminal and Git client.
+After `npm ci`, check `npm run fallow:status`. Install missing hooks once per clone with `npm run fallow:hooks`; the official installer refuses to overwrite hooks. Your terminal and Git client need Node/npm.
 
-Both **Codex and Copilot CLI** read the root `AGENTS.md` and the single skill in `.agents/skills/fallow`. The skill points to the full official instructions bundled with our pinned Fallow dependency. No copying of the full task map or per-agent hook scripts is needed.
+**Codex and Copilot CLI** share root `AGENTS.md` and `.agents/skills/fallow`, which links the pinned dependency’s official instructions. Do not duplicate the task map or add per-agent hooks.
 
-Agents run the same CLI commands as participants: `npm run analyze` and `npm run analyze:changes`. No repository MCP server configuration is needed.
+Agents use the same CLI: `npm run analyze` and `npm run analyze:changes`. No MCP server needed.
 
-The **Git pre-commit hook** runs `fallow audit --staged` against HEAD and blocks new findings for either client or a manual commit. Existing findings remain visible without blocking unrelated changes. Run `npm run analyze:changes -- --staged` to inspect a failure. Agents are instructed to run `npm run analyze:changes` before pushing; there is **no automatic pre-push or per-agent tool hook**. CI audits PRs against their base SHA and main pushes against the previous remote SHA.
+The **pre-commit hook** runs `fallow audit --staged` against HEAD for agent and manual commits. It blocks new findings; existing findings stay visible without blocking unrelated changes. Inspect failures with `npm run analyze:changes -- --staged`. Agents must run `npm run analyze:changes` before pushing; **no automatic pre-push or per-agent hook exists**. CI compares PRs with their base SHA and main pushes with the previous remote SHA.
 
-The Git hook is local, not branch protection; if Fallow is absent its official script warns and skips. Use the status command rather than assuming installation proves enforcement. Keep this setup small when updating Fallow: preserve the CLI and shared skill rather than rerunning `fallow agent install`, which regenerates the larger harness-specific integration.
+Hooks are local, not branch protection. Without Fallow, the hook warns and skips; verify enforcement with the status command. When updating, retain the CLI/shared skill. Avoid `fallow agent install`, which regenerates a larger harness-specific integration.
 
 References: [official Git hooks](https://fallow.tools/docs/cli/hooks/), [Copilot shared skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills).
 
@@ -39,7 +39,7 @@ References: [official Git hooks](https://fallow.tools/docs/cli/hooks/), [Copilot
 | `npm run analyze:architecture` | Are there import cycles or configured boundary violations? |
 | `npm run analyze -- list --entry-points --plugins --workspaces` | What does the tool think this project contains? |
 
-Pass CLI options after `--`, for example `npm run analyze:health -- --report-only` for an advisory health run. For a machine-readable report without npm's script banner, use `npm run --silent analyze:dead-code -- --format json --output-file .fallow/dead-code.json` after creating `.fallow/` if necessary.
+Pass options after `--`: `npm run analyze:health -- --report-only` gives advisory results. For JSON without npm’s banner, create `.fallow/` if needed, then run `npm run --silent analyze:dead-code -- --format json --output-file .fallow/dead-code.json`.
 
 ## Worked investigation: why is this dependency here?
 
@@ -49,28 +49,28 @@ Trace a real dependency from the repository root:
 npm run analyze:dead-code -- --trace-dependency d3-force
 ```
 
-Follow the result into `demos/constellation/index.tsx`. Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
+Follow the result into `demos/constellation/index.tsx`. Compare imports with uses. What does the dependency provide, and what would replacing it cost? Keeping it can be justified.
 
-For unused-code investigation, follow a current finding. Check that discovery sees the gallery metadata, each demo’s HTML entry and any Worker modules before trusting a report that calls them unused.
+Before trusting an unused-code finding, check discovery includes gallery metadata, demo HTML entries and Worker modules.
 
 ## Worked investigation: complexity is a clue
 
-Run `npm run analyze:health` and choose a current finding. For example, inspect the route selection and JSX conditions in `gallery/src/app/App.tsx`. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
+Run `npm run analyze:health` and inspect a finding. For example, examine routes and JSX conditions in `gallery/src/app/App.tsx`. Would extracting a view clarify intent or just move branches?
 
-No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured test coverage**, and the retained tests cover selected logic. A high score does not establish a defect. If you try a refactor, keep routes and error handling intact and choose a focused check for the behaviour you changed. A reasoned decision to leave the code alone is a valid outcome.
+Fallow receives no coverage file: its CRAP/risk score is **not measured test coverage**. Tests cover selected logic; high scores do not prove defects. Preserve routes and error handling during refactors, and check changed behaviour. Leaving code alone can be reasonable.
 
 ## How this repository is configured
 
-- We use Fallow's built-in discovery without a custom config. Earlier verification covered the npm workspace, Vite entry, Turbo generator, tests, independent demo entries and Worker module. Recheck the discovery command above after changes to folder discovery or when using another repository; previous evidence does not prove the new entry paths are understood.
-- Scripts run once at the repository root, outside Turbo's task cache, so the report reflects the current whole workspace. There is no analyzer wrapper or per-demo configuration.
-- No findings are suppressed and no baseline hides existing issues. We keep the defaults so participants can inspect their meaning before proposing thresholds.
-- No Fallow architecture boundary rules or rule packs have been configured. Separately, `npm run check:architecture` enforces the repository’s dependency-cruiser rules. A clean Fallow boundary result does not measure that separate policy.
-- `.fallow/` is ignored because it holds local generated data. Do not commit caches or machine-specific reports.
+- Built-in discovery, no custom config. Earlier checks covered npm workspaces, Vite entries, the Turbo generator, tests, demo entries and a Worker. Recheck discovery after moving entries or switching repositories.
+- Root scripts scan the current workspace outside Turbo’s cache. No wrapper or per-demo configuration.
+- No suppressions or baseline. Inspect default findings before proposing thresholds.
+- No Fallow boundary rules or rule packs. `npm run check:architecture` separately enforces dependency-cruiser rules; a clean Fallow result says nothing about that policy.
+- `.fallow/` holds ignored generated data. Never commit caches or machine-specific reports.
 
-If discovery misses a real entry in your own project, inspect it first and add a narrow `entry` pattern in `.fallowrc.json`. Avoid marking every file as an entry or ignoring a whole directory to obtain a clean report. Do not run automatic fixes before understanding the candidate change.
+If discovery misses an entry, inspect it before adding a narrow `entry` pattern in `.fallowrc.json`. Do not mark every file as an entry or ignore directories to clear findings. Understand changes before applying automatic fixes.
 
 Keep sensitive source and reports within the repository's permitted audience.
 
-References: [official quick start](https://fallow.tools/docs/quickstart/), [configuration](https://fallow.tools/docs/configuration/), [Fallow source](https://github.com/fallow-rs/fallow). Website examples can advance beyond our pinned version; `npm run analyze -- --help` describes the installed CLI.
+References: [official quick start](https://fallow.tools/docs/quickstart/), [configuration](https://fallow.tools/docs/configuration/), [Fallow source](https://github.com/fallow-rs/fallow). Web examples may outpace our pinned version; `npm run analyze -- --help` describes the installed CLI.
 
 [Code Quality & Maintainability](#/track/code-quality) · [Investigation bootstrap](#/track/code-quality)

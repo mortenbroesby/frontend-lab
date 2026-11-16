@@ -146,20 +146,19 @@ export default function Ecosystem() {
         </button>
       </div>
       <p id="pond-help">
-        Click or tap the pond to plant food. Keyboard: focus the pond, move the marker with arrow
-        keys, then press Enter. Up to 120 meals; adding more replaces the oldest.
+        Click to plant food, or focus the pond, move with arrow keys and press Enter. After 120
+        meals, new food replaces the oldest.
       </p>
       <details>
         <summary>Change the rules</summary>
         <p>
-          In <code>demos/ecosystem/world.ts</code>, creatures seek the nearest food they can sense;
-          otherwise they wander. Change that rule: prefer distant food, avoid neighbours, or add
-          predators. React draws the world in <code>index.tsx</code>.
+          In <code>demos/ecosystem/world.ts</code>, creatures seek the nearest food they sense or
+          wander. Try distant food, avoiding neighbours or predators. <code>index.tsx</code> draws
+          the world.
         </p>
         <p>
-          This is a toy habitat, not a biological model: creatures do not reproduce or starve. Food
-          does not regrow. Reset starts the same world; refresh forgets your changes. Reduced motion
-          starts paused.
+          A toy, not a biological model: no reproduction, starvation or food regrowth. Reset repeats
+          the initial world; refresh loses changes. Reduced motion starts paused.
         </p>
       </details>
     </div>

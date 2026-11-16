@@ -1,6 +1,6 @@
 # Design decisions
 
-Short notes explaining why this repository works the way it does: what we considered, what we chose and the tradeoffs. Participant instructions stay in the gallery guides; setup and maintenance procedures stay in the [gallery documentation](../../README.md#maintainer-reference).
+Why we made these choices, their alternatives and tradeoffs. Participant instructions stay in gallery guides; maintenance procedures in [gallery documentation](../../README.md#maintainer-reference).
 
 ## Decisions
 
@@ -10,4 +10,4 @@ Short notes explaining why this repository works the way it does: what we consid
 
 ## Add a note
 
-Use a descriptive Markdown filename and link it above. Explain the problem, the choice, alternatives considered and any useful limits or reasons to reconsider. Link to existing instructions instead of copying them. A few paragraphs are enough; no formal approval process or numbering is needed. Keep notes current when decisions change.
+Use a descriptive Markdown filename and link it above. In a few paragraphs, explain the problem, choice, alternatives, limits and reasons to reconsider. Link existing instructions; keep decisions current. No numbering or formal approval needed.

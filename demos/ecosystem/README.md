@@ -1,6 +1,6 @@
 # Little world
 
-A toy pond built with React and SVG. Plant food, change sensing distance and speed, or pause to inspect it. Keyboard controls and reduced-motion startup are included.
+A React/SVG pond. Plant food, adjust sensing and speed, or pause. Supports keyboard controls and reduced motion.
 
 From the repository root:
 
@@ -9,4 +9,4 @@ npm run dev --workspace @lab/demo-ecosystem -- --host 0.0.0.0
 npm test --workspace @lab/demo-ecosystem
 ```
 
-`world.ts` owns movement and feeding; `index.tsx` owns controls and drawing. Change one behaviour to make your own habitat. This completed example is independent of the generated starter. Creatures do not reproduce or starve; refresh resets the world.
+`world.ts` handles movement and feeding; `index.tsx` handles controls and drawing. Change a rule to make your own habitat. This finished demo is separate from the starter. Creatures never reproduce or starve; refresh resets the world.

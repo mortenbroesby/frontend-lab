@@ -1,6 +1,6 @@
 # Devices talking to each other
 
-Turn two browsers into a shared experience: a cheer, a control panel, or the first move in a multiplayer game.
+Connect two browsers for cheers, a control panel or a multiplayer game.
 
 <div className="button-row">
   <a className="button" href="#/demo/device-rally">Try Device Rally</a>
@@ -9,15 +9,15 @@ Turn two browsers into a shared experience: a cheer, a control panel, or the fir
 
 ## Try it together
 
-Open Device Rally in two browsers. Join the same room code, wait for a peer connection, then send a cheer. Try leaving and rejoining: what happens to the connection and messages?
+Join the same Device Rally room in two browsers. Wait for a peer, send a cheer, then leave and rejoin. What happens to connections and messages?
 
-Device Rally uses WebRTC with Trystero public signaling. It needs internet access and localhost or trusted HTTPS. A plain LAN HTTP address on your phone is not a supported setup for this demo. The workshop network and physical phones still need verification; if peers cannot connect, try two local browser windows first.
+Device Rally uses WebRTC and Trystero public signaling. It requires internet and localhost or trusted HTTPS; phone access over plain LAN HTTP is unsupported. Phones and the workshop network remain unverified. If connection fails, try two local browser windows.
 
 ## Make one change
 
-After [local setup](#/guide/setup), open `demos/device-rally/index.tsx`. Find the cheer interaction and change its presentation. Try it in both browsers before introducing a new message or shared state.
+After [local setup](#/guide/setup), change the cheer presentation in `demos/device-rally/index.tsx`. Try both browsers before adding messages or shared state.
 
-Keep the finished example as a reference if you prefer to [create your own React demo](#/create). A new demo starts independently; it does not automatically include WebRTC or signaling.
+Or [create your own React demo](#/create), using this as reference. New demos include no WebRTC or signaling.
 
 ## Follow your curiosity
 
@@ -25,4 +25,4 @@ Keep the finished example as a reference if you prefer to [create your own React
 - **Further:** let a phone control one visual property on a laptop, using trusted HTTPS.
 - **Stretch:** design how peers recover shared state after reconnecting.
 
-Only need tabs in one browser? [Signals](#/demo/signals) explores BroadcastChannel without cross-device networking. WebSockets and SSE are other directions, but need a server; they are not supplied by this starter.
+For tabs in one browser, try [Signals](#/demo/signals) and BroadcastChannel. WebSockets/SSE need a server, which this starter does not supply.

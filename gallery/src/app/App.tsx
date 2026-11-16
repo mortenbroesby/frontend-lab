@@ -13,7 +13,7 @@ function Gallery({ track }: { track?: TrackId }) {
   if (!entries.length)
     return (
       <p>
-        No demos here yet. <a href="#/create">Create the first one</a> or explore the track’s ideas.
+        No demos yet. <a href="#/create">Create the first one</a> or try a track idea.
       </p>
     );
   return (
@@ -90,7 +90,7 @@ function pageTitle(route: string, track?: (typeof tracks)[number], demo?: (typeo
   if (demo) return demo.title;
   if (guides[route]) return guides[route].title;
   if (route === '/') return 'Choose your track.';
-  if (route === '/create') return 'Make room for your idea.';
+  if (route === '/create') return 'Create a demo.';
   return 'Page not found';
 }
 
@@ -98,7 +98,7 @@ function TrackChoices() {
   return (
     <section aria-labelledby="tracks-heading">
       <div className="track-heading">
-        <h2 id="tracks-heading">Find your starting point</h2>
+        <h2 id="tracks-heading">Pick a starting point</h2>
         <p>04 tracks / Your own pace</p>
       </div>
       <div className="track-grid">
@@ -216,7 +216,7 @@ export function App() {
           <p className="welcome-description">
             {track?.description ??
               demo?.description ??
-              'Find something that sparks your curiosity. Try a demo or get straight to experimenting—solo or together.'}
+              'Try a demo or build your own—solo or together.'}
           </p>
         </section>
         {route === '/' && <TrackChoices />}
@@ -236,7 +236,7 @@ export function App() {
       </main>
       <footer>
         <span>THE FRONT-END LAB</span>
-        <span>No perfect outcome required. Just curiosity.</span>
+        <span>Stay curious. Unfinished is fine.</span>
       </footer>
     </>
   );

@@ -1,5 +1,5 @@
 # Contributing
 
-Work from the latest `main` and keep your demo in `demos/<id>/`. Try your change, run a focused check when needed, then commit and push directly to `main`. Pull requests are only needed when explicitly requested.
+Start from the latest `main`; keep demos in `demos/<id>/`. Try your change, run a focused check if needed, then commit and push to `main`. Open a PR only when requested.
 
-`npm run check` runs the combined checks. `npm run analyze:changes` audits introduced findings before committing.
+`npm run check` runs all checks. Run `npm run analyze:changes` before committing.

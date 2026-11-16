@@ -1,24 +1,24 @@
 # Browser experiments
 
-Choose a completed example below. These optional prompts give you one interaction, one change and something to notice. Rebuild a small version in [your own starter](#/track/modern-web/get-started), remix the reference locally or follow a different idea.
+Try, change and observe an example. Rebuild it in [your own starter](#/track/modern-web/get-started), remix locally or follow another idea.
 
 ## Device Rally
 
 - **Try:** [Open Device Rally](#/demo/device-rally) in two browsers, join the same room and send emoji cheers.
-- **Change:** In `demos/device-rally/index.tsx`, change a cheer button and the receive-side emoji allowlist; keep the same version open on both devices.
-- **Observe:** Leave and rejoin. How does the connected-peer count change, and do cheers sent while disconnected arrive later?
+- **Change:** Change a cheer button and receive-side emoji allowlist in `demos/device-rally/index.tsx`. Both devices need the same version.
+- **Observe:** Leave and rejoin. Does the peer count change? Do disconnected cheers arrive later?
 
 Discovery needs internet; the page needs localhost or trusted HTTPS. Restrictive networks may block WebRTC. Physical phones and the workshop network remain untested. [Connection setup](#/track/modern-web/devices).
 
-Stretch: exchange a shared colour or quiz answer. Trystero handles discovery; you decide what messages mean.
+Stretch: share a colour or quiz answer. Trystero handles discovery; you define messages.
 
 ## Dependency ripple
 
 - **Try:** [Select a package](#/demo/constellation), then compare the consumers of `react`, `react-dom` and `d3-force`.
-- **Change:** In `demos/constellation/index.tsx`, change a layout setting or visual treatment; inspect `graph.ts` for the consumer traversal.
-- **Observe:** Switch layouts. Positions change, but the dependency relationships stay the same. Which consumers are direct and which are indirect?
+- **Change:** Change layout or visuals in `demos/constellation/index.tsx`; find consumer traversal in `graph.ts`.
+- **Observe:** Switch layouts: positions change, relationships do not. Which consumers are direct or indirect?
 
-Arrows point from consumer to dependency; possible change impact travels backwards. This is a snapshot of declared workspace dependencies, not source imports or proof of breakage. External packages are leaves. Rebuild hosted output to refresh the snapshot.
+Arrows go from consumer to dependency; potential impact travels backwards. This snapshot shows declared workspace dependencies, not source imports or proven breakage. External packages are leaves. Rebuild hosted output to refresh it.
 
 Stretch: show the shortest path to an affected workspace. Read [D3 force simulations](https://d3js.org/d3-force/simulation).
 
@@ -33,15 +33,15 @@ Stretch: use a spiral or data-driven sizes. Compare [SVG](https://developer.mozi
 ## Keep the interface listening
 
 - **Try:** [Run the calculation](#/demo/workers) in a Worker and use the interaction pad. Compare the main thread, starting with a small workload.
-- **Change:** Modify the computation in `demos/workers/compute.ts`; both modes use it. Keep the workload bounded.
-- **Observe:** Does interaction remain responsive? Compare the same workload; displayed computation time excludes Worker startup and messaging.
+- **Change:** Edit `demos/workers/compute.ts`, shared by both modes. Keep workloads bounded.
+- **Observe:** Compare responsiveness at the same workload. Times exclude Worker startup and messaging.
 
 Off-thread work does not guarantee faster execution. Stretch: add progress messages or image processing. Read [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
 
 ## Let two tabs talk
 
 - **Try:** [Open Signals](#/demo/signals), open its second tab and send a message.
-- **Change:** Change the channel name in `demos/signals/index.tsx`; reload both tabs before trying again.
-- **Observe:** Only the other tab receives the message. Close and reopen a tab: history is not saved. Matching channel names and origins matter.
+- **Change:** Edit the channel name in `demos/signals/index.tsx`; reload both tabs.
+- **Observe:** Only the other tab receives messages. Reopening loses history. Channel names and origins must match.
 
 BroadcastChannel connects local tabs, not separate computers. Stretch: share a palette or drawing event. Read [Broadcast Channel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API).

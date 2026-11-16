@@ -1,32 +1,32 @@
-# Worked example: find your shortest feedback loop
+# Find your shortest feedback loop
 
-**Friction:** running broad validation after every small edit interrupts your flow. **Alternative:** run the smallest relevant test while editing, then broaden validation before sharing.
+Run the smallest relevant test while editing; broaden checks before sharing.
 
 - **Try:** [Open the command explorer](#/demo/tooling), choose **One behaviour** and run its command from the repository root.
 - **Change:** Choose **Watch changes** and temporarily reverse the comparator in `tracks/developer-experience/examples/commands.mjs`. Restore that edit afterwards.
 - **Observe:** Does saving trigger a failing test, then a pass after restoring? Check test counts as well as timings.
 
-The explorer shows real commands to run locally, not simulated timings. The walkthrough below explains the limits and optional next steps.
+The explorer supplies local commands, not simulated timings.
 
 ## 1. Establish a baseline
 
-From the repository root, with Node 24 (no install needed), run the completed command-inventory tests:
+From the root with Node 24, no install needed:
 
 ```sh
 node --test tracks/developer-experience/examples/commands.test.mjs
 ```
 
-Expect four passing tests, including a real CLI failure case. Note the test count and reported duration. This is a file-level baseline, not the whole repository suite.
+Expect four passes, including a CLI failure case. Note count and duration; this baseline covers one file, not the repository.
 
 ## 2. Narrow the question
 
-If you are changing command ordering, select its behaviour by name:
+Select the ordering test by name:
 
 ```sh
 node --test --test-name-pattern="sorts commands" tracks/developer-experience/examples/commands.test.mjs
 ```
 
-Expect one passing test. A misspelled pattern can select zero tests: check the count. A smaller selection is not automatically faster on a tiny suite, and does not cover the CLI or invalid-input cases.
+Expect one pass; a misspelled pattern may select none. Check the count. Fewer tests may not run faster and omit CLI/invalid-input coverage.
 
 ## 3. Make feedback continuous
 
@@ -34,9 +34,9 @@ Expect one passing test. A misspelled pattern can select zero tests: check the c
 node --test --watch --test-name-pattern="sorts commands" tracks/developer-experience/examples/commands.test.mjs
 ```
 
-On your experiment branch, open `tracks/developer-experience/examples/commands.mjs`. Temporarily reverse the comparator from `a.localeCompare(b)` to `b.localeCompare(a)`. Save: the ordering test should fail. Restore that single edit and save: it should pass. Stop watching with Ctrl+C, then rerun the full file. Keep unrelated edits intact.
+On your experiment branch, open `tracks/developer-experience/examples/commands.mjs`. Change `a.localeCompare(b)` to `b.localeCompare(a)` and save: the test should fail. Restore only that edit: it should pass. Stop with Ctrl+C and rerun the full file.
 
-You have demonstrated that your editing loop catches the relevant regression. Compare it with your usual workflow; do not infer a benchmark from one run. No new wrapper script was necessary.
+This demonstrates regression detection without a wrapper. Compare your usual workflow; one run is not a benchmark.
 
 ## 4. Explore task selection and caching
 
@@ -49,15 +49,15 @@ npm exec -- turbo run build --filter=@lab/demo-tooling
 npm exec -- turbo run build --affected --dry=json
 ```
 
-The dry runs describe tasks without building them. The explicit filter selects the tooling demo. Run the two builds without editing files: after a first cache miss, the second should report a cache hit (both can hit if already cached). Change a source file and run again; its build must miss. Restore your edit afterwards.
+Dry runs describe tasks without building. The filter selects the tooling demo. Without edits, the second build should hit cache; both may hit if cached already. Edit a source file: its next build must miss. Restore the edit.
 
-Generated `dist` files and `.turbo` logs are excluded. Inspect `tasks[].inputs` in the JSON: ordinary demos use their own files and shared kit dependencies; the gallery additionally tracks all demo source. The dependency map also tracks the manifests it displays.
+Inspect JSON `tasks[].inputs`: demos track their files and shared kit; gallery also tracks all demo source. The dependency map tracks displayed manifests. Generated `dist` and `.turbo` logs are excluded.
 
-Try editing a different demo's component: the tooling build should keep its cache while the gallery rebuilds. Changing the shared kit should invalidate its consumers. Root compiler or toolchain changes may still invalidate everything. Compare hashes before removing any input; a cache hit is useful only when the output remains correct.
+Edit another demo: tooling should keep its cache while gallery rebuilds. Kit changes should invalidate consumers; root compiler/toolchain changes may invalidate everything. Compare hashes before removing inputs. Cached output must remain correct.
 
-Affected selection needs Git history and a usable comparison base; inspect the plan before executing it. Choosing tasks and reusing cached outputs are different decisions.
+Affected selection needs Git history and a comparison base. Inspect the plan first; task selection and cache reuse are separate decisions.
 
-**Demonstrate:** show the red → green test rerun, the selected task or an explained cache miss. A targeted pass does not replace the broader checks needed for your actual change.
+**Show:** a red → green rerun, selected task or explained cache miss. Targeted passes do not replace broader checks your change needs.
 
 References: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) · [Turbo run options](https://turborepo.dev/docs/reference/run).
 
@@ -69,4 +69,4 @@ Compare the native `npm run` output with:
 node tracks/developer-experience/examples/commands.mjs gallery/package.json
 ```
 
-The example validates a manifest and prints sorted script names and commands. It does not execute them. Its source and four focused tests live together under `tracks/developer-experience/examples/`; the [optional starter](#/track/developer-experience/get-started) imports none of that finished solution. Keep the utility only if its output answers a real need.
+This validates a manifest and lists sorted scripts without executing them. Source and four tests live in `tracks/developer-experience/examples/`; the [optional starter](#/track/developer-experience/get-started) is independent. Keep the utility only if useful.

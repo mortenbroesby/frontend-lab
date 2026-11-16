@@ -31,7 +31,7 @@ export default function DeviceRally() {
     if (joined === null) return;
     if (!supported) {
       setStatus(
-        'This demo needs WebRTC and a secure page. Use localhost on each computer or trusted HTTPS; plain HTTP LAN addresses do not work.',
+        'Requires WebRTC and localhost on each device or trusted HTTPS. Plain HTTP LAN addresses will not work.',
       );
       return;
     }
@@ -40,11 +40,11 @@ export default function DeviceRally() {
     let room: Room | undefined;
     setPeers(0);
     setCheers({ total: 0, emoji: '👋' });
-    setStatus('Discovering peers… Open this demo on another computer using the same room code.');
+    setStatus('Discovering peers… Open this demo on another device with the same code.');
     const timer = window.setTimeout(() => {
       if (!room || Object.keys(room.getPeers()).length === 0) {
         setStatus(
-          'Still alone. Check the room code and internet access. Public signaling or WebRTC may be blocked; leave and retry on another network.',
+          'No peers yet. Check the code and internet. Signaling or WebRTC may be blocked; leave and try another network.',
         );
       }
     }, 20000);
@@ -77,7 +77,7 @@ export default function DeviceRally() {
           setStatus(
             count
               ? `Connected to ${count} other ${count === 1 ? 'device' : 'devices'}. Send a cheer!`
-              : 'Waiting for another device. Keep the same room code on both screens.',
+              : 'Waiting for a device with the same room code.',
           );
           if (count) clearTimeout(timer);
         };
@@ -87,7 +87,7 @@ export default function DeviceRally() {
           (error) => {
             clearTimeout(timer);
             setStatus(
-              `Connection problem (${error.code}). Check internet and room code; restrictive networks may need TURN, which this demo does not configure. Leave and retry, or refresh both pages.`,
+              `Connection error (${error.code}). Check internet and room code. Restricted networks may need TURN (not configured). Leave and retry, or refresh both pages.`,
             );
           },
           { signal },
@@ -96,9 +96,7 @@ export default function DeviceRally() {
       } catch {
         if (!signal.aborted) {
           clearTimeout(timer);
-          setStatus(
-            'Could not join. Check internet access and browser support, then leave and retry.',
-          );
+          setStatus('Cannot join. Check internet and browser support; leave and retry.');
         }
       }
     }
@@ -129,8 +127,7 @@ export default function DeviceRally() {
           setCheers((previous) => ({ total: previous.total + 1, emoji }));
       },
       () => {
-        if (action.current === current)
-          setStatus('The cheer could not be sent. Check the connection and try again.');
+        if (action.current === current) setStatus('Cheer failed. Check the connection and retry.');
       },
     );
   }
@@ -171,13 +168,12 @@ export default function DeviceRally() {
         <p className="eyebrow">Trystero / WebRTC</p>
         <h3>Find your people. Cheer together.</h3>
         <p>
-          Run the gallery on each computer and open Device rally. Everyone in{' '}
-          <strong>friday-lab</strong> discovers each other automatically. No host or backend to
-          start.
+          Open Device rally on each computer. Peers in <strong>friday-lab</strong> connect
+          automatically. No host or backend setup.
         </p>
         <p>
-          Internet access is required for public signaling. Peers can be on different networks. Use
-          localhost or trusted HTTPS; a phone cannot use another computer’s localhost address.
+          Public signaling needs internet; peers can use different networks. Use localhost or
+          trusted HTTPS. A phone cannot reach another computer’s localhost.
         </p>
         <form onSubmit={join}>
           <label htmlFor="rally-room">Room code</label>
@@ -194,22 +190,22 @@ export default function DeviceRally() {
             Join room
           </button>
         </form>
-        <p className="small">Joining refreshes this page with the selected room in its URL.</p>
+        <p className="small">Joining reloads the page with the room code in its URL.</p>
         <button
           disabled={joined === null}
           type="button"
           onClick={() => {
             setJoined(null);
             setPeers(0);
-            setStatus('You left the room. Choose a code and join again.');
+            setStatus('Left the room. Choose a code to rejoin.');
           }}
         >
           Leave room
         </button>
         <p role="status">{status}</p>
         <p className="small">
-          Up to 12 participants. Room codes are public grouping labels, not passwords. Public Nostr
-          relays carry signaling; cheers travel over WebRTC. Only use playful signals.
+          Up to 12 people. Room codes are public labels, not passwords. Nostr relays carry
+          signaling; WebRTC carries cheers. Send only playful signals.
         </p>
         <p className="source">
           Setup and remix: <code>gallery/docs/DEVICE-RALLY.md</code>

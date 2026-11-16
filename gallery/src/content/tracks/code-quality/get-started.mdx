@@ -1,6 +1,6 @@
 # Getting started
 
-**You need:** an accessible codebase, editor and its usual tools. Use your own repository or the working `gallery/` as a small fallback. Do not upload private source to an external service without permission.
+**You need:** a codebase, editor and its usual tools. Use your repository or `gallery/`. Never upload private source externally without permission.
 
 ## Start with the fallback
 
@@ -11,20 +11,20 @@ npm ls --depth=0
 npm explain d3-force
 ```
 
-This uses Node 24.x and npm. Expect a dependency list and an explanation of which workspace requires D3. None of these outputs proves that a dependency is unused or that a codebase has no problems.
+With Node 24 and npm, these list dependencies and explain which workspace needs D3. Neither proves a dependency unused or a codebase sound.
 
 ## Try automated analysis
 
-From the repository root, run `npm run analyze`. Fallow is installed by `npm ci`; no separate account or global installation is needed. Read the [Fallow walkthrough](#/track/code-quality/fallow) for focused commands, expected findings and how to interpret an exit code of 1. You can investigate without creating a new demo.
+Run `npm run analyze` from the root. `npm ci` installs Fallow; no account or global install needed. The [Fallow walkthrough](#/track/code-quality/fallow) covers focused commands, findings and exit code 1.
 
 ## Choose another route
 
-For architecture, run `npm run check:architecture` and inspect one rule in `.dependency-cruiser.cjs`. The **Demos** tab explains a real boundary investigation using dependency-cruiser, which is already installed.
+For architecture, run `npm run check:architecture` and inspect `.dependency-cruiser.cjs`. The **Demos** tab walks through a boundary investigation.
 
 For dependency health, follow `d3-force` from `demos/constellation/package.json` to its imports in `index.tsx`. For test confidence, follow `index.tsx` → `compute.worker.ts` → `compute.ts` under `demos/workers/`.
 
-Pick one question, trace the evidence and decide whether to keep the code or change it. You do not need a new demo or a report.
+Trace one question and decide whether to change the code. No new demo or report needed.
 
-**Use your own repository:** replace these commands with its documented setup/checks. No need to copy the gallery into it. If you choose automated analysis, record the tool/version/configuration and validate a few findings manually; an outdated dependency is not automatically harmful.
+**Your own repository:** use its setup/checks. Record analysis tools, versions and configuration; verify findings manually. An outdated dependency is not automatically harmful.
 
 [Back to Code Quality & Maintainability](#/track/code-quality)

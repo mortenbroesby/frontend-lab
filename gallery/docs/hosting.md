@@ -1,8 +1,8 @@
 # Temporary Vercel hosting
 
-Hosting is a temporary convenience, not a participant entry point. Local development is the documented workflow; hosting can be removed without changing demos.
+Hosting is optional and temporary. Participants develop locally; removing hosting leaves demos unchanged.
 
-Vercel project: `frontend-chapter-day` in `morten-broesbyolsens-projects`, connected to `mortenbroesby/frontend-chapter-day`. Production follows `main`; Git integration handles builds, with no deployment secrets or additional GitHub workflow in this repository.
+Vercel project: `frontend-chapter-day` in `morten-broesbyolsens-projects`, connected to `mortenbroesby/frontend-chapter-day`. Git integration builds `main` for production; no deployment secrets or extra GitHub workflow are needed.
 
 Project settings:
 
@@ -14,4 +14,4 @@ Project settings:
 
 The initial production deployment used commit `cb7e020`. An unauthenticated HTTP request and a Chrome smoke check verified the home page, named track navigation, D3 demo and Worker result. This is hosting verification, not participant-device or cross-device acceptance.
 
-To remove hosting, disconnect the Git repository and remove the Vercel project in its dashboard. The documentation must not depend on deployment links. There is no Vercel dependency in application code. To migrate to GitHub Pages, publish the same static build and configure Vite's base path for the destination; retain hash routes. Recheck lazy assets and Workers on the new host before sharing it.
+To remove hosting, disconnect the Git repository and remove the Vercel project in its dashboard. Documentation must not depend on deployment links. Application code has no Vercel dependency. To migrate to GitHub Pages, publish the same static build and configure Vite's base path for the destination; retain hash routes. Recheck lazy assets and Workers on the new host before sharing it.
