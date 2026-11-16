@@ -14,12 +14,14 @@
     "test": "node --test tests/art.test.ts tests/compute.test.ts tests/demo-contract.test.ts ../tracks/developer-experience/bootstrap/inspect.test.mjs ../tracks/developer-experience/examples/commands.test.mjs",
     "test:watch": "node --test --watch tests/art.test.ts tests/compute.test.ts tests/demo-contract.test.ts ../tracks/developer-experience/bootstrap/inspect.test.mjs ../tracks/developer-experience/examples/commands.test.mjs",
     "check": "npm run typecheck && npm test && vite build",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:devices": "playwright test --config playwright.devices.config.ts"
   },
   "dependencies": {
     "d3-force": "3.0.1",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "trystero": "0.27.0"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1",

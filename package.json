@@ -25,7 +25,8 @@
     "analyze:architecture": "fallow architecture",
     "fallow:hooks": "fallow hooks install --target git",
     "fallow:status": "fallow doctor && fallow hooks status",
-    "analyze:changes": "fallow audit"
+    "analyze:changes": "fallow audit",
+    "test:devices": "npm run test:devices --workspace playground"
   },
   "devDependencies": {
     "@turbo/gen": "2.11.11",

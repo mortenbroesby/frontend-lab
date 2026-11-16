@@ -1,0 +1,7 @@
+.device-rally .rally-stage { display: grid; place-items: center; align-content: center; gap: 1rem; padding: 2rem 1rem; border-radius: 1.5rem; background: var(--lab-track-modern-web); color: var(--lab-ink); min-height: 22rem; }
+.device-rally .rally-emoji { font-size: clamp(5rem, 15vw, 9rem); line-height: 1.2; animation: rally-pop 300ms ease-out; }
+.device-rally .rally-total { font-size: 1.5rem; font-weight: 700; margin: 0; }
+.device-rally .rally-buttons { display: flex; gap: .6rem; }
+.rally-buttons button { font-size: 1.7rem; min-width: 3.5rem; }
+@keyframes rally-pop { from { transform: scale(.7) rotate(-12deg); } to { transform: scale(1) rotate(0); } }
+@media (prefers-reduced-motion: reduce) { .device-rally .rally-emoji { animation: none; } }
