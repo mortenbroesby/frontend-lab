@@ -167,7 +167,7 @@ test('tracks, reference demos and bootstrap are distinct SPA journeys', async ({
 });
 
 test('a failed lazy demo leaves navigation usable', async ({ page }) => {
-  await page.route('**/assets/Tooling-*.js', route => route.abort());
+  await page.route('**/assets/tooling-*.js', route => route.abort());
   await page.goto('/#/demo/tooling');
   await expect(page.getByRole('alert')).toContainText('This experiment could not open');
   await page.getByRole('link', { name: 'All tracks', exact: true }).click();

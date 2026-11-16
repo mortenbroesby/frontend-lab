@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('gallery launches a working independent demo page with no gallery shell', async ({ page }) => {
   await page.goto('/#/demo/art');
   await page.getByRole('link', { name: 'Open standalone demo' }).click();
-  await expect(page).toHaveURL(/src\/demos\/art\/index.html$/);
+  await expect(page).toHaveURL(/demos\/art\/index.html$/);
   await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Lab' })).toHaveCount(0);
   await page.reload();

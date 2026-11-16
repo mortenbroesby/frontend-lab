@@ -1,5 +1,14 @@
 # Current verification status
 
+## Top-level standalone demos (PR #7)
+
+All reference and participant apps use `demos/<id>/`. Inline React entries default-export from `index.tsx`; standalone `main.tsx` mounts the same component. Metadata has no custom loader. The generator, workspace links, Vite entries, MDX guides and type checking follow this layout.
+
+- `npm ci`, `npm run check`, and all eight app builds passed on Node 24.
+- All 19 Chrome journeys passed across the full run and targeted rerun. The failure-recovery test needed the renamed chunk filename; the generator test additionally verifies a plain JavaScript standalone entry with no React component.
+- Fallow doctor passed. Audit passed with advisory complexity warnings; two findings attributed as new are in the relocated D3 implementation, unchanged apart from its default export.
+- No deployment or physical-device acceptance was performed.
+
 ## Reconciliation with onboarding changes
 
 Merged `origin/main` at `cc5f54d` into `feat/in-app-track-guides`. Preserved the track-specific generator, its end-to-end test, reference-page instructions and CI browser checks. MDX now describes the generated circle directly, without manual copying; deployment links remain absent.

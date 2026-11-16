@@ -55,7 +55,7 @@ Trace a real dependency from the repository root:
 npm run analyze:dead-code -- --trace-dependency d3-force
 ```
 
-Follow the result into `playground/src/demos/constellation/Constellation.tsx`. Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
+Follow the result into `demos/constellation/index.tsx`. Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
 
 The earlier unused `marker` export exercise depended on the manual demo registry. Folder discovery removes that registration mechanism; do not recreate the marker to reproduce an old finding. For unused-code investigation, run a fresh scan and follow a current finding instead. Check that discovery sees `demo.config.ts` loaders before trusting a report that calls a demo unused.
 

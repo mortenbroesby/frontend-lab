@@ -1,0 +1,15 @@
+{
+  "name": "@lab/demo-fallow",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config ../../playground/vite.demo.config.ts --host 127.0.0.1",
+    "build": "vite build --config ../../playground/vite.demo.config.ts",
+    "preview": "vite preview --config ../../playground/vite.demo.config.ts --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@lab/demo-kit": "*",
+    "react": "19.3.1"
+  }
+}
