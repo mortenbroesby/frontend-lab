@@ -207,11 +207,11 @@ export function App() {
       </header>
       <main id="content" className={route === '/' ? undefined : 'reading-page'} tabIndex={-1}>
         <section className="starter-welcome">
-          <p className="eyebrow welcome-eyebrow">
-            {demo
-              ? `${trackTitle(demo.track)} · ${demo.author}`
-              : 'Four tracks. Shared discoveries.'}
-          </p>
+          {demo && (
+            <p className="eyebrow welcome-eyebrow">
+              {trackTitle(demo.track)} · {demo.author}
+            </p>
+          )}
           <h1>{title}</h1>
           <p className="welcome-description">
             {track?.description ??
@@ -234,10 +234,6 @@ export function App() {
           </p>
         )}
       </main>
-      <footer>
-        <span>THE FRONT-END LAB</span>
-        <span>Stay curious. Unfinished is fine.</span>
-      </footer>
     </>
   );
 }
