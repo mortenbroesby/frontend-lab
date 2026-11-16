@@ -22,7 +22,11 @@
     "analyze:dead-code": "fallow dead-code",
     "analyze:dupes": "fallow dupes",
     "analyze:health": "fallow health",
-    "analyze:architecture": "fallow architecture"
+    "analyze:architecture": "fallow architecture",
+    "fallow:setup": "fallow agent install --harness codex --harness claude",
+    "fallow:hooks": "fallow hooks install --target git",
+    "fallow:status": "fallow agent status && fallow hooks status",
+    "analyze:changes": "fallow audit"
   },
   "devDependencies": {
     "@turbo/gen": "2.11.11",

@@ -81,3 +81,12 @@ The existing platform and independent-participant limitations still apply.
 - `npm run check` passed: six generator tests, eleven app/script tests, type checking and production build. All ten Chrome browser journeys passed.
 - Separate browser smoke check followed Track B → Investigate with Fallow at 390 px width, checked the command was visible, and found no page errors or horizontal document overflow. The full-page screenshot was visually inspected. The walkthrough is explanatory content, not a live browser-side analyzer.
 - Windows, Linux, Apple Silicon and participant proxy policies have not been tested. No automatic fixes, hooks, cloud integration or CI gate were enabled.
+
+## Official Fallow agent and Git integration — 16 November 2026
+
+- Applied the official `fallow agent install --harness codex --harness claude` after its dry-run preview, plus `fallow hooks install --target git`. Committed skills, MCP registrations, agent hooks and the managed AGENTS.md task map. The Git pre-commit hook is local and must be installed per clone.
+- A second agent install reported every managed surface unchanged. `fallow agent status` and `fallow hooks status` reported the intended surfaces installed; `fallow doctor` reported seven passes, no warnings/failures and two optional checks skipped.
+- In a disposable Git repository, the generated Git/Codex/Claude hooks all allowed a harmless staged documentation change. Adding a staged unused source file made Git return 1 and both agent hooks return 2 with the finding identified. No failing commit was executed; the fixture was removed.
+- A direct stdio MCP handshake initialized Fallow 3.43.1 and returned 44 tools. This proves the server can start locally, not that this existing Codex/Claude session has trusted and loaded it.
+- `npm run check` passed all 17 logic/generator tests, type checking and the production build. Browser code is unchanged from the preceding browser verification.
+- No global agent configuration, personal approval files, cloud connection or hosted CI was added. Generated hooks retain official fail-open behavior for documented missing-tool/runtime-error cases. Trust and GUI PATH behavior still require verification in each participant's client.

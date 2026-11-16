@@ -11,3 +11,6 @@ test-results/
 
 # Local Fallow caches and reports
 .fallow/
+
+# Personal Claude approvals are not shared
+.claude/settings.local.json

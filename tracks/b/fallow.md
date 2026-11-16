@@ -14,7 +14,30 @@ npm run analyze
 
 The last command combines unused-code, duplication and health analysis. It reads local source and may write caches under ignored `.fallow/`. It does not apply fixes. No account, cloud connection or editor extension is needed. The gallery's **Investigate with Fallow** entry explains the journey; your terminal output is the current evidence.
 
-**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Our initial report does this. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; we have not installed hooks or added a CI gate.
+**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Our initial report does this. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). There is no hosted CI gate.
+
+## Set up agents and commit checks
+
+After `npm ci`, from the root of a fresh clone:
+
+```sh
+npm run fallow:setup
+npm run fallow:hooks
+npm run fallow:status
+```
+
+These commands use Fallow’s official installers, not a custom hook framework:
+
+- `fallow:setup` installs the version-matched `fallow` and `fallow-setup` skills, MCP registrations and PreToolUse commit/push gates for Codex and Claude Code. The generated agent files are committed; rerunning setup keeps them current. The official task map lives in the managed AGENTS.md block; CLAUDE.md imports it.
+- `fallow:hooks` installs the Git pre-commit hook **locally in each clone**. Git does not copy `.git/hooks` when cloning. The installer refuses to overwrite an existing hook, including its own: check `fallow:status` first and preserve any existing hook rather than forcing replacement.
+- Codex must trust this project and its hooks through `/hooks`. Claude Code asks to approve the project MCP server. Installation status does not prove your running agent loaded the integration; reload/start a trusted session and check its tools/hooks. We do not change global agent configuration or pre-approve trust on your behalf.
+- Node/npm must be on the agent or Git client’s PATH. The generated scripts use the installed Fallow binary; Windows needs Git Bash or WSL for the Bash agent hooks. If launched from a GUI, verify the runtime is available there too.
+
+The Git hook runs `fallow audit --staged`, comparing the staged snapshot with HEAD. Agent hooks check before commit/push. The default `new-only` gate blocks introduced findings, while inherited findings remain visible without blocking unrelated work. A full `npm run analyze` can therefore exit 1 while a changed-code audit passes.
+
+To inspect a failure, run `npm run analyze:changes -- --staged` before a commit, or `npm run analyze:changes -- --base origin/main` for your branch. Review the report, fix the introduced finding or justify a narrow configuration change, then rerun. Agent failure reports are saved under `.fallow/gate-report.json`. These are local checks, not enforced GitHub branch protection. Official hooks have documented fail-open cases: the Git hook skips if Fallow is absent, and agent hooks allow runtime errors with a diagnostic. Verify status and diagnostics rather than assuming every command was checked.
+
+References: [official agent installer](https://fallow.tools/docs/cli/agent/), [official hooks](https://fallow.tools/docs/cli/hooks/).
 
 ## Choose a lens
 
