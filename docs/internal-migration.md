@@ -14,9 +14,7 @@ This repository is prepared for migration; no destination repository or team per
 
 Use Node 24, run `npm ci` and `npm run dev` at the repository root, then open the printed URL. After a contribution merges, pull `main` and restart/install dependencies when needed. There is no live synchronization between colleagues' apps.
 
-The app no longer assumes a personal source repository. Copy `playground/.env.example` to `playground/.env.local` and optionally set `VITE_SOURCE_URL` to the destination's full URL ending in `/blob/main` (or its default branch). Bootstrap links then open that repository. Without this value, the app shows local editor paths. Restart Vite after changing it.
-
-This variable is browser-visible: never include a token. Turbo includes it in cache inputs, so builds with different source links do not reuse the wrong output. Verification builds derive it from the current GitHub repository; these builds are not published.
+Participant guides are bundled from `playground/src/content/` and use in-app routes. No source-repository environment variable is required. Repository entry documents describe local startup and do not depend on a deployment URL.
 
 ## Workshop identity
 
@@ -28,7 +26,7 @@ The shell's palette is in `packages/demo-kit/theme.css`. Track colors follow tra
 - The chapter team can generate a named demo, push a branch and open a PR.
 - Verification runs in the destination, with its approved runner and action policies.
 - After merge and pull, another colleague sees the new demo in the local gallery.
-- Optional bootstrap links open the internal repository; no app link assumes the original personal source repository.
+- Track guides and their links work inside the app on the destination host.
 - Fallow's per-clone Git hook and agent trust/setup instructions work in the chosen clients.
 
 Still to decide: destination organization/repository, chapter team and maintainers, visibility, branch rules and any enterprise-specific registry/runner requirements. The temporary Vercel project can be removed or replaced independently.

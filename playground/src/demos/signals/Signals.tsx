@@ -1,3 +1,4 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 
 export function Signals() {
@@ -55,7 +56,7 @@ export function Signals() {
         </form>
         <p role="status" className="small">{status}</p>
         <p className="try-this"><strong>What if…</strong> two tabs shared a colour palette, a quiz question or a drawing? How would this change across computers?</p>
-        <p className="source">Make it yours: <code>src/demos/signals/Signals.tsx</code></p>
+        <p>Try sharing a colour or quiz answer between two same-origin tabs. Start with one event type and close the channel when leaving your demo. <a href={galleryHref('/create')}>Create your own experiment</a>.</p>
       </div>
     </div>
   );

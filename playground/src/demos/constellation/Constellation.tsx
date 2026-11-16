@@ -1,3 +1,4 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 import type { PointerEvent, KeyboardEvent } from 'react';
 import { forceCollide, forceLink, forceManyBody, forceSimulation, forceX, forceY } from 'd3-force';
@@ -131,7 +132,7 @@ export function Constellation() {
         <button className="secondary" onClick={() => setPaused(value => !value)}>{paused ? 'Resume motion' : 'Pause motion'}</button>
         <button className="secondary" onClick={release}>Release pinned ideas</button>
       </div>
-      <div className="graph-notes"><p id="graph-help">Drag an idea to pin it, or focus it and use arrow keys. Shift moves further. Filtering or changing layout starts a fresh arrangement. Reduced-motion preference starts paused.</p><p role="status">{active ? `${active.name} · ${groups[active.category].name}${active.fx != null ? ' · pinned' : ''}` : 'Choose an idea to inspect it.'}</p><p className="small">Illustrative connections, not measured data. D3 calculates the forces; React draws the SVG. Try replacing these ideas with your own dataset.</p><p className="source">Start here: <code>src/demos/constellation/Constellation.tsx</code> · Build towards it with Modern Web Capabilities or Experimental Projects.</p></div>
+      <div className="graph-notes"><p id="graph-help">Drag an idea to pin it, or focus it and use arrow keys. Shift moves further. Filtering or changing layout starts a fresh arrangement. Reduced-motion preference starts paused.</p><p role="status">{active ? `${active.name} · ${groups[active.category].name}${active.fx != null ? ' · pinned' : ''}` : 'Choose an idea to inspect it.'}</p><p className="small">Illustrative connections, not measured data. D3 calculates the forces; React draws the SVG. Try replacing these ideas with your own dataset.</p><p>Build a small version: draw three labelled circles and a connection, then try one D3 force. You do not need every control in this example. <a href={galleryHref('/create')}>Start your own idea map</a>.</p></div>
     </div>
   );
 }

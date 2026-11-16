@@ -6,9 +6,6 @@
     "playground/vite.demo.config.ts",
     "packages/demo-kit/**"
   ],
-  "globalEnv": [
-    "VITE_SOURCE_URL"
-  ],
   "tasks": {
     "dev": {
       "cache": false,
@@ -38,5 +35,8 @@
         "PLAYWRIGHT_PORT"
       ]
     }
-  }
+  },
+  "globalEnv": [
+    "VITE_GALLERY_URL"
+  ]
 }

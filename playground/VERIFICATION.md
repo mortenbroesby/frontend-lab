@@ -1,5 +1,35 @@
 # Current verification status
 
+## Reconciliation with onboarding changes
+
+Merged `origin/main` at `cc5f54d` into `feat/in-app-track-guides`. Preserved the track-specific generator, its end-to-end test, reference-page instructions and CI browser checks. MDX now describes the generated circle directly, without manual copying; deployment links remain absent.
+
+- `npm run check` passed: 22 unit/generator tests, TypeScript and build.
+- Sixteen browser cases passed in the full run; the remaining mobile reference-page case passed on a targeted rerun after correcting its selector for the D3 layout (17 total).
+- Fallow changed-code audit against `origin/main` passed with advisory warnings. No unresolved Git conflict entries or conflict markers remain.
+
+
+## MDX participant experience
+
+Branch `feat/in-app-track-guides` replaces the earlier Markdown viewer with build-time MDX pages. The Modern Web starter, Experimental Projects starter and Create a demo preview are embedded beside their instructions. Completed examples remain separate. Repository-wide tracked-file scanning found no deployment URLs; the README introduces local startup without raw guide links.
+
+- `npm ci` and `npm run check` passed: 20 generator/unit tests, TypeScript and the production build.
+- All 15 Chrome journeys passed, including the interactive MDX starter, all guide links, phone-width layout and recovery from a failed MDX chunk.
+- Fallow doctor and the changed-code audit passed; advisory complexity and styling warnings remain.
+- MDX compiles as trusted repository code. The runtime Markdown parser is removed; individual guide chunks range from about 0.6 to 4.4 kB gzip.
+- Production deployment and independent participant acceptance remain unverified.
+
+## Earlier in-app participant guides
+
+Branch `feat/in-app-track-guides`, based on `506a9a9`:
+
+- Participant guides moved to `src/content/`; track starts, exploration tables, worked examples, setup, demo creation, contributions and findings render in the app.
+- `npm ci` and `npm run check` passed on Node 24.19.0 / npm 11.6.2: 20 generator/unit tests, TypeScript and production build.
+- All 13 Chrome browser journeys passed, including all track guides, internal guide links, back/reload navigation and phone-width table scrolling.
+- Fallow doctor passed all seven applicable checks. Changed-code audit against `origin/main` passed; advisory complexity and styling findings remain. App cyclomatic complexity decreased from 21 to 16.
+- Markdown and GFM tables load in a separate guide chunk (approximately 66 kB gzip including content). Raw HTML is disabled. No new documentation server or source-link environment setting is needed.
+- Production deployment and independent participant acceptance are not claimed for this branch.
+
 ## Participant documentation revision · 16 November 2026
 
 Checked in `docs/participant-journeys`, based on `4ad159a`, with only Markdown changes:

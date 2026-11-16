@@ -7,7 +7,8 @@
     "./types": "./types.ts",
     "./mount": "./mount.tsx",
     "./boundary": "./DemoBoundary.tsx",
-    "./styles.css": "./styles.css"
+    "./styles.css": "./styles.css",
+    "./gallery-link": "./gallery-link.ts"
   },
   "dependencies": {
     "react": "19.3.1",

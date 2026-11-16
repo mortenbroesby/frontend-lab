@@ -1,18 +1,18 @@
 # Code Quality & Maintainability worked example · Does the largest workload have a trustworthy result?
 
-This is a completed investigation, separate from [your bootstrap](bootstrap.md). It examines the kit's actual code, not planted defects. The resulting test is already included; choose a different question rather than reproducing a known gap.
+This is a completed investigation, separate from [your bootstrap](#/track/code-quality). It examines the kit's actual code, not planted defects. The resulting test is already included; choose a different question rather than reproducing a known gap.
 
-For a second investigation using automated analysis, follow the [Fallow walkthrough](fallow.md).
+For a second investigation using automated analysis, follow the [Fallow walkthrough](#/track/code-quality/fallow).
 
 ## Problem and approach
 
 The Worker demo offers a workload up to two million. Before this investigation, tests checked known results up to 100,000 and rejected values above the supported maximum. The question was whether the **largest accepted input** had a verified result.
 
-1. Read [compute.ts](../../playground/src/demos/workers/compute.ts): it counts primes inclusively and allows `MAX_LIMIT = 2_000_000`.
-2. Read [Workers.tsx](../../playground/src/demos/workers/Workers.tsx): the largest menu option passes that same input.
+1. Read `playground/src/demos/workers/compute.ts`: it counts primes inclusively and allows `MAX_LIMIT = 2_000_000`.
+2. Read `playground/src/demos/workers/Workers.tsx`: the largest menu option passes that same input.
 3. Read the tests: rejecting values above the limit tests validation, not correctness at the limit.
 4. Independently calculate the result with a sieve rather than reuse the trial-division implementation: 148,933 primes.
-5. Add one assertion at the accepted boundary in [compute.test.ts](../../playground/tests/compute.test.ts).
+5. Add one assertion at the accepted boundary in `playground/tests/compute.test.ts`.
 
 The new test is named **“the largest selectable workload has a known correct result”**. From `playground`, `npm test` runs it alongside the smaller cases. It passes with the existing implementation: we found a confidence gap, not a demonstrated calculation bug.
 
@@ -26,4 +26,4 @@ The improvement is one meaningful boundary test, without changing runtime behavi
 
 This does not prove every input correct, establish performance on participant machines or suggest all code needs maximum-size tests. Use the question and evidence pattern on another part of this kit or your own repository.
 
-[Your investigation bootstrap](bootstrap.md) · [Code Quality & Maintainability](README.md)
+[Your investigation bootstrap](#/track/code-quality) · [Code Quality & Maintainability](#/track/code-quality/explore)

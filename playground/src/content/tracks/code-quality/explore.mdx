@@ -6,7 +6,7 @@ For you if you want stronger evidence for a dependency, test, complexity or arch
 
 ## Get a first result
 
-[Start an investigation](bootstrap.md). Choose one question and trace it to a file, caller or test before deciding whether to change anything.
+[Start an investigation](#/track/code-quality). Choose one question and trace it to a file, caller or test before deciding whether to change anything.
 
 **Success check:** You can point to evidence, explain an alternative interpretation, and justify keeping the code or making one small change. If you change it, rerun the relevant checks.
 
@@ -23,12 +23,12 @@ Pick one starting point; Fallow is optional for these investigations:
 
 For this repository, run commands at its root after `npm ci`. In another repository, use its documented setup and checks. Keep private source and analysis within the permitted audience.
 
-The [completed test-gap investigation](examples.md) shows the reasoning; its fix is already present. The [Fallow guide](fallow.md) offers optional local analysis and agent setup. Use your own tools if they fit.
+The [completed test-gap investigation](#/track/code-quality/examples) shows the reasoning; its fix is already present. The [Fallow guide](#/track/code-quality/fallow) offers optional local analysis and agent setup. Use your own tools if they fit.
 
 ## Show what you discovered
 
 Show the question, one piece of evidence and your decision. A justified “leave it alone” is a useful result; no gallery demo is required.
 
-Capture a few [findings](../findings.md), then use the [contribution guide](../../CONTRIBUTING.md) to share code or notes. You may build towards a reference or pursue your own idea.
+Capture a few [findings](#/guide/findings), then use the [contribution guide](#/guide/contributing) to share code or notes. You may build towards a reference or pursue your own idea.
 
-[Choose another track](../../README.md#tracks)
+[Choose another track](#/)

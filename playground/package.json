@@ -22,11 +22,14 @@
     "@lab/demo-kit": "*"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "3.1.1",
     "@playwright/test": "1.65.1",
+    "@types/mdx": "2.0.14",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.3.0",
+    "remark-gfm": "4.0.1",
     "typescript": "7.0.2",
     "vite": "8.3.8"
   }

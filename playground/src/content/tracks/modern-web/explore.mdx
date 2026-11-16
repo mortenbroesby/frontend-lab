@@ -6,7 +6,7 @@ For you if you want to understand what a browser can do beyond ordinary page UI.
 
 ## Get a first result
 
-[Start with the browser bootstrap](bootstrap.md). Create your own demo and change one visible behaviour: a shape, a control or a response to input.
+[Start with the browser bootstrap](#/track/modern-web). Create your own demo and change one visible behaviour: a shape, a control or a response to input.
 
 **Success check:** Your demo opens from the gallery and your change responds to input. Navigate away and back; it still works without console errors.
 
@@ -20,12 +20,12 @@ For you if you want to understand what a browser can do beyond ordinary page UI.
 
 **Communication boundary:** the existing example uses BroadcastChannel within one browser context. It does not connect phones or separate computers. WebRTC needs signalling for peer setup; WebSockets need a server. Neither service is included in this baseline, so there is no cross-device startup command here.
 
-[Worked references](examples.md) cover D3, SVG, Workers and tab messages. Start with one small piece; the completed examples are separate from your bootstrap.
+[Worked references](#/track/modern-web/examples) cover D3, SVG, Workers and tab messages. Start with one small piece; the completed examples are separate from your bootstrap.
 
 ## Show what you discovered
 
 Show the interaction, name the API or library you used, and explain one browser constraint you discovered.
 
-Capture a few [findings](../findings.md), then use the [contribution guide](../../CONTRIBUTING.md) to share code or notes. You may build towards a reference or pursue your own idea.
+Capture a few [findings](#/guide/findings), then use the [contribution guide](#/guide/contributing) to share code or notes. You may build towards a reference or pursue your own idea.
 
-[Choose another track](../../README.md#tracks)
+[Choose another track](#/)

@@ -55,13 +55,13 @@ Trace a real dependency from the repository root:
 npm run analyze:dead-code -- --trace-dependency d3-force
 ```
 
-Follow the result into [Constellation.tsx](../../playground/src/demos/constellation/Constellation.tsx). Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
+Follow the result into `playground/src/demos/constellation/Constellation.tsx`. Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
 
 The earlier unused `marker` export exercise depended on the manual demo registry. Folder discovery removes that registration mechanism; do not recreate the marker to reproduce an old finding. For unused-code investigation, run a fresh scan and follow a current finding instead. Check that discovery sees `demo.config.ts` loaders before trusting a report that calls a demo unused.
 
 ## Worked investigation: complexity is a clue
 
-The initial health report identified `App` in [App.tsx](../../playground/src/app/App.tsx) with cyclomatic complexity 21. Read its route selection and JSX conditions. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
+The initial health report identified `App` in `playground/src/app/App.tsx` with cyclomatic complexity 21. Read its route selection and JSX conditions. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
 
 No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured test coverage**, and this app already has browser journeys. A high score does not establish a defect. If you try a refactor, keep routes and error handling intact and run `npm run check` plus the documented browser checks. A reasoned decision to leave the code alone is a valid outcome.
 
@@ -82,8 +82,8 @@ If discovery misses a real entry in your own project, inspect it first and add a
 - **Architecture:** trace how host discovery finds `demo.config.ts` and loads a component. Propose one useful dependency boundary before writing any rules.
 - **Your own repository:** use its normal setup and obtain permission where needed. Start with discovery, record the Fallow version/config and manually check a few findings before adopting gates or fixes.
 
-Share your question, command/version, file or symbol, alternative explanation, decision and verification in [findings](../findings.md). Keep sensitive source and reports within the repository's permitted audience.
+Share your question, command/version, file or symbol, alternative explanation, decision and verification in [findings](#/guide/findings). Keep sensitive source and reports within the repository's permitted audience.
 
 References: [official quick start](https://fallow.tools/docs/quickstart/), [configuration](https://fallow.tools/docs/configuration/), [Fallow source](https://github.com/fallow-rs/fallow). Website examples can advance beyond our pinned version; `npm run analyze -- --help` describes the installed CLI.
 
-[Code Quality & Maintainability](README.md) · [Investigation bootstrap](bootstrap.md)
+[Code Quality & Maintainability](#/track/code-quality/explore) · [Investigation bootstrap](#/track/code-quality)

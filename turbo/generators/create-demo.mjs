@@ -23,10 +23,18 @@ export async function createDemo(root, answers) {
     }
   }
   const src = join(root, 'playground/src');
-  const template = await readFile(join(src, 'demos/template/Demo.tsx'), 'utf8');
-  const nameSlot = "useState('What if…')";
-  if (template.split(nameSlot).length !== 2) throw new Error('Expected one initial idea in the demo template.');
-  const component = template.replace(nameSlot, () => `useState(${JSON.stringify(name)})`);
+  const modernWeb = track === 'modern-web';
+  const templatePath = modernWeb ? 'starters/BrowserStarter.tsx' : 'demos/template/Demo.tsx';
+  const template = await readFile(join(src, templatePath), 'utf8');
+  const nameSlot = modernWeb ? 'One shape. Your next question.' : "useState('What if…')";
+  if (template.split(nameSlot).length !== 2) throw new Error('Expected one name slot in the demo template.');
+  const component = template
+    .replace(nameSlot, () => modernWeb ? `{${JSON.stringify(name)}}` : `useState(${JSON.stringify(name)})`)
+    .replace('export function BrowserStarter()', 'export default function Demo()')
+    .replace('To get your own copy, run <code>npm run demo:new</code> and choose Modern Web Capabilities. ', 'This is your independent circle starter. ');
+  const firstChange = modernWeb
+    ? 'Change the circle fill colour in Demo.tsx, save, then move the radius control.'
+    : 'Change "An idea, taking shape" in Demo.tsx to your own heading and save.';
   const folder = join(src, 'demos', id);
   // Exclusive creation protects an existing participant folder, including with --force.
   await mkdir(folder);
@@ -45,7 +53,43 @@ export async function createDemo(root, answers) {
         preview: 'vite preview --config ../../../vite.demo.config.ts --host 127.0.0.1',
       },
     }, null, 2) + '\n');
-    await writeFile(join(folder, 'README.md'), `# ${name}\n\nOpen #/demo/${id} in the lab, or run npm run dev --workspace @lab/demo-${id} for this app alone. Build it with npm run build --workspace @lab/demo-${id}; deploy its dist/ folder. Run npm install after generation to refresh workspace links and the lockfile. Edit Demo.tsx to build your experiment.\n\nRun npm run check from the repository root before sharing. Keep styles local (Demo.module.css), and clean up timers, listeners and Workers on unmount.\n\nRecord your question, what you tried and what you learned here.\n`);
+    await writeFile(join(folder, 'README.md'), `# ${name}
+
+## Open your demo
+
+From the repository root, run npm run dev (or keep your existing dev server running).
+Open its printed local address followed by #/demo/${id}; use Open standalone demo to launch the app. Your demo also appears in the gallery and your track.
+This is your local copy; the hosted gallery updates only after your contribution is merged and deployed.
+
+## Run independently
+
+Run npm install after generation to refresh workspace links and the lockfile.
+Use npm run dev --workspace @lab/demo-${id} to start this app alone.
+Use npm run build --workspace @lab/demo-${id} to produce its deployable dist/ folder.
+Both standalone and inline gallery presentation include these commands.
+
+## First change
+
+Edit playground/src/demos/${id}/Demo.tsx. ${firstChange}
+Refresh the page: your code change should remain. Form inputs and other in-memory state may reset.
+Navigate away and back to check the demo still works. You can replace this starter with your own idea.
+
+## What belongs here
+
+- index.html and main.tsx: your app entry. Replace the React entry for a different runtime.
+- package.json: independent dev/build/preview commands and dependencies.
+- Demo.tsx: your independent React component.
+- demo.config.ts: gallery title, track, description, author and lazy component loader. The folder name is the URL ID.
+- README.md: your question, what you tried, one observation and what to try next.
+
+Keep styles local (Demo.module.css) and clean up timers, listeners and Workers on unmount.
+Explore [your track's references](../../../../tracks/${track}/examples.md) when you want a hint; no finished example is required.
+
+## Share
+
+Run npm run check from the repository root. For UI/browser changes, also follow the browser checks in [CONTRIBUTING.md](../../../../CONTRIBUTING.md).
+Use that guide to commit your folder and open a pull request. No central registry edit is needed.
+`);
     const definition = `import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
@@ -63,5 +107,10 @@ export default {
     await rm(folder, { recursive: true, force: true });
     throw error;
   }
-  return `Created playground/src/demos/${id}. Open #/demo/${id} at your dev server. Run npm run dev if it is not running.`;
+  return `Created playground/src/demos/${id}.
+1. Run npm run dev from the repository root, or keep your existing server running.
+2. Open its printed local address followed by #/demo/${id}.
+3. Edit playground/src/demos/${id}/Demo.tsx. ${firstChange}
+4. Refresh: your code change stays; temporary input may reset.
+Next steps and sharing: playground/src/demos/${id}/README.md.`;
 }

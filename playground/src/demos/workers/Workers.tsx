@@ -1,3 +1,4 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
 import { countPrimes } from './compute';
 
@@ -70,7 +71,7 @@ export function Workers() {
         </div>
         <p className="small">The main-thread comparison briefly blocks this page and cannot be cancelled. Start small. Duration varies by device; use DevTools to inspect the difference. The timer excludes Worker startup and messaging.</p>
         <p className="try-this"><strong>What if…</strong> this processed an image, searched a dataset, or reported progress?</p>
-        <p className="source">Make it yours: <code>src/demos/workers/Workers.tsx</code> + <code>compute.worker.ts</code></p>
+        <p>Try your own version: start with a Worker that receives one number and sends a result back. Add a status message, then cancellation. <a href={galleryHref('/create')}>Create an independent demo</a>.</p>
       </div>
     </div>
   );

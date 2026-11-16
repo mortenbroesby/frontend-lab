@@ -1,3 +1,4 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useRef, useState } from 'react';
 import { makeDots } from './art';
 
@@ -41,7 +42,7 @@ export function Art() {
           <button className="secondary" onClick={download}>Save SVG</button>
         </div>
         <p className="try-this"><strong>What if…</strong> the dots followed a spiral, responded to a pointer, or became a tiny game?</p>
-        <p className="source">Make it yours: <code>src/demos/art/ArtStudio.tsx</code> + <code>art.ts</code></p>
+        <p>Build a small version: draw one SVG circle, add a few shapes from your own rule, then add a control. Saving an image can come later. <a href={galleryHref('/create')}>Create your own artwork</a>.</p>
       </div>
     </div>
   );
