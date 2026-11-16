@@ -24,6 +24,8 @@ Apply [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architect
 
 - Keep gallery routing/composition in `gallery/src/app/`; discover only demo metadata and HTML entry URLs.
 - Each demo owns its UI, state, effects, helpers and focused tests. Do not import another demo’s implementation or gallery internals.
+- Put genuinely reusable, framework-independent utilities in `shared/` (`@lab/shared`); keep demo-specific helpers local. Add explicit exports and declare the dependency in consumers.
+- Run `npm run check:architecture` when changing imports or ownership. Dependency-cruiser enforces these boundaries locally and through `npm run check` in CI. Do not weaken a rule to accommodate a misplaced feature.
 - Import shared kit code through `@lab/demo-kit` exports. The kit must not import gallery app code or demos; shared UI stays free of demo-specific state and service calls.
 - Keep pure calculations separate from React and browser effects when useful. Colocate their existing tests; keep small demos flat. Extract abstractions only for a demonstrated shared need.
 - Entry files assemble dependencies; the root coordinates workspace commands. Do not make gallery tests responsible for demo logic.

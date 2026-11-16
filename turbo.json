@@ -6,7 +6,8 @@
     "gallery/vite.demo.config.ts",
     "gallery/demo-kit/**",
     "demos/**",
-    "index.html"
+    "index.html",
+    "shared/**"
   ],
   "tasks": {
     "dev": {

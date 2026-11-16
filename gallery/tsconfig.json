@@ -12,5 +12,5 @@
     "skipLibCheck": true,
     "types": ["vite/client", "node"]
   },
-  "include": ["../demos", "src", "tests", "vite.config.ts"]
+  "include": ["../demos", "../shared", "src", "tests", "vite.config.ts"]
 }

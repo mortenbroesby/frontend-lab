@@ -18,6 +18,7 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `../demos/<your-idea>/` | Your component, assets and scoped styles |
 | `../demos/<id>/index.html` | Independently runnable app entry, also included in the gallery build |
 | `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
+| `../shared/` | Framework-independent utilities shared through `@lab/shared` exports |
 | `demo-kit/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Gallery metadata-discovery checks; demo tests live beside demo logic |
@@ -48,6 +49,8 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 | `npm run preview` | Serve an already built bundle locally |
 | `npm run check` | Type check and production bundle |
 | `npm ls --depth=0` | Inspect direct installed dependencies for a quality investigation |
+
+From the repository root, `npm run check:architecture` enforces import boundaries with dependency-cruiser. It also runs first in `npm run check` and CI. See [shared utilities](../shared/README.md) before extracting common helpers.
 
 From the repository root, `npm test` includes generator, script and demo-workspace tests; `npm run check` also type-checks and builds the gallery. Use `npm test --workspace @lab/demo-workers` for a focused demo check.
 
