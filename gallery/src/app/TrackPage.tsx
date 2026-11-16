@@ -1,20 +1,21 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@lab/ui/accordion';
 import { DemoGallery } from './DemoGallery';
 import { GuideView } from './GuideView';
 import { tracks } from './tracks';
 
 export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; route: string }) {
   const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'ideas';
+  const section = ['ideas', 'examples'].includes(trackPage) ? trackPage : 'guides';
   return (
     <>
       <nav className="guide-nav" aria-label="Track guide">
         {[
           ['ideas', 'Ideas'],
           ['examples', 'Demos'],
+          ['guides', 'Guides'],
         ].map(([page, label]) => (
           <a
             key={page}
-            aria-current={trackPage === page ? 'page' : undefined}
+            aria-current={section === page ? 'page' : undefined}
             href={`#/track/${track.id}${page === 'ideas' ? '' : '/' + page}`}
           >
             {label}
@@ -25,17 +26,22 @@ export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; r
         </a>
       </nav>
       {trackPage === 'examples' ? (
-        <>
-          <DemoGallery track={track.id} />
-          <Accordion className="demo-notes" type="single" collapsible>
-            <AccordionItem value="notes">
-              <AccordionTrigger>Experiments to try with these demos</AccordionTrigger>
-              <AccordionContent>
-                <GuideView document={`tracks/${track.id}/examples`} />
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </>
+        <DemoGallery track={track.id} />
+      ) : trackPage === 'guides' ? (
+        <section className="guide" aria-labelledby="guides-heading">
+          <h2 id="guides-heading">Guides</h2>
+          <p>Work through a real example. Learn what to look for and what to try next.</p>
+          <ul>
+            {track.guides.map((guide) => (
+              <li key={guide.slug}>
+                <h3>
+                  <a href={`#/track/${track.id}/${guide.slug}`}>{guide.title}</a>
+                </h3>
+                <p>{guide.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
       ) : (
         <GuideView
           document={`tracks/${track.id}/${trackPage}`}
@@ -50,11 +56,9 @@ export function findTrack(route: string) {
   return tracks.find((t) =>
     [
       `/track/${t.id}`,
-      ...[
-        'examples',
-        ...(t.id === 'modern-web' ? ['devices'] : []),
-        ...(t.id === 'code-quality' ? ['fallow'] : []),
-      ].map((page) => `/track/${t.id}/${page}`),
+      ...['examples', 'guides', ...t.guides.map((guide) => guide.slug)].map(
+        (page) => `/track/${t.id}/${page}`,
+      ),
     ].includes(route),
   );
 }

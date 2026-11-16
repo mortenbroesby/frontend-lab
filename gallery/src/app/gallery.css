@@ -648,17 +648,6 @@
   font-size: 0.85rem;
   font-weight: 600;
 }
-.demo-notes {
-  margin-top: 2rem;
-  padding: 0 1.25rem;
-  border: 1px solid var(--lab-line);
-  border-radius: var(--radius-lg);
-}
-.demo-notes .guide {
-  border: 0;
-  padding: 1rem 0;
-  margin: 0 auto;
-}
 .empty-demos {
   padding: 2rem 0;
 }

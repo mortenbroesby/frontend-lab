@@ -1,6 +1,6 @@
 # The Front-End Lab gallery
 
-The app helps participants explore tracks, try standalone demos and create their own. Use the [root README](../README.md) for setup; participant instructions live in the app.
+The app helps participants explore ideas, try standalone demos and follow practical guides. Use the [root README](../README.md) for setup; participant instructions live in the app.
 
 ## Where to work
 
@@ -11,7 +11,7 @@ The app helps participants explore tracks, try standalone demos and create their
 | `src/app/Home.tsx`, `TrackPage.tsx` | Homepage and track-page composition |
 | `src/app/DemoGallery.tsx` | Searchable demo cards |
 | `src/app/gallery.css` | Gallery layout, navigation and content styling |
-| `src/app/tracks.ts` | Four track identities |
+| `src/app/tracks.ts` | Four track identities and guide listings |
 | `src/app/Guide.tsx`, `GuideView.tsx` | Lazy MDX loading, shared components and loading/error states |
 | `src/content/` | Participant MDX pages |
 | `mdx-demo-links.ts` | Build-time validation of MDX demo references |
@@ -29,6 +29,7 @@ Edit `src/content/tracks/<track-id>/*.mdx`. Content compiles at build time and l
 
 - **Headings:** the app owns the page's `h1`. Markdown heading levels render unchanged: start sections at `##`, then use `###` for subsections.
 - **Ideas:** `TrackPage` selects the `ideas` layout explicitly. Use `IdeaGrid` with `Idea` children, each with a `title`, short `summary`, and full explanation/resources inside. `Inspiration` holds reference examples; `IdeaNote` holds an optional closing sentence.
+- **Guides:** each track has Ideas, Demos and Guides tabs. Add a guide listing in `src/app/tracks.ts` and a matching `<slug>.mdx` in that track’s content folder. The listing supplies both navigation and valid routes. Keep runnable experiments in Demos and explanations in Guides.
 - **Instructions:** the default `document` layout provides a narrow reading column. `GuideView` supplies loading and error states for both layouts.
 - **Internal links:** use hash routes such as `#/track/modern-web` and `#/guide/setup`.
 - **Demo links:** use `<DemoLink id="cross-tab-messaging">Open cross-tab messaging</DemoLink>`. The ID must be a literal matching a demo folder. The MDX compiler rejects invalid references; the link resolves through discovered metadata to the standalone entry.

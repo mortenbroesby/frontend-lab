@@ -1,19 +1,95 @@
 ## Investigate with Fallow
 
-Pick a question, run analysis and verify a finding in this repository. The root lockfile pins Fallow 3.43.1 as a development dependency.
+**Which code can we simplify, and what evidence would justify changing it?** Fallow helps you find places to investigate: unused code, repeated logic, complex functions and import relationships. A finding starts a conversation; it does not decide the change.
 
-### Get a first result
+By the end, you should be able to explain one finding, choose an action and name the check that supports your decision. You need a local checkout and a terminal; this page does not run analysis.
 
-After [local setup](#/guide/setup), run these from the **repository root**:
+### 1. Start with one question
+
+After [local setup](#/guide/setup), run commands from the **repository root**. The lockfile pins Fallow; check your installed version:
 
 ```sh
 npm run analyze -- --version
-npm run analyze
 ```
 
-`analyze` checks unused code, duplication and health. It reads local source and may cache in ignored `.fallow/`; it applies no fixes and needs no account, cloud connection or extension. The gallery explains the investigation; terminal output supplies current evidence.
+Choose the question closest to the work you are doing:
 
-**Exit codes matter:** completed scans can exit 1 when findings exceed thresholds. Read findings and gate messages; missing binaries, invalid configuration and parse errors need separate investigation. Analysis runs outside `npm run check`; hooks and CI gate new findings as described below.
+| Question | Root command |
+| --- | --- |
+| Can we remove something unused? | `npm run analyze:dead-code` |
+| Are we maintaining the same logic twice? | `npm run analyze:dupes` |
+| Which function is difficult to reason about? | `npm run analyze:health` |
+| Where do imports form a cycle? | `npm run analyze:architecture` |
+
+For a first overview, `npm run analyze` combines checks. Start with one finding near code you understand. No findings is a valid result; there is no cleanup quota.
+
+These analysis commands do not apply fixes. A completed scan can exit 1 because findings exceed thresholds; distinguish that from configuration, parsing or installation errors.
+
+Read the [official quick start](https://fallow.tools/docs/quickstart/) for the general workflow. Web documentation may be newer than this repository: check flags with `npm run analyze -- --help` or the relevant subcommand’s `--help`.
+
+### 2. Trace a real dependency
+
+Ask: **why do we depend on `d3-force`?**
+
+```sh
+npm run analyze:dead-code -- --trace-dependency d3-force
+```
+
+Follow the reported imports into `demos/dependency-map/index.tsx`. Find the simulation setup and the forces it uses. Then open <DemoLink id="dependency-map">Dependency ripple</DemoLink> and compare its layouts.
+
+Explain what the dependency contributes and what replacing it would require. Keeping a useful dependency is a successful investigation. This exercise uses your checkout’s actual output; it does not assume an unused dependency will appear.
+
+### 3. Check what the finding means
+
+| Finding | Investigate before acting |
+| --- | --- |
+| Unused file or export | Is it unreachable, or has discovery missed an entry, generated consumer or dynamic import? |
+| Duplicate code | Must these copies change together, or do they represent independent experiments? Sharing code adds a dependency between consumers. |
+| Complex function | Which decisions make it hard to understand? Would a named step clarify it, or just move the same complexity elsewhere? |
+| Import cycle | Trace the whole cycle. Which module should own the shared responsibility? |
+
+For unexpected unused-code results, inspect discovery:
+
+```sh
+npm run analyze -- list --entry-points --plugins --workspaces
+```
+
+Check that demo HTML entries, metadata and Worker modules are represented. Search for callers and inspect the source before deleting anything. An inaccurate project model needs a narrow discovery correction, not a broad ignore rule.
+
+Fallow is static analysis: reachability is not evidence of production use. This repo supplies no coverage file, so a coverage-related risk estimate is **not measured test coverage**. A score does not prove a defect, and a clean report does not prove correctness.
+
+Read [dead-code findings explained](https://fallow.tools/docs/explanations/dead-code/) and [health metrics explained](https://fallow.tools/docs/explanations/health/) for the tool’s reasoning and limits.
+
+### 4. Make one justified decision
+
+Choose one:
+
+- **Change the code:** remove a genuinely unused export or simplify a confusing function. Preserve the intended behaviour.
+- **Correct discovery:** add the missing entry narrowly in `.fallowrc.json`, then rerun analysis before touching the reported code.
+- **Keep it:** explain why the dependency, repetition or complexity serves this demo. Do not extract a shared abstraction just to improve a score.
+
+Rerun the same analysis, then the smallest check that could catch your mistake: a relevant test, type check or build. Broaden verification when the change crosses workspace boundaries. Preview any automatic fix before applying it.
+
+Before committing:
+
+```sh
+npm run analyze:changes
+```
+
+Finish with a short note: **“I investigated …; the evidence was …; I chose …; I checked ….”** That explanation is more useful than a before-and-after finding count.
+
+### How this repository is configured
+
+- `.fallowrc.json` declares workspace patterns, TypeScript app entries and the existing thresholds. Built-in discovery adds package exports, Vite, tests, generators and Workers. Recheck it when entries move.
+- Root scripts scan the current workspace outside Turbo’s cache. New error-level findings and worsening existing enforceable complexity findings fail the audit, commit hook and CI. Unchanged inherited findings remain allowed; estimated-coverage-only findings, test complexity and CSS suggestions stay advisory.
+- `.baselines/` records reviewed findings. Run `npm run analyze:baseline` to compare the whole repo; `npm run analyze:health` shows current metrics and advisories. Read the baseline README before refreshing.
+- No Fallow boundary rules or rule packs. `npm run check:architecture` separately enforces dependency-cruiser rules; a clean Fallow result says nothing about that policy.
+- `.fallow/` holds ignored generated data. Never commit caches or machine-specific reports.
+
+If discovery misses an entry, inspect it before adding a narrow `entry` pattern in `.fallowrc.json`. Do not mark every file as an entry or ignore directories to clear findings. Understand changes before applying automatic fixes.
+
+Keep sensitive source and reports within the repository's permitted audience.
+
 
 ### Set up agents and commit checks
 
@@ -29,48 +105,10 @@ Hooks are local, not branch protection. Without Fallow, the hook warns and skips
 
 References: [official Git hooks](https://fallow.tools/docs/cli/hooks/), [Copilot shared skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills).
 
-### Choose a lens
+### Go further
 
-| Root command | Question |
-| --- | --- |
-| `npm run analyze:dead-code` | Which files, exports or dependencies appear unused? |
-| `npm run analyze:dupes` | Where is code repeated? |
-| `npm run analyze:health` | Which functions deserve a closer look for complexity? |
-| `npm run analyze:architecture` | Are there import cycles or configured boundary violations? |
-| `npm run analyze -- list --entry-points --plugins --workspaces` | What does the tool think this project contains? |
+- [Official documentation](https://fallow.tools/docs/) — commands, explanations and supported frameworks.
+- [Configuration](https://fallow.tools/docs/configuration/) — adapt discovery when the defaults miss your project.
+- [Fallow source](https://github.com/fallow-rs/fallow) — implementation and issue reporting.
 
-Pass options after `--`: `npm run analyze:health -- --report-only` gives advisory results. For JSON without npm’s banner, create `.fallow/` if needed, then run `npm run --silent analyze:dead-code -- --format json --output-file .fallow/dead-code.json`.
-
-### Worked investigation: why is this dependency here?
-
-Trace a real dependency from the repository root:
-
-```sh
-npm run analyze:dead-code -- --trace-dependency d3-force
-```
-
-Follow the result into `demos/dependency-map/index.tsx`. Compare imports with uses. What does the dependency provide, and what would replacing it cost? Keeping it can be justified.
-
-Before trusting an unused-code finding, check discovery includes gallery metadata, demo HTML entries and Worker modules.
-
-### Worked investigation: complexity is a clue
-
-Run `npm run analyze:health` and review its metrics. The reviewed baseline currently has no complexity findings; if you find one in your own codebase, trace the decisions it measures. In this repo, compare route selection with rendering in `gallery/src/app/App.tsx`: does the separation clarify intent? Do not manufacture a problem just to produce a finding.
-
-Fallow receives no coverage file: its CRAP/risk score is **not measured test coverage**. Tests cover selected logic; high scores do not prove defects. Preserve routes and error handling during refactors, and check changed behaviour. Leaving code alone can be reasonable.
-
-### How this repository is configured
-
-- `.fallowrc.json` declares workspace patterns, TypeScript app entries and the existing thresholds. Built-in discovery adds package exports, Vite, tests, generators and Workers. Recheck it when entries move.
-- Root scripts scan the current workspace outside Turbo’s cache. New error-level findings and worsening existing enforceable complexity findings fail the audit, commit hook and CI. Unchanged inherited findings remain allowed; estimated-coverage-only findings, test complexity and CSS suggestions stay advisory.
-- `.baselines/` records reviewed findings. Run `npm run analyze:baseline` to compare the whole repo; `npm run analyze:health` shows current metrics and advisories. Read the baseline README before refreshing.
-- No Fallow boundary rules or rule packs. `npm run check:architecture` separately enforces dependency-cruiser rules; a clean Fallow result says nothing about that policy.
-- `.fallow/` holds ignored generated data. Never commit caches or machine-specific reports.
-
-If discovery misses an entry, inspect it before adding a narrow `entry` pattern in `.fallowrc.json`. Do not mark every file as an entry or ignore directories to clear findings. Understand changes before applying automatic fixes.
-
-Keep sensitive source and reports within the repository's permitted audience.
-
-References: [official quick start](https://fallow.tools/docs/quickstart/), [configuration](https://fallow.tools/docs/configuration/), [Fallow source](https://github.com/fallow-rs/fallow). Web examples may outpace our pinned version; `npm run analyze -- --help` describes the installed CLI.
-
-[Code Quality & Maintainability](#/track/code-quality) · [Investigation bootstrap](#/track/code-quality)
+[All Code Quality guides](#/track/code-quality/guides)
