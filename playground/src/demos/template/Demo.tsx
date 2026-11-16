@@ -14,7 +14,7 @@ export default function Demo() {
       <div className="controls">
         <p className="eyebrow">Your space / no prescribed outcome</p>
         <h3>Start with one small thing.</h3>
-        <p>Edit <code>your copied Demo.tsx</code> and watch this area change. Build one visible behaviour here. Visit a reference demo when you want inspiration.</p>
+        <p>In your generated <code>Demo.tsx</code>, change “An idea, taking shape” to your own heading and save. Refresh to confirm your code change stays. Then build one visible behaviour of your own.</p>
         <label htmlFor="idea">What are you curious about?</label>
         <input id="idea" value={idea} maxLength={120} onChange={event => setIdea(event.target.value)} />
         <label htmlFor="colour">A colour to start with</label>
