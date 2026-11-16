@@ -74,9 +74,15 @@ export const tracks = [
     id: 'experimental-projects',
     guides: [
       {
-        slug: 'experiments',
-        title: 'Take an experiment apart',
-        description: 'Change the rules of a little world or remix a repeatable SVG postcard.',
+        slug: 'little-world',
+        title: 'Change one rule in a little world',
+        description: 'Predict how a sensing or movement rule changes a small simulation.',
+      },
+      {
+        slug: 'postcard',
+        title: 'Reproduce a generative composition',
+        description:
+          'Keep randomness fixed while changing the visual rule, then export the result.',
       },
     ],
     title: 'Experimental Projects',

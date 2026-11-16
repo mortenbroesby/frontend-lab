@@ -1,0 +1,27 @@
+## Reproduce a generative composition
+
+**What changes when randomness stays fixed?** Open <DemoLink id="generative-postcard">Generative postcard</DemoLink>. A seed lets you reproduce the random choices and isolate the effect of a visual rule.
+
+### Change the rule, not the random choices
+
+Start with seed 42 and 90 dots. Switch Position rule from Scatter to Spiral. Dot sizes and colours remain tied to the same seeded sequence; their positions follow a different rule. Switch back: the original composition returns.
+
+Enter another whole-number seed and choose Apply seed. Record that seed, dot count and position rule. Remix, then re-enter your recorded settings. The result should match. Restore starting composition returns all three controls to their initial values.
+
+Save SVG to export the current result. The filename records the three settings. Open the downloaded image independently; it contains the shapes, not a running React application. This demo does not persist preferences between reloads.
+
+### Inspect the source
+
+After [local setup](#/guide/setup), inspect `demos/generative-postcard/art.ts`. A seeded number sequence supplies dot properties. The position rule transforms coordinates; it does not ask the browser for fresh randomness on every render.
+
+Change one rule while holding seed and count fixed. Can you explain which properties changed? Use the existing tests to check repeatability and coordinate bounds after editing.
+
+### Apply it in your project
+
+Use reproducible input when comparing a procedural layout, simulation or visual test. Record the seed alongside the parameters and algorithm version: changing the algorithm can change the result even with the same seed.
+
+Choose one parameter that produces an understandable visual difference. Keep export separate from generation so the same data can be rendered or saved. A deterministic pseudo-random sequence is useful for reproduction, not for passwords or security tokens.
+
+Read: [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) and [XMLSerializer](https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer).
+
+[All Experimental Projects guides](#/track/experimental-projects/guides)

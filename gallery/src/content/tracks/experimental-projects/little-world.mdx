@@ -1,0 +1,17 @@
+## Change one rule in a little world
+
+- **Try:** <DemoLink id="ecosystem-simulation">Open the pond</DemoLink>, pause, plant a food trail and press play.
+- **Change:** Adjust sensing distance, then change a movement rule in `demos/ecosystem-simulation/world.ts`.
+- **Observe:** Do creatures find the same food with a shorter sensing distance? Change one rule at a time.
+
+`world.ts` owns rules; `index.tsx` draws SVG and controls. Start with one creature and meal, or remix the example. Try avoidance, regrowing food or differing behaviours.
+
+Three tests cover movement towards food, one-time consumption and pond boundaries. This toy omits reproduction, starvation and persistence.
+
+### Apply it in your project
+
+Separate a small state-update rule from rendering so you can inspect its inputs and outputs. Choose one observable outcome before changing a rule. Keep the initial conditions comparable: random starts make causal comparisons harder.
+
+Try a single creature and food source first. Predict its next movement, then inspect what actually happens. Add more entities only when you can explain the simple case. This is a toy model, not evidence about a real ecosystem.
+
+[All Experimental Projects guides](#/track/experimental-projects/guides)

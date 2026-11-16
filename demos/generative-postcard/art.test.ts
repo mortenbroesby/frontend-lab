@@ -21,3 +21,17 @@ test('art stays inside its viewBox even at the supported extremes', () => {
   assert.throws(() => makeDots(1, 401), RangeError);
   assert.throws(() => makeDots(NaN, 1), RangeError);
 });
+
+test('changing the position rule preserves seeded dot identities and can be reversed', () => {
+  const scatter = makeDots(42, 90);
+  const spiral = makeDots(42, 90, 'spiral');
+  assert.notDeepEqual(scatter, spiral);
+  assert.deepEqual(
+    spiral.map(({ radius, hue }) => [radius, hue]),
+    scatter.map(({ radius, hue }) => [radius, hue]),
+  );
+  assert.deepEqual(makeDots(42, 90, 'scatter'), scatter);
+  for (const dot of makeDots(4294967295, 400, 'spiral')) {
+    assert.ok(dot.x >= 20 && dot.x <= 620 && dot.y >= 20 && dot.y <= 400);
+  }
+});
