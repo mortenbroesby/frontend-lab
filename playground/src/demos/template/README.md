@@ -1,6 +1,6 @@
 # Add your experiment to the lab
 
-From the repository root, after `npm ci`:
+Create your branch using [CONTRIBUTING.md](../../../../CONTRIBUTING.md) before editing. From the repository root, after `npm ci`:
 
 ```sh
 npm run demo:new
@@ -44,18 +44,12 @@ The template itself has no `demo.config.ts`, so it is not listed. Existing refer
 
 Keep code, assets and optional `Demo.module.css` beside the component. Keep state inside the demo. Clean up timers, listeners, Workers and subscriptions when leaving. Only the selected demo runs; the app handles navigation, loading and React render-error feedback. This is not a sandbox: an infinite loop still blocks the page, and async/event errors need handling inside your demo.
 
-Try your demo, navigate away and back, and check the browser console. Run `npm run check`; add a meaningful test if you introduce nontrivial logic. The existing browser journeys can be run with the optional setup in the [playground README](../../../README.md).
+Try your demo, navigate away and back, and check the browser console. Run `npm run check`; add a meaningful test if you introduce nontrivial logic. For UI/browser changes, also run the browser journeys using the [browser setup](../../../README.md#browser-checks).
 
 ## Share it through Git
 
-From the repository root, substituting your own unique branch name:
+Follow [CONTRIBUTING.md](../../../../CONTRIBUTING.md) for checks, staging, pushing and the pull request. Include the track, what to try and what you learned. Keep dependency additions small and explain them.
 
-```sh
-git switch -c demo/your-idea
-```
+Different demo folders do not edit a shared registration file; choose a unique folder ID.
 
-Make your changes, inspect `git diff`, then stage only your demo and any relevant tests. Commit, push your branch and open a pull request against `main`. Include the track, what to try and what you learned. Keep dependency additions small and explain them. Different demo folders do not edit a shared registration file; choose a unique folder ID.
-
-After merge, other participants update their clean `main` checkout with `git pull --ff-only`. Save or commit ongoing work before switching branches. Changes appear after pulling and reloading the local app; there is no live cross-computer sync or hosted deployment.
-
-For work in another repository, your gallery component can describe findings, show a before/after comparison, or link to a demo viewers can access. Do not copy company code, credentials or private data into this personal repository. Unfinished experiments and useful negative results are welcome.
+For work in another repository, share a permitted findings note or a gallery component with an appropriate link or walkthrough. Do not copy source, credentials or private data outside its permitted audience. Unfinished experiments and useful negative results are welcome.

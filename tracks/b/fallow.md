@@ -47,17 +47,17 @@ References: [official Git hooks](https://fallow.tools/docs/cli/hooks/), [Copilot
 
 Pass CLI options after `--`, for example `npm run analyze:health -- --report-only` for an advisory health run. For a machine-readable report without npm's script banner, use `npm run --silent analyze:dead-code -- --format json --output-file .fallow/dead-code.json` after creating `.fallow/` if necessary.
 
-## Worked investigation: an unused export
+## Worked investigation: why is this dependency here?
 
-The initial scan flagged `marker` in [create-demo.mjs](../../turbo/generators/create-demo.mjs). Investigate it:
+Trace a real dependency from the repository root:
 
 ```sh
-npm run analyze:dead-code -- --trace turbo/generators/create-demo.mjs:marker
+npm run analyze:dead-code -- --trace-dependency d3-force
 ```
 
-Fallow reports a reachable file but no references to the exported symbol. Read the file and search its imports: `marker` is used **inside** the generator to register demos, but no other module imports it. The potential improvement is to remove the `export` keyword, not the constant or its uses.
+Follow the result into [Constellation.tsx](../../playground/src/examples/Constellation.tsx). Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
 
-On your own branch, try that one change, rerun the trace and `npm run test:generator`, then `npm run check`. Does the finding disappear while the generator still works? This small cleanup is intentionally left for participants; later branches may already contain it. If so, pick another finding rather than manufacture a defect.
+The earlier unused `marker` export exercise depended on the manual demo registry. Folder discovery removes that registration mechanism; do not recreate the marker to reproduce an old finding. For unused-code investigation, run a fresh scan and follow a current finding instead. Check that discovery sees `demo.config.ts` loaders before trusting a report that calls a demo unused.
 
 ## Worked investigation: complexity is a clue
 
@@ -67,7 +67,7 @@ No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured te
 
 ## How this repository is configured
 
-- We use Fallow's built-in discovery without a custom config. The verified scan discovers the npm workspace, Vite entry, Turbo generator, tests, lazy demo imports and Worker module. Check the discovery command above before trusting unused-code results in a different repository.
+- We use Fallow's built-in discovery without a custom config. Earlier verification covered the npm workspace, Vite entry, Turbo generator, tests, lazy demo imports and Worker module. Recheck the discovery command above after changes to folder discovery or when using another repository; previous evidence does not prove the new entry paths are understood.
 - Scripts run once at the repository root, outside Turbo's task cache, so the report reflects the current whole workspace. There is no analyzer wrapper or per-demo configuration.
 - No findings are suppressed and no baseline hides existing issues. We keep the defaults so participants can inspect their meaning before proposing thresholds.
 - No architecture boundary rules or rule packs have been configured. Cycle checks still run; zero boundary violations means that no boundary policy was measured, not that the architecture is proven correct.
@@ -79,7 +79,7 @@ If discovery misses a real entry in your own project, inspect it first and add a
 
 - **Dependency detective:** `npm run analyze:dead-code -- --trace-dependency d3-force`. Follow the result into the constellation demo. Would you keep this dependency?
 - **Duplication:** run the duplication command. The initial default scan found no clone groups and skipped six files under its default duplication ignores. Use `npm run analyze:dupes -- --explain-skipped` to inspect that scope. Compare the template and examples manually; a clean report is not proof that every repeated idea is detected or should be shared.
-- **Architecture:** trace how the registry loads demos. Propose one useful dependency boundary before writing any rules.
+- **Architecture:** trace how host discovery finds `demo.config.ts` and loads a component. Propose one useful dependency boundary before writing any rules.
 - **Your own repository:** use its normal setup and obtain permission where needed. Start with discovery, record the Fallow version/config and manually check a few findings before adopting gates or fixes.
 
 Share your question, command/version, file or symbol, alternative explanation, decision and verification in [findings](../findings.md). Keep sensitive source and reports within the repository's permitted audience.

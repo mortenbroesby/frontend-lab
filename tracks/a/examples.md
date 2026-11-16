@@ -1,12 +1,12 @@
 # A worked examples · Browser capabilities
 
-These are completed references, separate from your [bootstrap](bootstrap.md). Choose one door below. You can experience the result first, rebuild a small version in your copied `src/demos/<your-idea>/Demo.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the playground](../../playground/README.md) if you want these examples.
+These are completed references, separate from your [bootstrap](bootstrap.md). Choose one door below. You can experience the result first, rebuild a small version in your generated `playground/src/demos/<your-idea>/Demo.tsx`, inspect the reference only when stuck, or take an entirely different API direction. [Start the playground](../../playground/README.md) if you want these examples.
 
 ## D3: build an atlas of ideas
 
 **Experience:** Open the playground's D3 constellation. Drag an idea and watch its neighbours follow, switch between one constellation and four islands, or filter to one cluster. Nodes stay pinned after dragging; release them with the button. Keyboard users can focus a node and move it with arrow keys. Pause motion to inspect it; reduced-motion preference starts paused.
 
-**Build towards it:** In your copied `src/demos/<your-idea>/Demo.tsx`, draw three labelled SVG circles from an array. Add a few source/target connections, then use D3's force simulation to calculate positions. Start with one force, inspect the result, and add links or collision avoidance only when useful. The completed reference is `src/examples/Constellation.tsx`; it uses the focused `d3-force` package rather than the whole D3 bundle.
+**Build towards it:** In your generated `playground/src/demos/<your-idea>/Demo.tsx`, draw three labelled SVG circles from an array. Add a few source/target connections, then use D3's force simulation to calculate positions. Start with one force, inspect the result, and add links or collision avoidance only when useful. The completed reference is `playground/src/examples/Constellation.tsx`; it uses the focused `d3-force` package rather than the whole D3 bundle.
 
 **Understand the boundary:** D3 owns mutable simulation nodes; React receives position snapshots and renders SVG. Copy links before passing them to D3 because the simulation resolves their endpoints into node objects. Stop its timer when leaving the example. D3 is a library on top of browser capabilities, not a native browser API.
 
@@ -20,7 +20,7 @@ References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link 
 
 **Experience:** In the SVG example, adjust the dot count, remix and save an image. Notice that the same seed produces the same result.
 
-**Build towards it:** Start with one SVG circle. Add an array of circles, then one control. If useful, borrow `makeDots` from `src/examples/art.ts`; alternatively invent your own distribution. The finished reference is `src/examples/ArtStudio.tsx`.
+**Build towards it:** Start with one SVG circle. Add an array of circles, then one control. If useful, borrow `makeDots` from `playground/src/examples/art.ts`; alternatively invent your own distribution. The finished reference is `playground/src/examples/ArtStudio.tsx`.
 
 **Branch:** Spiral instead of random scatter; data-driven sizes; pointer interaction; a game of finding a dot; keyboard controls or reduced motion. Optional export is already demonstrated by serialising SVG into a downloadable Blob.
 
@@ -30,7 +30,7 @@ References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link 
 
 **Experience:** Run the calculation in a Worker and use the interaction pad. Compare it on the main thread, starting small. A quick run may be hard to perceive; inspect a trace or increase the bounded workload.
 
-**Build towards it:** Start a Worker that receives a number and replies with a result. Then move one pure computation into it, show its status and add cancellation by terminating the Worker. References: `Workers.tsx`, `compute.worker.ts` and `compute.ts` under `src/examples`.
+**Build towards it:** Start a Worker that receives a number and replies with a result. Then move one pure computation into it, show its status and add cancellation by terminating the Worker. References: `Workers.tsx`, `compute.worker.ts` and `compute.ts` under `playground/src/examples`.
 
 **Branch:** Progress messages, image processing, search, or producing a large array of points for your SVG. Think about data-transfer cost, cancellation and stale results when inputs change.
 
@@ -40,7 +40,7 @@ References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link 
 
 **Experience:** Open the second lab tab from the signals example. Send a message and observe that only the other tab receives it. Close and reopen a tab: there is no saved history.
 
-**Build towards it:** Create a `BroadcastChannel`, send a string, display received strings and close the channel when the component leaves. Reference: `src/examples/Signals.tsx`. Keep both tabs on the exact same origin.
+**Build towards it:** Create a `BroadcastChannel`, send a string, display received strings and close the channel when the component leaves. Reference: `playground/src/examples/Signals.tsx`. Keep both tabs on the exact same origin.
 
 **Branch:** Share a palette, quiz question or simple drawing event between tabs. Decide how to distinguish event types, handle invalid messages or avoid feedback loops.
 
