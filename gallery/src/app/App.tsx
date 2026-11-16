@@ -1,4 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { Button } from '@lab/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@lab/ui/dropdown-menu';
 import { requirementLabels } from '@lab/demo-kit/types';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
@@ -161,22 +168,55 @@ function TrackChoices() {
 }
 
 function LabNavigation({ route }: { route: string }) {
+  const links = [
+    ['/create', 'Create a demo'],
+    ['/guide/setup', 'Local setup'],
+  ];
   return (
     <nav aria-label="Lab">
-      {[
-        ['/', 'All tracks'],
-        ['/create', 'Create a demo'],
-        ['/guide/setup', 'Local setup'],
-      ].map(([path, label]) => (
-        <a
-          className="site-nav-link"
-          key={path}
-          href={`#${path}`}
-          aria-current={route === path ? 'page' : undefined}
-        >
-          {label}
-        </a>
-      ))}
+      <div className="desktop-nav">
+        {links.map(([path, label]) => (
+          <a
+            className="site-nav-link"
+            key={path}
+            href={`#${path}`}
+            aria-current={route === path ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        ))}
+      </div>
+      <DropdownMenu key={route}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            className="mobile-nav-toggle"
+            variant="ghost"
+            size="icon"
+            aria-label="Open navigation menu"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          {links.map(([path, label]) => (
+            <DropdownMenuItem key={path} asChild>
+              <a href={`#${path}`} aria-current={route === path ? 'page' : undefined}>
+                {label}
+              </a>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </nav>
   );
 }

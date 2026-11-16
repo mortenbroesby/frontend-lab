@@ -607,6 +607,13 @@
   gap: 0.3rem;
   flex-wrap: wrap;
 }
+.desktop-nav {
+  display: flex;
+  gap: 0.3rem;
+}
+.mobile-nav-toggle {
+  display: none;
+}
 .site-nav-link {
   font-size: 0.8rem;
   color: var(--lab-muted);
@@ -631,9 +638,11 @@ pre {
   outline: none;
 }
 @media (max-width: 600px) {
-  .site-header {
-    flex-wrap: wrap;
-    gap: 1rem;
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-nav-toggle {
+    display: inline-flex;
   }
 }
 .demo-title-link {
