@@ -64,7 +64,7 @@ No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured te
 - We use Fallow's built-in discovery without a custom config. Earlier verification covered the npm workspace, Vite entry, Turbo generator, tests, independent demo entries and Worker module. Recheck the discovery command above after changes to folder discovery or when using another repository; previous evidence does not prove the new entry paths are understood.
 - Scripts run once at the repository root, outside Turbo's task cache, so the report reflects the current whole workspace. There is no analyzer wrapper or per-demo configuration.
 - No findings are suppressed and no baseline hides existing issues. We keep the defaults so participants can inspect their meaning before proposing thresholds.
-- No architecture boundary rules or rule packs have been configured. Cycle checks still run; zero boundary violations means that no boundary policy was measured, not that the architecture is proven correct.
+- No Fallow architecture boundary rules or rule packs have been configured. Separately, `npm run check:architecture` enforces the repository’s dependency-cruiser rules. A clean Fallow boundary result does not measure that separate policy.
 - `.fallow/` is ignored because it holds local generated data. Do not commit caches or machine-specific reports.
 
 If discovery misses a real entry in your own project, inspect it first and add a narrow `entry` pattern in `.fallowrc.json`. Avoid marking every file as an entry or ignoring a whole directory to obtain a clean report. Do not run automatic fixes before understanding the candidate change.

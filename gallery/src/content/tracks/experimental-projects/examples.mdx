@@ -1,4 +1,14 @@
-# Experimental Projects worked example · A generative postcard
+# Experiments to take apart
+
+## Little world
+
+[Open the pond](#/demo/ecosystem). Plant food, change sensing distance and watch the creatures find it. Pause to place a trail, then play. What changes when they can only sense nearby food?
+
+`demos/ecosystem/world.ts` contains the rules; `index.tsx` draws the SVG and supplies controls. Start your own version with one creature and one meal, or change a rule in the completed example. Try avoidance, food that regrows or different behaviours for different creatures.
+
+The three logic tests check movement towards food, one-time consumption and staying inside the pond. This is a toy habitat, not a biological simulation: there is no reproduction, starvation or persistence.
+
+## Generative postcard
 
 **Experience:** In the running gallery, open `/#/demo/art`. Change the dot count, remix the composition, then save an SVG. The same seed produces the same arrangement; the exported file can be opened in a browser independently.
 
@@ -13,8 +23,3 @@
 
 Try a spiral, a title, data-driven sizes or a tiny game. Borrow the generator when you want to focus on interaction instead of rebuilding every piece.
 
-For another direction, explore the [D3 dependency map](#/track/modern-web/examples) or use local signals to control a palette from a second tab. Local tabs are not multi-device networking.
-
-**Small checks:** logic tests cover repeatability and bounds. Try remixing and SVG download yourself when changing those interactions. Those checks do not decide whether your visual idea is interesting. Show a result and one thing you learned; an unfinished prototype counts.
-
-[Your creative bootstrap](#/track/experimental-projects) · [Experimental Projects](#/track/experimental-projects)

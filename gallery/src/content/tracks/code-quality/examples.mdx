@@ -1,29 +1,19 @@
-# Code Quality & Maintainability worked example · Does the largest workload have a trustworthy result?
+# Investigations to explore
 
-This is a completed investigation, separate from [your bootstrap](#/track/code-quality). It examines the kit's actual code, not planted defects. The resulting test is already included; choose a different question rather than reproducing a known gap.
+The entries above are written investigations with commands to run locally, rather than live analysis in the browser. **A test gap, investigated** follows one real confidence improvement; **Investigate with Fallow** starts from current terminal output.
 
-For a second investigation using automated analysis, follow the [Fallow walkthrough](#/track/code-quality/fallow).
+## Another route: inspect an architecture boundary
 
-## Problem and approach
+After local setup, run from the repository root:
 
-The Worker demo offers a workload up to two million. Before this investigation, tests checked known results up to 100,000 and rejected values above the supported maximum. The question was whether the **largest accepted input** had a verified result.
+```sh
+npm run check:architecture
+```
 
-1. Read `demos/workers/compute.ts`: it counts primes inclusively and allows `MAX_LIMIT = 2_000_000`.
-2. Read `demos/workers/index.tsx`: the largest menu option passes that same input.
-3. Read the tests: rejecting values above the limit tests validation, not correctness at the limit.
-4. Independently calculate the result with a sieve rather than reuse the trial-division implementation: 148,933 primes.
-5. Add one assertion at the accepted boundary in `demos/workers/compute.test.ts`.
+This uses the already-installed dependency-cruiser. Open `.dependency-cruiser.cjs` and find `demos-stay-independent`: one demo must not import another demo’s implementation. Trace the imports in `demos/workers/index.tsx`; which belong to that demo and which come from a shared package?
 
-The new test is named **“the largest selectable workload has a known correct result”**. From the repository root, `npm test --workspace @lab/demo-workers` runs it alongside the smaller cases. It passes with the existing implementation: we found a confidence gap, not a demonstrated calculation bug.
+Compare this source-import boundary with the dependency map’s package-level edges. They answer different questions. A passing check means the configured rules found no violations in the inspected graph; it does not prove every architectural choice is good.
 
-## Modern Web Capabilities concern that did not justify a rewrite
+Choose one rule and explain what change it prevents. Would that same boundary help in your own codebase? Explore a narrower rule there only if it protects an actual agreement.
 
-Both UI and Worker paths call the calculation. That might initially look like duplicated implementation. Following imports shows that they share `compute.ts`; running it in two places is the deliberate comparison. Removing one caller would remove the learning experience. “Two callers” is not “two implementations”.
-
-## Improvement, evidence and limits
-
-The improvement is one meaningful boundary test, without changing runtime behaviour. It complements the small validation tests. The expected count was checked independently; no timing threshold is asserted because hardware differs.
-
-This does not prove every input correct, establish performance on participant machines or suggest all code needs maximum-size tests. Use the question and evidence pattern on another part of this kit or your own repository.
-
-[Your investigation bootstrap](#/track/code-quality) · [Code Quality & Maintainability](#/track/code-quality)
+Read: [dependency-cruiser rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md).

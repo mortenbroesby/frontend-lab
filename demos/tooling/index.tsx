@@ -20,8 +20,8 @@ const experiments = [
     title: 'Build caching',
     question: 'Am I rebuilding something that has not changed?',
     command: 'npm exec -- turbo run build --filter=@lab/demo-tooling\nnpm exec -- turbo run build --filter=@lab/demo-tooling',
-    expect: 'After npm ci at the root, run twice without edits. Inspect the second run. Our verification produced two misses; compare actual logs, not a promised speedup.',
-    next: 'Inspect globalDependencies in turbo.json. The inspected global inputs included generated dist files and .turbo logs. Compare dry-run globalCacheInputs.files and hashes; try excluding generated inputs on your experiment branch, then verify real source edits still invalidate the cache.',
+    expect: 'After npm ci at the root, run twice without edits. The second run should use the cache; the first may also hit if already cached. Change a source file and check that its build misses.',
+    next: 'Inspect globalDependencies in turbo.json: dist files and .turbo logs are excluded, but real source inputs remain broad. Compare dry-run globalCacheInputs.files and hashes. Could you narrow inputs without missing a dependency? Restore your experimental edits afterwards.',
   },
   {
     title: 'Affected projects',

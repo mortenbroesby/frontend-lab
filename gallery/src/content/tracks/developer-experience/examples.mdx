@@ -45,9 +45,11 @@ npm exec -- turbo run build --filter=@lab/demo-tooling
 npm exec -- turbo run build --affected --dry=json
 ```
 
-The dry runs describe tasks without building them. The explicit filter selects the tooling demo; inspect whether the second build uses its local cache. In our verification, both runs missed—an investigation opportunity, not a required speedup. Affected selection needs Git history and a usable comparison base; inspect the plan before executing it.
+The dry runs describe tasks without building them. The explicit filter selects the tooling demo. Run the two builds without editing files: after a first cache miss, the second should report a cache hit (both can hit if already cached). Change a source file and run again; its build must miss. Restore your edit afterwards.
 
-**A real constraint to investigate:** this repository includes broad `globalDependencies` in `turbo.json`, including generated `dist` files and `.turbo` logs in the inspected dry-run plan. Those files can change during a build and invalidate the next run; unrelated source edits can also invalidate several cache keys. Affected selection and cache validity answer different questions. Inspect `globalCacheInputs.files` in the JSON. On your experiment branch, try excluding generated outputs from the inputs, run twice, then change a real source file and confirm it still invalidates the build. Compare the plans/hashes before deciding whether the input change is safe. The gallery bundles all demos; do not remove its real dependencies just to improve a cache number.
+Generated `dist` files and `.turbo` logs are excluded from the global inputs so a build does not invalidate itself. Inspect `globalCacheInputs.files` in the JSON to see the actual inputs. Source dependencies remain deliberately broad: an unrelated demo edit may invalidate this build too, because the gallery bundles all demos. Explore narrower inputs only after identifying which sources each build consumes.
+
+Affected selection needs Git history and a usable comparison base; inspect the plan before executing it. Choosing tasks and reusing cached outputs are different decisions.
 
 **Demonstrate:** show the red → green test rerun, the selected task or an explained cache miss. A targeted pass does not replace the broader checks needed for your actual change.
 

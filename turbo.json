@@ -7,7 +7,9 @@
     "gallery/demo-kit/**",
     "demos/**",
     "index.html",
-    "shared/**"
+    "shared/**",
+    "!**/dist/**",
+    "!**/.turbo/**"
   ],
   "tasks": {
     "dev": {

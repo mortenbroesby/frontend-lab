@@ -1,0 +1,11 @@
+.pond-demo { max-width: 960px; margin: auto; }
+.pond-demo p { max-width: 42rem; }
+.pond-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-block: 1.5rem; }
+.pond-controls label { margin: 0; min-width: 130px; flex: 1; }
+.pond-controls input { display: block; width: 100%; }
+.pond { display: block; width: 100%; border-radius: 20px; cursor: crosshair; }
+.pond-caption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-block: 1rem; }
+.pond-cursor { opacity: .35; }
+.pond:focus-visible .pond-cursor { opacity: 1; }
+.pond-demo details { border-top: 1px solid #ddd; padding-block: 1rem; }
+.pond-demo summary { cursor: pointer; margin-bottom: 1rem; font-weight: 650; }
