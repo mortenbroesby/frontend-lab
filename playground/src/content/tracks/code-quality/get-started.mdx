@@ -4,16 +4,14 @@
 
 ## Start with the fallback
 
-From the repository root:
+After [local setup](#/guide/setup), run from the repository root:
 
 ```sh
-npm ci
 npm ls --depth=0
 npm explain d3-force
-npm run check
 ```
 
-This uses Node 24.x and npm. Expect a dependency list, an explanation of why D3 is installed, and passing checks. None of these outputs proves that a dependency is unused or that a codebase has no problems.
+This uses Node 24.x and npm. Expect a dependency list and an explanation of which workspace requires D3. None of these outputs proves that a dependency is unused or that a codebase has no problems.
 
 ## Try automated analysis
 
@@ -29,7 +27,7 @@ Copy these prompts into your own notes:
 - **Decision:** Leave it alone, investigate further or try one small change on your own branch.
 - **Check:** What would demonstrate the change helped without breaking behaviour?
 
-**First result:** follow `d3-force` from `demos/constellation/package.json` to `demos/constellation/index.tsx`, or follow `index.tsx` → `compute.worker.ts` → `compute.ts` in that examples folder. Write one observation before opening the [worked example](#/track/code-quality/examples).
+**First result:** follow `d3-force` from `demos/constellation/package.json` to `demos/constellation/index.tsx`, or follow `index.tsx` → `compute.worker.ts` → `compute.ts` under `demos/workers/`. Write one observation before opening the [worked example](#/track/code-quality/examples).
 
 **Success check:** your note names the dependency or behaviour, points to a real caller or test, and explains why you would keep it or investigate further. Passing checks alone are not the conclusion. Create a [contribution branch](#/guide/contributing) before changing files.
 

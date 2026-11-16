@@ -24,6 +24,6 @@ Try the interaction you changed. Use `npm run check` for the existing logic test
 - **Worker finishes too quickly to observe:** choose a larger workload or inspect DevTools. Timing depends on hardware. The main-thread comparison deliberately pauses interaction briefly; start with the small workload.
 - **Install failure:** retain the error, check runtime and network/proxy access, and ask a peer. Pair or use your own existing project rather than spending the day reinstalling tools.
 
-The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSocket server, WebRTC signalling server or WebAssembly toolchain is included. Those remain optional directions for participants to explore.
+The examples use SVG, Workers and BroadcastChannel, plus D3 for visualisation and Trystero for Device Rally’s cross-device messaging. Device Rally uses public signaling services; no custom backend needs starting.
 
 The production build contains the gallery and each demo’s own HTML entry. Every demo can also build independently. Code Quality & Maintainability can use an existing codebase, and Developer Experience & Tooling's independent Node scripts under `tracks/developer-experience/` run without starting the app.

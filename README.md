@@ -66,7 +66,8 @@ the typed contract and manual setup.
 ## 🤝 Share Your Work
 
 Open a pull request with something to try and a short note about what you learned.
-Code, tools and investigations all belong here. Run `npm run check` before sharing.
+Code, tools and investigations all belong here. Try your change and use a focused
+check when needed.
 Open **Share your work** in the app for contribution instructions.
 
 ---

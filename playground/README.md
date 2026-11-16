@@ -22,13 +22,11 @@ Run `npm ci` and `npm run dev` from the repository root, then open the printed a
 | `../packages/demo-kit/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Small logic checks |
 
-Open **Create a demo** in the app. Run `npm run demo:new` from the repository root; Turborepo creates an independent app workspace with `index.tsx`, `demo.config.ts`, HTML/TypeScript entries and `README.md` in your demo folder. The host discovers `demo.config.ts` automatically and uses the folder name as the ID; no central registry or app-shell edit is needed. Use local component state, optional CSS modules and effect cleanup. The gallery orders demos alphabetically by folder ID. The gallery reads metadata only. Demo components run in their own pages; each React starter has a render-error boundary and owns resource cleanup.
-
-`demo.config.ts` default-exports metadata satisfying `DemoDefinition` from `@lab/demo-kit/types`. The gallery reads metadata and links to the app; it does not load demo components. The generated React starter uses `main.tsx` to mount `index.tsx` inside its own HTML entry.
+Open **Create a demo** in the app for the generator, metadata contract and independent-app commands. Each demo owns its entry, state, styles and cleanup. The gallery reads metadata and links to the app; it does not import demo components.
 
 The repository-root `index.html` opens the gallery. Its Vite config uses the repository as root so `demos/<id>/index.html` works in development and production without copying files or custom routing. The combined output stays in `playground/dist/`; individual workspace builds stay in `demos/<id>/dist/`.
 
-Hash routes such as `#/track/modern-web`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
+Hash routes such as `#/track/modern-web`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. Source changes are shared through Git; Device Rally separately demonstrates live peer messaging.
 
 ## Author a track page
 

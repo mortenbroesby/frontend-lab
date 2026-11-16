@@ -44,7 +44,15 @@ References: [D3 force simulations](https://d3js.org/d3-force/simulation), [link 
 
 **Branch:** Share a palette, quiz question or simple drawing event between tabs. Decide how to distinguish event types, handle invalid messages or avoid feedback loops.
 
-**Scope:** This is local tab communication. To explore WebSockets, SSE or WebRTC across computers, investigate their server/peer/signalling requirements separately; do not assume BroadcastChannel provides that service.
+**Scope:** BroadcastChannel connects local tabs. For separate computers, try the next example.
+
+## Door 4: connect separate devices
+
+**Experience:** Open [Device Rally](#/demo/device-rally) in two browsers with the same room code and send emoji cheers. Leave and rejoin to see peer discovery in action.
+
+**Build towards it:** Use Trystero to join a room and exchange one event type. The finished reference lives in `demos/device-rally/`; `playground/DEVICE-RALLY.md` contains the setup and network details.
+
+**Boundary:** Discovery needs internet access; the page needs localhost or trusted HTTPS. No custom backend is required, but restrictive networks may block WebRTC. Physical phones and the workshop network remain untested.
 
 ## Other doors remain open
 

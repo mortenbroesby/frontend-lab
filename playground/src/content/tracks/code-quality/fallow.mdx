@@ -4,17 +4,16 @@ Pick a question, run an analysis and verify one finding. You can use this reposi
 
 ## Get a first result
 
-Use Node 24 and run these from the **repository root**, not `playground/`:
+After [local setup](#/guide/setup), run these from the **repository root**:
 
 ```sh
-npm ci
 npm run analyze -- --version
 npm run analyze
 ```
 
 The last command combines unused-code, duplication and health analysis. It reads local source and may write caches under ignored `.fallow/`. It does not apply fixes. No account, cloud connection or editor extension is needed. The gallery's **Investigate with Fallow** entry explains the journey; your terminal output is the current evidence.
 
-**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Our initial report does this. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). The repository verification workflow also audits introduced findings on pull requests.
+**Exit codes matter:** a scan can finish successfully and exit 1 because findings exceed its default thresholds. Read the finding and any gate message; a missing binary, invalid configuration or parse diagnostic needs a different investigation. Analysis is deliberately separate from `npm run check`; the official hooks now gate new findings at commit time (see below). The repository verification workflow also audits introduced findings on pull requests.
 
 ## Set up agents and commit checks
 
@@ -52,11 +51,11 @@ npm run analyze:dead-code -- --trace-dependency d3-force
 
 Follow the result into `demos/constellation/index.tsx`. Compare the imported functions with their actual uses. What does the dependency provide, and what would implementing that behaviour yourself involve? A justified decision to keep it is a useful result.
 
-The earlier unused `marker` export exercise depended on the manual demo registry. Folder discovery removes that registration mechanism; do not recreate the marker to reproduce an old finding. For unused-code investigation, run a fresh scan and follow a current finding instead. Check that discovery sees `demo.config.ts` loaders before trusting a report that calls a demo unused.
+For unused-code investigation, follow a current finding. Check that discovery sees the gallery metadata, each demo’s HTML entry and any Worker modules before trusting a report that calls them unused.
 
 ## Worked investigation: complexity is a clue
 
-The initial health report identified `App` in `playground/src/app/App.tsx` with cyclomatic complexity 21. Read its route selection and JSX conditions. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
+Run `npm run analyze:health` and choose a current finding. For example, inspect the route selection and JSX conditions in `playground/src/app/App.tsx`. Would extracting one cohesive view improve understanding, or merely move branches elsewhere?
 
 No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured test coverage**, and the retained tests cover selected logic. A high score does not establish a defect. If you try a refactor, keep routes and error handling intact and choose a focused check for the behaviour you changed. A reasoned decision to leave the code alone is a valid outcome.
 
@@ -69,13 +68,6 @@ No coverage file is supplied to Fallow. Its CRAP/risk score is **not measured te
 - `.fallow/` is ignored because it holds local generated data. Do not commit caches or machine-specific reports.
 
 If discovery misses a real entry in your own project, inspect it first and add a narrow `entry` pattern in `.fallowrc.json`. Avoid marking every file as an entry or ignoring a whole directory to obtain a clean report. Do not run automatic fixes before understanding the candidate change.
-
-## Assemble your own journey
-
-- **Dependency detective:** `npm run analyze:dead-code -- --trace-dependency d3-force`. Follow the result into the constellation demo. Would you keep this dependency?
-- **Duplication:** run the duplication command. The initial default scan found no clone groups and skipped six files under its default duplication ignores. Use `npm run analyze:dupes -- --explain-skipped` to inspect that scope. Compare the template and examples manually; a clean report is not proof that every repeated idea is detected or should be shared.
-- **Architecture:** trace how host discovery finds `demo.config.ts` and loads a component. Propose one useful dependency boundary before writing any rules.
-- **Your own repository:** use its normal setup and obtain permission where needed. Start with discovery, record the Fallow version/config and manually check a few findings before adopting gates or fixes.
 
 Share your question, command/version, file or symbol, alternative explanation, decision and verification in [findings](#/guide/findings). Keep sensitive source and reports within the repository's permitted audience.
 

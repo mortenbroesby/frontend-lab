@@ -17,7 +17,7 @@ For a fully specified invocation:
 npm run demo:new -- --args "Chapter Quiz" chapter-quiz experimental-projects "Your team" "Test your browser knowledge"
 ```
 
-Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `index.tsx`. Modern Web Capabilities generates an independent circle with a radius control; other tracks generate the minimal idea/colour interaction. These are bootstraps, separate from completed reference examples.
+Run `npm run dev`, open your new demo from the gallery, and edit its `index.tsx`. Modern Web Capabilities generates an independent circle with a radius control; other tracks generate the minimal idea/colour interaction. These are bootstraps, separate from completed reference examples.
 
 ## Your first change
 
@@ -52,23 +52,17 @@ export default {
 } satisfies DemoDefinition;
 ```
 
-The generated `index.tsx` default-exports a React component with no required props. `main.tsx` mounts it for the standalone page; the gallery reads metadata and links to the app. There is no participant-written loader or central registry.
+The gallery discovers `demos/*/demo.config.ts`, validates the metadata and links to each app’s HTML entry in folder-ID order. Keep metadata free of side effects and retain `satisfies DemoDefinition`. Folder IDs use lowercase kebab-case, up to 60 characters; template and system names are reserved.
 
-Keep `satisfies DemoDefinition`: it checks the track and required metadata. The shared React mount checks the component accepts no required props. The folder supplies the URL ID; use lowercase kebab-case, at most 60 characters. Template and system names are reserved.
+The React starter’s `main.tsx` mounts the default component from `index.tsx`. Starters live in `playground/src/starters/`; entry templates live in `turbo/generators/templates/`. Reload the gallery after adding a demo, and rebuild for static hosting.
 
-All demos, including the completed references, live in top-level `demos/<id>/`. Vite discovers `demos/*/demo.config.ts`; metadata must remain free of side effects. Invalid metadata and missing HTML entries report the offending file. Demos appear in folder-ID order. If a new demo is not visible, reload the page; rebuild production output after adding one.
-
-Bootstraps live separately in `playground/src/starters/`, and HTML/mount templates in `turbo/generators/templates/`. They are not gallery entries.
-
-Keep code, assets and optional `Demo.module.css` beside the component. Keep state inside the demo. Clean up timers, listeners, Workers and subscriptions when leaving. Only the selected demo runs; the app handles navigation, loading and React render-error feedback. This is not a sandbox: an infinite loop still blocks the page, and async/event errors need handling inside your demo.
+Keep code, assets and optional `Demo.module.css` beside the component. Keep state inside the demo. Clean up timers, listeners, Workers and subscriptions when leaving. Each demo runs in its own page; the shared React mount provides render-error feedback. This is not a sandbox: an infinite loop still blocks the page, and async/event errors need handling inside your demo.
 
 Try your demo, navigate away and back, and check the browser console. Use a focused test, type check or build if needed to verify your change. `npm run check` combines the existing logic tests, TypeScript and build. These are demos; extensive test suites are not expected.
 
 ## Share it through Git
 
 Follow [the contribution guide](#/guide/contributing) for checks, staging, pushing and the pull request. Include the track, what to try and what you learned. Keep dependency additions small and explain them.
-
-Different demo folders do not edit a shared registration file; choose a unique folder ID.
 
 For work in another repository, share a permitted findings note or a gallery component with an appropriate link or walkthrough. Do not copy source, credentials or private data outside its permitted audience. Unfinished experiments and useful negative results are welcome.
 
@@ -85,8 +79,6 @@ npm run preview --workspace @lab/demo-chapter-quiz
 Run these from the repository root after installation. Each app owns its `index.html` and `main.tsx`, uses the shared Vite config, and builds into its own `dist/`. Deploy that folder alone to a static host; its relative asset URLs work at a domain root or under a subpath. The source workspace still uses the repository's shared toolchain and starter styles; the generated build has no gallery runtime dependency.
 
 The root gallery build also includes every demo's entry page, so **Open standalone demo** works on the shared site. Root `npm run dev` starts only the gallery server; root `npm run build` builds the gallery and individual apps.
-
-The gallery is a catalogue. Its cards open each demo’s app directly; it never imports or renders demo components.
 
 For a non-React experiment, replace `main.tsx` and its HTML script reference with your own entry. Keep `demo.config.ts` free of side effects. Add any framework dependencies to that demo's package, and configure any required compiler plugins in both the demo and gallery Vite builds. The gallery reads only metadata and links to the entry page; it does not import a standalone app's runtime.
 
