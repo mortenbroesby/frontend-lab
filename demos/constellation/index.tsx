@@ -103,7 +103,7 @@ export default function Constellation() {
     if (delta[event.key]) {
       event.preventDefault();
       pin(node.id, node.x + delta[event.key][0], node.y + delta[event.key][1]);
-    } else if (event.key === 'Enter' || event.key === ' ') {
+    } else if (['Enter', ' '].includes(event.key)) {
       event.preventDefault();
       setSelected(node.id);
     }
@@ -196,7 +196,7 @@ export default function Constellation() {
             {links.map((link) => {
               const source = byId.get(link.source);
               const target = byId.get(link.target);
-              const affected = impact.has(link.target) && impact.has(link.source);
+              const affected = [link.target, link.source].every((id) => impact.has(id));
               return source && target ? (
                 <line
                   key={`${link.source}-${link.target}`}

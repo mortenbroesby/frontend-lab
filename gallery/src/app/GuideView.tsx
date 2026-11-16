@@ -56,7 +56,3 @@ export function GuideView({ document }: { document: string }) {
     </GuideBoundary>
   );
 }
-
-export const guides: Record<string, { title: string; document: string }> = {
-  '/guide/setup': { title: 'Run the Lab locally', document: 'setup' },
-};

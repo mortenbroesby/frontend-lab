@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { requirementLabels } from '@lab/demo-kit/types';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
 import type { TrackId } from '../demo-contract';
 
-import { guides, GuideView } from './GuideView';
+import { GuideView } from './GuideView';
 
 const trackTitle = (id: TrackId) => tracks.find((track) => track.id === id)!.title;
 
@@ -85,13 +85,43 @@ function findTrack(route: string) {
   );
 }
 
-function pageTitle(route: string, track?: (typeof tracks)[number], demo?: (typeof demos)[number]) {
-  if (track) return track.title;
-  if (demo) return demo.title;
-  if (guides[route]) return guides[route].title;
-  if (route === '/') return 'Choose your track.';
-  if (route === '/create') return 'Create a demo.';
-  return 'Page not found';
+interface Page {
+  title: string;
+  description?: string;
+  attribution?: string;
+  content: ReactNode;
+}
+
+const pages: Record<string, Page> = {
+  '/': { title: 'Choose your track.', content: <TrackChoices /> },
+  '/create': { title: 'Create a demo.', content: <GuideView document="create-demo" /> },
+  '/guide/setup': { title: 'Run the Lab locally', content: <GuideView document="setup" /> },
+};
+const notFound: Page = {
+  title: 'Page not found',
+  content: (
+    <p>
+      <a href="#/">Return to the tracks</a>
+    </p>
+  ),
+};
+
+function resolvePage(route: string): Page {
+  const track = findTrack(route);
+  if (track) return { ...track, content: <TrackGuide track={track} route={route} /> };
+  const demo = demos.find((entry) => route === `/demo/${entry.id}`);
+  if (demo)
+    return {
+      title: demo.title,
+      description: demo.description,
+      attribution: `${trackTitle(demo.track)} · ${demo.author}`,
+      content: (
+        <p>
+          <a href={demo.href}>Open standalone demo ↗</a>
+        </p>
+      ),
+    };
+  return pages[route] ?? notFound;
 }
 
 function TrackChoices() {
@@ -153,7 +183,7 @@ function LabNavigation({ route }: { route: string }) {
   );
 }
 
-export function App() {
+function useRoute() {
   const [route, setRoute] = useState(() => location.hash.slice(1) || '/');
   useEffect(() => {
     const navigate = () => {
@@ -180,13 +210,15 @@ export function App() {
       window.scrollTo(0, 0);
     }
   }, [route]);
-  const track = findTrack(route);
-  const guide = guides[route];
-  const demo = demos.find((d) => route === `/demo/${d.id}`);
-  const title = pageTitle(route, track, demo);
+  return route;
+}
+
+export function App() {
+  const route = useRoute();
+  const page = resolvePage(route);
   useEffect(() => {
-    document.title = `${title} · The Front-End Lab`;
-  }, [title]);
+    document.title = `${page.title} · The Front-End Lab`;
+  }, [page.title]);
   return (
     <>
       <a
@@ -207,32 +239,13 @@ export function App() {
       </header>
       <main id="content" className={route === '/' ? undefined : 'reading-page'} tabIndex={-1}>
         <section className="starter-welcome">
-          {demo && (
-            <p className="eyebrow welcome-eyebrow">
-              {trackTitle(demo.track)} · {demo.author}
-            </p>
-          )}
-          <h1>{title}</h1>
+          {page.attribution && <p className="eyebrow welcome-eyebrow">{page.attribution}</p>}
+          <h1>{page.title}</h1>
           <p className="welcome-description">
-            {track?.description ??
-              demo?.description ??
-              'Try a demo or build your own—solo or together.'}
+            {page.description ?? 'Try a demo or build your own—solo or together.'}
           </p>
         </section>
-        {route === '/' && <TrackChoices />}
-        {track && <TrackGuide track={track} route={route} />}
-        {guide && <GuideView document={guide.document} />}
-        {demo && (
-          <p>
-            <a href={demo.href}>Open standalone demo ↗</a>
-          </p>
-        )}
-        {route === '/create' && <GuideView document="create-demo" />}
-        {!track && !demo && !guide && route !== '/' && route !== '/create' && (
-          <p>
-            <a href="#/">Return to the tracks</a>
-          </p>
-        )}
+        {page.content}
       </main>
     </>
   );

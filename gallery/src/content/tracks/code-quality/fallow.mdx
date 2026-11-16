@@ -55,15 +55,15 @@ Before trusting an unused-code finding, check discovery includes gallery metadat
 
 ## Worked investigation: complexity is a clue
 
-Run `npm run analyze:health` and inspect a finding. For example, examine routes and JSX conditions in `gallery/src/app/App.tsx`. Would extracting a view clarify intent or just move branches?
+Run `npm run analyze:health` and review its metrics. The reviewed baseline currently has no complexity findings; if you find one in your own codebase, trace the decisions it measures. In this repo, compare route selection with rendering in `gallery/src/app/App.tsx`: does the separation clarify intent? Do not manufacture a problem just to produce a finding.
 
 Fallow receives no coverage file: its CRAP/risk score is **not measured test coverage**. Tests cover selected logic; high scores do not prove defects. Preserve routes and error handling during refactors, and check changed behaviour. Leaving code alone can be reasonable.
 
 ## How this repository is configured
 
 - `.fallowrc.json` declares workspace patterns, TypeScript app entries and the existing thresholds. Built-in discovery adds package exports, Vite, tests, generators and Workers. Recheck it when entries move.
-- Root scripts scan the current workspace outside Turbo’s cache. New error-level findings and worsening existing enforceable complexity findings fail the audit, commit hook and CI. Unchanged inherited findings remain allowed; Estimated-coverage-only findings, test complexity and CSS suggestions stay advisory.
-- `.baselines/` records reviewed findings. Run `npm run analyze:baseline` to compare the whole repo; `npm run analyze:health` still shows existing findings. Read the baseline README before refreshing.
+- Root scripts scan the current workspace outside Turbo’s cache. New error-level findings and worsening existing enforceable complexity findings fail the audit, commit hook and CI. Unchanged inherited findings remain allowed; estimated-coverage-only findings, test complexity and CSS suggestions stay advisory.
+- `.baselines/` records reviewed findings. Run `npm run analyze:baseline` to compare the whole repo; `npm run analyze:health` shows current metrics and advisories. Read the baseline README before refreshing.
 - No Fallow boundary rules or rule packs. `npm run check:architecture` separately enforces dependency-cruiser rules; a clean Fallow result says nothing about that policy.
 - `.fallow/` holds ignored generated data. Never commit caches or machine-specific reports.
 
