@@ -42,7 +42,7 @@ export function App() {
   useEffect(() => { document.title = `${title} · The Front-End Lab`; }, [title]);
   return <>
     <a className="skip-link" href="#content" onClick={event => { event.preventDefault(); document.getElementById('content')?.focus(); }}>Skip to content</a>
-    <header className="site-header"><a className="wordmark" href="#/">✳ THE FRONT-END LAB</a><span className="lab-edition">CHAPTER DAY / 20 NOV 2026</span><nav aria-label="Lab"><a href="#/">All tracks</a><a href="#/create">Create a demo</a></nav></header>
+    <header className="site-header"><a className="wordmark" href="#/">✳ THE FRONT-END LAB</a><nav aria-label="Lab"><a href="#/">All tracks</a><a href="#/create">Create a demo</a></nav></header>
     <main id="content" tabIndex={-1}>
       <section className="starter-welcome"><p className="eyebrow">{demo ? `${trackTitle(demo.track)} · ${demo.author}` : 'Four tracks. Shared discoveries.'}</p><h1>{title}</h1>
         <p>{track?.description ?? demo?.description ?? 'Explore a reference, start your own experiment, and share what you discover. Go solo or team up.'}</p>
@@ -58,7 +58,7 @@ export function App() {
       {route === '/create' && <><section className="inspect-panel"><div><h2>One command. Your own demo.</h2><ol><li>Run <code>npm run demo:new</code> from the repository root.</li><li>Give your demo a name, confirm its suggested ID, then choose a track, author and description.</li><li>Open the printed demo route and edit your generated <code>Demo.tsx</code>.</li></ol><p>Turborepo creates your folder and registers it in the gallery. Keep state and styles local. The full guide is in <code>src/demos/template/README.md</code>.</p></div><div><h3>Share through Git</h3><p>Work on your own branch. Run the checks, commit your demo and open a pull request. Once merged, others pull the latest version to see your work here.</p><p>For an external project, contribute a short findings component with an appropriate link or walkthrough. Do not commit private code or data from another repository.</p></div></section>
         <section className="experiment"><DemoBoundary><Suspense fallback={<p role="status">Loading template…</p>}><Template /></Suspense></DemoBoundary></section></>}
       {!track && !demo && route !== '/' && route !== '/create' && <p><a href="#/">Return to the tracks</a></p>}
-      <section className="takeaway"><h2>Leave a small trail.</h2><p>Your question, what you tried, one discovery. Use <code>tracks/findings.md</code>.</p><p className="small">Show & tell: 13:00 India, anyone ready welcome · 14:30–15:00 Denmark & wrap-up. Danish local time.</p></section>
+      <section className="takeaway"><h2>Leave a small trail.</h2><p>Your question, what you tried, one discovery. Use <code>tracks/findings.md</code>.</p></section>
     </main><footer><span>THE FRONT-END LAB</span><span>No perfect outcome required. Just curiosity.</span></footer>
   </>;
 }
