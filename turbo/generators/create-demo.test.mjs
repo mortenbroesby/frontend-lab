@@ -11,6 +11,7 @@ async function fixture(t) {
   t.after(() => rm(root, { recursive: true, force: true }));
   await mkdir(join(root, 'playground/src/demos'), { recursive: true });
   await cp(new URL('../../playground/src/demos/template', import.meta.url), join(root, 'playground/src/demos/template'), { recursive: true });
+  await cp(new URL('../../playground/src/starters', import.meta.url), join(root, 'playground/src/starters'), { recursive: true });
   await writeFile(join(root, 'playground/src/demo-registry.ts'), 'do not edit');
   return root;
 }
@@ -94,4 +95,47 @@ test('every named track choice produces matching typed metadata', async t => {
     const metadata = await readFile(join(root, 'playground/src/demos', value, 'demo.config.ts'), 'utf8');
     assert.ok(metadata.includes(`track: ${JSON.stringify(value)}`));
   }
+});
+
+
+test('gives participants an exact route, editable file and persistent first change', async t => {
+  const root = await fixture(t);
+  const instructions = await createDemo(root, answers);
+  assert.match(instructions, /npm run dev/);
+  assert.match(instructions, /#\/demo\/chapter-quiz/);
+  assert.match(instructions, /playground\/src\/demos\/chapter-quiz\/Demo\.tsx/);
+  const notes = await readFile(join(root, 'playground/src/demos/chapter-quiz/README.md'), 'utf8');
+  assert.match(notes, /First change/);
+  assert.match(notes, /refresh/i);
+  assert.match(notes, /demo\.config\.ts/);
+  assert.match(notes, /CONTRIBUTING\.md/);
+});
+
+test('Modern Web generates an independent circle bootstrap, leaving the shared starter unchanged', async t => {
+  const root = await fixture(t);
+  const starter = join(root, 'playground/src/starters/BrowserStarter.tsx');
+  const before = await readFile(starter, 'utf8');
+  await createDemo(root, { ...answers, track: 'modern-web' });
+  const component = await readFile(join(root, 'playground/src/demos/chapter-quiz/Demo.tsx'), 'utf8');
+  assert.match(component, /export default function Demo/);
+  assert.match(component, /<circle/);
+  assert.match(component, /Circle radius/);
+  assert.doesNotMatch(component, /Edit.*src\/starters/);
+  assert.equal(await readFile(starter, 'utf8'), before);
+});
+
+
+test('every generated demo has its own app and standalone is the default', async t => {
+  const root = await fixture(t);
+  await createDemo(root, answers);
+  const folder = join(root, 'playground/src/demos/chapter-quiz');
+  const pkg = JSON.parse(await readFile(join(folder, 'package.json'), 'utf8'));
+  assert.equal(pkg.name, '@lab/demo-chapter-quiz');
+  assert.ok(pkg.scripts.dev && pkg.scripts.build && pkg.scripts.preview);
+  assert.match(await readFile(join(folder, 'index.html'), 'utf8'), /main.tsx/);
+  assert.match(await readFile(join(folder, 'demo.config.ts'), 'utf8'), /presentation: "standalone"/);
+  await createDemo(root, { ...answers, id: 'inline-demo', presentation: 'inline' });
+  assert.match(await readFile(join(root, 'playground/src/demos/inline-demo/demo.config.ts'), 'utf8'), /presentation: "inline"/);
+  assert.ok(await readFile(join(root, 'playground/src/demos/inline-demo/package.json'), 'utf8'));
+  await assert.rejects(createDemo(root, { ...answers, id: 'bad-mode', presentation: 'invalid' }));
 });

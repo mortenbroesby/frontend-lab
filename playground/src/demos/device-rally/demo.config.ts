@@ -1,4 +1,4 @@
-import type { DemoDefinition } from '../../demo-contract';
+import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
   title: 'Device rally',

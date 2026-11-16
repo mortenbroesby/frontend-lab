@@ -56,3 +56,15 @@ Read [Trystero’s getting-started guide](https://trystero.dev/docs/getting-star
 The live test verifies separate software clients on one computer. It does not prove physical phone, cross-network NAT traversal or corporate Wi-Fi compatibility. Those require an on-site check.
 
 Verified on 16 November 2026 with Node 24.13.0 and Chrome: 20 generator/unit tests, 13 regular browser tests, the live peer smoke test and the Fallow new-findings audit passed. Immediate same-page rejoining failed in the initial implementation; joining now creates a fresh page session, and the live rejoin assertion passes.
+
+## Independent app
+
+Device Rally also runs without the gallery:
+
+```sh
+npm run dev --workspace @lab/demo-device-rally
+npm run build --workspace @lab/demo-device-rally
+npm run preview --workspace @lab/demo-device-rally
+```
+
+Deploy `playground/src/demos/device-rally/dist/` for this app alone. The live WebRTC test runs against that independent build. The gallery still offers both its inline view and an Open standalone demo link.

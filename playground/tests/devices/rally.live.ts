@@ -10,7 +10,7 @@ test('real public signaling connects independent clients for two-way WebRTC chee
     for (const [index, page] of pages.entries()) {
       page.on('pageerror', error => errors.push(error.message));
       page.on('websocket', socket => socket.on('socketerror', error => diagnostics.push(`${new URL(socket.url()).host}: ${error}`)));
-      await page.goto(`/?rallyRoom=${index === 2 ? `${code}-x` : code}#/demo/device-rally`);
+      await page.goto(`/?rallyRoom=${index === 2 ? `${code}-x` : code}`);
     }
     await expect(pages[0].getByTestId('rally-peers')).toHaveText('1 other devices connected', { timeout: 60000 });
     await expect(pages[1].getByRole('button', { name: 'Send rocket' })).toBeEnabled();
