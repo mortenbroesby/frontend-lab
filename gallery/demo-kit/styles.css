@@ -139,15 +139,16 @@ pre { overflow-x: auto; max-width: 100%; padding: 1rem; background: #f5f5f5; bor
 .track-heading h2 { font-size: 1.1rem; letter-spacing: -.025em; margin: 0; }
 .track-heading p { font: .7rem ui-monospace, SFMono-Regular, monospace; text-transform: uppercase; letter-spacing: .05em; color: var(--lab-muted); margin: 0; }
 .track-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--lab-line); background: var(--lab-line); margin-bottom: 4rem; }
-.track-card { display: flex; flex-direction: column; align-items: start; padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--lab-surface); transition: background .15s; }
-.track-card:hover { background: #f7f7f7; }
+.track-card { display: flex; flex-direction: column; align-items: start; padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--lab-surface); text-decoration: none; transition: background .15s; }
+.track-card:hover, .track-card:focus-visible { background: #f7f7f7; }
+.track-card:focus-visible { outline-offset: -4px; }
 .track-card-top { width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
 .track-symbol { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--lab-line); border-radius: .5rem; font: 500 1.1rem ui-monospace, SFMono-Regular, monospace; background: var(--lab-surface); }
 .track-number { color: var(--lab-muted); font: .7rem ui-monospace, SFMono-Regular, monospace; }
 .track-card h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: -.035em; line-height: 1.25; }
 .track-card p { color: var(--lab-muted); max-width: 27rem; font-size: .95rem; }
-.track-card a { margin-top: auto; padding-top: .8rem; font-size: .8rem; font-weight: 600; text-decoration: none; }
-.track-card a:hover { text-decoration: underline; }
+.track-card-cta { margin-top: auto; padding-top: .8rem; font-size: .8rem; font-weight: 600; }
+.track-card:hover .track-card-cta, .track-card:focus-visible .track-card-cta { text-decoration: underline; }
 .track-link-arrow { display: inline-block; margin-left: .35rem; }
 .journey-card > p { color: var(--lab-muted); }
 .demo-title-link { text-decoration: none; }

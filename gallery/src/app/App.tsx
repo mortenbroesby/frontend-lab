@@ -40,10 +40,10 @@ function pageTitle(route: string, track?: typeof tracks[number], demo?: typeof d
 function TrackChoices() {
   return <section aria-labelledby="tracks-heading">
           <div className="track-heading"><h2 id="tracks-heading">Find your starting point</h2><p>04 tracks / Your own pace</p></div>
-          <div className="track-grid">{tracks.map((t, index) => <article className="track-card" key={t.id}>
+          <div className="track-grid">{tracks.map((t, index) => <a className="track-card" key={t.id} href={`#/track/${t.id}`} aria-label={`Explore ${t.title}`}>
             <div className="track-card-top"><span className="track-symbol" aria-hidden="true">{['◇', '{ }', '>_', '✳'][index]}</span><span className="track-number" aria-hidden="true">0{index + 1}</span></div>
-            <h3>{t.title}</h3><p>{t.description}</p><a href={`#/track/${t.id}`} aria-label={`Explore ${t.title}`}>Explore track<span className="track-link-arrow" aria-hidden="true">↗</span></a>
-          </article>)}</div>
+            <h3>{t.title}</h3><p>{t.description}</p><span className="track-card-cta">Explore track<span className="track-link-arrow" aria-hidden="true">↗</span></span>
+          </a>)}</div>
         </section>;
 }
 
