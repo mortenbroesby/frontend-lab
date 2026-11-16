@@ -1,6 +1,7 @@
 import { Component, Suspense, type ReactNode } from 'react';
 
 import Guide from './Guide';
+import { ideas } from './ideas';
 
 class GuideBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
@@ -17,5 +18,9 @@ export function GuideView({ document }: { document: string }) {
 }
 
 export const guides: Record<string, { title: string; document: string }> = {
+  ...Object.fromEntries(ideas.flatMap(idea => [
+    [`/idea/${idea.id}`, { title: idea.title, document: `ideas/${idea.id}` }],
+    [`/idea/${idea.id}/get-started`, { title: idea.title, document: `ideas/${idea.id}-start` }],
+  ])),
   '/guide/setup': { title: 'Run the Lab locally', document: 'setup' },
 };

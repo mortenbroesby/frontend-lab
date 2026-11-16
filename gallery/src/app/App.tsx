@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { demos } from '../demo-registry';
 import { tracks } from './tracks';
+import { Ideas } from './IdeaBrowser';
 import type { TrackId } from '../demo-contract';
 
 import { guides, GuideView } from './GuideView';
@@ -32,7 +33,7 @@ function pageTitle(route: string, track?: typeof tracks[number], demo?: typeof d
   if (track) return track.title;
   if (demo) return demo.title;
   if (guides[route]) return guides[route].title;
-  if (route === '/') return 'Choose your track.';
+  if (route === '/') return 'What would you like to build?';
   if (route === '/create') return 'Make room for your idea.';
   return 'Page not found';
 }
@@ -55,19 +56,17 @@ export function App() {
   useEffect(() => { document.title = `${title} · The Front-End Lab`; }, [title]);
   return <>
     <a className="skip-link" href="#content" onClick={event => { event.preventDefault(); document.getElementById('content')?.focus(); }}>Skip to content</a>
-    <header className="site-header"><a className="wordmark" href="#/">✳ THE FRONT-END LAB</a><nav aria-label="Lab"><a href="#/">All tracks</a><a href="#/create">Create a demo</a><a href="#/guide/setup">Local setup</a></nav></header>
+    <header className="site-header"><a className="wordmark" href="#/">✳ THE FRONT-END LAB</a><nav aria-label="Lab"><a href="#/">Ideas</a><a href="#/create">Create a demo</a><a href="#/guide/setup">Local setup</a></nav></header>
     <main id="content" tabIndex={-1}>
       <section className="starter-welcome"><p className="eyebrow">{demo ? `${trackTitle(demo.track)} · ${demo.author}` : 'Four tracks. Shared discoveries.'}</p><h1>{title}</h1>
         <p>{track?.description ?? demo?.description ?? 'Find something that sparks your curiosity. Try a demo or get straight to experimenting—solo or together.'}</p>
       </section>
-      {route === '/' && <>
-        <div className="journey-grid">{tracks.map(t => <article className="journey-card" data-track={t.id} key={t.id}><h2>{t.title}</h2><p>{t.description}</p><a href={`#/track/${t.id}`}>Choose this track →</a></article>)}</div>
-      </>}
+      {route === '/' && <Ideas />}
       {track && <TrackGuide track={track} route={route} />}
       {guide && <GuideView document={guide.document} />}
       {demo && <p><a href={demo.href}>Open standalone demo ↗</a></p>}
       {route === '/create' && <GuideView document="create-demo" />}
-      {!track && !demo && !guide && route !== '/' && route !== '/create' && <p><a href="#/">Return to the tracks</a></p>}
+      {!track && !demo && !guide && route !== '/' && route !== '/create' && <p><a href="#/">Browse ideas</a></p>}
     </main><footer><span>THE FRONT-END LAB</span><span>No perfect outcome required. Just curiosity.</span></footer>
   </>;
 }
