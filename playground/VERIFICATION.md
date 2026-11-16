@@ -20,7 +20,7 @@ The latest recorded checks before the participant-guide revision are below. Thes
 
 - Intel macOS, Node 24.19.0 and npm 11.6.2: root `npm ci` and `npm run check` passed after the portable lockfile update. The later lean-agent revision passed all 17 generator/logic tests, type checking and the build.
 - The last UI verification passed ten Chrome browser journeys. Browser code was unchanged in the subsequent local-only hosting and agent-configuration revisions, so those revisions did not rerun the browser suite.
-- Fallow doctor reported ready. Its changed-code Git hook allowed a clean fixture and rejected a newly unused file. Existing analyzer findings are investigation material, not passing full-analysis gates; see the [Fallow guide](../tracks/b/fallow.md).
+- Fallow doctor reported ready. Its changed-code Git hook allowed a clean fixture and rejected a newly unused file. Existing analyzer findings are investigation material, not passing full-analysis gates; see the [Fallow guide](../tracks/code-quality/fallow.md).
 - Supported agents are Codex and Copilot CLI. The local MCP binary initialized with 44 tools; fresh trusted-client discovery remains unverified. Copilot CLI was not installed in the recorded environment.
 
 ## Remaining checks

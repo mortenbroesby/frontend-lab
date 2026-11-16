@@ -60,11 +60,10 @@
   .text-link { font-size: .9rem; font-weight: 650; }
   .small, .source { font-size: .8rem; }
   .source { margin: 1rem 0 0; color: var(--lab-muted); }
-  .journey-card { display: flex; flex-direction: column; background: var(--track-color, var(--lab-track-a)); border: 1px solid var(--lab-line); border-top: 4px solid var(--lab-ink); padding: 1.4rem; border-radius: .9rem; }
-  .journey-card[data-track="b"] { --track-color: var(--lab-track-b); }
-  .journey-card[data-track="c"] { --track-color: var(--lab-track-c); }
-  .journey-card[data-track="d"] { --track-color: var(--lab-track-d); }
-  .track-letter { font-size: .8rem; border: 1px solid currentColor; border-radius: 50%; width: 2rem; height: 2rem; text-align: center; line-height: 1.9rem; margin-bottom: 2rem; }
+  .journey-card { display: flex; flex-direction: column; background: var(--track-color, var(--lab-track-modern-web)); border: 1px solid var(--lab-line); border-top: 4px solid var(--lab-ink); padding: 1.4rem; border-radius: .9rem; }
+  .journey-card[data-track="code-quality"] { --track-color: var(--lab-track-code-quality); }
+  .journey-card[data-track="developer-experience"] { --track-color: var(--lab-track-developer-experience); }
+  .journey-card[data-track="experimental-projects"] { --track-color: var(--lab-track-experimental-projects); }
   .journey-card h3 { font-size: 1.4rem; }
   .journey-card p { font-size: .9rem; }
   .journey-card a { margin-top: auto; font-size: .8rem; font-weight: 650; }

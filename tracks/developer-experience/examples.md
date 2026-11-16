@@ -1,4 +1,4 @@
-# C worked example · What commands can I run in this project?
+# Developer Experience & Tooling worked example · What commands can I run in this project?
 
 ## Problem
 
@@ -11,8 +11,8 @@ This is an illustrative onboarding problem, not a claim that participants need a
 From the repository root, with Node 24.x and no package installation:
 
 ```sh
-node tracks/c/examples/commands.mjs playground/package.json
-node --test tracks/c/examples/commands.test.mjs
+node tracks/developer-experience/examples/commands.mjs playground/package.json
+node --test tracks/developer-experience/examples/commands.test.mjs
 ```
 
 Expect alphabetically ordered script names and their actual commands, including `check`, `dev` and `test`. The report only reads the supplied manifest; it does not execute scripts, traverse the repository or contact a service.
@@ -27,4 +27,4 @@ Compare its output with the `scripts` section in [package.json](../../playground
 
 Maybe your real need is clearer commands, documenting required environment variables or shortening a feedback loop. Build towards one useful result from your starter rather than adding every report. This script does not detect unused scripts, validate their safety or prove they work.
 
-[Your script bootstrap](bootstrap.md) · [Track C](README.md)
+[Your script bootstrap](bootstrap.md) · [Developer Experience & Tooling](README.md)

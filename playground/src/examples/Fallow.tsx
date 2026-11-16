@@ -13,6 +13,6 @@ export default function Fallow() {
     <p>The initial report highlighted the App function. Inspect its routing and rendering branches. We have not supplied coverage data, so a risk score is not proof that this code is untested or broken.</p>
     <h3>Choose your own investigation</h3>
     <p>Try <code>npm run analyze:dupes</code> or <code>npm run analyze:architecture</code>. A report with no findings is also worth explaining. Share one finding, the evidence you checked and what you would change or keep.</p>
-    <p>Open <code>tracks/b/fallow.md</code> in your editor for the complete guide, configuration choices and optional experiments. Fallow runs locally in the terminal; this page does not execute commands.</p>
+    <p>Open <code>tracks/code-quality/fallow.md</code> in your editor for the complete guide, configuration choices and optional experiments. Fallow runs locally in the terminal; this page does not execute commands.</p>
   </div>;
 }

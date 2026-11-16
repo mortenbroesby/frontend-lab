@@ -25,4 +25,4 @@ A self-directed React workshop for 20 November 2026: four tracks, small experime
 
 ## Fallow
 
-Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](tracks/b/fallow.md) for setup. Keep one shared skill and no per-agent hook scripts.
+Codex and Copilot CLI share `.agents/skills/fallow`. Use its installed-version instructions for analysis. Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. The official Git hook audits staged changes, and CI audits PRs. See [the Fallow guide](tracks/code-quality/fallow.md) for setup. Keep one shared skill and no per-agent hook scripts.

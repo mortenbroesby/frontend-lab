@@ -86,4 +86,4 @@ Share your question, command/version, file or symbol, alternative explanation, d
 
 References: [official quick start](https://fallow.tools/docs/quickstart/), [configuration](https://fallow.tools/docs/configuration/), [Fallow source](https://github.com/fallow-rs/fallow). Website examples can advance beyond our pinned version; `npm run analyze -- --help` describes the installed CLI.
 
-[Track B](README.md) · [Investigation bootstrap](bootstrap.md)
+[Code Quality & Maintainability](README.md) · [Investigation bootstrap](bootstrap.md)

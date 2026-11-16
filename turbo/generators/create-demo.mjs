@@ -15,7 +15,7 @@ export async function createDemo(root, answers) {
   if (!validateName(answers.title)) throw new Error('Demo name is required: enter 1–240 characters on one line.');
   const name = answers.title.trim();
   if (!validateId(id)) throw new Error('Use a unique lowercase kebab-case ID, up to 60 characters; template and system names are reserved.');
-  if (!['a', 'b', 'c', 'd'].includes(track)) throw new Error('Choose track a, b, c or d.');
+  if (!['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(track)) throw new Error('Choose a named track from the generator menu.');
   for (const key of ['description', 'author']) {
     if (typeof answers[key] !== 'string' || !answers[key].trim() || answers[key].length > 240) {
       throw new Error(`${key} must contain 1–240 characters.`);

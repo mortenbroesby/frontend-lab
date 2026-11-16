@@ -1,4 +1,4 @@
-# Track A · Modern Web Capabilities
+# Modern Web Capabilities
 
 For you if you want to understand what a browser can do beyond ordinary page UI. Choose one capability and one question.
 

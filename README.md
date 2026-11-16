@@ -41,7 +41,7 @@ an unfinished experiment is a worthwhile outcome.
 ## 🚀 Start Here
 
 1. **[Choose a track](#tracks)** based on the question you want to explore. Its guide gives you a first result and a success check.
-2. **Set up only what you need.** For the shared gallery, follow the commands below. Track B can use an existing repository; Track C’s Node script needs no dependency install.
+2. **Set up only what you need.** For the shared gallery, follow the commands below. Code Quality & Maintainability can use an existing repository; Developer Experience & Tooling’s Node script needs no dependency install.
 3. **[Create your branch](CONTRIBUTING.md)** before editing, follow your track’s bootstrap, then share one discovery.
 
 For the gallery you need **Node.js 24.x**, npm and access to this private repository.
@@ -68,14 +68,14 @@ issues, see [setup and troubleshooting](playground/README.md).
 
 | Track | Explore | Starting point |
 | --- | --- | --- |
-| [🌐 A · Modern Web Capabilities](tracks/a/README.md) | Browser APIs, visuals, computation and communication | D3 constellation, SVG, Workers and tab messaging |
-| [🔍 B · Code Quality & Maintainability](tracks/b/README.md) | Dependencies, complexity, architecture and test confidence | Investigate this app or an existing React codebase |
-| [🛠️ C · Developer Experience & Tooling](tracks/c/README.md) | Faster feedback and less everyday workflow friction | A small Node script and a worked command inventory |
-| [🚀 D · Experimental Projects](tracks/d/README.md) | Games, visual stories, art, quizzes and your own ideas | Generative postcard or a fresh React demo |
+| [🌐 Modern Web Capabilities](tracks/modern-web/README.md) | Browser APIs, visuals, computation and communication | D3 constellation, SVG, Workers and tab messaging |
+| [🔍 Code Quality & Maintainability](tracks/code-quality/README.md) | Dependencies, complexity, architecture and test confidence | Investigate this app or an existing React codebase |
+| [🛠️ Developer Experience & Tooling](tracks/developer-experience/README.md) | Faster feedback and less everyday workflow friction | A small Node script and a worked command inventory |
+| [🚀 Experimental Projects](tracks/experimental-projects/README.md) | Games, visual stories, art, quizzes and your own ideas | Generative postcard or a fresh React demo |
 
 Each track has a short **bootstrap guide** and separate **worked examples**.
-Follow your curiosity; there is no required sequence. Track B can use an
-existing codebase, and Track C's script starter runs with Node alone.
+Follow your curiosity; there is no required sequence. Code Quality & Maintainability can use an
+existing codebase, and Developer Experience & Tooling's script starter runs with Node alone.
 
 <a id="create-a-demo"></a>
 ## 🛠️ Create a Demo
@@ -155,7 +155,7 @@ The [app guide](playground/README.md#useful-commands) covers extra commands and 
 | `npm run preview` | Serve the built app locally |
 | `npm run test:browser` | Verify UI/browser changes (requires browser setup) |
 
-Codex/Copilot CLI setup and the shared Git hook are explained in the [integration guide](tracks/b/fallow.md#set-up-agents-and-commit-checks).
+Codex/Copilot CLI setup and the shared Git hook are explained in the [integration guide](tracks/code-quality/fallow.md#set-up-agents-and-commit-checks).
 
 Browser tests require the [documented browser setup](playground/README.md).
 See [verification evidence and limits](playground/VERIFICATION.md) for what
@@ -167,10 +167,10 @@ still need validation.
 
 - [App setup, architecture and troubleshooting](playground/README.md)
 - [Create and contribute a demo](playground/src/demos/template/README.md)
-- [Modern Web Capabilities](tracks/a/README.md)
-- [Code Quality & Maintainability](tracks/b/README.md) and [Fallow walkthrough](tracks/b/fallow.md)
-- [Developer Experience & Tooling](tracks/c/README.md)
-- [Experimental Projects](tracks/d/README.md)
+- [Modern Web Capabilities](tracks/modern-web/README.md)
+- [Code Quality & Maintainability](tracks/code-quality/README.md) and [Fallow walkthrough](tracks/code-quality/fallow.md)
+- [Developer Experience & Tooling](tracks/developer-experience/README.md)
+- [Experimental Projects](tracks/experimental-projects/README.md)
 - [Findings and show-and-tell prompts](tracks/findings.md)
 - [Technical verification](playground/VERIFICATION.md)
 

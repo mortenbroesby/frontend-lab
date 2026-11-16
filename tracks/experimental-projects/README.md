@@ -1,4 +1,4 @@
-# Track D · Experimental Projects
+# Experimental Projects
 
 For you if you have a “what if” that does not need a prescribed exercise: a game, story, quiz, artwork or useful little tool.
 

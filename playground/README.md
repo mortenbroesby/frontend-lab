@@ -19,7 +19,7 @@ The home page opens four track pages and a shared demo gallery. Try the D3 const
 | `src/demos/template/` | Copyable bootstrap, separate from completed examples |
 | `src/demos/<your-idea>/` | Your component, assets and scoped styles |
 | `src/examples/` | Reference experiments and small pure functions |
-| `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Track A |
+| `src/starters/BrowserStarter.tsx` | Optional one-circle browser starting point on Modern Web Capabilities |
 | `src/app/DemoBoundary.tsx` | Render-error fallback around the active demo |
 | `src/styles.css` | Shared shell, responsive layout and accessibility styles |
 | `tests/` | Logic checks and browser journeys |
@@ -28,7 +28,7 @@ The home page opens four track pages and a shared demo gallery. Try the D3 const
 
 `demo.config.ts` default-exports an object satisfying `DemoDefinition` from `../../demo-contract`, with `title`, `track`, `description`, `author` and `load`. The loader imports a module whose default export is your React component. Use the generator and [technical demo guide](src/demos/template/README.md) for the exact file shape.
 
-Hash routes such as `#/track/a`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
+Hash routes such as `#/track/modern-web`, `#/demo/constellation` and `#/create` keep deep links in one app without server rewrite rules. Sharing is Git-backed: merge a contribution, then pull it locally. There is no live cross-computer sync.
 
 ## Useful commands
 
@@ -38,7 +38,7 @@ Run `npm ci`, `npm run demo:new`, `npm run dev` and `npm run check` from the rep
 | --- | --- |
 | `npm run dev` | Local development with fast refresh |
 | `npm run typecheck` | TypeScript check without producing files |
-| `npm test` | Node tests for art, computation and Track C scripts |
+| `npm test` | Node tests for art, computation and Developer Experience & Tooling scripts |
 | `npm run test:watch` | Repeat those tests when source changes; stop with Ctrl+C |
 | `npm run build` | Type check and production bundle |
 | `npm run preview` | Serve an already built bundle locally |
@@ -67,7 +67,7 @@ The browser download takes extra space and bandwidth. Alternatively use an exist
 
 The examples use browser-native SVG, Worker and BroadcastChannel APIs. No WebSocket server, WebRTC signalling server or WebAssembly toolchain is included. Those remain optional directions for participants to explore.
 
-The production build has one HTML entry and lazy demo chunks. Track B can use an existing codebase, and Track C's independent Node scripts under `tracks/c/` run without starting the app.
+The production build has one HTML entry and lazy demo chunks. Code Quality & Maintainability can use an existing codebase, and Developer Experience & Tooling's independent Node scripts under `tracks/developer-experience/` run without starting the app.
 
 ## Internal repository and theme
 

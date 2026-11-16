@@ -14,7 +14,7 @@ async function fixture(t) {
   await writeFile(join(root, 'playground/src/demo-registry.ts'), 'do not edit');
   return root;
 }
-const answers = { id: 'chapter-quiz', track: 'd', title: 'Quiz "hello" $&', author: 'Morten', description: 'One question\nTwo answers' };
+const answers = { id: 'chapter-quiz', track: 'experimental-projects', title: 'Quiz "hello" $&', author: 'Morten', description: 'One question\nTwo answers' };
 
 test('creates a working template and typed metadata with safely escaped text', async t => {
   const root = await fixture(t);
@@ -44,7 +44,7 @@ test('rejects existing demo folders without modifying work', async t => {
 
 test('invalid names, tracks and empty metadata cause no writes', async t => {
   const root = await fixture(t);
-  for (const patch of [{ id: '../escape' }, { id: 'Bad Name' }, { id: 'template' }, { id: 'con' }, { track: 'e' }, { title: ' ' }, { author: '' }]) {
+  for (const patch of [{ id: '../escape' }, { id: 'Bad Name' }, { id: 'template' }, { id: 'con' }, { track: 'e' }, { track: 'a' }, { track: 'b' }, { track: 'c' }, { track: 'd' }, { title: ' ' }, { author: '' }]) {
     await assert.rejects(createDemo(root, { ...answers, ...patch }));
   }
   assert.deepEqual(await readdir(join(root, 'playground/src/demos')), ['template']);
@@ -80,4 +80,18 @@ test('missing, whitespace-only and multiline names leave all files untouched', a
   }
   assert.equal(await readFile(registry, 'utf8'), before);
   assert.deepEqual(await readdir(join(root, 'playground/src/demos')), ['template']);
+});
+
+test('every named track choice produces matching typed metadata', async t => {
+  const root = await fixture(t);
+  let config;
+  configureGenerator({ setGenerator: (_name, value) => { config = value; } });
+  const choices = config.prompts.find(prompt => prompt.name === 'track').choices;
+  assert.deepEqual(choices.map(choice => choice.value), ['modern-web', 'code-quality', 'developer-experience', 'experimental-projects']);
+  for (const { name, value } of choices) {
+    assert.doesNotMatch(name, /^[A-D] ·/);
+    await createDemo(root, { ...answers, id: value, track: value });
+    const metadata = await readFile(join(root, 'playground/src/demos', value, 'demo.config.ts'), 'utf8');
+    assert.ok(metadata.includes(`track: ${JSON.stringify(value)}`));
+  }
 });

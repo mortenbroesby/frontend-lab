@@ -11,7 +11,7 @@ Give your demo a name first (required, with no default). Confirm or edit the sug
 For a fully specified invocation:
 
 ```sh
-npm run demo:new -- --args "Chapter Quiz" chapter-quiz d "Your team" "Test your browser knowledge"
+npm run demo:new -- --args "Chapter Quiz" chapter-quiz experimental-projects "Your team" "Test your browser knowledge"
 ```
 
 Run `npm run dev`, open the printed address followed by `#/demo/chapter-quiz`, and edit your generated `Demo.tsx`. The template contains a small React interaction, not a finished exercise. Choose your own experiment.
@@ -28,7 +28,7 @@ Add `demo.config.ts` inside your copied folder:
 import type { DemoDefinition } from '../../demo-contract';
 
 export default {
-  track: 'd',
+  track: 'experimental-projects',
   title: 'Your experiment',
   description: 'What can someone try or learn?',
   author: 'Your name or group',

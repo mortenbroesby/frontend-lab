@@ -7,8 +7,8 @@
   --lab-line: #cdd3c8;
   --lab-accent: #24483e;
   --lab-accent-hover: #356052;
-  --lab-track-a: #e6ebdf;
-  --lab-track-b: #ece5d7;
-  --lab-track-c: #dfe8ed;
-  --lab-track-d: #ebe2e8;
+  --lab-track-modern-web: #e6ebdf;
+  --lab-track-code-quality: #ece5d7;
+  --lab-track-developer-experience: #dfe8ed;
+  --lab-track-experimental-projects: #ebe2e8;
 }

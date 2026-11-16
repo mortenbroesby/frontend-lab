@@ -4,7 +4,7 @@ import { discoverDemos } from '../src/demo-contract.ts';
 import type { DemoDefinition } from '../src/demo-contract.ts';
 
 const demo = {
-  title: 'Example', track: 'a', description: 'Try it', author: 'Lab',
+  title: 'Example', track: 'modern-web', description: 'Try it', author: 'Lab',
   load: async () => ({ default: () => null }),
 } satisfies DemoDefinition;
 

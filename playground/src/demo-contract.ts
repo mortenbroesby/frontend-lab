@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-export type TrackId = 'a' | 'b' | 'c' | 'd';
+export type TrackId = 'modern-web' | 'code-quality' | 'developer-experience' | 'experimental-projects';
 
 /** A demo supplies its own state; the host never supplies required props. */
 export interface DemoDefinition {
@@ -17,8 +17,8 @@ export function discoverDemos(modules: Record<string, unknown>): (DemoDefinition
     if (!value || typeof value !== 'object') throw new Error(`${path}: export a default DemoDefinition.`);
     const demo = value as Partial<DemoDefinition>;
     validateMetadata(demo, path);
-    if (!['a', 'b', 'c', 'd'].includes(demo.track ?? '') || typeof demo.load !== 'function') {
-      throw new Error(`${path}: provide track a–d and a lazy load function.`);
+    if (!['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(demo.track ?? '') || typeof demo.load !== 'function') {
+      throw new Error(`${path}: provide a valid named track and a lazy load function.`);
     }
     return { ...(demo as DemoDefinition), id };
   });
