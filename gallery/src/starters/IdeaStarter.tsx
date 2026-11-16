@@ -19,7 +19,7 @@ export default function Demo() {
         <input id="idea" value={idea} maxLength={120} onChange={event => setIdea(event.target.value)} />
         <label htmlFor="colour">A colour to start with</label>
         <input id="colour" type="color" value={colour} onChange={event => setColour(event.target.value)} />
-        <p className="small">This draft lives in memory. Record anything you want to keep in your findings before refreshing.</p>
+        <p className="small">This preview resets when you refresh.</p>
       </div>
     </div>
   );

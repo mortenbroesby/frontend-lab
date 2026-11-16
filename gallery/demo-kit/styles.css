@@ -42,7 +42,6 @@
   .controls h3 { font-size: 2rem; }
   .controls p { color: var(--lab-muted); }
   .examples-intro { margin-bottom: 1.7rem; }
-  .takeaway { text-align: center; padding: 3rem 0 5rem; }
   footer { display: flex; justify-content: space-between; padding-top: 2rem; padding-bottom: 2rem; border-top: 1px solid var(--lab-line); font-size: .8rem; gap: 1rem; }
   @media (max-width: 950px) { .journey-grid { grid-template-columns: repeat(2, 1fr); } .hero { gap: 1rem; } }
   @media (max-width: 650px) { .hero { grid-template-columns: 1fr; padding: 3rem 0; } .hero-art { display: none; } .journey-grid, .experiment-grid { grid-template-columns: 1fr; } .section-heading, .examples-intro { align-items: start; flex-direction: column; gap: .4rem; } .edition { display: none; } footer { flex-direction: column; } }

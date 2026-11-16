@@ -18,6 +18,4 @@ export function GuideView({ document }: { document: string }) {
 
 export const guides: Record<string, { title: string; document: string }> = {
   '/guide/setup': { title: 'Run the Lab locally', document: 'setup' },
-  '/guide/contributing': { title: 'Build and share', document: 'contributing' },
-  '/guide/findings': { title: 'Record your discoveries', document: 'findings' },
 };

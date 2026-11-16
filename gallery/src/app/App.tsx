@@ -69,7 +69,6 @@ export function App() {
       {demo && <p><a href={demo.href}>Open standalone demo ↗</a></p>}
       {route === '/create' && <GuideView document="create-demo" />}
       {!track && !demo && !guide && route !== '/' && route !== '/create' && <p><a href="#/">Return to the tracks</a></p>}
-      <section className="takeaway"><h2>Leave a small trail.</h2><p>Your question, what you tried, one discovery. <a href="#/guide/findings">Record your findings</a> and <a href="#/guide/contributing">share your work</a>.</p></section>
     </main><footer><span>THE FRONT-END LAB</span><span>No perfect outcome required. Just curiosity.</span></footer>
   </>;
 }
