@@ -1,5 +1,5 @@
 import { BrowserStarter } from '../../../starters/BrowserStarter';
-import { DemoBoundary } from '../../../app/DemoBoundary';
+import { DemoBoundary } from '@lab/demo-kit/boundary';
 
 # Getting started
 
@@ -36,11 +36,11 @@ npm run demo:new
 
 Give it a name, confirm its suggested ID and choose **Modern Web Capabilities**, then enter your author and description. Open the route printed by the generator using your local server address.
 
-The generator creates an independent circle starter in `playground/src/demos/<your-id>/Demo.tsx`. No copying or shared-file edits are needed.
+The generator creates an independent circle starter in `demos/<your-id>/index.tsx`. No copying or shared-file edits are needed.
 
 ## 4. Make something happen
 
-**First result:** change the circle fill colour in your generated `Demo.tsx` and save. Open your demo and move the radius control.
+**First result:** change the circle fill colour in your generated `index.tsx` and save. Open your demo and move the radius control.
 
 **Success check:** refresh: the saved colour remains while the radius resets. Navigate away and back; it should still work without console errors. Then add another shape or try your own interaction.
 

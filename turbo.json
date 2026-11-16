@@ -1,12 +1,44 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
-  "globalDependencies": ["tracks/developer-experience/**/*.mjs"],
+  "globalDependencies": [
+    "tracks/developer-experience/**/*.mjs",
+    "playground/src/**",
+    "playground/vite.demo.config.ts",
+    "packages/demo-kit/**",
+    "demos/**",
+    "index.html"
+  ],
   "tasks": {
-    "dev": { "cache": false, "persistent": true },
-    "preview": { "cache": false, "persistent": true },
-    "build": { "outputs": ["dist/**"] },
-    "check": { "outputs": ["dist/**"] },
-    "test": { "outputs": [] },
-    "test:browser": { "cache": false, "passThroughEnv": ["PLAYWRIGHT_CHANNEL"] }
-  }
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "preview": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "check": {
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "test": {
+      "outputs": []
+    },
+    "test:browser": {
+      "cache": false,
+      "passThroughEnv": [
+        "PLAYWRIGHT_CHANNEL",
+        "PLAYWRIGHT_PORT"
+      ]
+    }
+  },
+  "globalEnv": [
+    "VITE_GALLERY_URL"
+  ]
 }

@@ -18,7 +18,7 @@ Participant guides are bundled from `playground/src/content/` and use in-app rou
 
 ## Workshop identity
 
-The shell's palette is in `playground/src/theme.css`. Track colors follow track IDs, not gallery position. Keep experimental demo artwork and scoped styles independent. The workshop uses the Front-End Lab identity and does not require Sapphire or an internal component package registry.
+The shell's palette is in `packages/demo-kit/theme.css`. Track colors follow track IDs, not gallery position. Keep experimental demo artwork and scoped styles independent. The workshop uses the Front-End Lab identity and does not require Sapphire or an internal component package registry.
 
 ## Acceptance before inviting participants
 

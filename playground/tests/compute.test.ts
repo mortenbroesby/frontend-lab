@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { countPrimes, MAX_LIMIT } from '../src/examples/compute.ts';
+import { countPrimes, MAX_LIMIT } from '../../demos/workers/compute.ts';
 
 test('counts primes inclusively, including boundary and composite limits', () => {
   for (const [limit, count] of [[2, 1], [3, 2], [4, 2], [10, 4], [100, 25], [100000, 9592]]) {

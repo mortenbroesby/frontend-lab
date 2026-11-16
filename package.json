@@ -7,12 +7,14 @@
     "node": ">=24.0.0 <25"
   },
   "workspaces": [
-    "playground"
+    "playground",
+    "demos/*",
+    "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=front-end-lab-playground",
     "build": "turbo run build",
-    "preview": "turbo run preview",
+    "preview": "turbo run preview --filter=front-end-lab-playground",
     "demo:new": "turbo gen demo",
     "test:generator": "node --test turbo/generators/create-demo.test.mjs",
     "test": "npm run test:generator && turbo run test",

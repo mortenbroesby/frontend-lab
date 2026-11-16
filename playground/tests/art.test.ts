@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { makeDots } from '../src/examples/art.ts';
+import { makeDots } from '../../demos/art/art.ts';
 
 test('a saved seed reproduces the same artwork while a remix changes it', () => {
   assert.deepEqual(makeDots(42, 90), makeDots(42, 90));
