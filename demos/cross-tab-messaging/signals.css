@@ -1,8 +1,51 @@
-.density-preview {
-  padding: 1.5rem;
-  border: 1px solid var(--lab-line);
-  border-radius: var(--radius-lg);
-  background: var(--lab-surface);
+:where(#cross-tab-messaging) {
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+.signals-demo {
+  max-width: 1100px;
+  margin: auto;
+}
+.signals-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+.signals-panels h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+.signals-panels [data-slot='card-description'] {
+  grid-column: 1 / -1;
+}
+.signals-controls {
+  display: grid;
+  gap: 1.5rem;
+}
+.signals-controls > [data-slot='button'] {
+  justify-self: start;
+}
+.signals-density {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.signals-muted {
+  margin: 0;
+  color: var(--lab-muted);
+  font-size: 0.85rem;
+}
+.signals-notes {
+  margin-top: 2rem;
+  max-width: 65ch;
+}
+@media (max-width: 700px) {
+  .signals-panels {
+    grid-template-columns: 1fr;
+  }
 }
 .density-preview ul {
   list-style: none;

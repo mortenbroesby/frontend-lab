@@ -1,3 +1,13 @@
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardAction,
+} from '@lab/ui/card';
+import { Badge } from '@lab/ui/badge';
 import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useEffect, useRef, useState } from 'react';
@@ -47,53 +57,76 @@ export default function Signals() {
   }
 
   return (
-    <div className="experiment-grid">
-      <section className="density-preview" data-density={density} aria-label="Task list preview">
-        <p className="eyebrow">Your workspace · {density} view</p>
-        <h2>One preference. Every open tab.</h2>
-        <ul>
-          {[
-            'Review the proposal',
-            'Sketch an interaction',
-            'Try it with a teammate',
-            'Inspect the result',
-            'Make one improvement',
-          ].map((task, index) => (
-            <li key={task}>
-              <span aria-hidden="true">0{index + 1}</span>
-              {task}
-            </li>
-          ))}
-        </ul>
-        <p className="small">{received} updates received in this tab</p>
-      </section>
-      <div className="controls">
-        <p className="eyebrow">BroadcastChannel / shared preferences</p>
-        <h3>Change the view in two tabs.</h3>
-        <p>
-          Open a second tab, then choose Compact here. Its list changes too. Change it back from
-          either tab.
-        </p>
-        <Button asChild variant="outline">
-          <a href="./index.html" target="_blank" rel="noopener">
-            Open another tab ↗
-          </a>
-        </Button>
-        <div className="button-row" role="group" aria-label="List density">
-          {(['comfortable', 'compact'] as const).map((value) => (
-            <Button
-              key={value}
-              variant={density === value ? 'default' : 'outline'}
-              aria-pressed={density === value}
-              onClick={() => changeDensity(value)}
-            >
-              {value === 'comfortable' ? 'Comfortable' : 'Compact'}
+    <div className="signals-demo">
+      <div className="signals-panels">
+        <Card className="density-preview" data-density={density} aria-label="Task list preview">
+          <CardHeader>
+            <CardTitle>
+              <h2>Your workspace</h2>
+            </CardTitle>
+            <CardDescription>One preference. Every open tab.</CardDescription>
+            <CardAction>
+              <Badge variant="secondary">{density}</Badge>
+            </CardAction>
+          </CardHeader>
+          <CardContent>
+            <ul>
+              {[
+                'Review the proposal',
+                'Sketch an interaction',
+                'Try it with a teammate',
+                'Inspect the result',
+                'Make one improvement',
+              ].map((task, index) => (
+                <li key={task}>
+                  <span aria-hidden="true">0{index + 1}</span>
+                  {task}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+          <CardFooter>
+            <p className="signals-muted">{received} updates received in this tab</p>
+          </CardFooter>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2>Sync a preference</h2>
+            </CardTitle>
+            <CardDescription>
+              Open a second tab, then choose Compact here. Its list changes too. Change it back from
+              either tab.
+            </CardDescription>
+            <CardAction>
+              <Badge variant="outline">BroadcastChannel</Badge>
+            </CardAction>
+          </CardHeader>
+          <CardContent className="signals-controls">
+            <Button asChild variant="outline">
+              <a href="./index.html" target="_blank" rel="noopener">
+                Open another tab ↗
+              </a>
             </Button>
-          ))}
-        </div>
-        <p role="status" className="small">
-          {status}
-        </p>
+            <div className="signals-density" role="group" aria-label="List density">
+              {(['comfortable', 'compact'] as const).map((value) => (
+                <Button
+                  key={value}
+                  variant={density === value ? 'default' : 'outline'}
+                  aria-pressed={density === value}
+                  onClick={() => changeDensity(value)}
+                >
+                  {value === 'comfortable' ? 'Comfortable' : 'Compact'}
+                </Button>
+              ))}
+            </div>
+            <p role="status" className="signals-muted">
+              {status}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="signals-notes">
         <h3>Messages are not saved preferences.</h3>
         <p>
           Reload one tab: it starts Comfortable, even if the other is Compact. Choose a density
