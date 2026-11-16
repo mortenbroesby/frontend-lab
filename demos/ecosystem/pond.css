@@ -39,7 +39,7 @@
   opacity: 1;
 }
 .pond-demo details {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--lab-line);
   padding-block: 1rem;
 }
 .pond-demo summary {

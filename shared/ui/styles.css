@@ -5,6 +5,7 @@
 @import 'tailwindcss/utilities.css' layer(utilities) source(none);
 @import 'tw-animate-css';
 @source "./src";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
   --color-background: var(--lab-surface);
@@ -23,8 +24,8 @@
   --color-accent: var(--lab-hover);
   --color-accent-foreground: var(--lab-ink);
   --color-input: var(--lab-control-border);
-  --color-ring: #0070f3;
-  --color-destructive: #b91c1c;
+  --color-ring: var(--lab-focus);
+  --color-destructive: var(--lab-danger);
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.5rem;

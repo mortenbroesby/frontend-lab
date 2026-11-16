@@ -1,3 +1,4 @@
+import { ThemeControl } from '@lab/ui/theme-control';
 import { LabMark } from './LabMark';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -23,11 +24,17 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
             Front-End Lab
           </a>
           <nav aria-label="Lab">
+            <ThemeControl />
             <Button variant="outline" asChild>
               <a href={trackHref}>← Back to track</a>
             </Button>
           </nav>
         </header>
+      )}
+      {!trackHref && (
+        <div className="standalone-theme-control">
+          <ThemeControl />
+        </div>
       )}
       <main className="standalone-shell" id="content" tabIndex={-1}>
         <h1>{demo.title}</h1>

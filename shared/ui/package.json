@@ -35,7 +35,8 @@
     "./toggle": "./src/toggle.tsx",
     "./separator": "./src/separator.tsx",
     "./badge": "./src/badge.tsx",
-    "./select": "./src/select.tsx"
+    "./select": "./src/select.tsx",
+    "./theme-control": "./src/theme-control.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

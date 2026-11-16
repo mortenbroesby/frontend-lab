@@ -19,9 +19,9 @@
   gap: 1rem;
   padding: 1.2rem;
   margin-bottom: 1rem;
-  border: 1px solid #ccd6d0;
+  border: 1px solid var(--lab-line);
   border-radius: 1rem;
-  background: #eef4ef;
+  background: var(--lab-paper);
 }
 .impact-summary > div {
   display: grid;
@@ -35,11 +35,11 @@
 }
 .impact-summary small,
 .impact-summary span {
-  color: #4b625b;
+  color: var(--lab-muted);
 }
 .impact-legend {
   font-size: 0.8rem;
-  color: #4b625b;
+  color: var(--lab-muted);
 }
 .impact-legend span {
   display: inline-flex;
@@ -73,7 +73,7 @@
   justify-content: space-between;
   gap: 0.5rem;
   align-items: center;
-  border-bottom: 1px solid #dce3df;
+  border-bottom: 1px solid var(--lab-line);
   padding: 0.35rem 0;
 }
 .impact-insight button {

@@ -45,7 +45,7 @@
     text-underline-offset: 0.25em;
   }
   :focus-visible {
-    outline: 3px solid #0070f3;
+    outline: 3px solid var(--lab-focus);
     outline-offset: 4px;
   }
   input[type='color'] {
@@ -62,7 +62,7 @@
     font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
     font-size: 0.85em;
     overflow-wrap: anywhere;
-    background: #f0f0f0;
+    background: var(--lab-hover);
     padding: 0.1rem 0.25rem;
     border-radius: 0.2rem;
   }
@@ -296,7 +296,7 @@
     padding: 1.5rem;
     display: grid;
     place-items: center;
-    background: #dfe8df;
+    background: var(--lab-stage-visual);
   }
   .visual-stage svg {
     width: 100%;
@@ -309,11 +309,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: #e3eaf0;
+    background: var(--lab-stage-interaction);
     min-height: 350px;
   }
   .signal-stage {
-    background: #eee4d7;
+    background: var(--lab-stage-signal);
   }
   .tap-pad {
     font: inherit;
@@ -348,7 +348,7 @@
     min-height: 4rem;
   }
   .try-this {
-    border-top: 1px solid #d6dcd2;
+    border-top: 1px solid var(--lab-line);
     padding-top: 1rem;
     margin-top: 1.4rem;
   }
@@ -371,14 +371,14 @@
   }
   .idea-stage h3 {
     font-size: clamp(2rem, 4vw, 3.5rem);
-    color: #132d32;
+    color: var(--lab-ink);
     background: var(--lab-surface);
     border-radius: 0.8rem;
     padding: 1rem;
     overflow-wrap: anywhere;
   }
   .idea-stage .eyebrow {
-    color: #132d32;
+    color: var(--lab-ink);
     background: var(--lab-surface);
     border-radius: 0.3rem;
     padding: 0.4rem;
@@ -388,7 +388,7 @@
     position: absolute;
     top: -100px;
     left: 1rem;
-    background: #fff;
+    background: var(--lab-surface);
     padding: 1rem;
     z-index: 10;
   }
@@ -534,7 +534,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #171717;
+  background: var(--lab-ink);
 }
 .starter-welcome h1 {
   font-size: clamp(2.8rem, 6.5vw, 5.5rem);
@@ -553,6 +553,7 @@
   flex-wrap: wrap;
 }
 .desktop-nav {
+  align-items: center;
   display: flex;
   gap: 0.3rem;
 }
@@ -625,13 +626,13 @@
 .site-nav-link:hover,
 .site-nav-link[aria-current='page'] {
   color: var(--lab-ink);
-  background: #f2f2f2;
+  background: var(--lab-hover);
 }
 pre {
   overflow-x: auto;
   max-width: 100%;
   padding: 1rem;
-  background: #f5f5f5;
+  background: var(--lab-hover);
   border: 1px solid var(--lab-line);
   border-radius: 0.5rem;
 }
@@ -748,7 +749,7 @@ pre {
 }
 .track-card:hover,
 .track-card:focus-visible {
-  background: #f7f7f7;
+  background: var(--lab-hover);
 }
 .track-card:focus-visible {
   outline-offset: -4px;
@@ -941,4 +942,19 @@ pre {
 }
 .controls [data-slot='slider'] {
   margin-block: 1rem;
+}
+
+.mobile-theme-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--lab-muted);
+}
+.standalone-theme-control {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
 }

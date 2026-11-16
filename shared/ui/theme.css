@@ -1,5 +1,6 @@
 /* Shared shell identity; demo artwork keeps its own palette. */
 :root {
+  color-scheme: light;
   --lab-paper: #fafafa;
   --lab-surface: #fff;
   --lab-ink: #171717;
@@ -10,8 +11,32 @@
   --lab-selected: #ededed;
   --lab-accent: #171717;
   --lab-accent-hover: #383838;
-  --lab-track-modern-web: #fafafa;
-  --lab-track-code-quality: #fafafa;
-  --lab-track-developer-experience: #fafafa;
-  --lab-track-experimental-projects: #fafafa;
+  --lab-focus: #0070f3;
+  --lab-danger: #b91c1c;
+  --lab-stage-visual: #dfe8df;
+  --lab-stage-interaction: #e3eaf0;
+  --lab-stage-signal: #eee4d7;
+  --lab-track-modern-web: var(--lab-paper);
+  --lab-track-code-quality: var(--lab-paper);
+  --lab-track-developer-experience: var(--lab-paper);
+  --lab-track-experimental-projects: var(--lab-paper);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --lab-paper: #0a0a0a;
+  --lab-surface: #111;
+  --lab-ink: #ededed;
+  --lab-muted: #a1a1a1;
+  --lab-line: #292929;
+  --lab-control-border: #525252;
+  --lab-hover: #1f1f1f;
+  --lab-selected: #303030;
+  --lab-accent: #ededed;
+  --lab-accent-hover: #d4d4d4;
+  --lab-focus: #52a8ff;
+  --lab-danger: #f87171;
+  --lab-stage-visual: #14221b;
+  --lab-stage-interaction: #141f25;
+  --lab-stage-signal: #241d14;
 }
