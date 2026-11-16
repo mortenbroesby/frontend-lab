@@ -20,6 +20,16 @@ Compare native commands such as `npm run`, `git diff --stat` and `git diff --che
 
 Read: [Git diff options](https://git-scm.com/docs/git-diff) and [Node’s native argument parser](https://nodejs.org/docs/latest-v24.x/api/util.html#utilparseargsconfig).
 
+### Idea: a Sapphire usage inspector
+
+Explore a developer tool that helps engineers review how they use Sapphire React components. It could highlight a potential issue, point to the relevant code and explain what to investigate.
+
+Possible questions include whether a component or prop is deprecated, whether required setup is present, and whether composition or accessibility guidance is being followed. These are candidate checks, not confirmed Sapphire rules.
+
+Start by defining what a useful finding would look like. Once Sapphire documentation, types or examples are available, choose one documented rule and investigate whether an existing lint rule, a small source-analysis script or browser inspection could check it. Show the evidence and a suggested next step rather than claiming the entire implementation is correct.
+
+This is an exploration idea only: we do not yet have Sapphire’s package, repository or documentation. No integration or library-specific checks are implemented.
+
 ## Development Workflows
 
 Explore local API mocking, monorepo tooling, development environments and alternative build workflows. Look for a way to work independently of a slow service, unclear setup or unnecessarily broad command.
