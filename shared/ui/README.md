@@ -1,24 +1,65 @@
 # Lab UI
 
-Small, source-exported React components for the gallery and standalone demos. Based on the official shadcn/ui New York v4 registry (MIT; see LICENSE.md), with Lab theme colours, 44px default buttons, wrapping alert titles and static skeletons.
+30 component families for the gallery and standalone demos, adapted from [shadcn/ui’s New York v4 registry](https://ui.shadcn.com/docs/components) with focused Radix primitives. MIT attribution is in [LICENSE.md](LICENSE.md).
+
+Try **UI library** in the gallery, or run `npm run dev --workspace @lab/demo-ui-library`.
+
+| Use | Package exports |
+| --- | --- |
+| Actions | `button`, `toggle`, `toggle-group` |
+| Forms | `input`, `textarea`, `label`, `checkbox`, `radio-group`, `switch`, `select`, `slider` |
+| Layout and content | `card`, `badge`, `separator`, `table`, `avatar`, `scroll-area` |
+| Navigation | `tabs`, `accordion`, `breadcrumb`, `pagination` |
+| Overlays | `dialog`, `alert-dialog`, `sheet`, `popover`, `dropdown-menu`, `tooltip` |
+| Feedback | `alert`, `progress`, `skeleton` |
+
+## Use
 
 ```tsx
 import { Button } from '@lab/ui/button';
-import { Alert, AlertTitle, AlertDescription } from '@lab/ui/alert';
-import { Skeleton } from '@lab/ui/skeleton';
+import { Input } from '@lab/ui/input';
+import { Label } from '@lab/ui/label';
+
+<form onSubmit={save}>
+  <Label htmlFor="title">Title</Label>
+  <Input id="title" name="title" required />
+  <Button type="submit">Save</Button>
+</form>
 ```
 
-Generated demos already declare `@lab/ui`; existing consumers must declare `"@lab/ui": "*"` in their workspace dependencies and run `npm install` at the root. The standard demo mount loads the stylesheet. Custom entries should import `@lab/ui/styles.css` themselves.
+Generated demos declare `@lab/ui`; other consumers need `"@lab/ui": "*"` and a root `npm install`. Import individual exports. The standard demo mount loads styles; custom entries must import `@lab/ui/styles.css`.
 
-Theme tokens live in `theme.css`. Both Vite configs compile Tailwind; Preflight is deliberately omitted to preserve native demo controls and MDX typography. Shared styles scan these component sources only. For utility classes in a demo's own code, import a local CSS file containing:
+Native attributes and React 19 refs pass through. Radix controls support controlled and uncontrolled state. Consumers own data, validation and side effects; the library has no app routes or services.
+
+## Interaction contracts
+
+- Buttons default to `type="button"`; submit explicitly. `asChild` uses the child’s element semantics. A disabled anchor still needs application-level navigation prevention; prefer a native button for disabled actions.
+- Label every field. Pair errors with `aria-invalid` and `aria-describedby`; an invalid style alone is not validation. Label icon-only buttons and tooltip triggers too.
+- Include Dialog/Sheet/AlertDialog titles and descriptions. Radix handles focus trapping, Escape and focus return. AlertDialog is for confirmation; cancellation gets initial focus.
+- Wrap tooltips in `TooltipProvider`. Essential instructions must remain visible without hovering.
+- Slider defaults to one thumb. Pass `aria-label` or `aria-labelledby`; use `thumbLabels={['Minimum', 'Maximum']}` for separately named range thumbs.
+- Progress accepts `value` and `max` (default 100). Missing or invalid values are indeterminate. Give it an accessible name.
+- ScrollArea focuses its viewport. Use `viewportProps` for an accessible region name or to override `tabIndex`.
+- Pagination uses links; callers supply URLs, state and unavailable-link handling. Table is semantic markup, not a sorting/filtering engine.
+- Alert defaults to an assertive announcement; use `role="status"` or `role="note"` for nonurgent/static content. Skeleton is presentation; announce loading on its container.
+
+## Styling
+
+`theme.css` owns Lab tokens. Tailwind compiles in both Vite builds without Preflight. Scoped `data-slot` resets keep library elements consistent without restyling native demo controls. Portals use the same global tokens. Reduced-motion preferences disable library transitions and animations.
+
+Shared styles scan the library source. For utility classes in your own demo, import local CSS containing:
 
 ```css
 @import '@lab/ui/styles.css';
 @source '.';
 ```
 
-Keep components independent of app state and routes. Import individual exports, not a barrel. Add components when a real screen needs them; do not generate a full catalogue. Registry updates require reviewing our local adaptations, not blindly overwriting them.
+Use `className` for local adjustments; `cn` resolves conflicting Tailwind utilities. Default buttons have 44px targets; compact variants need appropriate surrounding space. Checkbox/radio controls should have clickable labels. Dark-mode switching is not provided; the current palette is light.
 
-Sources: https://ui.shadcn.com/r/styles/new-york-v4/button.json, alert.json and skeleton.json under the same registry path. Button uses the focused Radix Slot package; `cn` uses clsx and tailwind-merge. Component source is ours to maintain.
+## Maintain
 
-Fallow's advisory CSS audit flags the upstream Alert grid templates and the `theme`/`utilities` layers. The grids reserve a column for an optional icon; both layers are populated by Tailwind imports during compilation. Keep these intentional rules.
+Run `npm run test --workspace @lab/ui` for focused rendering contracts and `npm run check` for workspace types, builds, hooks and import boundaries. Manually check keyboard interaction and narrow layouts in the playground when behavior changes. No browser test suite is installed.
+
+Sources were imported from `https://ui.shadcn.com/r/styles/new-york-v4/<component>.json` on 16 November 2026. We maintain these files locally. Review upstream updates against our adaptations: focused package imports, scoped resets, button defaults, bounded overlays, slider labels, viewport focus and progress semantics. Do not overwrite them blindly.
+
+The playground covers the listed families. Rich editors, date pickers, combobox search, charts, toasts and data-grid behavior remain separate future additions.

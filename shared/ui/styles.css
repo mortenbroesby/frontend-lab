@@ -3,6 +3,7 @@
 @import './theme.css';
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@import 'tw-animate-css';
 @source "./src";
 
 @theme inline {
@@ -14,10 +15,81 @@
   --color-primary-foreground: var(--lab-surface);
   --color-secondary: var(--lab-paper);
   --color-secondary-foreground: var(--lab-ink);
+  --color-muted: var(--lab-paper);
+  --color-border: var(--lab-line);
+  --color-popover: var(--lab-surface);
+  --color-popover-foreground: var(--lab-ink);
   --color-muted-foreground: var(--lab-muted);
   --color-accent: var(--lab-line);
   --color-accent-foreground: var(--lab-ink);
   --color-input: var(--lab-line);
   --color-ring: #0070f3;
   --color-destructive: #b91c1c;
+}
+
+/* Reset only library elements; native demo controls keep their own defaults. */
+@layer components {
+  :where([data-slot]) {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--lab-line);
+  }
+  :where(button[data-slot], input[data-slot], textarea[data-slot]) {
+    font: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+  :where(button[data-slot]:hover) {
+    background: transparent;
+  }
+  :where(button[data-slot]) {
+    cursor: pointer;
+  }
+  :where(button[data-slot]:disabled) {
+    cursor: not-allowed;
+  }
+  :where(
+    label[data-slot],
+    h2[data-slot],
+    h3[data-slot],
+    p[data-slot],
+    [data-slot='accordion-header']
+  ) {
+    margin: 0;
+    line-height: 1.5;
+    letter-spacing: normal;
+  }
+  :where(ol[data-slot], ul[data-slot]) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  :where([data-slot='table']) {
+    border-collapse: collapse;
+  }
+  :where(
+    [data-slot='dialog-content'],
+    [data-slot='alert-dialog-content'],
+    [data-slot='sheet-content'],
+    [data-slot='popover-content'],
+    [data-slot='dropdown-menu-content'],
+    [data-slot='select-content']
+  ) {
+    color: var(--lab-ink);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot],
+  [data-slot]::before,
+  [data-slot]::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
