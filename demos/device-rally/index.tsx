@@ -1,3 +1,4 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { Input } from '@lab/ui/input';
 import { Label } from '@lab/ui/label';
 import { Button } from '@lab/ui/button';
@@ -171,8 +172,8 @@ export default function DeviceRally() {
         <p className="eyebrow">Trystero / WebRTC</p>
         <h3>Find your people. Cheer together.</h3>
         <p>
-          Open Device rally on each computer. Peers in <strong>friday-lab</strong> connect
-          automatically. No host or backend setup.
+          Open Device Rally on each device and use the same room code. Peers connect automatically.
+          No host or backend setup.
         </p>
         <p>
           Public signaling needs internet; peers can use different networks. Use localhost or
@@ -210,9 +211,13 @@ export default function DeviceRally() {
           Up to 12 people. Room codes are public labels, not passwords. Nostr relays carry
           signaling; WebRTC carries cheers. Send only playful signals.
         </p>
-        <p className="source">
-          Setup and remix: <code>gallery/docs/DEVICE-RALLY.md</code>
-        </p>
+        {galleryHref('/track/modern-web/devices') && (
+          <p>
+            <a href={galleryHref('/track/modern-web/devices')}>
+              Understand this · Try it in your project
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

@@ -29,3 +29,7 @@ On the public HTTPS deployment, the participant opened room `lab-check-1611` on 
 The built gallery was checked in the laptop browser over the LAN preview. At the same limit of 2,000,000, both modes returned 148,933 primes. One Worker run measured 631.2 ms calculation / 21.1 ms longest animation-callback gap; one main-thread run measured 406.5 ms calculation / 409.3 ms gap. These are individual observations, not portable benchmarks. The metric includes normal frame spacing and is not input latency.
 
 Cancellation returned the UI to “Cancelled. Ready to restart.” The bounded observer test verifies the post-computation frame is included, hidden-tab samples are rejected, and disposed observers do not publish results. No browser-test infrastructure was added.
+
+## Guide navigation — 2026-11-16
+
+At a 390 × 844 browser viewport, the mobile menu exposed Guides and navigated to the complete guide list, closing the menu. The desktop dependency guide → demo → guide path was also followed successfully. This is responsive-browser verification, not physical-phone evidence.

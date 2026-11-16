@@ -1,3 +1,4 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { Button } from '@lab/ui/button';
 import { Label } from '@lab/ui/label';
 import { Slider } from '@lab/ui/slider';
@@ -164,6 +165,13 @@ export default function Ecosystem() {
           the initial world; refresh loses changes. Reduced motion starts paused.
         </p>
       </details>
+      {galleryHref('/track/experimental-projects/little-world') && (
+        <p>
+          <a href={galleryHref('/track/experimental-projects/little-world')}>
+            Understand this · Try it in your project
+          </a>
+        </p>
+      )}
     </div>
   );
 }

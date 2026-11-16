@@ -13,13 +13,19 @@ Connect two browsers for cheers, a control panel or a multiplayer game.
 
 Join the same Device Rally room in two browsers. Wait for a peer, send a cheer, then leave and rejoin. What happens to connections and messages?
 
-Device Rally uses WebRTC and Trystero public signaling. It requires internet and localhost or trusted HTTPS; phone access over plain LAN HTTP is unsupported. Phones and the workshop network remain unverified. If connection fails, try two local browser windows.
+Device Rally uses WebRTC and Trystero public signaling. It requires internet and localhost or trusted HTTPS; phone access over plain LAN HTTP is unsupported. A physical phone-to-laptop cheer has been observed, but return delivery, reconnect behaviour and the workshop network are not yet verified. Two local browser windows can help diagnose setup, but do not prove that a phone or another network will connect.
 
 ### Make one change
 
 After [local setup](#/guide/setup), change the cheer presentation in `demos/device-rally/index.tsx`. Try both browsers before adding messages or shared state.
 
 Or [create your own React demo](#/create), using this as reference. New demos include no WebRTC or signaling.
+
+### Try it in your project
+
+Begin with one message between two devices over trusted HTTPS. Give both clients the same room identifier, validate incoming messages, show connection status and release the room when leaving. Decide explicitly whether messages are transient or whether a new peer needs an initial state snapshot.
+
+Test the network where people will actually use it. Public signaling discovers peers; it does not guarantee a direct connection through every firewall. A TURN relay can help restricted connections, but it needs separate setup and is not configured in this demo.
 
 ### Follow your curiosity
 
@@ -28,3 +34,5 @@ Or [create your own React demo](#/create), using this as reference. New demos in
 - **Stretch:** design how peers recover shared state after reconnecting.
 
 For tabs in one browser, try <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink> and BroadcastChannel. WebSockets/SSE need a server, which this starter does not supply.
+
+Read: [Trystero documentation](https://github.com/dmotz/trystero) · [WebRTC connection protocols](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols).
