@@ -1,27 +1,33 @@
 # Microsoft Teams announcement — draft
 
-Not posted. Review logistics and preparation details before sending. Track names and hours remain proposals.
+Not posted. Replace the logistics/contact/whiteboard placeholders before posting, or omit those unavailable details from the message.
 
 ---
 
-## The Front-End Lab · Friday, 20 November
+## 🧪 Front-End Chapter Day: The Front-End Lab
 
-**Five tracks. Different challenges. One day to experiment, learn and build.**
+This Friday, let’s explore, experiment and build something interesting together! Pick a track, team up or go solo, and see what you can discover. 🚀
 
-For our next Front-End Chapter Day, we'll step outside normal delivery work and explore what we can build and learn together across squads. The proposed tracks are Creative Browser, Push the Browser, Performance Detective and Developer Experience & Tooling, with a fifth still open: Architecture Under Pressure or Resilient Interfaces. Expect hands-on experiments, small discoveries and a relaxed show-and-tell — no polished product required.
+Still working out the final details, so ideas, feedback and help with preparations are very welcome! 😊
 
-The proposed day runs **09:00–16:00 (to be confirmed)**: welcome and track selection, hands-on labs with breaks and lunch, then demos and takeaways. **Location / meeting link and time zone: [TO CONFIRM].**
+**Friday, 20 November — four tracks to choose from:**
 
-Bring your laptop, charger, editor and browser with DevTools. Check access to our [private planning repository](https://github.com/mortenbroesby/frontend-chapter-day), browse the tracks and bring a question you'd like to explore. Tested setup instructions will follow once the starter is ready; no exercise installation is needed yet.
+- 🌐 **Modern Web Capabilities:** Try browser APIs, visual interactions, Workers, WebAssembly or real-time communication.
+- 🔍 **Code Quality & Maintainability:** Explore technical debt, dependency health, complexity, architecture or automated analysis in an existing or sample project.
+- 🛠️ **Developer Experience & Tooling:** Pick a recurring workflow annoyance and experiment with a practical improvement.
+- 🚀 **Experimental Projects:** Build a game, visualisation, generative art, chapter quiz, utility or whatever sparks your curiosity!
 
-Whiteboard: **[WHITEBOARD_URL — coming soon]**. Access/setup help: **[ORGANISER_CONTACT — to confirm]**.
+**Agenda — Danish local time:**
 
-Which track catches your interest — and what would you like the fifth to be?
+| Time | Activity |
+| --- | --- |
+| Before 09:00 | Agenda and track details available for colleagues in India |
+| 09:00 | Welcome, introduction and walkthrough of tracks |
+| Morning | Coffee break, optional technical presentation and hands-on experimentation |
+| 11:30 | Lunch |
+| 13:00 | India show & tell — anyone else ready is welcome too! |
+| 14:30–15:00 | Denmark show & tell and wrap-up |
 
----
+Bring your laptop, charger and curiosity. Use your own repository, tools and technologies if you like; no extensive preparation or polished deliverable needed. Check access to the [planning repository](https://github.com/mortenbroesby/frontend-chapter-day) and, if using an existing project, make sure its usual setup works.
 
-## Short teaser alternative
-
-**The Front-End Lab · Friday, 20 November**
-
-Five tracks. Different challenges. One day to experiment, learn and build. Join engineers across squads for a hands-on day exploring creative browser features, demanding workloads, performance mysteries and developer tools — with a fifth track still open for input. Bring your curiosity; we'll finish by sharing demos and discoveries. Track details and preparation instructions will follow.
+Location / meeting link: **[TO CONFIRM]** · Whiteboard: **[WHITEBOARD_URL]** · Help: **[HELP_CONTACT]**

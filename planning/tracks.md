@@ -1,86 +1,78 @@
-# Proposed tracks
+# Four agreed tracks
 
-The confirmed direction is a hands-on, exploratory front-end day with cross-squad collaboration and knowledge sharing. The five-track format, titles and experiments below remain proposals. A–D are working directions; E is explicitly undecided. Examples are a menu, not a checklist.
+Pick a track, go solo or team up, and follow your curiosity. The track structure is agreed; the ideas below are optional starting points. Use your own repository, tools and technologies where appropriate. No bespoke exercise or organiser-led technical walkthrough is required.
 
-Each group should choose a question, establish a small baseline, try one change and record what happened. Use its whiteboard area for **question → experiment → evidence → finding → next step**. Finish with a lightweight demo or explanation. No exercises or starters exist yet.
+For any track: choose one question, try the smallest useful experiment, record what happened and share a discovery. Capture **question → approach → evidence → learning → possible next step** in your board area. You can change scope or track along the way.
 
-## A · Creative Browser — proposed
+## 🌐 A · Modern Web Capabilities
 
-**Introduction:** What can the browser make possible without a large library?
+**Explore:** Modern browser APIs and capabilities beyond everyday front-end development.
 
-**Objective:** Explore native visual and interactive capabilities through a small creative build.
+**Possible areas:**
 
-**Experiment menu:**
-- Make an interactive Canvas or SVG visualisation using a small synthetic dataset.
-- Build a tiny game or playful animation with direct user interaction.
-- Explore View Transitions between two states and consider a fallback when unavailable.
+- Visual & Interactive: Canvas, SVG, animations and View Transitions.
+- Computing & Performance: Web Workers, WebAssembly and browser scheduling.
+- Real-Time Communication: WebSockets, Server-Sent Events (SSE) and WebRTC.
+- Other Web APIs: any browser-native capability that interests you.
 
-**Likely preparation / getting started:** Modern browser, editor and DevTools. Once selected, use a minimal browser page or the agreed Vite/React/TypeScript starter. Begin with one visible object and one interaction; confirm support for the chosen API before expanding.
+**Start independently:** Pick one API and a question it could answer. Open its documentation, check browser support and begin with its smallest example in a browser page or your own app. An optional Vite/React/TypeScript starter may help later, but is not required. Choose the smallest interaction that demonstrates the capability.
 
-**Optional stretch:** Keyboard controls, reduced-motion behaviour, accessible text alternatives or comparing SVG and Canvas for the same scene.
+**Suggested experiments:** Animate a state transition; compare a small calculation on the main thread and in a Worker; try a local real-time message experiment; or explore another API of your choice. For real-time work, first establish what server, peer or signalling setup your chosen example needs; use a runnable local example or choose a simpler API if setup dominates. No shared communication service is promised.
 
-**Possible outcome:** A short interactive demo plus notes on browser support, usability and what was unexpectedly easy or hard.
+**Optional stretch:** Explore cancellation, browser fallback, keyboard use or reduced motion where relevant.
 
-## B · Push the Browser — proposed
+**Share:** A small demonstration plus what the API enabled, its constraints and what you would try next.
 
-**Introduction:** Can the interface stay usable while the browser does serious work?
+## 🔍 B · Code Quality & Maintainability
 
-**Objective:** Understand where work runs and how different approaches affect responsiveness.
+**Explore:** The health, quality and maintainability of an existing codebase or suitable sample project.
 
-**Experiment menu:**
-- Compare a main-thread computation with a Web Worker implementation while interacting with the UI.
-- Split a long task into chunks and compare responsiveness with an uninterrupted baseline.
-- Explore WebAssembly for one bounded computation and compare the whole path, including data transfer and startup costs.
+**Possible areas:**
 
-**Likely preparation / getting started:** Browser performance tools and a small deterministic synthetic workload. The starter must support local serving. Begin with a bounded workload and record baseline interaction behaviour. WebAssembly is optional: choose and verify a toolchain only if that challenge is selected; it must not block everyone else's setup.
+- Automated technical debt discovery: investigate tools such as Fallow.
+- Dependency health: unused, outdated or problematic dependencies.
+- Code complexity: duplication, complexity and maintainability.
+- Architecture: dependencies, boundaries and coupling.
+- Automation: repeatable analysis and quality checks.
 
-**Optional stretch:** Cancellation, progress updates, transferable data or varying input size to identify crossover points.
+**Start independently:** Choose a repository you can work with and get its existing documented setup running. Select one question, such as “Which dependencies appear unused?” or “Where are boundaries unclear?” Begin with its existing analysis scripts, dependency information or a focused source inspection. No specially prepared broken application is needed.
 
-**Possible outcome:** Side-by-side behaviour or a timing table with methodology, limitations and a recommendation about when the technique helps.
+**Suggested experiments:** Evaluate an analysis tool on a small scope; trace one dependency boundary; investigate duplicated logic; or prototype a repeatable quality check. Fallow is a candidate to investigate, not a required installation or an endorsed tool with verified capabilities. Consult the selected tool's documentation before running it. Check a few findings against actual usage before deciding they represent debt; an outdated dependency is not automatically a problem.
 
-## C · Performance Detective — proposed
+**Fallback:** If you cannot use a work repository, use a small project you already know or a suitable public sample with setup instructions. A shared sample link still needs selection and a setup check; this must not block own-project exploration. Do not upload private source to external analysis services without permission.
 
-**Introduction:** Find the bottleneck before reaching for an optimisation.
+**Optional stretch:** Test whether a validated finding can become a useful automated check, or try one small improvement on an isolated branch.
 
-**Objective:** Use evidence to explain a slow interaction, render or load sequence and verify an improvement.
+**Share:** Findings with evidence, false positives/limitations and a practical next step. There is no obligation to fix every finding.
 
-**Experiment menu:**
-- Profile a React interaction and identify unnecessary or expensive rendering.
-- Read a network waterfall and test one loading strategy.
-- Investigate bundle composition or an expensive operation, then measure one targeted change.
+## 🛠️ C · Developer Experience & Tooling
 
-**Likely preparation / getting started:** Browser DevTools; React profiling tooling if the chosen sample uses React. Organisers must prepare a small reproducible sample with observable bottlenecks and synthetic data. Choose one user journey, record browser/device conditions and capture a baseline before editing.
+**Explore:** A recurring source of friction in your front-end development workflow and a practical way to reduce it.
 
-**Optional stretch:** Check whether the improvement holds under throttling or introduces a different regression. Compare repeat measurements instead of relying on a single run.
+**Possible areas:** Faster feedback loops, better local tooling, simpler workflows, repetitive-task automation, build/test/debugging improvements and small utilities or scripts.
 
-**Possible outcome:** A before/after trace, explanation of the cause and a small justified fix. Avoid claiming a universal speed-up from one device.
+**Start independently:** Write down one task you repeat, what makes it awkward and what a useful improvement would look like. Reproduce it in your existing environment. Check existing scripts and native tool features before building anything.
 
-## D · Developer Experience & Tooling — proposed
+**Suggested experiments:** Shorten the path to a focused test; simplify a local setup step; automate a repetitive edit or report; improve debugging feedback; or make a small utility for an actual need. Keep one concrete input/output example and compare the workflow before and after.
 
-**Introduction:** What small annoyance could we remove from an engineer's day?
+**Optional stretch:** Ask a peer to try the improvement, improve error messages or add a meaningful check for an important failure case.
 
-**Objective:** Build a focused utility and evaluate whether it makes a real workflow clearer or faster.
+**Share:** The original friction, what changed and whether it helped. Discovering an existing feature may be the best result; tools are not the goal in themselves.
 
-**Experiment menu:**
-- Build a small CLI that validates a fixture or produces a useful report.
-- Explore build-tool diagnostics and improve one feedback loop.
-- Prototype a developer utility or investigate a monorepo workflow using a tiny local fixture.
+## 🚀 D · Experimental Projects
 
-**Likely preparation / getting started:** Identify one pain point, its intended user and a concrete input/output example. Use the agreed Node.js baseline for scripts; a UI starter only when useful. Use local fixtures rather than production integrations. Monorepo investigation does not require converting this repository into a monorepo.
+**Explore:** Something that sparks your curiosity, away from business requirements.
 
-**Optional stretch:** Helpful errors, a representative automated test, cross-platform use or measuring time saved against the original workflow.
+**Possible ideas:** A browser game, interactive data visualisation, generative art, chapter quiz, small developer utility or any other interesting experiment.
 
-**Possible outcome:** A working small utility, usage example and honest account of its trade-offs.
+**Start independently:** Choose your own idea, technologies and approach. Reduce it to one visible or demonstrable behaviour, using familiar tools or a minimal example for a technology you want to explore. A plain page, existing project or optional app starter can all work.
 
-## E · To Be Decided — explicitly provisional
+**Suggested experiments:** Create one playable interaction; visualise a small dataset; generate a visual pattern; prototype a quiz question flow; or follow an idea of your own. Use local or synthetic assets if gathering data would slow you down.
 
-Choose one direction after discussion; do not prepare two complete exercises by default.
+**Optional stretch:** Add a playful interaction, improve accessibility or invite a peer to test the prototype.
 
-| Candidate | Objective and challenge suggestions | Likely preparation and first step | Stretch and possible outcome |
-| --- | --- | --- | --- |
-| Architecture Under Pressure | Explore how a small UI design responds to changing requirements: add an alternative data source, a new feature or a changed state boundary | Agree a tiny starter and two or three requirement-change cards; sketch the initial design before applying one card | Compare a second design; demonstrate the change and record coupling, complexity and trade-offs |
-| Resilient Interfaces | Keep an interface understandable under slow responses, errors, retries or out-of-order results | Agree a tiny UI and deterministic local fault simulation; start with one failure scenario | Cancellation, recovery and accessible status feedback; demonstrate failure/recovery and explain what the user experiences |
+**Share:** A demo, sketch or discovery and the most interesting thing you learned. Finishing a product is not expected.
 
-**Decision criteria:** Participant interest, distinction from A–D, achievable setup by Thursday and a demonstrable result within a day. Architecture should stay hands-on rather than becoming only a design discussion; resilience should focus on user experience and correctness rather than repeating C's speed investigation.
+## Choosing between overlapping interests
 
-**Shared findings and show-and-tell:** Whichever candidate is chosen, capture the original assumption, changed condition, observed result and next question. Update this file, AGENTS.md, the announcement, board specification and Mermaid diagram after the organiser confirms the choice.
+A centres on learning a browser capability; B on codebase health; C on a real workflow problem; D on an open-ended project. Overlap is welcome. Choose the framing that helps you start rather than seeking permission for a perfect category fit.

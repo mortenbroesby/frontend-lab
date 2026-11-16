@@ -1,40 +1,35 @@
 # The Front-End Lab
 
-**Five tracks. Different challenges. One day to experiment, learn and build.**
+Front-End Chapter Day · **Friday, 20 November 2026** · All agenda times are Danish local time.
 
-Front-End Chapter Day · **Friday, 20 November 2026**
+A hands-on day for front-end engineers across squads to explore, experiment, collaborate and learn. Pick a track, team up or go solo, and share something you discovered or built. Learning matters more than production-ready deliverables.
 
-A hands-on day for front-end engineers across squads, following the Spotify chapter model: explore unfamiliar techniques, collaborate, share discoveries and have fun outside normal delivery work. Previous days explored AWS CDK and Spec Kit; this day is not primarily focused on AI.
+## Agreed tracks
 
-This private repository is our central planning workspace. The title, five-track format, track content and schedule are proposals; the date and workshop objectives are confirmed. No technical exercises have been implemented yet.
+| Track | Direction |
+| --- | --- |
+| 🌐 A · Modern Web Capabilities | Visual interaction, browser computing, real-time communication and other Web APIs |
+| 🔍 B · Code Quality & Maintainability | Technical debt, dependency health, complexity, architecture and automated analysis |
+| 🛠️ C · Developer Experience & Tooling | Identify real workflow friction and explore a practical improvement |
+| 🚀 D · Experimental Projects | Build a game, visualisation, generative art, quiz, utility or your own idea |
 
-## Proposed tracks
-
-| Track | Direction | Status |
-| --- | --- | --- |
-| A · Creative Browser | Canvas, SVG, animation, View Transitions and native browser experiments | Proposed |
-| B · Push the Browser | Workers, WebAssembly, scheduling and responsive heavy workloads | Proposed |
-| C · Performance Detective | Profiling, React rendering, network waterfalls and bundle investigation | Proposed |
-| D · Developer Experience & Tooling | Small tools that improve daily engineering workflows | Proposed |
-| E · To Be Decided | Architecture Under Pressure **or** Resilient Interfaces | Explicitly open |
-
-Choose a question, build or investigate something small, then share what you discovered. A useful failed experiment counts as an outcome.
+These four tracks are the agreed direction. Their experiments are suggestions, not prescribed exercises. Participants can use their own repositories, tools and technologies. There is no required shared application or implemented starter.
 
 ## Workspace map
 
-- [Vision](planning/vision.md): experience and success criteria.
-- [Agenda](planning/agenda.md): provisional full-day schedule.
-- [Tracks](planning/tracks.md): experiments, preparation and possible outcomes.
-- [Preparation](planning/preparation.md): participant checklist and organiser readiness.
-- [Teams announcement](planning/announcement.md): draft for review and posting.
-- [Whiteboard specification](planning/whiteboard.md): editable Confluence board handoff.
-- [Workshop flow](whiteboard/structure.mmd): Mermaid source for the overview.
-- [Technical bootstrap](exercises/README.md): implementation approach after scope agreement.
-- [Agent context](AGENTS.md): decisions, conventions and next priorities.
+- [Vision](planning/vision.md): participant experience and success criteria.
+- [Agenda](planning/agenda.md): flexible schedule, including India and Denmark show-and-tell.
+- [Tracks](planning/tracks.md): self-directed starting points and optional experiments.
+- [Preparation](planning/preparation.md): minimal preparation and remaining readiness gaps.
+- [Teams announcement](planning/announcement.md): concise draft for posting.
+- [Whiteboard specification](planning/whiteboard.md): native, editable Confluence board handoff.
+- [Workshop flow](whiteboard/structure.mmd): Mermaid overview.
+- [Technical bootstrap](exercises/README.md): optional starter assessment; no full exercises yet.
+- [Agent context](AGENTS.md): confirmed decisions, conventions and priorities.
 
-## Next decisions
+## Next steps
 
-Choose Track E; confirm tracks A–D, hours, location/time zone, attendance and facilitators; settle the runtime/package-manager baseline and participant access; then approve the announcement and build the whiteboard. See the preparation plan for suggested deadlines.
+Make agenda and track details accessible to colleagues in India before 09:00 on Friday. Confirm venue/meeting links, board destination and edit access, a help contact and whether an optional starter is actually needed. An optional morning presentation still needs a topic/speaker if included.
 
 Repository: https://github.com/mortenbroesby/frontend-chapter-day
 

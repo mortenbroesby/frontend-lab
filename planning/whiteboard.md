@@ -1,122 +1,185 @@
 # Confluence whiteboard specification
 
-## Purpose and status
+## Purpose and handoff
 
-Build an editable collaboration space for **The Front-End Lab**, Friday, 20 November 2026. It should guide participants from choosing an experiment to sharing evidence and reflecting together. This file is a handoff specification; no Confluence board has been created.
+Create a collaborative workshop space for **The Front-End Lab**, Friday, 20 November 2026, using native, editable Confluence whiteboard elements. This is a specification only; no board has been created. The four tracks are agreed. Experiment suggestions are optional, and participants can work solo or in groups.
 
-The previous chapter-day screenshots were unavailable during setup. The layout below is a new proposal based on the supplied requirements, not a reconstruction of those screenshots. The working title, five tracks and agenda are provisional. Track E must remain visibly undecided until confirmed.
+The design follows the requested chapter-day format. Earlier workshop screenshots were unavailable during setup; do not claim a visual match to them. Use [agenda](agenda.md), [tracks](tracks.md) and [preparation](preparation.md) as canonical content. The [Mermaid diagram](../whiteboard/structure.mmd) is an overview, not an editable-board import format.
 
-## Inputs for the implementing agent
+For later construction, resolve the Confluence destination, intended audience and publishing authorisation. Reuse authorisation if already provided. Verify participant edit access, and report missing capabilities rather than claiming a board exists. Do not invite participants or choose an unrelated destination from this specification alone.
 
-Use [the agenda](agenda.md), [track definitions](tracks.md) and [preparation checklist](preparation.md) as canonical content. The [Mermaid overview](../whiteboard/structure.mmd) expresses navigation, not an import format or a substitute for an editable board.
+## Layout and native elements
 
-Before publishing, obtain the Confluence space/destination, board title approval, access audience and permission to create the board. Confirm participant edit access and the final logistics. Do not infer a destination or invite people from this specification.
+Use six numbered zones in reading order:
 
-If board creation is unavailable, report the missing capability and preserve this handoff. Do not claim a board exists or assume Mermaid automatically becomes editable Confluence objects.
+1. Welcome, objectives and agenda.
+2. Preparation and getting started.
+3. Overview of the four tracks.
+4. Four independent track areas A–D, in a spacious two-by-two layout.
+5. Show-and-tell area.
+6. Shared takeaways and next steps.
 
-## Layout and visual conventions
+Use editable text, shapes, sticky notes and connectors, grouped by zone where supported. Include a navigation index and track letters as well as colour. Keep contrast readable and instructions distinct from participant notes. Leave several blank prompted notes per collaborative area and room to expand. Screenshots may support findings but must not replace editable board content.
 
-Create six numbered zones with clear reading order:
+## 1 · Welcome, objectives and agenda
 
-1. Welcome and agenda across the top.
-2. Common preparation and setup below it.
-3. Track selection before the branching work areas.
-4. Five independent track areas A–E, arranged as three on one row and two on the next with generous space for notes.
-5. Shared findings and demonstrations below the tracks.
-6. Retrospective and takeaways at the end.
+Title: **The Front-End Lab**. Date: **Friday, 20 November 2026**.
 
-Use native editable text, shapes, sticky notes and connectors supported by the host. Group each zone using available grouping/container features. Keep instructions separate from empty participant canvases; do not flatten the board into an image. Use track letters and descriptive titles as well as colour, readable contrast and concise text. Label every provisional item with “Proposed” or “To Be Decided”; colour alone is insufficient.
+Welcome copy:
 
-Provide a small legend: instruction cards, participant notes, evidence links and help requests. Each participant note should contain a name/group label. Leave at least three blank notes per collaborative prompt and room to add more; blank note prompts must look different from actual findings. Add a compact navigation index with zone names and links if supported.
+> Explore, experiment and build something interesting. Pick a track, team up or go solo, and share what you discover. Follow your curiosity; learning matters more than a polished deliverable.
 
-## 1 · Welcome and agenda
+Show the agenda exactly at this level of detail, with **all times Danish local time**:
 
-Place the working title, tagline and date prominently. Include this welcome copy:
+| Time | Activity |
+| --- | --- |
+| Before 09:00 | Agenda and track details available for colleagues in India |
+| 09:00 | Welcome, introduction and walkthrough of tracks |
+| Morning | Coffee break, optional technical presentation and hands-on experimentation |
+| 11:30 | Lunch |
+| 13:00 | India show & tell; anyone else ready is welcome |
+| 14:30–15:00 | Denmark show & tell and wrap-up |
 
-> Choose something you are curious about. Work with people from another squad. Try a small experiment, capture what happens and share one discovery. A useful failed attempt counts.
+Keep coffee, presentation and experimentation flexible; do not invent additional slots. Add **[VENUE_OR_MEETING_LINK]** and **[HELP_CONTACT]** placeholders until supplied. The optional presentation needs a topic/speaker only if included.
 
-Add the provisional agenda from `agenda.md`, visibly labelled as proposed until confirmed. Include placeholders for **[VENUE_OR_MEETING_LINK]**, **[TIME_ZONE]**, **[FACILITATOR_CONTACT]** and **[CONFIRMED_HOURS]**. Working agreements: ask for help early, share the keyboard, respect different starting points and favour learning over polish.
+Provide an editable prompt: “What are you curious about today?” with name or group label. Working agreements: respect different starting points, share useful discoveries, ask peers for help and feel free to change direction.
 
-Collaborative space: “What would make today worthwhile for you?” with name and one sentence per note.
+## 2 · Preparation and getting started
 
-## 2 · Common preparation and setup
+Link to the planning repository and its preparation guide:
 
-Include repository link: https://github.com/mortenbroesby/frontend-chapter-day and a link to its preparation document. Show laptop/editor/browser/Git/access checks. State that exercise setup commands are pending until implemented and verified; replace this statement with links to real tested exercise guides later.
+- https://github.com/mortenbroesby/frontend-chapter-day
+- https://github.com/mortenbroesby/frontend-chapter-day/blob/main/planning/preparation.md
 
-Provide three columns:
+Display this start route: **choose a question → choose an existing project or minimal example → try one small thing → record what happened**. No starter or workshop installation is required. An optional Vite/React/TypeScript starter is only under consideration; add a link later if it actually exists and is tested.
 
-- **Ready:** name/group, chosen environment and successful setup evidence.
-- **Blocked:** name/group, step attempted, symptom and help needed; no secrets in notes.
-- **Can help:** name, topic and how to reach them during the day.
+Include browser/editor/access checks, own-project setup instructions and permission to use preferred tools/technologies. Keep special API, server or toolchain requirements local to the chosen experiment. The board must enable India colleagues to start before the welcome, without waiting for the organiser.
 
-Add a fallback card: pair with a prepared participant or work from a facilitator's saved demo/trace while recording the blocker. Do not make a specialist toolchain a universal prerequisite.
+Create editable columns:
 
-## 3 · Track selection
+- **Ready / exploring:** name or group, chosen question and starting point.
+- **Need help:** attempted step, blocker and help requested.
+- **Can help:** name and relevant experience.
+- **Setup tips:** verified fixes or useful references others can reuse.
 
-Create five editable track cards with letter, title, one-sentence objective and “Proposed” status. A–D use the objectives in `tracks.md`. E reads “To Be Decided: Architecture Under Pressure or Resilient Interfaces”.
+Fallback card: use an existing environment, a simple browser example or peer pairing if setup becomes the experiment. Do not require a facilitator-provided demo or bespoke broken app.
 
-Under each card provide participant/group name, squad (optional), curiosity/question and help they can offer. Encourage cross-squad pairs or small groups without fixing sizes or capacity. Include a separate E discussion space with “Which candidate interests you, and why?” Notes are input to the organiser, not an automatic vote that finalises the choice.
+## 3 · Four-track overview
 
-Allow participants to move their names as interests change. Link or visibly connect each selection card to its independent track area.
+Create four native cards using these exact titles and descriptions:
 
-## 4 · Five independent track areas
+| Track | Purpose |
+| --- | --- |
+| 🌐 A · Modern Web Capabilities | Explore a browser API or capability beyond everyday development |
+| 🔍 B · Code Quality & Maintainability | Investigate codebase health, dependencies, complexity and boundaries |
+| 🛠️ C · Developer Experience & Tooling | Address real recurring workflow friction with a practical improvement |
+| 🚀 D · Experimental Projects | Build something that sparks curiosity with your own technologies and approach |
 
-Every area must be usable without reading another track. Use the same lightweight template:
+Under each, leave space for participant/group names, question and optional collaboration invitations. Solo participation is equally valid. Allow names to move between tracks and connect cards to their areas. Overlap is welcome; do not create approval gates for choosing a track.
 
-1. **Start here:** short introduction, objective and preparation/start link. Until implemented, mark the start link **[EXERCISE_GUIDE_PENDING]**.
-2. **Choose a challenge:** three suggestion cards; explicitly say “Pick one, adapt it or bring your own question.”
-3. **Experiment canvas:** question/hypothesis; approach; baseline; change tried; result/evidence; interpretation/limitations; next experiment. Leave editable notes under each prompt.
-4. **Discoveries and help:** separate spaces for surprises, useful references and blockers.
-5. **Optional stretch:** one or two ideas, never prerequisites.
-6. **Show-and-tell:** group, question, demo/evidence link, one finding, one limitation and next step.
+## 4 · Four independent track areas
 
-Add the following track-specific content, keeping full detail in `tracks.md`:
+Each area should work on its own without a spoken briefing. Include an introduction, a concrete first step, optional challenge cards, useful starting points, a discoveries canvas and a show-and-tell prompt. Use the following content and link to the relevant section of `planning/tracks.md` for detail.
 
-| Area | Introduction and challenge cards | Preparation and first move | Stretch and demonstration prompt |
-| --- | --- | --- | --- |
-| A · Creative Browser — proposed | What can the browser make possible? Try interactive Canvas/SVG, a tiny game/animation, or a View Transition with fallback | Browser/editor/DevTools; start with one visible object and one interaction; check API support | Keyboard access, reduced motion or Canvas/SVG comparison. Show the interaction and a surprising capability or constraint |
-| B · Push the Browser — proposed | Keep the UI responsive under load. Compare main thread vs Worker, chunk a long task, or investigate an optional bounded WebAssembly computation | Synthetic workload and local server once ready; capture interaction behaviour before changing execution | Cancellation, progress or transfer costs. Show the comparison with measurement conditions and limitations |
-| C · Performance Detective — proposed | Find the cause before optimising. Profile React rendering, inspect a network waterfall, or investigate bundle/operation cost | Reproducible synthetic slow sample to be prepared; record baseline and device/browser conditions | Repeat under throttling or check regressions. Show before/after evidence and explain the cause |
-| D · Developer Experience & Tooling — proposed | Remove one everyday annoyance. Try a fixture-checking CLI, a build feedback improvement, or a small developer utility | One pain point and input/output example; local fixture and agreed runtime; no production integration needed | Helpful errors, a meaningful test or time comparison. Demonstrate the workflow and trade-offs |
-| E · To Be Decided | Display both candidate cards below; no chosen challenge or required setup yet | Record interests and requirements; organiser must select direction before exercise preparation | Leave a common findings/demo canvas ready for whichever candidate is selected |
+### A · Modern Web Capabilities
 
-### Track E candidate cards
+**Introduction:** Explore what a browser-native capability makes possible.
 
-**Architecture Under Pressure — candidate:** Start with a tiny UI, then apply a new requirement such as an alternative data source, a new feature or changed state ownership. Record the original design, the change, coupling exposed and trade-offs. Preparation requires an agreed sample and requirement cards. Stretch: compare a second design. Show a working change and explain what it cost.
+**Start here:** Pick one API, read its documentation and run or adapt the smallest example in a browser page or your own app. Check browser support and setup requirements before expanding.
 
-**Resilient Interfaces — candidate:** Explore slow responses, errors or out-of-order results using deterministic local fault simulation. Record the failure, what the user sees, recovery behaviour and evidence. Preparation requires an agreed UI and fault controls. Stretch: cancellation or accessible status feedback. Show failure and recovery.
+**Challenge cards:**
 
-Keep a conspicuous “Decision pending” banner over E. After confirmation, retain a brief decision note and use the standard track template for the chosen direction; do not present both candidates as committed tracks.
+- Visual & Interactive: Canvas, SVG, animation or View Transitions.
+- Computing & Performance: Web Workers, WebAssembly or browser scheduling.
+- Real-Time Communication: WebSockets, SSE or WebRTC.
+- Other Web APIs: choose another capability that interests you.
 
-## 5 · Shared findings and demonstrations
+**Starting points:** Your own app, a minimal browser example or an optional tested starter if later provided. For real-time experiments, establish the local server/peer/signalling needs of the chosen example; no shared backend is promised. Add checked API documentation links when selected, without invented commands.
 
-Provide a demo queue with group, track, presenter, title, evidence/demo link and time slot. Use the agenda's 40-minute window: propose five-minute demos plus questions for five groups; revise the format if attendance produces more groups.
+**Stretch:** Browser fallback, cancellation, keyboard use or reduced motion as appropriate.
 
-Below it create a gallery with these editable prompts:
+**Show:** The experiment, what the capability enabled and an interesting constraint.
 
-- We wanted to find out…
-- We tried…
-- The evidence was…
-- What surprised us / what did not work…
-- What another squad could reuse…
-- What remains uncertain…
+### B · Code Quality & Maintainability
 
-Keep references to code, traces or screenshots next to findings. Screenshots can be supporting evidence but must not replace editable text. Do not enter invented example outcomes as if participants had produced them.
+**Introduction:** Investigate the health of an existing or suitable sample project.
 
-## 6 · Retrospective and takeaways
+**Start here:** Choose a project you can access, follow its normal setup and ask one bounded question. Start with existing analysis scripts or a focused source/dependency inspection.
 
-Create columns “Learned”, “Enjoyed”, “Would change” and “Want to explore next”. Invite each participant to add one takeaway. Add a follow-up table: idea, optional owner, next step and link. Ownership is voluntary; a sticky note is not a delivery commitment.
+**Challenge cards:** Technical debt discovery (investigate tools such as Fallow); dependency health; duplication/complexity; architecture/boundaries/coupling; automated quality checks.
 
-## Construction and acceptance checklist
+**Starting points:** An existing codebase and its current tooling, or a suitable public sample with verified setup. Add **[VERIFIED_SAMPLE_LINK — pending selection]** as an optional fallback, not a prerequisite. Fallow is a tool candidate, not required or validated here; check its documentation before use. Private source should not be uploaded to an external service without permission.
 
-- [ ] All six zones exist, follow the flow and can be located easily.
-- [ ] All five independent track areas have instructions, challenge suggestions, preparation status, findings space and show-and-tell prompts.
-- [ ] E shows both candidates and an explicit pending decision; A–D and timing retain their provisional status unless subsequently confirmed.
-- [ ] Instruction cards, sticky notes and connectors remain individually editable; the board is not a single exported picture.
-- [ ] A participant can add and edit a note, move a selection note and paste an evidence link with the intended permissions.
-- [ ] Repository and implemented exercise links resolve for the intended participants; missing links remain clearly marked rather than guessed.
-- [ ] Text is readable, status is not conveyed only by colour and each area has room to grow.
-- [ ] Agenda and track wording match their canonical documents; no fictional findings or unsupported commands have been added.
-- [ ] Record the real board URL, permission check and any unsupported host features in this document, then update README and announcement links.
+**Stretch:** Validate a finding against actual use, test a small improvement on an isolated branch or turn a useful check into repeatable analysis.
 
-Deliver the board URL and a brief completion report describing editable elements, access verification and any remaining placeholders. Publishing, participant access and content completion are separate checks.
+**Show:** Evidence-backed findings, false positives/limitations and a possible next step. Fixing every finding is not expected.
+
+### C · Developer Experience & Tooling
+
+**Introduction:** Improve something that repeatedly gets in the way of development.
+
+**Start here:** Name one recurring task, reproduce the friction and define what an improvement would look like. Inspect existing scripts and tool features first.
+
+**Challenge cards:** Faster feedback loops; local tooling; simpler workflows; repetitive-task automation; build/test/debugging improvements; small practical utilities.
+
+**Starting points:** Your own working environment, existing scripts/configuration and one concrete input/output example. A new tool is unnecessary if an existing feature solves the problem.
+
+**Stretch:** Ask a peer to try the change, improve failure feedback or check an important failure case.
+
+**Show:** The original problem, practical change and whether it helped.
+
+### D · Experimental Projects
+
+**Introduction:** Build something interesting outside business requirements.
+
+**Start here:** Choose an idea and reduce it to one demonstrable behaviour. Use your preferred technologies, an existing project or a minimal example.
+
+**Challenge cards:** Browser game; interactive data visualisation; generative art; chapter quiz; developer utility; your own idea.
+
+**Starting points:** Familiar tools, a plain browser page, local/synthetic data or an optional app starter if useful. There is no prescribed stack or required finished product.
+
+**Stretch:** Add a playful interaction, consider accessibility or let a peer try it.
+
+**Show:** A demo, sketch or discovery and the most interesting learning.
+
+### Collaborative canvas within every track
+
+Create distinct editable areas for:
+
+- **Question / idea:** What do I or we want to explore?
+- **Approach:** Starting point, tool/API and smallest experiment.
+- **Evidence:** What happened? Link code, a trace, screenshot or notes.
+- **Discoveries:** What surprised us? What worked or failed?
+- **Limitations and help:** What is uncertain or blocked?
+- **Share:** Presenter/group, finding or demo, preferred show-and-tell session.
+
+Include name/group labels and optional next experiments. Leave blank prompts; do not pre-populate fictional participant findings. No track should depend on the organiser guiding every technical step.
+
+## 5 · Show-and-tell area
+
+Create two editable sign-up queues:
+
+- **13:00 — India show & tell:** anyone else ready is welcome to present.
+- **14:30–15:00 — Denmark show & tell and wrap-up.**
+
+Each row contains name/group, track, title/question, demo/evidence link and any presentation needs. Keep durations flexible based on volunteers; do not assign invented slots. Provide space for asynchronous findings so sharing does not require attendance at both sessions.
+
+Prompt presenters: “What did you try? What did you discover or build? What remains uncertain?” Allow useful failed experiments and incomplete prototypes. Put questions and reusable tips beside each finding.
+
+## 6 · Shared takeaways and next steps
+
+Create editable columns **Learned**, **Enjoyed**, **Would change** and **Want to explore next**. Add a lightweight follow-up table: idea, optional owner, next step and link. These are voluntary follow-ups, not delivery commitments. Keep it usable asynchronously for colleagues who have already finished their day.
+
+## Acceptance checklist for the later board build
+
+- [ ] Six zones and exactly four independent track areas use the agreed names and purposes.
+- [ ] Agenda uses Danish local time and only the supplied anchors, including both show-and-tell sessions.
+- [ ] Agenda, track starting points and access instructions are available to India colleagues before 09:00 Friday; verify access with a participant.
+- [ ] Every track has a usable first step, suggested experiments, useful starting points and editable discovery space without needing an organiser walkthrough.
+- [ ] Solo and group participation are supported, with no mandatory shared application or toolchain.
+- [ ] Text, cards, notes and connectors remain individually editable and readable; content is not a flattened image.
+- [ ] A participant can add/edit a note, move a track selection and paste evidence links.
+- [ ] Existing links resolve for participants; missing destinations remain explicit placeholders. No unimplemented commands or invented findings appear.
+- [ ] Record the real board URL, access verification and any unsupported host features here; update README and announcement links.
+
+Deliver the board URL and a concise report distinguishing content completion, participant access verification and remaining placeholders.

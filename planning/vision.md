@@ -1,26 +1,25 @@
-# Vision
+# Vision: The Front-End Lab
 
-**Working concept: The Front-End Lab**
-
-Five tracks. Different challenges. One day to experiment, learn and build.
-
-On Friday, 20 November 2026, engineers from different squads come together as a front-end chapter. The day creates room for curiosity that normal delivery rarely allows: unfamiliar browser capabilities, demanding workloads, performance investigation and tools we wish existed.
+On Friday, 20 November 2026, front-end engineers from different squads come together to explore, experiment, collaborate and learn. The four agreed tracks are Modern Web Capabilities, Code Quality & Maintainability, Developer Experience & Tooling and Experimental Projects.
 
 ## Desired experience
 
-Participants can choose a question that interests them, find collaborators outside their squad and get to a first experiment quickly. Challenges provide starting points, not step-by-step solutions. People may change direction when evidence suggests a better question.
+Pick something that sparks your curiosity, work independently or team up, and get to a first experiment quickly. Cross-squad collaboration is welcome. Participants can adapt suggestions, use their own technologies or change direction when they discover a better question.
 
-Aim for small discoveries rather than polished products. A prototype, profiling trace, surprising limitation or well-explained failed attempt is worth sharing. Make space for different experience levels: pair up, explain assumptions and offer optional stretch goals. Accessibility and user experience belong in experiments where relevant.
+The day is hands-on rather than presentation-heavy. An optional technical presentation can inspire exploration, but participation must not depend on it. Colleagues in India should have the agenda and track details before 09:00 Danish local time so they can start independently.
 
-This is a practical engineering day, not primarily an AI session. Previous AWS CDK and Spec Kit days provide context, not a requirement to reuse those formats.
+We value learning over production-ready deliverables: a prototype, useful analysis, improved workflow, surprising limitation or well-explained failed attempt is worth sharing. Prior AWS CDK and Spec Kit days provide context; this day is not primarily focused on AI.
 
-## Proposed success criteria
+## Design principles
 
-- Every participating group records its question, what it tried and at least one finding.
-- Participants collaborate across squads and can name something new they learned.
-- Each group has an achievable entry point and a way to ask for setup help.
-- Show-and-tell includes evidence: a demo, trace, comparison or clear explanation.
-- The board preserves reusable insights, remaining questions and optional follow-ups.
-- The retrospective captures what was enjoyable and what would improve the next day.
+- Every track offers a first step that does not require the organiser to explain or facilitate each challenge.
+- Use existing projects or simple starting points; extensive preparation and deliberately broken applications are unnecessary.
+- Respect different experience levels and allow solo work, pairs or groups without fixed sizes.
+- Make tools optional where possible. A shared starter is a convenience, not an entry requirement.
+- Keep show-and-tell lightweight and capture evidence and discoveries for colleagues across locations.
 
-These are facilitation goals, not performance measures for individuals. Attendance, group sizes and track balance still need confirmation. Five tracks are the current proposal; avoid forcing equal numbers into every track.
+## Success criteria
+
+Participants can start with little setup, explain what they explored and share at least one learning. Solo participants and groups have equal space to record findings. The board preserves ideas, evidence, questions and optional next steps beyond the day.
+
+These are learning goals, not individual performance measures. A polished product, equal track attendance or a completed checklist of experiments is not required.

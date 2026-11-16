@@ -1,48 +1,47 @@
-# Preparation
+# Preparation and getting started
 
-Status: initial planning checklist, 16 November 2026. No runnable exercises exist yet. Exact runtime versions, package manager and commands will be published only after the bootstrap is implemented and verified.
+The aim is minimal setup, not a common stack for everyone. The four tracks are self-directed; participants can use existing repositories, preferred technologies and tools. No full exercises or starter have been implemented here.
 
-## Participants: before Friday
+## Participant checklist
 
-- Bring a laptop, charger, preferred editor and a modern browser with developer tools.
-- Check that Git is installed. If already using Node.js, note your installed Node.js and package-manager versions; wait for the agreed baseline before changing your environment.
-- Sign in to GitHub and check access to [the private repository](https://github.com/mortenbroesby/frontend-chapter-day). Report an access failure to the organiser; being able to see this document elsewhere does not prove repository access.
-- Once invited, confirm that you can edit the Confluence whiteboard: **[WHITEBOARD_URL — pending creation]**.
-- Read the proposed tracks and bring one question you would enjoy exploring. No specialist knowledge or finished idea is expected.
-- After organisers publish a tested setup guide, follow its exact steps and report blockers before Friday. There is nothing to install from this repository yet.
+- Bring a laptop, charger, preferred editor and browser with developer tools.
+- Read the [tracks](tracks.md) and choose a curiosity or workflow problem. You can decide or change your mind on the day.
+- If using an existing repository, check its access and normal setup ahead of time. B and C particularly benefit from a project or workflow you already know.
+- Check access to the [planning repository](https://github.com/mortenbroesby/frontend-chapter-day) and, once available, the editable board: **[WHITEBOARD_URL — pending creation]**.
+- Install only what your chosen experiment requires. Git is useful for repository work; Node.js or specialist toolchains are not universal prerequisites.
+- Record blockers on the board or contact **[HELP_CONTACT — to confirm]**. You can pair with someone or choose a simpler browser experiment if setup gets in the way.
 
-Optional inventory commands for existing tools only:
+No workshop install/run commands are published because no starter exists. Own-project participants should use their project's instructions. Do not wait for an optional starter to begin with tools you already have.
 
-```sh
-git --version
-node --version
-npm --version
-```
+## Minimal preparation assessment
 
-A missing Node.js/npm command is a setup item to resolve once the baseline is agreed, not evidence that a workshop exercise is broken. Do not install global CLIs, WebAssembly toolchains or cloud tooling speculatively.
+Reviewing the track entry paths suggests that access, a clear first question and a usable existing environment are more valuable than four prepared applications. This is a planning assessment, not participant-tested setup evidence.
 
-## Organiser readiness plan — suggested deadlines
-
-| Target | Action | Evidence of readiness |
+| Track | Smallest useful preparation | Avoid |
 | --- | --- | --- |
-| Mon 16 Nov | Review concept, propose tracks and review announcement | Open decisions are explicit; draft ready for organiser review |
-| Tue 17 Nov | Confirm E, A–D, logistics, attendance and facilitator roles | Decisions recorded in AGENTS.md and relevant docs |
-| Tue 17 Nov | Agree participant repository access and Confluence destination | Named owner for access; invitation approach agreed |
-| Wed 18 Nov | Implement only the agreed minimal bootstrap; create the editable board | Tested starter instructions and editable board available |
-| Thu 19 Nov | Verify setup from a clean checkout and with a participant | Runtime versions, lockfile, exact commands and access confirmed |
-| Thu 19 Nov | Publish final preparation details and logistics | Announcement links resolve for a participant account |
-| Fri 20 Nov | Open room/board and run a brief setup check | Help route, fallback materials and demo flow ready |
+| A | Choose an API, find its documentation/minimal example and check browser/setup needs | Installing every specialist toolchain or provisioning a shared service |
+| B | An accessible existing project; optionally one verified public sample fallback and tool documentation | A deliberately problematic app or a mandatory analysis tool |
+| C | One real friction point and the existing workflow that reproduces it | Building utilities without a user/problem |
+| D | A small idea, familiar environment or minimal starting example | A prescribed stack or elaborate shared app |
 
-Owner assignments are pending. Dates above are proposals, not completed work.
+One optional Vite + React + TypeScript starter could help people beginning a new UI. First check whether anyone needs it and whether an existing minimal template is sufficient. See [bootstrap plan](../exercises/README.md). There is no need to make the rest of the workshop depend on that decision.
 
-## Verification and fallback
+## Readiness gaps and next actions
 
-For each implemented exercise, record the verified runtime and package manager, a clean installation, start command, expected initial behaviour and any build/test checks that actually exist. Browser support and optional tools should be verified against the selected challenge.
+| Gap / open decision | Next action | Ready when |
+| --- | --- | --- |
+| India colleagues' independent start | Publish agenda, track details and access instructions before 09:00 Danish local time on Friday; preferably earlier | A colleague can reach the material and choose a starting point without the welcome session |
+| Venue and remote access | Confirm venue/meeting link and how both show-and-tell sessions are joined | Participant-facing details are available |
+| Planning repository and board access | Confirm intended audience, contribution approach, Confluence destination and edit permissions | Participant access is verified, not only owner access |
+| Starting resources | Select/check a small set of useful API/tool references and a suitable public sample fallback for B | Links and setup guidance have been checked; no bespoke exercise needed |
+| Optional app starter | Establish demand; if useful, agree a minimal baseline and verify setup | One clean setup works with documented versions, or explicitly use existing participant environments |
+| Optional morning presentation | Decide whether to include it; identify topic/speaker if so | Status communicated without inventing a slot |
+| Help and demonstrations | Identify a help contact and invite demo sign-ups for both sessions | Participants can seek help and record which session suits them |
 
-Test access using a participant account, not only the repository owner's account. Confirm whether participants need read-only or contribution access and how changes/findings will be shared. Do not issue invitations without organiser authorisation.
+Owner assignments, attendance and demo volume remain open. The title, track structure, Danish time zone and agenda anchors are already agreed.
 
-Keep assets and test data local and synthetic where possible. If setup fails on the day, pair with a prepared participant or use a facilitator's demonstration and saved traces; capture the blocker. Avoid making cloud accounts or production credentials a prerequisite.
+## Verification before Friday
 
-## Logistics still to confirm
+Check material access with a participant, including someone in India where practical. Verify board editing once it exists. If a starter is added later, test its real instructions from a clean checkout; if a public sample is offered, check its documented setup. Do not describe any of these checks as complete until evidence is recorded.
 
-Start/end time and time zone; venue or meeting link; remote participation; attendee count; facilitators and help contact; lunch/break arrangements; contribution workflow; final board URL and edit permissions.
+A plain browser example, own project or peer pairing is a fallback. The organiser should not need to build or troubleshoot every participant's chosen challenge. Keep useful discoveries and setup tips on the shared board for others to reuse.
