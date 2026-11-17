@@ -1,25 +1,39 @@
 ## Profile a React interaction
 
-Choose a slow interaction you can reproduce: typing, opening a panel or selecting an item. The goal is to find the work behind it and evaluate one change—not to eliminate renders.
+**You edit a collection's note. Why do its unchanged tiles render?** Open <DemoLink id="react-render-detective">React Render Detective</DemoLink> and predict which of its three lanes will skip tile renders when you press **Update parent**.
 
-### Record and investigate
+<div className="guide-flow" role="group" aria-label="A parent update reaches its children">
+  <div><strong>Collection state changes</strong><span>Typing or Update parent renders the parent</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Tile props are compared when memoised</strong><span>Same values do not always mean the same object</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Tiles render or skip the parent update</strong><span>Their own state and context can still trigger renders</span></div>
+</div>
 
-Use [React Developer Tools](https://react.dev/learn/react-developer-tools) to record the interaction in Profiler. Inspect its commit in the flamegraph or ranked view, then examine the relevant props and state. Repeat to avoid mistaking startup work for the problem.
+### Predict, then try
 
-Need an example? <DemoLink id="react-render-detective">React Render Detective</DemoLink> demonstrates updates with deliberately cheap tiles. Its counters aren't speed measurements. Compare `experiment.tsx` and `tile.tsx` under `demos/react-render-detective/`.
+Press **Update parent** in each lane. Compare the tile counters before and after:
 
-Follow the state update and ask:
+| Lane | What to watch for |
+| --- | --- |
+| No memo | Children render with the parent |
+| Memo, new object | A freshly created object defeats the shallow prop comparison |
+| Memo, stable prop | Reusing the existing object lets the tiles skip this update |
 
-- Is state higher in the tree than necessary?
-- Are objects or callbacks recreated for each render?
-- Is expensive work repeated with unchanged inputs?
+The demo's tiles are deliberately cheap. **These counters explain renders; they don't measure speed.** Exact development counts matter less than which updates reach the tiles.
 
-Stable props help a memoised component skip parent-driven updates; its own state and context can still cause updates.
+Follow the difference in `demos/react-render-detective/experiment.tsx` and `tile.tsx`. What changes if a tile owns state of its own?
 
-### Change one thing and compare
+### Find work that matters
 
-Choose a change supported by the recording. Preserve behaviour, then repeat with the same data and environment. Remove the change if it doesn't help; don't add memoisation everywhere.
+Choose a reproducibly slow interaction in your own app. Record it with [React Developer Tools](https://react.dev/learn/react-developer-tools), then inspect the commit in Profiler's flamegraph or ranked view. Repeat so startup work doesn't dominate the conclusion.
 
-Development checks and profiling add overhead. Use the browser Performance panel to investigate scripting, layout and painting beyond React. Fewer commits alone don't prove a faster interaction.
+Look for evidence before choosing a fix: state high in the tree, recreated props or expensive work repeated with unchanged inputs. A component rendering isn't itself a bug.
 
-Read [React memo](https://react.dev/reference/react/memo) and [Chrome Performance](https://developer.chrome.com/docs/devtools/performance). If computation dominates, explore a [Web Worker](#/track/modern-web/workers).
+### Change one thing
+
+Try the smallest change the recording supports. Repeat the same interaction with the same data and environment. Did the work or responsiveness improve? Remove the change if it doesn't help; don't memoise everything.
+
+Use the browser Performance panel when scripting, layout or painting outside React may dominate. Development checks and profiling add overhead, so fewer commits alone don't prove a faster interface.
+
+**Done:** you can connect one observed cost to one change and explain the comparison. Read [React memo](https://react.dev/reference/react/memo) and [Chrome Performance](https://developer.chrome.com/docs/devtools/performance). If calculation dominates, explore a [Web Worker](#/track/modern-web/workers).

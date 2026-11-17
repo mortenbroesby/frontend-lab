@@ -1,34 +1,52 @@
 ## Protect an architecture boundary
 
-Which dependency would make your code harder to change independently? Choose an ownership rule before choosing enforcement. A tool can't decide whether the boundary makes sense.
+**A button needs a colour from a demo. Should the shared UI package import the demo to get it?** The code might compile, but now the reusable button depends on one application.
 
-### Express one decision
+### Read the arrows
 
-For example: “Shared utilities must not import feature implementations.” Use directories that represent real responsibilities; don't reorganise a project to fit a tool.
+Each arrow means **imports**. Demo A and Demo B stand for separate workspaces:
 
-In your own npm project, install dependency-cruiser and inspect its initializer:
+<div className="guide-flow" role="group" aria-label="Allowed and forbidden dependencies">
+  <div><strong>Allowed · Demo A → Shared UI</strong><span>The demo uses a reusable button</span></div>
+  <div><strong>Forbidden · Shared UI → Demo A</strong><span>The button would depend on an application</span></div>
+  <div><strong>Forbidden · Demo A → Demo B</strong><span>One standalone demo would depend on another</span></div>
+</div>
+
+Before adding a rule, finish this sentence: “This part should be changeable without knowing about ___.” Choose a real responsibility, not a folder structure for its own sake.
+
+### Try it: predict the violation
+
+In the Lab, inspect `demos-stay-independent` in `.dependency-cruiser.cjs`. It allows imports within one demo and rejects imports into another demo's implementation.
+
+```sh
+npm run check:architecture
+```
+
+Choose an existing export in a different demo. Temporarily import and use it from yours, then run the check. **Expect the named boundary rule to fail.** An unresolved path isn't evidence that the ownership rule works. Remove only your probe and confirm the clean result; don't commit it.
+
+Now inspect an allowed import from `@lab/ui`. Why can both demos use it without depending on each other?
+
+### Decide what belongs where
+
+If a real change crosses a boundary, consider:
+
+- **Pass a value** when the shared component only needs data from its caller.
+- **Move shared behaviour** when multiple consumers genuinely need the same responsibility.
+- **Revisit the boundary** when the ownership decision itself is wrong.
+
+A rule that rejects everything isn't useful. Test an allowed case as well as a forbidden one.
+
+### Bring it to another repository
+
+In an npm project:
 
 ```sh
 npm install --save-dev --save-exact dependency-cruiser
 npx depcruise --init
 ```
 
-Use your existing package manager. Edit existing configuration rather than replacing it, and check resolver settings against your framework and aliases.
+Use your existing package manager and configuration. Check framework aliases and resolver settings, then translate one ownership decision into `from` and `to` paths using the [rules tutorial](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-tutorial.md).
 
-The [rules tutorial](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-tutorial.md) explains `from`, `to` and path expressions. Translate your decision into a rule using your project's paths.
-
-In the Lab, setup already exists. Inspect `demos-stay-independent` in `.dependency-cruiser.cjs`: demos may use shared packages, but not each other's implementations. Run:
-
-```sh
-npm run check:architecture
-```
-
-### Prove the rule works
-
-Temporarily introduce an import across your chosen boundary. Does the named rule catch it? Remove only that probe and confirm the clean result. Also check an allowed import—a rule that rejects everything isn't useful. Don't commit the probe.
-
-For a real violation, consider moving responsibility, passing a value or revising an unsuitable boundary. Don't weaken rules merely to get a green result.
-
-Once trusted, add the check to your existing workflow. Keep exceptions narrow. The Lab checks static source imports with SWC; MDX, Vite globs and computed imports still need review.
+**Done:** one meaningful rule catches the forbidden dependency and permits the intended one. Add it to your existing workflow once you trust it. The Lab checks static source imports with SWC; MDX, Vite globs and computed imports still need review.
 
 Read the [rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md) and [CLI reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/cli.md).

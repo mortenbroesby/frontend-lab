@@ -1,8 +1,13 @@
 ## Give an interaction room to respond
 
-Choose something that should stay usable while a page is busy: typing, dragging, cancelling or navigating.
+**A calculation is running. Can you still tap a button?** Open <DemoLink id="web-worker-comparison">Room to think</DemoLink> and use the interaction pad during both execution modes, with the same workload.
 
-Try <DemoLink id="web-worker-comparison">Room to think</DemoLink>. Use the interaction pad during both execution modes. Moving work can improve responsiveness without making it finish sooner.
+<div className="guide-flow" role="group" aria-label="Two ways to schedule a calculation">
+  <div><strong>Main thread · input → calculation → next interaction</strong><span>A long synchronous calculation delays other main-thread work</span></div>
+  <div><strong>Worker · send input → calculate elsewhere → receive result</strong><span>The main thread can handle interaction while the Worker calculates</span></div>
+</div>
+
+Watch the interaction, not just the finish time. Moving work can make the page more responsive without making the calculation finish sooner. Choose something you want to keep usable: typing, dragging, cancelling or navigating.
 
 ### Find the boundary
 

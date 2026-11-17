@@ -1,27 +1,24 @@
 ## What is a state machine?
 
-**Try an example first:** open [Stately’s stopwatch on CodeSandbox](https://codesandbox.io/p/sandbox/github/statelyai/xstate/tree/main/examples/stopwatch) and explore how its controls change the running state. It uses full XState; our TV below uses the compact FSM API.
+**Press Back twice. Why does the same button do two different things?** Open <DemoLink id="canvas-tv">Remote / Canvas TV</DemoLink>, start a title and try it: the first Back hides the controls; the second returns to browsing.
 
-Prefer a diagram? [Stately’s introduction](https://stately.ai/docs/state-machines-and-statecharts) starts with a video-player model. Choose **Click to interact** to explore its states and transitions.
+A **state machine** names the modes an interaction can be in and the events that move it between them. The current mode determines what an input means.
 
-Open <DemoLink id="canvas-tv">Remote / Canvas TV</DemoLink>, start a title and press Back twice. The first press hides the controls; the second returns to browsing. The button is the same. The current state changes its meaning.
+<div className="guide-flow" role="group" aria-label="TV playback transitions">
+  <div><strong>Browsing → Controls visible</strong><span>OK starts a title</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Controls visible → Watching without controls</strong><span>Back or Up hides the overlay</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Watching → Browsing or Controls visible</strong><span>Back returns to browsing; OK or Down reveals controls</span></div>
+</div>
 
-A **state machine** names the modes an interaction can be in and the events that move it between them. Instead of following several booleans through conditionals, you can read the allowed transitions together.
+### Predict the next action
 
-### Follow one interaction
+Hide the controls, then press Right. Nothing changes. Reveal them and press Right again: now it selects a subtitle option. OK applies that option without leaving the controls state.
 
-The TV uses three modes:
+**State is the mode; data records the details.** Title and subtitle selections don't need a separate state for every combination. Replacing `playing` and `controlsVisible` with explicit modes makes “browsing with playback controls visible” impossible to represent.
 
-| Current state | Event | Next state |
-| --- | --- | --- |
-| Browsing | OK | Controls visible |
-| Controls visible | Back or Up | Watching without controls |
-| Watching without controls | OK or Down | Controls visible |
-| Watching without controls | Back | Browsing |
-
-Try hiding the controls, then pressing Right. Nothing changes. Show them again and Right selects a subtitle option. A missing mode transition does not necessarily mean a button does nothing: OK with controls visible applies the selected subtitle without leaving that state.
-
-**State is the mode; data records the details.** The selected title, focused subtitle and applied language survive mode changes. They do not need a separate state for every combination. Here, the machine replaces `playing` and `controlsVisible`, making “browsing with playback controls visible” impossible to represent.
+For another interactive example, try [Stately's stopwatch](https://codesandbox.io/p/sandbox/github/statelyai/xstate/tree/main/examples/stopwatch). Or choose **Click to interact** in [Stately's introduction](https://stately.ai/docs/state-machines-and-statecharts). Those examples use full XState; this TV uses its compact FSM API.
 
 ### Read the working machine
 

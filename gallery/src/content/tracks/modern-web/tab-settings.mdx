@@ -1,8 +1,14 @@
 ## Let tabs share what matters
 
-Choose something to synchronise: a preference, selected document or draft. What should remain independent?
+**Both tabs changed colour. Will a third tab know which colour to use?** Try <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink>, change the setting, then open another tab or reload one. Predict its value before looking.
 
-Try <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink>, then reload or open another tab. Live updates and remembering a value are different problems.
+<div className="guide-flow" role="group" aria-label="Live messages and remembered state are different">
+  <div><strong>Tab A → message → Tab B</strong><span>An open listener receives the update</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>A new tab joins later</strong><span>It needs a starting value; the channel does not replay history</span></div>
+</div>
+
+Choose a preference, selected document or draft to synchronise. Decide which values should travel and which should stay local.
 
 ### Understand the mechanism
 

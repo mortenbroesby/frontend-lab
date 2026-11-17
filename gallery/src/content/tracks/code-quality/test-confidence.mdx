@@ -1,34 +1,51 @@
 ## Find a missing test
 
-What behaviour matters, and what evidence do your tests provide? Choose an input boundary, state transition or failure path. Follow a caller into the implementation and tests.
+**The tests pass. Would they catch this bug?** [TDD](#/track/code-quality/tdd) starts with a failing example. Here, start with existing green tests and see what they actually protect.
 
-### Establish the contract
+### Try it: a number that isn't a number
 
-Derive an expected outcome from a requirement or hand-worked example before writing an assertion. Don't copy the implementation's calculation into the test.
+`countPrimes` accepts numbers and rejects invalid input. But a Worker message arrives at runtime; TypeScript can't guarantee its contents.
 
-For a Lab example, investigate `countPrimes` in `demos/web-worker-comparison/compute.ts` and its adjacent tests:
+| Input | Intended result |
+| --- | --- |
+| `10` | Four primes: 2, 3, 5, 7 |
+| `"10"` | Reject a string instead of silently converting it |
+
+Read `demos/web-worker-comparison/compute.ts` and `compute.test.ts`. Does the suite protect both claims?
 
 ```sh
 npm test --workspace @lab/demo-web-worker-comparison
 ```
 
-Correct arithmetic and input validation are separate claims. Neither proves interface responsiveness. Check whether the current suite already protects your chosen behaviour.
+### Challenge the green result
 
-### Check whether the test catches a mistake
+Temporarily change `Number.isInteger(limit)` to `Number.isInteger(Number(limit))`. This allows coercion at the validation boundary. Predict the test outcome before rerunning.
 
-Add a case if needed, then temporarily introduce a plausible regression. The test should fail for the expected reason. Restore only that deliberate edit and confirm it passes; don't commit the defect.
+<div className="guide-flow" role="group" aria-label="Check whether a test detects a regression">
+  <div><strong>Introduce one plausible mistake</strong><span>Keep the edit small and temporary</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Run the relevant test</strong><span>Did it fail for the intended reason?</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Restore the implementation</strong><span>Confirm the test passes again</span></div>
+</div>
+
+If the suite stays green, add an assertion derived from the rejection contract. Check that it fails against the coercing implementation, then restore the original validation and rerun. Don't commit the deliberate defect.
 
 <details>
-<summary>Example: a numeric string at a runtime boundary</summary>
+<summary>What should the assertion establish?</summary>
 
-`countPrimes` rejects `"10"`: TypeScript doesn't validate incoming Worker messages. Investigate whether the tests protect that contract.
+It should establish that a numeric string is rejected—not reproduce the prime-counting algorithm. In a TypeScript test, deliberately invalid input may need an explicit type escape or expected type-error annotation. Keep that exception at the test boundary; don't weaken the production signature.
 
-Temporarily replacing `Number.isInteger(limit)` with `Number.isInteger(Number(limit))` introduces coercion. Would the existing tests detect it? Choose an assertion from the rejection contract, then verify it catches this change. Restore the original validation afterwards.
+A failure for a syntax error or missing import doesn't demonstrate that the test detects coercion.
 
 </details>
 
-If a test stays green, investigate its inputs and assertions rather than assuming the code is safe. If it already catches the mistake, another test may add no value.
+If an existing test already catches the mistake, another equivalent test may add no value.
 
-For your next case, consider whether a unit test is enough: testing a function alone doesn't prove its caller supplies the right data. Rerun surrounding checks after restoring deliberate changes.
+### Pick your next blind spot
+
+Try an input boundary, state transition or failure path in your own code. Derive the expectation from a requirement or hand-worked example before reading the implementation's answer.
+
+**Done:** a plausible regression fails for the right reason, and restoring the behaviour makes it pass. Function tests still don't prove the caller sends the right data or the UI stays responsive; choose a broader check when that's the claim you need.
 
 Read [Node's test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html).
