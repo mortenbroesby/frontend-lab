@@ -6,6 +6,8 @@ Each `showcases/<id>/` contains `showcase.config.ts` (the shared `DemoDefinition
 
 The demo generator still creates small demos. There is no separate showcase generator.
 
+Introduce each showcase in the app with five to ten short sentences explaining what it does and why it exists. Keep this visible before the interaction, use plain language and avoid repeating it in technical notes.
+
 ## Signal Garden
 
 After the root install:

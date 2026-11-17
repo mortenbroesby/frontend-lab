@@ -50,11 +50,12 @@ export default function SignalGarden() {
             </h1>
           </div>
           <p>
-            A living system made of simple rules.
-            <br />
-            Change its shape. Follow a connection.
-            <br />
-            Make a little disturbance.
+            Signal Garden turns 384 connected particles into an interactive artwork. Switch between
+            rings, clusters and woven strands, or send a ripple through the field. Highlight a
+            family to follow its connections as the shape changes. D3 calculates the movement,
+            Canvas draws it, and React handles the controls. It shows how a few simple rules can
+            create something expressive in the browser, using generated patterns rather than a real
+            dataset.
           </p>
         </section>
         <GardenArtwork
@@ -99,11 +100,6 @@ export default function SignalGarden() {
         <FamilyExplorer selected={selected} onSelect={setSelected} formation={formation} />
         <details className="garden-notes">
           <summary>How this is made</summary>
-          <p>
-            D3's force simulation pulls 384 particles towards three sets of coordinates. Canvas
-            draws their connections; React owns the controls. The families and links are generated
-            artwork, not measured data. Nothing is fetched from a server.
-          </p>
           <p>
             Start in <code>showcases/signal-garden/model.ts</code> to invent a formation.{' '}
             <code>engine.ts</code> handles forces and lifecycle; <code>paint.ts</code> draws each
