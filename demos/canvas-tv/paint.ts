@@ -37,19 +37,19 @@ function hero(ctx: Context, programme: Programme, seconds: number) {
   text(ctx, 'CANVAS ORIGINAL', 64, 120, 12, '#ddd', 700);
   text(ctx, programme.title, 60, 187, 60, '#fff', 800);
   text(ctx, programme.genre, 64, 224, 13, '#ddd', 600);
-  text(ctx, programme.description, 64, 260, 17, '#ddd');
+  text(ctx, programme.description, 64, 250, 17, '#ddd');
   ctx.fillStyle = '#fff';
   ctx.beginPath();
-  ctx.roundRect(64, 286, 186, 42, 4);
+  ctx.roundRect(64, 270, 186, 42, 4);
   ctx.fill();
-  text(ctx, '▶  Enter to play', 82, 313, 17, '#141414', 700);
-  text(ctx, 'Procedural short films', 268, 312, 14, '#aaa');
+  text(ctx, '▶  Enter to play', 82, 297, 17, '#141414', 700);
+  text(ctx, 'Procedural short films', 268, 296, 14, '#aaa');
 }
 function shelf(ctx: Context, state: TVState, view: View, rowIndex: number) {
   const row = rows[rowIndex];
   const y = rowTop(rowIndex) - view.scrollY;
   const height = cardHeight(rowIndex);
-  text(ctx, row.title, 64, y - 20, 19, state.row === rowIndex ? '#fff' : '#b3b3b3', 600);
+  text(ctx, row.title, 64, y - 12, 19, state.row === rowIndex ? '#fff' : '#b3b3b3', 600);
   ctx.save();
   ctx.beginPath();
   ctx.rect(50, y - 8, 1180, height + 14);
