@@ -412,7 +412,7 @@ a {
 }
 @media (max-width: 600px) {
   /* The live TV needs room for its touch remote below the 16:9 canvas. */
-  .audience-stage .slide-stage:has(.tv-slide:not(.instrument-slide)) {
+  .audience-stage .slide-stage:has(.remote-slide) {
     aspect-ratio: auto;
     height: calc(56.25vw + 270px);
   }

@@ -133,7 +133,7 @@ function Remote({ preview }: { preview?: boolean }) {
       </div>
     );
   return (
-    <div className="tv-slide" data-presentation-interactive>
+    <div className="tv-slide remote-slide" data-presentation-interactive>
       {demoHref ? (
         <iframe title="Canvas TV — interactive remote navigation" src={`${demoHref}?embed=1`} />
       ) : (
