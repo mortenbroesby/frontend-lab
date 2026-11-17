@@ -6,7 +6,6 @@
       "demos/*",
       "gallery/demo-kit",
       "shared/*",
-      "showcases/*",
       "presentation"
     ]
   },

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import signalGarden from '../../demos/signal-garden/demo.config.ts';
 import { discoverDemos } from '../src/demo-contract.ts';
 import type { DemoDefinition } from '../src/demo-contract.ts';
 
@@ -63,10 +64,9 @@ test('runtime requirements are optional and reject unknown values', () => {
   );
 });
 
-test('showcases have separate discovery and cannot accidentally enter the demo catalogue', () => {
-  const path = '../../showcases/signal-garden/showcase.config.ts';
-  assert.equal(discoverDemos({ [path]: demo }, 'showcases')[0].id, 'signal-garden');
-  assert.throws(() => discoverDemos({ [path]: demo }), /Invalid demo folder/);
-  assert.throws(() => discoverDemos({ '../../demos/alpha/demo.config.ts': demo }, 'showcases'));
-  assert.throws(() => discoverDemos({ [path]: { ...demo, title: '' } }, 'showcases'), /title/);
+test('Signal Garden is discoverable as a Modern Web demo', () => {
+  const [entry] = discoverDemos({ '../../demos/signal-garden/demo.config.ts': signalGarden });
+  assert.equal(entry.id, 'signal-garden');
+  assert.equal(entry.track, 'modern-web');
+  assert.equal(entry.title, 'Signal Garden');
 });

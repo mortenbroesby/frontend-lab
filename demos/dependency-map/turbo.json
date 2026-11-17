@@ -11,7 +11,6 @@
         "$TURBO_ROOT$/gallery/demo-kit/package.json",
         "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/shared/*/package.json",
-        "$TURBO_ROOT$/showcases/*/package.json",
         "$TURBO_ROOT$/presentation/package.json"
       ]
     }

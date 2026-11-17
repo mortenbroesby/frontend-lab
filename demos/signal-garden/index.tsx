@@ -44,7 +44,7 @@ export default function SignalGarden() {
       <main id="content" tabIndex={-1}>
         <section className="garden-intro">
           <div>
-            <p className="garden-kicker">SHOWCASE 001 / D3 + CANVAS</p>
+            <p className="garden-kicker">D3 + CANVAS</p>
             <h1>
               Signal <span>Garden.</span>
             </h1>
@@ -101,7 +101,7 @@ export default function SignalGarden() {
         <details className="garden-notes">
           <summary>How this is made</summary>
           <p>
-            Start in <code>showcases/signal-garden/model.ts</code> to invent a formation.{' '}
+            Start in <code>demos/signal-garden/model.ts</code> to invent a formation.{' '}
             <code>engine.ts</code> handles forces and lifecycle; <code>paint.ts</code> draws each
             frame.
           </p>
@@ -116,7 +116,7 @@ export default function SignalGarden() {
 }
 
 function GardenHeader() {
-  const back = galleryHref('/showcases');
+  const back = galleryHref('/demos');
   return (
     <header className="garden-header">
       <a className="garden-brand" href={galleryHref('/') ?? '#content'}>
@@ -125,11 +125,11 @@ function GardenHeader() {
       </a>
       <div>
         <CommandMenu
-          links={back ? [{ label: 'Showcases', group: 'Navigation', href: back }] : []}
+          links={back ? [{ label: 'All demos', group: 'Navigation', href: back }] : []}
         />
         {back && (
           <Button variant="outline" asChild>
-            <a href={back}>← Showcases</a>
+            <a href={back}>← All demos</a>
           </Button>
         )}
       </div>

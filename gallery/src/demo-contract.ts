@@ -2,14 +2,11 @@ import { requirementLabels } from '@lab/demo-kit/types';
 import type { DemoDefinition } from '@lab/demo-kit/types';
 export type { DemoDefinition, TrackId } from '@lab/demo-kit/types';
 
-export function discoverDemos(
-  modules: Record<string, unknown>,
-  collection: 'demos' | 'showcases' = 'demos',
-) {
+export function discoverDemos(modules: Record<string, unknown>) {
   return Object.entries(modules)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([path, value]) => {
-      const id = demoId(path, collection);
+      const id = demoId(path);
       if (!value || typeof value !== 'object')
         throw new Error(`${path}: export a default DemoDefinition.`);
       const demo = value as Partial<DemoDefinition>;
@@ -41,11 +38,8 @@ function validateMetadata(demo: Partial<DemoDefinition>, path: string) {
   }
 }
 
-function demoId(path: string, collection: 'demos' | 'showcases'): string {
-  const pattern =
-    collection === 'demos'
-      ? /^\.\.\/\.\.\/demos\/([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\/demo\.config\.ts$/
-      : /^\.\.\/\.\.\/showcases\/([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\/showcase\.config\.ts$/;
+function demoId(path: string): string {
+  const pattern = /^\.\.\/\.\.\/demos\/([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\/demo\.config\.ts$/;
   const id = pattern.exec(path)?.[1];
   if (!id || id.length > 60 || /^(template|con|prn|aux|nul|com[0-9]|lpt[0-9])$/.test(id)) {
     throw new Error(

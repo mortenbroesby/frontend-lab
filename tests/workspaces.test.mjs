@@ -11,7 +11,6 @@ test('React versions agree across the gallery, kit and independent demos', () =>
     'presentation/package.json',
     'gallery/demo-kit/package.json',
     ...globSync('demos/*/package.json'),
-    ...globSync('showcases/*/package.json'),
     ...globSync('shared/*/package.json'),
   ];
   for (const path of paths) {

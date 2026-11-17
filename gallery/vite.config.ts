@@ -14,11 +14,6 @@ const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => 
     throw new Error(`${path}: every demo needs an index.html entry. Use npm run demo:new.`);
   return entry;
 });
-const showcases = globSync('showcases/*/showcase.config.ts', { cwd: root }).map((path) => {
-  const entry = resolve(root, path.replace('showcase.config.ts', 'index.html'));
-  if (!existsSync(entry)) throw new Error(`${path}: every showcase needs an index.html entry.`);
-  return entry;
-});
 export default defineConfig({
   root,
   plugins: [
@@ -38,12 +33,7 @@ export default defineConfig({
     outDir: resolve(import.meta.dirname, 'dist'),
     emptyOutDir: true,
     rollupOptions: {
-      input: [
-        resolve(root, 'index.html'),
-        ...entries,
-        ...showcases,
-        resolve(root, 'presentation/index.html'),
-      ],
+      input: [resolve(root, 'index.html'), ...entries, resolve(root, 'presentation/index.html')],
     },
   },
 });

@@ -11,7 +11,6 @@
     "demos/*",
     "gallery/demo-kit",
     "shared/*",
-    "showcases/*",
     "presentation"
   ],
   "scripts": {
@@ -31,11 +30,11 @@
     "fallow:hooks": "fallow hooks install --target git",
     "fallow:status": "fallow doctor && fallow hooks status",
     "analyze:changes": "fallow audit",
-    "check:architecture": "depcruise gallery/src gallery/demo-kit demos shared showcases presentation",
+    "check:architecture": "depcruise gallery/src gallery/demo-kit demos shared presentation",
     "typecheck": "turbo run typecheck",
-    "format": "prettier --write \"{gallery,demos,showcases,presentation,shared,turbo,tests}/**/*.{ts,tsx,js,mjs,css}\"",
-    "format:check": "prettier --check \"{gallery,demos,showcases,presentation,shared,turbo,tests}/**/*.{ts,tsx,js,mjs,css}\"",
-    "lint": "oxlint gallery demos showcases shared --deny-warnings presentation",
+    "format": "prettier --write \"{gallery,demos,presentation,shared,turbo,tests}/**/*.{ts,tsx,js,mjs,css}\"",
+    "format:check": "prettier --check \"{gallery,demos,presentation,shared,turbo,tests}/**/*.{ts,tsx,js,mjs,css}\"",
+    "lint": "oxlint gallery demos shared --deny-warnings presentation",
     "test:workspaces": "node --test tests/workspaces.test.mjs",
     "analyze:baseline": "fallow dead-code --baseline .baselines/dead-code.json && fallow dupes --baseline .baselines/dupes.json --fail-on-issues && fallow health --baseline .baselines/health.json --baseline-mode identity",
     "storybook": "npm run storybook --workspace @lab/ui",

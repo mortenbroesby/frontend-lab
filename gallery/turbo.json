@@ -13,10 +13,6 @@
         "!demo-kit/**",
         "!$TURBO_ROOT$/demos/**/node_modules/**",
         "$TURBO_ROOT$/.env*",
-        "$TURBO_ROOT$/showcases/**",
-        "!$TURBO_ROOT$/showcases/**/dist/**",
-        "!$TURBO_ROOT$/showcases/**/.turbo/**",
-        "!$TURBO_ROOT$/showcases/**/node_modules/**",
         "$TURBO_ROOT$/presentation/**",
         "!$TURBO_ROOT$/presentation/dist/**",
         "!$TURBO_ROOT$/presentation/.turbo/**",
@@ -27,8 +23,7 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "$TURBO_ROOT$/demos/*/demo.config.ts",
-        "!demo-kit/**",
-        "$TURBO_ROOT$/showcases/*/showcase.config.ts"
+        "!demo-kit/**"
       ]
     },
     "test": {

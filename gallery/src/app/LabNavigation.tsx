@@ -5,7 +5,6 @@ import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '
 import { LabMark } from '@lab/demo-kit/mark';
 import { tracks } from './tracks';
 import { demos } from '../demo-registry';
-import { showcases } from '../showcase-registry';
 import { listenForPresentation } from './presentation-discovery';
 
 const presentationHref = `${import.meta.env.BASE_URL}presentation/`;
@@ -20,7 +19,6 @@ export function LabNavigation({ route }: { route: string }) {
   const links = [
     ['/', 'Tracks'],
     ['/demos', 'Demos'],
-    ['/showcases', 'Showcases'],
     ['/guides', 'Guides'],
     ['/create', 'Create a demo'],
     ['/guide/setup', 'Local setup'],
@@ -40,7 +38,6 @@ export function LabNavigation({ route }: { route: string }) {
         links={[
           { label: 'Tracks', group: 'Navigation', href: '#/' },
           { label: 'All demos', group: 'Navigation', href: '#/demos', shortcut: 'G' },
-          { label: 'Showcases', group: 'Navigation', href: '#/showcases' },
           { label: 'All guides', group: 'Navigation', href: '#/guides' },
           { label: 'Create a demo', group: 'Navigation', href: '#/create' },
           { label: 'Local setup', group: 'Navigation', href: '#/guide/setup' },
@@ -52,11 +49,6 @@ export function LabNavigation({ route }: { route: string }) {
               href: `#/track/${track.id}/${guide.slug}`,
             })),
           ),
-          ...showcases.map((showcase) => ({
-            label: showcase.title,
-            group: 'Showcases',
-            href: showcase.href,
-          })),
           ...demos.map((demo) => ({ label: demo.title, group: 'Demos', href: demo.href })),
         ]}
       />
