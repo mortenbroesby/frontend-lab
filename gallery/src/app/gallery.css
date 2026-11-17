@@ -149,6 +149,17 @@
   border-radius: var(--radius-lg);
   overflow-wrap: anywhere;
 }
+/* Document flow owns spacing; embedded UI keeps its internal padding. */
+.guide > * + *,
+.guide :where(details) > * + * {
+  margin-block-start: 1rem;
+}
+.guide > :first-child {
+  margin-block-start: 0;
+}
+.guide > :last-child {
+  margin-block-end: 0;
+}
 .guide h3,
 .guide h4 {
   margin-top: 1.8rem;
