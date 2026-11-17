@@ -73,6 +73,11 @@ export const tracks = [
     id: 'experimental-projects',
     guides: [
       {
+        slug: 'motion',
+        title: 'Add motion with purpose',
+        description: 'Connect an action to its result with Motion and a reusable Lottie animation.',
+      },
+      {
         slug: 'little-world',
         title: 'Build a tiny moving world',
         description: 'Create a movement rule, animate a creature and give it a goal.',

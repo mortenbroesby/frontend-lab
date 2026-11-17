@@ -1,0 +1,158 @@
+## Add motion with purpose
+
+**Can someone follow what changed without having to look twice?** Open <DemoLink id="motion-with-purpose">Motion with purpose</DemoLink>. The same card can save instantly, transition with Motion, or finish with a Lottie vector seal.
+
+Motion should answer a question: where did that item go, what opened, or did my action succeed? Start with a working interaction, then give one movement a job.
+
+### Try the difference
+
+1. Choose **Still**, select **Edit card**, change the title and save. The new value and confirmation appear immediately.
+2. Choose **Motion**, edit again and save. Follow the card as its height changes and the confirmation enters.
+3. Choose **Motion + Lottie** and **Replay confirmation**. A small vector seal settles into place and draws a check. The revision number does not change: replay is visual feedback, not another save.
+4. Change **Interface transition** from 150 ms to 750 ms. Edit and save again. Notice how a long transition can make a finished action feel unfinished.
+
+The title is stored in React state for this page visit. Refresh resets it. There is no network request, simulated loading time or performance measurement. The slider controls the interface transition; the artwork has its own 1.5-second timeline.
+
+### Choose the right tool
+
+| Need | Start with | Why |
+| --- | --- | --- |
+| A hover colour, focus style or simple opacity change | CSS | Often enough; no animation dependency. |
+| A React element entering, leaving or changing layout | Motion | Describe the visual state alongside the component state. |
+| A designed illustration with a reusable timeline | Lottie | Play an animation asset without recreating every frame in React. |
+
+An SVG file describes vector shapes. You can animate those shapes directly with CSS or Motion. A **Lottie JSON file describes shapes and a timeline**; a player interprets it. This demo uses Lottie's SVG renderer, so the result is actual SVG in the page. Lottie files may also contain raster assets or fonts; the format alone does not guarantee a purely vector or self-contained file.
+
+Read [Motion's SVG guide](https://motion.dev/docs/react-svg-animation) if you want to animate an existing SVG, and [Lottie Web's usage documentation](https://github.com/airbnb/lottie-web#usage) for authored animation files.
+
+### Run and change this demo
+
+After [local setup](#/guide/setup), run from the repository root:
+
+```sh
+npm run dev --workspace @lab/demo-motion-with-purpose
+```
+
+Open the URL Vite prints. The package runs independently of the gallery.
+
+| File | What to change |
+| --- | --- |
+| `demos/motion-with-purpose/index.tsx` | The interaction, treatments and Motion transition. |
+| `demos/motion-with-purpose/SaveSeal.tsx` | Player creation, playback and cleanup. |
+| `demos/motion-with-purpose/save-seal.json` | The actual vector timeline. |
+| `demos/motion-with-purpose/ASSET.md` | Asset provenance, format and reuse terms. |
+
+**First edit:** change the confirmation's entrance offset from `8` to `24`. Save, then replay. The card value and revision should remain unchanged, while the confirmation travels further. Restore the smaller offset if it pulls attention away from the title.
+
+**Next:** change `easeOut` to `linear`. Use the same duration and action to compare only the easing. Duration describes how long a transition lasts; easing describes how its progress changes over that time. See [Motion transitions](https://motion.dev/docs/react-transitions).
+
+### Add Motion to your own React app
+
+In an existing React project, install the two packages used here:
+
+```sh
+npm install motion lottie-web
+```
+
+You can start with Motion alone. This example uses ordinary HTML controls, with no Lab dependencies. Put it in a component and render it from your app:
+
+```tsx
+import { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+
+export function SaveCard() {
+  const [draft, setDraft] = useState('An idea worth trying');
+  const [saved, setSaved] = useState('');
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.section
+      layout={!reduced}
+      transition={{ duration: reduced ? 0 : 0.3, ease: 'easeOut' }}
+      style={{ maxWidth: 360, padding: 24, border: '1px solid #888' }}
+    >
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        if (draft.trim()) setSaved(draft.trim());
+      }}>
+        <label htmlFor="card-title">Card title</label>
+        <input
+          id="card-title"
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
+        />
+        <button type="submit" disabled={!draft.trim()}>Save</button>
+      </form>
+      <p role="status">{saved ? `Saved: ${saved}` : 'No saved title yet.'}</p>
+    </motion.section>
+  );
+}
+```
+
+Give the input and button your application's existing styles. Save a longer title so the status wraps onto another line: the section should animate its new size. In reduced-motion mode, the same state change is immediate. No timeout controls the saved value.
+
+Motion's [`layout` documentation](https://motion.dev/docs/react-layout-animations) explains how layout transitions work and when nested content needs its own layout treatment. Use [`AnimatePresence`](https://motion.dev/docs/react-animate-presence) when an element must animate out before React removes it. Stable keys identify real items; changing a key deliberately remounts an animation, as Replay does in this demo.
+
+### Add the vector animation
+
+Use **Download the animation file** in the demo and place `save-seal.json` beside your component. The original asset is hand-authored Lottie data, released under CC0; it is not a claimed After Effects export. Its final frame is a check on a disc, so it also works without movement.
+
+Create `SaveSeal.tsx`:
+
+```tsx
+import { useEffect, useRef } from 'react';
+import lottie from 'lottie-web/build/player/lottie_light';
+import data from './save-seal.json';
+
+export function SaveSeal({ animate }: { animate: boolean }) {
+  const host = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!host.current) return;
+    const player = lottie.loadAnimation({
+      container: host.current,
+      renderer: 'svg',
+      animationData: structuredClone(data),
+      autoplay: false,
+      loop: false,
+    });
+    const start = () => {
+      if (animate) player.goToAndPlay(0, true);
+      else player.goToAndStop(player.totalFrames - 1, true);
+    };
+    player.addEventListener('DOMLoaded', start);
+    if (player.isLoaded) start();
+    return () => player.destroy();
+  }, [animate]);
+
+  return <div ref={host} aria-hidden="true" style={{ width: 64, height: 64 }} />;
+}
+```
+
+For TypeScript projects, enable `resolveJsonModule` in your app's `tsconfig.json` if JSON imports are not already supported. The lightweight player supports this shape-only file without expression support. Check compatibility before substituting a more complex asset; not every Lottie export works in every player build.
+
+Import `SaveSeal` into `SaveCard` and add `{saved && <SaveSeal key={saved} animate={!reduced} />}` after the status paragraph. A changed saved title mounts a new player; saving the exact same title does not replay it. For an explicit replay action, keep a separate replay counter, as the demo does.
+
+**Success check:** save a new title. The text updates immediately and the seal plays once. Save another title and it plays again. Unmount the component: `destroy()` removes the player's DOM and releases its resources. React development mode may run effect setup and cleanup more than once; cleanup must work each time.
+
+The text communicates success; the decorative illustration is hidden from assistive technology. Never make an animation's completion callback responsible for committing data. In an app with a server, show success after the real operation succeeds and handle failure separately.
+
+### Make the movement comfortable
+
+- Try your operating system's **Reduce Motion** setting. Keep the information and remove unnecessary travel. This demo makes transitions instant and shows the final Lottie frame.
+- Edit again before the animation finishes. The controls should still work; a decorative timeline must not lock the interface.
+- Reserve space for artwork. The fixed 64 × 64 container prevents asset loading from shifting text.
+- Keep feedback finite. Pause or stop continuous animation when it is not needed; this demo has no perpetual loop.
+- Keep focus useful. When an editor closes, return focus to the control that opens it rather than leaving it on a removed input.
+
+Read [Motion's reduced-motion guidance](https://motion.dev/docs/react-accessibility) and [MDN's `prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion).
+
+### Bring your own artwork
+
+Keep the supplied asset for a first experiment, then replace it with an animation whose license permits your intended use. A common workflow is to create artwork in After Effects and export with Bodymovin; other tools can export Lottie too. The [Lottie Web project](https://github.com/airbnb/lottie-web) documents the exporter, player and supported features. [LottieFiles' supported features](https://lottiefiles.com/supported-features) is another useful compatibility reference.
+
+Check dimensions, frame rate, duration, final frame, images, fonts and expression requirements. Test in the actual runtime you ship, not just the design-tool preview. Keep required assets local when offline use matters. Record source and license beside the file; downloading a public animation is not proof that you can redistribute it.
+
+For a first replacement, choose a short shape-only animation. Confirm that it plays once, stays readable as a still frame and does not obscure the saved content. If it needs much more attention than the action it explains, simplify it.
+
+[All Experimental Projects guides](#/track/experimental-projects/guides)
