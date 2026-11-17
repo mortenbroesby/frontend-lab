@@ -7,9 +7,16 @@
     "dev": "vite --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
     "build": "vite build --config ../../gallery/vite.demo.config.ts",
     "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
-    "test": "node --test navigation.test.ts",
+    "test": "node --test *.test.ts",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run build"
   },
-  "dependencies": { "@lab/demo-kit": "*", "@lab/ui": "*", "react": "19.3.1", "react-dom": "19.3.1" }
+  "dependencies": {
+    "@lab/demo-kit": "*",
+    "@lab/ui": "*",
+    "qrcode.react": "4.2.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "trystero": "0.27.0"
+  }
 }

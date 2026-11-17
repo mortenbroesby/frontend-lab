@@ -216,3 +216,89 @@ body {
     align-items: center;
   }
 }
+
+.tv-pairing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--lab-border);
+  border-radius: 12px;
+  background: var(--lab-surface);
+  color: var(--lab-ink);
+}
+.tv-pairing h2 {
+  margin: 8px 0;
+  font-size: 22px;
+}
+.tv-pairing p {
+  line-height: 1.6;
+}
+.tv-pairing-note {
+  max-width: 48ch;
+  font-size: 12px;
+  color: var(--lab-muted);
+}
+.tv-pairing-code {
+  width: 220px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.tv-pairing-code svg {
+  display: block;
+  margin: auto;
+  background: white;
+  border-radius: var(--radius-lg);
+}
+.tv-pairing-code input {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border: 1px solid var(--lab-border);
+  background: var(--lab-surface);
+  color: var(--lab-ink);
+  border-radius: var(--radius-md);
+}
+.tv-phone {
+  max-width: 420px;
+  text-align: center;
+  padding-top: 40px;
+}
+.tv-phone-selection {
+  margin: 32px 0;
+  min-height: 100px;
+}
+.tv-phone-selection p {
+  color: var(--lab-muted);
+}
+.tv-phone .tv-remote {
+  width: fit-content;
+  margin: 24px auto;
+  grid-template-columns: repeat(3, 68px);
+  grid-template-rows: repeat(4, 60px);
+  gap: 8px;
+  padding: 16px;
+}
+.tv-phone > button,
+.tv-phone > a {
+  margin: 4px;
+}
+.tv-embedded .tv-pairing,
+main:fullscreen .tv-pairing {
+  grid-column: 1 / -1;
+  margin: 12px;
+}
+@media (max-width: 600px) {
+  .tv-pairing {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    gap: 20px;
+  }
+  .tv-pairing-code {
+    width: 100%;
+  }
+}

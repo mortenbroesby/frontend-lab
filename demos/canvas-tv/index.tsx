@@ -5,12 +5,18 @@ import { LabMark } from '@lab/demo-kit/mark';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { initialState, navigate, selectedTitle, type TVState } from './navigation';
 import { rows } from './catalogue';
+import { RemotePad } from './remote-pad';
+import { PhonePairing, PhoneRemote, phoneRoom } from './phone-remote';
 import { useScreen } from './use-screen';
 import './tv.css';
 
 const embedded = new URLSearchParams(window.location.search).has('embed');
 
 export default function CanvasTV() {
+  return phoneRoom ? <PhoneRemote code={phoneRoom} /> : <TV />;
+}
+
+function TV() {
   useTheme();
   const [state, dispatch] = useReducer(navigate, initialState);
   const { canvas, available } = useScreen(state);
@@ -65,6 +71,7 @@ export default function CanvasTV() {
           )}
         </div>
         <RemoteControls screen={screen} dispatch={dispatch} />
+        <PhonePairing state={state} dispatch={dispatch} />
         <Selection state={state} />
       </main>
     </div>
@@ -134,46 +141,7 @@ function RemoteControls({
             Fullscreen TV
           </Button>
         </div>
-        <div className="tv-remote" role="group" aria-label="On-screen remote">
-          <Button
-            className="tv-up"
-            variant="outline"
-            aria-label="Move up"
-            onClick={() => dispatch('ArrowUp')}
-          >
-            ↑
-          </Button>
-          <Button
-            className="tv-left"
-            variant="outline"
-            aria-label="Move left"
-            onClick={() => dispatch('ArrowLeft')}
-          >
-            ←
-          </Button>
-          <Button className="tv-ok" onClick={() => dispatch('Enter')}>
-            OK
-          </Button>
-          <Button
-            className="tv-right"
-            variant="outline"
-            aria-label="Move right"
-            onClick={() => dispatch('ArrowRight')}
-          >
-            →
-          </Button>
-          <Button
-            className="tv-down"
-            variant="outline"
-            aria-label="Move down"
-            onClick={() => dispatch('ArrowDown')}
-          >
-            ↓
-          </Button>
-          <Button className="tv-back" variant="ghost" onClick={() => dispatch('Escape')}>
-            Back
-          </Button>
-        </div>
+        <RemotePad dispatch={dispatch} />
       </div>
       {error && <p role="status">{error}</p>}
     </>

@@ -13,3 +13,11 @@ Focus the screen, use arrow keys to browse, Enter to play an animated short and 
 `catalogue.ts` owns fictional content, `navigation.ts` owns selection and return behaviour, `paint.ts` draws the interface, `scenery.ts` draws the animated panorama and caches static posters, and `use-screen.ts` handles resolution, frame scheduling and cleanup. The gallery discovers the workspace automatically. The presentation embeds its HTML entry with `?embed=1` without importing its components. Embedded mode shows the screen, a compact touch D-pad with OK and Back, and accessible selection text; its keyboard events cannot advance the parent deck.
 
 Selecting a title replaces the catalogue with a full-frame procedural mountain flight: camera movement, parallax and drifting lights. The 45-second scene fades out and loops. It is silent, generated locally and needs no external video assets. Back restores the catalogue selection. This fills the TV canvas without forcing the browser or presentation out of its current fullscreen mode. Reduced motion shows a still scene. `playback.ts` owns this view.
+
+## Optional phone remote
+
+Choose **Connect phone**, then scan the QR code on a phone. Keep both screens open: the TV owns selection and playback; the phone sends directional commands and displays the current title. Keyboard and touch controls remain usable. **Disconnect phone** closes the room; connecting again generates a fresh link.
+
+Pairing requires trusted HTTPS (or localhost for same-computer experiments), internet and WebRTC. Plain HTTP over a LAN will not pair. Trystero uses public Nostr signaling; controls travel over WebRTC. One phone can join; treat the random pairing link as permission to control this TV. No TURN relay is configured, so restrictive networks may prevent connection. Reconnect or scan a fresh code if a mobile browser suspends the page. No network connection starts until pairing is enabled.
+
+`use-phone.ts` owns connection cleanup and synchronization; `remote-protocol.ts` validates received controls and display snapshots. No cross-demo imports or custom backend.
