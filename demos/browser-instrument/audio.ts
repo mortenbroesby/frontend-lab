@@ -100,6 +100,10 @@ export function createInstrument() {
   }
   return {
     analyser,
+    playNote(note: number) {
+      if (closed || context.state !== 'running') return;
+      tone(note, context.currentTime, 0.45, 'triangle', 0.2);
+    },
     async start(read: () => Settings) {
       await context.resume();
       if (closed) return;

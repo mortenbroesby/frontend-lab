@@ -467,50 +467,189 @@ body:has(.instrument-performance) {
   }
 }
 
-/* A quiet, fixed widescreen composition for the live presentation. */
+/* A widescreen instrument face, kept separate from the standalone sequencer. */
 .instrument-presentation {
   height: 720px;
   min-height: 720px;
-  padding: 64px 80px;
+  padding: 40px 72px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 24px;
+  background: radial-gradient(ellipse at 50% 20%, #18251e, #0d1312 70%);
 }
 .instrument-presentation .instrument-top {
   padding: 0;
 }
 .instrument-presentation h1 {
-  font-size: 48px;
+  font-size: 40px;
   margin: 0;
 }
 .instrument-presentation .instrument-console {
-  display: flex;
-  flex-direction: column;
-  gap: 64px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
   background: transparent;
   border: 0;
   overflow: visible;
 }
 .instrument-presentation .instrument-scope {
   background: none;
-  opacity: 0.6;
+  opacity: 0.45;
 }
 .instrument-presentation .scope-caption,
 .instrument-presentation .scope-footer {
   display: none;
 }
 .instrument-presentation .instrument-scope canvas {
-  height: 180px;
+  height: 52px;
 }
 .instrument-presentation .instrument-controls {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: 0;
-  gap: 64px;
+  padding: 0 80px;
+  gap: 72px;
 }
-.instrument-presentation .instrument-dial {
-  font-size: 24px;
-  gap: 24px;
+.rotary-control {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
 }
-.instrument-presentation .instrument-dial output {
-  font-size: 18px;
+.rotary-label {
+  font-size: 20px;
+  color: var(--lab-muted);
+}
+.rotary-dial {
+  position: relative;
+  display: block;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 225deg,
+    #b9f7d1 0deg var(--arc),
+    #304439 var(--arc) 270deg,
+    transparent 270deg
+  );
+}
+.rotary-face {
+  position: absolute;
+  inset: 7px;
+  border: 5px solid #0d1312;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #33473b, #141e18);
+  box-shadow:
+    inset 0 1px 1px #6c8d76,
+    0 5px 12px #0005;
+}
+.rotary-face i {
+  position: absolute;
+  inset: 0;
+  transform: rotate(var(--rotation));
+}
+.rotary-face i::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: calc(50% - 2px);
+  height: 24px;
+  width: 4px;
+  border-radius: 2px;
+  background: #c6ffdc;
+}
+.rotary-dial input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ns-resize;
+  touch-action: none;
+}
+.rotary-dial:focus-within {
+  outline: 2px solid var(--lab-focus);
+  outline-offset: 6px;
+}
+.rotary-control output {
+  font: 24px monospace;
+  color: var(--lab-ink);
+}
+.rotary-control small {
+  font-size: 14px;
+  color: var(--lab-muted);
+  margin-left: 8px;
+}
+.piano-section {
+  margin-top: auto;
+}
+.piano-section p {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: var(--lab-muted);
+}
+.piano-section p span {
+  font-size: 13px;
+}
+.piano-keys {
+  position: relative;
+  display: flex;
+  gap: 5px;
+  height: 180px;
+  padding: 8px;
+  border: 1px solid #35473b;
+  border-radius: 10px;
+  background: #080e0b;
+}
+.piano-key {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 3px 3px 7px 7px;
+  padding: 16px 0;
+  font: 14px monospace;
+}
+.piano-key:disabled {
+  opacity: 0.65;
+}
+.piano-white {
+  flex: 1;
+  height: 100%;
+  background: #dae5dc;
+  color: #435b4b;
+  border: 0;
+  box-shadow: inset 0 -6px #9cab9f;
+}
+.piano-white:hover {
+  background: #eaf6ed;
+  color: #253c2e;
+}
+.piano-black {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: calc(8px + (100% - 16px) / 8 * var(--key-position) - 3.5%);
+  width: 7%;
+  height: 100px;
+  background: #1a2720;
+  border: 1px solid #49604f;
+  color: #91a998;
+  box-shadow:
+    0 5px 8px #0006,
+    inset 0 -5px #080e0b;
+}
+.piano-black:hover {
+  background: #293d30;
+  color: #d9f3e1;
+}
+.piano-key[data-lit='true'] {
+  background: #9cf6b8;
+  color: #153820;
+  box-shadow:
+    inset 0 -3px #5aab73,
+    0 0 18px #9cf6b833;
+}
+.piano-key:focus-visible {
+  outline: 3px solid #63c889;
+  outline-offset: -4px;
 }
