@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CommandMenu, commandMenuLabel } from '@lab/demo-kit/command-menu';
 import { Button } from '@lab/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@lab/ui/dialog';
@@ -6,9 +6,16 @@ import { LabMark } from '@lab/demo-kit/mark';
 import { tracks } from './tracks';
 import { demos } from '../demo-registry';
 import { showcases } from '../showcase-registry';
+import { listenForPresentation } from './presentation-discovery';
+
+const presentationHref = `${import.meta.env.BASE_URL}presentation/`;
 
 export function LabNavigation({ route }: { route: string }) {
   const [commandOpen, setCommandOpen] = useState(false);
+  useEffect(
+    () => (commandOpen ? undefined : listenForPresentation(presentationHref)),
+    [commandOpen],
+  );
   const mobileTrigger = useRef<HTMLButtonElement>(null);
   const links = [
     ['/', 'Tracks'],
@@ -37,6 +44,7 @@ export function LabNavigation({ route }: { route: string }) {
           { label: 'All guides', group: 'Navigation', href: '#/guides' },
           { label: 'Create a demo', group: 'Navigation', href: '#/create' },
           { label: 'Local setup', group: 'Navigation', href: '#/guide/setup' },
+          { label: 'Presentation', group: 'Tools', href: presentationHref },
           ...tracks.flatMap((track) =>
             track.guides.map((guide) => ({
               label: guide.title,

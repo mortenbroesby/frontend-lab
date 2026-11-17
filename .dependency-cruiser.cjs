@@ -2,8 +2,16 @@
 module.exports = {
   forbidden: [
     {
+      name: 'presentation-stays-independent', severity: 'error',
+      from: { path: '^presentation/' }, to: { path: '^(demos/|showcases/)' },
+    },
+    {
+      name: 'apps-do-not-import-presentation', severity: 'error',
+      from: { path: '^(gallery/|demos/|showcases/)' }, to: { path: '^presentation/' },
+    },
+    {
       name: 'ui-stays-independent', severity: 'error',
-      from: { path: '^shared/ui/' }, to: { path: '^(gallery/|demos/|showcases/)' },
+      from: { path: '^shared/ui/' }, to: { path: '^(gallery/|demos/|showcases/|presentation/)' },
     },
     {
       name: 'use-ui-package-exports', severity: 'error',
@@ -35,23 +43,23 @@ module.exports = {
     },
     {
       name: 'demos-use-kit-not-gallery', severity: 'error',
-      from: { path: '^(demos|showcases)/' },
+      from: { path: '^(demos|showcases|presentation)/' },
       to: { path: '^gallery/', pathNot: '^gallery/demo-kit/' },
     },
     {
       name: 'gallery-reads-only-demo-metadata', severity: 'error',
       from: { path: '^gallery/src/' },
-      to: { path: '^(demos|showcases)/', pathNot: '^(demos/[^/]+/demo|showcases/[^/]+/showcase)\\.config\\.ts$' },
+      to: { path: '^(demos|showcases|presentation)/', pathNot: '^(demos/[^/]+/demo|showcases/[^/]+/showcase)\\.config\\.ts$' },
     },
     {
       name: 'metadata-stays-declarative', severity: 'error',
       from: { path: '^(demos/[^/]+/demo|showcases/[^/]+/showcase)\\.config\\.ts$' },
-      to: { path: '^(demos/|showcases/|gallery/src/)' },
+      to: { path: '^(demos/|showcases/|presentation/|gallery/src/)' },
     },
     {
       name: 'kit-does-not-depend-on-apps', severity: 'error',
       from: { path: '^gallery/demo-kit/' },
-      to: { path: '^(demos/|showcases/|gallery/)', pathNot: '^gallery/demo-kit/' },
+      to: { path: '^(demos/|showcases/|presentation/|gallery/)', pathNot: '^gallery/demo-kit/' },
     },
     {
       name: 'use-kit-package-exports', severity: 'error',

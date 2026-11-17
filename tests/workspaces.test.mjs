@@ -8,6 +8,7 @@ const kit = read('gallery/demo-kit/package.json');
 test('React versions agree across the gallery, kit and independent demos', () => {
   const paths = [
     'gallery/package.json',
+    'presentation/package.json',
     'gallery/demo-kit/package.json',
     ...globSync('demos/*/package.json'),
     ...globSync('showcases/*/package.json'),

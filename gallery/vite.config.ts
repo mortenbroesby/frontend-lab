@@ -37,6 +37,13 @@ export default defineConfig({
   build: {
     outDir: resolve(import.meta.dirname, 'dist'),
     emptyOutDir: true,
-    rollupOptions: { input: [resolve(root, 'index.html'), ...entries, ...showcases] },
+    rollupOptions: {
+      input: [
+        resolve(root, 'index.html'),
+        ...entries,
+        ...showcases,
+        resolve(root, 'presentation/index.html'),
+      ],
+    },
   },
 });
