@@ -302,3 +302,37 @@ main:fullscreen .tv-pairing {
     width: 100%;
   }
 }
+
+/* Keep optional pairing beside the TV inside a presentation frame. */
+@media (min-width: 700px) {
+  .tv-embedded main {
+    grid-template-columns: minmax(0, 1fr) auto 210px;
+    gap: 8px;
+  }
+  .tv-embedded .tv-pairing {
+    grid-column: 3;
+    grid-row: 1;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .tv-embedded h2,
+  .tv-embedded .tv-eyebrow,
+  .tv-embedded .tv-pairing-note,
+  .tv-embedded input {
+    display: none;
+  }
+  .tv-embedded p {
+    font-size: 12px;
+    margin: 8px 0;
+  }
+  .tv-embedded .tv-pairing-code {
+    width: 100%;
+  }
+  .tv-embedded svg {
+    width: 150px;
+    height: 150px;
+  }
+}

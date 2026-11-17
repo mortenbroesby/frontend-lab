@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@lab/ui/button';
 import { Progress } from '@lab/ui/progress';
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { LabMark } from '@lab/demo-kit/mark';
 import { useTheme } from '@lab/ui/theme-control';
 import { slides } from './slides';
@@ -54,7 +55,7 @@ function PresenterPanel({
             <SlideStage index={index + 1} preview />
           </>
         ) : (
-          <p>End of the draft.</p>
+          <p>End of the presentation.</p>
         )}
       </div>
       <div className="speaker-notes">
@@ -161,6 +162,7 @@ export function Presentation() {
   useTheme();
   const { index, move } = useSlides();
   const timer = useElapsedTime();
+  const appHref = galleryHref('/');
   const [mode, setMode] = useState<'audience' | 'presenter' | 'clean'>('clean');
   const setPresenter = (active: boolean) => setMode(active ? 'presenter' : 'audience');
   const setClean = () => setMode('clean');
@@ -181,7 +183,11 @@ export function Presentation() {
           <LabMark />
           The Frontend Lab
         </span>
-        <span>Working draft</span>
+        {appHref && (
+          <Button variant="ghost" asChild>
+            <a href={appHref}>← Back to app</a>
+          </Button>
+        )}
       </header>
       <main id="presentation-stage" className="presentation-body" tabIndex={-1}>
         <div className="audience-stage">
