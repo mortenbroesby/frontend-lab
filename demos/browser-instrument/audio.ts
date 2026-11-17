@@ -1,5 +1,6 @@
-import { frequency, melody, stepDuration } from './pattern';
+import { frequency, songs, stepDuration } from './pattern';
 export type Settings = {
+  song: number;
   tempo: number;
   cutoff: number;
   echo: number;
@@ -93,9 +94,9 @@ export function createInstrument() {
   }
   function playStep(settings: Settings, beat: number, time: number) {
     const { pattern, levels } = settings;
+    const { melody, bass } = songs[settings.song];
     if (pattern[0][beat]) tone(melody[beat], time, 0.18, 'square', levels[0] * 0.12);
-    if (pattern[1][beat])
-      tone([36, 39, 34, 32][Math.floor(beat / 4)], time, 0.22, 'sawtooth', levels[1] * 0.2);
+    if (pattern[1][beat]) tone(bass[Math.floor(beat / 4)], time, 0.22, 'sawtooth', levels[1] * 0.2);
     if (pattern[2][beat]) drum(time, beat, levels[2]);
   }
   return {

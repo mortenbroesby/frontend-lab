@@ -583,3 +583,37 @@ body:has(.instrument-performance) {
   color: var(--lab-muted);
   font-size: 14px;
 }
+
+.instrument-song-picker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--lab-control-border);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+.instrument-song-picker button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.instrument-song-display {
+  display: grid;
+  gap: 4px;
+  min-width: 164px;
+  text-align: center;
+  font-family: monospace;
+}
+.instrument-song-display small {
+  color: var(--lab-muted);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+}
+.instrument-song-display strong {
+  color: var(--lab-ink);
+  font-size: 0.875rem;
+}
+@media (max-width: 700px) {
+  .instrument-top {
+    flex-wrap: wrap;
+  }
+}

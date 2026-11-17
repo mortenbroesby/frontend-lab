@@ -3,7 +3,7 @@ import { Button } from '@lab/ui/button';
 import { Slider } from '@lab/ui/slider';
 import { createInstrument } from './audio';
 import type { Instrument, Settings } from './audio';
-import { initialPattern, toggleStep } from './pattern';
+import { initialPattern, songs, toggleStep } from './pattern';
 import { Scope } from './scope';
 import { PerformanceControls } from './performance-controls';
 import './instrument.css';
@@ -49,6 +49,7 @@ function Dial({
 export default function InstrumentDemo() {
   const stage = useRef<HTMLDivElement>(null);
   const [settings, setSettings] = useState<Settings>({
+    song: 0,
     tempo: 112,
     cutoff: 3800,
     echo: 0.25,
@@ -98,6 +99,13 @@ export default function InstrumentDemo() {
   return (
     <div ref={stage} className={instrumentClass}>
       <InstrumentHeader
+        song={settings.song}
+        onSong={(direction) =>
+          setSettings((previous) => {
+            const song = (previous.song + direction + songs.length) % songs.length;
+            return { ...previous, song, pattern: songs[song].pattern };
+          })
+        }
         stage={stage}
         busy={busy}
         playing={Boolean(instrument)}
@@ -218,7 +226,7 @@ export default function InstrumentDemo() {
           </p>
           <Button
             variant="outline"
-            onClick={() => setSettings((s) => ({ ...s, pattern: initialPattern }))}
+            onClick={() => setSettings((s) => ({ ...s, pattern: songs[s.song].pattern }))}
           >
             Reset pattern
           </Button>
@@ -233,18 +241,34 @@ function InstrumentHeader({
   busy,
   playing,
   onPlay,
+  song,
+  onSong,
 }: {
   stage: RefObject<HTMLDivElement | null>;
   busy: boolean;
   playing: boolean;
   onPlay: () => void;
+  song: number;
+  onSong: (direction: number) => void;
 }) {
   return (
     <div className="instrument-top">
       <div>
-        {!presentation && <span className="instrument-eyebrow">PATTERN 01 / C MINOR</span>}
+        {!presentation && <span className="instrument-eyebrow">3 ORIGINAL LOOPS</span>}
         {embedded ? <h1>Browser Beat</h1> : <h2>Press play. Find your sound.</h2>}
-        <p>An original loop, ready to reshape.</p>
+        <p>Three original loops, ready to reshape.</p>
+      </div>
+      <div className="instrument-song-picker" role="group" aria-label="Choose a song">
+        <Button variant="ghost" aria-label="Previous song" onClick={() => onSong(-1)}>
+          ◀
+        </Button>
+        <div className="instrument-song-display" aria-live="polite" aria-atomic="true">
+          <small>TRACK 0{song + 1} / 03</small>
+          <strong>{songs[song].name}</strong>
+        </div>
+        <Button variant="ghost" aria-label="Next song" onClick={() => onSong(1)}>
+          ▶
+        </Button>
       </div>
       <div className="instrument-actions">
         <Button className="instrument-play" onClick={onPlay} disabled={busy}>
