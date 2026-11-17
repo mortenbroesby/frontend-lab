@@ -72,7 +72,7 @@ export default function CanvasTV() {
 
 function TVIntro() {
   if (embedded) return null;
-  const back = galleryHref('/showcases');
+  const back = galleryHref('/demos');
   return (
     <>
       <header className="tv-header">
@@ -81,7 +81,7 @@ function TVIntro() {
         </span>
         {back && (
           <Button variant="outline" asChild>
-            <a href={back}>← Showcases</a>
+            <a href={back}>← All demos</a>
           </Button>
         )}
       </header>

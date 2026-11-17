@@ -8,10 +8,10 @@ type Slide = {
   notes?: string;
 };
 
-const showcaseHref = import.meta.env.LAB_STANDALONE
+const demoHref = import.meta.env.LAB_STANDALONE
   ? import.meta.env.VITE_GALLERY_URL &&
-    `${import.meta.env.VITE_GALLERY_URL.replace(/\/$/, '')}/showcases/canvas-tv/`
-  : `${import.meta.env.BASE_URL}showcases/canvas-tv/`;
+    `${import.meta.env.VITE_GALLERY_URL.replace(/\/$/, '')}/demos/canvas-tv/`
+  : `${import.meta.env.BASE_URL}demos/canvas-tv/`;
 
 function Entrance() {
   return (
@@ -119,7 +119,7 @@ function Remote({ preview }: { preview?: boolean }) {
   if (preview)
     return (
       <div className="tv-slide-preview">
-        <p>LIVE CANVAS SHOWCASE</p>
+        <p>LIVE CANVAS DEMO</p>
         <h1>
           No pointer.
           <br />
@@ -129,8 +129,8 @@ function Remote({ preview }: { preview?: boolean }) {
     );
   return (
     <div className="tv-slide" data-presentation-interactive>
-      {showcaseHref ? (
-        <iframe title="Canvas TV — interactive remote navigation" src={`${showcaseHref}?embed=1`} />
+      {demoHref ? (
+        <iframe title="Canvas TV — interactive remote navigation" src={`${demoHref}?embed=1`} />
       ) : (
         <p>Set VITE_GALLERY_URL to the gallery URL to embed Canvas TV in a standalone deck.</p>
       )}

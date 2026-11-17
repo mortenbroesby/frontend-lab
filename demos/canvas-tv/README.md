@@ -3,9 +3,9 @@
 A keyboard-first TV interaction study. React owns selection; Canvas 2D paints the entire 1280 × 720 composition. Generated landscapes and fictional titles require no network services. This does not use Lightning or implement a custom React renderer.
 
 ```sh
-npm run dev --workspace @lab/showcase-canvas-tv -- --host 0.0.0.0
-npm run check --workspace @lab/showcase-canvas-tv
-npm test --workspace @lab/showcase-canvas-tv
+npm run dev --workspace @lab/demo-canvas-tv -- --host 0.0.0.0
+npm run check --workspace @lab/demo-canvas-tv
+npm test --workspace @lab/demo-canvas-tv
 ```
 
 Focus the screen, use arrow keys to browse, Enter to play an animated short and Escape to return. Tab leaves the screen normally. Fullscreen TV keeps the 16:9 screen and touch remote together; Escape also exits browser fullscreen, so Backspace can return from playback while staying fullscreen. On-screen remote buttons offer touch and semantic keyboard controls; selection is also announced as text. The mountain panorama uses parallax layers, drifting mist and a changing night sky. System reduced motion freezes the background and disables focus/scroll animation. Hidden tabs stop repainting. This models a directional remote with a keyboard; physical TV devices have not been tested.

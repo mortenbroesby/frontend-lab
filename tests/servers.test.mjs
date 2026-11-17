@@ -10,6 +10,7 @@ for (const [name, directory, config] of [
   ['gallery', '.', 'gallery/vite.config.ts'],
   ['presentation', 'presentation', 'gallery/vite.demo.config.ts'],
   ['standalone', 'demos/dependency-map', 'gallery/vite.demo.config.ts'],
+  ['canvas-tv', 'demos/canvas-tv', 'gallery/vite.demo.config.ts'],
   ['signal-garden', 'demos/signal-garden', 'gallery/vite.demo.config.ts'],
 ]) {
   for (const mode of ['development', 'preview']) {

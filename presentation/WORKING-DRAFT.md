@@ -27,7 +27,7 @@ The Lightning section illustrates how a required rendering platform need not dic
 | 7. A few related experiments | Keyboard navigation and React state drawn on Canvas | 2–3 minutes |
 | 8. Questions? | Discussion without another motivational closing | Questions |
 
-The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 showcase.
+The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 demo.
 
 The transition into Lightning is: “I worked on one of those: a TV application. Let me give you a quick look at how that worked.” The project is a historical firsthand example, not a claim about how all TV apps are built today. The final slides return to experimentation without requiring a business case or finished product.
 
@@ -73,11 +73,11 @@ This remains a three-slide section within the eight-slide talk. Do not expand it
 
 ## The live showcase
 
-`showcases/canvas-tv/` is an independent React + Canvas 2D app, discoverable in the gallery. It draws a 16:9 streaming-style interface with original generated landscapes and fictional titles. React manages the selection and Canvas draws the actual interface; this is not HTML styled to look like Canvas.
+`demos/canvas-tv/` is an independent React + Canvas 2D app, discoverable in the gallery. It draws a 16:9 streaming-style interface with original generated landscapes and fictional titles. React manages the selection and Canvas draws the actual interface; this is not HTML styled to look like Canvas.
 
 Use arrow keys to move through two catalogue rows, Enter to play a full-frame animated short and Escape to return. Horizontal movement scrolls the shelf; each row remembers its last selection. The visible focus ring is central to the experience. On-screen remote buttons also support touch and provide ordinary accessible controls, with a text announcement of the selected programme. Tab remains available to leave the screen. Reduced motion removes focus/scroll animation and freezes the scenery. The background has moving mountain layers, drifting mist and a changing night sky, with automatic support for the system reduced-motion preference.
 
-The presentation embeds the actual showcase inline through its `?embed=1` view. No new tab is needed. The iframe keeps TV arrow keys separate from slide navigation; Tab leads to Continue presentation. Presenter previews stay static. The combined gallery build supplies the URL; standalone presentation builds can set `VITE_GALLERY_URL`. The standalone showcase remains available in the gallery.
+The presentation embeds the actual demo inline through its `?embed=1` view. No new tab is needed. The iframe keeps TV arrow keys separate from slide navigation; Tab leads to Continue presentation. Presenter previews stay static. The combined gallery build supplies the URL; standalone presentation builds can set `VITE_GALLERY_URL`. The standalone demo remains available in the gallery.
 
 This is **not Lightning**, the original application, a custom React renderer or a video streaming service. It illustrates the interaction model using native Canvas. Actual TV hardware compatibility is unverified. The original product and its technical history remain distinct from this example.
 
