@@ -479,3 +479,9 @@ a {
   outline: 2px solid currentColor;
   outline-offset: 4px;
 }
+@media (max-width: 600px) {
+  .audience-stage .slide-stage:has(.instrument-slide) {
+    height: calc(100dvh - 32px);
+    min-height: 420px;
+  }
+}

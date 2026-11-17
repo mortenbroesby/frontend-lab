@@ -454,3 +454,15 @@ body:has(.instrument-performance) {
   padding: 0;
   margin: 0;
 }
+/* Leave space for the deck's navigation below an embedded 16:9 slide. */
+@media (min-width: 1201px) and (max-height: 700px) {
+  .instrument-performance {
+    padding: 16px 24px;
+  }
+  .instrument-performance .instrument-dial [data-slot='slider'] {
+    min-height: 32px;
+  }
+  .instrument-performance .instrument-scope canvas {
+    height: 96px;
+  }
+}

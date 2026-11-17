@@ -1,6 +1,6 @@
 # Presentation working draft
 
-Status: an eight-slide draft for a 20–25-minute technical spotlight, including discussion. The framing is a peek at front-end beyond the usual web page, with the three-slide Lightning section as a concrete firsthand example. The deck and speaker notes are in `slides.tsx`; this notebook tracks decisions, recollections and open questions.
+Status: a nine-slide draft for a 20–30-minute technical spotlight, including discussion. The framing is a peek at front-end beyond the usual web page, with the three-slide Lightning section as a concrete firsthand example. The deck and speaker notes are in `slides.tsx`; this notebook tracks decisions, recollections and open questions.
 
 ## What we want
 
@@ -24,10 +24,11 @@ The Lightning section illustrates how a required rendering platform need not dic
 | 4. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
 | 5. How our app worked. | JSX → custom renderer → Lightning; explain the benefit without internals | 2–3 minutes |
 | 6. What was different | Briefly recap input, rendering and tooling | About 1 minute |
-| 7. A few related experiments | Keyboard navigation and React state drawn on Canvas | 2–3 minutes |
-| 8. Questions? | Discussion without another motivational closing | Questions |
+| 7. The browser as an instrument | Shape an original Web Audio loop in the inline Pocket tracker | 2–3 minutes |
+| 8. A few related experiments | Keyboard navigation and React state drawn on Canvas | 2–3 minutes |
+| 9. Questions? | Discussion without another motivational closing | Questions |
 
-The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 demo.
+The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the live demonstrations are the TV and Pocket tracker. No changes are required to the standalone D3 demo.
 
 The transition into Lightning is: “I worked on one of those: a TV application. Let me give you a quick look at how that worked.” The project is a historical firsthand example, not a claim about how all TV apps are built today. The final slides return to experimentation without requiring a business case or finished product.
 
@@ -121,3 +122,7 @@ These sources describe the current platform; they are not evidence of our projec
 ## How we iterate
 
 Edit slide content and notes in `slides.tsx`, then record new recollections here. Move an open question into the confirmed section only after the presenter clarifies it or we recover evidence. Keep illustrative examples labelled. Rehearse in presenter mode to check pacing; view audience mode to judge text density. Update this notebook when the story changes rather than accumulating competing summaries.
+
+## Browser instrument
+
+After the TV recap, one live slide offers a second perspective: the browser as an instrument. Pocket tracker is a new experiment inspired by demoscene/tracker music, not part of the historical TV project. It uses native Web Audio and Canvas with React controls. Start the original loop, change tone and echo, isolate a voice, edit a few steps, then stop. The slide embeds its performance view with audio/fullscreen permissions and keeps Continue presentation outside the iframe. Presenter previews are static and silent. Leaving the slide removes the instrument and its audio context.

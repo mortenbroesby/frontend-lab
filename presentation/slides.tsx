@@ -8,10 +8,14 @@ type Slide = {
   notes?: string;
 };
 
-const demoHref = import.meta.env.LAB_STANDALONE
-  ? import.meta.env.VITE_GALLERY_URL &&
-    `${import.meta.env.VITE_GALLERY_URL.replace(/\/$/, '')}/demos/canvas-tv/`
-  : `${import.meta.env.BASE_URL}demos/canvas-tv/`;
+function demoUrl(id: string) {
+  const base = import.meta.env.LAB_STANDALONE
+    ? import.meta.env.VITE_GALLERY_URL
+    : import.meta.env.BASE_URL;
+  return base && `${base.replace(/\/$/, '')}/demos/${id}/`;
+}
+const demoHref = demoUrl('canvas-tv');
+const instrumentHref = demoUrl('browser-instrument');
 
 function Entrance() {
   return (
@@ -28,7 +32,7 @@ function Possibilities() {
       <p>
         TV interfaces. Interactive installations. Visual tools. Games.
         <br />
-        <strong>A different use of front-end technology, through one project.</strong>
+        <strong>A TV project, then a browser instrument.</strong>
       </p>
     </StatementSlide>
   );
@@ -86,7 +90,7 @@ function Experiments() {
 function Closing() {
   return (
     <StatementSlide eyebrow="Discussion" title="Questions?">
-      <p>About the TV project, the demo, or something you'd like to try.</p>
+      <p>About the TV project, the demos, or something you'd like to try.</p>
     </StatementSlide>
   );
 }
@@ -137,6 +141,37 @@ function Remote({ preview }: { preview?: boolean }) {
       <div className="tv-slide-footer">
         <span>↑ ↓ ← → Navigate · Enter select · Escape back · Tab to leave TV</span>
         <a href="#components">Continue presentation →</a>
+      </div>
+    </div>
+  );
+}
+
+function Instrument({ preview }: { preview?: boolean }) {
+  if (preview)
+    return (
+      <div className="tv-slide-preview">
+        <p>LIVE WEB AUDIO DEMO</p>
+        <h1>
+          The browser
+          <br />
+          as an instrument.
+        </h1>
+      </div>
+    );
+  return (
+    <div className="tv-slide instrument-slide" data-presentation-interactive>
+      {instrumentHref ? (
+        <iframe
+          title="Pocket tracker — interactive browser instrument"
+          src={`${instrumentHref}?embed=1&presentation=1`}
+          allow="autoplay; fullscreen"
+        />
+      ) : (
+        <p>Set VITE_GALLERY_URL to the gallery URL to embed Pocket tracker in a standalone deck.</p>
+      )}
+      <div className="tv-slide-footer">
+        <span>Press Play · Shape the sound · Tab to continue</span>
+        <a href="#experiments">Continue presentation →</a>
       </div>
     </div>
   );
@@ -262,7 +297,26 @@ Default tests mocked parts of rendering, including Canvas functionality; tests u
 Don't explain the diagram again. Use these three points to draw together what people just saw. The animation makes the demo enjoyable; the focus movement and return behaviour are the connection to the project.
 
 TRANSITION
-“You can explore either of those first two differences without building a whole TV application.”`,
+“That project changed the input and rendering. Here is another direction: using the browser to generate sound.”`,
+  },
+  {
+    id: 'instrument',
+    title: 'The browser as an instrument',
+    Content: Instrument,
+    notes: `A SECOND PERSPECTIVE · 2–3 minutes
+“This one is a new experiment, not part of the TV project. I remembered those small demoscene intros with tracker music and wondered what we could make in a browser.”
+
+TRY IT LIVE
+Press Play. Move Tone slowly, then add a little Echo. Turn the lead volume down to hear the rhythm and bass, then bring it back. Toggle a few steps so people can hear the pattern change. Keep the volume comfortable and stop playback before discussing it.
+
+WHAT IS HAPPENING
+“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The waveform and frequency bars read the live audio signal.
+
+TRANSITION
+“Changing an input, a rendering surface or an output can lead to quite a different experiment.” Click Continue presentation outside the instrument. Moving to another slide removes the iframe and stops its audio. The presenter preview is deliberately static and silent.
+
+IF AUDIO IS UNAVAILABLE
+Describe the signal path and show the controls. Do not spend the talk debugging the room's sound system.`,
   },
   {
     id: 'experiments',
@@ -280,7 +334,7 @@ These are suggestions, not assignments. People can also work on code quality or 
     title: 'Questions',
     Content: Closing,
     notes: `QUESTIONS
-“That's the example I wanted to share. Any questions about the project or the demo?”
+“Any questions about the project or either of the demos?”
 
 Leave this slide up for discussion. If someone asks about a historical detail you don't remember, say so. The current Lightning documentation and this Canvas demo are not evidence of exactly how the original app was implemented.
 

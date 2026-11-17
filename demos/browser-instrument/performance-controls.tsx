@@ -2,6 +2,7 @@ import { useEffect, useState, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
 
 export function PerformanceControls({ stage }: { stage: RefObject<HTMLDivElement | null> }) {
+  const inPresentation = new URLSearchParams(window.location.search).has('presentation');
   const [fullscreen, setFullscreen] = useState(false);
   const [error, setError] = useState('');
   useEffect(() => {
@@ -23,9 +24,11 @@ export function PerformanceControls({ stage }: { stage: RefObject<HTMLDivElement
       <Button variant="outline" onClick={() => void toggle()}>
         {fullscreen ? 'Exit fullscreen' : 'Fullscreen'}
       </Button>
-      <Button variant="ghost" asChild>
-        <a href={window.location.pathname}>Back to demo</a>
-      </Button>
+      {!inPresentation && (
+        <Button variant="ghost" asChild>
+          <a href={window.location.pathname}>Back to demo</a>
+        </Button>
+      )}
       {error && <span role="status">{error}</span>}
     </>
   );
