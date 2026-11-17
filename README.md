@@ -61,5 +61,5 @@ gallery discovers your demo automatically. See **Create a demo** in the app.
 ---
 
 <p align="center">
-  Made by <a href="https://github.com/mortenbroesby">Morten Broesby-Olsen</a> · Built with React, TypeScript, Vite, Turborepo and D3
+  Built with React, TypeScript, Vite, Turborepo and D3
 </p>
