@@ -462,3 +462,20 @@ a {
   line-height: 1.5;
   margin: 0;
 }
+
+.slide-description p + p {
+  margin-top: 2cqw;
+}
+.slide-resource {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 2cqw;
+  color: #b9f7d1;
+  font-size: 1.7cqw;
+  text-underline-offset: 0.25em;
+}
+.slide-resource:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}

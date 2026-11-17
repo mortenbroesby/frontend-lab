@@ -15,8 +15,8 @@ const showcaseHref = import.meta.env.LAB_STANDALONE
 
 function Entrance() {
   return (
-    <TitleSlide eyebrow="A technical spotlight" title="The Front-End Lab">
-      <p>What else could we build?</p>
+    <TitleSlide eyebrow="A chapter session" title="The Front-End Lab">
+      <p>Front-end development outside the usual web page.</p>
       <span className="slide-caption">Morten Broesby</span>
     </TitleSlide>
   );
@@ -24,11 +24,11 @@ function Entrance() {
 
 function Possibilities() {
   return (
-    <StatementSlide eyebrow="A peek at other possibilities" title="Front-end beyond the page.">
+    <StatementSlide eyebrow="A few examples" title="Front-end beyond the page.">
       <p>
         TV interfaces. Interactive installations. Visual tools. Games.
         <br />
-        <strong>Where else could your skills take you?</strong>
+        <strong>One example from a project I worked on.</strong>
       </p>
     </StatementSlide>
   );
@@ -36,23 +36,23 @@ function Possibilities() {
 
 function Assumptions() {
   return (
-    <DiagramSlide eyebrow="Take something you know somewhere new" title="Change one assumption.">
+    <DiagramSlide eyebrow="In this project" title="What was different.">
       <ExperimentOptions
         options={[
           {
             label: 'INPUT',
-            title: 'Beyond the pointer.',
-            description: 'What if you only had five buttons?',
+            title: 'Remote input.',
+            description: 'Focus and directional navigation replaced pointer targeting.',
           },
           {
-            label: 'SURFACE',
-            title: 'Beyond the page.',
-            description: 'What if your interface was a canvas?',
+            label: 'RENDERING',
+            title: 'Canvas visuals.',
+            description: 'The interface was drawn rather than laid out with HTML elements.',
           },
           {
-            label: 'CONNECTION',
-            title: 'Beyond one screen.',
-            description: 'What if another browser could join in?',
+            label: 'TOOLING',
+            title: 'Our own tools.',
+            description: 'We built a component layer and testing tools for this setup.',
           },
         ]}
       />
@@ -62,56 +62,60 @@ function Assumptions() {
 
 function Experiments() {
   return (
-    <DiagramSlide
-      eyebrow="A starting point, not a specification"
-      title="Something you could try today."
-    >
+    <DiagramSlide eyebrow="If you want to explore further" title="A few related experiments.">
       <ExperimentOptions
         options={[
           {
-            label: 'MAKE',
-            title: 'A small world.',
-            description: 'Draw a landscape. Give one thing movement or a response to input.',
+            label: 'CANVAS',
+            title: 'Keyboard input.',
+            description: 'Draw an object and move it with the arrow keys.',
           },
           {
-            label: 'REVEAL',
-            title: 'A hidden pattern.',
+            label: 'DATA',
+            title: 'A visualisation.',
             description: 'Visualise a small dataset. Let someone explore a connection.',
           },
           {
-            label: 'CONNECT',
+            label: 'MESSAGING',
             title: 'Two screens.',
             description: 'Send one action from a browser and show its effect in another.',
           },
         ]}
       />
-      <p className="diagram-caption">Start with one interaction. Follow what interests you.</p>
     </DiagramSlide>
   );
 }
 
 function Closing() {
   return (
-    <StatementSlide eyebrow="Your turn" title="What are you curious about?">
-      <p>
-        Pick something you haven't tried before.
-        <br />
-        <strong>See what happens.</strong>
-      </p>
+    <StatementSlide eyebrow="Discussion" title="Questions?">
+      <p>About the TV project, the demo, or something you'd like to try.</p>
     </StatementSlide>
   );
 }
 
 function Television() {
   return (
-    <TitleSlide eyebrow="A story from smart-TV development" title="A front-end app. On a TV.">
-      <p>
-        Canvas visuals. Animation. Remote navigation.
-        <br />
-        <strong>Lightning was the required platform.</strong>
-      </p>
-      <span className="slide-caption">Comcast collaboration · Xfinity set-top boxes</span>
-    </TitleSlide>
+    <DiagramSlide eyebrow="Comcast collaboration · Xfinity set-top boxes" title="The TV project.">
+      <div className="slide-description">
+        <p>
+          We built an animated, canvas-based interface controlled with a remote. Lightning was
+          required by the project agreement.
+        </p>
+        <p>
+          <strong>Lightning is a JavaScript framework for building TV interfaces.</strong> In our
+          app, it rendered the interface to a canvas rather than HTML elements.
+        </p>
+        <a
+          className="slide-resource"
+          href="https://lightningjs.io/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Lightning overview and documentation ↗
+        </a>
+      </div>
+    </DiagramSlide>
   );
 }
 function Remote({ preview }: { preview?: boolean }) {
@@ -177,7 +181,7 @@ export const slides: readonly Slide[] = [
 Leave this on screen while people arrive. No explanation is needed yet.
 
 WHEN READY
-“Welcome. Today I'd like to share a few possibilities, and one experience that changed how I think about web applications.” Advance to the invitation.`,
+“I'll show a TV project I worked on, explain a little about how it worked, and show a small demo of that kind of interaction.”`,
   },
   {
     id: 'possibilities',
@@ -187,7 +191,7 @@ WHEN READY
 “We usually associate front-end development with websites. But the same skills show up in very different environments: TV interfaces, interactive installations, visual tools and games.”
 
 THE INVITATION
-“This is a peek at those possibilities, not a tour of every technology. I'd like to invite you to think outside what we normally build. Hopefully, you'll leave with something unfamiliar you want to try.”
+“I'm using one project as an example. It involved familiar front-end work, but with a different rendering system and input device.”
 
 BRIDGE TO OUR EXAMPLE
 “I worked on one of those: a TV application. Let me give you a quick look at how that worked.”
@@ -196,10 +200,13 @@ Keep the other settings brief. The TV project is the concrete firsthand example;
   },
   {
     id: 'television',
-    title: 'A front-end app on a TV',
+    title: 'The TV project',
     Content: Television,
     notes: `ONE REAL EXAMPLE · 1–2 minutes
 “We built a fully animated, canvas-based application for smart TVs. People navigated it with a remote rather than a pointer. Lightning was part of our agreement with Comcast for Xfinity devices.”
+
+WHAT LIGHTNING IS
+“Lightning is a JavaScript framework for TV interfaces. In our project it drew the interface to a canvas, rather than us building it from HTML elements.” The slide links to its official site for anyone who wants to look further. Today the site covers Lightning 3 and Blits; those names do not identify the version we used.
 
 THE APP AT A GLANCE
 The interface was drawn on Canvas. Remote input moved focus and selected things. It was still front-end work: building components, managing state and making the interaction understandable, on a different kind of screen.
@@ -243,55 +250,47 @@ WHY THAT HELPED
 “People could get up and running building components quickly. The abstraction also made it easier to build testing tools for this environment.” Keep testing to that brief benefit unless someone asks.
 
 BACK TO THE BIGGER IDEA
-“Different screen, different input, but many familiar front-end skills. Which part of what you know could you take somewhere new?”
+“The component model was familiar, but input, rendering and testing were different. Here are the main differences.”
 
 IF ASKED
 Default tests mocked parts of rendering, including Canvas functionality; tests using real Lightning primitives also existed. Exact testing APIs need checking. The team later switched to Solid.js, but the reason and migration details aren't confirmed here. The live example is React plus Canvas 2D, not this original renderer.`,
   },
   {
     id: 'assumptions',
-    title: 'Change one assumption',
+    title: 'What was different',
     Content: Assumptions,
-    notes: `ZOOM BACK OUT · 3–4 minutes
-“We changed the input and the rendering surface, but kept a familiar way to build components. You can try a much smaller version of that idea.”
+    notes: `WHAT WAS DIFFERENT · 2–3 minutes
+Remote input meant we had to think about where focus moved and where it returned. The demo illustrates that, without reproducing the original application.
 
-THREE POSSIBILITIES
-Input: take away the pointer and design a predictable path through an interface.
-Surface: keep React for state, but try drawing an interactive scene on Canvas.
-Connection: let an action in one browser affect another. Start with one message rather than a complete multiplayer application.
+Canvas rendering changed how the interface was represented. We still had components and application state, but the output was not ordinary HTML elements.
 
-INVITE A RESPONSE
-“Which assumption in something you build every day would be interesting to change?” Give people time to think. These are possibilities, not requirements.
+We built a component layer and testing tools because that setup didn't provide the development experience we needed. That helped engineers start building components, and it also meant we had our own code to maintain. Don't invent maintenance incidents or performance figures.
 
 TRANSITION
-“Here are three small places you could start.”`,
+“If any of that interests you, here are a few smaller things you could try.”`,
   },
   {
     id: 'experiments',
-    title: 'Something you could try today',
+    title: 'A few related experiments',
     Content: Experiments,
-    notes: `CHOOSE A FIRST EXPERIMENT · 3–4 minutes
-A small world: start with a shape or landscape that moves. Then let a key press change something. The TV scenery is one illustration, not a target you need to match.
+    notes: `OPTIONAL EXPERIMENTS · 2–3 minutes
+Keyboard input: draw one object on Canvas and change its position with the arrow keys. This is enough to investigate input, state and drawing without building a whole TV app.
 
-A hidden pattern: use a small dataset you understand. Draw relationships and make one of them selectable. Finding an interesting question matters more than the size of the dataset.
+A visualisation: use a small dataset you understand and make one relationship selectable. The aim can simply be to understand the data better.
 
-Two screens: send one action and display it elsewhere. Same-origin tabs can be a first step; separate devices need an appropriate connection and setup. Don't promise that a tab-messaging API works across devices.
+Two screens: send one action and display it elsewhere. Same-origin tabs can be a first step; separate devices need an appropriate connection and setup. A tab-messaging API alone does not connect different devices.
 
-KEEP IT OPEN
-People can explore these through Modern Web Capabilities or Experimental Projects. Improving the workflow or understanding an existing codebase is also a valid choice in the other tracks. There is no required finished product.
-
-TRANSITION
-“You don't need to build a TV application. You just need a question you'd enjoy exploring.”`,
+These are suggestions, not assignments. People can also work on code quality or tooling in the other tracks. Stop here if discussion is already underway.`,
   },
   {
     id: 'curiosity',
-    title: 'What are you curious about?',
+    title: 'Questions',
     Content: Closing,
-    notes: `CLOSE · 1 minute, then questions
-“Pick something you haven't tried before and see what happens. Today is a good opportunity to do that.”
+    notes: `QUESTIONS
+“That's the example I wanted to share. Any questions about the project or the demo?”
 
-Leave the question on screen. Invite questions or ideas about what people would like to explore. Allow roughly 4–5 minutes for discussion if the session has a 20–25-minute slot.
+Leave this slide up for discussion. If someone asks about a historical detail you don't remember, say so. The current Lightning documentation and this Canvas demo are not evidence of exactly how the original app was implemented.
 
-If questions return to the original project, distinguish what you remember from details that still need checking. No need to turn this into a framework comparison.`,
+There is no need for another motivational summary. Allow time for questions rather than stretching the material to fill the slot.`,
   },
 ];

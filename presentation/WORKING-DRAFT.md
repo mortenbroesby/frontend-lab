@@ -6,6 +6,8 @@ Status: an eight-slide draft for a 20–25-minute technical spotlight, including
 
 An authentic presentation grounded in an actual project, not a technology showcase for its own sake. Briefly introduce alternative settings, show the TV interaction, then explain how that app worked at a high level. Keep the slides visual and brief; put context and uncertainty in speaker notes. Leave room for an interactive illustration and discussion.
 
+Tone: plain and personal. Explain what we built, what was different and what we know. Avoid slogans, repeated invitations, claims of transformation or a sales-style closing. Let the example be interesting on its own. The time estimate is a guide; do not pad the talk to reach it.
+
 Possible broader-talk title: **The browser beyond the page.**
 
 Working subtitle: **Building a familiar world on an unfamiliar platform.**
@@ -18,12 +20,12 @@ The Lightning section illustrates how a required rendering platform need not dic
 | --- | --- | --- |
 | 1. The Front-End Lab | Entrance slide to leave up while people arrive | No speaking segment |
 | 2. Front-end beyond the page | A brief look at TVs, installations, visual tools and games | 2–3 minutes |
-| 3. A front-end app. On a TV. | Explain Canvas visuals, animation, remote input and the project constraint | 1–2 minutes |
+| 3. The TV project | Define Lightning, link its official site and describe the project | 1–2 minutes |
 | 4. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
 | 5. How our app worked. | JSX → custom renderer → Lightning; explain the benefit without internals | 2–3 minutes |
-| 6. Change one assumption | Different input, rendering surface or connection | 3–4 minutes |
-| 7. Something you could try today | Three approachable experiments | 3–4 minutes |
-| 8. What are you curious about? | Closing invitation, followed by discussion | 1 minute + questions |
+| 6. What was different | Input, rendering and tooling in the actual project | 2–3 minutes |
+| 7. A few related experiments | Optional concrete starting points | 2–3 minutes |
+| 8. Questions? | Discussion without another motivational closing | Questions |
 
 The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 showcase.
 
@@ -63,7 +65,7 @@ The first draft expanded this into nine slides. That was too much: the presenter
 
 | Slide | Purpose | Approximate time |
 | --- | --- | --- |
-| A front-end app on a TV | Establish the original app and required Lightning platform | 1–2 minutes |
+| The TV project | Explain Lightning and the original project | 1–2 minutes |
 | No pointer. Where is your focus? | Explore remote navigation in the embedded Canvas TV | 2–3 minutes |
 | How our app worked. | Explain the component-to-renderer flow and its benefit at a high level | 2–3 minutes |
 
@@ -106,6 +108,7 @@ Do not turn the talk into a complete reconciler tutorial, a React-versus-Solid c
 
 Current documentation uses LightningJS, Lightning 3 Renderer and Blits (the higher-level application framework). That naming does not identify the version used in this historical project. Refer to the project as Lightning until its actual version is recovered.
 
+- [Lightning overview and documentation](https://lightningjs.io/) — linked from the TV slide; current site, not a version claim about our project.
 - [Lightning 3 Renderer](https://www.lightningjs.io/api/renderer/)
 - [Blits introduction](https://lightningjs.io/v3-docs/blits/getting_started/intro.html)
 
