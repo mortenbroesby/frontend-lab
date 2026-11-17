@@ -1,72 +1,59 @@
 <section className="track-start" aria-labelledby="start-heading">
 
-<p className="eyebrow">Your starting point</p>
-<h2 id="start-heading">Choose one uncertainty to investigate.</h2>
-<p>Find out why a dependency exists, what makes a function confusing or whether a test catches a mistake. Use the Lab or your own repository. A useful result can be evidence that nothing needs changing.</p>
+<h2 id="start-heading">Make a piece of code easier to change.</h2>
+<p>Pick something that slows you down: a dependency nobody understands, a function that takes too long to follow, or a test you don't quite trust. Investigate it and try one improvement.</p>
+<p>Bring your own repository, or use the Lab examples below.</p>
 
 </section>
 
-<div className="track-options">
-<section aria-labelledby="try-heading">
-<p className="eyebrow">Try</p>
-<h2 id="try-heading">Try something now</h2>
-<p>Start with one concrete question and follow the evidence.</p>
-<ul>
-<li><DemoLink id="dependency-map">Trace a dependency's reach →</DemoLink><span>Open Dependency Ripple in your browser. Select React or the demo kit and inspect its consumers. No installation needed.</span></li>
-<li><a href="#/track/code-quality/fallow">Investigate a Fallow finding →</a><span>Follow the guide in a local repository. Check one finding before deciding whether to change anything.</span></li>
-</ul>
-<p className="track-next">Then check the source: a graph or tool finding is a lead, not a verdict.</p>
+<section aria-labelledby="quality-options-heading">
+<h2 id="quality-options-heading">What would you like to work on?</h2>
+<div className="track-options quality-options">
+<section aria-labelledby="dependency-heading">
+<h3 id="dependency-heading">Understand a dependency</h3>
+<p>Pick a package and find why it's installed and where it's used.</p>
+<p>Decide whether to keep it, update it or remove it.</p>
+<a className="quality-start-link" href="#/track/code-quality/dependencies">Start tracing a dependency →</a>
+<p className="quality-example">Want to look around first? <DemoLink id="dependency-map">Open Dependency Ripple</DemoLink> to explore the Lab's packages in your browser.</p>
 </section>
-<section aria-labelledby="inspire-heading">
-<p className="eyebrow">Discover</p>
-<h2 id="inspire-heading">Find a question</h2>
-<p>Start with something you wish were easier to explain.</p>
-<ul>
-<li><a href="#dependencies" onClick={(event) => { event.preventDefault(); const section = document.getElementById('dependencies'); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: 'start' }); }}>Why is this package here? ↓</a><span>Understand what depends on it before changing it.</span></li>
-<li><a href="#clarity" onClick={(event) => { event.preventDefault(); const section = document.getElementById('clarity'); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: 'start' }); }}>Why is this hard to change? ↓</a><span>Follow one confusing branch or unexpected connection.</span></li>
-<li><a href="#confidence" onClick={(event) => { event.preventDefault(); const section = document.getElementById('confidence'); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: 'start' }); }}>Would a test catch this mistake? ↓</a><span>Check one behavior instead of chasing a coverage score.</span></li>
-</ul>
+<section aria-labelledby="code-heading">
+<h3 id="code-heading">Simplify difficult code</h3>
+<p>Pick a function you have to read twice. Identify what makes it difficult.</p>
+<p>Try a clearer name, an early return or a smaller responsibility while preserving its behavior.</p>
+<a className="quality-start-link" href="#/track/code-quality/fallow">Start investigating difficult code →</a>
+<p className="quality-example">The Fallow guide shows how to find a candidate and check its callers before editing. You can also start with code you already know.</p>
 </section>
-<section aria-labelledby="own-heading">
-<p className="eyebrow">Investigate</p>
-<h2 id="own-heading">Explore your own question</h2>
-<p>Bring a dependency, function or test from code you already work on.</p>
-<ul>
-<li><a href="#/track/code-quality/guides">Choose an investigation guide →</a><span>Apply an approach in your own repository. You don't need to generate an app.</span></li>
-<li><a href="#/guide/setup">Use the Lab as your workspace →</a><span>Run it locally, choose one file and make a small, reversible change.</span></li>
-</ul>
-<p className="track-next">Need an isolated example? <a href="#/create">Create an experiment →</a></p>
+<section aria-labelledby="test-heading">
+<h3 id="test-heading">Check a test you don't trust</h3>
+<p>Choose a mistake you think the test should catch. Make that change temporarily and run it.</p>
+<p>Find out whether the assertion protects the behavior you care about.</p>
+<a className="quality-start-link" href="#/track/code-quality/test-confidence">Start checking a test →</a>
+<p className="quality-example">The guide includes a worked example using the Lab's prime-counting function.</p>
+</section>
+<section aria-labelledby="boundary-heading">
+<h3 id="boundary-heading">Untangle a connection</h3>
+<p>Follow an import between two features that seem unrelated. Find out why it's there.</p>
+<p>Clarify who owns the code, or protect a useful boundary with a dependency rule.</p>
+<a className="quality-start-link" href="#/track/code-quality/architecture">Start tracing a boundary →</a>
+<p className="quality-example">Use your own project, or investigate the rule that keeps the Lab's demos independent.</p>
 </section>
 </div>
+</section>
 
-<section className="track-inspiration" aria-labelledby="inspiration-heading">
-<p className="eyebrow">A little inspiration</p>
-<h2 id="inspiration-heading">What could you understand better?</h2>
-<p>Choose one question. Gather evidence, try a small change and check what it tells you.</p>
+<section className="quality-method" aria-labelledby="method-heading">
+<h2 id="method-heading">How to work on it</h2>
+<ol>
+<li><strong>Start with something specific.</strong><p>One package, function, test or connection is enough. Decide what you want to understand or improve.</p></li>
+<li><strong>Understand it before editing.</strong><p>Follow its callers, run the relevant check and establish what must keep working.</p></li>
+<li><strong>Try a change and compare.</strong><p>Did it answer your question or make the code easier to work with? Keep it if it helps. Leaving the code as it is can be the right result.</p></li>
+</ol>
+</section>
 
-<div className="track-directions">
-<section id="dependencies" tabIndex={-1}>
-<h3>Explain a dependency before removing it</h3>
-<p>Pick a package you don't recognise. The external <a href="https://docs.npmjs.com/cli/v11/commands/npm-explain/">npm explain documentation ↗</a> shows how to trace why it is installed. Check imports, scripts and configuration too: apparent non-use can be misleading.</p>
-<p><strong>Start small:</strong> run <code>npm explain react</code> in the Lab and follow one chain to a real consumer. An old version alone is not evidence that a package should be replaced.</p>
-<DemoLink id="dependency-map">Explore Dependency Ripple →</DemoLink> · <a href="#/track/code-quality/dependencies">Trace a dependency's reach →</a>
-</section>
-<section id="clarity" tabIndex={-1}>
-<h3>Make one change easier to reason about</h3>
-<p>Pick a function with too many decisions or an import that crosses an unexpected boundary. The external <a href="https://eslint.org/docs/latest/rules/complexity">ESLint complexity examples ↗</a> can help explain a metric; a lower score isn't the goal.</p>
-<p><strong>Start small:</strong> name the inputs, outcome and one confusing branch. Try a clearer name or early return, then run the relevant check. For unexpected coupling, trace the import before introducing a rule.</p>
-<a href="#/track/code-quality/fallow">Investigate with Fallow →</a> · <a href="#/track/code-quality/architecture">Protect an architecture boundary →</a>
-</section>
-<section id="confidence" tabIndex={-1}>
-<h3>Find out whether green tests mean what you think</h3>
-<p>Choose one observable behavior and the assertion that protects it. Use your existing test runner; the external <a href="https://nodejs.org/docs/latest-v24.x/api/test.html">Node test runner documentation ↗</a> explains the one used for the Lab's logic tests.</p>
-<p><strong>Start small:</strong> predict a mistake the test should catch. Make that reversible change on your branch and run the test. Restore the implementation before strengthening an assertion.</p>
-<a href="#/track/code-quality/test-confidence">Find a missing test →</a>
-</section>
-</div>
+<section className="quality-workspace" aria-label="Choose your workspace">
+<p><strong>Using your own project?</strong> Open it and choose an investigation above. The guides explain how to apply each approach outside the Lab.</p>
+<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a>, then follow a guide's worked example. No new app is required.</p>
 </section>
 
 <nav className="track-browse" aria-label="More in Code Quality">
 <a href="#/track/code-quality/guides">Browse all guides →</a>
-<a href="#/demos">Browse all Lab demos →</a>
 </nav>
