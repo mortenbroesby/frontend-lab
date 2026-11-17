@@ -56,27 +56,27 @@ function Workshop() {
 function Tracks() {
   return (
     <DiagramSlide eyebrow="Choose a direction" title="Four ways to explore.">
-      <div className="track-options">
+      <div className="track-options track-overview">
         <ExperimentOptions
           options={[
             {
               label: 'BROWSER',
-              title: 'Modern Web Capabilities',
+              title: 'Modern Web\nCapabilities',
               description: 'Try a browser capability you haven’t used.',
             },
             {
               label: 'CODE',
-              title: 'Code Quality & Maintainability',
+              title: 'Code Quality &\nMaintainability',
               description: 'Investigate something difficult to understand or maintain.',
             },
             {
               label: 'WORKFLOW',
-              title: 'Developer Experience & Tooling',
+              title: 'Developer Experience\n& Tooling',
               description: 'Improve something that slows you down.',
             },
             {
               label: 'CURIOSITY',
-              title: 'Experimental Projects',
+              title: 'Experimental\nProjects',
               description: 'Build something you’re curious about.',
             },
           ]}

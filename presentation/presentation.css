@@ -155,6 +155,9 @@ a {
   border-radius: 50%;
   box-shadow: 0 0 5cqw #68db9380;
 }
+.diagram-layout .slide-eyebrow {
+  margin-bottom: 2.5cqw;
+}
 .diagram-layout h1 {
   font-size: 4.7cqw;
   max-width: 80%;
@@ -165,7 +168,7 @@ a {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3cqw;
-  margin: 5cqw 0 0;
+  margin: 3cqw 0 0;
 }
 .system-diagram li {
   position: relative;
@@ -439,13 +442,15 @@ a {
   gap: 3cqw;
   list-style: none;
   padding: 0;
-  margin: 5cqw 0 0;
+  margin: 3cqw 0 0;
 }
 .experiment-options li {
   border-top: 1px solid #4d7960;
   padding-top: 2cqw;
 }
 .experiment-options span {
+  display: block;
+  line-height: 1.3;
   color: #84ecad;
   font-size: 1.2cqw;
   letter-spacing: 0.12em;
@@ -497,11 +502,12 @@ a {
 
 .track-options .experiment-options {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5cqw 4cqw;
-  margin-top: 2.5cqw;
+  gap: 3cqw 4cqw;
+  margin-top: 3cqw;
 }
 .track-options h2 {
   font-size: 2.5cqw;
+  line-height: 1.2;
   margin: 1cqw 0;
 }
 
@@ -510,4 +516,8 @@ a {
 }
 .rendering-options ::after {
   display: none;
+}
+
+.track-overview h2 {
+  white-space: pre-line;
 }
