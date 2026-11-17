@@ -494,3 +494,20 @@ a {
   max-width: none;
   transform-origin: center;
 }
+
+.track-options .experiment-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5cqw 4cqw;
+  margin-top: 2.5cqw;
+}
+.track-options .experiment-options h2 {
+  font-size: 2.5cqw;
+  margin: 1cqw 0;
+}
+
+.rendering-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.rendering-options li::after {
+  display: none;
+}

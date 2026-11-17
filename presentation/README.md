@@ -1,6 +1,6 @@
 # Presentation
 
-A nine-slide React talk offering a peek at front-end beyond the usual web page: Browser Beat first, then the Lightning story and live TV interaction. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the confirmed recollections, proposed structure and open questions.
+A 13-slide introduction to the chapter day: the four tracks, Browser Beat, alternative inputs and rendering through a TV example, then starting points for participants. Historical project details stay in presenter notes. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the running order, confirmed recollections and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0

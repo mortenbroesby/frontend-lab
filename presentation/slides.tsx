@@ -29,35 +29,85 @@ function Entrance() {
 
 function Possibilities() {
   return (
-    <StatementSlide eyebrow="What this session is about" title="Front-end beyond the page.">
+    <StatementSlide eyebrow="A different starting point" title="Change one assumption.">
       <p>
-        TV interfaces. Interactive installations. Visual tools. Games.
+        What if the browser makes sound?
         <br />
-        <strong>A browser instrument, then a TV project.</strong>
+        What if there is no pointer?
+        <br />
+        What if two screens share an interaction?
       </p>
     </StatementSlide>
   );
 }
 
+function Workshop() {
+  return (
+    <StatementSlide eyebrow="Chapter day" title="Today is for experimenting.">
+      <p>
+        Choose something interesting. Work solo or together.
+        <br />
+        Aim for a small experiment, not a finished product.
+      </p>
+    </StatementSlide>
+  );
+}
+
+function Tracks() {
+  return (
+    <DiagramSlide eyebrow="Choose a direction" title="Four ways to explore.">
+      <div className="track-options">
+        <ExperimentOptions
+          options={[
+            {
+              label: 'BROWSER',
+              title: 'Modern Web Capabilities',
+              description: 'Try a browser capability you haven’t used.',
+            },
+            {
+              label: 'CODE',
+              title: 'Code Quality & Maintainability',
+              description: 'Investigate something difficult to understand or maintain.',
+            },
+            {
+              label: 'WORKFLOW',
+              title: 'Developer Experience & Tooling',
+              description: 'Improve something that slows you down.',
+            },
+            {
+              label: 'CURIOSITY',
+              title: 'Experimental Projects',
+              description: 'Build something you’re curious about.',
+            },
+          ]}
+        />
+      </div>
+    </DiagramSlide>
+  );
+}
+
 function Assumptions() {
   return (
-    <DiagramSlide eyebrow="In this project" title="What was different.">
+    <DiagramSlide
+      eyebrow="Beyond the usual web page"
+      title="Familiar skills. Different constraints."
+    >
       <ExperimentOptions
         options={[
           {
-            label: 'INPUT',
-            title: 'Remote input.',
-            description: 'Focus and directional navigation replaced pointer targeting.',
+            label: 'STATE',
+            title: 'Where am I?',
+            description: 'Track focus and restore the selection when someone returns.',
           },
           {
-            label: 'RENDERING',
-            title: 'Canvas visuals.',
-            description: 'The interface was drawn rather than laid out with HTML elements.',
+            label: 'COMPONENTS',
+            title: 'What gets rendered?',
+            description: 'Separate the interface model from the way it is drawn.',
           },
           {
             label: 'TOOLING',
-            title: 'Our own tools.',
-            description: 'We built a component layer and testing tools for this setup.',
+            title: 'How do I check it?',
+            description: 'Test navigation rules and inspect what the renderer is doing.',
           },
         ]}
       />
@@ -78,37 +128,72 @@ function InstrumentIntroduction() {
 }
 
 function Closing() {
+  const labHref = import.meta.env.LAB_STANDALONE
+    ? import.meta.env.VITE_GALLERY_URL
+    : import.meta.env.BASE_URL;
   return (
-    <StatementSlide eyebrow="Discussion" title="Questions?">
-      <p>About the TV project, the demos, or something you'd like to try.</p>
+    <StatementSlide eyebrow="Questions, then time to explore" title="Choose your starting point.">
+      <p>
+        Pick a track. Browse the ideas.
+        <br />
+        Use a guide, adapt a demo or bring your own project.
+      </p>
+      {labHref && (
+        <a className="slide-resource" href={`${labHref.replace(/\/$/, '')}/#/`}>
+          Open the Frontend Lab →
+        </a>
+      )}
     </StatementSlide>
+  );
+}
+
+function NextDirections() {
+  return (
+    <DiagramSlide eyebrow="The same example, four directions" title="Where would you take it?">
+      <div className="track-options">
+        <ExperimentOptions
+          options={[
+            {
+              label: 'MODERN WEB',
+              title: 'Connect a phone.',
+              description: 'Explore messages between a remote and a shared screen.',
+            },
+            {
+              label: 'CODE QUALITY',
+              title: 'Understand the state.',
+              description: 'Trace navigation rules and test what happens when you go back.',
+            },
+            {
+              label: 'DEVELOPER EXPERIENCE',
+              title: 'Make debugging easier.',
+              description: 'Explore ways to inspect focus, events and transitions.',
+            },
+            {
+              label: 'EXPERIMENTAL PROJECTS',
+              title: 'Invent another interface.',
+              description: 'Turn the interaction into a game, visual world or something else.',
+            },
+          ]}
+        />
+      </div>
+    </DiagramSlide>
   );
 }
 
 function Television() {
   return (
-    <DiagramSlide eyebrow="Comcast collaboration · Xfinity set-top boxes" title="The TV project.">
-      <div className="slide-description">
-        <p>
-          We built an animated, canvas-based interface controlled with a remote. Lightning was
-          required by the project agreement.
-        </p>
-        <p>
-          <strong>Lightning is a JavaScript framework for building TV interfaces.</strong> In our
-          app, it rendered the interface to a canvas rather than HTML elements.
-        </p>
-        <a
-          className="slide-resource"
-          href="https://lightningjs.io/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Lightning overview and documentation ↗
-        </a>
-      </div>
-    </DiagramSlide>
+    <StatementSlide eyebrow="A different input device" title="A screen without a pointer.">
+      <p>
+        How do you know where you are?
+        <br />
+        Where does the next arrow press take you?
+        <br />
+        What happens when you press Back?
+      </p>
+    </StatementSlide>
   );
 }
+
 function Remote({ preview }: { preview?: boolean }) {
   if (preview)
     return (
@@ -130,7 +215,7 @@ function Remote({ preview }: { preview?: boolean }) {
       )}
       <div className="tv-slide-footer">
         <span>↑ ↓ ← → Navigate · Enter select · Escape back · Tab to leave TV</span>
-        <a href="#components">Continue presentation →</a>
+        <a href="#next-directions">Continue presentation →</a>
       </div>
     </div>
   );
@@ -161,35 +246,60 @@ function Instrument({ preview }: { preview?: boolean }) {
       )}
       <div className="tv-slide-footer">
         <span>Press Play · Shape the sound · Tab to continue</span>
-        <a href="#television">Continue presentation →</a>
+        <a href="#sound-system">Continue presentation →</a>
       </div>
     </div>
   );
 }
 
+function DiagramItems({ items }: { items: [string, string, string][] }) {
+  return items.map(([label, title, description]) => (
+    <li key={label}>
+      <span>{label}</span>
+      <strong>{title}</strong>
+      <small>{description}</small>
+    </li>
+  ));
+}
+
 function Components() {
   return (
-    <DiagramSlide eyebrow="Familiar components, different screen" title="How our app worked.">
-      <ol className="system-diagram">
-        <li>
-          <span>AUTHOR</span>
-          <strong>JSX</strong>
-          <small>Familiar components</small>
-        </li>
-        <li>
-          <span>TRANSLATE</span>
-          <strong>Custom renderer</strong>
-          <small>Our abstraction layer</small>
-        </li>
-        <li>
-          <span>DISPLAY</span>
-          <strong>Lightning</strong>
-          <small>Primitives on the TV</small>
-        </li>
+    <DiagramSlide
+      eyebrow="A different rendering target"
+      title="The interface doesn’t have to be HTML."
+    >
+      <ol className="system-diagram rendering-options">
+        <DiagramItems
+          items={[
+            ['DOM', 'Elements', 'The browser lays out and paints HTML and CSS.'],
+            ['CANVAS', 'Drawing', 'Your code or a renderer draws the interface.'],
+          ]}
+        />
       </ol>
       <p className="diagram-caption">
-        Engineers built components. Our renderer translated them into the TV interface.
+        Lightning is a JavaScript framework for TV interfaces. It was the rendering platform on a TV
+        project I worked on.
       </p>
+      <a className="slide-resource" href="https://lightningjs.io/" target="_blank" rel="noreferrer">
+        Lightning overview and documentation ↗
+      </a>
+    </DiagramSlide>
+  );
+}
+
+function SoundSystem() {
+  return (
+    <DiagramSlide eyebrow="Inside Browser Beat" title="What makes that possible?">
+      <ol className="system-diagram">
+        <DiagramItems
+          items={[
+            ['CONTROL', 'React', 'Faders update the sound parameters.'],
+            ['GENERATE', 'Web Audio', 'Schedules notes and processes the sound.'],
+            ['OUTPUT', 'Speakers', 'Hear the signal as you change it.'],
+          ]}
+        />
+      </ol>
+      <p className="diagram-caption">Canvas draws a waveform from the live audio signal.</p>
     </DiagramSlide>
   );
 }
@@ -199,139 +309,138 @@ export const slides: readonly Slide[] = [
     id: 'welcome',
     title: 'The Frontend Lab',
     Content: Entrance,
-    notes: `ARRIVAL SLIDE
-Leave this on screen while people arrive. No explanation is needed yet.
+    notes: `ARRIVAL
+Leave this on screen while people arrive.
 
 WHEN READY
-“I want to show you two different uses of front-end technology: a small music experiment, then a TV project I worked on.”`,
+“Today is a chance to explore something outside our normal delivery work. First, a quick look at the tracks, then two examples of what front-end skills can do.”`,
+  },
+  {
+    id: 'workshop',
+    title: 'Today is for experimenting',
+    Content: Workshop,
+    notes: `THE DAY · 1 minute
+“Choose a question or an idea that interests you. You can work alone or with people from other squads. A useful outcome might be discovering an existing solution, comparing approaches or building something small.”
+
+No production-ready deliverable is expected. The tracks provide starting points; participants can follow their curiosity. Keep logistics separate from this introduction.`,
+  },
+  {
+    id: 'tracks',
+    title: 'Four ways to explore',
+    Content: Tracks,
+    notes: `THE FOUR TRACKS · 2 minutes
+Give each track one sentence. Modern Web explores browser capabilities. Code Quality investigates real code. Developer Experience addresses recurring friction. Experimental Projects leaves the idea open.
+
+All four are equally valid. Bring an existing repository where appropriate; a new app is not a requirement. Guides and examples help participants start independently.
+
+TRANSITION
+“The examples I’ll show are visual and interactive, but we can also look at their state, testing and tooling.”`,
   },
   {
     id: 'possibilities',
-    title: 'Front-end beyond the page',
+    title: 'Change one assumption',
     Content: Possibilities,
-    notes: `FRONT-END IN OTHER SETTINGS · 2–3 minutes
-“We usually associate front-end development with websites. But the same skills show up in very different environments: TV interfaces, interactive installations, visual tools and games.”
+    notes: `OPEN THE QUESTION · 1–2 minutes
+“We often start with a page and a pointer. Change one assumption and the same front-end skills lead somewhere different.”
 
-THE PURPOSE
-“We'll start with something I was curious to try, then look at a real project with a different rendering system and input device.”
-
-BRIDGE TO OUR EXAMPLE
-“First, could we use the browser to make music, rather than just play a recording?”
-
-Keep the other settings brief. The TV project is the concrete firsthand example; don't imply its architecture represents every TV app today.`,
+Give people a moment to consider the questions. Do not turn this into a catalogue of APIs. Two examples follow: browser-generated music, then a remote-controlled interface.`,
   },
   {
     id: 'instrument-introduction',
     title: 'Could the browser be an instrument?',
     Content: InstrumentIntroduction,
-    notes: `A PERSONAL QUESTION · about 1 minute
-“I started with something I wanted to try: making music in the browser.”
+    notes: `PERSONAL CURIOSITY · 1 minute
+“I remembered those small demoscene intros with tracker music. Could the browser generate music, and could we shape it while it plays?”
 
-WHERE THE IDEA CAME FROM
-“I remembered those small demoscene intros with tracker music and wondered what we could make using browser APIs. Could the browser generate the music, and could we shape it while it plays?”
-
-TRANSITION
-“This is Browser Beat: a small experiment made for this session. Let's hear it.”
-
-Keep this personal and brief. It is a new experiment, not part of the TV project or a recreation of a particular historical intro.`,
+Browser Beat is a new experiment made for this session, not a historical tracker file or part of the TV project. “Let’s hear it.”`,
   },
   {
     id: 'instrument',
-    title: 'The browser as an instrument',
+    title: 'Browser Beat',
     Content: Instrument,
-    notes: `TRY THE EXPERIMENT · 2–3 minutes
-Start with sound rather than another introduction. The previous slide has established why this experiment is here.
+    notes: `LIVE MUSIC · 2–3 minutes
+Press Play. Slowly change Tone, then add Echo. Change Tempo, and move Pitch to −12 or +12 to hear an octave shift without changing tempo. Faders support arrow keys too.
 
-TRY IT LIVE
-Press Play. Move the Tone fader to the right slowly, then add a little Echo. Change Tempo to hear the same loop at a different pace. Move Pitch to −12 or +12 for an octave down or up without changing the tempo. Faders also support arrow keys. Keep the volume comfortable and stop playback before discussing it.
-
-WHAT IS HAPPENING
-“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The waveform reads the live audio signal.
-
-TRANSITION
-“That was an experiment driven by curiosity. Next is a project where the platform was part of the brief: an application for TVs.” Click Continue presentation outside the instrument to open The TV project. Moving to another slide removes the iframe and stops its audio. The presenter preview is deliberately static and silent.
+Keep the volume comfortable. Stop playback before discussing it. Continue presentation opens the signal diagram; leaving the slide removes the iframe and stops its audio. Presenter previews are static and silent.
 
 IF AUDIO IS UNAVAILABLE
-Describe the signal path and show the controls. Do not spend the talk debugging the room's sound system.`,
+Show the controls and explain the signal path. Avoid spending the session troubleshooting the room’s sound system.`,
+  },
+  {
+    id: 'sound-system',
+    title: 'What makes that possible?',
+    Content: SoundSystem,
+    notes: `EXPLAIN WHAT THEY HEARD · 1–2 minutes
+“React handles the controls. Web Audio schedules notes and processes the sound. The speakers play that signal; Canvas draws a waveform from it.”
+
+The loop is original synthesized audio, not a recording. React does not need to render every audio sample. Keep the explanation at the level of responsibilities, not a tour of the source.
+
+TRANSITION
+“Now change the input instead of the output. Imagine using a screen without a pointer.”`,
   },
   {
     id: 'television',
-    title: 'The TV project',
+    title: 'A screen without a pointer',
     Content: Television,
-    notes: `ONE REAL EXAMPLE · 1–2 minutes
-“We built a fully animated, canvas-based application for smart TVs. People navigated it with a remote rather than a pointer. Lightning was part of our agreement with Comcast for Xfinity devices.”
+    notes: `REMOTE INPUT · 1–2 minutes
+Ask where focus should start, how it moves between rows and where it should return after playback. Give people a moment to predict the behaviour.
 
-WHAT LIGHTNING IS
-“Lightning is a JavaScript framework for TV interfaces. In our project it drew the interface to a canvas, rather than us building it from HTML elements.” The slide links to its official site for anyone who wants to look further. Today the site covers Lightning 3 and Blits; those names do not identify the version we used.
-
-THE APP AT A GLANCE
-The interface was drawn on Canvas. Remote input moved focus and selected things. It was still front-end work: building components, managing state and making the interaction understandable, on a different kind of screen.
-
-TRANSITION
-“Let's try what that interaction feels like, and then I'll show you the high-level structure.”
-
-REMEMBER
-This describes our project, not current Xfinity policy. The next slide is a new illustration, not footage of the original app.`,
-  },
-  {
-    id: 'remote',
-    title: 'Try the interaction: no pointer',
-    Content: Remote,
-    notes: `LET PEOPLE TRY IT · 2–3 minutes
-“This is a small Canvas example made for this talk, not our original Lightning application. Notice what changes when you navigate with a remote instead of a mouse. Put the pointer aside for a moment.”
-
-LIVE SEQUENCE
-Move right until the shelf scrolls. Move down, then back up: the row remembers its selection. Press Enter to play the selected title as a full-frame procedural animation, then Escape to return. On a phone, use the on-screen arrows, OK and Back.
-
-PAUSE FOR A QUESTION
-“What should happen when I go back?” Give people a moment to predict it before pressing Back. The focus ring, predictable movement and restored selection are doing work a pointer normally makes easy.
-
-TRANSITION
-“The interaction was unfamiliar. We wanted building the components to feel familiar.” Tab through the remote to Continue presentation, or click that link, to move on.
-
-REMEMBER
-This illustration uses React state and native Canvas 2D. It does not demonstrate Lightning or our custom renderer, and its playback is an original procedural animation, not streamed video.`,
+Focus is part of the interface state, not just decoration. Explain directional navigation before showing the TV. Do not imply every TV app uses the same rendering system.`,
   },
   {
     id: 'components',
-    title: 'How our app worked',
+    title: 'The interface doesn’t have to be HTML',
     Content: Components,
-    notes: `HOW IT WORKED, AT A HIGH LEVEL · 2–3 minutes
-“Lightning exposed an imperative API. Our engineers were used to components, so we built a custom React renderer that let them work with familiar JSX.”
+    notes: `RENDERING · 2 minutes
+“HTML and CSS are one way to describe an interface. With Canvas, code or a rendering library draws it. That changes which responsibilities the platform handles for us.”
 
-FOLLOW THE DIAGRAM
-Engineers described components in JSX. Our renderer translated them into Lightning primitives. Lightning provided the rendered TV interface. That is the level of detail needed here; no reconciler internals or code walkthrough.
+A BRIEF REAL EXAMPLE
+“I worked on an animated TV application using Lightning, rendered to canvas and controlled with a remote.” The link provides context for anyone unfamiliar with Lightning. Current documentation is not evidence of which historical version we used. Canvas is an alternative for particular constraints, not a general replacement for HTML; layout, semantics and accessibility need deliberate attention.
 
-WHY THAT HELPED
-“People could get up and running building components quickly. The abstraction also made it easier to build testing tools for this environment.” Keep testing to that brief benefit unless someone asks.
-
-BACK TO THE BIGGER IDEA
-“The component model was familiar, but input, rendering and testing were different. Here are the main differences.”
-
-IF ASKED
-Default tests mocked parts of rendering, including Canvas functionality; tests using real Lightning primitives also existed. Exact testing APIs need checking. The team later switched to Solid.js, but the reason and migration details aren't confirmed here. The live example is React plus Canvas 2D, not this original renderer.`,
+ONLY IF ASKED
+Lightning was required by the agreement with Comcast for Xfinity devices. Its imperative API led us to build a custom React renderer so engineers could use familiar JSX. This accelerated component work and helped us build testing tools. Default tests mocked rendering, including Canvas; real-primitives tests also existed. The team later switched to Solid.js. Exact versions, testing APIs and migration reasons remain unconfirmed.`,
   },
   {
     id: 'assumptions',
-    title: 'What was different',
+    title: 'Familiar skills, different constraints',
     Content: Assumptions,
-    notes: `BRIEF RECAP · about 1 minute
-“The input was different, the rendering was different, and we built some of the tooling ourselves. Components and application state were still familiar.”
+    notes: `CONNECT TO EVERYDAY WORK · 1–2 minutes
+“State, components and events are still useful. The questions change: where does focus live, who draws the screen, and how do we inspect and test it?”
 
-Don't explain the diagram again. Use these three points to draw together what people just saw. The animation makes the demo enjoyable; the focus movement and return behaviour are the connection to the project.
+This is the link to quality and tooling, not a recommendation to build a framework. Existing tools and small improvements are valid experiments.
 
 TRANSITION
-“Those were two different starting points: curiosity about browser audio, and a TV platform we were required to use. Any questions about either?”`,
+“Let’s try a small illustration of that interaction. Watch what happens to the selection when we come back.”`,
+  },
+  {
+    id: 'remote',
+    title: 'Try the TV interface',
+    Content: Remote,
+    notes: `FINAL LIVE DEMO · 2–3 minutes
+“This is a new React and Canvas illustration, not our original Lightning app.”
+
+Move right until the shelf scrolls. Move down and back up: the row remembers the selection. Press Enter to play, then Escape to return. On a phone, use the on-screen arrows, OK and Back. Ask “Where should focus return?” before going back.
+
+Playback is an original procedural animation, not streamed video. This does not demonstrate our custom renderer or Lightning itself. Tab through the remote to Continue presentation, which leads back to the four tracks.`,
+  },
+  {
+    id: 'next-directions',
+    title: 'Where would you take it?',
+    Content: NextDirections,
+    notes: `CONNECT THE DEMOS TO THE TRACKS · 2 minutes
+“These examples are starting points. You could explore device communication, investigate the navigation state, improve a debugging workflow or invent a different interface.”
+
+You do not have to extend these demos. An existing codebase or a recurring workflow problem is equally useful. Discovering a good existing solution counts; building a new tool is not compulsory.`,
   },
   {
     id: 'curiosity',
-    title: 'Questions',
+    title: 'Choose your starting point',
     Content: Closing,
-    notes: `QUESTIONS
-“Any questions about the project or either of the demos?”
+    notes: `QUESTIONS AND HANDOVER · 3–5 minutes
+“Any questions before we start? If you already have an idea, open a track and find a useful starting point.”
 
-Leave this slide up for discussion. If someone asks about a historical detail you don't remember, say so. The current Lightning documentation and this Canvas demo are not evidence of exactly how the original app was implemented.
+Use Open the Frontend Lab to return to the gallery. Track pages offer ideas, guides and demos. Participants can work independently or in small groups, using their own project where appropriate.
 
-There is no need for another motivational summary. Allow time for questions rather than stretching the material to fill the slot.`,
+Keep this slide up for questions. Answer historical project details honestly; say when a detail needs checking. No additional motivational closing or requirement to present a finished result.`,
   },
 ];
