@@ -13,3 +13,9 @@ npm run dev --workspace @lab/demo-browser-instrument -- --host 0.0.0.0
 The sequencer wraps into groups of eight steps, or four on phones, keeping every step visible without horizontal scrolling. Controls work with touch and keyboard; use arrow keys on a focused slider. Reset pattern restores the grid without changing the sound controls.
 
 [Web Audio introduction](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API)
+
+## Performance view
+
+Choose **Performance view** to open the instrument without the gallery's documentation shell. It uses a dark stage, live frequency spectrum, sound controls and step pads. **Fullscreen** expands it for a projector; Escape leaves fullscreen. Audio still starts only when you press Play, and leaving the page stops it.
+
+The same standalone entry accepts `?embed=1`, like Canvas TV, for an iframe in the presentation. Use `allow="autoplay; fullscreen"` on the iframe when embedding and keep a way to continue the presentation outside it. No presentation slides were added by this change. Small screens scroll naturally rather than shrinking the controls.

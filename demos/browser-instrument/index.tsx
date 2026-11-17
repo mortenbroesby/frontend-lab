@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
 import { Slider } from '@lab/ui/slider';
 import { createInstrument } from './audio';
 import type { Instrument, Settings } from './audio';
 import { initialPattern, toggleStep } from './pattern';
 import { Scope } from './scope';
+import { PerformanceControls } from './performance-controls';
 import './instrument.css';
 
+const embedded = new URLSearchParams(window.location.search).has('embed');
+const instrumentClass = embedded ? 'pocket-instrument instrument-performance' : 'pocket-instrument';
 const voices = ['Lead', 'Bass', 'Drums'];
 function Dial({
   label,
@@ -43,6 +46,7 @@ function Dial({
   );
 }
 export default function InstrumentDemo() {
+  const stage = useRef<HTMLDivElement>(null);
   const [settings, setSettings] = useState<Settings>({
     tempo: 112,
     cutoff: 3800,
@@ -91,17 +95,13 @@ export default function InstrumentDemo() {
     }
   }
   return (
-    <div className="pocket-instrument">
-      <div className="instrument-top">
-        <div>
-          <span className="instrument-eyebrow">PATTERN 01 / C MINOR</span>
-          <h2>Press play. Find your sound.</h2>
-          <p>An original loop, ready to reshape.</p>
-        </div>
-        <Button className="instrument-play" onClick={() => void togglePlayback()} disabled={busy}>
-          {instrument ? '■ Stop' : '▶ Play'}
-        </Button>
-      </div>
+    <div ref={stage} className={instrumentClass}>
+      <InstrumentHeader
+        stage={stage}
+        busy={busy}
+        playing={Boolean(instrument)}
+        onPlay={() => void togglePlayback()}
+      />
       {error && <p role="alert">{error}</p>}
       <div className="instrument-console">
         <div className="instrument-scope">
@@ -198,19 +198,55 @@ export default function InstrumentDemo() {
           ))}
         </div>
       </div>
-      <div className="instrument-note">
-        <p>
-          Inspired by tracker music and tiny demoscene intros. The melody, bass and percussion are
-          generated live with oscillators. The grid changes the loop; the sliders shape its sound.
-          No recording is playing behind the controls. Start with the tone slider, then take a few
-          notes out.
-        </p>
-        <Button
-          variant="outline"
-          onClick={() => setSettings((s) => ({ ...s, pattern: initialPattern }))}
-        >
-          Reset pattern
+      {!embedded && (
+        <div className="instrument-note">
+          <p>
+            Inspired by tracker music and tiny demoscene intros. The melody, bass and percussion are
+            generated live with oscillators. The grid changes the loop; the sliders shape its sound.
+            No recording is playing behind the controls. Start with the tone slider, then take a few
+            notes out.
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => setSettings((s) => ({ ...s, pattern: initialPattern }))}
+          >
+            Reset pattern
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InstrumentHeader({
+  stage,
+  busy,
+  playing,
+  onPlay,
+}: {
+  stage: RefObject<HTMLDivElement | null>;
+  busy: boolean;
+  playing: boolean;
+  onPlay: () => void;
+}) {
+  return (
+    <div className="instrument-top">
+      <div>
+        <span className="instrument-eyebrow">PATTERN 01 / C MINOR</span>
+        {embedded ? <h1>Pocket tracker</h1> : <h2>Press play. Find your sound.</h2>}
+        <p>An original loop, ready to reshape.</p>
+      </div>
+      <div className="instrument-actions">
+        <Button className="instrument-play" onClick={onPlay} disabled={busy}>
+          {playing ? '■ Stop' : '▶ Play'}
         </Button>
+        {embedded ? (
+          <PerformanceControls stage={stage} />
+        ) : (
+          <Button variant="outline" asChild>
+            <a href="?embed=1">Performance view ↗</a>
+          </Button>
+        )}
       </div>
     </div>
   );

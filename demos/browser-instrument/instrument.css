@@ -294,3 +294,163 @@
     transition: none;
   }
 }
+/* The shared demo shell intentionally has no phone padding; this instrument owns its inset. */
+.pocket-instrument {
+  padding: clamp(20px, 3vw, 36px);
+  box-sizing: border-box;
+}
+.instrument-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.instrument-performance {
+  --lab-paper: #121918;
+  --lab-surface: #0d1312;
+  --lab-ink: #eff8f2;
+  --lab-muted: #a5b6ac;
+  --lab-line: #293932;
+  --lab-control-border: #4c6256;
+  --lab-hover: #1f3027;
+  --lab-focus: #9cf6b8;
+  --lab-accent: #eff8f2;
+  --lab-accent-hover: #c6e4d0;
+  color-scheme: dark;
+  color: var(--lab-ink);
+  background: var(--lab-surface);
+  width: 100%;
+  max-width: none;
+  min-height: 100dvh;
+  padding: clamp(20px, 3vw, 48px);
+}
+body:has(.instrument-performance) {
+  margin: 0;
+  background: #0d1312;
+}
+.instrument-performance:fullscreen {
+  overflow: auto;
+}
+.instrument-performance .instrument-top {
+  padding: 0 0 24px;
+}
+.instrument-performance h1 {
+  margin: 8px 0 0;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  letter-spacing: -0.04em;
+}
+.instrument-performance .instrument-top p {
+  display: none;
+}
+.instrument-performance .instrument-console {
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+.instrument-performance .instrument-controls {
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 24px;
+}
+.instrument-performance .instrument-scope canvas {
+  height: 180px;
+}
+.instrument-performance .sequencer-heading {
+  margin: 28px 0 16px;
+}
+.instrument-performance .sequencer {
+  gap: 16px;
+}
+.instrument-performance .sequence-row {
+  padding: 12px 16px;
+  grid-template-columns: 140px repeat(16, minmax(44px, 1fr));
+  gap: 8px;
+}
+.instrument-performance .voice-label {
+  grid-column: auto;
+  display: grid;
+  gap: 0;
+  padding: 0 16px 0 0;
+}
+.instrument-performance .voice-label strong {
+  min-width: 0;
+}
+.instrument-performance .sequence-step {
+  height: 64px;
+}
+@media (max-width: 1200px) {
+  .instrument-performance .sequence-row {
+    grid-template-columns: repeat(8, minmax(44px, 1fr));
+  }
+  .instrument-performance .voice-label {
+    grid-column: 1/-1;
+    display: flex;
+    padding-bottom: 8px;
+  }
+  .instrument-performance .voice-label strong {
+    min-width: 140px;
+  }
+}
+@media (max-width: 700px) {
+  .instrument-actions {
+    width: 100%;
+  }
+  .instrument-performance .instrument-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .instrument-performance .instrument-console {
+    grid-template-columns: 1fr;
+  }
+  .instrument-performance .sequence-row {
+    grid-template-columns: repeat(4, minmax(44px, 1fr));
+  }
+  .instrument-performance .voice-label strong {
+    min-width: 100px;
+  }
+  .instrument-performance .instrument-controls {
+    padding: 24px;
+    gap: 20px;
+  }
+  .instrument-performance .scope-caption {
+    font-size: 0.625rem;
+  }
+}
+@media (min-width: 1201px) and (max-height: 800px) {
+  .instrument-performance .sequencer-heading {
+    margin: 16px 0 12px;
+  }
+  .instrument-performance {
+    padding: 24px;
+  }
+  .instrument-performance .instrument-top {
+    padding-bottom: 16px;
+  }
+  .instrument-performance .instrument-controls {
+    padding: 16px 24px;
+    gap: 0;
+  }
+  .instrument-performance .instrument-dial {
+    gap: 4px;
+  }
+  .instrument-performance .instrument-scope canvas {
+    height: 120px;
+  }
+  .instrument-performance .scope-caption,
+  .instrument-performance .scope-footer {
+    padding: 16px;
+  }
+  .instrument-performance .sequence-step {
+    height: 52px;
+  }
+  .instrument-performance .sequence-row {
+    padding: 8px 16px;
+  }
+  .instrument-performance .sequencer {
+    gap: 12px;
+  }
+}
+
+.instrument-performance-page {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
