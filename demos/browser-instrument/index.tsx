@@ -4,7 +4,6 @@ import { Slider } from '@lab/ui/slider';
 import { createInstrument } from './audio';
 import type { Instrument, Settings } from './audio';
 import { initialPattern, toggleStep } from './pattern';
-import { RotaryKnob } from './rotary-knob';
 import { Scope } from './scope';
 import { PerformanceControls } from './performance-controls';
 import './instrument.css';
@@ -28,10 +27,9 @@ function Dial({
   unit: string;
   onChange: (value: number) => void;
 }) {
-  if (presentation) return <RotaryKnob {...{ label, value, min, max, unit, onChange }} />;
   return (
     <label className="instrument-dial">
-      <span>
+      <span className="instrument-dial-label">
         {label}
         <output>
           {value} {unit}
@@ -148,7 +146,7 @@ export default function InstrumentDemo() {
         </div>
       </div>
       {presentation && (
-        <p className="instrument-knob-hint">Drag knobs up or down · Arrow keys when focused</p>
+        <p className="instrument-fader-hint">Drag left or right · Arrow keys when focused</p>
       )}
       {!presentation && (
         <>
