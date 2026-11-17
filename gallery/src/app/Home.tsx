@@ -30,6 +30,12 @@ export function Home() {
 function HomeJourneys() {
   return (
     <nav className="home-journeys" aria-label="Resources for your experiment">
+      <a href="#/showcases">
+        <span className="journey-label">
+          Explore showcases <span aria-hidden="true">↗</span>
+        </span>
+        <span>See the possibilities on a larger canvas.</span>
+      </a>
       <a href="#/demos">
         <span className="journey-label">
           Try demos <span aria-hidden="true">↗</span>

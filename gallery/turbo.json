@@ -12,14 +12,19 @@
         "!$TURBO_ROOT$/demos/**/.turbo/**",
         "!demo-kit/**",
         "!$TURBO_ROOT$/demos/**/node_modules/**",
-        "$TURBO_ROOT$/.env*"
+        "$TURBO_ROOT$/.env*",
+        "$TURBO_ROOT$/showcases/**",
+        "!$TURBO_ROOT$/showcases/**/dist/**",
+        "!$TURBO_ROOT$/showcases/**/.turbo/**",
+        "!$TURBO_ROOT$/showcases/**/node_modules/**"
       ]
     },
     "typecheck": {
       "inputs": [
         "$TURBO_DEFAULT$",
         "$TURBO_ROOT$/demos/*/demo.config.ts",
-        "!demo-kit/**"
+        "!demo-kit/**",
+        "$TURBO_ROOT$/showcases/*/showcase.config.ts"
       ]
     },
     "test": {

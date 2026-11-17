@@ -4,6 +4,7 @@ import { DemoGallery } from './DemoGallery';
 import { GuideGallery } from './GuideGallery';
 import { GuideView } from './GuideView';
 import { Home } from './Home';
+import { ShowcaseGallery } from './ShowcaseGallery';
 import { LabNavigation } from './LabNavigation';
 import { TrackGuide, findTrack } from './TrackPage';
 
@@ -23,6 +24,11 @@ const pages: Record<string, Page> = {
     title: 'Try a demo',
     description: 'Every demo, across all four tracks.',
     content: <DemoGallery />,
+  },
+  '/showcases': {
+    title: 'Showcases',
+    description: 'Larger interactive pieces. Explore what a few web technologies can become.',
+    content: <ShowcaseGallery />,
   },
   '/guides': {
     title: 'Follow a guide',

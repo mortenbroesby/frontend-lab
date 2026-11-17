@@ -34,6 +34,8 @@ bring your own idea—solo or together. Unfinished work is welcome.
 
 Each track has ideas, demos and a starting point. Use this repo or your own project.
 
+**Showcases** are larger interactive pieces, separate from the small demos. Open Showcases in the app to explore Signal Garden, a D3-powered particle world.
+
 <a id="start-here"></a>
 ## 🚀 Run Locally
 

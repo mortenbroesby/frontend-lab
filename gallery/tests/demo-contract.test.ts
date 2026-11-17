@@ -62,3 +62,11 @@ test('runtime requirements are optional and reject unknown values', () => {
     /requirements/,
   );
 });
+
+test('showcases have separate discovery and cannot accidentally enter the demo catalogue', () => {
+  const path = '../../showcases/signal-garden/showcase.config.ts';
+  assert.equal(discoverDemos({ [path]: demo }, 'showcases')[0].id, 'signal-garden');
+  assert.throws(() => discoverDemos({ [path]: demo }), /Invalid demo folder/);
+  assert.throws(() => discoverDemos({ '../../demos/alpha/demo.config.ts': demo }, 'showcases'));
+  assert.throws(() => discoverDemos({ [path]: { ...demo, title: '' } }, 'showcases'), /title/);
+});

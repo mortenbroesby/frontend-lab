@@ -5,7 +5,8 @@
       "gallery",
       "demos/*",
       "gallery/demo-kit",
-      "shared/*"
+      "shared/*",
+      "showcases/*"
     ]
   },
   "duplicates": {
