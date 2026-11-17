@@ -50,6 +50,7 @@ export default function InstrumentDemo() {
   const stage = useRef<HTMLDivElement>(null);
   const [settings, setSettings] = useState<Settings>({
     song: 0,
+    pitch: 0,
     tempo: 112,
     cutoff: 3800,
     echo: 0.25,
@@ -134,6 +135,14 @@ export default function InstrumentDemo() {
             max={160}
             unit="BPM"
             onChange={(tempo) => setSettings((s) => ({ ...s, tempo }))}
+          />
+          <Dial
+            label="Pitch"
+            value={settings.pitch}
+            min={-12}
+            max={12}
+            unit="semitones"
+            onChange={(pitch) => setSettings((s) => ({ ...s, pitch }))}
           />
           <Dial
             label="Tone"

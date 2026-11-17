@@ -55,7 +55,7 @@ export const initialPattern = [
   ],
 ];
 const melody = [72, 79, 84, 79, 75, 79, 82, 79, 70, 77, 82, 77, 68, 75, 79, 82];
-export const frequency = (note: number) => 440 * 2 ** ((note - 69) / 12);
+export const frequency = (note: number, semitones = 0) => 440 * 2 ** ((note + semitones - 69) / 12);
 export const stepDuration = (tempo: number) => 60 / tempo / 4;
 export function toggleStep(pattern: boolean[][], row: number, step: number) {
   return pattern.map((line, index) =>

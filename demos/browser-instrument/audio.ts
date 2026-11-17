@@ -1,6 +1,7 @@
 import { frequency, songs, stepDuration } from './pattern';
 export type Settings = {
   song: number;
+  pitch: number;
   tempo: number;
   cutoff: number;
   echo: number;
@@ -41,11 +42,12 @@ export function createInstrument() {
     duration: number,
     type: OscillatorType,
     volume: number,
+    pitch: number,
   ) {
     const oscillator = context.createOscillator();
     const envelope = context.createGain();
     oscillator.type = type;
-    oscillator.frequency.value = frequency(note);
+    oscillator.frequency.value = frequency(note, pitch);
     envelope.gain.setValueAtTime(0, time);
     envelope.gain.linearRampToValueAtTime(volume, time + 0.008);
     envelope.gain.exponentialRampToValueAtTime(0.001, time + duration);
@@ -95,8 +97,10 @@ export function createInstrument() {
   function playStep(settings: Settings, beat: number, time: number) {
     const { pattern, levels } = settings;
     const { melody, bass } = songs[settings.song];
-    if (pattern[0][beat]) tone(melody[beat], time, 0.18, 'square', levels[0] * 0.12);
-    if (pattern[1][beat]) tone(bass[Math.floor(beat / 4)], time, 0.22, 'sawtooth', levels[1] * 0.2);
+    if (pattern[0][beat])
+      tone(melody[beat], time, 0.18, 'square', levels[0] * 0.12, settings.pitch);
+    if (pattern[1][beat])
+      tone(bass[Math.floor(beat / 4)], time, 0.22, 'sawtooth', levels[1] * 0.2, settings.pitch);
     if (pattern[2][beat]) drum(time, beat, levels[2]);
   }
   return {

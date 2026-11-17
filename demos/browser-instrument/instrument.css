@@ -89,7 +89,7 @@
 }
 .instrument-controls {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 40px;
   padding: 32px;
 }
@@ -471,7 +471,7 @@ body:has(.instrument-performance) {
 .instrument-presentation {
   height: 720px;
   min-height: 720px;
-  padding: 40px 72px;
+  padding: 24px 72px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -507,11 +507,11 @@ body:has(.instrument-performance) {
 .instrument-presentation .instrument-controls {
   grid-template-columns: 1fr;
   padding: 0 60px;
-  gap: 24px;
+  gap: 12px;
 }
 .instrument-presentation .instrument-dial {
-  gap: 8px;
-  padding: 16px 32px 12px;
+  gap: 4px;
+  padding: 10px 32px 8px;
   border: 1px solid #35473b;
   border-radius: 10px;
   background: linear-gradient(170deg, #26352c, #18241d);
@@ -529,7 +529,7 @@ body:has(.instrument-performance) {
   color: #b9f7d1;
 }
 .instrument-presentation [data-slot='slider'] {
-  min-height: 52px;
+  min-height: 44px;
   cursor: ew-resize;
   background: repeating-linear-gradient(90deg, #708b7844 0 1px, transparent 1px 5%) center / 100%
     28px no-repeat;

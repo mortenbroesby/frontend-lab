@@ -28,3 +28,9 @@ test('three original tunes have complete, distinct sixteen-step arrangements', (
     assert.notEqual(edited[0][0], song.pattern[0][0]);
   }
 });
+
+test('octave transposition doubles or halves pitch', () => {
+  assert.equal(frequency(69, 12), 880);
+  assert.equal(frequency(69, -12), 220);
+  assert.equal(frequency(69, 0), 440);
+});

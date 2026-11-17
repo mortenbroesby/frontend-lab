@@ -308,7 +308,7 @@ TRANSITION
 “This one is a new experiment, not part of the TV project. I remembered those small demoscene intros with tracker music and wondered what we could make in a browser.”
 
 TRY IT LIVE
-Press Play. Move the Tone fader to the right slowly, then add a little Echo. Change Tempo to hear the same loop at a different pace. Faders also support arrow keys. Keep the volume comfortable and stop playback before discussing it.
+Press Play. Move the Tone fader to the right slowly, then add a little Echo. Change Tempo to hear the same loop at a different pace. Move Pitch to −12 or +12 for an octave down or up without changing the tempo. Faders also support arrow keys. Keep the volume comfortable and stop playback before discussing it.
 
 WHAT IS HAPPENING
 “The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The subtle waveform reads the live audio signal.
