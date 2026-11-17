@@ -11,10 +11,11 @@ function initialRoomCode() {
   return /^[a-z0-9-]{1,24}$/.test(code) ? code : 'front-end-lab';
 }
 
-export default function DeviceRally() {
+export default function ReactionRoom() {
   const [roomCode, setRoomCode] = useState(initialRoomCode);
   const [joined, setJoined] = useState<string | null>(initialRoomCode);
-  const { status, peers, cheers, cheer, leave } = useRallyRoom(joined);
+  const room = useRallyRoom(joined);
+  const { status, leave } = room;
 
   function join(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -25,88 +26,164 @@ export default function DeviceRally() {
     location.reload();
   }
 
+  const guide = galleryHref('/track/modern-web/devices');
   return (
-    <div className="experiment-grid device-rally">
-      <div className="rally-stage">
-        <div
-          key={cheers.total}
-          className="rally-emoji"
-          data-testid="rally-emoji"
-          role="img"
-          aria-label={
-            { '👋': 'Wave', '🚀': 'Rocket', '✨': 'Sparkle', '💜': 'Heart' }[cheers.emoji] ??
-            'Cheer'
-          }
-        >
-          {cheers.emoji}
+    <div className="reaction-room">
+      <ReactionStage room={room} joined={joined !== null} />
+      <aside className="reaction-room-panel" aria-labelledby="room-heading">
+        <div>
+          <p className="eyebrow">Trystero / WebRTC</p>
+          <h2 id="room-heading">Your room</h2>
+          <p>Same code. Connected screens.</p>
         </div>
-        <p className="rally-total" aria-live="polite" data-testid="rally-total">
-          {cheers.total} cheers seen here
-        </p>
-        <p data-testid="rally-peers">{peers} other devices connected</p>
-        <div className="rally-buttons">
-          <Button disabled={!peers} aria-label="Send rocket" onClick={() => void cheer('🚀')}>
-            🚀
-          </Button>
-          <Button disabled={!peers} aria-label="Send sparkle" onClick={() => void cheer('✨')}>
-            ✨
-          </Button>
-          <Button disabled={!peers} aria-label="Send heart" onClick={() => void cheer('💜')}>
-            💜
-          </Button>
-        </div>
-        <p className="small">Live cheers, no saved history. Late arrivals start at zero.</p>
-      </div>
-      <div className="controls">
-        <p className="eyebrow">Trystero / WebRTC</p>
-        <h3>Find your people. Cheer together.</h3>
-        <p>
-          Open Device Rally on each device and use the same room code. Peers connect automatically.
-          No host or backend setup.
-        </p>
-        <p>
-          Public signaling needs internet; peers can use different networks. Use localhost or
-          trusted HTTPS. A phone cannot reach another computer’s localhost.
-        </p>
-        <form onSubmit={join}>
-          <Label htmlFor="rally-room">Room code</Label>
-          <Input
-            id="rally-room"
-            value={roomCode}
-            disabled={joined !== null}
-            pattern={'[a-z0-9\\-]{1,24}'}
-            maxLength={24}
-            required
-            onChange={(event) => setRoomCode(event.target.value.toLowerCase())}
-          />
-          <Button disabled={joined !== null} type="submit">
-            Join room
-          </Button>
-        </form>
-        <p className="small">Joining reloads the page with the room code in its URL.</p>
-        <Button
-          disabled={joined === null}
-          type="button"
-          onClick={() => {
-            setJoined(null);
-            leave();
-          }}
-        >
-          Leave room
-        </Button>
-        <p role="status">{status}</p>
-        <p className="small">
-          Up to 12 people. Room codes are public labels, not passwords. Nostr relays carry
-          signaling; WebRTC carries cheers. Send only playful signals.
-        </p>
-        {galleryHref('/track/modern-web/devices') && (
-          <p>
-            <a href={galleryHref('/track/modern-web/devices')}>
-              Understand this · Try it in your project
-            </a>
-          </p>
+        {joined ? (
+          <div className="reaction-room-code">
+            <span>Room code</span>
+            <strong>{joined}</strong>
+            <p>Use this code on each device.</p>
+          </div>
+        ) : (
+          <form className="reaction-room-form" onSubmit={join}>
+            <Label htmlFor="rally-room">Room code</Label>
+            <Input
+              id="rally-room"
+              value={roomCode}
+              pattern={'[a-z0-9\\-]{1,24}'}
+              maxLength={24}
+              required
+              name="room"
+              autoComplete="off"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              aria-describedby="room-format"
+              onChange={(event) => setRoomCode(event.target.value.toLowerCase())}
+            />
+            <p id="room-format">1–24 lowercase letters, numbers or hyphens.</p>
+            <Button type="submit">Join room</Button>
+          </form>
         )}
-      </div>
+        <p className="reaction-connection" role="status">
+          {status}
+        </p>
+        {joined && (
+          <Button
+            variant="outline"
+            onClick={() => {
+              setJoined(null);
+              leave();
+            }}
+          >
+            Leave room
+          </Button>
+        )}
+      </aside>
+      <footer className="reaction-footnote">
+        <div className="reaction-room-help">
+          <h3>Bring another screen</h3>
+          <p>
+            Use the hosted demo on your phone, or two localhost windows on this computer. Devices
+            need internet and trusted HTTPS; plain HTTP over LAN will not connect.
+          </p>
+          {guide && <a href={guide}>How do browsers connect? →</a>}
+        </div>
+        <p>Up to 12 people · Live reactions, no saved history · Late arrivals start at zero.</p>
+        <p>
+          Room codes are public labels, not passwords. Nostr relays handle discovery; WebRTC carries
+          reactions. Some networks block connections.
+        </p>
+      </footer>
     </div>
+  );
+}
+
+function roomView(supported: boolean, joined: boolean, peers: number) {
+  if (!supported)
+    return {
+      status: 'Connection unavailable',
+      title: 'A secure connection is needed.',
+      hint: 'Use localhost or open the hosted demo over HTTPS.',
+    };
+  if (!joined)
+    return {
+      status: 'Not in a room',
+      title: 'Start with a room.',
+      hint: 'Choose a room code to connect.',
+    };
+  if (peers)
+    return {
+      status: 'Connected',
+      title: 'Send a little hello.',
+      hint: 'Pick a reaction. Watch it arrive on the other screens.',
+    };
+  return {
+    status: 'Waiting for company',
+    title: 'Better with another screen.',
+    hint: 'Open this demo in another browser and use the same room code.',
+  };
+}
+
+function ReactionStage({
+  room,
+  joined,
+}: {
+  room: ReturnType<typeof useRallyRoom>;
+  joined: boolean;
+}) {
+  const { supported, peers, cheers, cheer } = room;
+  const view = roomView(supported, joined, peers);
+  const reactions = [
+    { emoji: '🚀', label: 'Rocket' },
+    { emoji: '✨', label: 'Sparkle' },
+    { emoji: '💜', label: 'Heart' },
+  ];
+  return (
+    <section className="reaction-stage" aria-label="Live reactions">
+      <header className="reaction-stage-header">
+        <span className="reaction-status" data-connected={peers > 0}>
+          <span aria-hidden="true" />
+          {view.status}
+        </span>
+        <span className="reaction-count" data-testid="rally-peers">
+          Other devices: {peers}
+        </span>
+      </header>
+      <div className="reaction-display">
+        <div className="reaction-orbit">
+          <div
+            key={cheers.total}
+            className="reaction-emoji"
+            data-testid="rally-emoji"
+            role="img"
+            aria-label={
+              reactions.find((reaction) => reaction.emoji === cheers.emoji)?.label ?? 'Wave'
+            }
+          >
+            {cheers.emoji}
+          </div>
+        </div>
+        <h2>{view.title}</h2>
+        <p>{view.hint}</p>
+      </div>
+      <div className="reaction-actions" aria-label="Send a reaction">
+        {reactions.map(({ emoji, label }) => (
+          <Button
+            key={emoji}
+            variant="outline"
+            disabled={!peers}
+            aria-label={`Send ${label.toLowerCase()}`}
+            onClick={() => cheer(emoji)}
+          >
+            <span className="reaction-action-emoji" aria-hidden="true">
+              {emoji}
+            </span>
+            {label}
+          </Button>
+        ))}
+      </div>
+      <p className="reaction-total" aria-live="polite" data-testid="rally-total">
+        <strong>{cheers.total}</strong> reactions seen here
+      </p>
+    </section>
   );
 }

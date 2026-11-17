@@ -68,7 +68,7 @@ export function useRallyRoom(joined: string | null) {
           setPeers(count);
           setStatus(
             count
-              ? `Connected to ${count} other ${count === 1 ? 'device' : 'devices'}. Send a cheer!`
+              ? `Connected to ${count} other ${count === 1 ? 'device' : 'devices'}. Send a reaction!`
               : 'Waiting for a device with the same room code.',
           );
           if (count) clearTimeout(timer);
@@ -110,7 +110,8 @@ export function useRallyRoom(joined: string | null) {
           setCheers((previous) => ({ total: previous.total + 1, emoji }));
       },
       () => {
-        if (action.current === current) setStatus('Cheer failed. Check the connection and retry.');
+        if (action.current === current)
+          setStatus('Reaction failed. Check the connection and retry.');
       },
     );
   }
@@ -119,5 +120,5 @@ export function useRallyRoom(joined: string | null) {
     setPeers(0);
     setStatus('Left the room. Choose a code to rejoin.');
   }
-  return { status, peers, cheers, cheer, leave };
+  return { status, peers, cheers, cheer, leave, supported };
 }

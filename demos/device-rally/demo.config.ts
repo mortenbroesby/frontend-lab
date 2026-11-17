@@ -2,8 +2,8 @@ import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
   requirements: ['internet', 'secure-context'],
-  title: 'Device rally',
+  title: 'Reaction Room',
   tracks: ['modern-web'],
-  description: 'Discover browsers and send giant emoji cheers with Trystero and WebRTC.',
+  description: 'Connect browsers in a shared room and send reactions from screen to screen.',
   author: 'Lab examples',
 } satisfies DemoDefinition;

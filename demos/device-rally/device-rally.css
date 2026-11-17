@@ -1,42 +1,196 @@
-.device-rally .rally-stage {
+.reaction-room {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(17rem, 1fr);
+  gap: 1.5rem;
+  color: var(--lab-ink);
+}
+.reaction-stage,
+.reaction-room-panel {
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+  background: var(--lab-surface);
+  min-width: 0;
+}
+.reaction-stage {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.reaction-stage-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--lab-muted);
+}
+.reaction-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.reaction-status > span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--lab-muted);
+}
+.reaction-status[data-connected='true'] > span {
+  background: var(--lab-accent);
+}
+.reaction-count,
+.reaction-total strong {
+  font-variant-numeric: tabular-nums;
+}
+.reaction-display {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  flex: 1;
+  padding: 2.5rem 0 2rem;
+  text-align: center;
+}
+.reaction-orbit {
   display: grid;
   place-items: center;
-  align-content: center;
-  gap: 1rem;
-  padding: 2rem 1rem;
-  border-radius: 1.5rem;
-  background: var(--lab-track-modern-web);
+  width: 10rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--lab-line);
+  border-radius: 50%;
+  background: var(--lab-paper);
+  margin-bottom: 1.5rem;
+}
+.reaction-emoji {
+  font-size: 5rem;
+  line-height: 1;
+  animation: reaction-arrive 220ms ease-out;
+}
+.reaction-room h2 {
+  margin: 0;
+  font-size: 1.375rem;
+  letter-spacing: -0.025em;
+}
+.reaction-display p {
+  max-width: 28rem;
+  margin: 0.75rem 0 0;
+  color: var(--lab-muted);
+}
+.reaction-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.reaction-actions button {
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 5.5rem;
+  padding: 0.75rem 0.25rem;
+}
+.reaction-action-emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+.reaction-total {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  color: var(--lab-muted);
+  font-size: 0.8125rem;
+}
+.reaction-total strong {
   color: var(--lab-ink);
-  min-height: 22rem;
 }
-.device-rally .rally-emoji {
-  font-size: clamp(5rem, 15vw, 9rem);
-  line-height: 1.2;
-  animation: rally-pop 300ms ease-out;
+.reaction-room-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.25rem;
+  padding: 1.5rem;
 }
-.device-rally .rally-total {
-  font-size: 1.5rem;
-  font-weight: 700;
+.reaction-room-panel p {
+  margin: 0.5rem 0 0;
+  color: var(--lab-muted);
+  font-size: 0.875rem;
+}
+.reaction-room-panel .eyebrow {
+  margin: 0 0 0.75rem;
+}
+.reaction-room-code {
+  border-block: 1px solid var(--lab-line);
+  padding: 1.25rem 0;
+}
+.reaction-room-code > span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--lab-muted);
+  margin-bottom: 0.5rem;
+}
+.reaction-room-code strong {
+  display: block;
+  font-family: ui-monospace, monospace;
+  font-size: 1.25rem;
+  overflow-wrap: anywhere;
+}
+.reaction-room-form {
+  display: grid;
+  gap: 0.75rem;
+}
+.reaction-room-form p {
+  margin: 0;
+  font-size: 0.75rem;
+}
+.reaction-room-panel .reaction-connection {
+  margin: 0;
+  line-height: 1.6;
+}
+.reaction-room-help {
+  border-top: 1px solid var(--lab-line);
+  padding-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.reaction-room-help h3 {
+  font-size: 0.875rem;
   margin: 0;
 }
-.device-rally .rally-buttons {
-  display: flex;
-  gap: 0.6rem;
+.reaction-room-help a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
 }
-.rally-buttons button {
-  font-size: 1.7rem;
-  min-width: 3.5rem;
+.reaction-footnote {
+  grid-column: 1 / -1;
+  color: var(--lab-muted);
+  font-size: 0.75rem;
 }
-@keyframes rally-pop {
+.reaction-footnote p {
+  margin: 0 0 0.5rem;
+}
+@keyframes reaction-arrive {
   from {
-    transform: scale(0.7) rotate(-12deg);
+    transform: translateY(0.4rem) scale(0.85);
+    opacity: 0.5;
   }
   to {
-    transform: scale(1) rotate(0);
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+@media (max-width: 720px) {
+  .reaction-room {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .reaction-room-panel {
+    order: -1;
+  }
+  .reaction-display {
+    padding: 1.5rem 0;
+  }
+  .reaction-orbit {
+    width: 8rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .device-rally .rally-emoji {
+  .reaction-emoji {
     animation: none;
   }
 }
