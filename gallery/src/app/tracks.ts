@@ -7,7 +7,7 @@ export const tracks = [
       {
         slug: 'devices',
         title: 'Connect two browsers',
-        description: 'Build a reaction button that sends a message to another browser.',
+        description: 'Explore peers, messages and what your screens need to share.',
       },
       {
         slug: 'workers',
