@@ -6,6 +6,7 @@ import { GuideView } from './GuideView';
 import { Home } from './Home';
 import { LabNavigation } from './LabNavigation';
 import { TrackGuide, findTrack } from './TrackPage';
+import { TrackBreadcrumbs } from './TrackBreadcrumbs';
 
 interface Page {
   title: string;
@@ -85,17 +86,12 @@ function useRoute() {
   return route;
 }
 
-function PageHeading({ page, track, plain }: { page: Page; track: boolean; plain: boolean }) {
+function PageHeading({ page, route }: { page: Page; route: string }) {
+  const track = findTrack(route);
   return (
     <>
-      {track && (
-        <nav className="page-path" aria-label="Breadcrumb">
-          <a href="#/">Tracks</a>
-          <span aria-hidden="true">/</span>
-          <span>{page.title}</span>
-        </nav>
-      )}
-      <section className={`starter-welcome ${plain ? 'page-intro' : ''}`}>
+      {track && <TrackBreadcrumbs track={track} route={route} />}
+      <section className={`starter-welcome ${route !== '/' ? 'page-intro' : ''}`}>
         <h1>{page.title}</h1>
         {page.description && <p className="welcome-description">{page.description}</p>}
       </section>
@@ -140,7 +136,7 @@ export function App() {
         data-track={findTrack(route)?.id}
         tabIndex={-1}
       >
-        <PageHeading page={page} track={Boolean(findTrack(route))} plain={route !== '/'} />
+        <PageHeading page={page} route={route} />
         {page.content}
       </main>
     </>

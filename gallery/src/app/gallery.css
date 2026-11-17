@@ -456,15 +456,7 @@
   margin-left: 0;
 }
 .page-path {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
   padding-top: 1.5rem;
-  color: var(--lab-muted);
-  font-size: 0.8rem;
-}
-.page-path a {
-  color: var(--lab-ink);
 }
 .guide-nav {
   display: flex;
@@ -642,9 +634,6 @@
   .idea-card,
   .demo-card {
     padding: 1.25rem;
-  }
-  .page-path span {
-    display: none;
   }
 }
 
