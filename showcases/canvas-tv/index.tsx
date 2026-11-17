@@ -12,8 +12,7 @@ const embedded = new URLSearchParams(window.location.search).has('embed');
 export default function CanvasTV() {
   useTheme();
   const [state, dispatch] = useReducer(navigate, initialState);
-  const [playing, setPlaying] = useState(true);
-  const { canvas, available } = useScreen(state, playing);
+  const { canvas, available } = useScreen(state);
   const screen = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (embedded) screen.current?.focus();
@@ -57,14 +56,6 @@ export default function CanvasTV() {
           onKeyDown={onKeyDown}
         >
           <canvas ref={canvas} aria-hidden="true" />
-          <Button
-            className="tv-motion"
-            variant="outline"
-            aria-pressed={!playing}
-            onClick={() => setPlaying((value) => !value)}
-          >
-            {playing ? 'Pause scenery' : 'Resume scenery'}
-          </Button>
           {!available && (
             <p className="tv-unavailable">
               Canvas is unavailable in this browser. You can still explore the catalogue with the
@@ -103,9 +94,9 @@ function TVIntro() {
           Remote is a TV interface drawn entirely in Canvas. Explore its fictional catalogue with
           arrow keys, then press Enter to open a title. Escape brings you back to the same
           selection. A TV remote has no pointer, so a visible focus and predictable movement matter.
-          Mountains and mist drift behind the catalogue; Pause scenery freezes the view. React
-          manages the state while Canvas draws every title, landscape and focus ring. This is an
-          original interaction study, not a recreation of Lightning or a streaming service.
+          Mountains and mist drift behind the catalogue. React manages the state while Canvas draws
+          every title, landscape and focus ring. This is an original interaction study, not a
+          recreation of Lightning or a streaming service.
         </p>
       </section>
     </>
@@ -121,7 +112,7 @@ function RemoteControls({
   const [error, setError] = useState('');
   const fullscreen = async () => {
     try {
-      await screen.current?.requestFullscreen();
+      await screen.current?.parentElement?.requestFullscreen();
       screen.current?.focus();
       setError('');
     } catch {
@@ -146,20 +137,42 @@ function RemoteControls({
           </Button>
         </div>
         <div className="tv-remote" role="group" aria-label="On-screen remote">
-          <Button variant="outline" aria-label="Move up" onClick={() => dispatch('ArrowUp')}>
+          <Button
+            className="tv-up"
+            variant="outline"
+            aria-label="Move up"
+            onClick={() => dispatch('ArrowUp')}
+          >
             ↑
           </Button>
-          <Button variant="outline" aria-label="Move left" onClick={() => dispatch('ArrowLeft')}>
+          <Button
+            className="tv-left"
+            variant="outline"
+            aria-label="Move left"
+            onClick={() => dispatch('ArrowLeft')}
+          >
             ←
           </Button>
-          <Button onClick={() => dispatch('Enter')}>OK</Button>
-          <Button variant="outline" aria-label="Move right" onClick={() => dispatch('ArrowRight')}>
+          <Button className="tv-ok" onClick={() => dispatch('Enter')}>
+            OK
+          </Button>
+          <Button
+            className="tv-right"
+            variant="outline"
+            aria-label="Move right"
+            onClick={() => dispatch('ArrowRight')}
+          >
             →
           </Button>
-          <Button variant="outline" aria-label="Move down" onClick={() => dispatch('ArrowDown')}>
+          <Button
+            className="tv-down"
+            variant="outline"
+            aria-label="Move down"
+            onClick={() => dispatch('ArrowDown')}
+          >
             ↓
           </Button>
-          <Button variant="outline" onClick={() => dispatch('Escape')}>
+          <Button className="tv-back" variant="ghost" onClick={() => dispatch('Escape')}>
             Back
           </Button>
         </div>

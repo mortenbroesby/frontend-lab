@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { paint, targetView } from './paint';
 import type { TVState } from './navigation';
 
-export function useScreen(state: TVState, playing: boolean) {
+export function useScreen(state: TVState) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const view = useRef(targetView(state));
   const time = useRef(0);
@@ -19,7 +19,7 @@ export function useScreen(state: TVState, playing: boolean) {
     const to = targetView(state);
     const start = performance.now();
     let previous = start;
-    let animated = playing && !motion.matches;
+    let animated = !motion.matches;
     let frame = 0;
     const draw = (now: number) => {
       const progress = transitionProgress(now - start, motion.matches);
@@ -37,7 +37,7 @@ export function useScreen(state: TVState, playing: boolean) {
     };
     const resize = () => {
       cancelAnimationFrame(frame);
-      animated = playing && !motion.matches;
+      animated = !motion.matches;
       const width = Math.max(1, Math.round(element.clientWidth * Math.min(devicePixelRatio, 2)));
       element.width = width;
       element.height = Math.round((width * 9) / 16);
@@ -56,7 +56,7 @@ export function useScreen(state: TVState, playing: boolean) {
       motion.removeEventListener('change', resize);
       document.removeEventListener('visibilitychange', resize);
     };
-  }, [state, playing]);
+  }, [state]);
   return { canvas, available };
 }
 

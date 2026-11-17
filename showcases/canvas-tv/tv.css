@@ -84,9 +84,41 @@ body {
   line-height: 1.6;
 }
 .tv-remote {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-areas: '. up .' 'left ok right' '. down .' '. back .';
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(4, 44px);
+  gap: 2px;
+  padding: 10px;
+  flex-shrink: 0;
+  border: 1px solid var(--lab-border);
+  border-radius: 28px;
+  background: var(--lab-surface);
+}
+.tv-remote button {
+  padding: 0;
+  border-radius: 50%;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+.tv-up {
+  grid-area: up;
+}
+.tv-left {
+  grid-area: left;
+}
+.tv-ok {
+  grid-area: ok;
+}
+.tv-right {
+  grid-area: right;
+}
+.tv-down {
+  grid-area: down;
+}
+.tv-back {
+  grid-area: back;
+  font-size: 12px;
 }
 .tv-selection {
   min-height: 3.2em;
@@ -104,16 +136,6 @@ body {
     align-items: flex-start;
     flex-direction: column;
   }
-}
-.tv-screen:fullscreen {
-  display: grid;
-  place-items: center;
-  border-radius: 0;
-}
-.tv-screen:fullscreen canvas {
-  width: min(100vw, calc(100dvh * 16 / 9));
-  height: auto;
-  aspect-ratio: 16 / 9;
 }
 .tv-launch > button {
   margin-right: 8px;
@@ -133,43 +155,64 @@ body {
 .tv-skip:focus {
   transform: translateY(0);
 }
-.tv-motion {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  background: #080e12c9;
-  color: #e6f6ee;
-  border-color: #668079;
-}
+/* Embedded mode reserves space for the touch remote without covering the catalogue. */
 .tv-embedded {
   padding: 0;
   max-width: none;
   background: #080e12;
 }
+.tv-shell main:fullscreen,
 .tv-embedded main {
-  height: 100dvh;
+  background: #080e12;
+  min-height: 100dvh;
   display: grid;
-  place-items: center;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: center;
+  align-items: center;
+  gap: 12px;
+  padding-right: 12px;
 }
+.tv-shell main:fullscreen .tv-screen,
 .tv-embedded .tv-screen {
-  width: min(100vw, calc(100dvh * 16 / 9));
+  width: 100%;
   border-radius: 0;
 }
-.tv-embedded .tv-controls,
-.tv-embedded .tv-selection,
-.tv-embedded .tv-skip {
+.tv-shell main:fullscreen .tv-controls,
+.tv-embedded .tv-controls {
+  margin: 0;
+}
+.tv-shell main:fullscreen .tv-launch,
+.tv-shell main:fullscreen .tv-selection,
+.tv-embedded .tv-launch,
+.tv-embedded .tv-selection {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
 }
-.tv-embedded .tv-controls,
+.tv-shell main:fullscreen .tv-launch button,
+.tv-embedded .tv-launch button,
 .tv-embedded .tv-skip {
   display: none;
 }
-
 .tv-embedded .tv-screen:focus-visible {
   outline: 1px solid #668079;
   outline-offset: -1px;
+}
+@media (max-width: 600px) {
+  .tv-shell main:fullscreen,
+  .tv-embedded main {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
+    gap: 12px;
+  }
+  .tv-shell main:fullscreen .tv-controls,
+  .tv-embedded .tv-controls {
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .tv-controls {
+    align-items: center;
+  }
 }
