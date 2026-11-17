@@ -39,7 +39,8 @@
     "./theme-control": "./src/theme-control.tsx",
     "./kbd": "./src/kbd.tsx",
     "./empty-state": "./src/empty-state.tsx",
-    "./snippet": "./src/snippet.tsx"
+    "./snippet": "./src/snippet.tsx",
+    "./code-preview": "./src/code-preview.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

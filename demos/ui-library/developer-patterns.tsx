@@ -4,6 +4,7 @@ import { EmptyState } from '@lab/ui/empty-state';
 import { Input } from '@lab/ui/input';
 import { Label } from '@lab/ui/label';
 import { Kbd } from '@lab/ui/kbd';
+import { CodePreview } from '@lab/ui/code-preview';
 import { Snippet } from '@lab/ui/snippet';
 
 export function DeveloperPatterns() {
@@ -25,6 +26,16 @@ export function DeveloperPatterns() {
           <p className="ui-showcase-note">
             On HTTP connections, select the command if clipboard access is unavailable.
           </p>
+        </div>
+        <div>
+          <h4>Preview source code</h4>
+          <CodePreview
+            filename="hello.tsx"
+            language="TSX"
+            code={
+              "import { Button } from '@lab/ui/button';\n\nexport function Hello() {\n  return <Button onClick={() => alert('Hello!')}>Say hello</Button>;\n}"
+            }
+          />
         </div>
         <div>
           <h4>Keyboard hints</h4>

@@ -22,7 +22,7 @@ For components working together, open **UI library** in the gallery or run `npm 
 | Layout and content | `card`, `badge`, `separator`, `table`, `avatar`, `scroll-area` |
 | Navigation | `tabs`, `accordion`, `breadcrumb`, `pagination` |
 | Overlays | `dialog`, `alert-dialog`, `sheet`, `popover`, `dropdown-menu`, `tooltip` |
-| Developer patterns | `snippet`, `kbd`, `empty-state` |
+| Developer patterns | `snippet`, `code-preview`, `kbd`, `empty-state` |
 | Feedback | `alert`, `progress`, `skeleton` |
 
 ## Use
@@ -79,3 +79,5 @@ The playground covers the listed families. Rich editors, date pickers, combobox 
 ## Developer patterns
 
 Inspired by [Geist](https://vercel.com/geist/introduction), using Lab tokens and existing primitives. `Snippet` takes a `code` string and an optional copy-button `label`; it copies the exact text and reports clipboard failures (including insecure HTTP) without hiding the selectable command. `Kbd` is a native keyboard hint, not a shortcut handler. `EmptyState` takes `title`, `description`, optional decorative `icon`, and action children; callers own filtering and announcements. Reserve alerts for errors and empty states for useful next actions.
+
+`CodePreview` displays a `code` string with a required `filename`, optional `language` label and copy control. It preserves whitespace, scrolls long lines and bounds tall files. Source is rendered as plain text, never executed; the language label does not enable syntax highlighting. Use `Snippet` for short commands and `CodePreview` for source files.

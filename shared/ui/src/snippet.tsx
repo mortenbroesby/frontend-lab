@@ -1,4 +1,5 @@
-import { useState, type ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
+import { useCopyText } from './use-copy-text';
 import { Check, Copy } from 'lucide-react';
 import { Button } from './button';
 import { cn } from './utils';
@@ -9,15 +10,7 @@ type SnippetProps = Omit<ComponentProps<'div'>, 'children'> & {
 };
 
 function Snippet({ code, label = 'Copy command', className, ...props }: SnippetProps) {
-  const [message, setMessage] = useState('');
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(code);
-      setMessage('Copied');
-    } catch {
-      setMessage('Copy unavailable. Select and copy the command above.');
-    }
-  }
+  const { message, copy } = useCopyText(code);
   return (
     <div data-slot="snippet" className={cn('min-w-0', className)} {...props}>
       <div className="flex items-start gap-3 rounded-md border border-solid border-border bg-muted/40 p-3">
