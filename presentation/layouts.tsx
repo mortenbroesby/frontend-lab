@@ -31,20 +31,3 @@ export function DiagramSlide({ eyebrow, title, children }: LayoutProps) {
     </div>
   );
 }
-
-export function DemonstrationSlide({ eyebrow, title, children }: LayoutProps) {
-  return (
-    <div className="slide-layout demonstration-layout">
-      <div>
-        <p className="slide-eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
-        <p className="slide-description">
-          Your keyboard is the remote.
-          <br />
-          Follow the focus.
-        </p>
-      </div>
-      <div className="slide-experiment">{children}</div>
-    </div>
-  );
-}

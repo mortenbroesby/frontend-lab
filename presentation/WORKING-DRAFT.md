@@ -45,7 +45,7 @@ The first draft expanded this into nine slides. That was too much: the presenter
 | Slide | Purpose | Approximate time |
 | --- | --- | --- |
 | A web app on a TV | Establish the original app and required Lightning platform | 1 minute |
-| No pointer. Where is your focus? | Launch Canvas TV and explore remote navigation | 2–3 minutes |
+| No pointer. Where is your focus? | Explore remote navigation in the embedded Canvas TV | 2–3 minutes |
 | Familiar components. Different renderer. | Explain the custom renderer and testing benefit | 1–2 minutes |
 
 This is a section, not a finished talk. Do not expand it into the whole presentation again without agreement. The later Solid migration belongs in optional speaker context, not another slide.
@@ -54,9 +54,9 @@ This is a section, not a finished talk. Do not expand it into the whole presenta
 
 `showcases/canvas-tv/` is an independent React + Canvas 2D app, discoverable in the gallery. It draws a 16:9 streaming-style interface with original generated landscapes and fictional titles. React manages the selection and Canvas draws the actual interface; this is not HTML styled to look like Canvas.
 
-Use arrow keys to move through two catalogue rows, Enter to view details and Escape to return. Horizontal movement scrolls the shelf; each row remembers its last selection. The visible focus ring is central to the experience. On-screen remote buttons also support touch and provide ordinary accessible controls, with a text announcement of the selected programme. Tab remains available to leave the screen. Reduced motion removes focus/scroll animation.
+Use arrow keys to move through two catalogue rows, Enter to view details and Escape to return. Horizontal movement scrolls the shelf; each row remembers its last selection. The visible focus ring is central to the experience. On-screen remote buttons also support touch and provide ordinary accessible controls, with a text announcement of the selected programme. Tab remains available to leave the screen. Reduced motion removes focus/scroll animation and freezes the scenery. The background has moving mountain layers, drifting mist and a changing night sky, with a Pause scenery control.
 
-The presentation opens it in a new tab, keeping the slide available when the demo closes. The combined gallery build supplies the link; standalone presentation builds can set `VITE_GALLERY_URL`.
+The presentation embeds the actual showcase inline through its `?embed=1` view. No new tab is needed. The iframe keeps TV arrow keys separate from slide navigation; Tab leads to Continue presentation. Presenter previews stay static. The combined gallery build supplies the URL; standalone presentation builds can set `VITE_GALLERY_URL`. The standalone showcase remains available in the gallery.
 
 This is **not Lightning**, the original application, a custom React renderer or a video streaming service. It illustrates the interaction model using native Canvas. Actual TV hardware compatibility is unverified. The original product and its technical history remain distinct from this example.
 

@@ -133,3 +133,43 @@ body {
 .tv-skip:focus {
   transform: translateY(0);
 }
+.tv-motion {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  background: #080e12c9;
+  color: #e6f6ee;
+  border-color: #668079;
+}
+.tv-embedded {
+  padding: 0;
+  max-width: none;
+  background: #080e12;
+}
+.tv-embedded main {
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+}
+.tv-embedded .tv-screen {
+  width: min(100vw, calc(100dvh * 16 / 9));
+  border-radius: 0;
+}
+.tv-embedded .tv-controls,
+.tv-embedded .tv-selection,
+.tv-embedded .tv-skip {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.tv-embedded .tv-controls,
+.tv-embedded .tv-skip {
+  display: none;
+}
+
+.tv-embedded .tv-screen:focus-visible {
+  outline: 1px solid #668079;
+  outline-offset: -1px;
+}

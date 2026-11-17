@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState, type RefObject, type KeyboardEvent } from 'react';
+import { useEffect, useReducer, useRef, useState, type RefObject, type KeyboardEvent } from 'react';
 import { Button } from '@lab/ui/button';
 import { useTheme } from '@lab/ui/theme-control';
 import { LabMark } from '@lab/demo-kit/mark';
@@ -7,11 +7,17 @@ import { initialState, navigate, selectedTitle, type TVState } from './navigatio
 import { useScreen } from './use-screen';
 import './tv.css';
 
+const embedded = new URLSearchParams(window.location.search).has('embed');
+
 export default function CanvasTV() {
   useTheme();
   const [state, dispatch] = useReducer(navigate, initialState);
-  const { canvas, available } = useScreen(state);
+  const [playing, setPlaying] = useState(true);
+  const { canvas, available } = useScreen(state, playing);
   const screen = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (embedded) screen.current?.focus();
+  }, []);
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (
       [
@@ -34,7 +40,7 @@ export default function CanvasTV() {
     dispatch(event.key);
   };
   return (
-    <div className="tv-shell">
+    <div className={embedded ? 'tv-shell tv-embedded' : 'tv-shell'}>
       <a className="tv-skip" href="#tv-screen" onClick={() => screen.current?.focus()}>
         Skip to TV screen
       </a>
@@ -51,6 +57,14 @@ export default function CanvasTV() {
           onKeyDown={onKeyDown}
         >
           <canvas ref={canvas} aria-hidden="true" />
+          <Button
+            className="tv-motion"
+            variant="outline"
+            aria-pressed={!playing}
+            onClick={() => setPlaying((value) => !value)}
+          >
+            {playing ? 'Pause scenery' : 'Resume scenery'}
+          </Button>
           {!available && (
             <p className="tv-unavailable">
               Canvas is unavailable in this browser. You can still explore the catalogue with the
@@ -66,6 +80,7 @@ export default function CanvasTV() {
 }
 
 function TVIntro() {
+  if (embedded) return null;
   const back = galleryHref('/showcases');
   return (
     <>
@@ -88,8 +103,9 @@ function TVIntro() {
           Remote is a TV interface drawn entirely in Canvas. Explore its fictional catalogue with
           arrow keys, then press Enter to open a title. Escape brings you back to the same
           selection. A TV remote has no pointer, so a visible focus and predictable movement matter.
-          React manages the state while Canvas draws every title, landscape and focus ring. This is
-          an original interaction study, not a recreation of Lightning or a streaming service.
+          Mountains and mist drift behind the catalogue; Pause scenery freezes the view. React
+          manages the state while Canvas draws every title, landscape and focus ring. This is an
+          original interaction study, not a recreation of Lightning or a streaming service.
         </p>
       </section>
     </>

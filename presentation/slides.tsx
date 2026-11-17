@@ -1,6 +1,5 @@
 import type { ComponentType } from 'react';
-import { Button } from '@lab/ui/button';
-import { TitleSlide, DiagramSlide, DemonstrationSlide } from './layouts';
+import { TitleSlide, DiagramSlide } from './layouts';
 
 type Slide = {
   id: string;
@@ -27,42 +26,32 @@ function Television() {
   );
 }
 function Remote({ preview }: { preview?: boolean }) {
-  return (
-    <DemonstrationSlide
-      eyebrow="Try a different interaction model"
-      title="No pointer. Where is your focus?"
-    >
-      <div className="remote-slide">
-        <div className="remote-diagram" aria-label="A directional remote">
-          <span>↑</span>
-          <span>←</span>
-          <strong>OK</strong>
-          <span>→</span>
-          <span>↓</span>
-        </div>
-        <p>Move. Select. Return.</p>
-        {showcaseHref ? (
-          <Button asChild className="text-foreground" variant="outline" disabled={preview}>
-            <a
-              href={showcaseHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              tabIndex={preview ? -1 : undefined}
-            >
-              Open Canvas TV ↗
-            </a>
-          </Button>
-        ) : (
-          <p className="showcase-setup">
-            Open this deck through the gallery build to launch Canvas TV, or set
-            VITE_GALLERY_URL for a standalone deck.
-          </p>
-        )}
-        <small>Original Canvas 2D showcase · opens in a new tab</small>
+  if (preview)
+    return (
+      <div className="tv-slide-preview">
+        <p>LIVE CANVAS SHOWCASE</p>
+        <h1>
+          No pointer.
+          <br />
+          Follow the focus.
+        </h1>
       </div>
-    </DemonstrationSlide>
+    );
+  return (
+    <div className="tv-slide" data-presentation-interactive>
+      {showcaseHref ? (
+        <iframe title="Canvas TV — interactive remote navigation" src={`${showcaseHref}?embed=1`} />
+      ) : (
+        <p>Set VITE_GALLERY_URL to the gallery URL to embed Canvas TV in a standalone deck.</p>
+      )}
+      <div className="tv-slide-footer">
+        <span>↑ ↓ ← → Navigate · Enter select · Escape back · Tab to leave TV</span>
+        <a href="#components">Continue presentation →</a>
+      </div>
+    </div>
   );
 }
+
 function Components() {
   return (
     <DiagramSlide
@@ -106,7 +95,7 @@ export const slides: readonly Slide[] = [
     title: 'No pointer: navigating with a remote',
     Content: Remote,
     notes:
-      'About 2–3 minutes live. Open Canvas TV in a separate tab, focus its screen using Use keyboard remote and put the mouse aside. Move right beyond the visible row, down to another shelf, then back up: each row remembers its selection. Enter opens title details; Escape returns to the same position. Ask where focus should move next. A visible focus and predictable movement replace pointer targeting. This is a new React + Canvas 2D interaction study with generated artwork, not Lightning, the original custom renderer or a video service. Close the tab to return here. Physical TV hardware has not been tested.',
+      'About 2–3 minutes live. The live Canvas TV is embedded in this slide. Its screen receives focus: put the mouse aside and use the arrows. Move right beyond the visible row, down to another shelf, then back up: each row remembers its selection. Enter opens title details; Escape returns to the same position. Ask where focus should move next. A visible focus and predictable movement replace pointer targeting. This is a new React + Canvas 2D interaction study with generated artwork, not Lightning, the original custom renderer or a video service. Tab past Pause scenery to reach Continue presentation; activating it advances to the next slide. There is no live iframe in presenter previews. Physical TV hardware has not been tested.',
   },
   {
     id: 'components',
