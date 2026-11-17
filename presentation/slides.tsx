@@ -22,7 +22,6 @@ function Entrance() {
   return (
     <TitleSlide eyebrow="A chapter session" title="The Frontend Lab">
       <p>Front-end development outside the usual web page.</p>
-      <span className="slide-caption">Morten Broesby</span>
     </TitleSlide>
   );
 }

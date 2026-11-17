@@ -103,12 +103,6 @@ a {
   color: #84ecad;
   font-weight: 500;
 }
-.slide-caption {
-  display: block;
-  font-size: 1.1cqw;
-  margin-top: 4cqw;
-  color: #a9b4ac;
-}
 .slide-number {
   position: absolute;
   bottom: 2cqw;
