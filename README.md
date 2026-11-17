@@ -4,12 +4,7 @@
   Explore, experiment and build something interesting.
 </p>
 
-<p align="center">
-  <img alt="Node 24.x" src="https://img.shields.io/badge/node-24.x-6366f1">
-  <img alt="React" src="https://img.shields.io/badge/React-19-149eca">
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178c6">
-  <img alt="Turborepo" src="https://img.shields.io/badge/Turborepo-0f172a">
-</p>
+
 
 <p align="center">
   <a href="#start-here">Run locally</a>
@@ -47,6 +42,8 @@ npm run dev
 ```
 
 Open the printed address and choose a track.
+
+Moving this repository internally? See the [migration checklist](gallery/docs/internal-migration.md).
 
 Windows works with native PowerShell or Command Prompt; WSL is not required. If PowerShell blocks `npm.ps1`, use `npm.cmd` instead of `npm` in these commands. See [Windows setup and compatibility](gallery/docs/windows.md).
 

@@ -24,7 +24,7 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 - Import shared kit code through `@lab/demo-kit` exports. The kit cannot import apps or contain demo-specific state or service calls.
 - Keep pure calculations separate from React/effects when useful, with tests beside them. Extract shared utilities only for multiple real consumers; no empty workspaces or speculative abstractions.
 - Entry files assemble dependencies; root scripts coordinate workspaces. Gallery tests must not own demo logic.
-- Run `npm run check:architecture` for import or ownership changes. Dependency-cruiser also runs in `npm run check` and CI. Fix misplaced code rather than weakening rules.
+- Run `npm run check:architecture` for import or ownership changes. Dependency-cruiser also runs in `npm run check`. Fix misplaced code rather than weakening rules.
 
 
 ## Development
@@ -60,6 +60,6 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 
 ## Fallow
 
-Codex and Copilot CLI share `.agents/skills/fallow`; follow its installed-version instructions. Config: `.fallowrc.json`. Snapshot and refresh instructions: [.baselines](.baselines/README.md). Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. Do not refresh baselines to hide new findings. The official Git hook audits staged changes; CI audits PRs and direct pushes to main. See the [Fallow contributor notes](gallery/docs/fallow.md).
+Codex and Copilot CLI share `.agents/skills/fallow`; follow its installed-version instructions. Config: `.fallowrc.json`. Snapshot and refresh instructions: [.baselines](.baselines/README.md). Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. Do not refresh baselines to hide new findings. The official Git hook audits staged changes. GitHub Actions workflows are intentionally absent; run checks locally before pushing. See the [Fallow contributor notes](gallery/docs/fallow.md).
 
 Use the CLI. Keep one shared Fallow skill, no repo MCP entries, per-agent hooks or duplicate task maps.

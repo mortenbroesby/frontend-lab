@@ -10,7 +10,7 @@ Codex and Copilot CLI use these project skills in `.agents/skills`. Keep one cop
 | `web-design-guidelines` | Review scoped UI code against Vercel's interface guidelines. |
 | `turborepo` | Configure tasks, caching and workspace builds using installed-version docs. |
 | `lab-debugging` | Reproduce failures, test one cause and verify a focused correction. |
-| `lab-ci` | Diagnose GitHub Actions failures on main or a requested PR. |
+| `lab-ci` | Diagnose historical or explicitly configured GitHub Actions runs; no workflow is currently installed. |
 | `fallow` | Audit code quality with the installed Fallow instructions. |
 
 ## Upstream sources

@@ -18,7 +18,7 @@ The standalone demo packages, gallery, generator and shared toolchain remain in 
 
 ## Windows
 
-[Windows compatibility](windows.md) records the scope, safeguards and remaining manual checks. CI runs native Windows and Linux in a checkout path containing spaces. `npm run test:servers` checks gallery and standalone HTTP startup after building; it does not run a browser.
+[Windows compatibility](windows.md) records the scope, safeguards and remaining manual checks. The previous Windows/Linux CI workflow has been removed; current revisions require local verification on the destination machines. `npm run test:servers` checks gallery and standalone HTTP startup after building; it does not run a browser.
 
 ## Device Rally physical-device session — 2026-11-16
 
@@ -57,7 +57,7 @@ Use a fresh or agreed room on trusted HTTPS with the phone page in the foregroun
 
 ## Focused lint rules
 
-`npm run lint` uses the root Oxlint config for React hooks, a small explicit correctness baseline and type-aware `no-floating-promises` / `no-misused-promises` checks. The pinned `oxlint-tsgolint` companion resolves workspace TypeScript types; normal workspace typechecking remains separate. CI already runs lint through `npm run check`.
+`npm run lint` uses the root Oxlint config for React hooks, a small explicit correctness baseline and type-aware `no-floating-promises` / `no-misused-promises` checks. The pinned `oxlint-tsgolint` companion resolves workspace TypeScript types; normal workspace typechecking remains separate. Run lint locally through `npm run check`; no CI workflow is configured.
 
 Only imported Node `test()` registrations are allowlisted in test files, because the test runner owns their outcome. Other Promises in those files remain checked. Await, return or handle rejection as appropriate; `void` marks intentional detachment but does not handle a rejection by itself.
 

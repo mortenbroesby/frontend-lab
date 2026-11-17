@@ -31,16 +31,15 @@ peer connections. This does not require disabling the firewall.
 | --- | --- |
 | Checkout | `.gitattributes` keeps text LF regardless of `core.autocrlf`, so formatting checks agree across systems. No tracked symlinks. |
 | Commands | npm scripts use cross-platform CLIs and Node APIs; no Unix copy/remove commands or shell environment assignments. |
-| Paths | Node path and file-URL APIs handle native separators. Generator fixtures include spaces and Unicode; CI checks out into `Front End Lab`. |
+| Paths | Node path and file-URL APIs handle native separators. Generator fixtures include spaces and Unicode; test the actual checkout location on the destination laptop. |
 | Names | Demo IDs reject traversal, spaces, trailing dots and Windows device names; existing folders are never overwritten. |
-| Dependencies | The lockfile includes native Windows packages. CI exercises a clean install, TypeScript, Vite, Turbo, Oxlint and Fallow on Windows x64. |
-| Generation | CI runs the actual Turbo generator, installs the new workspace, checks its standalone app and rebuilds gallery discovery. |
+| Dependencies | The lockfile includes native Windows packages. Verify a clean install, TypeScript, Vite, Turbo, Oxlint and Fallow on the destination Windows laptop. |
+| Generation | Run the Turbo generator, install the new workspace, check its standalone app and rebuild gallery discovery locally. |
 | Serving | A bounded HTTP check starts gallery and standalone dev/preview servers and fetches their entry scripts. |
-| Components | CI builds Storybook; ordinary controls remain shared Radix/native controls with system-font fallbacks. |
+| Components | `npm run storybook:build` checks Storybook; ordinary controls use shared Radix/native controls and system-font fallbacks. |
 
-The Windows job uses the runner's native PowerShell. The Git diff audit remains
-Linux-only; Windows runs the complete Fallow baseline comparison. No browser
-suite or additional test framework is installed.
+The Windows/Linux Actions workflow has been removed. Use native PowerShell for
+local checks; no browser suite or additional test framework is installed.
 
 ## Website audit
 
@@ -57,7 +56,7 @@ suite or additional test framework is installed.
 
 ## Evidence boundary
 
-CI results are attached to each commit; a workflow definition alone is not a pass.
+No CI workflow is configured. Earlier CI results are historical evidence, not acceptance of the current revision.
 Source review and HTTP checks do not establish interactive Windows browser support.
 Still manually check current Edge/Chrome and Firefox on Windows: open the palette
 with Ctrl+K, use both action shortcuts, switch keyboard layouts, save an SVG,

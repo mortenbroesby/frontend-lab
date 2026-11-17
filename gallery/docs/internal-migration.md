@@ -1,32 +1,47 @@
-# Move the lab into GitHub Enterprise Cloud
+# Prepare for internal Danske Bank use
 
-Migration is prepared; the destination repository and team permissions are not created. Participants run locally. Reassess [temporary hosting](hosting.md) before migration.
+This is a repository readiness review, not approval or a completed migration. No destination repository, bank network, registry or hosting policy has been tested. Keep internal code and data out of the current publicly hosted app until the destination and access controls are agreed.
+
+## Decisions before migration
+
+| Area | What exists now | What needs to happen |
+| --- | --- | --- |
+| Public hosting | The personal Vercel project automatically deploys `main`. Production is public. | Disconnect its Git integration before introducing internal material. Review existing deployments separately. Deleting CI or `vercel.json` does not disconnect the service. See [hosting](hosting.md). |
+| Device Rally | `trystero` 0.27.0 uses public Nostr WebSocket relays and default Google/Cloudflare STUN servers. The app uses a public-project app ID and participant-entered room codes. | Decide whether to exclude this demo or configure an approved signaling/network setup. A private Git repository does not isolate its rooms; room codes are not bank authentication. Do not use confidential content in room names. |
+| Package installation | The lockfile resolves downloads from `registry.npmjs.org`; no Git-sourced dependencies were found. Node 24 and npm 11.6.2 are expected. | Confirm the approved registry/proxy and TLS certificate setup. Validate the lockfile with that registry; changing npm's registry alone is not proof that every resolved download is internal. Never commit registry credentials or disable TLS verification. |
+| Native tools and scripts | Vite, Turbo, TypeScript, Oxlint and Fallow include platform-specific tooling; some dependencies have install scripts. | Check package and binary approval on managed Windows laptops. Keep required optional packages available in the registry mirror. Review licenses/dependency scanning using the bank's process; this review does not establish approval. |
+| Hosting and browser policy | The build is static, uses hash routes, module Workers and a same-origin Canvas TV iframe. No app login or server is required. | Use an approved host with access control if hosting internally. Check its base path, CSP, Worker/iframe permissions, trusted HTTPS and WebRTC policies. Rebuild with the intended base path and verify nested assets. |
+| External resources | Guides link to MDN, vendor docs and optional external examples. Agent skills can fetch public guidance; Codex/Copilot usage depends on the chosen client. | Confirm permitted browsing and agent use. External links are optional resources, not bundled offline copies. Do not send internal source or reports to unapproved services. |
+| Automation | GitHub Actions workflows have been removed. Local checks and optional per-clone Fallow hooks remain. | Do not require the retired `verify` job in destination branch rules. Add internal CI only when its runner, policy and commands are explicitly chosen. |
+
+README image badges were removed to avoid incidental external image requests. Public reference links and authorship remain. `vercel.json` remains for the existing temporary host; it contains no credentials and can be removed when that hosting is retired.
 
 ## Repository and access
 
-1. Agree the destination organization, repository name, contributing team and maintainers. Use the enterprise's approved transfer/import procedure; preserve Git history if permitted. Review history before copying it into a different audience. Do not mirror-push over an existing repository.
-2. Keep the repository private, or choose internal visibility if enterprise-wide read access is intended. Grant the contributing team **Write** so participants can push their own branches. Visibility does not grant write access.
-3. Keep `main` as the default branch, or update the verification workflow's branch trigger if renamed. Consider requiring PRs and the `verify` check on `main`; this still permits everyone to push demo branches.
-4. Clone from the destination's **Code → SSH** URL, or change a reviewed existing clone's `origin`. Follow [the contribution guide](../../CONTRIBUTING.md). Git hooks are local and must be installed in each clone.
-5. Confirm the organization permits the actions in `.github/workflows/lab.yml`, or adapt it to approved equivalents and runners. The workflow verifies without deploying. Node/npm dependencies need an approved registry/network.
+1. Choose the destination organization, repository, maintainers and contributing team. Confirm whether the target is Enterprise Cloud or a self-hosted service rather than assuming a hostname.
+2. Use the approved transfer/import procedure. Review source, Git history, issues, attachments, authorship and licenses for the destination audience. This review is not a full historical secret scan. Do not mirror-push over an existing repository.
+3. Set private or internal visibility deliberately and grant the contributing team write access. Agree branch and review rules. The source repository's `main` was reported unprotected during this review; destination rules are separate, and the source rulesets endpoint was unavailable.
+4. Clone using the destination's approved URL, or update a reviewed clone's `origin`. Follow [contributing](../../CONTRIBUTING.md). There are no runtime source-repository URLs to configure. Install approved hooks separately in each clone.
 
-## Local setup and source links
+## Local verification at the destination
 
-Use Node 24, run `npm ci` and `npm run dev` at the repository root, then open the printed URL. After a contribution merges, pull `main` and restart/install dependencies when needed. Apps do not synchronize live.
+From a clean checkout on a managed laptop, using the approved package configuration:
 
-Participant guides are bundled from `gallery/src/content/` and use in-app routes. No source-repository environment variable is required. Entry documents describe local startup without deployment URLs.
+```sh
+npm ci
+npm run check
+npm run analyze:changes
+npm run dev
+```
 
-## Lab identity
+Use `npm.cmd` if PowerShell blocks `npm.ps1`; see [Windows notes](windows.md). The Fallow audit needs a usable Git comparison base; inspect its reported base after an import or use an explicit approved base. Hooks are local checks, not server-side enforcement.
 
-The shell's palette is in `shared/ui/theme.css`. Track colors follow track IDs, not gallery position. Keep experimental demo artwork and scoped styles independent. Use the Front-End Lab identity; Sapphire and an internal component registry are unnecessary.
+Then verify the participant journey:
 
-## Acceptance before inviting participants
+- Open a track, follow a bundled guide and run a demo. Most demos need no external runtime service; Device Rally is the explicit network-dependent exception.
+- Generate a disposable demo with `npm run demo:new`, install its workspace and run its printed standalone commands. Check it appears after rebuilding the gallery.
+- Push a branch and open a review using the team's chosen process. After merge and pull, another colleague should see the demo.
+- If hosting, verify access as an authorized and unauthorized user, lazy-loaded guides, SVG assets, Workers, downloads and the presentation's Canvas TV embed. `npm run test:servers` checks local HTTP startup after building; it does not validate bank hosting or browser policy.
+- Try Device Rally only after its service/network decision. Test on the intended network; the earlier public-network session does not establish compatibility.
 
-- A colleague can clone, install and run the app on their actual device/network.
-- The contributing team can generate a named demo, push a branch and open a PR.
-- Verification runs in the destination, with its approved runner and action policies.
-- After merge and pull, another colleague sees the new demo in the local gallery.
-- Track guides and their links work inside the app on the destination host.
-- Fallow's per-clone Git hook and agent trust/setup instructions work in the chosen clients.
-
-Still to decide: destination organization/repository, contributing team and maintainers, visibility, branch rules and any enterprise-specific registry/runner requirements. Vercel can be removed or replaced independently.
+The remaining inputs are the destination URL, approved registry/tool versions, hosting/access model, allowed agent clients and the Device Rally decision. No bank-specific configuration is invented here.

@@ -12,9 +12,9 @@ CRAP uses estimated coverage; these are static findings, not measured test cover
 
 ## Use
 
-`npm run analyze:baseline` checks the whole repo against these files; CI runs it too. Health uses function identity so an unrelated new hotspot cannot simply replace an old one. `npm run analyze:health` shows current metrics and advisories, including large functions. CSS stays advisory; dependency-cruiser remains the architecture boundary check.
+`npm run analyze:baseline` checks the whole repo against these files; run it locally when needed. Health uses function identity so an unrelated new hotspot cannot simply replace an old one. `npm run analyze:health` shows current metrics and advisories, including large functions. CSS stays advisory; dependency-cruiser remains the architecture boundary check.
 
-`npm run analyze:changes` and the Git hook separately compare changes with their Git base. They do not suppress findings with these saved baselines. The audit uses `new-only` with `worsened: error`: new error-level findings and worsening existing enforceable complexity findings fail locally and in CI; unchanged inherited findings remain allowed. Fallow counts any increase in cyclomatic/cognitive/CRAP metrics, or at least five added function lines, as worsening an existing finding. Fallow deliberately keeps findings based only on estimated coverage (CRAP), test-file complexity and CSS suggestions advisory; these are not proof of regressions. Cyclomatic and cognitive threshold regressions are enforced.
+`npm run analyze:changes` and the Git hook separately compare changes with their Git base. They do not suppress findings with these saved baselines. The audit uses `new-only` with `worsened: error`: new error-level findings and worsening existing enforceable complexity findings fail locally; unchanged inherited findings remain allowed. Fallow counts any increase in cyclomatic/cognitive/CRAP metrics, or at least five added function lines, as worsening an existing finding. Fallow deliberately keeps findings based only on estimated coverage (CRAP), test-file complexity and CSS suggestions advisory; these are not proof of regressions. Cyclomatic and cognitive threshold regressions are enforced.
 
 ## Refresh deliberately
 
