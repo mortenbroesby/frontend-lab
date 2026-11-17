@@ -23,8 +23,8 @@ The Lightning section illustrates how a required rendering platform need not dic
 | 3. The TV project | Define Lightning, link its official site and describe the project | 1–2 minutes |
 | 4. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
 | 5. How our app worked. | JSX → custom renderer → Lightning; explain the benefit without internals | 2–3 minutes |
-| 6. What was different | Input, rendering and tooling in the actual project | 2–3 minutes |
-| 7. A few related experiments | Optional concrete starting points | 2–3 minutes |
+| 6. What was different | Briefly recap input, rendering and tooling | About 1 minute |
+| 7. A few related experiments | Keyboard navigation and React state drawn on Canvas | 2–3 minutes |
 | 8. Questions? | Discussion without another motivational closing | Questions |
 
 The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 showcase.
@@ -82,6 +82,10 @@ The presentation embeds the actual showcase inline through its `?embed=1` view. 
 This is **not Lightning**, the original application, a custom React renderer or a video streaming service. It illustrates the interaction model using native Canvas. Actual TV hardware compatibility is unverified. The original product and its technical history remain distinct from this example.
 
 A useful live sequence: put the pointer aside; move right until the row scrolls; move down, then back up; select a title; return. Discuss how focus, spatial movement and restoring a selection affect usability when there is no pointer.
+
+## A personal moment to add when recalled
+
+One short, concrete memory could make the story more personal: something awkward to implement, something the component layer made easier, or something that surprised the team. No specific incident has been supplied yet. Keep this as a notebook prompt, not an invented anecdote or an audience-facing placeholder.
 
 ## Open questions, in priority order
 

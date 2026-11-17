@@ -24,11 +24,11 @@ function Entrance() {
 
 function Possibilities() {
   return (
-    <StatementSlide eyebrow="A few examples" title="Front-end beyond the page.">
+    <StatementSlide eyebrow="What this session is about" title="Front-end beyond the page.">
       <p>
         TV interfaces. Interactive installations. Visual tools. Games.
         <br />
-        <strong>One example from a project I worked on.</strong>
+        <strong>A different use of front-end technology, through one project.</strong>
       </p>
     </StatementSlide>
   );
@@ -62,23 +62,20 @@ function Assumptions() {
 
 function Experiments() {
   return (
-    <DiagramSlide eyebrow="If you want to explore further" title="A few related experiments.">
+    <DiagramSlide eyebrow="Two parts of the TV example" title="A few related experiments.">
       <ExperimentOptions
         options={[
           {
-            label: 'CANVAS',
-            title: 'Keyboard input.',
-            description: 'Draw an object and move it with the arrow keys.',
+            label: 'INPUT',
+            title: 'Keyboard navigation.',
+            description:
+              'Build a small grid. Move focus with arrow keys and restore it after opening an item.',
           },
           {
-            label: 'DATA',
-            title: 'A visualisation.',
-            description: 'Visualise a small dataset. Let someone explore a connection.',
-          },
-          {
-            label: 'MESSAGING',
-            title: 'Two screens.',
-            description: 'Send one action from a browser and show its effect in another.',
+            label: 'RENDERING',
+            title: 'React and Canvas.',
+            description:
+              'Keep position or colour in React state. Draw it on Canvas and update it from a control.',
           },
         ]}
       />
@@ -181,7 +178,7 @@ export const slides: readonly Slide[] = [
 Leave this on screen while people arrive. No explanation is needed yet.
 
 WHEN READY
-“I'll show a TV project I worked on, explain a little about how it worked, and show a small demo of that kind of interaction.”`,
+“I want to show you a different use of front-end technology, using a project I worked on. We'll look at the interaction and then how the app worked.”`,
   },
   {
     id: 'possibilities',
@@ -190,7 +187,7 @@ WHEN READY
     notes: `FRONT-END IN OTHER SETTINGS · 2–3 minutes
 “We usually associate front-end development with websites. But the same skills show up in very different environments: TV interfaces, interactive installations, visual tools and games.”
 
-THE INVITATION
+THE PURPOSE
 “I'm using one project as an example. It involved familiar front-end work, but with a different rendering system and input device.”
 
 BRIDGE TO OUR EXAMPLE
@@ -222,7 +219,7 @@ This describes our project, not current Xfinity policy. The next slide is a new 
     title: 'Try the interaction: no pointer',
     Content: Remote,
     notes: `LET PEOPLE TRY IT · 2–3 minutes
-“This is a small Canvas example made for this talk, not our original Lightning application. Put the mouse aside for a moment. Where would you expect the focus to go?”
+“This is a small Canvas example made for this talk, not our original Lightning application. Notice what changes when you navigate with a remote instead of a mouse. Put the pointer aside for a moment.”
 
 LIVE SEQUENCE
 Move right until the shelf scrolls. Move down, then back up: the row remembers its selection. Press Enter to play the selected title as a full-frame procedural animation, then Escape to return. On a phone, use the on-screen arrows, OK and Back.
@@ -259,26 +256,22 @@ Default tests mocked parts of rendering, including Canvas functionality; tests u
     id: 'assumptions',
     title: 'What was different',
     Content: Assumptions,
-    notes: `WHAT WAS DIFFERENT · 2–3 minutes
-Remote input meant we had to think about where focus moved and where it returned. The demo illustrates that, without reproducing the original application.
+    notes: `BRIEF RECAP · about 1 minute
+“The input was different, the rendering was different, and we built some of the tooling ourselves. Components and application state were still familiar.”
 
-Canvas rendering changed how the interface was represented. We still had components and application state, but the output was not ordinary HTML elements.
-
-We built a component layer and testing tools because that setup didn't provide the development experience we needed. That helped engineers start building components, and it also meant we had our own code to maintain. Don't invent maintenance incidents or performance figures.
+Don't explain the diagram again. Use these three points to draw together what people just saw. The animation makes the demo enjoyable; the focus movement and return behaviour are the connection to the project.
 
 TRANSITION
-“If any of that interests you, here are a few smaller things you could try.”`,
+“You can explore either of those first two differences without building a whole TV application.”`,
   },
   {
     id: 'experiments',
     title: 'A few related experiments',
     Content: Experiments,
-    notes: `OPTIONAL EXPERIMENTS · 2–3 minutes
-Keyboard input: draw one object on Canvas and change its position with the arrow keys. This is enough to investigate input, state and drawing without building a whole TV app.
+    notes: `TWO RELATED EXPERIMENTS · 2–3 minutes
+Keyboard navigation: build a small grid of items, move focus with arrows, open one and return to the same selection. This is the interaction we just tried. It can use ordinary HTML; Canvas isn't required to investigate focus.
 
-A visualisation: use a small dataset you understand and make one relationship selectable. The aim can simply be to understand the data better.
-
-Two screens: send one action and display it elsewhere. Same-origin tabs can be a first step; separate devices need an appropriate connection and setup. A tab-messaging API alone does not connect different devices.
+React and Canvas: keep a position or colour in React state, draw it on Canvas, and change it from a control. This is a small way to explore state and a different rendering surface. It is not the same as implementing a custom React renderer.
 
 These are suggestions, not assignments. People can also work on code quality or tooling in the other tracks. Stop here if discussion is already underway.`,
   },
