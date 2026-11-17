@@ -6,7 +6,6 @@
   "dependencies": {
     "@lab/demo-kit": "*",
     "@lab/ui": "*",
-    "lottie-web": "^5.13.0",
     "motion": "^14.14.0",
     "react": "19.3.1"
   },

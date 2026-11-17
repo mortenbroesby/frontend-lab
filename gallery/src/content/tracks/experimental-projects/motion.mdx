@@ -1,39 +1,41 @@
-## Give movement a purpose
+## Make change easy to follow
 
-What should someone understand: an item moved, a panel opened, an action succeeded? Choose a working interaction and give movement a job.
+A card moves to another position. A thumbnail opens into a detail view. Half a collection disappears after filtering. Can you keep track of what happened without reading an explanation?
 
-Compare Still, Motion and Motion + Lottie in <DemoLink id="motion-with-purpose">Motion with purpose</DemoLink>. Vary the duration. When does movement clarify the change, and when does it distract?
+Try <DemoLink id="motion-with-purpose">Motion with purpose</DemoLink>: an interactive collection of six graphic prints. Filter it, mix up the order and open a print. Then turn motion off and compare the same actions.
 
-The demo saves only local React state. Replay repeats the illustration, not the save. It makes no network request or performance measurement.
+### Keep an object recognisable
 
-### Choose a technique
+Start with a grid of things you care about: album covers, photos, recipes or project cards. Change their order while keeping stable React keys. Can your eye follow an item to its new position?
 
-| Need | Starting point |
-| --- | --- |
-| Colour, focus or opacity transitions | CSS |
-| React elements entering, leaving or changing layout | Motion |
-| An authored illustration with a timeline | Lottie |
+Explore [Motion layout animations](https://motion.dev/docs/react-layout-animations). Let CSS determine the final layout; use motion to connect the old and new positions. Try a different column count or spacing before adding more effects.
 
-SVG describes shapes; Lottie JSON adds a timeline and may reference images or fonts. You don't need both libraries.
+### Connect a thumbnail to its detail
 
-Explore [Motion's layout](https://motion.dev/docs/react-layout-animations), [SVG](https://motion.dev/docs/react-svg-animation) or [exit animation](https://motion.dev/docs/react-animate-presence) guides according to your interaction. Compare one parameter at a time: duration sets how long; [easing](https://motion.dev/docs/react-transitions) sets how progress changes.
+Open one item into a larger view. What should remain recognisable: its artwork, title, colour or position?
 
-### Follow the reference
+Investigate shared elements with `layoutId` in the [layout guide](https://motion.dev/docs/react-layout-animations). The reference uses a shared artwork identity and a dialog from the Lab UI library. The dialog handles focus, Escape and keyboard access; the animation only explains the visual connection. Explore a different transition without replacing those behaviours.
 
-After [local setup](#/guide/setup):
+### Make room when items leave
+
+Add a category filter. Try removing items instantly, then letting them leave before or while their neighbours move. Which feels clearer when you change filters quickly?
+
+Read [AnimatePresence](https://motion.dev/docs/react-animate-presence), including `mode="popLayout"`. Compare opacity and scale, then experiment with [duration and easing](https://motion.dev/docs/react-transitions). Change one parameter at a time so you can tell what made the difference.
+
+### Start your own experiment
+
+After [local setup](#/guide/setup), run the reference:
 
 ```sh
 npm run dev --workspace @lab/demo-motion-with-purpose
 ```
 
-In `demos/motion-with-purpose/`, `index.tsx` connects state and transitions; `SaveSeal.tsx` owns the Lottie player and cleanup. Follow a save: committing data must remain independent of animation completion. Networked confirmation should follow the real operation's outcome.
+`demos/motion-with-purpose/posters.tsx` contains the original SVG artwork and collection data. `index.tsx` connects filtering, ordering and the detail view. Replace the subject, change a transition or build your own collection through [Create a demo](#/create).
 
-Download the demo's animation to explore `save-seal.json`. `ASSET.md` documents its hand-authored, CC0 origin; it isn't an After Effects export. Its final frame works without movement.
+CSS transitions are enough for simple colour and opacity changes. Motion is useful here because elements enter, leave and change layout. An authored illustration is a different problem; this example doesn't need a separate animation player.
 
-For replacement artwork, check license, assets and [player compatibility](https://lottiefiles.com/supported-features). The demo's lightweight SVG player supports shape-only artwork. [Lottie Web](https://github.com/airbnb/lottie-web) documents playback and authoring routes, including Bodymovin. Test in the actual player and release it on unmount.
+### Keep it usable without movement
 
-### Challenge the treatment
+Try the keyboard, close a detail view with Escape, and change filters mid-transition. Enable your device's Reduce Motion setting. Are the same actions and results still available, and does focus return to the print you opened?
 
-Interrupt or repeat the action. Enable Reduce Motion. Remove or delay the artwork. Can someone still use the controls and understand the result?
-
-Keep layout space reserved, focus useful and confirmation finite. Decorative artwork shouldn't duplicate accessible text. Read [Motion's reduced-motion guidance](https://motion.dev/docs/react-accessibility). Keeping an interaction still is a valid result.
+Use [Motion's accessibility guidance](https://motion.dev/docs/react-accessibility). Animation should explain a state change, not delay it or become a requirement for understanding it.
