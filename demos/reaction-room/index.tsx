@@ -3,24 +3,24 @@ import { Input } from '@lab/ui/input';
 import { Label } from '@lab/ui/label';
 import { Button } from '@lab/ui/button';
 import { useState } from 'react';
-import { useRallyRoom } from './use-rally-room';
-import './device-rally.css';
+import { useReactionRoom } from './use-reaction-room';
+import './reaction-room.css';
 
 function initialRoomCode() {
-  const code = new URLSearchParams(location.search).get('rallyRoom') ?? '';
+  const code = new URLSearchParams(location.search).get('reactionRoom') ?? '';
   return /^[a-z0-9-]{1,24}$/.test(code) ? code : 'front-end-lab';
 }
 
 export default function ReactionRoom() {
   const [roomCode, setRoomCode] = useState(initialRoomCode);
   const [joined, setJoined] = useState<string | null>(initialRoomCode);
-  const room = useRallyRoom(joined);
+  const room = useReactionRoom(joined);
   const { status, leave } = room;
 
   function join(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const url = new URL(location.href);
-    url.searchParams.set('rallyRoom', roomCode);
+    url.searchParams.set('reactionRoom', roomCode);
     history.replaceState(null, '', url);
     // shortcut: a fresh Trystero endpoint avoids failed immediate rejoin; revisit on library upgrade.
     location.reload();
@@ -44,9 +44,9 @@ export default function ReactionRoom() {
           </div>
         ) : (
           <form className="reaction-room-form" onSubmit={join}>
-            <Label htmlFor="rally-room">Room code</Label>
+            <Label htmlFor="reaction-room">Room code</Label>
             <Input
-              id="rally-room"
+              id="reaction-room"
               value={roomCode}
               pattern={'[a-z0-9\\-]{1,24}'}
               maxLength={24}
@@ -127,7 +127,7 @@ function ReactionStage({
   room,
   joined,
 }: {
-  room: ReturnType<typeof useRallyRoom>;
+  room: ReturnType<typeof useReactionRoom>;
   joined: boolean;
 }) {
   const { supported, peers, cheers, cheer } = room;
@@ -144,7 +144,7 @@ function ReactionStage({
           <span aria-hidden="true" />
           {view.status}
         </span>
-        <span className="reaction-count" data-testid="rally-peers">
+        <span className="reaction-count" data-testid="reaction-peers">
           Other devices: {peers}
         </span>
       </header>
@@ -153,7 +153,7 @@ function ReactionStage({
           <div
             key={cheers.total}
             className="reaction-emoji"
-            data-testid="rally-emoji"
+            data-testid="reaction-emoji"
             role="img"
             aria-label={
               reactions.find((reaction) => reaction.emoji === cheers.emoji)?.label ?? 'Wave'
@@ -181,7 +181,7 @@ function ReactionStage({
           </Button>
         ))}
       </div>
-      <p className="reaction-total" aria-live="polite" data-testid="rally-total">
+      <p className="reaction-total" aria-live="polite" data-testid="reaction-total">
         <strong>{cheers.total}</strong> reactions seen here
       </p>
     </section>

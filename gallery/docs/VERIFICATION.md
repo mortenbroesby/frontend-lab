@@ -4,7 +4,7 @@ Verify proportionally: use a focused existing test, type check or build to answe
 
 Browser tests, Playwright and browser CI are removed; no browser installation is needed. Reintroduce browser tests only when explicitly requested, such as for a testing demo.
 
-The standalone demo packages, gallery, generator and shared toolchain remain in place. Device Rally has partial physical-device evidence; see the session below. Target-network acceptance remains unverified.
+The standalone demo packages, gallery, generator and shared toolchain remain in place. Reaction Room has partial physical-device evidence; see the session below. Target-network acceptance remains unverified.
 
 [Verification history](VERIFICATION-HISTORY.md) records earlier revisions, not current coverage or requirements. Report only checks run for this change.
 
@@ -20,7 +20,7 @@ The standalone demo packages, gallery, generator and shared toolchain remain in 
 
 [Windows compatibility](windows.md) records the scope, safeguards and remaining manual checks. The previous Windows/Linux CI workflow has been removed; current revisions require local verification on the destination machines. `npm run test:servers` checks gallery and standalone HTTP startup after building; it does not run a browser.
 
-## Device Rally physical-device session — 2026-11-16
+## Reaction Room physical-device session — 2026-11-16
 
 On the public HTTPS deployment, the participant opened room `lab-check-1611` on a phone. The laptop browser observed three received cheers, ending with a heart. It subsequently showed zero connected peers. This confirms delivery to the laptop during that session, not bidirectional or reconnect acceptance. Phone/browser details, network type, return delivery and deliberate rejoin verification are still pending participant confirmation.
 
@@ -47,7 +47,7 @@ Software and content were delivered through `6e27cc6`; the physical-device accep
 | Focused guides | Rendering and terminal feedback are separate. The mixed browser experiments page was replaced by a dependency investigation; postcard and ecosystem each have their own guide. Guides include application outside this repo and official references. | Delivered |
 | Worker responsiveness | See measured values above. Observer test covers the final frame, hidden samples and cleanup. Following the layout change, both modes again returned 41,538 primes at 500,000; the table stayed within the phone-width page. | Delivered |
 | Reproducible postcard | Pure tests cover deterministic layouts. Browser SVG circle attributes matched after re-entering seed 123 with Spiral; restoring the starting composition matched the initial seed 42 / Scatter output. | Delivered |
-| Physical Device Rally | Three phone-to-laptop cheers observed over public HTTPS. No verified return delivery, deliberate rejoin, device/browser identification or network identification. Participant said they can test later. | Pending participant |
+| Physical Reaction Room | Three phone-to-laptop cheers observed over public HTTPS. No verified return delivery, deliberate rejoin, device/browser identification or network identification. Participant said they can test later. | Pending participant |
 
 The final layout pass completed all 20 check tasks. Fallow reported no dead code or duplication; estimated-coverage and CSS advisories remain. Browser checks used 390px and 1280px viewports, with dark-mode graph controls also inspected. No browser-test suite was added.
 

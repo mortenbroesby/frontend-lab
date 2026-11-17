@@ -12,7 +12,7 @@ function supportsPeerConnections() {
   );
 }
 
-export function useRallyRoom(joined: string | null) {
+export function useReactionRoom(joined: string | null) {
   const [status, setStatus] = useState('Discovering peers…');
   const [peers, setPeers] = useState(0);
   const [cheers, setCheers] = useState({ total: 0, emoji: '👋' });
@@ -48,7 +48,7 @@ export function useRallyRoom(joined: string | null) {
         if (signal.aborted) return;
         room = joinRoom(
           {
-            appId: 'mortenbroesby/front-end-lab/device-rally-v1',
+            appId: 'mortenbroesby/front-end-lab/reaction-room-v1',
             identity: 'none',
             maxUsers: 12,
             maxReceiveBytes: 65536,

@@ -7,7 +7,7 @@ This is a repository readiness review, not approval or a completed migration. No
 | Area | What exists now | What needs to happen |
 | --- | --- | --- |
 | Public hosting | The personal Vercel project automatically deploys `main`. Production is public. | Disconnect its Git integration before introducing internal material. Review existing deployments separately. Deleting CI or `vercel.json` does not disconnect the service. See [hosting](hosting.md). |
-| Device Rally | `trystero` 0.27.0 uses public Nostr WebSocket relays and default Google/Cloudflare STUN servers. The app uses a public-project app ID and participant-entered room codes. | Keep the current demo and external services, as requested by the project owner for this developer audience. Verify connectivity on the intended VPN/network. Room codes remain peer-discovery identifiers, not employee authentication. |
+| Reaction Room | `trystero` 0.27.0 uses public Nostr WebSocket relays and default Google/Cloudflare STUN servers. The app uses a public-project app ID and participant-entered room codes. | Keep the current demo and external services, as requested by the project owner for this developer audience. Verify connectivity on the intended VPN/network. Room codes remain peer-discovery identifiers, not employee authentication. |
 | Package installation | The lockfile resolves downloads from `registry.npmjs.org`; no Git-sourced dependencies were found. Node 24 and npm 11.6.2 are expected. | Confirm the approved registry/proxy and TLS certificate setup. Validate the lockfile with that registry; changing npm's registry alone is not proof that every resolved download is internal. Never commit registry credentials or disable TLS verification. |
 | Native tools and scripts | Vite, Turbo, TypeScript, Oxlint and Fallow include platform-specific tooling; some dependencies have install scripts. | Check package and binary approval on managed Windows laptops. Keep required optional packages available in the registry mirror. Review licenses/dependency scanning using the bank's process; this review does not establish approval. |
 | Hosting and browser policy | The build is static, uses hash routes, module Workers and a same-origin Canvas TV iframe. No app login or server is required. | Use an approved host with access control if hosting internally. Check its base path, CSP, Worker/iframe permissions, trusted HTTPS and WebRTC policies. Rebuild with the intended base path and verify nested assets. |
@@ -38,10 +38,10 @@ Use `npm.cmd` if PowerShell blocks `npm.ps1`; see [Windows notes](windows.md). T
 
 Then verify the participant journey:
 
-- Open a track, follow a bundled guide and run a demo. Most demos need no external runtime service; Device Rally is the explicit network-dependent exception.
+- Open a track, follow a bundled guide and run a demo. Most demos need no external runtime service; Reaction Room is the explicit network-dependent exception.
 - Generate a disposable demo with `npm run demo:new`, install its workspace and run its printed standalone commands. Check it appears after rebuilding the gallery.
 - Push a branch and open a review using the team's chosen process. After merge and pull, another colleague should see the demo.
 - If hosting, verify access as an authorized and unauthorized user, lazy-loaded guides, SVG assets, Workers, downloads and the presentation's Canvas TV embed. `npm run test:servers` checks local HTTP startup after building; it does not validate bank hosting or browser policy.
-- Keep Device Rally in the migration. Test joining, sending cheers and reconnecting on the intended VPN/network; the earlier public-network session does not establish compatibility.
+- Keep Reaction Room in the migration. Test joining, sending cheers and reconnecting on the intended VPN/network; the earlier public-network session does not establish compatibility.
 
 The remaining inputs are the destination URL, approved registry/tool versions, hosting/access model and allowed agent clients. No bank-specific configuration is invented here.

@@ -21,7 +21,7 @@ npm run dev --workspace frontend-lab-gallery -- --host 0.0.0.0
 
 Open the printed network address. If Windows Firewall prompts, allow Node on
 trusted private networks only. Localhost is a secure browser context; ordinary
-LAN HTTP is not. Device Rally needs HTTPS or localhost as its UI explains.
+LAN HTTP is not. Reaction Room needs HTTPS or localhost as its UI explains.
 Corporate firewalls, browser policies and WebRTC relay access can still prevent
 peer connections. This does not require disabling the firewall.
 
@@ -46,7 +46,7 @@ local checks; no browser suite or additional test framework is installed.
 - The command button shows **Ctrl K** on Windows and **⌘K** on Apple devices,
   including mobile navigation. The visible button remains usable when browser
   chrome or policy captures the keyboard shortcut.
-- Device Rally's room pattern escapes the hyphen for HTML's Unicode `v` grammar.
+- Reaction Room's room pattern escapes the hyphen for HTML's Unicode `v` grammar.
 - Workers use Vite module URLs; BroadcastChannel and WebRTC have capability/error
   handling. Browser URLs are independent of filesystem separators.
 - SVG downloads use Windows-safe filenames. Pointer capture, touch handling,
@@ -58,7 +58,7 @@ No CI workflow is configured. Earlier CI results are historical evidence, not ac
 Source review and HTTP checks do not establish interactive Windows browser support.
 Still manually check current Edge/Chrome and Firefox on Windows: open the palette
 with Ctrl+K, switch keyboard layouts, save an SVG,
-try worker interactions and connect Device Rally peers over HTTPS. Touch/pen,
+try worker interactions and connect Reaction Room peers over HTTPS. Touch/pen,
 managed devices, Windows ARM64 and intended networks remain unverified.
 
 References: [Git line endings](https://git-scm.com/docs/gitattributes),

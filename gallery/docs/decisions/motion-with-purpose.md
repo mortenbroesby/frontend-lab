@@ -81,6 +81,6 @@ Verification on 17 November 2026:
 
 Known limits: the standalone bundle triggers Vite's size advisory (about 204 kB gzip including shared UI, React and both animation libraries). The lightweight SVG player removes the unused expression engine. No performance benchmark or physical-phone acceptance is claimed. Public Vercel deployment remains blocked by its daily quota.
 
-The requested new app goal could not be created because the previous goal remains blocked on physical Device Rally acceptance. That check remains incomplete; this plan does not mark it done.
+The requested new app goal could not be created because the previous goal remains blocked on physical Reaction Room acceptance. That check remains incomplete; this plan does not mark it done.
 
 References: [Motion animation](https://motion.dev/docs/react-animation), [layout](https://motion.dev/docs/react-layout-animations), [reduced motion](https://motion.dev/docs/react-accessibility), [Lottie Web](https://github.com/airbnb/lottie-web).

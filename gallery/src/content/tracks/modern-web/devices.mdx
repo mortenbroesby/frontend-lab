@@ -1,6 +1,6 @@
 ## Make something happen on another screen
 
-Choose an interaction: a remote control, shared drawing, reaction—or your own idea. Try <DemoLink id="device-rally">Reaction Room</DemoLink> in two browsers, then disconnect and rejoin. What travels between screens, and what stays local?
+Choose an interaction: a remote control, shared drawing, reaction—or your own idea. Try <DemoLink id="reaction-room">Reaction Room</DemoLink> in two browsers, then disconnect and rejoin. What travels between screens, and what stays local?
 
 ### Understand the pieces
 
@@ -18,7 +18,7 @@ Use your own app, adapt the demo or [create an experiment](#/create). For a new 
 npm install --save-exact trystero@0.27.0 --workspace @lab/demo-your-id
 ```
 
-Follow one cheer through `demos/device-rally/use-rally-room.ts`: `joinRoom` finds the group, `makeAction` defines the channel, and `send` and `onMessage` carry the interaction. Look at peer listeners, message validation and cleanup with `leave` before adapting it.
+Follow one cheer through `demos/reaction-room/use-reaction-room.ts`: `joinRoom` finds the group, `makeAction` defines the channel, and `send` and `onMessage` carry the interaction. Look at peer listeners, message validation and cleanup with `leave` before adapting it.
 
 Use [Trystero's documentation](https://github.com/dmotz/trystero) for the APIs and [MDN's WebRTC guide](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols) for signaling, STUN and TURN.
 

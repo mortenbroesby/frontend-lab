@@ -1,4 +1,4 @@
-# Device rally
+# Reaction Room
 
 > **Experimental demo.** Physical-device testing is incomplete; the intended network remains unverified. Restrictive networks may block discovery or connections.
 
@@ -13,7 +13,7 @@ npm ci
 npm run dev
 ```
 
-Open the printed localhost URL and choose **Device rally** in the gallery, or open `/demos/device-rally/index.html`. Everyone joins `front-end-lab` automatically. Once another device connects, tap 🚀, ✨ or 💜 to animate its screen. Buttons stay disabled until connected.
+Open the printed localhost URL and choose **Reaction Room** in the gallery, or open `/demos/reaction-room/index.html`. Everyone joins `front-end-lab` automatically. Once another device connects, tap 🚀, ✨ or 💜 to animate its screen. Buttons stay disabled until connected.
 
 For a separate group, **Leave room**, enter the same code on each device, then **Join room**. Joining reloads the page for a fresh peer session and adds the code to the shareable URL. Codes allow up to 24 lowercase letters, digits or hyphens. Rooms allow 12 members with ephemeral browser-session identities. Counters track cheers seen this visit, not a synchronized score. Late joiners start at zero; missed cheers are not replayed.
 
@@ -29,7 +29,7 @@ Room codes group peers; they are not passwords. Anyone using this app and room c
 
 ## Build an independent experiment
 
-Keep `../../demos/device-rally/index.tsx` as the finished reference. Use `npm run demo:new` under **Modern Web Capabilities**. Start with a local interaction, then try Trystero:
+Keep `../../demos/reaction-room/index.tsx` as the finished reference. Use `npm run demo:new` under **Modern Web Capabilities**. Start with a local interaction, then try Trystero:
 
 ```ts
 import { joinRoom } from 'trystero';
@@ -55,12 +55,12 @@ Removed browser tests checked separate clients on one computer. They did not est
 
 ## Independent app
 
-Device Rally also runs without the gallery:
+Reaction Room also runs without the gallery:
 
 ```sh
-npm run dev --workspace @lab/demo-device-rally
-npm run build --workspace @lab/demo-device-rally
-npm run preview --workspace @lab/demo-device-rally
+npm run dev --workspace @lab/demo-reaction-room
+npm run build --workspace @lab/demo-reaction-room
+npm run preview --workspace @lab/demo-reaction-room
 ```
 
-Deploy `demos/device-rally/dist/` for this app alone. The gallery lists this app and opens its standalone page.
+Deploy `demos/reaction-room/dist/` for this app alone. The gallery lists this app and opens its standalone page.
