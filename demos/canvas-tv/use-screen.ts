@@ -28,6 +28,7 @@ export function useScreen(state: TVState) {
       const ease = 1 - (1 - progress) ** 3;
       const mix = (a: number, b: number) => a + (b - a) * ease;
       view.current = {
+        overlay: mix(from.overlay, to.overlay),
         x: mix(from.x, to.x),
         y: mix(from.y, to.y),
         scrollY: mix(from.scrollY, to.scrollY),
@@ -36,7 +37,7 @@ export function useScreen(state: TVState) {
       };
       time.current += (Math.min(now - previous, 50) / 1000) * Number(animated);
       previous = now;
-      paint(ctx, state, view.current, time.current, motion.matches);
+      paint(ctx, state, view.current, time.current);
       if (!document.hidden && (progress < 1 || animated)) frame = requestAnimationFrame(draw);
     };
     const resize = () => {

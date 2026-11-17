@@ -6,6 +6,7 @@ export type TVState = {
   column: number;
   starts: number[];
   playing: boolean;
+  controlsVisible: boolean;
   subtitles: number;
   subtitleFocus: number;
 };
@@ -14,6 +15,7 @@ export const initialState: TVState = {
   column: 0,
   starts: rows.map(() => 0),
   playing: false,
+  controlsVisible: false,
   subtitles: 0,
   subtitleFocus: 0,
 };
@@ -25,9 +27,9 @@ export function selectedTitle(state: TVState) {
   return programmes[programmeIndex(state.starts[state.row] + state.column, programmes.length)];
 }
 export function navigate(state: TVState, key: string): TVState {
-  if (key === 'Escape' || key === 'Backspace') return { ...state, playing: false };
+  if (key === 'Escape' || key === 'Backspace') return goBack(state);
   if (state.playing) return playbackNavigation(state, key);
-  if (key === 'Enter') return { ...state, playing: true };
+  if (key === 'Enter') return { ...state, playing: true, controlsVisible: true };
   if (key === 'ArrowUp' || key === 'ArrowDown') {
     return {
       ...state,
@@ -45,9 +47,22 @@ export function navigate(state: TVState, key: string): TVState {
 
 export const subtitleOptions = ['Off', 'English', 'Dansk'];
 export function playbackHint(state: TVState) {
-  return `Demo subtitles: ${subtitleOptions[state.subtitles]}. Selected option: ${subtitleOptions[state.subtitleFocus]}. ← → choose · OK apply · Back browse.`;
+  if (!state.controlsVisible)
+    return `Demo subtitles: ${subtitleOptions[state.subtitles]}. Controls hidden. ↓ / OK show controls · Back browse.`;
+  return `Demo subtitles: ${subtitleOptions[state.subtitles]}. Selected option: ${subtitleOptions[state.subtitleFocus]}. ← → choose · OK apply · ↑ / Back hide.`;
+}
+function goBack(state: TVState): TVState {
+  if (state.playing && state.controlsVisible) return { ...state, controlsVisible: false };
+  return { ...state, playing: false, controlsVisible: false };
 }
 function playbackNavigation(state: TVState, key: string): TVState {
+  if (key === 'ArrowUp') return { ...state, controlsVisible: false };
+  if (!state.controlsVisible) {
+    return ['ArrowDown', 'Enter'].includes(key) ? { ...state, controlsVisible: true } : state;
+  }
+  return subtitleNavigation(state, key);
+}
+function subtitleNavigation(state: TVState, key: string): TVState {
   if (key === 'Enter') return { ...state, subtitles: state.subtitleFocus };
   if (key === 'ArrowLeft') return { ...state, subtitleFocus: Math.max(0, state.subtitleFocus - 1) };
   if (key === 'ArrowRight')

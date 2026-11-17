@@ -8,7 +8,7 @@ export function playback(
   programme: Programme,
   seconds: number,
   state: TVState,
-  reducedMotion: boolean,
+  overlay: number,
 ) {
   const elapsed = seconds % 45;
   ctx.save();
@@ -22,9 +22,9 @@ export function playback(
   ctx.restore();
 
   captions(ctx, state.subtitles, elapsed);
-  const reveal = reducedMotion ? 1 : Math.min(1, seconds / 0.55);
+  if (overlay === 0) return;
   ctx.save();
-  ctx.translate(0, 220 * (1 - reveal) ** 3);
+  ctx.translate(0, 250 * (1 - overlay));
   playbackControls(ctx, programme.title, elapsed, state);
   ctx.restore();
 }
@@ -49,7 +49,7 @@ function playbackControls(
   ctx.fillText('GENERATED SCENE · DEMO SUBTITLES', 56, 562);
   ctx.textAlign = 'right';
   ctx.fillText(`0:${String(Math.floor(elapsed)).padStart(2, '0')} / 0:45`, 1224, 534);
-  ctx.fillText('← → Choose · OK Apply · Back Browse', 1224, 562);
+  ctx.fillText('← → Choose · OK Apply · ↑ / Back Hide', 1224, 562);
   ctx.textAlign = 'left';
   ctx.fillStyle = '#ffffff30';
   ctx.fillRect(56, 586, 1168, 3);

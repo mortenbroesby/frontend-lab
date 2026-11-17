@@ -81,18 +81,12 @@ function shelf(ctx: Context, state: TVState, view: View, rowIndex: number) {
   }
   ctx.restore();
 }
-export function paint(
-  ctx: Context,
-  state: TVState,
-  view: View,
-  seconds: number,
-  reducedMotion = false,
-) {
+export function paint(ctx: Context, state: TVState, view: View, seconds: number) {
   ctx.fillStyle = '#141414';
   ctx.fillRect(0, 0, 1280, 720);
   const programme = selectedTitle(state);
   if (state.playing) {
-    playback(ctx, programme, seconds, state, reducedMotion);
+    playback(ctx, programme, seconds, state, view.overlay);
     return;
   }
   hero(ctx, programme, seconds);

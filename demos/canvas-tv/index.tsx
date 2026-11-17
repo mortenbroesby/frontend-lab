@@ -100,8 +100,8 @@ function TVIntro() {
         </div>
         <p>
           A fictional streaming catalogue, drawn in Canvas. Browse with arrow keys; Enter plays a
-          short scene and Escape returns. Browse twelve looping rows; moving vertically keeps your
-          column. Continue watching shows illustrative progress.
+          short scene. Escape hides playback controls, then returns. Browse twelve looping rows;
+          moving vertically keeps your column. Continue watching shows illustrative progress.
         </p>
       </section>
     </>
