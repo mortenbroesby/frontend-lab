@@ -94,54 +94,58 @@ export default function InstrumentDemo() {
     <div className="pocket-instrument">
       <div className="instrument-top">
         <div>
-          <span className="instrument-eyebrow">WEB AUDIO / 01</span>
-          <h2>A little machine for making noise.</h2>
-          <p>Press play. Change the beat. See what happens.</p>
+          <span className="instrument-eyebrow">PATTERN 01 / C MINOR</span>
+          <h2>Press play. Find your sound.</h2>
+          <p>An original loop, ready to reshape.</p>
         </div>
-        <Button onClick={() => void togglePlayback()} disabled={busy}>
+        <Button className="instrument-play" onClick={() => void togglePlayback()} disabled={busy}>
           {instrument ? '■ Stop' : '▶ Play'}
         </Button>
       </div>
       {error && <p role="alert">{error}</p>}
-      <div className="instrument-scope">
-        <div className="scope-caption">
-          <span>{instrument ? 'SIGNAL LIVE' : 'AWAITING SIGNAL'}</span>
-          <span>SYNTHESIZED IN YOUR BROWSER</span>
+      <div className="instrument-console">
+        <div className="instrument-scope">
+          <div className="scope-caption">
+            <span className="signal-status" data-live={Boolean(instrument)}>
+              {instrument ? 'PLAYING' : 'READY'}
+            </span>
+            <span>LIVE WAVEFORM</span>
+          </div>
+          <Scope instrument={instrument} onStep={setStep} />
+          <div className="scope-footer">
+            <span>WEB AUDIO</span>
+            <span>16 STEPS · 3 VOICES</span>
+          </div>
         </div>
-        <Scope instrument={instrument} onStep={setStep} />
-        <div className="scope-footer">
-          <span>POCKET TRACKER</span>
-          <span>16 STEPS · 3 VOICES</span>
+        <div className="instrument-controls">
+          <Dial
+            label="Tempo"
+            value={settings.tempo}
+            min={70}
+            max={160}
+            unit="BPM"
+            onChange={(tempo) => setSettings((s) => ({ ...s, tempo }))}
+          />
+          <Dial
+            label="Tone"
+            value={settings.cutoff}
+            min={200}
+            max={8000}
+            unit="Hz"
+            onChange={(cutoff) => setSettings((s) => ({ ...s, cutoff }))}
+          />
+          <Dial
+            label="Echo"
+            value={Math.round(settings.echo * 100)}
+            min={0}
+            max={60}
+            unit="%"
+            onChange={(echo) => setSettings((s) => ({ ...s, echo: echo / 100 }))}
+          />
         </div>
-      </div>
-      <div className="instrument-controls">
-        <Dial
-          label="Tempo"
-          value={settings.tempo}
-          min={70}
-          max={160}
-          unit="BPM"
-          onChange={(tempo) => setSettings((s) => ({ ...s, tempo }))}
-        />
-        <Dial
-          label="Tone"
-          value={settings.cutoff}
-          min={200}
-          max={8000}
-          unit="Hz"
-          onChange={(cutoff) => setSettings((s) => ({ ...s, cutoff }))}
-        />
-        <Dial
-          label="Echo"
-          value={Math.round(settings.echo * 100)}
-          min={0}
-          max={60}
-          unit="%"
-          onChange={(echo) => setSettings((s) => ({ ...s, echo: echo / 100 }))}
-        />
       </div>
       <div className="sequencer-heading">
-        <h3>Make it yours</h3>
+        <h3>Step sequencer</h3>
         <span>Tap a step to add or remove a note.</span>
       </div>
       <div className="sequencer-scroll">
@@ -155,7 +159,11 @@ export default function InstrumentDemo() {
               }
             >
               <div className="voice-label">
-                <strong>{voice}</strong>
+                <strong>
+                  <span className="voice-dot" aria-hidden="true" />
+                  {voice}
+                  <span className="voice-level">{Math.round(settings.levels[row] * 100)}%</span>
+                </strong>
                 <Slider
                   aria-label={`${voice} volume`}
                   value={[settings.levels[row] * 100]}
@@ -183,6 +191,7 @@ export default function InstrumentDemo() {
                   }
                 >
                   <span>{String(column + 1).padStart(2, '0')}</span>
+                  <i aria-hidden="true" />
                 </Button>
               ))}
             </div>
