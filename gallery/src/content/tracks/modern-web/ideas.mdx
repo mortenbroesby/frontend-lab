@@ -1,69 +1,57 @@
 <section className="track-start" aria-labelledby="start-heading">
 
-<p className="eyebrow">Your starting point</p>
-<h2 id="start-heading">Pick one thing you want to see working.</h2>
-<p>Try a working demo, borrow an idea or explore your own question. These are starting points, not a checklist. You can work in the Lab or your own project.</p>
+<h2 id="start-heading">Make the browser do something new.</h2>
+<p>Make a button affect another screen, keep a page responsive during a calculation, or turn data into something you can interact with. Choose one behavior you'd like to build and get a small version working.</p>
+<p>Use an existing demo for inspiration, start a Lab experiment or bring your own project.</p>
 
 </section>
 
+<section aria-labelledby="options-heading">
+<h2 id="options-heading">What would you like to build?</h2>
 <div className="track-options">
-<section aria-labelledby="try-heading">
-<p className="eyebrow">Try</p>
-<h2 id="try-heading">Try something now</h2>
-<p>Open an experiment in your browser. No installation needed.</p>
-<ul>
-<li><DemoLink id="web-worker-comparison">Keep a page responsive →</DemoLink><span>Run the same calculation in a Worker and on the main thread. Try clicking while it runs.</span></li>
-<li><DemoLink id="device-rally">Send a reaction between devices →</DemoLink><span>Join the same room on two devices. Requires internet and trusted HTTPS; some networks block connections.</span></li>
-</ul>
-<p className="track-next">Then make one change: alter the calculation or add a reaction.</p>
+<section aria-labelledby="devices-heading">
+<h3 id="devices-heading">Connect two browsers</h3>
+<p>Click a button in one browser and see a reaction arrive in the other.</p>
+<p>Start with one message. Then try a shared slider, remote control or collaborative drawing.</p>
+<a className="track-start-link" href="#/track/modern-web/devices">Start with a reaction button →</a>
+<p className="track-example"><DemoLink id="device-rally">Try Device Rally</DemoLink> on two devices first. It needs internet and trusted HTTPS; some networks block connections. The guide also works with two local browser windows.</p>
 </section>
-<section aria-labelledby="inspire-heading">
-<p className="eyebrow">Discover</p>
-<h2 id="inspire-heading">Find an idea</h2>
-<p>Start with a possibility that makes you curious.</p>
-<ul>
-<li><a href="#connected" onClick={(event) => { event.preventDefault(); const section = document.getElementById("connected"); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: "start" }); }}>Connected experiences ↓</a><span>Make something happen in another browser.</span></li>
-<li><a href="#graphics" onClick={(event) => { event.preventDefault(); const section = document.getElementById("graphics"); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: "start" }); }}>Interactive graphics ↓</a><span>Turn a few shapes into something you can explore.</span></li>
-<li><a href="#browser" onClick={(event) => { event.preventDefault(); const section = document.getElementById("browser"); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: "start" }); }}>Browser-native interactions ↓</a><span>Try a smooth transition or a local file preview.</span></li>
-</ul>
+<section aria-labelledby="workers-heading">
+<h3 id="workers-heading">Keep a busy page responsive</h3>
+<p>Run a calculation while buttons and inputs still respond.</p>
+<p>Move the work into a Worker, then compare the same interaction before and after. Later, try filtering data or processing an image.</p>
+<a className="track-start-link" href="#/track/modern-web/workers">Start with a Web Worker →</a>
+<p className="track-example"><DemoLink id="web-worker-comparison">Try the Worker comparison</DemoLink> in your browser. Click the interaction pad while each mode runs; moving work doesn't have to make it finish faster to help.</p>
 </section>
-<section aria-labelledby="own-heading">
-<p className="eyebrow">Build</p>
-<h2 id="own-heading">Explore your own question</h2>
-<p>You don't need to choose one of our ideas.</p>
-<ul>
-<li><a href="#/create">Create an experiment →</a><span>Generate a standalone React app in the Lab, then change its first component.</span></li>
-<li><a href="#/track/modern-web/guides">Start in your own project →</a><span>Choose a guide and apply the technique to code you already have.</span></li>
-</ul>
-<p className="track-next"><a href="#/guide/setup">Set up the Lab locally →</a> when you're ready to edit.</p>
+<section aria-labelledby="graphics-heading">
+<h3 id="graphics-heading">Make data interactive</h3>
+<p>Drag a shape, rearrange a diagram or change the rules of a simulation.</p>
+<p>Start with a few shapes and one interaction. Replace the sample values with data you care about once that works.</p>
+<a className="track-start-link" href="https://d3js.org/getting-started">Start with D3's guide ↗</a>
+<p className="track-example"><a href="#/showcases">Explore Signal Garden</a> for inspiration, or <DemoLink id="dependency-map">try Dependency Ripple</DemoLink> for a smaller graph. The D3 guide is an external resource.</p>
+</section>
+<section aria-labelledby="tabs-heading">
+<h3 id="tabs-heading">Keep two tabs in sync</h3>
+<p>Change a preference in one tab and watch another tab update.</p>
+<p>Start with a compact-layout switch. Then explore what happens when a new tab opens or a page reloads.</p>
+<a className="track-start-link" href="#/track/modern-web/tab-settings">Start with a shared preference →</a>
+<p className="track-example">The guide includes a React example using BroadcastChannel. It connects tabs on the same origin in one browser, not separate devices.</p>
 </section>
 </div>
+</section>
 
-<section className="track-inspiration" aria-labelledby="inspiration-heading">
-<p className="eyebrow">A little inspiration</p>
-<h2 id="inspiration-heading">What could you make?</h2>
-<p>Borrow the interesting interaction. Your first version can be much smaller.</p>
+<section className="track-method" aria-labelledby="method-heading">
+<h2 id="method-heading">How to work on it</h2>
+<ol>
+<li><strong>Choose one visible behavior.</strong><p>Describe what someone does and what should happen: “Click here, see a message there.” Your own idea is welcome.</p></li>
+<li><strong>Get the smallest version working.</strong><p>Follow a guide or adapt a demo. Use a button, a few values or one message before adding more controls and data.</p></li>
+<li><strong>Change something and observe.</strong><p>Try a larger input, reload a tab or disconnect a peer. Check what still works and choose the next improvement from what you see.</p></li>
+</ol>
+</section>
 
-<div className="track-directions">
-<section id="connected" tabIndex={-1}>
-<h3>Make one browser control another</h3>
-<p>Send a reaction, change a colour or draw a line on another screen. Try <a href="https://pairdrop.net/">PairDrop ↗</a> for an external example of a useful connected experience.</p>
-<p><strong>Start small:</strong> send one message. Then try a shared button or slider.</p>
-<DemoLink id="device-rally">Try Device Rally →</DemoLink> · <a href="#/track/modern-web/devices">Build a reaction button →</a>
-</section>
-<section id="graphics" tabIndex={-1}>
-<h3>Give your data something to do</h3>
-<p>Drag a shape, rearrange a diagram or influence a simulation. Browse the external <a href="https://observablehq.com/@d3/gallery">D3 gallery ↗</a> and pick one interaction you like.</p>
-<p><strong>Start small:</strong> make a few shapes respond to a pointer or keyboard. Add your own data later.</p>
-<a href="#/showcases">Explore Signal Garden →</a> · <a href="https://d3js.org/getting-started">Start with D3 ↗</a>
-</section>
-<section id="browser" tabIndex={-1}>
-<h3>Make a familiar interaction feel better</h3>
-<p>Expand a card smoothly or preview a file someone selects. Explore the external <a href="https://view-transitions.chrome.dev/">View Transitions examples ↗</a>; browser support varies.</p>
-<p><strong>Start small:</strong> transition between two states. Or display one selected image, keeping everything local.</p>
-<a href="#/create">Create a browser experiment →</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications">Explore local files ↗</a>
-</section>
-</div>
+<section className="track-workspace" aria-label="Choose your workspace">
+<p><strong>Using your own project?</strong> Pick a guide above and apply the browser API to one existing interaction.</p>
+<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a> to edit an existing demo, or <a href="#/create">create a standalone experiment</a>. You can try the hosted demos before installing anything.</p>
 </section>
 
 <nav className="track-browse" aria-label="More in Modern Web">

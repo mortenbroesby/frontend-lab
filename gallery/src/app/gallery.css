@@ -744,7 +744,7 @@
   }
 }
 
-/* Open starting points shared by the migrated track pages. */
+/* Activity-led landing pages shared by the migrated tracks. */
 .track-start {
   max-width: 48rem;
   margin-bottom: 2rem;
@@ -754,14 +754,16 @@
 }
 .track-start p,
 .track-options p,
-.track-inspiration p {
+.track-method p,
+.track-workspace p {
   color: var(--lab-muted);
   line-height: 1.65;
 }
 .track-options {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  margin-top: 1.5rem;
 }
 .track-options > section {
   min-width: 0;
@@ -770,51 +772,43 @@
   border-radius: var(--radius-lg);
   background: var(--lab-surface);
 }
-.track-options h2 {
+.track-options h3 {
   font-size: 1.25rem;
   line-height: 1.35;
 }
-.track-options ul {
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem 0 0;
-}
-.track-options li + li {
-  margin-top: 1.25rem;
-}
-.track-options li a {
-  display: block;
-  padding-block: 0.5rem;
+.track-start-link {
+  display: inline-block;
+  padding-block: 0.75rem;
   font-weight: 600;
 }
-.track-options li span {
-  display: block;
-  color: var(--lab-muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-.track-options .track-next {
-  margin-top: 1.5rem;
+.track-options .track-example {
+  margin-top: 0.5rem;
   padding-top: 1rem;
   border-top: 1px solid var(--lab-line);
   font-size: 0.9rem;
 }
-.track-inspiration {
-  margin-top: 4rem;
+.track-method {
+  margin-top: 3rem;
+  max-width: 48rem;
 }
-.track-directions {
-  display: grid;
-  gap: 1.5rem;
+.track-method ol {
+  padding-left: 1.5rem;
+}
+.track-method li {
+  padding-left: 0.5rem;
+  margin-top: 1.25rem;
+}
+.track-method p {
+  margin-top: 0.25rem;
+}
+.track-workspace {
   margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--lab-line);
+  max-width: 48rem;
 }
-.track-directions > section {
-  padding: 1.5rem;
-  border-left: 2px solid var(--lab-line);
-  scroll-margin-top: 6rem;
-  max-width: 52rem;
-}
-.track-directions h3 {
-  font-size: 1.25rem;
+.track-workspace strong {
+  color: var(--lab-ink);
 }
 .track-browse {
   display: flex;
@@ -824,61 +818,8 @@
   margin-top: 2rem;
   border-top: 1px solid var(--lab-line);
 }
-@media (max-width: 900px) {
-  .track-options {
-    grid-template-columns: 1fr;
-  }
-}
-
-.quality-options {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 1.5rem;
-}
-.quality-options h3 {
-  font-size: 1.25rem;
-  line-height: 1.35;
-}
-.quality-start-link {
-  display: inline-block;
-  padding-block: 0.75rem;
-  font-weight: 600;
-}
-.quality-options .quality-example {
-  margin-top: 0.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--lab-line);
-  font-size: 0.9rem;
-}
-.quality-method {
-  margin-top: 3rem;
-  max-width: 48rem;
-}
-.quality-method ol {
-  padding-left: 1.5rem;
-}
-.quality-method li {
-  padding-left: 0.5rem;
-  margin-top: 1.25rem;
-}
-.quality-method p {
-  margin-top: 0.25rem;
-}
-.quality-method p,
-.quality-workspace p {
-  color: var(--lab-muted);
-  line-height: 1.65;
-}
-.quality-workspace {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--lab-line);
-  max-width: 48rem;
-}
-.quality-workspace strong {
-  color: var(--lab-ink);
-}
 @media (max-width: 700px) {
-  .quality-options {
+  .track-options {
     grid-template-columns: 1fr;
   }
 }
