@@ -167,3 +167,87 @@
   background: var(--lab-surface);
   border-radius: var(--radius-md);
 }
+
+/* A contained 8:5 flight view, with instruments and controls outside the canvas. */
+.lander-game-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
+  padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right))
+    max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  background: var(--lab-surface);
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.lander-game-screen .lander-telemetry,
+.lander-game-screen .lander-flight-bar {
+  padding: 0;
+}
+.lander-game-screen .lander-viewport {
+  display: grid;
+  place-items: center;
+  container-type: size;
+  border-radius: var(--radius-md);
+}
+.lander-game-screen canvas {
+  width: min(100cqw, 160cqh);
+  height: auto;
+}
+.lander-game-screen .lander-controls {
+  margin: 0;
+}
+.lander-game-screen .lander-help,
+.lander-game-screen .lander-about {
+  display: none;
+}
+.lander-game-screen button {
+  min-height: 44px;
+}
+.lander-game-screen .lander-control {
+  min-height: 64px;
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .lander-game-screen {
+    grid-template-columns: minmax(0, 1fr) 210px;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  .lander-game-screen .lander-viewport {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+  .lander-game-screen .lander-telemetry {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .lander-game-screen .lander-flight-bar {
+    display: block;
+  }
+  .lander-game-screen .lander-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+  .lander-game-screen .lander-screen-toggle {
+    grid-column: 1 / -1;
+  }
+  .lander-game-screen strong {
+    font-size: 1rem;
+  }
+  .lander-game-screen p {
+    font-size: 0.75rem;
+  }
+  .lander-game-screen .lander-control {
+    min-width: 0;
+    padding-inline: 0.2rem;
+    font-size: 0.65rem;
+    flex-direction: column;
+  }
+}

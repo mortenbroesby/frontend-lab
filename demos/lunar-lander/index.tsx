@@ -1,6 +1,7 @@
 import { Button } from '@lab/ui/button';
 import { Progress } from '@lab/ui/progress';
 import { useFlight } from './use-flight';
+import { useGameScreen } from './use-game-screen';
 import type { Control } from './use-flight';
 import type { KeyboardEvent } from 'react';
 import './styles.css';
@@ -46,6 +47,7 @@ const keyMap: Record<string, Control> = {
 
 export default function LunarLander() {
   const game = useFlight();
+  const screen = useGameScreen();
   const { phase, flight } = game.view;
   const flying = phase === 'flying';
   const available = phase !== 'loading' && phase !== 'error';
@@ -62,7 +64,7 @@ export default function LunarLander() {
     game.canvas.current?.focus();
   }
   return (
-    <div className="lander">
+    <div ref={screen.root} className={screen.className}>
       <div className="lander-telemetry" aria-label="Flight instruments">
         <div>
           <span>Altitude</span>
@@ -93,6 +95,13 @@ export default function LunarLander() {
       <div className="lander-flight-bar">
         <p role="status">{messages[phase]}</p>
         <div className="lander-actions">
+          <Button
+            className="lander-screen-toggle"
+            variant="outline"
+            onClick={() => void screen.toggle()}
+          >
+            {screen.label}
+          </Button>
           <Button disabled={!available} onClick={flying ? () => game.command('pause') : start}>
             {actions[phase]}
           </Button>
@@ -173,6 +182,7 @@ function FlightControls({ game, flying }: { game: ReturnType<typeof useFlight>; 
       {controls.map(({ id, label, glyph }) => (
         <Button
           key={id}
+          className="lander-control"
           variant="outline"
           aria-label={label}
           disabled={!flying}
