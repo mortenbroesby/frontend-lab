@@ -1,4 +1,5 @@
 import { scenery, poster } from './scenery';
+import { playback } from './playback';
 import { rows, type Programme } from './catalogue';
 import { selectedTitle, type TVState } from './navigation';
 
@@ -24,20 +25,6 @@ function text(
   ctx.fillStyle = colour;
   ctx.font = `${weight} ${size}px system-ui, sans-serif`;
   ctx.fillText(value, x, y);
-}
-function panel(
-  ctx: Context,
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  radius: number,
-  colour: string,
-) {
-  ctx.beginPath();
-  ctx.roundRect(x, y, width, height, radius);
-  ctx.fillStyle = colour;
-  ctx.fill();
 }
 function hero(ctx: Context, programme: Programme, seconds: number) {
   scenery(ctx, programme, seconds);
@@ -82,40 +69,31 @@ function shelf(ctx: Context, state: TVState, view: View, rowIndex: number) {
   });
   ctx.restore();
 }
-function details(ctx: Context, programme: Programme) {
-  panel(ctx, 64, 352, 1152, 300, 12, '#142128');
-  text(ctx, 'TITLE DETAILS', 96, 401, 14, '#b9f7d1', 600);
-  text(ctx, programme.title, 96, 455, 36, '#f4f6f5', 600);
-  text(ctx, programme.genre, 96, 495, 16, '#a8b9bc');
-  text(ctx, 'Fictional catalogue. No video is streamed.', 96, 546, 20, '#c6d1d1');
-  panel(ctx, 92, 576, 220, 48, 6, '#b9f7d1');
-  text(ctx, 'Esc  /  Back to browse', 110, 607, 17, '#092018', 600);
-}
 export function paint(ctx: Context, state: TVState, view: View, seconds: number) {
   ctx.fillStyle = '#080e12';
   ctx.fillRect(0, 0, 1280, 720);
   const programme = selectedTitle(state);
-  hero(ctx, programme, seconds);
-  if (state.detail) {
-    details(ctx, programme);
-  } else {
-    rows.forEach((_, index) => shelf(ctx, state, view, index));
-    ctx.beginPath();
-    ctx.roundRect(view.x - 5, view.y - 5, 234, 110, 10);
-    ctx.strokeStyle = '#b9f7d1';
-    ctx.lineWidth = 3;
-    ctx.shadowColor = '#b9f7d1';
-    ctx.shadowBlur = 18;
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-    text(
-      ctx,
-      `${state.columns[state.row] + 1} / ${rows[state.row].programmes.length}`,
-      1158,
-      696,
-      14,
-      '#a8b9bc',
-    );
+  if (state.playing) {
+    playback(ctx, programme, seconds);
+    return;
   }
-  text(ctx, '↑ ↓ ← →  Navigate      Enter  Details      Esc  Back', 64, 696, 14, '#a8b9bc');
+  hero(ctx, programme, seconds);
+  rows.forEach((_, index) => shelf(ctx, state, view, index));
+  ctx.beginPath();
+  ctx.roundRect(view.x - 5, view.y - 5, 234, 110, 10);
+  ctx.strokeStyle = '#b9f7d1';
+  ctx.lineWidth = 3;
+  ctx.shadowColor = '#b9f7d1';
+  ctx.shadowBlur = 18;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  text(
+    ctx,
+    `${state.columns[state.row] + 1} / ${rows[state.row].programmes.length}`,
+    1158,
+    696,
+    14,
+    '#a8b9bc',
+  );
+  text(ctx, '↑ ↓ ← →  Navigate      Enter  Play      Esc  Back', 64, 696, 14, '#a8b9bc');
 }

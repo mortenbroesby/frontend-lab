@@ -13,12 +13,12 @@ test('remote navigation clamps edges and remembers the column per row', () => {
   assert.equal(state.columns[0], 5);
 });
 
-test('opening details freezes catalogue navigation and Back restores selection', () => {
+test('starting playback freezes catalogue navigation and Back restores selection', () => {
   const selected = navigate(initialState, 'ArrowRight');
-  const detail = navigate(selected, 'Enter');
-  assert.equal(detail.detail, true);
-  assert.equal(selectedTitle(detail).title, selectedTitle(selected).title);
-  assert.deepEqual(navigate(detail, 'ArrowDown'), detail);
-  assert.deepEqual(navigate(detail, 'Escape'), selected);
+  const playback = navigate(selected, 'Enter');
+  assert.equal(playback.playing, true);
+  assert.equal(selectedTitle(playback).title, selectedTitle(selected).title);
+  assert.deepEqual(navigate(playback, 'ArrowDown'), playback);
+  assert.deepEqual(navigate(playback, 'Escape'), selected);
   assert.deepEqual(navigate(initialState, 'Escape'), initialState);
 });

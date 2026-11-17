@@ -92,11 +92,11 @@ function TVIntro() {
         </div>
         <p>
           Remote is a TV interface drawn entirely in Canvas. Explore its fictional catalogue with
-          arrow keys, then press Enter to open a title. Escape brings you back to the same
-          selection. A TV remote has no pointer, so a visible focus and predictable movement matter.
-          Mountains and mist drift behind the catalogue. React manages the state while Canvas draws
-          every title, landscape and focus ring. This is an original interaction study, not a
-          recreation of Lightning or a streaming service.
+          arrow keys, then press Enter to play a short animated scene. Escape brings you back to the
+          same selection. A TV remote has no pointer, so a visible focus and predictable movement
+          matter. Mountains and mist drift behind the catalogue. React manages the state while
+          Canvas draws every title, landscape and focus ring. This is an original interaction study,
+          not a recreation of Lightning or a streaming service.
         </p>
       </section>
     </>
@@ -191,9 +191,9 @@ function Selection({ state }: { state: TVState }) {
       aria-live="polite"
       aria-atomic="true"
     >
-      {state.detail ? 'Details' : 'Selected'}: <strong>{programme.title}</strong> ·{' '}
+      {state.playing ? 'Playing' : 'Selected'}: <strong>{programme.title}</strong> ·{' '}
       {programme.genre}. {programme.description}
-      {state.detail && ' Fictional title; no video is streamed.'}
+      {state.playing && ' Procedural animation; Back returns to the catalogue.'}
     </p>
   );
 }

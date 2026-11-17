@@ -225,7 +225,7 @@ This describes our project, not current Xfinity policy. The next slide is a new 
 “This is a small Canvas example made for this talk, not our original Lightning application. Put the mouse aside for a moment. Where would you expect the focus to go?”
 
 LIVE SEQUENCE
-Move right until the shelf scrolls. Move down, then back up: the row remembers its selection. Press Enter to open a title, then Escape to return. On a phone, use the on-screen arrows, OK and Back.
+Move right until the shelf scrolls. Move down, then back up: the row remembers its selection. Press Enter to play the selected title as a full-frame procedural animation, then Escape to return. On a phone, use the on-screen arrows, OK and Back.
 
 PAUSE FOR A QUESTION
 “What should happen when I go back?” Give people a moment to predict it before pressing Back. The focus ring, predictable movement and restored selection are doing work a pointer normally makes easy.
@@ -234,7 +234,7 @@ TRANSITION
 “The interaction was unfamiliar. We wanted building the components to feel familiar.” Tab through the remote to Continue presentation, or click that link, to move on.
 
 REMEMBER
-This illustration uses React state and native Canvas 2D. It does not demonstrate Lightning or our custom renderer, and it does not stream video.`,
+This illustration uses React state and native Canvas 2D. It does not demonstrate Lightning or our custom renderer, and its playback is an original procedural animation, not streamed video.`,
   },
   {
     id: 'components',

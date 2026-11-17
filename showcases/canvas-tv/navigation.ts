@@ -1,13 +1,13 @@
 import { rows } from './catalogue.ts';
-export type TVState = { row: number; columns: number[]; detail: boolean };
-export const initialState: TVState = { row: 0, columns: rows.map(() => 0), detail: false };
+export type TVState = { row: number; columns: number[]; playing: boolean };
+export const initialState: TVState = { row: 0, columns: rows.map(() => 0), playing: false };
 export function selectedTitle(state: TVState) {
   return rows[state.row].programmes[state.columns[state.row]];
 }
 export function navigate(state: TVState, key: string): TVState {
-  if (key === 'Escape' || key === 'Backspace') return { ...state, detail: false };
-  if (state.detail) return state;
-  if (key === 'Enter') return { ...state, detail: true };
+  if (key === 'Escape' || key === 'Backspace') return { ...state, playing: false };
+  if (state.playing) return state;
+  if (key === 'Enter') return { ...state, playing: true };
   if (key === 'ArrowUp' || key === 'ArrowDown') {
     return {
       ...state,

@@ -11,5 +11,5 @@
 <g fill="#183b3b"><rect x="40" y="288" width="166" height="98" rx="7"/><rect x="224" y="288" width="166" height="98" rx="7" fill="#282b4b"/><rect x="408" y="288" width="166" height="98" rx="7" fill="#294735"/><rect x="592" y="288" width="166" height="98" rx="7" fill="#4a3525"/></g>
 <rect x="35" y="283" width="176" height="108" rx="10" stroke="#b9f7d1" stroke-width="3"/>
 <g fill="#c6dfd4"><circle cx="170" cy="315" r="13"/><circle cx="354" cy="315" r="13"/><circle cx="538" cy="315" r="13"/><circle cx="722" cy="315" r="13"/></g>
-<text x="40" y="425" font-family="system-ui,sans-serif" font-size="12" fill="#a8b9bc">↑ ↓ ← →   Navigate      Enter   Details      Esc   Back</text>
+<text x="40" y="425" font-family="system-ui,sans-serif" font-size="12" fill="#a8b9bc">↑ ↓ ← →   Navigate      Enter   Play      Esc   Back</text>
 </svg>
