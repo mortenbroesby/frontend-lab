@@ -1,0 +1,93 @@
+## Build a behaviour with TDD
+
+Test-driven development means writing a small example of the behaviour you want **before** implementing it. Run it, watch it fail for the right reason, make it pass, then improve the code while the tests stay green.
+
+Try it on a small rule from your own project: wrapping a carousel, disabling an action or calculating a game score. The example below builds “next item” navigation without needing a browser or another dependency.
+
+### Start with one expectation
+
+After [local setup](#/guide/setup), use a demo workspace you own, or [create one](#/create). Add these two files beside its `index.tsx`.
+
+In `selection.test.ts`:
+
+```ts
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { nextIndex } from './selection.ts';
+
+test('next moves to the following item', () => {
+  assert.equal(nextIndex(0, 3), 1);
+});
+```
+
+In `selection.ts`, give the function a deliberately unfinished body:
+
+```ts
+export function nextIndex(current: number, count: number): number {
+  return current;
+}
+```
+
+For this first version, assume a non-empty list and a valid current index. Run from the repository root, replacing `your-id` with your demo's folder ID:
+
+```sh
+node --test demos/your-id/selection.test.ts
+```
+
+**Red:** the assertion should report `0` instead of `1`. A missing module or syntax error doesn't establish the behaviour yet; fix that setup problem first.
+
+### Make only that behaviour work
+
+Change the return value to `current + 1`. Run the same test again.
+
+**Green:** the first example now passes. Don't add wrapping, empty-list handling or a selection controller yet. Choose the next behaviour that matters.
+
+Add this test without changing the implementation:
+
+```ts
+test('next wraps from the last item to the first', () => {
+  assert.equal(nextIndex(2, 3), 0);
+});
+```
+
+Run again. It should fail with `3` instead of `0`. Now implement wrapping and rerun **both** tests.
+
+<details>
+<summary>One possible next implementation</summary>
+
+```ts
+export function nextIndex(current: number, count: number): number {
+  if (current === count - 1) return 0;
+  return current + 1;
+}
+```
+
+</details>
+
+### Refactor with the tests still green
+
+**Refactor:** improve clarity without adding behaviour. For example, compare the explicit branch with `(current + 1) % count`. Which is easier to understand here? Keep the branch if it communicates the rule better; refactoring doesn't require changing something.
+
+Run the tests after each edit. A refactor should preserve their expectations, not rewrite them to match the implementation.
+
+For a short feedback loop:
+
+```sh
+node --test --watch demos/your-id/selection.test.ts
+```
+
+### Choose the next question
+
+- **One item:** should Next keep it selected? Write the example. If it already passes, don't change the implementation unnecessarily.
+- **No items:** should there be no selection, a disabled Next button or an error? Decide the contract before adding a test. The current assumption deliberately excludes this case.
+- **A real interface:** connect the rule to a carousel or menu. The function tests don't prove that a button calls it or that focus moves correctly.
+
+For UI behaviour, use your project's existing component test setup. A useful test clicks Next and checks the selected item or accessible state. Avoid asserting internal hook values or component structure. [Testing Library's principles](https://testing-library.com/docs/guiding-principles/) explain this user-facing approach; it isn't required for the Node exercise above.
+
+### Keep the cycle useful
+
+Start with one observable outcome. Derive the expected result from the requirement, not by repeating the implementation in the assertion. Mock an external boundary when needed, not the logic you're trying to test.
+
+TDD is useful when the expected behaviour is clear enough to express. For exploratory visuals, try a sketch first and test stable rules as they emerge. For existing code with unclear behaviour, [find a missing test](#/track/code-quality/test-confidence) before changing it.
+
+See [Node's test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html) for the tools used here.

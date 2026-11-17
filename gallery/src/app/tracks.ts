@@ -29,6 +29,11 @@ export const tracks = [
     id: 'code-quality',
     guides: [
       {
+        slug: 'tdd',
+        title: 'Build a behaviour with TDD',
+        description: 'Write a failing test, make it pass and refactor through one small behaviour.',
+      },
+      {
         slug: 'state-machines',
         title: 'What is a state machine?',
         description:
