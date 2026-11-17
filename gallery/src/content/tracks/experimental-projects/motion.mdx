@@ -4,6 +4,18 @@ A card moves to another position. A thumbnail opens into a detail view. Half a c
 
 Try <DemoLink id="motion-with-purpose">Motion with purpose</DemoLink>: an interactive collection of six graphic prints. Filter it, mix up the order and open a print. Then turn motion off and compare the same actions.
 
+### Choose something to explore
+
+Start with the effect you want, then pick a tool:
+
+- **[Motion](https://motion.dev/docs/react)** — React elements entering, leaving and changing layout. Try connecting a thumbnail to a detail view. Our reference demo uses Motion; the experiments below explore that approach.
+- **[GSAP](https://gsap.com/docs/v3/GSAP/Timeline/)** — coordinated animation sequences with timeline controls. Try choreographing an SVG scene, then add a slider that scrubs through the sequence.
+- **[React Spring](https://www.react-spring.dev/docs)** — spring-based animation driven by React state. Try a card that springs between positions; vary its tension and friction to change how it feels.
+- **[Lottie](https://github.com/airbnb/lottie-web)** — playing exported, authored animations in the browser. Find a suitably licensed animation and try controlling its playback or progress through an interaction.
+- **[Rive](https://rive.app/docs/runtimes/react/react)** — interactive artwork with state machines. Try a character or gauge that reacts to a button or slider. This path uses a `.riv` asset authored in Rive and a React runtime to control it.
+
+CSS transitions are enough for simple colour and opacity changes. Lottie and Rive are useful when the animation itself is an authored asset; Motion, GSAP and React Spring let you explore movement in your own interface. These alternatives are suggestions, not additional setup requirements.
+
 ### Keep an object recognisable
 
 Start with a grid of things you care about: album covers, photos, recipes or project cards. Change their order while keeping stable React keys. Can your eye follow an item to its new position?
@@ -31,8 +43,6 @@ npm run dev --workspace @lab/demo-motion-with-purpose
 ```
 
 `demos/motion-with-purpose/posters.tsx` contains the original SVG artwork and collection data. `index.tsx` connects filtering, ordering and the detail view. Replace the subject, change a transition or build your own collection through [Create a demo](#/create).
-
-CSS transitions are enough for simple colour and opacity changes. Motion is useful here because elements enter, leave and change layout. An authored illustration is a different problem; this example doesn't need a separate animation player.
 
 ### Keep it usable without movement
 
