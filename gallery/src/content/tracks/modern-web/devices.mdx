@@ -1,38 +1,100 @@
+## Send a message between browsers
+
+Build a two-browser reaction button: click in one browser and see a message arrive in the other. You'll learn the difference between finding a peer, connecting to it and sending application data.
+
+### 1. Prepare a small React app
+
+[Create a demo](#/create) in Modern Web Capabilities. From the repository root, add the same Trystero version used by Device Rally to your new workspace. Replace `your-id` with the folder ID you chose:
+
+```sh
+npm install --save-exact trystero@0.27.0 --workspace @lab/demo-your-id
+```
+
+Trystero handles WebRTC signaling so you don't need to build a signaling server for this experiment. Public signaling requires internet. Start with two browser windows on **localhost**. To connect separate computers, each can run its own local copy; both must use the same app ID and room code. A phone visiting your laptop needs **trusted HTTPS**—plain HTTP at a LAN address is not supported by this setup.
+
+Use a room code unique to your pair. A room name isn't authentication; send only throwaway experiment data. Restricted networks can prevent connections; TURN relay setup is outside this guide.
+
+### 2. Join a room and receive a reaction
+
+Replace your demo's `index.tsx` with the following. Keep the generated entry and metadata. Change `roomCode` in both copies to the same value.
+
+```tsx
+import { useEffect, useRef, useState } from 'react';
+import { joinRoom, type MessageAction } from 'trystero';
 import { Button } from '@lab/ui/button';
 
-## Devices talking to each other
+const roomCode = 'choose-your-pair-code';
+// React can remount effects before an asynchronous leave has finished.
+let leaving = Promise.resolve();
 
-Connect two browsers for cheers, a control panel or a multiplayer game.
+export default function Demo() {
+  const action = useRef<MessageAction<string> | null>(null);
+  const [peers, setPeers] = useState(0);
+  const [received, setReceived] = useState(0);
+  const [status, setStatus] = useState('Finding a peer…');
 
-<div className="button-row">
-  <Button asChild><DemoLink id="device-rally">Try Device Rally</DemoLink></Button>
-  <Button asChild variant="outline"><a href="#/guide/setup">Local setup</a></Button>
-</div>
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+    let room: ReturnType<typeof joinRoom> | undefined;
 
-### Try it together
+    async function connect() {
+      await leaving;
+      if (signal.aborted) return;
+      if (!window.isSecureContext) throw new Error('Use localhost or trusted HTTPS.');
+      room = joinRoom({ appId: 'front-end-lab-reaction-guide', identity: 'none' }, roomCode);
+      const reaction = room.makeAction<string>('reaction');
+      action.current = reaction;
+      reaction.onMessage(message => {
+        if (message === 'hello') setReceived(count => count + 1);
+      }, { signal });
+      const updatePeers = () => {
+        const count = Object.keys(room!.getPeers()).length;
+        setPeers(count);
+        setStatus(count ? 'Connected' : 'Waiting for another browser…');
+      };
+      room.onPeerJoin(updatePeers, { signal });
+      room.onPeerLeave(updatePeers, { signal });
+      room.onError(error => setStatus(`Connection error: ${error.code}`), { signal });
+      await room.ready;
+    }
 
-Join the same Device Rally room in two browsers. Wait for a peer, send a cheer, then leave and rejoin. What happens to connections and messages?
+    void connect().catch(error => {
+      if (!signal.aborted) setStatus(error instanceof Error ? error.message : 'Connection failed');
+    });
+    return () => {
+      controller.abort();
+      action.current = null;
+      leaving = room?.leave().catch(() => {}) ?? leaving;
+    };
+  }, []);
 
-Device Rally uses WebRTC and Trystero public signaling. It requires internet and localhost or trusted HTTPS; phone access over plain LAN HTTP is unsupported. A physical phone-to-laptop cheer has been observed, but return delivery, reconnect behaviour and the workshop network are not yet verified. Two local browser windows can help diagnose setup, but do not prove that a phone or another network will connect.
+  function send() {
+    void action.current?.send('hello').catch(() => setStatus('Could not send. Try reconnecting.'));
+  }
 
-### Make one change
+  return (
+    <section>
+      <p role="status">{status} · Peers: {peers}</p>
+      <Button disabled={peers === 0} onClick={send}>Send hello</Button>
+      <p>Received: {received}</p>
+    </section>
+  );
+}
+```
 
-After [local setup](#/guide/setup), change the cheer presentation in `demos/device-rally/index.tsx`. Try both browsers before adding messages or shared state.
+### 3. Make the round trip
 
-Or [create your own React demo](#/create), using this as reference. New demos include no WebRTC or signaling.
+Open the same app in another window, wait for a peer, then send in both directions. Only the receiving browser's count should increase. Close one window: the remaining peer count should fall. Reopen it and reconnect; the counter is local state, not a shared history.
 
-### Try it in your project
+The room discovers peers; the named action defines the message channel. `MessageAction<string>` helps TypeScript callers, but the receiver still checks the actual message. Cleanup removes listeners and leaves the room; the pending-leave promise prevents a remount racing the previous connection.
 
-Begin with one message between two devices over trusted HTTPS. Give both clients the same room identifier, validate incoming messages, show connection status and release the room when leaving. Decide explicitly whether messages are transient or whether a new peer needs an initial state snapshot.
+If no peer appears, check matching room codes, secure context and internet access. Don't build further behaviour until a message travels both ways. Two local windows establish the basic flow; repeat on separate devices before relying on a particular network.
 
-Test the network where people will actually use it. Public signaling discovers peers; it does not guarantee a direct connection through every firewall. A TURN relay can help restricted connections, but it needs separate setup and is not configured in this demo.
+### Take it further
 
-### Follow your curiosity
+Make a phone control a colour or position on a laptop. Replace `'hello'` with a small typed message object and validate its fields on receipt. Decide whether a newly connected peer needs a current-state snapshot: transient actions don't automatically replay earlier messages.
 
-- **Small:** invent a new reaction and see it arrive in the other browser.
-- **Further:** let a phone control one visual property on a laptop, using trusted HTTPS.
-- **Stretch:** design how peers recover shared state after reconnecting.
+Optional reference: <DemoLink id="device-rally">Device Rally</DemoLink> adds room controls and connection feedback. For same-browser tabs without signaling, use [Share a preference between tabs](#/track/modern-web/tab-settings).
 
-For tabs in one browser, try <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink> and BroadcastChannel. WebSockets/SSE need a server, which this starter does not supply.
-
-Read: [Trystero documentation](https://github.com/dmotz/trystero) · [WebRTC connection protocols](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols).
+Read: [Trystero](https://github.com/dmotz/trystero) · [WebRTC connection protocols](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols).

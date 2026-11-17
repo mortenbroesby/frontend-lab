@@ -1,17 +1,79 @@
-## Change one rule in a little world
+## Build a tiny moving world
 
-- **Try:** <DemoLink id="ecosystem-simulation">Open the pond</DemoLink>, pause, plant a food trail and press play.
-- **Change:** Adjust sensing distance, then change a movement rule in `demos/ecosystem-simulation/world.ts`.
-- **Observe:** Do creatures find the same food with a shorter sensing distance? Change one rule at a time.
+Make a creature move across a small SVG world, then give it a reason to change direction. You'll build the core of a simulation or game: state, a rule that advances time, and a picture of that state.
 
-`world.ts` owns rules; `index.tsx` draws SVG and controls. Start with one creature and meal, or remix the example. Try avoidance, regrowing food or differing behaviours.
+### 1. Define one movement rule
 
-Three tests cover movement towards food, one-time consumption and pond boundaries. This toy omits reproduction, starvation and persistence.
+[Create a demo](#/create) in Experimental Projects. Add `world.ts` in its folder:
 
-### Apply it in your project
+```ts
+export type Creature = { x: number; direction: 1 | -1 };
 
-Separate a small state-update rule from rendering so you can inspect its inputs and outputs. Choose one observable outcome before changing a rule. Keep the initial conditions comparable: random starts make causal comparisons harder.
+export function step(creature: Creature, seconds: number): Creature {
+  const x = creature.x + creature.direction * 60 * seconds;
+  if (x >= 390) return { x: 390, direction: -1 };
+  if (x <= 10) return { x: 10, direction: 1 };
+  return { ...creature, x };
+}
+```
 
-Try a single creature and food source first. Predict its next movement, then inspect what actually happens. Then try adding more entities. This is a toy model, not evidence about a real ecosystem.
+Coordinates describe a 400-unit-wide world. Speed is 60 units per second; elapsed time makes movement independent of the screen's refresh rate. The rule returns new state without drawing anything.
 
-[All Experimental Projects guides](#/track/experimental-projects/guides)
+### 2. Draw it and advance time
+
+Replace `index.tsx` with this component:
+
+```tsx
+import { useEffect, useState } from 'react';
+import { Button } from '@lab/ui/button';
+import { step, type Creature } from './world';
+
+export default function Demo() {
+  const [creature, setCreature] = useState<Creature>({ x: 40, direction: 1 });
+  const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+    if (!running) return;
+    let previous = performance.now();
+    let frame = 0;
+    function tick(now: number) {
+      const seconds = Math.min((now - previous) / 1000, 0.05);
+      previous = now;
+      setCreature(current => step(current, seconds));
+      frame = requestAnimationFrame(tick);
+    }
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [running]);
+
+  return (
+    <section>
+      <Button aria-pressed={running} onClick={() => setRunning(value => !value)}>
+        {running ? 'Pause' : 'Play'}
+      </Button>
+      <svg viewBox="0 0 400 160" role="img" aria-label="A creature moving between two walls">
+        <rect width="400" height="160" fill="#12261c" />
+        <circle cx={creature.x} cy="80" r="10" fill="#8fe0a5" />
+      </svg>
+    </section>
+  );
+}
+```
+
+Press Play. The creature travels to a wall and turns around. Pause stops it; Play resumes from the same position. The frame cleanup prevents duplicate loops, and the time cap prevents a huge jump after returning from a background tab. Animation starts only when requested.
+
+### 3. Give the creature a goal
+
+Add a food position, initially at `x: 300`. Draw a second, smaller circle. In `step`, choose direction from the sign of `food.x - creature.x`; stop when the creature reaches the food rather than overshooting it. Start with horizontal movement before adding a second coordinate.
+
+The interesting part is the rule: following food, avoiding neighbours or wandering produces different behaviour from the same drawing code. Check a few known states directly: a creature left of food should move right; one at food should stop.
+
+### Take it further
+
+- Add a click-to-place target and translate pointer coordinates into SVG coordinates.
+- Introduce several creatures with different speeds or sensing distances.
+- Turn the world into a game by adding a player-controlled obstacle or a goal.
+
+Optional reference: <DemoLink id="ecosystem-simulation">Little world</DemoLink> adds food, sensing and multiple creatures. Its `world.ts` keeps the rules separate from rendering.
+
+Read: [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) · [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial).

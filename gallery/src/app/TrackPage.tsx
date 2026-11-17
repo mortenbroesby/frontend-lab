@@ -45,7 +45,10 @@ function TrackContent({ track, page }: { track: (typeof tracks)[number]; page: s
   ) : page === 'guides' ? (
     <section className="guide" aria-labelledby="guides-heading">
       <h2 id="guides-heading">Guides</h2>
-      <p>Work through a real example. Learn what to look for and what to try next.</p>
+      <p>
+        Build something small or learn a practical technique. Start with the guide that fits your
+        idea.
+      </p>
       <GuideList track={track} />
     </section>
   ) : (

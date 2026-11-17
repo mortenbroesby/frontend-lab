@@ -1,29 +1,37 @@
-## Why did React render again?
+## Profile a React interaction
 
-**Would memoisation skip this update, and would skipping it matter?** Use <DemoLink id="react-render-detective">React Render Detective</DemoLink> to separate parent updates, prop identity and local state.
+Learn to record a React interaction, identify the work behind it and evaluate one improvement. The outcome is a repeatable profiling workflow; you don't need to add memoisation to succeed.
 
-### Predict, then click
+### 1. Pick an interaction and record it
 
-The three panels use ordinary rendering, memo with a fresh object prop, and memo with a stable object prop. Before updating a parent, predict which tile commit counts will increase.
+Use an existing React app with a slow interaction you can reproduce: typing in a filter, opening a panel or selecting an item. Run it locally and install [React Developer Tools](https://react.dev/learn/react-developer-tools) for your browser if it isn't available. It adds Components and Profiler panels to browser developer tools.
 
-Update each parent once. Compare the change from its starting count. The fresh object defeats the memo comparison even when its contents match. The stable object lets memo skip that parent-driven update. Now like a tile in the stable panel: its own state still changes.
+Open Profiler, start recording, perform the interaction once and stop. Select the commit associated with that action. Use the flamegraph or ranked view to identify components that account for the work; inspect their props and state in Components. Record the same interaction more than once to avoid drawing conclusions from startup or an unusual run.
 
-Reset and repeat with the collection-note input. Compare which components rerender in each case.
+If you don't have a suitable app, <DemoLink id="react-render-detective">React Render Detective</DemoLink> is an optional controlled example. Its tiles are deliberately cheap: use it to learn to read updates, not to claim a performance win.
 
-### Inspect one change
+### 2. Follow the update to its cause
 
-After [local setup](#/guide/setup), open `demos/react-render-detective/experiment.tsx`. Find the object spread in the unstable case. Replace that newly created object with the existing object reference, then repeat the parent update. Restore your edit after the experiment.
+Find the state update triggered by the interaction. Then follow the affected component's inputs in source:
 
-Read `tile.tsx` to see where memo is applied. These counters observe commits, not every render attempt. Development Strict Mode may affect starting counts. React Scan adds instrumentation overhead; neither its outlines nor these cheap tiles prove a speed improvement.
+- Does state live higher in the tree than necessary?
+- Does the parent create a fresh object or callback on every render?
+- Is an expensive calculation repeated with unchanged inputs?
 
-### Apply it in your project
+A component rendering again is normal. Focus on work that affects the interaction rather than trying to eliminate all renders. A stable prop only helps a memoised component skip a parent-driven update; its own state and context can still cause updates.
 
-Start with a slow interaction someone can reproduce. Profile that interaction before changing code. Identify the expensive work, its inputs and the state update that triggers it.
+In the Lab reference, compare `experiment.tsx` and `tile.tsx` under `demos/react-render-detective/`. The ordinary, fresh-object and stable-object cases make that distinction visible. Commit counters aren't measurements of interaction speed.
 
-Check whether a prop changes by identity because the parent creates an object or function each time. Only stabilise it if doing so preserves its intended values and helps a measured problem. Memo is an optimisation, not a correctness guarantee. Moving state nearer the component that owns it may be simpler.
+### 3. Make one change and compare
 
-Repeat the same interaction after the change and compare the relevant profiling evidence. “Fewer commits” and “faster interaction” are separate claims.
+Choose a change supported by the recording: move state closer to its owner, avoid repeating an expensive calculation, or stabilise a prop where memoisation is useful. Preserve the values and behaviour the component needs. Don't add memo everywhere.
 
-Read: [React memo](https://react.dev/reference/react/memo) and [React Profiler](https://react.dev/reference/react/Profiler).
+Record the same interaction with the same data and environment. Compare several runs and check the behaviour as well as the profile. If the change doesn't help, remove it; understanding that a component wasn't the bottleneck is a useful result.
 
-[All Developer Experience guides](#/track/developer-experience/guides)
+Development checks and profiling instrumentation add overhead. Use React profiling to locate work, then the browser Performance panel when you need to understand scripting, layout, painting and the complete interaction. Fewer React commits alone doesn't prove a faster app.
+
+### Take it further
+
+Compare moving state with memoising a child. Or profile filtering a larger dataset and determine whether the next improvement belongs in rendering, the calculation, or a [Web Worker](#/track/modern-web/workers).
+
+Read: [React Developer Tools](https://react.dev/learn/react-developer-tools) · [React memo](https://react.dev/reference/react/memo) · [Chrome Performance panel](https://developer.chrome.com/docs/devtools/performance).

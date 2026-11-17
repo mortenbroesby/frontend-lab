@@ -7,23 +7,17 @@ export const tracks = [
       {
         slug: 'devices',
         title: 'Connect two browsers',
-        description: 'Set up Device Rally, check its connection limits and try a small change.',
-      },
-      {
-        slug: 'dependencies',
-        title: 'Trace a dependency’s reach',
-        description: 'Follow consumers to choose where to investigate a package change.',
+        description: 'Build a reaction button that sends a message to another browser.',
       },
       {
         slug: 'workers',
         title: 'Keep the interface responsive',
-        description: 'Separate calculation speed from the browser’s ability to respond.',
+        description: 'Move a calculation into a Web Worker and return its result to React.',
       },
       {
         slug: 'tab-settings',
         title: 'Synchronise a setting between tabs',
-        description:
-          'Send a real preference change, then discover what a late-arriving tab misses.',
+        description: 'Build a shared preference with BroadcastChannel, then explore persistence.',
       },
     ],
     title: 'Modern Web Capabilities',
@@ -32,6 +26,11 @@ export const tracks = [
   {
     id: 'code-quality',
     guides: [
+      {
+        slug: 'dependencies',
+        title: 'Trace a dependency’s reach',
+        description: 'Follow consumers to choose where to investigate a package change.',
+      },
       {
         slug: 'fallow',
         title: 'Investigate with Fallow',
@@ -62,8 +61,8 @@ export const tracks = [
       },
       {
         slug: 'rendering',
-        title: 'Why did React render again?',
-        description: 'Compare prop identity and local state before deciding whether memo helps.',
+        title: 'Profile a React interaction',
+        description: 'Record an interaction, follow the work and evaluate one improvement.',
       },
     ],
     title: 'Developer Experience & Tooling',
@@ -75,14 +74,13 @@ export const tracks = [
     guides: [
       {
         slug: 'little-world',
-        title: 'Change one rule in a little world',
-        description: 'Predict how a sensing or movement rule changes a small simulation.',
+        title: 'Build a tiny moving world',
+        description: 'Create a movement rule, animate a creature and give it a goal.',
       },
       {
         slug: 'postcard',
-        title: 'Reproduce a generative composition',
-        description:
-          'Keep randomness fixed while changing the visual rule, then export the result.',
+        title: 'Make generative SVG art',
+        description: 'Generate shapes from a seed, invent a visual rule and export your artwork.',
       },
     ],
     title: 'Experimental Projects',

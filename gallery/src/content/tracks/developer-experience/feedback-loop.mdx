@@ -1,8 +1,8 @@
 ## Find your shortest feedback loop
 
-Run the smallest relevant test while editing; broaden checks before committing.
+Set up a focused check that reruns as you edit, then explore when a build cache can safely skip work. You’ll leave with a repeatable development loop, using your existing tools.
 
-Use the terminal exercises below to see real test results and cache decisions. Make one change, observe the result, then restore your edit.
+Choose one behaviour you’re changing in your own project. Find its test and your runner’s filter and watch options. If you need a starting point, the Lab commands below use a small existing Node script—no new app or tool is required.
 
 ### 1. Establish a baseline
 
@@ -34,7 +34,7 @@ On your experiment branch, open `gallery/exercises/tooling/commands.mjs`. Change
 
 This demonstrates regression detection without a wrapper. Compare your usual workflow; one run is not a benchmark.
 
-### 4. Explore task selection and caching
+### Take it further: task selection and caching
 
 After the normal root install:
 
@@ -57,7 +57,7 @@ Targeted passes do not replace broader checks your change needs.
 
 References: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) · [Turbo run options](https://turborepo.dev/docs/reference/run).
 
-### Apply it in your project
+### Keep the useful part
 
 Choose a test for the behaviour you are editing, using your existing runner's filter and watch options. Confirm the filter actually selects tests. Keep a broader check before committing changes that cross module boundaries.
 

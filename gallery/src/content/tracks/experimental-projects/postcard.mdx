@@ -1,27 +1,92 @@
-## Reproduce a generative composition
+## Make generative SVG art
 
-**What changes when randomness stays fixed?** Open <DemoLink id="generative-postcard">Generative postcard</DemoLink>. A seed lets you reproduce the random choices and isolate the effect of a visual rule.
+Create a composition from a few rules instead of placing every shape by hand. You'll turn numbers into SVG, make the result reproducible and save an image you can keep.
 
-### Change the rule, not the random choices
+### 1. Generate the shapes
 
-Start with seed 42 and 90 dots. Switch Position rule from Scatter to Spiral. Dot sizes and colours remain tied to the same seeded sequence; their positions follow a different rule. Switch back: the original composition returns.
+[Create a demo](#/create) in Experimental Projects. Add `art.ts` in its folder:
 
-Enter another whole-number seed and choose Apply seed. Record that seed, dot count and position rule. Remix, then re-enter your recorded settings. The result should match. Restore starting composition returns all three controls to their initial values.
+```ts
+export function makeDots(seed: number) {
+  let state = seed >>> 0;
+  const random = () => {
+    state = (Math.imul(1664525, state) + 1013904223) >>> 0;
+    return state / 4294967296;
+  };
+  return Array.from({ length: 60 }, () => ({
+    x: 20 + random() * 600,
+    y: 20 + random() * 360,
+    radius: 3 + random() * 14,
+    hue: 140 + random() * 100,
+  }));
+}
+```
 
-Save SVG to export the current result. The filename records the three settings. Open the downloaded image independently; it contains the shapes, not a running React application. This demo does not persist preferences between reloads.
+Each dot gets a position, size and colour. The pseudo-random sequence starts from a seed: the same seed and algorithm produce the same numbers. This is useful for artwork, not security tokens.
 
-### Inspect the source
+### 2. Render your composition
 
-After [local setup](#/guide/setup), inspect `demos/generative-postcard/art.ts`. A seeded number sequence supplies dot properties. The position rule transforms coordinates; it does not ask the browser for fresh randomness on every render.
+Replace `index.tsx` with this component:
 
-Change one rule while holding seed and count fixed. Compare which properties changed. Use the existing tests to check repeatability and coordinate bounds after editing.
+```tsx
+import { useState } from 'react';
+import { Button } from '@lab/ui/button';
+import { makeDots } from './art';
 
-### Apply it in your project
+export default function Demo() {
+  const [seed, setSeed] = useState(42);
+  const dots = makeDots(seed);
+  return (
+    <section>
+      <Button onClick={() => setSeed(value => (value + 1) >>> 0)}>Next composition</Button>
+      <Button onClick={() => setSeed(42)}>Back to seed 42</Button>
+      <p>Seed: {seed}</p>
+      <svg viewBox="0 0 640 400" role="img" aria-label={`Generative dots, seed ${seed}`}>
+        <rect width="640" height="400" fill="#10231b" />
+        {dots.map((dot, index) => (
+          <circle key={index} cx={dot.x} cy={dot.y} r={dot.radius}
+            fill={`hsl(${dot.hue} 65% 65%)`} />
+        ))}
+      </svg>
+    </section>
+  );
+}
+```
 
-Use reproducible input when comparing a procedural layout, simulation or visual test. Record the seed alongside the parameters and algorithm version: changing the algorithm can change the result even with the same seed.
+Try a few compositions, then return to seed 42: the original image should return. The fixed dot slots make index keys suitable here; they aren't independently reordered items.
 
-Choose one parameter that produces an understandable visual difference. Keep export separate from generation so the same data can be rendered or saved. A deterministic pseudo-random sequence is useful for reproduction, not for passwords or security tokens.
+### 3. Invent a visual rule
 
-Read: [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) and [XMLSerializer](https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer).
+Keep seed 42 while changing the palette or dot sizes. Then try placing dots on a spiral instead of scattering them. Use the dot's index for an angle and an increasing distance from the centre, then convert that angle and distance into `x` and `y` with `Math.cos` and `Math.sin`.
 
-[All Experimental Projects guides](#/track/experimental-projects/guides)
+Keep calling `random` in the same order if you want colours and sizes to stay comparable while positions change. Moving randomness into rendering with `Math.random()` would make every render a new composition.
+
+### 4. Export it
+
+Add a `useRef<SVGSVGElement>(null)` in your component and attach it to the SVG with `ref`. Import `useRef` from React. Add a Save button that calls this function with the current SVG and a filename:
+
+```ts
+function saveSvg(svg: SVGSVGElement, filename: string) {
+  const copy = svg.cloneNode(true) as SVGSVGElement;
+  copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  const blob = new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+```
+
+For example, guard `svgRef.current` before calling `saveSvg(svgRef.current, 'my-composition.svg')`. Open the saved file separately: it should contain the same image without needing React or the Lab. The SVG uses explicit fills so its appearance doesn't depend on app CSS.
+
+### Take it further
+
+Try a grid, lettering made from shapes, or a small collection generated from different seeds. Add an editable seed and validate it as a whole number from 0 to 4,294,967,295. Store the seed and parameters with an image if you want to recreate it later.
+
+Optional reference: <DemoLink id="generative-postcard">Generative postcard</DemoLink> adds controls, spiral placement and export.
+
+Read: [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) · [XMLSerializer](https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer).

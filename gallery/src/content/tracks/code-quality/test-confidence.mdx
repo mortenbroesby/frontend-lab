@@ -4,33 +4,30 @@
 
 Use the Lab exercise below after [local setup](#/guide/setup), or follow the same steps in your own repository with its existing test runner.
 
-### 1. Trace the behaviour
+### 1. Choose one behaviour and its contract
 
-Open <DemoLink id="web-worker-comparison">Room to think</DemoLink>. Both calculation buttons ultimately use `countPrimes` in `demos/web-worker-comparison/compute.ts`. The function counts primes up to and including a limit; the largest allowed limit is `MAX_LIMIT`.
+Pick a real input boundary, state transition or failure path in your project. Trace a caller to the implementation and its tests. Write down one expected outcome from the requirement or a hand-worked example before writing an assertion.
 
-Read the callers and `compute.test.ts`. Separate three questions:
+For a concrete Lab exercise, use `countPrimes` in `demos/web-worker-comparison/compute.ts`. It counts primes up to an integer limit and rejects invalid input. Its tests cover numeric inputs, but you can investigate whether they protect the runtime boundary against a string such as `"10"`.
 
-- Does the calculation return the right result?
-- Does it reject invalid inputs?
-- Does moving work to a Worker keep the interface responsive?
+### 2. Establish what the tests already prove
 
-A unit test of the function answers the first two. It cannot establish the third. Trace imports before proposing a refactor: both buttons already share the same calculation.
-
-### 2. Read the existing evidence
-
-From the repository root:
+Run the relevant tests with your existing runner. In the Lab:
 
 ```sh
 npm test --workspace @lab/demo-web-worker-comparison
 ```
 
-The tests cover small limits, invalid inputs and the maximum workload. The maximum case was added after an investigation found that only smaller workloads were covered: `countPrimes(2_000_000)` should return `148933`, independently checked using a sieve. No algorithm bug was found; the improvement was stronger evidence for an allowed input.
+Read `compute.test.ts` alongside the result. Correct arithmetic and input validation are separate claims; neither proves that the interface stays responsive. Check the current suite before adding a case—someone may already have covered your chosen behaviour.
 
-That case is already in the suite. Keep it. A completed investigation is a useful example, not a reason to add the same test twice.
+### 3. Write a test that protects the contract
 
-### 3. Catch a regression the suite misses
+Add an assertion for the outcome you identified, using the project's existing test runner. Make sure its expected value comes from the contract rather than duplicating the implementation. Then temporarily introduce a plausible regression: the new test should fail. Restore your edit and confirm it passes again.
 
-The calculation also receives values through a Worker message. TypeScript types do not validate messages at runtime. Should the string `"10"` be accepted as a number? The current function rejects it.
+<details>
+<summary>Worked example: reject a numeric string in the Lab</summary>
+
+For the Lab exercise, TypeScript types do not validate Worker messages at runtime. The current function rejects the string `"10"`. Use that contract to justify the expected error. The following temporary mutation checks that a test can protect the behaviour, not just pass today.
 
 On an experiment branch, temporarily change just this expression in `compute.ts`:
 
@@ -60,15 +57,11 @@ Restore `Number.isInteger(limit)` and rerun with the new test present. All tests
 
 You have now observed three distinct results: the old suite passed a defect, the added test detected it, and the restored implementation satisfied it. The expected error comes from the function's input contract, not a copy of its algorithm.
 
-### 4. Apply it in your own repository
+</details>
 
-Choose one real input boundary, state transition or failure path. Trace it from a caller to the logic and then to its tests. Check existing coverage before adding a test.
+### Take it further
 
-Derive the expected result from the requirement, a small hand-worked example or an independent method. Copying the implementation into the test can reproduce the same mistake twice. Use your project's existing runner; adopting Node's test runner is not part of this exercise.
-
-Verify that a small, plausible implementation regression fails the new test. Restore the correct implementation, then run the relevant surrounding tests. Keep any wider checks needed by the change. Never leave a deliberate failure in the committed code.
-
-If the existing tests already cover the behaviour, there is no need to add another.
+Try a state transition or failure path next. Ask whether the appropriate check is a unit test or an integration test: an isolated function cannot prove its caller passes the right data. Run the surrounding tests after restoring any deliberate regression. If existing tests already protect the behaviour, there is no need to add another.
 
 Read: [Node test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html).
 

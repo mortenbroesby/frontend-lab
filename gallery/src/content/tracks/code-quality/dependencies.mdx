@@ -1,0 +1,43 @@
+## Trace a dependency's reach
+
+Before changing a package, find the code and checks that depend on it. You'll build a small impact map from actual manifests and imports, then choose a useful validation command. No graph tool is required.
+
+### 1. Choose a real dependency
+
+Use a package you're considering upgrading or replacing in your own repository. Or, after [local setup](#/guide/setup), investigate `d3-force` in the Lab.
+
+From the repository root:
+
+```sh
+npm ls d3-force --workspaces
+```
+
+This shows installed relationships. Open the consuming workspace's `package.json` to confirm what it declares. In the Lab, start at `demos/dependency-map/package.json`.
+
+### 2. Follow consumers, not just package names
+
+Search the consuming workspace for imports of the package using your editor. Follow the imported functions to their callers. For `d3-force`, inspect `demos/dependency-map/index.tsx`: it positions nodes, while `graph.ts` calculates dependency reach.
+
+Write a short chain such as `d3-force → dependency-map layout`. For a shared workspace, repeat the search for packages that import that workspace. Keep a visited list so cycles don't send you around indefinitely.
+
+A manifest edge says “declares a dependency.” A source import says where code uses it. Neither proves that a proposed version change affects the API being used. Separate build-time dependencies from code shipped to the browser.
+
+### 3. Choose the checks for your proposed change
+
+Identify the API or behaviour the change could affect. For a `d3-force` update, check layout creation and interaction as well as TypeScript compatibility. In the Lab:
+
+```sh
+npm run check --workspace @lab/demo-dependency-map
+```
+
+Run the demo locally and inspect the layout if you actually change the dependency. A passing build won't catch an unusable graph. Use the scripts and relevant tests in your own project; broaden checks when shared consumers are affected.
+
+You now have a reasoned validation scope, rather than choosing checks solely from a package's name.
+
+### Take it further
+
+Automate the manifest traversal or compare direct and transitive consumers. For enforcement rather than investigation, try [Protect an architecture boundary](#/track/code-quality/architecture).
+
+Optional reference: <DemoLink id="dependency-map">Dependency ripple</DemoLink> visualises this repository's declared dependencies. Its arrows point from consumer to dependency; change impact travels in the opposite direction. It includes development dependencies but doesn't inspect source use or external packages' dependency trees. The graph is a build-time snapshot.
+
+Read: [npm workspaces](https://docs.npmjs.com/cli/v11/using-npm/workspaces/) · [npm ls](https://docs.npmjs.com/cli/v11/commands/npm-ls).

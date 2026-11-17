@@ -4,35 +4,15 @@
 
 The tool enforces the rule you choose. It cannot decide whether that rule makes sense.
 
-### 1. See the Lab's boundary
+### 1. Choose a boundary worth protecting
 
-After [local setup](#/guide/setup), run from the repository root:
+Use your own project and write one ownership decision in plain language: for example, “Shared utilities must not import feature implementations.” Choose directories that actually represent those responsibilities. Don't reorganise a project to fit a tool.
 
-```sh
-npm run check:architecture
-```
+If you don't have a project in mind, use the Lab after [local setup](#/guide/setup). Its rule is: “A demo may use shared packages, but must not import another demo's implementation.” Read `demos-stay-independent` in `.dependency-cruiser.cjs` and run `npm run check:architecture` to see the existing check.
 
-Read `demos-stay-independent` in `.dependency-cruiser.cjs`. Each demo may import its own implementation and shared packages, but not another demo's implementation. This keeps demos independently runnable and changeable.
+### 2. Express your rule
 
-Trace imports in `demos/web-worker-comparison/index.tsx`. Which belong to the demo, and which come from shared UI or the demo kit? Compare them with <DemoLink id="dependency-map">Dependency ripple</DemoLink>: its package relationships are a different view from dependency-cruiser's source-file imports.
-
-### 2. Prove the rule catches something
-
-On an experiment branch, create a temporary file at `demos/web-worker-comparison/boundary-probe.ts` containing:
-
-```ts
-import '../generative-postcard/art';
-```
-
-Run `npm run check:architecture` again. Expect a nonzero exit and a `demos-stay-independent` violation naming the probe's import. If the check passes, inspect the scanned paths and configuration before trusting the rule.
-
-Delete only the temporary `boundary-probe.ts` file and rerun. The check should pass again. This exercise tests the import graph; do not import the probe into the running demo or commit it.
-
-### 3. Apply one rule in your own repository
-
-Write the ownership decision in plain language first. For example: **“Shared utilities must not import feature implementations.”** Choose directories that actually represent those responsibilities; do not reorganise the project just to match this example.
-
-For an npm project, install locally and inspect the initializer:
+In your own npm project, install locally and inspect the initializer. Skip installation and initialisation in the Lab, which already has both:
 
 ```sh
 npm install --save-dev --save-exact dependency-cruiser
@@ -61,7 +41,9 @@ npx depcruise --config .dependency-cruiser.cjs src
 
 Use the actual config filename and source roots in your project. Create a temporary import that crosses your chosen boundary, confirm the named violation, then remove it and confirm the clean result. Also check an allowed import: a rule that rejects everything is not useful.
 
-### 4. Decide what a violation should mean
+In the Lab, create `demos/web-worker-comparison/boundary-probe.ts` containing `import '../generative-postcard/art';`. Run `npm run check:architecture`: it should fail with `demos-stay-independent`. Delete only the probe and run again: it should pass. Don’t import the probe into the running app or commit it.
+
+### 3. Decide what a violation should mean
 
 When a real violation appears, ask which module should own the responsibility. Moving code or passing a value into a utility may be clearer than extracting another shared package. Sometimes the proposed boundary was wrong; revise it deliberately with a reason.
 

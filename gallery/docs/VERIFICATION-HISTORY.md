@@ -2,7 +2,7 @@
 
 # Historical verification record
 
-Historical evidence, not setup instructions. Some commands, paths and integrations were later removed. Use [current status](VERIFICATION.md), [Start Here](../../README.md#start-here) and the [Fallow guide](../src/content/tracks/code-quality/fallow.mdx) for current guidance.
+Historical evidence, not setup instructions. Some commands, paths and integrations were later removed. Use [current status](VERIFICATION.md), [Start Here](../../README.md#start-here) and the [Fallow contributor notes](fallow.md) for current guidance.
 
 ## Environment
 

@@ -122,7 +122,7 @@ export default function Constellation() {
   }
 
   const createHref = galleryHref('/create');
-  const guideHref = galleryHref('/track/modern-web/dependencies');
+  const guideHref = galleryHref('/track/code-quality/dependencies');
   return (
     <div className="constellation-example dependency-map">
       <div className="constellation-heading">
