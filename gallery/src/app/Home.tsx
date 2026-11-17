@@ -67,8 +67,8 @@ function TrackChoices() {
             <div className="track-card-top">
               <TrackIllustration track={t.id} />
               <span className="track-number">
-                {demos.filter((demo) => demo.track === t.id).length} demos · {t.guides.length}{' '}
-                guides
+                {demos.filter((demo) => demo.tracks.includes(t.id)).length} demos ·{' '}
+                {t.guides.length} guides
               </span>
             </div>
             <h3>{t.title}</h3>

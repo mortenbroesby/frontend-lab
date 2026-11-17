@@ -15,8 +15,10 @@ const components: MDXComponents = {
   DemoLink: ({ id, children, ...props }: ComponentProps<'a'> & { id: string }) => {
     const demo = demos.find((entry) => entry.id === id);
     if (!demo) throw new Error(`Unknown demo: ${id}`);
+    const track =
+      demo.tracks.find((id) => location.hash.startsWith(`#/track/${id}`)) ?? demo.tracks[0];
     return (
-      <a {...props} href={demo.href}>
+      <a {...props} href={`${demo.href}?track=${track}`}>
         {children}
       </a>
     );

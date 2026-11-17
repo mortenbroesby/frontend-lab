@@ -131,7 +131,7 @@ test('a name alone creates a discoverable starter with safe defaults', async (t)
   const folder = join(root, 'demos/my-first-demo');
   const metadata = (await import(pathToFileURL(join(folder, 'demo.config.ts')).href)).default;
   assert.equal(metadata.title, 'My First Demo!');
-  assert.equal(metadata.track, 'experimental-projects');
+  assert.deepEqual(metadata.tracks, ['experimental-projects']);
   assert.ok(metadata.description && metadata.author);
   assert.match(await readFile(join(folder, 'index.tsx'), 'utf8'), /My First Demo!/);
   assert.match(instructions, /@lab\/demo-my-first-demo/);

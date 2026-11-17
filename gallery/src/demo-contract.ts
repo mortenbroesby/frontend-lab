@@ -11,13 +11,7 @@ export function discoverDemos(modules: Record<string, unknown>) {
         throw new Error(`${path}: export a default DemoDefinition.`);
       const demo = value as Partial<DemoDefinition>;
       validateMetadata(demo, path);
-      if (
-        !['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(
-          demo.track ?? '',
-        )
-      ) {
-        throw new Error(`${path}: provide a valid named track.`);
-      }
+      validateTracks(demo.tracks, path);
       return { ...(demo as DemoDefinition), id };
     });
 }
@@ -47,4 +41,14 @@ function demoId(path: string): string {
     );
   }
   return id;
+}
+
+function validateTracks(tracks: unknown, path: string) {
+  const known = ['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'];
+  if (!Array.isArray(tracks) || !tracks.length) {
+    throw new Error(`${path}: tracks must be a nonempty array.`);
+  }
+  if (tracks.some((track) => !known.includes(track)) || new Set(tracks).size !== tracks.length) {
+    throw new Error(`${path}: tracks must contain unique, valid named tracks.`);
+  }
 }

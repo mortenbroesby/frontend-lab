@@ -2,12 +2,13 @@ import { useEffect, useReducer, useRef, useState, type RefObject, type KeyboardE
 import { Button } from '@lab/ui/button';
 import { useTheme } from '@lab/ui/theme-control';
 import { LabMark } from '@lab/demo-kit/mark';
-import { galleryHref } from '@lab/demo-kit/gallery-link';
+import { galleryHref, demoTrack } from '@lab/demo-kit/gallery-link';
 import { initialState, navigate, selectedTitle, playbackHint, type TVState } from './navigation';
 import { rows } from './catalogue';
 import { RemotePad } from './remote-pad';
 import { PhonePairing, PhoneRemote, phoneRoom } from './phone-remote';
 import { useScreen } from './use-screen';
+import demo from './demo.config';
 import './tv.css';
 
 const embedded = new URLSearchParams(window.location.search).has('embed');
@@ -80,7 +81,7 @@ function TV() {
 
 function TVIntro() {
   if (embedded) return null;
-  const back = galleryHref('/demos');
+  const back = galleryHref(`/track/${demoTrack(demo, location.search)}/examples`);
   return (
     <>
       <header className="tv-header">
@@ -89,7 +90,7 @@ function TVIntro() {
         </span>
         {back && (
           <Button variant="outline" asChild>
-            <a href={back}>← All demos</a>
+            <a href={back}>← Back to track</a>
           </Button>
         )}
       </header>

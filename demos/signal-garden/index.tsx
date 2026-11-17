@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Button } from '@lab/ui/button';
 import { CommandMenu } from '@lab/demo-kit/command-menu';
 import { LabMark } from '@lab/demo-kit/mark';
-import { galleryHref } from '@lab/demo-kit/gallery-link';
+import { galleryHref, demoTrack } from '@lab/demo-kit/gallery-link';
 import { formations, families, type Formation } from './model';
 import { Garden } from './engine';
+import demo from './demo.config';
 import './garden.css';
 
 function useMotion() {
@@ -116,7 +117,7 @@ export default function SignalGarden() {
 }
 
 function GardenHeader() {
-  const back = galleryHref('/demos');
+  const back = galleryHref(`/track/${demoTrack(demo, location.search)}/examples`);
   return (
     <header className="garden-header">
       <a className="garden-brand" href={galleryHref('/') ?? '#content'}>
@@ -125,11 +126,11 @@ function GardenHeader() {
       </a>
       <div>
         <CommandMenu
-          links={back ? [{ label: 'All demos', group: 'Navigation', href: back }] : []}
+          links={back ? [{ label: 'Back to track', group: 'Navigation', href: back }] : []}
         />
         {back && (
           <Button variant="outline" asChild>
-            <a href={back}>← All demos</a>
+            <a href={back}>← Back to track</a>
           </Button>
         )}
       </div>

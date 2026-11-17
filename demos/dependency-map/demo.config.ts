@@ -1,7 +1,7 @@
 import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
-  track: 'modern-web',
+  tracks: ['modern-web', 'code-quality'],
   title: 'Dependency ripple',
   description: 'Trace package impact in this repo’s interactive D3 dependency map.',
   author: 'Lab examples',

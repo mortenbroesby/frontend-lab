@@ -141,7 +141,7 @@ The build goes into demos/${id}/dist/. Add tests when you have logic worth testi
 
 export default {
   title: ${JSON.stringify(name)},
-  track: ${JSON.stringify(track)},
+  tracks: [${JSON.stringify(track)}],
   description: ${JSON.stringify(description.trim())},
   author: ${JSON.stringify(author.trim())},
 } satisfies DemoDefinition;

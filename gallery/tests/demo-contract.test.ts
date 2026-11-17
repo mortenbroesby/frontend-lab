@@ -1,3 +1,4 @@
+import { demoTrack } from '../demo-kit/gallery-link.ts';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import signalGarden from '../../demos/signal-garden/demo.config.ts';
@@ -6,7 +7,7 @@ import type { DemoDefinition } from '../src/demo-contract.ts';
 
 const demo = {
   title: 'Example',
-  track: 'modern-web',
+  tracks: ['modern-web'],
   description: 'Try it',
   author: 'Lab',
 } satisfies DemoDefinition;
@@ -31,7 +32,7 @@ test('invalid paths and metadata report the offending file', () => {
   ]) {
     assert.throws(() => discoverDemos({ [path]: demo }), /Invalid demo folder/);
   }
-  for (const value of [undefined, {}, { ...demo, title: '' }, { ...demo, track: 'e' }]) {
+  for (const value of [undefined, {}, { ...demo, title: '' }, { ...demo, tracks: ['e'] }]) {
     assert.throws(
       () => discoverDemos({ '../../demos/broken/demo.config.ts': value }),
       /broken\/demo.config.ts/,
@@ -43,7 +44,7 @@ test('invalid paths and metadata report the offending file', () => {
 const invalidTrack: DemoDefinition = {
   ...demo,
   // @ts-expect-error Track IDs are a closed union.
-  track: 'e',
+  tracks: ['e'],
 };
 void invalidTrack;
 
@@ -67,6 +68,29 @@ test('runtime requirements are optional and reject unknown values', () => {
 test('Signal Garden is discoverable as a Modern Web demo', () => {
   const [entry] = discoverDemos({ '../../demos/signal-garden/demo.config.ts': signalGarden });
   assert.equal(entry.id, 'signal-garden');
-  assert.equal(entry.track, 'modern-web');
+  assert.equal(entry.tracks[0], 'modern-web');
   assert.equal(entry.title, 'Signal Garden');
+});
+
+test('a demo can belong to multiple distinct tracks', () => {
+  const tracks = ['modern-web', 'code-quality'];
+  const [entry] = discoverDemos({ '../../demos/shared/demo.config.ts': { ...demo, tracks } });
+  assert.deepEqual(entry.tracks, tracks);
+});
+
+test('track lists must be nonempty, valid and unique', () => {
+  for (const tracks of [[], ['unknown'], ['modern-web', 'modern-web'], 'modern-web']) {
+    assert.throws(
+      () => discoverDemos({ '../../demos/invalid/demo.config.ts': { ...demo, tracks } }),
+      /tracks/,
+    );
+  }
+});
+
+test('shared demos return to a declared source track, with a safe direct-link default', () => {
+  const shared: DemoDefinition = { ...demo, tracks: ['modern-web', 'code-quality'] };
+  assert.equal(demoTrack(shared, '?track=code-quality'), 'code-quality');
+  assert.equal(demoTrack(shared, ''), 'modern-web');
+  assert.equal(demoTrack(shared, '?track=developer-experience'), 'modern-web');
+  assert.equal(demoTrack(shared, '?track=https://example.com'), 'modern-web');
 });

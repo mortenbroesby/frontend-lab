@@ -11,8 +11,11 @@ export function DemoGallery({ track }: { track?: TrackId }) {
   const [query, setQuery] = useState('');
   const entries = demos.filter(
     (demo) =>
-      (!track || demo.track === track) &&
-      `${demo.title} ${demo.description} ${demo.author} ${tracks.find((t) => t.id === demo.track)?.title}`
+      (!track || demo.tracks.includes(track)) &&
+      `${demo.title} ${demo.description} ${demo.author} ${tracks
+        .filter((t) => demo.tracks.includes(t.id))
+        .map((t) => t.title)
+        .join(' ')}`
         .toLowerCase()
         .includes(query.trim().toLowerCase()),
   );
@@ -31,7 +34,7 @@ export function DemoGallery({ track }: { track?: TrackId }) {
       </div>
       <div className="demo-grid">
         {entries.map((demo) => (
-          <DemoCard key={demo.id} demo={demo} />
+          <DemoCard key={demo.id} demo={demo} track={track} />
         ))}
       </div>
       {!entries.length && <EmptyDemos track={track} searching={Boolean(query.trim())} />}
@@ -39,19 +42,25 @@ export function DemoGallery({ track }: { track?: TrackId }) {
   );
 }
 
-function DemoCard({ demo }: { demo: (typeof demos)[number] }) {
+function DemoCard({
+  demo,
+  track = demo.tracks[0],
+}: {
+  demo: (typeof demos)[number];
+  track?: TrackId;
+}) {
   return (
-    <a className="demo-card" data-track={demo.track} href={demo.href}>
+    <a className="demo-card" data-track={track} href={`${demo.href}?track=${track}`}>
       <div className="demo-preview" aria-hidden="true">
         {demo.preview ? (
           <img src={demo.preview} alt="" loading="lazy" width="600" height="300" />
         ) : (
-          <TrackIllustration track={demo.track} />
+          <TrackIllustration track={track} />
         )}
       </div>
       <div className="demo-identity">
-        <TrackSymbol track={demo.track} />
-        <span>{tracks.find((t) => t.id === demo.track)?.title}</span>
+        <TrackSymbol track={track} />
+        <span>{tracks.find((t) => t.id === track)?.title}</span>
       </div>
       <h2>{demo.title}</h2>
       <p className="demo-description">{demo.description}</p>

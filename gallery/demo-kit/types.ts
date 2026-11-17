@@ -8,7 +8,8 @@ export type TrackId =
 
 export interface DemoDefinition {
   title: string;
-  track: TrackId;
+  /** The first track is the default when a demo is opened directly. */
+  tracks: readonly [TrackId, ...TrackId[]];
   description: string;
   author: string;
   requirements?: readonly (keyof typeof requirementLabels)[];

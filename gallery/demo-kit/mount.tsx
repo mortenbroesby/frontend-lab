@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { requirementLabels } from './types';
 import type { ComponentType } from 'react';
 import type { DemoDefinition } from './types';
-import { galleryHref } from './gallery-link';
+import { galleryHref, demoTrack } from './gallery-link';
 import { DemoBoundary } from './DemoBoundary';
 import { Button } from '@lab/ui/button';
 import '@lab/ui/styles.css';
@@ -14,10 +14,11 @@ import './styles.css';
 /** Optional React starter; standalone apps may replace their entry with any framework. */
 export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: string) {
   document.title = demo.title;
-  const trackHref = galleryHref(`/track/${demo.track}/examples`);
+  const track = demoTrack(demo, location.search);
+  const trackHref = galleryHref(`/track/${track}/examples`);
   const commands = [
     ['/demos', 'All demos'],
-    [`/track/${demo.track}/examples`, 'Back to track'],
+    [`/track/${track}/examples`, 'Back to track'],
   ].flatMap(([route, label]) => {
     const href = galleryHref(route);
     return href ? [{ label, group: 'Navigation', href }] : [];
