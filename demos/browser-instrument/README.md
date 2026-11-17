@@ -18,4 +18,4 @@ The sequencer wraps into groups of eight steps, or four on phones, keeping every
 
 Choose **Performance view** to open the instrument without the gallery's documentation shell. It uses a dark stage, live frequency spectrum, sound controls and step pads. **Fullscreen** expands it for a projector; Escape leaves fullscreen. Audio still starts only when you press Play, and leaving the page stops it.
 
-The same standalone entry accepts `?embed=1`, like Canvas TV, for an iframe in the presentation. Use `allow="autoplay; fullscreen"` on the iframe when embedding and keep a way to continue the presentation outside it. No presentation slides were added by this change. Small screens scroll naturally rather than shrinking the controls.
+The same standalone entry accepts `?embed=1`, like Canvas TV, for an iframe in the presentation. Use `allow="autoplay; fullscreen"` on the iframe when embedding and keep a way to continue the presentation outside it. The presentation embeds it on the instrument slide with `?embed=1&presentation=1`; the additional parameter hides the standalone return link. Small screens scroll naturally rather than shrinking the controls.
