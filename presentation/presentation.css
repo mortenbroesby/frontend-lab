@@ -502,13 +502,16 @@ a {
 
 .track-options .experiment-options {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3cqw 4cqw;
-  margin-top: 3cqw;
+  gap: 1.75cqw 4cqw;
+  margin-top: 2cqw;
+}
+.track-options li {
+  padding-top: 1.2cqw;
 }
 .track-options h2 {
   font-size: 2.5cqw;
   line-height: 1.2;
-  margin: 1cqw 0;
+  margin: 0.65cqw 0;
 }
 
 .rendering-options {
