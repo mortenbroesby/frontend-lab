@@ -89,7 +89,7 @@ export function Overlays() {
     <section id="ui-overlays" className="ui-showcase-section" aria-labelledby="overlays-title">
       <div className="ui-showcase-section-heading">
         <span>03 / Overlays</span>
-        <h3 id="overlays-title">A little room to focus.</h3>
+        <h3 id="overlays-title">Dialogs & menus</h3>
         <p>Use Tab to move, Escape to close. Focus returns to the trigger.</p>
       </div>
       <div className="ui-showcase-panel">

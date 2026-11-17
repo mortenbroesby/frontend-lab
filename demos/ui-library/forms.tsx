@@ -16,7 +16,7 @@ export function Forms() {
     <section id="ui-forms" className="ui-showcase-section" aria-labelledby="forms-title">
       <div className="ui-showcase-section-heading">
         <span>02 / Forms</span>
-        <h3 id="forms-title">Give every input a purpose.</h3>
+        <h3 id="forms-title">Forms & validation</h3>
         <p>Try native validation, keyboard controls and disabled states.</p>
       </div>
       <form

@@ -12,7 +12,7 @@ export function Actions() {
     <section id="ui-actions" className="ui-showcase-section" aria-labelledby="actions-title">
       <div className="ui-showcase-section-heading">
         <span>01 / Actions</span>
-        <h3 id="actions-title">Make the next step clear.</h3>
+        <h3 id="actions-title">Buttons & toggles</h3>
         <p>Buttons communicate priority. Toggles keep their state.</p>
       </div>
       <div className="ui-showcase-panel">

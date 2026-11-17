@@ -12,10 +12,10 @@ export function DeveloperPatterns() {
     name.toLowerCase().includes(query.toLowerCase()),
   );
   return (
-    <section id="ui-developer" className="ui-showcase-section">
-      <div className="ui-showcase-heading">
-        <span>06 Developer patterns</span>
-        <h3>Commands, shortcuts and useful next steps.</h3>
+    <section id="ui-developer" className="ui-showcase-section" aria-labelledby="developer-title">
+      <div className="ui-showcase-section-heading">
+        <span>06 / Developer patterns</span>
+        <h3 id="developer-title">Developer patterns</h3>
         <p>Small patterns for the moments between building and running.</p>
       </div>
       <div className="ui-showcase-panel">
@@ -29,7 +29,8 @@ export function DeveloperPatterns() {
         <div>
           <h4>Keyboard hints</h4>
           <p>
-            Open the lab command menu with <Kbd>⌘</Kbd> or <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>.
+            Open the lab command menu with <Kbd>⌘ K</Kbd> on Mac or <Kbd>Ctrl K</Kbd> on Windows and
+            Linux.
           </p>
         </div>
         <div className="ui-showcase-field">

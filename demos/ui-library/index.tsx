@@ -1,4 +1,3 @@
-import { Badge } from '@lab/ui/badge';
 import { Separator } from '@lab/ui/separator';
 import { TooltipProvider } from '@lab/ui/tooltip';
 import { Actions } from './actions';
@@ -14,15 +13,9 @@ export default function UiLibrary() {
     <TooltipProvider>
       <div className="ui-showcase">
         <header className="ui-showcase-hero">
-          <Badge variant="outline">Component playground</Badge>
-          <h2>
-            Shared components.
-            <br />
-            Working examples.
-          </h2>
+          <h2>Explore the components</h2>
           <p>
-            Real components, real states. Explore the shared UI library, then use the same pieces in
-            your own demo.
+            Try the controls below. Every example uses the same components available in your demo.
           </p>
           <nav aria-label="Component sections" className="ui-showcase-links">
             <a href="#ui-foundations">Foundations</a>
@@ -35,10 +28,14 @@ export default function UiLibrary() {
           </nav>
         </header>
         <Separator />
-        <section id="ui-foundations" className="ui-showcase-section">
-          <div className="ui-showcase-heading">
-            <span>00 Foundations</span>
-            <h3>A shared visual language.</h3>
+        <section
+          id="ui-foundations"
+          className="ui-showcase-section"
+          aria-labelledby="foundations-title"
+        >
+          <div className="ui-showcase-section-heading">
+            <span>00 / Foundations</span>
+            <h3 id="foundations-title">Foundations</h3>
             <p>
               Neutral surfaces, readable type and clear focus. These tokens follow your light or
               dark theme.

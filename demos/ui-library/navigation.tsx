@@ -30,7 +30,7 @@ export function Navigation() {
     <section id="ui-navigation" className="ui-showcase-section" aria-labelledby="navigation-title">
       <div className="ui-showcase-section-heading">
         <span>04 / Navigation</span>
-        <h3 id="navigation-title">Find your way through.</h3>
+        <h3 id="navigation-title">Navigation</h3>
         <p>Arrow keys move between tabs. Tab reaches the content.</p>
       </div>
       <div className="ui-showcase-panel">

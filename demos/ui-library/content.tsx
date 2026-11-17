@@ -30,7 +30,7 @@ export function Content() {
     <section id="ui-content" className="ui-showcase-section" aria-labelledby="content-title">
       <div className="ui-showcase-section-heading">
         <span>05 / Content & feedback</span>
-        <h3 id="content-title">Show what is happening.</h3>
+        <h3 id="content-title">Content & feedback</h3>
         <p>Clear status, useful empty space and loading states with a purpose.</p>
       </div>
       <div className="ui-showcase-content">
