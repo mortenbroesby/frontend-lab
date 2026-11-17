@@ -1,0 +1,183 @@
+@import '@lab/ui/styles.css';
+@source '.';
+.pocket-instrument {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.instrument-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 0 28px;
+}
+.instrument-eyebrow {
+  font: 11px monospace;
+  letter-spacing: 0.15em;
+  color: var(--lab-muted);
+}
+.instrument-top h2 {
+  font-size: clamp(24px, 4vw, 38px);
+  letter-spacing: -0.045em;
+  margin: 12px 0;
+}
+.instrument-top p {
+  color: var(--lab-muted);
+  margin: 0;
+}
+.instrument-top button {
+  min-width: 100px;
+}
+.instrument-scope {
+  background: #080f0c;
+  border: 1px solid #25362c;
+  border-radius: 12px;
+  overflow: hidden;
+  color: #9cf6b8;
+  background-image:
+    linear-gradient(#9cf6b808 1px, transparent 1px),
+    linear-gradient(90deg, #9cf6b808 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.instrument-scope canvas {
+  display: block;
+  width: 100%;
+  height: 200px;
+}
+.scope-caption,
+.scope-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  font: 10px monospace;
+  letter-spacing: 0.12em;
+}
+.scope-caption {
+  color: #739682;
+}
+.scope-footer {
+  font-size: 12px;
+}
+.instrument-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--lab-line);
+}
+.instrument-dial {
+  display: grid;
+  gap: 18px;
+  font-size: 13px;
+}
+.instrument-dial > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.instrument-dial output {
+  color: var(--lab-muted);
+  font-family: monospace;
+}
+.instrument-dial [data-slot='slider'] {
+  min-height: 28px;
+}
+.sequencer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 24px 0 12px;
+}
+.sequencer-heading h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+.sequencer-heading span {
+  font-size: 12px;
+  color: var(--lab-muted);
+}
+.sequencer-scroll {
+  overflow-x: auto;
+  padding: 6px 3px 14px;
+}
+.sequencer {
+  min-width: 890px;
+}
+.sequence-row {
+  display: grid;
+  grid-template-columns: 110px repeat(16, minmax(44px, 1fr));
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.voice-label {
+  display: grid;
+  gap: 14px;
+  padding: 0 22px 0 0;
+  font-size: 12px;
+}
+.voice-label strong {
+  color: var(--lab-ink);
+}
+.sequence-step {
+  padding: 0;
+  min-width: 44px;
+  height: 52px;
+  color: var(--lab-muted);
+  border-radius: 4px;
+}
+.sequence-step[data-on='true'] {
+  background: color-mix(in srgb, var(--voice-color) 24%, var(--lab-surface));
+  border-color: color-mix(in srgb, var(--voice-color) 55%, var(--lab-line));
+  color: var(--lab-ink);
+}
+.sequence-step[data-current='true'] {
+  outline: 2px solid var(--lab-ink);
+  outline-offset: 1px;
+}
+.sequence-step span {
+  font: 10px monospace;
+}
+.instrument-note {
+  border-top: 1px solid var(--lab-line);
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.instrument-note p {
+  max-width: 690px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--lab-muted);
+}
+@media (max-width: 600px) {
+  .instrument-controls {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .instrument-top {
+    align-items: flex-start;
+  }
+  .instrument-top h2 {
+    font-size: 26px;
+  }
+  .scope-caption span:last-child {
+    display: none;
+  }
+  .instrument-scope canvas {
+    height: 150px;
+  }
+  .sequencer-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .instrument-note {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
