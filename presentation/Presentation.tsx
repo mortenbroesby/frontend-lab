@@ -52,7 +52,7 @@ function PresenterPanel({
             <SlideStage index={index + 1} preview />
           </>
         ) : (
-          <p>End of the example deck.</p>
+          <p>End of the draft.</p>
         )}
       </div>
       <div className="speaker-notes">
@@ -179,7 +179,7 @@ export function Presentation() {
           <LabMark />
           The Front-End Lab
         </span>
-        <span>Example deck</span>
+        <span>Working draft</span>
       </header>
       <main id="presentation-stage" className="presentation-body" tabIndex={-1}>
         <div className="audience-stage">

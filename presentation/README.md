@@ -1,6 +1,6 @@
 # Presentation
 
-A standalone React deck with five example slides. These demonstrate layouts and interaction; they are not the eventual talk.
+A standalone React deck with a first draft of the Lightning project story. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the confirmed recollections, proposed structure and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0
@@ -22,4 +22,4 @@ Edit `slides.tsx`. Each entry has a stable, unique `id`, a `title`, a React `Con
 
 Use the five layout components in `layouts.tsx`, or compose a slide directly. Slides use a 16:9 canvas; container-relative typography keeps the composition consistent. Keep text brief and test your projector size.
 
-Interactive slide components receive `preview`. Render a quiet, disabled representation when it is true. The next-slide preview is also inert and hidden from assistive technology. Put complex custom interactions inside `data-presentation-interactive` to reserve their keyboard events. Clean up effects when slides unmount. The included frequency experiment needs no effects or external services.
+Interactive slide components receive `preview`. Render a quiet, disabled representation when it is true. The next-slide preview is also inert and hidden from assistive technology. Put complex custom interactions inside `data-presentation-interactive` to reserve their keyboard events. Clean up effects when slides unmount. The included renderer illustration uses React DOM, needs no effects or external services, and is not the original Lightning implementation.
