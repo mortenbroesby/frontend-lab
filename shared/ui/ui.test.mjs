@@ -8,6 +8,7 @@ let server;
 let Button;
 let Progress;
 let Input;
+let HighlightedCode;
 before(async () => {
   server = await createServer({
     configFile: false,
@@ -16,6 +17,7 @@ before(async () => {
   ({ Button } = await server.ssrLoadModule('/src/button.tsx'));
   ({ Progress } = await server.ssrLoadModule('/src/progress.tsx'));
   ({ Input } = await server.ssrLoadModule('/src/input.tsx'));
+  ({ HighlightedCode } = await server.ssrLoadModule('/src/highlighted-code.tsx'));
 });
 after(async () => server?.close());
 const render = (component, props, child) =>
@@ -57,4 +59,18 @@ test('inputs preserve native validation and accessible error relationships', () 
   assert.match(html, /disabled=""/);
   assert.match(html, /aria-invalid="true"/);
   assert.match(html, /aria-describedby="error"/);
+});
+
+test('code highlighting colours JSX safely in both themes and preserves unknown languages', () => {
+  const code = 'const node = <button title="Hello">Click</button>;\n';
+  const html = render(HighlightedCode, { code, language: 'TSX' });
+  assert.match(html, /light-dark\(/);
+  assert.ok(new Set([...html.matchAll(/color:([^";]+)/g)].map((match) => match[1])).size >= 3);
+  assert.doesNotMatch(html, /<button/);
+  assert.match(html, /&lt;/);
+  assert.match(html, /\n$/);
+  assert.equal(
+    render(HighlightedCode, { code: 'plain\n  text', language: 'unknown' }),
+    'plain\n  text',
+  );
 });

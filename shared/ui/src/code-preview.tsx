@@ -1,8 +1,16 @@
-import type { ComponentProps } from 'react';
+import { lazy, Suspense, type ComponentProps } from 'react';
 import { Check, Copy, FileCode } from 'lucide-react';
 import { Button } from './button';
 import { useCopyText } from './use-copy-text';
 import { cn } from './utils';
+
+const HighlightedCode = lazy(() =>
+  import('./highlighted-code')
+    .then((module) => ({ default: module.HighlightedCode }))
+    .catch(() => ({
+      default: ({ code }: { code: string }) => <>{code}</>,
+    })),
+);
 
 type CodePreviewProps = Omit<ComponentProps<'figure'>, 'children'> & {
   code: string;
@@ -43,7 +51,14 @@ function CodePreview({ code, filename, language, className, ...props }: CodePrev
         aria-label={`${filename} source code`}
         className="m-0 max-h-96 overflow-auto p-5 font-mono text-sm leading-7 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
       >
-        <code className="bg-transparent p-0 text-inherit [font-size:inherit]">{code}</code>
+        <code className="bg-transparent p-0 text-inherit [font-size:inherit]">
+          <Suspense fallback={code}>
+            <HighlightedCode
+              code={code}
+              language={language ?? filename.slice(filename.lastIndexOf('.') + 1)}
+            />
+          </Suspense>
+        </code>
       </pre>
       <div role="status" className="min-h-7 px-4 pb-2 text-xs text-muted-foreground">
         {message}

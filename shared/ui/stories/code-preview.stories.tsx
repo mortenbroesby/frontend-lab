@@ -26,3 +26,15 @@ export const PlainText: Story = {
     code: 'Write a small experiment.\nChange one thing at a time.',
   },
 };
+
+export const ReactSource: Story = {
+  args: {
+    filename: 'hello.tsx',
+    language: 'TSX',
+    code: `import { Button } from '@lab/ui/button';
+
+export function Hello() {
+  return <Button disabled={false}>Hello, world</Button>;
+}`,
+  },
+};
