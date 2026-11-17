@@ -65,26 +65,15 @@ function Assumptions() {
   );
 }
 
-function Experiments() {
+function InstrumentIntroduction() {
   return (
-    <DiagramSlide eyebrow="Two parts of the TV example" title="A few related experiments.">
-      <ExperimentOptions
-        options={[
-          {
-            label: 'INPUT',
-            title: 'Keyboard navigation.',
-            description:
-              'Build a small grid. Move focus with arrow keys and restore it after opening an item.',
-          },
-          {
-            label: 'RENDERING',
-            title: 'React and Canvas.',
-            description:
-              'Keep position or colour in React state. Draw it on Canvas and update it from a control.',
-          },
-        ]}
-      />
-    </DiagramSlide>
+    <StatementSlide eyebrow="A personal experiment" title="Could the browser be an instrument?">
+      <p>
+        I remembered the music in old demoscene intros.
+        <br />
+        Could we make something like that with browser APIs?
+      </p>
+    </StatementSlide>
   );
 }
 
@@ -172,7 +161,7 @@ function Instrument({ preview }: { preview?: boolean }) {
       )}
       <div className="tv-slide-footer">
         <span>Press Play · Shape the sound · Tab to continue</span>
-        <a href="#experiments">Continue presentation →</a>
+        <a href="#curiosity">Continue presentation →</a>
       </div>
     </div>
   );
@@ -298,37 +287,41 @@ Default tests mocked parts of rendering, including Canvas functionality; tests u
 Don't explain the diagram again. Use these three points to draw together what people just saw. The animation makes the demo enjoyable; the focus movement and return behaviour are the connection to the project.
 
 TRANSITION
-“That project changed the input and rendering. Here is another direction: using the browser to generate sound.”`,
+“That project came from a contractual requirement. The next experiment came from curiosity.”`,
+  },
+  {
+    id: 'instrument-introduction',
+    title: 'Could the browser be an instrument?',
+    Content: InstrumentIntroduction,
+    notes: `FROM A PROJECT REQUIREMENT TO A PERSONAL QUESTION · about 1 minute
+“The TV project involved an unfamiliar platform we had to use. For this one, I chose something I wanted to try.”
+
+WHERE THE IDEA CAME FROM
+“I remembered those small demoscene intros with tracker music and wondered what we could make using browser APIs. Could the browser generate the music, and could we shape it while it plays?”
+
+TRANSITION
+“This is Browser Beat: a small experiment made for this session. Let's hear it.”
+
+Keep this personal and brief. It is a new experiment, not part of the TV project or a recreation of a particular historical intro.`,
   },
   {
     id: 'instrument',
     title: 'The browser as an instrument',
     Content: Instrument,
-    notes: `A SECOND PERSPECTIVE · 2–3 minutes
-“This one is a new experiment, not part of the TV project. I remembered those small demoscene intros with tracker music and wondered what we could make in a browser.”
+    notes: `TRY THE EXPERIMENT · 2–3 minutes
+Start with sound rather than another introduction. The previous slide has established why this experiment is here.
 
 TRY IT LIVE
 Press Play. Move the Tone fader to the right slowly, then add a little Echo. Change Tempo to hear the same loop at a different pace. Move Pitch to −12 or +12 for an octave down or up without changing the tempo. Faders also support arrow keys. Keep the volume comfortable and stop playback before discussing it.
 
 WHAT IS HAPPENING
-“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The subtle waveform reads the live audio signal.
+“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The waveform reads the live audio signal.
 
 TRANSITION
-“Changing an input, a rendering surface or an output can lead to quite a different experiment.” Click Continue presentation outside the instrument. Moving to another slide removes the iframe and stops its audio. The presenter preview is deliberately static and silent.
+“That is the experiment. Any questions about how it works, or about the TV project?” Click Continue presentation outside the instrument to open Questions. Moving to another slide removes the iframe and stops its audio. The presenter preview is deliberately static and silent.
 
 IF AUDIO IS UNAVAILABLE
 Describe the signal path and show the controls. Do not spend the talk debugging the room's sound system.`,
-  },
-  {
-    id: 'experiments',
-    title: 'A few related experiments',
-    Content: Experiments,
-    notes: `TWO RELATED EXPERIMENTS · 2–3 minutes
-Keyboard navigation: build a small grid of items, move focus with arrows, open one and return to the same selection. This is the interaction we just tried. It can use ordinary HTML; Canvas isn't required to investigate focus.
-
-React and Canvas: keep a position or colour in React state, draw it on Canvas, and change it from a control. This is a small way to explore state and a different rendering surface. It is not the same as implementing a custom React renderer.
-
-These are suggestions, not assignments. People can also work on code quality or tooling in the other tracks. Stop here if discussion is already underway.`,
   },
   {
     id: 'curiosity',

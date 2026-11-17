@@ -24,8 +24,8 @@ The Lightning section illustrates how a required rendering platform need not dic
 | 4. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
 | 5. How our app worked. | JSX → custom renderer → Lightning; explain the benefit without internals | 2–3 minutes |
 | 6. What was different | Briefly recap input, rendering and tooling | About 1 minute |
-| 7. The browser as an instrument | Shape an original Web Audio loop in the inline Browser Beat | 2–3 minutes |
-| 8. A few related experiments | Keyboard navigation and React state drawn on Canvas | 2–3 minutes |
+| 7. Could the browser be an instrument? | Introduce the personal curiosity behind Browser Beat | About 1 minute |
+| 8. The browser as an instrument | Shape an original Web Audio loop in the inline Browser Beat | 2–3 minutes |
 | 9. Questions? | Discussion without another motivational closing | Questions |
 
 The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the live demonstrations are the TV and Browser Beat. No changes are required to the standalone D3 demo.
@@ -125,4 +125,4 @@ Edit slide content and notes in `slides.tsx`, then record new recollections here
 
 ## Browser instrument
 
-After the TV recap, one live slide offers a second perspective: the browser as an instrument. Browser Beat is a new experiment inspired by demoscene/tracker music, not part of the historical TV project. It uses native Web Audio and Canvas with React controls. Start the original loop, shape tempo, pitch, tone and echo, then stop. The presentation uses four stacked horizontal mixing-console faders and a live waveform; the full sequencer remains in the standalone demo. The slide embeds its performance view with audio/fullscreen permissions and keeps Continue presentation outside the iframe. Presenter previews are static and silent. Leaving the slide removes the instrument and its audio context.
+After the TV recap, a short introduction connects a project requirement to a personal question: could the browser be an instrument? It explains the memory of old demoscene music before opening Browser Beat. The live demo then leads directly to Questions; the related-exercises slide has been removed to avoid returning to the TV topic after the music demo. Browser Beat is a new experiment inspired by demoscene/tracker music, not part of the historical TV project. It uses native Web Audio and Canvas with React controls. Start the original loop, shape tempo, pitch, tone and echo, then stop. The presentation uses four stacked horizontal mixing-console faders and a live waveform; the full sequencer remains in the standalone demo. The slide embeds its performance view with audio/fullscreen permissions and keeps Continue presentation outside the iframe. Presenter previews are static and silent. Leaving the slide removes the instrument and its audio context.
