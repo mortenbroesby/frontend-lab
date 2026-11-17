@@ -1,106 +1,60 @@
-<Inspiration>
+<section className="track-start" aria-labelledby="start-heading">
 
-Spend a few minutes playing with something before choosing what to build:
+<h2 id="start-heading">Make something you want to play with.</h2>
+<p>A creature that follows your cursor, artwork that changes with a slider, or a sound you control by moving a shape. Choose an interaction that makes you curious and bring it to life.</p>
+<p>Use an idea below, remix a demo or invent your own. You don't need a practical use case or a finished app.</p>
 
-- **Make a game:** [MDN’s Canvas Breakout tutorial](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_breakout_game_pure_JavaScript) includes playable examples of a paddle-and-ball game, with steps from moving a ball to keeping score.
-- **Make music:** [Chrome Music Lab](https://musiclab.chromeexperiments.com/Experiments) turns sound and rhythm into things you can play with. Try Song Maker and think about a tiny instrument of your own.
-- **Make something beautiful:** [WebGL Fluid Simulation](https://paveldogreat.github.io/WebGL-Fluid-Simulation/) lets you play with flowing colour. It is an ambitious visual reference; a simple Canvas brush or particle trail is a smaller place to begin.
-- **Make an idea understandable:** [Red Blob Games’ interactive pathfinding explanation](https://www.redblobgames.com/pathfinding/a-star/introduction.html) lets you move points and explore how routes are found. Imagine explaining something you know through interaction.
+</section>
 
-Pick one interaction you like and give it your own twist. These are inspiration, not a checklist of finished projects to reproduce. Get that first interaction working before adding levels, multiplayer or more sophisticated visuals.
+<section aria-labelledby="options-heading">
+<h2 id="options-heading">What would you like to make?</h2>
+<div className="track-options">
+<section aria-labelledby="world-heading">
+<h3 id="world-heading">A tiny world or game</h3>
+<p>Give a creature a goal and see how a simple rule changes its behavior.</p>
+<p>Start with one moving dot. Make it follow food, avoid an obstacle or reach a player-controlled target.</p>
+<a className="track-start-link" href="#/track/experimental-projects/little-world">Start with one moving creature →</a>
+<p className="track-example"><DemoLink id="ecosystem-simulation">Play with Little world</DemoLink> first. Change food or sensing to see how the creatures respond, then invent a rule of your own.</p>
+</section>
+<section aria-labelledby="art-heading">
+<h3 id="art-heading">A picture made from rules</h3>
+<p>Grow imaginary coral, invent an alphabet or make a postcard that changes each time.</p>
+<p>Generate a few shapes, then change one rule: their size, spacing or color. Keep a seed when you find a version you like.</p>
+<a className="track-start-link" href="#/track/experimental-projects/postcard">Start with generative SVG art →</a>
+<p className="track-example"><DemoLink id="generative-postcard">Try Generative postcard</DemoLink> to explore variations and export an image. The guide builds up from a small set of dots.</p>
+</section>
+<section aria-labelledby="motion-heading">
+<h3 id="motion-heading">An interaction with personality</h3>
+<p>Make a button spring to life, a card unfold or a little machine react to a click.</p>
+<p>Start with one action and its result. Add a transition that makes the change easier to follow, then compare it with no motion.</p>
+<a className="track-start-link" href="#/track/experimental-projects/motion">Start with a purposeful transition →</a>
+<p className="track-example"><DemoLink id="motion-with-purpose">Try Motion with purpose</DemoLink> to compare still, animated and Lottie treatments. Give people a usable result even with reduced motion.</p>
+</section>
+<section aria-labelledby="instrument-heading">
+<h3 id="instrument-heading">An instrument of your own</h3>
+<p>Let position control pitch, turn a drawing into a rhythm or make a shape you can hear.</p>
+<p>Start with one gentle sound triggered by a button. Add a stop or mute control before experimenting with pitch and patterns.</p>
+<a className="track-start-link" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Simple_synth">Start with MDN's simple synth ↗</a>
+<p className="track-example">This external tutorial uses plain JavaScript. For inspiration, play with <a href="https://musiclab.chromeexperiments.com/Experiments">Chrome Music Lab</a>; you only need one sound to begin.</p>
+</section>
+</div>
+</section>
 
-</Inspiration>
+<section className="track-method" aria-labelledby="method-heading">
+<h2 id="method-heading">How to work on it</h2>
+<ol>
+<li><strong>Pick the part you want to try.</strong><p>Describe one action and what happens next. A puzzle, a miniature city or a playable explanation can start with one control too.</p></li>
+<li><strong>Make that part work.</strong><p>Use a dot, a button or one sound. Follow a guide or change an existing demo before adding more scenes, rules or controls.</p></li>
+<li><strong>Play with it and adjust.</strong><p>Change the timing, the rule or the input. Keep what makes it more interesting, and make it easy to pause, restart or try again.</p></li>
+</ol>
+</section>
 
-<IdeaGrid>
+<section className="track-workspace" aria-label="Choose your workspace">
+<p><strong>Already have an idea?</strong> Use your own project and take whichever technique helps. The examples are starting points, not assignments.</p>
+<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a> to remix a demo, or <a href="#/create">create a standalone experiment</a>. You can play with the hosted examples before installing anything.</p>
+</section>
 
-<Idea title="A game you can play in a minute" summary="Build a paddle game, a tiny maze or a one-button challenge. Make one interaction feel good.">
-
-Make a paddle game, a one-button obstacle course or a tiny maze. What makes someone want to try again? Explore movement, timing, collision and the feeling of a good control.
-
-Start with a ball, a paddle and a restart button, or a character that can reach one goal. Canvas works well for drawing a moving scene; React can handle the score and controls around it. Stretch with a second player on the same keyboard, changing obstacles or touch controls.
-
-Build from [MDN’s Canvas Breakout steps](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_breakout_game_pure_JavaScript). The examples use plain JavaScript; use their drawing and game-loop ideas inside your React demo rather than expecting a React starter.
-
-</Idea>
-
-<Idea title="An ecosystem in a tab" summary="Give creatures simple rules, add food and watch surprising behaviour emerge.">
-
-Give tiny creatures a few simple rules and watch a world emerge. Plant food, change the weather or introduce something they should avoid. What do they seek? What happens when food becomes scarce?
-
-Start with one creature following food. Explore flocking, predators or changing seasons when that becomes interesting. Surprising behaviour can come from very little code.
-
-Read: [MDN’s animation-loop examples](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations).
-
-</Idea>
-
-<Idea title="An impossible instrument" summary="Turn shapes, colours or movement into an instrument you can play.">
-
-Draw a shape and hear it. Let position control pitch, colour change the sound, or movement create a rhythm. Could a drawing become a song someone else can play?
-
-Start with one sound triggered by a deliberate interaction. Explore loops, layered instruments or a visual sequencer. Give people a mute control and keep the first sound gentle.
-
-Read: [Build a simple synth with Web Audio](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Simple_synth).
-
-</Idea>
-
-<Idea title="A machine nobody needs" summary="Build a satisfying chain reaction with switches, motion and an unexpected ending.">
-
-Make a beautifully satisfying contraption: switches, bouncing balls and ridiculous chain reactions. A button might launch an elaborate machine whose only job is to switch itself off.
-
-Start with one cause and one effect. Add timing, sound or an unexpected ending. How much personality can you give an ordinary button?
-
-Read: [Using the Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API).
-
-</Idea>
-
-<Idea title="A living city" summary="Draw a road and watch a miniature city respond to your decisions.">
-
-Sketch a road and watch a miniature city wake up. People travel, traffic collects and your decisions change the flow.
-
-Start with dots moving along one road. Try intersections, public transport or a strange rule: what if everyone always took the scenic route? Invent the data; realism is optional.
-
-Read: [SVG paths](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths).
-
-</Idea>
-
-<Idea title="A world built by its visitors" summary="Let visitors contribute to a shared landscape, creature or constellation.">
-
-Each visitor adds a tiny piece to a shared landscape, creature or constellation. Can a group make something none of them would have designed alone?
-
-Begin by placing objects locally. Then connect browsers or combine contributions. Explore what happens when two people change the same thing; accounts and permanent storage can wait.
-
-Read: [WebRTC data channels](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_data_channels).
-
-</Idea>
-
-<Idea title="A picture made from rules" summary="Generate art from simple rules, then change the rules and see what happens.">
-
-Grow imaginary coral, draw a fictional alphabet or generate maps of places that do not exist. Each variation should feel related, but different.
-
-Start with one rule and a slider. Explore repeatable seeds, branching growth or artwork you can export. What happens when you break just one of your rules?
-
-Read: [Canvas drawing shapes](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes).
-
-</Idea>
-
-<Idea title="A browser escape room" summary="Create an interactive puzzle with clues that players can inspect and connect.">
-
-Hide clues in an interactive environment. Let players manipulate, inspect and connect things until a satisfying solution appears.
-
-Start with one puzzle. Try linked rooms, cooperative clues or multiple solutions. Can someone solve it with a keyboard, without relying on colour or sound alone?
-
-Read: [MDN’s game-development techniques](https://developer.mozilla.org/en-US/docs/Games/Techniques).
-
-</Idea>
-
-<Idea title="A playable explanation" summary="Explain an idea through interaction: change a variable and make its effect visible.">
-
-Make someone feel how traffic jams form, how sound waves combine or how an algorithm makes a decision. Let them change a variable and discover something unexpected.
-
-Start with one relationship and one control. Add a challenge or compare two scenarios. What does your model leave out, and does that change the story?
-
-Read: [D3 scales for mapping data to visuals](https://d3js.org/d3-scale).
-
-</Idea>
-
-</IdeaGrid>
+<nav className="track-browse" aria-label="More in Experimental Projects">
+<a href="#/track/experimental-projects/examples">Browse all demos →</a>
+<a href="#/track/experimental-projects/guides">Browse all guides →</a>
+</nav>

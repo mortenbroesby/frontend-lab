@@ -1,72 +1,60 @@
-<Inspiration>
+<section className="track-start" aria-labelledby="start-heading">
 
-Start with a small improvement you would actually use:
+<h2 id="start-heading">Make everyday development less frustrating.</h2>
+<p>Waiting for a test, guessing why a screen is slow, or repeating the same investigation? Pick one thing that interrupts your work and try a better way to do it.</p>
+<p>Bring a project you know, or use a Lab example. A useful result can be a shorter command, a repeatable debugging step or a clearer brief.</p>
 
-- **Stop repeating work:** [Turborepo’s caching walkthrough](https://turborepo.dev/docs/crafting-your-repository/caching) shows how completed tasks can be reused. Explore why a build runs again—or why it does not need to.
-- **Debug without editing in more logs:** [DevTools breakpoints and logpoints](https://developer.chrome.com/docs/devtools/javascript/breakpoints) let you stop on a condition or inspect values without changing source code.
-- **Try the UI state you need:** [DevTools local overrides](https://developer.chrome.com/docs/devtools/overrides) let you replace a response locally. Explore an empty list or an unusually long label without asking someone to change the backend.
-- **Stop rewriting the same agent brief:** [Copilot CLI’s skill guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills) shows how instructions and supporting resources can become a reusable workflow. Pick one bounded task you already understand.
+</section>
 
-Choose one annoyance, try an alternative, then compare the experience. Fewer steps, clearer feedback or a reason to keep your current approach are all useful results.
+<section aria-labelledby="options-heading">
+<h2 id="options-heading">What would you like to improve?</h2>
+<div className="track-options">
+<section aria-labelledby="feedback-heading">
+<h3 id="feedback-heading">Get an answer sooner</h3>
+<p>Find out whether a small change works without waiting for every check in the repository.</p>
+<p>Run one test, put it in watch mode and make a change. Compare what it catches with the broader check.</p>
+<a className="track-start-link" href="#/track/developer-experience/feedback-loop">Start with one real test →</a>
+<p className="track-example">The guide includes runnable Lab commands, task selection and cache inspection. Keep broader validation for changes the smaller run cannot cover.</p>
+</section>
+<section aria-labelledby="profiling-heading">
+<h3 id="profiling-heading">Find what makes an interaction slow</h3>
+<p>Follow what happens when you type, open a panel or select an item.</p>
+<p>Record one interaction in React Profiler. Find the work behind it before deciding what to change.</p>
+<a className="track-start-link" href="#/track/developer-experience/rendering">Start recording an interaction →</a>
+<p className="track-example"><DemoLink id="react-render-detective">Explore React Render Detective</DemoLink> to see why components update. Its counters explain renders; they do not measure interaction speed.</p>
+</section>
+<section aria-labelledby="responses-heading">
+<h3 id="responses-heading">Reach the UI state you need</h3>
+<p>Work on an empty list, a failed request or a slow response without waiting for the backend to produce it.</p>
+<p>Open an app that makes a request. Override one response with an empty result and inspect what the screen does.</p>
+<a className="track-start-link" href="https://developer.chrome.com/docs/devtools/overrides">Start with DevTools overrides ↗</a>
+<p className="track-example">Chrome's external guide explains local response overrides. Try request blocking or throttling separately to explore failure and loading, then remove your overrides.</p>
+</section>
+<section aria-labelledby="agents-heading">
+<h3 id="agents-heading">Stop repeating an agent brief</h3>
+<p>Turn a task you keep explaining into a workflow you can reuse and check.</p>
+<p>Start with a read-only review of one small diff. Specify the files, allowed actions and evidence you need, then compare the findings with your own inspection.</p>
+<a className="track-start-link" href="https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills">Turn the brief into a Copilot skill ↗</a>
+<p className="track-example">Or use the <a href="https://developers.openai.com/codex/skills">Codex skills guide</a>. Both are external resources. Try the workflow on a second change; you can rehearse it manually if you don't have an agent.</p>
+</section>
+</div>
+</section>
 
-</Inspiration>
+<section className="track-method" aria-labelledby="method-heading">
+<h2 id="method-heading">How to work on it</h2>
+<ol>
+<li><strong>Choose a recurring annoyance.</strong><p>Use one you can reproduce. Your own idea is welcome: a useful script, a debugger shortcut or one less setup step.</p></li>
+<li><strong>Try one alternative.</strong><p>Keep the task the same so you can compare. Use an existing tool before building one.</p></li>
+<li><strong>Keep what helps.</strong><p>Check whether it saves steps, gives a clearer answer or makes the task easier to repeat. Note what it misses before relying on it.</p></li>
+</ol>
+</section>
 
-<IdeaGrid>
+<section className="track-workspace" aria-label="Choose your workspace">
+<p><strong>Using your own project?</strong> Choose a task you already perform and follow the relevant guide above.</p>
+<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a> for the test and profiling walkthroughs. You can explore Render Detective in your browser before installing anything.</p>
+</section>
 
-<Idea title="Faster Feedback Loops" summary="Compare targeted tests, watch mode and cached builds to get useful feedback sooner.">
-
-**“I lose my train of thought while waiting to find out whether my change works.”** Explore targeted tests, watch modes, build caching and affected-project detection. Aim for useful feedback sooner while keeping the checks that matter.
-
-Start with a real test in this repository or your own project. Run its test file, then select one named test and put it in watch mode. Make a small change and observe how quickly you get an answer. Compare the time and the scope: what would the smaller run miss?
-
-For a different experiment, run one package’s build twice through Turbo and inspect whether the second run uses the cache. Change an input and see what reruns. Stretch by inspecting affected tasks with a dry run before executing them, or investigating a cache miss. Keep broader validation for changes that need it; the shortest command is not always the right check.
-
-Read: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) and [Turborepo’s task-selection and dry-run options](https://turborepo.dev/docs/reference/run).
-
-</Idea>
-
-<Idea title="Developer Tools" summary="Try a debugger feature or build a small CLI that answers a recurring question.">
-
-**“I keep doing the same little investigation by hand.”** Make one recurring question easier to answer: which scripts can I run, what changed in this package, or why does this event handler fire twice?
-
-Start by trying an existing command or debugger feature. Compare `npm run`, `git diff --stat` and `git diff --check` with the information you wish they showed. Or try a conditional breakpoint or logpoint in a real interaction. You may already have the tool you need.
-
-If a gap remains, build a small read-only CLI that answers one question—for example, listing package scripts with their workspace names. Try it against two real manifests and an invalid input. Stretch with a useful filter or machine-readable output, rather than building a general-purpose framework. The optional Node starter is there if you want it; it is not the main exercise.
-
-Read: [Git diff options](https://git-scm.com/docs/git-diff) and [Node’s native argument parser](https://nodejs.org/docs/latest-v24.x/api/util.html#utilparseargsconfig).
-
-### Another possibility: a Sapphire usage inspector
-
-Could a tool help engineers review their use of Sapphire React components? Sketch a useful finding: a code location, the documented guidance it relates to and a suggested next step. Candidate questions include deprecated props, required setup or component composition.
-
-We do not yet have Sapphire’s package or documentation, so these are questions to explore, not confirmed rules or implemented checks. Once that material is available, choose one documented rule and compare existing linting, source analysis and browser inspection. For an experiment you can implement now, use a library whose documentation and code you already have.
-
-</Idea>
-
-<Idea title="Development Workflows" summary="Explore API mocking, workspace commands or a simpler local development setup.">
-
-**“I cannot work on this screen until the environment behaves.”** Explore local API mocking, monorepo commands and reproducible development environments. Make one part of your workflow independent of a slow service or unnecessary setup.
-
-Start with an app that makes a request. Override its response with an empty result, block the request or throttle the network, and inspect the UI. These are different experiments: an empty result tests content, blocking tests failure, and throttling exposes loading behaviour. Remove the override when you finish.
-
-Compare a browser-only override with a mock response in an app you own. Which is easiest for a colleague to reproduce? Alternatively, compare a standalone package build with a filtered monorepo build, or ask a peer to try your documented local setup. Stretch by making one scenario repeatable or removing one unnecessary setup step.
-
-Read: [Chrome DevTools local overrides](https://developer.chrome.com/docs/devtools/overrides) and [Turborepo run reference](https://turborepo.dev/docs/reference/run).
-
-</Idea>
-
-<Idea title="Agentic Workflows" summary="Turn a repeated task into a Codex or Copilot skill and check the results yourself.">
-
-**“I explain the same task repeatedly, and still have to check what the agent actually did.”** Explore reusable Codex/Copilot skills, agent-assisted development and automated review. Choose a task whose result you can judge yourself.
-
-Start with a read-only review of one small change. Specify the package, what to inspect, which actions are allowed and what evidence to return. Compare the findings with your own inspection and existing checks. Then put the same workflow in a skill and try it on another change: does it save explanation, stay within scope and produce useful evidence?
-
-For a development experiment, ask an agent to make one small improvement and inspect its diff. For automated review, compare the repository’s Fallow audit with an agent review: where do they agree, miss something or report a false positive? Stretch by refining the workflow around an observed failure. Reusability is useful; a clean review is not proof of correctness.
-
-Use Codex or Copilot if you already have access. You can also design and rehearse the workflow manually; this track requires no new account.
-
-Read: [Codex skills](https://developers.openai.com/codex/skills) and [Copilot CLI skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills).
-
-</Idea>
-
-</IdeaGrid>
+<nav className="track-browse" aria-label="More in Developer Experience">
+<a href="#/track/developer-experience/examples">Browse all demos →</a>
+<a href="#/track/developer-experience/guides">Browse all guides →</a>
+</nav>

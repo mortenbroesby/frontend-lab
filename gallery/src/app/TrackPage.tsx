@@ -1,4 +1,3 @@
-import { Button } from '@lab/ui/button';
 import { DemoGallery } from './DemoGallery';
 import { GuideList } from './GuideGallery';
 import { GuideView } from './GuideView';
@@ -6,24 +5,11 @@ import { tracks } from './tracks';
 
 export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; route: string }) {
   const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'ideas';
-  if (['modern-web', 'code-quality'].includes(track.id) && trackPage === 'ideas')
+  if (trackPage === 'ideas')
     return <GuideView document={`tracks/${track.id}/ideas`} layout="ideas" />;
   const section = ['ideas', 'examples'].includes(trackPage) ? trackPage : 'guides';
   return (
     <>
-      {trackPage === 'ideas' && (
-        <section className="mb-8" aria-labelledby="starting-point-heading">
-          <h2 id="starting-point-heading">Choose your starting point</h2>
-          <p>
-            Use an idea below, adapt an existing demo or explore your own question within this
-            track. Choose one small experiment; the ideas are not a checklist. Guides are here to
-            help when you need them.
-          </p>
-          <Button asChild className="mt-4">
-            <a href="#/create">Start your experiment →</a>
-          </Button>
-        </section>
-      )}
       <TrackNavigation track={track} page={trackPage} section={section} />
       <TrackContent track={track} page={trackPage} />
     </>
@@ -73,7 +59,7 @@ function TrackNavigation({
   return (
     <nav className="guide-nav" aria-label="Track guide">
       {[
-        ['ideas', ['modern-web', 'code-quality'].includes(track.id) ? 'Start here' : 'Ideas'],
+        ['ideas', 'Start here'],
         ['examples', 'Demos'],
         ['guides', 'Guides'],
       ].map(([page, label]) => (
