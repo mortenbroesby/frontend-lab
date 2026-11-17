@@ -13,7 +13,13 @@ export default function UiLibrary() {
     <TooltipProvider>
       <div className="ui-showcase">
         <header className="ui-showcase-hero">
-          <h2>Explore the components</h2>
+          <span className="ui-showcase-eyebrow">LAB UI / COMPONENT EXPLORER</span>
+          <h2>
+            Explore the components
+            <span aria-hidden="true" className="ui-showcase-accent">
+              .
+            </span>
+          </h2>
           <p>
             Try the controls below. Every example uses the same components available in your demo.
           </p>
@@ -44,19 +50,37 @@ export default function UiLibrary() {
           <div className="ui-showcase-panel">
             <div className="ui-showcase-surfaces">
               <div style={{ background: 'var(--lab-paper)' }}>
+                <span className="ui-surface-sample ui-surface-canvas" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
                 <strong>Canvas</strong>
                 <code>--lab-paper</code>
               </div>
               <div style={{ background: 'var(--lab-surface)' }}>
+                <span className="ui-surface-sample ui-surface-resting" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
                 <strong>Surface</strong>
                 <code>--lab-surface</code>
               </div>
               <div style={{ background: 'var(--lab-hover)' }}>
+                <span className="ui-surface-sample ui-surface-hover" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
                 <strong>Hover</strong>
                 <code>--lab-hover</code>
               </div>
             </div>
             <div className="ui-showcase-type">
+              <span className="ui-type-specimen" aria-hidden="true">
+                Aa<span>0123456789</span>
+              </span>
               <h4>Clear hierarchy</h4>
               <p>Body text gives an interface context.</p>
               <small>Secondary text supports the next decision.</small>
