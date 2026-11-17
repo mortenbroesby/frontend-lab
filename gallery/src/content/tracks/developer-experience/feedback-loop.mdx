@@ -1,66 +1,45 @@
-## Find your shortest feedback loop
+## Find your shortest useful feedback loop
 
-Set up a focused check that reruns as you edit, then explore when a build cache can safely skip work. You’ll leave with a repeatable development loop, using your existing tools.
+Where do you lose time while changing code: waiting for checks, finding the right command or discovering mistakes too late? Choose one recurring interruption in your own workflow and investigate an alternative.
 
-Choose one behaviour you’re changing in your own project. Find its test and your runner’s filter and watch options. If you need a starting point, the Lab commands below use a small existing Node script—no new app or tool is required.
+A useful loop gives you evidence about the change you're making. The shortest command isn't necessarily the best one if it leaves the relevant behaviour unchecked.
 
-### 1. Establish a baseline
+### Find the question behind a check
 
-From the root with Node 24, no install needed:
+Choose a behaviour you're editing. Locate its implementation, callers and existing tests. What would a passing test establish—and what would it leave unknown?
+
+Look up your runner's filtering and watch options. A filter narrows what executes; watch mode repeats checks after changes. They solve different problems. Confirm that a filter actually selects tests before trusting a green result.
+
+If you need a small example, the Lab has `gallery/exercises/tooling/commands.mjs` and its adjacent test file. Run the existing checks from the root with Node 24:
 
 ```sh
 node --test gallery/exercises/tooling/commands.test.mjs
 ```
 
-Expect four passes, including a CLI failure case. Note count and duration; this baseline covers one file, not the repository.
+Read a test and choose a behaviour to investigate. Use [Node's test runner documentation](https://nodejs.org/docs/latest-v24.x/api/test.html) to discover how to select that test and rerun it as you edit. Your own project's runner is equally suitable.
 
-### 2. Narrow the question
+### Check the feedback, not just the command
 
-Select the ordering test by name:
+Try a temporary change that you expect your selected test to detect. Does it fail for the reason you expected? Restore only that deliberate edit and confirm the test passes again. Don't commit an intentional defect.
 
-```sh
-node --test --test-name-pattern="sorts commands" gallery/exercises/tooling/commands.test.mjs
-```
+If it stays green, investigate whether the filter missed the test or the test missed the behaviour. [Find a missing test](#/track/code-quality/test-confidence) explores that distinction.
 
-Expect one pass; a misspelled pattern may select none. Check the count. Fewer tests may not run faster and omit CLI/invalid-input coverage.
+Compare this loop with your usual one. Consider steps, waiting and clarity of feedback. A single timing isn't a benchmark, and fewer tests may not run faster.
 
-### 3. Make feedback continuous
+### Investigate what can safely be skipped
 
-```sh
-node --test --watch --test-name-pattern="sorts commands" gallery/exercises/tooling/commands.test.mjs
-```
+Caching is a separate question: when is previous output still valid? Before adding a cache, find out whether task selection or watch mode already solves your problem.
 
-On your experiment branch, open `gallery/exercises/tooling/commands.mjs`. Change `a.localeCompare(b)` to `b.localeCompare(a)` and save: the test should fail. Restore only that edit: it should pass. Stop with Ctrl+C and rerun the full file.
-
-This demonstrates regression detection without a wrapper. Compare your usual workflow; one run is not a benchmark.
-
-### Take it further: task selection and caching
-
-After the normal root install:
+For an existing Turbo project, the [run reference](https://turborepo.dev/docs/reference/run) explains filters, affected selection and dry runs. In the Lab, this inspects one demo's build plan without building it:
 
 ```sh
 npm exec -- turbo run build --filter=@lab/demo-react-render-detective --dry=json
-npm exec -- turbo run build --filter=@lab/demo-react-render-detective
-npm exec -- turbo run build --filter=@lab/demo-react-render-detective
-npm exec -- turbo run build --affected --dry=json
 ```
 
-Dry runs describe tasks without building. The filter selects React Render Detective. Without edits, the second build should hit cache; both may hit if cached already. Edit a source file: its next build must miss. Restore the edit.
+Explore `tasks[].inputs` and the project's `turbo.json`. Which source files, shared packages and configuration should invalidate the result? Affected selection depends on Git history and a comparison base; it isn't the same as a cache hit.
 
-Inspect JSON `tasks[].inputs`: demos track their files and shared kit; gallery also tracks all demo source. The dependency map tracks displayed manifests. Generated `dist` and `.turbo` logs are excluded.
-
-Edit another demo: Render Detective should keep its cache while gallery rebuilds. Kit changes should invalidate consumers; root compiler/toolchain changes may invalidate everything. Compare hashes before removing inputs. Cached output must remain correct.
-
-Affected selection needs Git history and a comparison base. Inspect the plan first; task selection and cache reuse are separate decisions.
-
-Targeted passes do not replace broader checks your change needs.
-
-References: [Node test filtering and watch mode](https://nodejs.org/docs/latest-v24.x/api/test.html) · [Turbo run options](https://turborepo.dev/docs/reference/run).
+Choose a dependency you expect to matter. Compare the plan or cache behaviour before and after a temporary change, then restore your edit. Also consider an unrelated change: should it require the same work? Cached output must remain correct; removing inputs merely to get hits isn't an improvement.
 
 ### Keep the useful part
 
-Choose a test for the behaviour you are editing, using your existing runner's filter and watch options. Confirm the filter actually selects tests. Keep a broader check before committing changes that cross module boundaries.
-
-If your project uses a task cache, inspect its inputs before trusting a hit. Change a dependency and confirm the affected consumer rebuilds. You do not need to adopt Turbo to use a focused test or watch mode.
-
-[All Developer Experience guides](#/track/developer-experience/guides)
+Keep a command or workflow if it answers your question with less friction. Decide when broader checks are still needed, particularly when a change crosses module boundaries. You can improve feedback without adopting Turbo or replacing your existing tools.

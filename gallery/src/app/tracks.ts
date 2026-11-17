@@ -12,12 +12,14 @@ export const tracks = [
       {
         slug: 'workers',
         title: 'Keep the interface responsive',
-        description: 'Move a calculation into a Web Worker and return its result to React.',
+        description:
+          'Investigate which work can move off-thread and whether it improves responsiveness.',
       },
       {
         slug: 'tab-settings',
         title: 'Synchronise a setting between tabs',
-        description: 'Build a shared preference with BroadcastChannel, then explore persistence.',
+        description:
+          'Decide what tabs should share and explore messaging, persistence and conflicting changes.',
       },
     ],
     title: 'Modern Web Capabilities',
@@ -75,17 +77,19 @@ export const tracks = [
       {
         slug: 'motion',
         title: 'Add motion with purpose',
-        description: 'Connect an action to its result with Motion and a reusable Lottie animation.',
+        description:
+          'Explore when CSS, Motion or a Lottie illustration helps explain an interaction.',
       },
       {
         slug: 'little-world',
         title: 'Build a tiny moving world',
-        description: 'Create a movement rule, animate a creature and give it a goal.',
+        description:
+          'Invent a behaviour and explore how state, rules and time shape a small world.',
       },
       {
         slug: 'postcard',
         title: 'Make generative SVG art',
-        description: 'Generate shapes from a seed, invent a visual rule and export your artwork.',
+        description: 'Explore visual rules, controlled randomness and reproducible compositions.',
       },
     ],
     title: 'Experimental Projects',

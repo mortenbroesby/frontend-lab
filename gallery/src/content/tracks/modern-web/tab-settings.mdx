@@ -1,70 +1,33 @@
-## Share a preference between tabs
+## Let tabs share what matters
 
-Build a React preference control that updates another tab immediately. You'll learn how browser messages differ from saved state, and how to avoid sending the same update back and forth.
+A preference, a selected document or a draft could follow someone between tabs. Choose something that would be useful to keep in sync. What should remain independent in each tab?
 
-### 1. Start with local state
+Open <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink> in two tabs of the same browser profile. Change a setting, then open another tab or reload one. Live updates and remembering a value are different problems.
 
-[Create a demo](#/create) in Modern Web Capabilities. Replace its `index.tsx` with the component below. Keep the generated `main.tsx` and metadata.
+### Messages aren't memory
 
-```tsx
-import { useEffect, useRef, useState } from 'react';
-import { Button } from '@lab/ui/button';
+BroadcastChannel lets channel instances exchange messages within the same origin and storage partition. It doesn't connect separate devices; use [Connect two browsers](#/track/modern-web/devices) for that.
 
-export default function Demo() {
-  const [compact, setCompact] = useState(false);
-  const channel = useRef<BroadcastChannel | null>(null);
+A message describes something happening now. It doesn't automatically give a new tab the current state or survive a reload. Storage can remember a value, but you still need to decide how it relates to live updates.
 
-  useEffect(() => {
-    const connection = new BroadcastChannel('lab-layout-preference');
-    channel.current = connection;
-    connection.onmessage = (event: MessageEvent<unknown>) => {
-      if (typeof event.data === 'boolean') setCompact(event.data);
-    };
-    return () => {
-      channel.current = null;
-      connection.close();
-    };
-  }, []);
+Choose a small piece of information to share. Consider whether a new tab should start fresh, read a saved value or ask an existing tab. If two tabs change it together, what would a reasonable outcome look like?
 
-  function toggle() {
-    const next = !compact;
-    setCompact(next);
-    channel.current?.postMessage(next);
-  }
+### Find the mechanism
 
-  return (
-    <section>
-      <Button aria-pressed={compact} onClick={toggle}>Compact layout</Button>
-      <ul style={{ lineHeight: compact ? 1.4 : 2.4 }}>
-        <li>One idea</li><li>Another idea</li><li>Your next experiment</li>
-      </ul>
-    </section>
-  );
-}
-```
+Use your own app, adapt the demo or [create an experiment](#/create). The [BroadcastChannel reference](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) explains channel names, sending, receiving and closing a connection.
 
-Run your generated demo. The button changes the list's spacing. The React state is still the source of what this tab renders.
+In `demos/cross-tab-messaging/index.tsx`, trace a local change through `postMessage` to the receiving handler. Look for which code updates local state and which sends a message. A channel doesn't deliver a message back to its sending instance; blindly forwarding received messages can create an echo loop.
 
-### 2. Connect another tab
+Keep message validation and connection cleanup when adapting the example. A TypeScript annotation doesn't establish what another sender actually sent.
 
-Open the exact same URL in a second tab of the same browser profile. Toggle either button: both lists should update. The channel name identifies the conversation; use your own name if other experiments share the same origin.
+### Test the behaviour you chose
 
-`postMessage` sends to other channel instances, not back to the sending instance. That's why `toggle` updates local state itself. The receiving handler only updates state; posting again there would create an echo loop. The type check rejects messages this control doesn't understand.
+Try a situation that challenges your design:
 
-BroadcastChannel works within the same origin and storage partition. It doesn't connect a phone to a laptop. For that, use [Connect two browsers](#/track/modern-web/devices).
+- Open a tab after the value has changed. Where does its starting value come from?
+- Change both tabs quickly. Does the eventual result match your intended rule?
+- Reload or close one tab. Which information should survive?
 
-### 3. Add memory, if your idea needs it
+If persistence matters, investigate [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), including parsing and unavailable storage. You don't need persistence merely to demonstrate messaging.
 
-Reload one tab: it starts with the default spacing. Messages are events, not a saved history.
-
-To keep the preference, store it in `localStorage` when a local or incoming change arrives, and read it when initialising state. Parse stored values explicitly; handle unavailable storage. The channel delivers live updates while storage supplies the starting value.
-
-Check opening a third tab after a change and reloading an existing one. Decide which update wins if two tabs change the preference together; a simple last-arriving update is enough for this experiment.
-
-### Take it further
-
-Synchronise a colour or a selected document instead. Use a message object with a `type` and validated payload when you introduce more than one kind of event.
-
-Optional reference: <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink> adds a more complete interface.
-
-Read: [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) · [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+If nothing arrives, check the origin, browser profile and channel name before changing the state logic. Begin with a single message you can inspect, then connect it to your chosen interaction.

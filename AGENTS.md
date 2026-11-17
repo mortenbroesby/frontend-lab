@@ -46,6 +46,8 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 
 - Track landing pages explain the activity, offer concrete things to work on and show how to begin. Keep essential choices visible, pair each option with a first action and relevant guide/demo, and keep all-content browsing secondary. Adapt the grouping to the track rather than forcing generic intent categories. All four tracks use this activity-led approach.
 
+- Guides teach investigation rather than prescribe a finished implementation. Offer a motivating question, concepts, relevant documentation or demo source, and ways to evaluate choices. Keep exact setup commands and small explanatory snippets where useful; put complete implementations in demos. Worked examples are optional references, and participants may choose their own idea and outcome.
+
 - Write concise, participant-focused copy without event dates or schedules. Prefer concrete actions and useful examples. Avoid sales language, compulsory presentations, reflection prompts and instructions to report what participants learned. Say each thing once; do not repeat setup or onboarding on every page. Link canonical guidance. Keep the README a local starting point, not a guide directory.
 - Participant MDX lives in `gallery/src/content/` and track subfolders. Generator templates live in `turbo/generators/templates/`. Treat MDX as trusted app code, never remote or user-supplied content.
 - Keep meaningful choices and tradeoffs in `gallery/docs/decisions/`.

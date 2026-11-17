@@ -1,84 +1,42 @@
-## Move a calculation off the main thread
+## Give an interaction room to respond
 
-Build a small calculator whose work happens in a Web Worker. You'll learn to separate computation from React, send a result back and release the Worker when the page closes.
+What should someone still be able to do while your page is busy? Choose an interaction—typing, dragging, cancelling or navigating—and some work that might interrupt it.
 
-### 1. Give the Worker one job
+Try <DemoLink id="web-worker-comparison">Room to think</DemoLink>. Use the interaction pad while the same calculation runs on the main thread and in a Worker. Look at responsiveness as well as completion time: moving work doesn't necessarily make it finish sooner.
 
-[Create a demo](#/create) in Modern Web Capabilities. Add `calculate.worker.ts` beside its `index.tsx`:
+### Find work that can move
 
-```ts
-self.onmessage = (event: MessageEvent<unknown>) => {
-  const limit = event.data;
-  if (!Number.isInteger(limit) || typeof limit !== 'number' || limit < 1 || limit > 50_000_000) {
-    self.postMessage({ error: 'Use an integer from 1 to 50,000,000.' });
-    return;
-  }
-  let total = 0;
-  for (let i = 1; i <= limit; i++) total += Math.sqrt(i);
-  self.postMessage({ total });
-};
-```
+A Worker runs JavaScript away from the main thread. It can't manipulate the page's DOM or React state directly. The useful boundary is between computing a result and displaying it.
 
-The calculation doesn't access the DOM or React state. That separation is what lets it run on another thread. The limit keeps a mistyped input from starting unbounded work.
+In your app, identify the input a calculation needs and the result its caller uses. Could it run without reading the page? Filtering data, processing pixels or analysing a document are possibilities; choose a job that matters to your experiment.
 
-### 2. Send work from React
+Use a Performance recording to check your suspicion. If layout or painting is the bottleneck, moving a calculation may not address it.
 
-Replace `index.tsx` with this component. Keep the generated entry and metadata.
+### Understand the boundary
 
-```tsx
-import { useEffect, useRef, useState } from 'react';
-import { Button } from '@lab/ui/button';
+Read [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) for the message model and [Vite's Worker support](https://vite.dev/guide/features.html#web-workers) for bundling a Worker in this repository.
 
-export default function Demo() {
-  const worker = useRef<Worker | null>(null);
-  const [busy, setBusy] = useState(false);
-  const [result, setResult] = useState('Ready');
-  const [taps, setTaps] = useState(0);
+The reference demo separates these responsibilities:
 
-  useEffect(() => {
-    const instance = new Worker(new URL('./calculate.worker.ts', import.meta.url), { type: 'module' });
-    worker.current = instance;
-    instance.onmessage = (event: MessageEvent<{ total?: number; error?: string }>) => {
-      setResult(event.data.error ?? String(event.data.total));
-      setBusy(false);
-    };
-    instance.onerror = () => {
-      setResult('Calculation failed. Reload to try again.');
-      setBusy(false);
-    };
-    return () => {
-      worker.current = null;
-      instance.terminate();
-    };
-  }, []);
+| File in `demos/web-worker-comparison/` | What to investigate |
+| --- | --- |
+| `compute.ts` | The calculation and its input contract |
+| `compute.worker.ts` | Receiving a request and returning a result |
+| `index.tsx` | Starting work, handling results and updating the interface |
+| `frames.ts` | Observing gaps between animation frames |
 
-  return (
-    <section>
-      <Button disabled={busy} onClick={() => {
-        setBusy(true);
-        worker.current?.postMessage(50_000_000);
-      }}>Calculate</Button>
-      <Button onClick={() => setTaps(value => value + 1)}>Tap: {taps}</Button>
-      <p role="status">{busy ? 'Working…' : result}</p>
-    </section>
-  );
-}
-```
+Trace one request before adapting the code. Messages cross a boundary: ordinary objects are cloned, and moving large inputs can have a cost. Validate incoming data and bound expensive work. Release the Worker when its owner no longer needs it and make errors visible.
 
-Start your demo and click Calculate, then Tap. The tap count remains interactive while the Worker calculates. On a fast machine the calculation may finish before you tap; use browser CPU throttling or inspect a Performance recording instead of increasing the bound indefinitely.
+### Make a fair comparison
 
-### 3. Understand the tradeoff
+Use the same input and calculation in both execution modes. Repeat the interaction and observe whether it remains usable. Frame gaps and a Performance recording can help explain what you feel; one run isn't a benchmark.
 
-Vite recognises the `new Worker(new URL(...))` expression and builds a separate module. Messages cross the thread boundary; ordinary objects are cloned. A Worker can improve responsiveness without making the calculation itself faster.
+Choose a follow-up based on what your interaction needs:
 
-Temporarily run the same bounded loop directly in the Calculate handler and compare responsiveness. Restore the Worker afterwards. Keep the input identical so you're comparing where work runs, not different calculations.
+- If someone changes the input mid-job, should the old result still be displayed?
+- If they cancel, does computation stop or does the interface merely hide it?
+- For a tiny job or large payload, does messaging cost outweigh the benefit?
 
-### Take it further
+A busy synchronous Worker can't handle a cancel message until its current work yields. Investigate termination or chunked work if cancellation matters. Request identifiers can help distinguish results when jobs overlap.
 
-- Add Cancel with `terminate()`, then create a fresh Worker for the next run. A busy synchronous loop cannot process a cancel message until it finishes.
-- Add request IDs if you allow overlapping jobs, so old results cannot replace newer ones.
-- Try image or data processing. Measure transfer costs as well as calculation time.
-
-Optional reference: <DemoLink id="web-worker-comparison">Room to think</DemoLink> compares both execution modes and visualises frame gaps.
-
-Read: [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) · [Vite Worker imports](https://vite.dev/guide/features.html#web-workers).
+Adapt the demo, [create an experiment](#/create), or apply the boundary to your own app. Keeping work on the main thread is a valid outcome if the evidence supports it.

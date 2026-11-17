@@ -1,92 +1,35 @@
-## Make generative SVG art
+## Draw with rules
 
-Create a composition from a few rules instead of placing every shape by hand. You'll turn numbers into SVG, make the result reproducible and save an image you can keep.
+Invent a visual rule and see what it produces. You could explore a grid with deliberate irregularities, imaginary coral, lettering or a composition of your own. Decide what gives the image its character before adding controls.
 
-### 1. Generate the shapes
+Try <DemoLink id="generative-postcard">Generative postcard</DemoLink>. Keep a seed while changing a parameter, then change the seed. Which features belong to the rule and which come from chance?
 
-[Create a demo](#/create) in Experimental Projects. Add `art.ts` in its folder:
+### Choose your constraints
 
-```ts
-export function makeDots(seed: number) {
-  let state = seed >>> 0;
-  const random = () => {
-    state = (Math.imul(1664525, state) + 1013904223) >>> 0;
-    return state / 4294967296;
-  };
-  return Array.from({ length: 60 }, () => ({
-    x: 20 + random() * 600,
-    y: 20 + random() * 360,
-    radius: 3 + random() * 14,
-    hue: 140 + random() * 100,
-  }));
-}
-```
+A generative image is more than random positions. Shape, repetition, spacing, palette and empty space all affect the result.
 
-Each dot gets a position, size and colour. The pseudo-random sequence starts from a seed: the same seed and algorithm produce the same numbers. This is useful for artwork, not security tokens.
+Pick one relationship to explore: size might depend on distance, colour on direction, or spacing on an underlying grid. You choose the relationship and the shapes. A few marks are enough to see whether an idea is interesting.
 
-### 2. Render your composition
+### Make chance repeatable
 
-Replace `index.tsx` with this component:
+A seeded pseudo-random generator produces the same sequence for the same seed and algorithm. That lets you compare rule changes without changing every random choice too.
 
-```tsx
-import { useState } from 'react';
-import { Button } from '@lab/ui/button';
-import { makeDots } from './art';
+Decide which properties should vary and which should remain stable. Reordering calls to the generator changes which values reach which properties. Calling `Math.random()` while rendering makes it harder to reproduce a composition.
 
-export default function Demo() {
-  const [seed, setSeed] = useState(42);
-  const dots = makeDots(seed);
-  return (
-    <section>
-      <Button onClick={() => setSeed(value => (value + 1) >>> 0)}>Next composition</Button>
-      <Button onClick={() => setSeed(42)}>Back to seed 42</Button>
-      <p>Seed: {seed}</p>
-      <svg viewBox="0 0 640 400" role="img" aria-label={`Generative dots, seed ${seed}`}>
-        <rect width="640" height="400" fill="#10231b" />
-        {dots.map((dot, index) => (
-          <circle key={index} cx={dot.x} cy={dot.y} r={dot.radius}
-            fill={`hsl(${dot.hue} 65% 65%)`} />
-        ))}
-      </svg>
-    </section>
-  );
-}
-```
+Reproducibility needs the rules and parameters as well as the seed. This kind of randomness is for artwork, not secrets or security tokens.
 
-Try a few compositions, then return to seed 42: the original image should return. The fixed dot slots make index keys suitable here; they aren't independently reordered items.
+### Explore the reference
 
-### 3. Invent a visual rule
+Use your own app, [create an experiment](#/create) or adapt the demo. In `demos/generative-postcard/`, `art.ts` contains generation rules and `index.tsx` connects those rules to SVG, controls and export. Follow one generated value to the shape it affects.
 
-Keep seed 42 while changing the palette or dot sizes. Then try placing dots on a spiral instead of scattering them. Use the dot's index for an angle and an increasing distance from the centre, then convert that angle and distance into `x` and `y` with `Math.cos` and `Math.sin`.
+The [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) explains shapes, coordinates and transforms. Choose the part your idea needs; you don't have to recreate the demo's dots or spiral.
 
-Keep calling `random` in the same order if you want colours and sizes to stay comparable while positions change. Moving randomness into rendering with `Math.random()` would make every render a new composition.
+Keep one composition stable while changing a rule. Then try several seeds: does the rule produce a family of interesting images, or only one lucky result?
 
-### 4. Export it
+### Decide what to keep
 
-Add a `useRef<SVGSVGElement>(null)` in your component and attach it to the SVG with `ref`. Import `useRef` from React. Add a Save button that calls this function with the current SVG and a filename:
+If exporting matters, investigate how the demo turns SVG into a file using [XMLSerializer](https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer). Consider what the file needs outside the app: explicit styling, referenced assets and its own dimensions.
 
-```ts
-function saveSvg(svg: SVGSVGElement, filename: string) {
-  const copy = svg.cloneNode(true) as SVGSVGElement;
-  copy.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  const blob = new Blob([new XMLSerializer().serializeToString(copy)], { type: 'image/svg+xml' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-```
+Open an exported file independently. Does it still look right without the page's CSS? Can you recreate it from the saved seed and parameters? Release temporary object URLs when they are no longer needed.
 
-For example, guard `svgRef.current` before calling `saveSvg(svgRef.current, 'my-composition.svg')`. Open the saved file separately: it should contain the same image without needing React or the Lab. The SVG uses explicit fills so its appearance doesn't depend on app CSS.
-
-### Take it further
-
-Try a grid, lettering made from shapes, or a small collection generated from different seeds. Add an editable seed and validate it as a whole number from 0 to 4,294,967,295. Store the seed and parameters with an image if you want to recreate it later.
-
-Optional reference: <DemoLink id="generative-postcard">Generative postcard</DemoLink> adds controls, spiral placement and export.
-
-Read: [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) · [XMLSerializer](https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer).
+Export is optional. Your experiment might instead be an interactive drawing, a collection of variations or a rule that responds to input. Let the visual idea determine the next feature.
