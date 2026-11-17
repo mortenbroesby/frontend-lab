@@ -4,6 +4,6 @@
 <g fill="#b5c1d3"><circle cx="100" cy="110" r="2"/><circle cx="450" cy="90" r="2"/><circle cx="290" cy="240" r="2"/><circle cx="640" cy="170" r="2"/><circle cx="830" cy="260" r="2"/></g>
 <circle cx="790" cy="120" r="45" fill="#547a87"/><circle cx="808" cy="104" r="43" fill="#101b2c"/>
 <path fill="#26344b" d="m0 450 120-60 130 80 170-50 140 50 150-100 150 80v150H0z"/>
-<path fill="#101b2c" d="M0 510h960v90H0z"/><path stroke="#b7f67b" stroke-width="6" d="M610 510h140"/>
+<path fill="#101b2c" d="M0 490 80 470 160 500 240 440 320 470 400 460 480 495 560 480 610 510 750 510 800 470 880 490 960 450V600H0z"/><path stroke="#b7f67b" stroke-width="6" d="M610 510h140"/>
 <g transform="translate(460 290) rotate(12) scale(2.4)"><path fill="#f7b45e" d="m-6 12 6 35 6-35"/><path fill="#dce6ed" d="M-11 10V-8l5-9H6l5 9v18z"/><path fill="#90e4de" d="M-6-8H6v8H-6z"/><path fill="none" stroke="#b7f67b" stroke-width="3" d="m-9 6-7 12h-5M9 6l7 12h5"/></g>
 </svg>

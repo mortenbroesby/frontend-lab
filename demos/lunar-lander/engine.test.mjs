@@ -17,3 +17,14 @@ test('committed Rust binary exports a working, resettable flight engine', async 
   assert.equal(read(6), 2, 'uncontrolled descent crashes');
   assert.equal(read(7), 0);
 });
+
+test('the compiled engine exposes uneven terrain and a flat landing pad', async () => {
+  const {
+    instance: { exports: game },
+  } = await WebAssembly.instantiate(bytes);
+  assert.equal(game.terrain_height(240), 440);
+  assert.equal(game.terrain_height(610), 510);
+  assert.equal(game.terrain_height(680), 510);
+  assert.equal(game.terrain_height(750), 510);
+  assert.ok(game.read_state(8) < 382, 'altitude follows terrain rather than pad height');
+});

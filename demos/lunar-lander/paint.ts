@@ -18,14 +18,14 @@ function stars(ctx: CanvasRenderingContext2D) {
   }
 }
 
-function landscape(ctx: CanvasRenderingContext2D) {
+function landscape(ctx: CanvasRenderingContext2D, terrain: [number, number][]) {
   const sky = ctx.createLinearGradient(0, 0, 0, HEIGHT);
   sky.addColorStop(0, '#080f23');
   sky.addColorStop(1, '#1c2940');
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
   stars(ctx);
-  // A quiet planet and distant ridges; the foreground collision surface is flat.
+  // Distant ridges sit behind the solid, collidable foreground.
   ctx.fillStyle = '#547a87';
   ctx.beginPath();
   ctx.arc(800, 105, 37, 0, Math.PI * 2);
@@ -42,19 +42,16 @@ function landscape(ctx: CanvasRenderingContext2D) {
   ctx.lineTo(WIDTH, 600);
   ctx.lineTo(0, 600);
   ctx.fill();
-  ctx.fillStyle = '#101b2c';
-  ctx.fillRect(0, 510, WIDTH, 90);
-  ctx.strokeStyle = '#40516b';
   ctx.beginPath();
-  ctx.moveTo(0, 510);
-  ctx.lineTo(WIDTH, 510);
+  terrain.forEach(([x, y]) => ctx.lineTo(x, y));
+  ctx.strokeStyle = '#8093ab';
+  ctx.lineWidth = 2;
   ctx.stroke();
-  for (let i = 0; i < 18; i++) {
-    ctx.strokeStyle = '#28374b';
-    ctx.beginPath();
-    ctx.ellipse((i * 91) % WIDTH, 532 + ((i * 19) % 60), 7 + (i % 15), 3, 0, 0, Math.PI * 2);
-    ctx.stroke();
-  }
+  ctx.lineTo(WIDTH, HEIGHT);
+  ctx.lineTo(0, HEIGHT);
+  ctx.closePath();
+  ctx.fillStyle = '#101b2c';
+  ctx.fill();
   ctx.fillStyle = '#b7f67b';
   ctx.fillRect(610, 507, 140, 6);
   ctx.fillRect(610, 493, 3, 17);
@@ -112,7 +109,13 @@ function spacecraft(ctx: CanvasRenderingContext2D, flight: Flight, time: number,
   ctx.restore();
 }
 
-export function paint(canvas: HTMLCanvasElement, flight: Flight, time: number, reduced: boolean) {
+export function paint(
+  canvas: HTMLCanvasElement,
+  flight: Flight,
+  time: number,
+  reduced: boolean,
+  terrain: [number, number][],
+) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   const dpr = Math.min(window.devicePixelRatio, 2);
@@ -123,13 +126,13 @@ export function paint(canvas: HTMLCanvasElement, flight: Flight, time: number, r
     canvas.height = height;
   }
   ctx.setTransform(width / WIDTH, 0, 0, height / HEIGHT, 0, 0);
-  landscape(ctx);
+  landscape(ctx, terrain);
   ctx.setLineDash([3, 7]);
   ctx.strokeStyle = '#75879d';
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo(flight.x, flight.y + 40);
-  ctx.lineTo(flight.x, 501);
+  ctx.lineTo(flight.x, flight.y + 18 + flight.altitude);
   ctx.stroke();
   ctx.setLineDash([]);
   spacecraft(ctx, flight, time, reduced);

@@ -7,11 +7,13 @@ export interface Flight {
   fuel: number;
   outcome: number;
   burning: boolean;
+  altitude: number;
 }
 
 interface RustEngine {
   reset: () => void;
   step: (dt: number, turn: number, thrust: number) => void;
+  terrain_height: (x: number) => number;
   read_state: (index: number) => number;
 }
 
@@ -21,6 +23,10 @@ export async function loadEngine(signal: AbortSignal) {
   const { instance } = await WebAssembly.instantiate(await response.arrayBuffer());
   const rust = instance.exports as unknown as RustEngine;
   return {
+    terrain: Array.from({ length: 97 }, (_, i): [number, number] => [
+      i * 10,
+      rust.terrain_height(i * 10),
+    ]),
     reset: () => rust.reset(),
     step: (dt: number, turn: number, thrust: boolean) => rust.step(dt, turn, Number(thrust)),
     snapshot: (): Flight => ({
@@ -32,6 +38,7 @@ export async function loadEngine(signal: AbortSignal) {
       fuel: rust.read_state(5),
       outcome: rust.read_state(6),
       burning: Boolean(rust.read_state(7)),
+      altitude: rust.read_state(8),
     }),
   };
 }

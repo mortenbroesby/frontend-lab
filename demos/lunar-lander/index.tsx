@@ -67,7 +67,7 @@ export default function LunarLander() {
         <div>
           <span>Altitude</span>
           <strong>
-            {Math.max(0, Math.round(492 - flight.y))}
+            {Math.round(flight.altitude)}
             <small> m</small>
           </strong>
         </div>

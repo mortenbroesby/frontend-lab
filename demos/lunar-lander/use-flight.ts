@@ -14,6 +14,7 @@ const blank: Flight = {
   fuel: 100,
   outcome: 0,
   burning: false,
+  altitude: 312,
 };
 
 export function useFlight() {
@@ -79,6 +80,7 @@ export function useFlight() {
         { ...flight, burning: flight.burning && phase.current === 'flying' },
         now,
         reduced.matches,
+        current.terrain,
       );
       if (now - published > 100) {
         setView({ phase: phase.current, flight });

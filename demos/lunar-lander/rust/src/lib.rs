@@ -7,6 +7,46 @@ const GROUND: f64 = 510.0;
 const PAD_LEFT: f64 = 610.0;
 const PAD_RIGHT: f64 = 750.0;
 const FEET: f64 = 18.0;
+const TERRAIN: [(f64, f64); 13] = [
+    (0.0, 490.0),
+    (80.0, 470.0),
+    (160.0, 500.0),
+    (240.0, 440.0),
+    (320.0, 470.0),
+    (400.0, 460.0),
+    (480.0, 495.0),
+    (560.0, 480.0),
+    (PAD_LEFT, GROUND),
+    (PAD_RIGHT, GROUND),
+    (800.0, 470.0),
+    (880.0, 490.0),
+    (960.0, 450.0),
+];
+
+// Canvas samples this same profile; collision and scenery cannot drift apart.
+#[unsafe(no_mangle)]
+pub extern "C" fn terrain_height(x: f64) -> f64 {
+    let x = x.clamp(0.0, 960.0);
+    for edge in TERRAIN.windows(2) {
+        let [(left, a), (right, b)] = [edge[0], edge[1]];
+        if x <= right {
+            return a + (b - a) * (x - left) / (right - left);
+        }
+    }
+    TERRAIN[TERRAIN.len() - 1].1
+}
+
+fn contact_height(x: f64) -> f64 {
+    let left = x - 21.0;
+    let right = x + 21.0;
+    let mut height = terrain_height(left).min(terrain_height(right));
+    for &(vertex, y) in &TERRAIN {
+        if vertex >= left && vertex <= right {
+            height = height.min(y);
+        }
+    }
+    height
+}
 
 #[derive(Clone, Copy)]
 struct Flight {
@@ -49,11 +89,12 @@ impl Flight {
         self.vy += (GRAVITY - self.angle.cos() * power) * dt;
         self.x += self.vx * dt;
         self.y += self.vy * dt;
-        if self.y + FEET >= GROUND {
-            let on_pad = self.x - 16.0 >= PAD_LEFT && self.x + 16.0 <= PAD_RIGHT;
+        let surface = contact_height(self.x);
+        if self.y + FEET >= surface {
+            let on_pad = self.x - 21.0 >= PAD_LEFT && self.x + 21.0 <= PAD_RIGHT;
             let gentle = self.vy.abs() <= 35.0 && self.vx.abs() <= 25.0 && self.angle.abs() <= 0.25;
             self.outcome = if on_pad && gentle { 1 } else { 2 };
-            self.y = GROUND - FEET;
+            self.y = surface - FEET;
         }
         if self.x < 18.0 || self.x > 942.0 || self.y < 18.0 {
             self.outcome = 2;
@@ -100,6 +141,20 @@ mod tests {
     }
 
     #[test]
+    fn ridge_contact_crashes_above_the_landing_pad_height() {
+        let mut f = Flight {
+            x: 240.0,
+            y: 440.0 - FEET - 0.1,
+            vx: 0.0,
+            vy: 10.0,
+            ..Flight::new()
+        };
+        f.step(0.02, 0.0, false);
+        assert_eq!(f.outcome, 2);
+        assert!(f.y < GROUND - FEET);
+    }
+
+    #[test]
     fn empty_tank_and_finished_flights_do_not_keep_burning() {
         let mut f = Flight {
             fuel: 0.0,
@@ -142,6 +197,7 @@ pub extern "C" fn read_state(index: u32) -> f64 {
             5 => f.fuel,
             6 => f.outcome as f64,
             7 => u32::from(f.burning) as f64,
+            8 => (contact_height(f.x) - FEET - f.y).max(0.0),
             _ => 0.0,
         }
     })
