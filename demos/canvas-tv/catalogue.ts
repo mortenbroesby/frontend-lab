@@ -5,7 +5,7 @@ export type Programme = {
   hue: number;
   seed: number;
 };
-export const rows: { title: string; programmes: Programme[] }[] = [
+const collections: { title: string; programmes: Programme[] }[] = [
   {
     title: 'Beyond the familiar',
     programmes: [
@@ -100,4 +100,31 @@ export const rows: { title: string; programmes: Programme[] }[] = [
       },
     ],
   },
+];
+
+// Fictional shelves reuse the small original catalogue; progress is illustrative, not saved history.
+const all = collections.flatMap((row) => row.programmes);
+export const rows: { title: string; programmes: Programme[]; progress?: number[] }[] = [
+  ...collections,
+  {
+    title: 'Continue watching · demo progress',
+    programmes: [all[0], all[7], all[2], all[8], all[5], all[10]],
+    progress: [0.65, 0.32, 0.8, 0.46, 0.12, 0.57],
+  },
+  ...(
+    [
+      ['Into the unknown', 0, 5, 7, 10, 3, 11],
+      ['Slow Sunday', 1, 6, 8, 4, 11, 2],
+      ['After dark', 7, 4, 0, 1, 5, 10],
+      ['Wild places', 2, 9, 6, 3, 11, 0],
+      ['Made of imagination', 5, 0, 10, 8, 3, 7],
+      ['A closer look', 10, 8, 2, 6, 4, 1],
+      ['Take the long way home', 9, 3, 1, 5, 2, 11],
+      ['Sound and colour', 4, 8, 5, 11, 1, 9],
+      ['One more escape', 11, 3, 9, 0, 6, 7],
+    ] satisfies [string, ...number[]][]
+  ).map(([title, ...indices]) => ({
+    title,
+    programmes: indices.map((index) => all[index]),
+  })),
 ];

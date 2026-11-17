@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { paint, targetView } from './paint';
+import { paint } from './paint';
+import { targetView } from './layout';
 import type { TVState } from './navigation';
 
 export function useScreen(state: TVState) {
@@ -29,6 +30,8 @@ export function useScreen(state: TVState) {
       view.current = {
         x: mix(from.x, to.x),
         y: mix(from.y, to.y),
+        scrollY: mix(from.scrollY, to.scrollY),
+        height: mix(from.height, to.height),
         offsets: to.offsets.map((offset, i) => mix(from.offsets[i], offset)),
       };
       time.current += (Math.min(now - previous, 50) / 1000) * Number(animated);

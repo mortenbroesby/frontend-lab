@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { targetView } from './layout.ts';
 import { initialState, navigate, selectedTitle } from './navigation.ts';
 
 test('vertical movement keeps the visible column after independently scrolling rows', () => {
@@ -39,4 +40,20 @@ test('starting playback freezes catalogue navigation and Back restores selection
   assert.deepEqual(navigate(playback, 'ArrowDown'), playback);
   assert.deepEqual(navigate(playback, 'Escape'), selected);
   assert.deepEqual(navigate(initialState, 'Escape'), initialState);
+});
+
+test('all twelve rows stay reachable and visible, including the taller shelf', () => {
+  let state = navigate(initialState, 'ArrowRight');
+  for (let row = 0; row < 12; row++) {
+    assert.equal(state.row, row);
+    assert.equal(state.column, 1);
+    const view = targetView(state);
+    assert.ok(view.y >= 374);
+    assert.ok(view.y + view.height <= 670);
+    if (row === 2) assert.equal(view.height, 174);
+    state = navigate(state, 'ArrowDown');
+  }
+  assert.equal(state.row, 11);
+  for (let row = 11; row > 0; row--) state = navigate(state, 'ArrowUp');
+  assert.equal(targetView(state).scrollY, 0);
 });

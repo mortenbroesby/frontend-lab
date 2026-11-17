@@ -3,16 +3,9 @@ import { playback } from './playback';
 import { rows, type Programme } from './catalogue';
 import { selectedTitle, programmeIndex, type TVState } from './navigation';
 
+import { rowTop, cardHeight, type View } from './layout';
+
 type Context = CanvasRenderingContext2D;
-export type View = { offsets: number[]; x: number; y: number };
-export function targetView(state: TVState): View {
-  const offsets = state.starts.map((start) => start * 242);
-  return {
-    offsets,
-    x: 64 + state.column * 242,
-    y: 374 + state.row * 170,
-  };
-}
 function text(
   ctx: Context,
   value: string,
@@ -54,11 +47,12 @@ function hero(ctx: Context, programme: Programme, seconds: number) {
 }
 function shelf(ctx: Context, state: TVState, view: View, rowIndex: number) {
   const row = rows[rowIndex];
-  const y = 374 + rowIndex * 170;
+  const y = rowTop(rowIndex) - view.scrollY;
+  const height = cardHeight(rowIndex);
   text(ctx, row.title, 64, y - 20, 19, state.row === rowIndex ? '#fff' : '#b3b3b3', 600);
   ctx.save();
   ctx.beginPath();
-  ctx.rect(50, y - 8, 1180, 140);
+  ctx.rect(50, y - 8, 1180, height + 14);
   ctx.clip();
   // Only paint the visible slice, including one card either side during transitions.
   const first = Math.floor(view.offsets[rowIndex] / 242) - 1;
@@ -67,16 +61,23 @@ function shelf(ctx: Context, state: TVState, view: View, rowIndex: number) {
     const x = 64 + index * 242 - view.offsets[rowIndex];
     ctx.save();
     ctx.beginPath();
-    ctx.roundRect(x, y, 224, 126, 4);
+    ctx.roundRect(x, y, 224, height, 4);
     ctx.clip();
-    ctx.drawImage(poster(programme), x, y, 224, 126);
-    const shadow = ctx.createLinearGradient(0, y + 40, 0, y + 126);
+    ctx.drawImage(poster(programme), x, y, 224, height);
+    const shadow = ctx.createLinearGradient(0, y + 40, 0, y + height);
     shadow.addColorStop(0, 'transparent');
     shadow.addColorStop(1, '#000b');
     ctx.fillStyle = shadow;
-    ctx.fillRect(x, y, 224, 126);
-    text(ctx, programme.title, x + 14, y + 105, 18, '#fff', 600);
+    ctx.fillRect(x, y, 224, height);
+    text(ctx, programme.title, x + 14, y + height - 21, 18, '#fff', 600);
     ctx.restore();
+    if (row.progress) {
+      const progress = row.progress[programmeIndex(index, row.programmes.length)];
+      ctx.fillStyle = '#555';
+      ctx.fillRect(x + 12, y + height - 10, 200, 3);
+      ctx.fillStyle = '#e50914';
+      ctx.fillRect(x + 12, y + height - 10, 200 * progress, 3);
+    }
   }
   ctx.restore();
 }
@@ -89,15 +90,23 @@ export function paint(ctx: Context, state: TVState, view: View, seconds: number)
     return;
   }
   hero(ctx, programme, seconds);
-  rows.forEach((_, index) => shelf(ctx, state, view, index));
+  ctx.save();
   ctx.beginPath();
-  ctx.roundRect(view.x - 5, view.y - 5, 234, 136, 7);
+  ctx.rect(48, 340, 1188, 338);
+  ctx.clip();
+  rows.forEach((_, index) => {
+    const y = rowTop(index) - view.scrollY;
+    if (y + cardHeight(index) >= 340 && y <= 676) shelf(ctx, state, view, index);
+  });
+  ctx.beginPath();
+  ctx.roundRect(view.x - 5, view.y - 5, 234, view.height + 10, 7);
   ctx.strokeStyle = '#fff';
   ctx.lineWidth = 4;
   ctx.shadowColor = '#000';
   ctx.shadowBlur = 12;
   ctx.stroke();
   ctx.shadowBlur = 0;
+  ctx.restore();
   text(
     ctx,
     `${programmeIndex(state.starts[state.row] + state.column, rows[state.row].programmes.length) + 1} / ${rows[state.row].programmes.length}`,
@@ -106,5 +115,6 @@ export function paint(ctx: Context, state: TVState, view: View, seconds: number)
     14,
     '#aaa',
   );
-  text(ctx, '↑ ↓ ← →  Navigate      Enter  Play      Esc  Back', 64, 696, 14, '#aaa');
+  text(ctx, `ROW ${state.row + 1} OF ${rows.length}`, 950, 696, 13, '#aaa');
+  text(ctx, '↑ ↓ ← →  Browse      Enter  Play      Esc  Back', 64, 696, 14, '#aaa');
 }

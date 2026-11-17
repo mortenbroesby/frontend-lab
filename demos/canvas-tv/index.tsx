@@ -4,6 +4,7 @@ import { useTheme } from '@lab/ui/theme-control';
 import { LabMark } from '@lab/demo-kit/mark';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { initialState, navigate, selectedTitle, type TVState } from './navigation';
+import { rows } from './catalogue';
 import { useScreen } from './use-screen';
 import './tv.css';
 
@@ -92,7 +93,8 @@ function TVIntro() {
         </div>
         <p>
           A fictional streaming catalogue, drawn in Canvas. Browse with arrow keys; Enter plays a
-          short scene and Escape returns. Rows loop, and moving vertically keeps your column.
+          short scene and Escape returns. Browse twelve looping rows; moving vertically keeps your
+          column. Continue watching shows illustrative progress.
         </p>
       </section>
     </>
@@ -187,6 +189,7 @@ function Selection({ state }: { state: TVState }) {
       aria-live="polite"
       aria-atomic="true"
     >
+      Row {state.row + 1} of {rows.length}, {rows[state.row].title}.{' '}
       {state.playing ? 'Playing' : 'Selected'}: <strong>{programme.title}</strong> ·{' '}
       {programme.genre}. {programme.description}
       {state.playing && ' Procedural animation; Back returns to the catalogue.'}
