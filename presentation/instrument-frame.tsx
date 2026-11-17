@@ -1,3 +1,4 @@
+import { DemoFrame } from './demo-frame';
 import { useEffect, useRef, useState } from 'react';
 
 /** A fixed widescreen viewport keeps the live controls from wrapping inside a slide. */
@@ -23,7 +24,7 @@ export function InstrumentFrame({
   }, []);
   return (
     <div className="instrument-frame" ref={container}>
-      <iframe
+      <DemoFrame
         src={src}
         title={title}
         allow={allow}

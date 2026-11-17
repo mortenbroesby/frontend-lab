@@ -1,3 +1,4 @@
+import { DemoFrame } from './demo-frame';
 import { InstrumentFrame } from './instrument-frame';
 import type { ComponentType } from 'react';
 import { TitleSlide, DiagramSlide, StatementSlide, ExperimentOptions } from './layouts';
@@ -208,7 +209,7 @@ function Remote({ preview }: { preview?: boolean }) {
   return (
     <div className="tv-slide remote-slide" data-presentation-interactive>
       {demoHref ? (
-        <iframe title="Canvas TV — interactive remote navigation" src={`${demoHref}?embed=1`} />
+        <DemoFrame title="Canvas TV — interactive remote navigation" src={`${demoHref}?embed=1`} />
       ) : (
         <p>Set VITE_GALLERY_URL to the gallery URL to embed Canvas TV in a standalone deck.</p>
       )}
