@@ -1,10 +1,10 @@
 # Presentation working draft
 
-Status: an eight-slide draft for a 20–25-minute technical spotlight, including discussion. The three-slide Lightning section stays within the broader invitation to explore. The deck and speaker notes are in `slides.tsx`; this notebook tracks decisions, recollections and open questions.
+Status: an eight-slide draft for a 20–25-minute technical spotlight, including discussion. The framing is a peek at front-end beyond the usual web page, with the three-slide Lightning section as a concrete firsthand example. The deck and speaker notes are in `slides.tsx`; this notebook tracks decisions, recollections and open questions.
 
 ## What we want
 
-An authentic presentation grounded in an actual project, not a technology showcase for its own sake. Show the result, explain a real constraint, then make the engineering decisions understandable. Keep the slides visual and brief; put context and uncertainty in speaker notes. Leave room for an interactive illustration and discussion.
+An authentic presentation grounded in an actual project, not a technology showcase for its own sake. Briefly introduce alternative settings, show the TV interaction, then explain how that app worked at a high level. Keep the slides visual and brief; put context and uncertainty in speaker notes. Leave room for an interactive illustration and discussion.
 
 Possible broader-talk title: **The browser beyond the page.**
 
@@ -17,17 +17,17 @@ The Lightning section illustrates how a required rendering platform need not dic
 | Slide | Purpose | Approximate time |
 | --- | --- | --- |
 | 1. The Front-End Lab | Entrance slide to leave up while people arrive | No speaking segment |
-| 2. What's possible? | Invite people to think beyond everyday web applications | 2–3 minutes |
-| 3. A web app. On a TV. | Introduce the real Lightning project and constraint | 1–2 minutes |
-| 4. No pointer. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
-| 5. Familiar components. Different renderer. | Explain the abstraction and testing benefit | 2–3 minutes |
+| 2. Front-end beyond the page | A brief look at TVs, installations, visual tools and games | 2–3 minutes |
+| 3. A front-end app. On a TV. | Explain Canvas visuals, animation, remote input and the project constraint | 1–2 minutes |
+| 4. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
+| 5. How our app worked. | JSX → custom renderer → Lightning; explain the benefit without internals | 2–3 minutes |
 | 6. Change one assumption | Different input, rendering surface or connection | 3–4 minutes |
 | 7. Something you could try today | Three approachable experiments | 3–4 minutes |
 | 8. What are you curious about? | Closing invitation, followed by discussion | 1 minute + questions |
 
-The entrance is a landing screen, not another content section. Slide 2 expresses the presenter's intent: the modern browser has many possibilities, and today is an invitation to think outside our usual work. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 showcase.
+The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 showcase.
 
-The transition into Lightning is: “One experience that changed how I thought about web applications was building one for a TV.” The final slides return to experimentation without requiring a business case or finished product.
+The transition into Lightning is: “I worked on one of those: a TV application. Let me give you a quick look at how that worked.” The project is a historical firsthand example, not a claim about how all TV apps are built today. The final slides return to experimentation without requiring a business case or finished product.
 
 Every slide includes presenter notes: suggested wording, demonstration cues, transitions and reminders where facts remain uncertain. Rehearse the pacing; allow roughly 4–5 minutes for questions within the slot rather than filling it with more slides.
 
@@ -63,9 +63,9 @@ The first draft expanded this into nine slides. That was too much: the presenter
 
 | Slide | Purpose | Approximate time |
 | --- | --- | --- |
-| A web app on a TV | Establish the original app and required Lightning platform | 1–2 minutes |
+| A front-end app on a TV | Establish the original app and required Lightning platform | 1–2 minutes |
 | No pointer. Where is your focus? | Explore remote navigation in the embedded Canvas TV | 2–3 minutes |
-| Familiar components. Different renderer. | Explain the custom renderer and testing benefit | 2–3 minutes |
+| How our app worked. | Explain the component-to-renderer flow and its benefit at a high level | 2–3 minutes |
 
 This remains a three-slide section within the eight-slide talk. Do not expand it into the whole presentation. The later Solid migration belongs in optional speaker context, not another slide.
 

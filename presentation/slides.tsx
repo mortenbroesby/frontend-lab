@@ -24,14 +24,11 @@ function Entrance() {
 
 function Possibilities() {
   return (
-    <StatementSlide
-      eyebrow="What's possible?"
-      title="The browser can do more than we usually ask of it."
-    >
+    <StatementSlide eyebrow="A peek at other possibilities" title="Front-end beyond the page.">
       <p>
-        Think beyond what we normally build.
+        TV interfaces. Interactive installations. Visual tools. Games.
         <br />
-        <strong>Try something unfamiliar.</strong>
+        <strong>Where else could your skills take you?</strong>
       </p>
     </StatementSlide>
   );
@@ -107,9 +104,9 @@ function Closing() {
 
 function Television() {
   return (
-    <TitleSlide eyebrow="A story from smart-TV development" title="A web app. On a TV.">
+    <TitleSlide eyebrow="A story from smart-TV development" title="A front-end app. On a TV.">
       <p>
-        A fully animated, canvas-based interface.
+        Canvas visuals. Animation. Remote navigation.
         <br />
         <strong>Lightning was the required platform.</strong>
       </p>
@@ -146,10 +143,7 @@ function Remote({ preview }: { preview?: boolean }) {
 
 function Components() {
   return (
-    <DiagramSlide
-      eyebrow="The engineering behind our original app"
-      title="Familiar components. Different renderer."
-    >
+    <DiagramSlide eyebrow="Familiar components, different screen" title="How our app worked.">
       <ol className="system-diagram">
         <li>
           <span>AUTHOR</span>
@@ -168,7 +162,7 @@ function Components() {
         </li>
       </ol>
       <p className="diagram-caption">
-        Faster component onboarding. A boundary we could build testing tools around.
+        Engineers built components. Our renderer translated them into the TV interface.
       </p>
     </DiagramSlide>
   );
@@ -187,40 +181,38 @@ WHEN READY
   },
   {
     id: 'possibilities',
-    title: "What's possible?",
+    title: 'Front-end beyond the page',
     Content: Possibilities,
-    notes: `THE INVITATION · 2–3 minutes
-“This is mostly an invitation to think outside what we normally build. The modern browser gives us so many possibilities, and our everyday work only touches some of them.”
+    notes: `FRONT-END IN OTHER SETTINGS · 2–3 minutes
+“We usually associate front-end development with websites. But the same skills show up in very different environments: TV interfaces, interactive installations, visual tools and games.”
 
-“Hopefully, by the end, I've inspired you to try something unfamiliar. You don't need a production-ready result or a business case for every experiment today.”
+THE INVITATION
+“This is a peek at those possibilities, not a tour of every technology. I'd like to invite you to think outside what we normally build. Hopefully, you'll leave with something unfamiliar you want to try.”
 
-MAKE IT PERSONAL
-Ask what people normally spend their time building. Leave a moment for an answer; don't turn this into a catalogue of browser APIs.
+BRIDGE TO OUR EXAMPLE
+“I worked on one of those: a TV application. Let me give you a quick look at how that worked.”
 
-BRIDGE TO LIGHTNING
-“One experience that changed how I thought about web applications was building one for a TV.”`,
+Keep the other settings brief. The TV project is the concrete firsthand example; don't imply its architecture represents every TV app today.`,
   },
   {
     id: 'television',
-    title: 'A web app on a TV',
+    title: 'A front-end app on a TV',
     Content: Television,
-    notes: `BRIDGE INTO THE STORY · 1–2 minutes
-“For us, this became a real project. We had to build a fully animated web application for TVs, using Lightning as part of our agreement with Comcast for Xfinity devices.”
+    notes: `ONE REAL EXAMPLE · 1–2 minutes
+“We built a fully animated, canvas-based application for smart TVs. People navigated it with a remote rather than a pointer. Lightning was part of our agreement with Comcast for Xfinity devices.”
 
-“The interesting question wasn't which framework to choose. It was how to make this unfamiliar environment productive for our engineers.”
-
-POINT TO LAND
-A web application can have a very different rendering surface and interaction model from the pages we build every day. This is one personal example, not a recommendation that everyone should build for TVs.
+THE APP AT A GLANCE
+The interface was drawn on Canvas. Remote input moved focus and selected things. It was still front-end work: building components, managing state and making the interaction understandable, on a different kind of screen.
 
 TRANSITION
-“Before I explain how we built components, let's try the part that feels most different: there is no pointer.”
+“Let's try what that interaction feels like, and then I'll show you the high-level structure.”
 
 REMEMBER
-This describes our project's contractual constraint, not current Xfinity policy. The next slide is a new illustration, not footage of the original app.`,
+This describes our project, not current Xfinity policy. The next slide is a new illustration, not footage of the original app.`,
   },
   {
     id: 'remote',
-    title: 'No pointer: navigating with a remote',
+    title: 'Try the interaction: no pointer',
     Content: Remote,
     notes: `LET PEOPLE TRY IT · 2–3 minutes
 “This is a small Canvas example made for this talk, not our original Lightning application. Put the mouse aside for a moment. Where would you expect the focus to go?”
@@ -239,25 +231,22 @@ This illustration uses React state and native Canvas 2D. It does not demonstrate
   },
   {
     id: 'components',
-    title: 'Familiar components, different renderer',
+    title: 'How our app worked',
     Content: Components,
-    notes: `THE ENGINEERING STORY · 2–3 minutes
-“The biggest challenge for us was Lightning's imperative API. Our engineers were used to building components. So we built a custom React renderer over Lightning's primitives and exposed the JSX model people already knew.”
+    notes: `HOW IT WORKED, AT A HIGH LEVEL · 2–3 minutes
+“Lightning exposed an imperative API. Our engineers were used to components, so we built a custom React renderer that let them work with familiar JSX.”
 
-WALK THROUGH THE DIAGRAM
-Engineers authored familiar components. Our renderer translated that into Lightning primitives. That helped people get up and running building components quickly.
+FOLLOW THE DIAGRAM
+Engineers described components in JSX. Our renderer translated them into Lightning primitives. Lightning provided the rendered TV interface. That is the level of detail needed here; no reconciler internals or code walkthrough.
 
-THE SECOND BENEFIT
-“We also had to build testing tools for this setup. Having that abstraction made it easier to create a testing library.” Default tests mocked parts of the rendering environment, including Canvas functionality; tests using real Lightning primitives also existed.
+WHY THAT HELPED
+“People could get up and running building components quickly. The abstraction also made it easier to build testing tools for this environment.” Keep testing to that brief benefit unless someone asks.
 
-BACK TO CURIOSITY
-“The point isn't that you should build a framework. It's that an unfamiliar platform doesn't mean throwing away everything you know. Which familiar skill could you take somewhere new?”
-
-HAND BACK TO THE BROADER TALK
-“You don't need to build a TV application. Try a different input method, an interactive visualisation, or communication between browsers. Pick something you haven't tried before and see what happens.”
+BACK TO THE BIGGER IDEA
+“Different screen, different input, but many familiar front-end skills. Which part of what you know could you take somewhere new?”
 
 IF ASKED
-We later switched to Solid.js, but the reason and migration details aren't confirmed here. The exact testing APIs also need checking; don't improvise those details.`,
+Default tests mocked parts of rendering, including Canvas functionality; tests using real Lightning primitives also existed. Exact testing APIs need checking. The team later switched to Solid.js, but the reason and migration details aren't confirmed here. The live example is React plus Canvas 2D, not this original renderer.`,
   },
   {
     id: 'assumptions',
