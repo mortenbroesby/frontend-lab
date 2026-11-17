@@ -30,7 +30,7 @@ export const tracks = [
     guides: [
       {
         slug: 'tdd',
-        title: 'Build a behaviour with TDD',
+        title: 'Try test-driven development',
         description: 'Write a failing test, make it pass and refactor through one small behaviour.',
       },
       {

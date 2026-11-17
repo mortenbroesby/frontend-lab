@@ -1,12 +1,22 @@
-## Build a behaviour with TDD
+## Try test-driven development
 
-Test-driven development means writing a small example of the behaviour you want **before** implementing it. Run it, watch it fail for the right reason, make it pass, then improve the code while the tests stay green.
+TDD is a way to build a feature in small steps: **describe one behaviour with a test, make it work, then tidy the code.** The test helps you decide what the code should do before deciding how to implement it.
 
-Try it on a small rule from your own project: wrapping a carousel, disabling an action or calculating a game score. The example below builds “next item” navigation without needing a browser or another dependency.
+| Step | What you do | What you should see |
+| --- | --- | --- |
+| **Red** | Write one test for the next behaviour. | It fails because that behaviour is missing. |
+| **Green** | Add just enough code to support it. | All your tests pass. |
+| **Refactor** | Improve names or structure without changing behaviour. | The same tests still pass. |
 
-### Start with one expectation
+### Your first experiment: a carousel's Next button
 
-After [local setup](#/guide/setup), use a demo workspace you own, or [create one](#/create). Add these two files beside its `index.tsx`.
+Build the rule for choosing the next item. With three items numbered **0, 1, 2**, Next should move **0 → 1 → 2 → 0**. We'll test the rule first; connecting it to a React button comes later.
+
+**You need:** the Lab's Node 24 setup and a demo folder you can edit. No extra testing library or browser is needed. Follow [local setup](#/guide/setup) and [create a demo](#/create) if you don't have one. In the commands below, replace `your-id` with its generated folder ID.
+
+### 1. Red: describe one step forward
+
+Add these two files beside your demo's `index.tsx`. Write the test first.
 
 In `selection.test.ts`:
 
@@ -36,13 +46,15 @@ node --test demos/your-id/selection.test.ts
 
 **Red:** the assertion should report `0` instead of `1`. A missing module or syntax error doesn't establish the behaviour yet; fix that setup problem first.
 
-### Make only that behaviour work
+### 2. Green: make the first test pass
 
 Change the return value to `current + 1`. Run the same test again.
 
 **Green:** the first example now passes. Don't add wrapping, empty-list handling or a selection controller yet. Choose the next behaviour that matters.
 
-Add this test without changing the implementation:
+### 3. Repeat: what happens at the end?
+
+Append this test to `selection.test.ts`, leaving the first test in place. Don’t change `selection.ts` yet:
 
 ```ts
 test('next wraps from the last item to the first', () => {
@@ -64,19 +76,21 @@ export function nextIndex(current: number, count: number): number {
 
 </details>
 
-### Refactor with the tests still green
+### 4. Refactor: improve the code, keep the behaviour
 
 **Refactor:** improve clarity without adding behaviour. For example, compare the explicit branch with `(current + 1) % count`. Which is easier to understand here? Keep the branch if it communicates the rule better; refactoring doesn't require changing something.
 
 Run the tests after each edit. A refactor should preserve their expectations, not rewrite them to match the implementation.
 
-For a short feedback loop:
+**First experiment complete:** both tests pass, and changing the wrapping rule breaks the second test. You now have examples that protect the behaviour while you change its implementation.
+
+To rerun automatically when you save:
 
 ```sh
 node --test --watch demos/your-id/selection.test.ts
 ```
 
-### Choose the next question
+### 5. Take it into your own feature
 
 - **One item:** should Next keep it selected? Write the example. If it already passes, don't change the implementation unnecessarily.
 - **No items:** should there be no selection, a disabled Next button or an error? Decide the contract before adding a test. The current assumption deliberately excludes this case.
@@ -90,4 +104,11 @@ Start with one observable outcome. Derive the expected result from the requireme
 
 TDD is useful when the expected behaviour is clear enough to express. For exploratory visuals, try a sketch first and test stable rules as they emerge. For existing code with unclear behaviour, [find a missing test](#/track/code-quality/test-confidence) before changing it.
 
-See [Node's test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html) for the tools used here.
+### Where to go next
+
+- **Understand the approach:** [Martin Fowler: Test Driven Development](https://martinfowler.com/bliki/TestDrivenDevelopment.html) explains the cycle and the role of a list of behaviours to implement. Read this if TDD still feels like “write tests first” without a reason.
+- **Test a React interaction:** [React Testing Library's annotated example](https://testing-library.com/docs/react-testing-library/example-intro/) walks through rendering, acting and checking visible results. Use it to turn “Next selects the following item” into a component test; it needs a component test environment beyond this Node-only exercise.
+- **Choose better assertions:** [Testing Library's guiding principles](https://testing-library.com/docs/guiding-principles/) explain why tests should resemble how people use the interface.
+- **Use the tools in this exercise:** [Node's test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) covers running and watching tests; [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html) covers checking values and errors.
+
+Already using Jest or Vitest in your own project? Keep that runner. TDD is the feedback cycle, not a particular library.
