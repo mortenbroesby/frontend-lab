@@ -6,7 +6,7 @@ import { TrackIllustration } from './TrackIllustration';
 export function Home() {
   return (
     <>
-      <section className="mb-8" aria-label="Choose an experiment">
+      <section className="my-8 text-center sm:text-left" aria-label="Choose an experiment">
         <Button asChild>
           <a
             href="#tracks-heading"
