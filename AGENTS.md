@@ -45,6 +45,8 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 
 ## Documentation
 
+- Track landing pages use the open starting-point pattern: a short purpose and first step, then visible groups for trying something, finding inspiration and exploring your own question. Pair inspiration with a small action and relevant demos/guides. Keep essential choices out of accordions and all-content browsing secondary. Modern Web and Code Quality are the references; migrate the remaining tracks when requested.
+
 - Write concise, participant-focused copy without event dates or schedules. Prefer concrete actions and useful examples. Avoid sales language, compulsory presentations, reflection prompts and instructions to report what participants learned. Say each thing once; do not repeat setup or onboarding on every page. Link canonical guidance. Keep the README a local starting point, not a guide directory.
 - Participant MDX lives in `gallery/src/content/` and track subfolders. Generator templates live in `turbo/generators/templates/`. Treat MDX as trusted app code, never remote or user-supplied content.
 - Keep meaningful choices and tradeoffs in `gallery/docs/decisions/`.

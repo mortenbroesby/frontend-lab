@@ -1,66 +1,72 @@
-<Inspiration>
+<section className="track-start" aria-labelledby="start-heading">
 
-Choose a question you would like to answer:
+<p className="eyebrow">Your starting point</p>
+<h2 id="start-heading">Choose one uncertainty to investigate.</h2>
+<p>Find out why a dependency exists, what makes a function confusing or whether a test catches a mistake. Use the Lab or your own repository. A useful result can be evidence that nothing needs changing.</p>
 
-- **Why is this package here?** [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain/) traces why a dependency is installed. Pick a package you do not recognise and follow the chain back to something you do.
-- **What could we stop maintaining?** [Knip’s getting-started guide](https://knip.dev/overview/getting-started) introduces finding unused files, exports and dependencies. Compare its approach with Fallow, which is already available in this repository.
-- **What is connected to what?** [dependency-cruiser’s examples](https://github.com/sverweij/dependency-cruiser) show how imports can become diagrams and enforceable rules. Look for a surprising connection, then ask whether it makes changes harder.
-- **Why is this function difficult to follow?** [ESLint’s complexity examples](https://eslint.org/docs/latest/rules/complexity) illustrate how branches contribute to a metric. Compare the number with how easy the code is to explain.
+</section>
 
-You do not need to install every tool or produce a cleanup commit. Pick one question, gather evidence and try one small improvement. Discovering that the code should stay as it is can be just as useful.
+<div className="track-options">
+<section aria-labelledby="try-heading">
+<p className="eyebrow">Try</p>
+<h2 id="try-heading">Try something now</h2>
+<p>Start with one concrete question and follow the evidence.</p>
+<ul>
+<li><DemoLink id="dependency-map">Trace a dependency's reach →</DemoLink><span>Open Dependency Ripple in your browser. Select React or the demo kit and inspect its consumers. No installation needed.</span></li>
+<li><a href="#/track/code-quality/fallow">Investigate a Fallow finding →</a><span>Follow the guide in a local repository. Check one finding before deciding whether to change anything.</span></li>
+</ul>
+<p className="track-next">Then check the source: a graph or tool finding is a lead, not a verdict.</p>
+</section>
+<section aria-labelledby="inspire-heading">
+<p className="eyebrow">Discover</p>
+<h2 id="inspire-heading">Find a question</h2>
+<p>Start with something you wish were easier to explain.</p>
+<ul>
+<li><a href="#dependencies" onClick={(event) => { event.preventDefault(); const section = document.getElementById('dependencies'); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: 'start' }); }}>Why is this package here? ↓</a><span>Understand what depends on it before changing it.</span></li>
+<li><a href="#clarity" onClick={(event) => { event.preventDefault(); const section = document.getElementById('clarity'); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: 'start' }); }}>Why is this hard to change? ↓</a><span>Follow one confusing branch or unexpected connection.</span></li>
+<li><a href="#confidence" onClick={(event) => { event.preventDefault(); const section = document.getElementById('confidence'); section?.focus({ preventScroll: true }); section?.scrollIntoView({ block: 'start' }); }}>Would a test catch this mistake? ↓</a><span>Check one behavior instead of chasing a coverage score.</span></li>
+</ul>
+</section>
+<section aria-labelledby="own-heading">
+<p className="eyebrow">Investigate</p>
+<h2 id="own-heading">Explore your own question</h2>
+<p>Bring a dependency, function or test from code you already work on.</p>
+<ul>
+<li><a href="#/track/code-quality/guides">Choose an investigation guide →</a><span>Apply an approach in your own repository. You don't need to generate an app.</span></li>
+<li><a href="#/guide/setup">Use the Lab as your workspace →</a><span>Run it locally, choose one file and make a small, reversible change.</span></li>
+</ul>
+<p className="track-next">Need an isolated example? <a href="#/create">Create an experiment →</a></p>
+</section>
+</div>
 
-</Inspiration>
+<section className="track-inspiration" aria-labelledby="inspiration-heading">
+<p className="eyebrow">A little inspiration</p>
+<h2 id="inspiration-heading">What could you understand better?</h2>
+<p>Choose one question. Gather evidence, try a small change and check what it tells you.</p>
 
-<IdeaGrid>
+<div className="track-directions">
+<section id="dependencies" tabIndex={-1}>
+<h3>Explain a dependency before removing it</h3>
+<p>Pick a package you don't recognise. The external <a href="https://docs.npmjs.com/cli/v11/commands/npm-explain/">npm explain documentation ↗</a> shows how to trace why it is installed. Check imports, scripts and configuration too: apparent non-use can be misleading.</p>
+<p><strong>Start small:</strong> run <code>npm explain react</code> in the Lab and follow one chain to a real consumer. An old version alone is not evidence that a package should be replaced.</p>
+<DemoLink id="dependency-map">Explore Dependency Ripple →</DemoLink> · <a href="#/track/code-quality/dependencies">Trace a dependency's reach →</a>
+</section>
+<section id="clarity" tabIndex={-1}>
+<h3>Make one change easier to reason about</h3>
+<p>Pick a function with too many decisions or an import that crosses an unexpected boundary. The external <a href="https://eslint.org/docs/latest/rules/complexity">ESLint complexity examples ↗</a> can help explain a metric; a lower score isn't the goal.</p>
+<p><strong>Start small:</strong> name the inputs, outcome and one confusing branch. Try a clearer name or early return, then run the relevant check. For unexpected coupling, trace the import before introducing a rule.</p>
+<a href="#/track/code-quality/fallow">Investigate with Fallow →</a> · <a href="#/track/code-quality/architecture">Protect an architecture boundary →</a>
+</section>
+<section id="confidence" tabIndex={-1}>
+<h3>Find out whether green tests mean what you think</h3>
+<p>Choose one observable behavior and the assertion that protects it. Use your existing test runner; the external <a href="https://nodejs.org/docs/latest-v24.x/api/test.html">Node test runner documentation ↗</a> explains the one used for the Lab's logic tests.</p>
+<p><strong>Start small:</strong> predict a mistake the test should catch. Make that reversible change on your branch and run the test. Restore the implementation before strengthening an assertion.</p>
+<a href="#/track/code-quality/test-confidence">Find a missing test →</a>
+</section>
+</div>
+</section>
 
-<Idea title="A dependency you can explain" summary="Trace why a package is installed and decide whether it still earns its place.">
-
-**“I would like to remove or update this package, but I do not know what depends on it.”** Explore unused dependencies, duplicate versions and libraries that solve overlapping problems. The interesting result is understanding the cost of keeping or changing something.
-
-Start with one dependency from a real `package.json`. In this repository, try `npm explain react` from the root and follow one dependency chain. Find the imports and configuration that use the package. For a removal candidate, compare that evidence with static analysis: dynamic loading, scripts or build configuration can explain apparent non-use.
-
-Stretch by comparing two libraries with overlapping responsibilities, or trying one warranted removal on your branch and running the affected checks. An outdated version is a reason to investigate, not proof that the package needs replacing.
-
-Read: [npm explain](https://docs.npmjs.com/cli/v11/commands/npm-explain/) and [Knip’s getting-started guide](https://knip.dev/overview/getting-started). Knip is an optional tool to explore, not a required part of the Lab setup.
-
-</Idea>
-
-<Idea title="Code a colleague can follow" summary="Simplify one confusing function and compare how easily a colleague can explain it.">
-
-**“This works, but I have to hold too much in my head to change it.”** Pick a function or component with several decisions, responsibilities or repeated pieces. Try explaining what it does without narrating every line.
-
-Start by identifying its inputs, outcomes and one confusing branch. Compare the original with a small change: a better name, an early return or separating a calculation from an effect. Run the relevant tests and ask someone to read both versions. Did the change make the behaviour clearer, or merely move it into another file?
-
-Stretch by investigating repeated code. Do the copies represent the same rule, or could they reasonably change independently? Keeping two small pieces separate may be clearer than creating a shared abstraction. A lower complexity score is supporting evidence, not the goal.
-
-Read: [ESLint’s complexity rule and examples](https://eslint.org/docs/latest/rules/complexity) and [Fallow](https://fallow.tools/) for broader codebase analysis.
-
-</Idea>
-
-<Idea title="Boundaries that make changes smaller" summary="Map imports, investigate unexpected coupling and try a rule that protects a useful boundary.">
-
-**“Why does changing this feature affect that one?”** Follow the connections between a screen, its data and shared utilities. Explore whether the code’s dependencies match the boundaries people think they have.
-
-Start by tracing one behaviour through its imports. Sketch the few modules involved and mark any dependency you did not expect. In this repository, run `npm run check:architecture` and inspect one rule in `.dependency-cruiser.cjs`. The check uses dependency-cruiser, which is already installed; check what the rule protects before changing it.
-
-Stretch by comparing two ways to remove an unwanted connection, or expressing an agreed boundary as a rule. Check that the rule catches the intended import without blocking legitimate use. A passing check only tells you that the inspected graph satisfies the configured rules.
-
-Read: [dependency-cruiser’s diagrams and examples](https://github.com/sverweij/dependency-cruiser) and [its rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md).
-
-</Idea>
-
-<Idea title="Tests that answer your actual question" summary="Find out whether a real test catches the mistake you are worried about.">
-
-**“The tests are green. Would they notice this behaviour breaking?”** Choose one observable behaviour and find the assertion that protects it. Explore missing boundaries, weak assertions or tests that repeat the implementation’s assumptions.
-
-Start with a real test in this repository or your own project. Predict a small mistake it should catch, make that reversible change on your branch and run the test. If it still passes, investigate why. Restore the implementation before strengthening the test, then verify that your assertion distinguishes the intended behaviour from the mistake.
-
-Stretch with an edge case whose expected result you can establish independently, or compare what a unit test and an interaction test would tell you. You do not need a coverage target or a new test framework to learn something useful.
-
-Read: [Node’s test runner](https://nodejs.org/docs/latest-v24.x/api/test.html). Use the test runner already present in your chosen project.
-
-</Idea>
-
-</IdeaGrid>
-
-<IdeaNote>Choose one uncertainty you would like to replace with evidence.</IdeaNote>
+<nav className="track-browse" aria-label="More in Code Quality">
+<a href="#/track/code-quality/guides">Browse all guides →</a>
+<a href="#/demos">Browse all Lab demos →</a>
+</nav>
