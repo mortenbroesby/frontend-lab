@@ -6,6 +6,8 @@ import { tracks } from './tracks';
 
 export function TrackGuide({ track, route }: { track: (typeof tracks)[number]; route: string }) {
   const trackPage = route.slice(`/track/${track.id}`.length + 1) || 'ideas';
+  if (track.id === 'modern-web' && trackPage === 'ideas')
+    return <GuideView document="tracks/modern-web/ideas" layout="ideas" />;
   const section = ['ideas', 'examples'].includes(trackPage) ? trackPage : 'guides';
   return (
     <>
@@ -71,7 +73,7 @@ function TrackNavigation({
   return (
     <nav className="guide-nav" aria-label="Track guide">
       {[
-        ['ideas', 'Ideas'],
+        ['ideas', track.id === 'modern-web' ? 'Start here' : 'Ideas'],
         ['examples', 'Demos'],
         ['guides', 'Guides'],
       ].map(([page, label]) => (

@@ -743,3 +743,89 @@
     min-height: 220px;
   }
 }
+
+/* Modern Web's open starting points; other tracks retain their current layout. */
+.track-start {
+  max-width: 48rem;
+  margin-bottom: 2rem;
+}
+.track-start h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+.track-start p,
+.track-options p,
+.track-inspiration p {
+  color: var(--lab-muted);
+  line-height: 1.65;
+}
+.track-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.track-options > section {
+  min-width: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+  background: var(--lab-surface);
+}
+.track-options h2 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+.track-options ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+.track-options li + li {
+  margin-top: 1.25rem;
+}
+.track-options li a {
+  display: block;
+  padding-block: 0.5rem;
+  font-weight: 600;
+}
+.track-options li span {
+  display: block;
+  color: var(--lab-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.track-options .track-next {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--lab-line);
+  font-size: 0.9rem;
+}
+.track-inspiration {
+  margin-top: 4rem;
+}
+.track-directions {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.track-directions > section {
+  padding: 1.5rem;
+  border-left: 2px solid var(--lab-line);
+  scroll-margin-top: 6rem;
+  max-width: 52rem;
+}
+.track-directions h3 {
+  font-size: 1.25rem;
+}
+.track-browse {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-block: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid var(--lab-line);
+}
+@media (max-width: 900px) {
+  .track-options {
+    grid-template-columns: 1fr;
+  }
+}
