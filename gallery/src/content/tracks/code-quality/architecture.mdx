@@ -1,56 +1,34 @@
 ## Protect an architecture boundary
 
-**Which dependency would make this code harder to change independently?** Agree on one ownership rule, express it as a dependency-cruiser check and prove the check detects a forbidden import.
+Which dependency would make your code harder to change independently? Choose an ownership rule before choosing enforcement. A tool can't decide whether the boundary makes sense.
 
-The tool enforces the rule you choose. It cannot decide whether that rule makes sense.
+### Express one decision
 
-### 1. Choose a boundary worth protecting
+For example: “Shared utilities must not import feature implementations.” Use directories that represent real responsibilities; don't reorganise a project to fit a tool.
 
-Use your own project and write one ownership decision in plain language: for example, “Shared utilities must not import feature implementations.” Choose directories that actually represent those responsibilities. Don't reorganise a project to fit a tool.
-
-If you don't have a project in mind, use the Lab after [local setup](#/guide/setup). Its rule is: “A demo may use shared packages, but must not import another demo's implementation.” Read `demos-stay-independent` in `.dependency-cruiser.cjs` and run `npm run check:architecture` to see the existing check.
-
-### 2. Express your rule
-
-In your own npm project, install locally and inspect the initializer. Skip installation and initialisation in the Lab, which already has both:
+In your own npm project, install dependency-cruiser and inspect its initializer:
 
 ```sh
 npm install --save-dev --save-exact dependency-cruiser
 npx depcruise --init
 ```
 
-Use your existing package manager and commit its manifest and lockfile. If you already have a configuration, edit it instead of replacing it. Review generated rules and resolver settings against your framework, TypeScript version and aliases.
+Use your existing package manager. Edit existing configuration rather than replacing it, and check resolver settings against your framework and aliases.
 
-Merge this example into the configuration's `forbidden` array, adapting the paths:
+The [rules tutorial](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-tutorial.md) explains `from`, `to` and path expressions. Translate your decision into a rule using your project's paths.
 
-```js
-{
-  name: 'shared-does-not-import-features',
-  severity: 'error',
-  comment: 'Shared utilities must remain independent of feature implementations.',
-  from: { path: '^src/shared/' },
-  to: { path: '^src/features/' },
-}
-```
-
-Paths are regular expressions against module paths. With a config named `.dependency-cruiser.cjs` and sources under `src`, run:
+In the Lab, setup already exists. Inspect `demos-stay-independent` in `.dependency-cruiser.cjs`: demos may use shared packages, but not each other's implementations. Run:
 
 ```sh
-npx depcruise --config .dependency-cruiser.cjs src
+npm run check:architecture
 ```
 
-Use the actual config filename and source roots in your project. Create a temporary import that crosses your chosen boundary, confirm the named violation, then remove it and confirm the clean result. Also check an allowed import: a rule that rejects everything is not useful.
+### Prove the rule works
 
-In the Lab, create `demos/web-worker-comparison/boundary-probe.ts` containing `import '../generative-postcard/art';`. Run `npm run check:architecture`: it should fail with `demos-stay-independent`. Delete only the probe and run again: it should pass. Don’t import the probe into the running app or commit it.
+Temporarily introduce an import across your chosen boundary. Does the named rule catch it? Remove only that probe and confirm the clean result. Also check an allowed import—a rule that rejects everything isn't useful. Don't commit the probe.
 
-### 3. Decide what a violation should mean
+For a real violation, consider moving responsibility, passing a value or revising an unsuitable boundary. Don't weaken rules merely to get a green result.
 
-When a real violation appears, ask which module should own the responsibility. Moving code or passing a value into a utility may be clearer than extracting another shared package. Sometimes the proposed boundary was wrong; revise it deliberately with a reason.
+Once trusted, add the check to your existing workflow. Keep exceptions narrow. The Lab checks static source imports with SWC; MDX, Vite globs and computed imports still need review.
 
-Once the rule is trusted, add the checked command to your existing scripts and CI. Keep exceptions narrow. Do not weaken a rule merely to get a green run.
-
-The Lab uses SWC to parse TypeScript and checks static source imports. Its MDX content, Vite glob expansion and computed runtime imports still need review. Other projects need their own parser and resolution choices. A passing result only covers the graph and rules that were actually inspected.
-
-Read: [official rules tutorial](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-tutorial.md), [rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md) and [CLI reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/cli.md).
-
-[All Code Quality guides](#/track/code-quality/guides)
+Read the [rule reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md) and [CLI reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/cli.md).

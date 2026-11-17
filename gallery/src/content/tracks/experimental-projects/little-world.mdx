@@ -1,37 +1,21 @@
 ## Invent a small world
 
-What could a few simple rules bring to life? A creature could seek shade, a crowd could avoid obstacles, or a tiny machine could react to your cursor. Choose a behaviour you're curious about; it doesn't need to become a game.
+A creature seeking shade, a crowd avoiding obstacles, a machine reacting to your cursor: choose a behaviour you're curious about.
 
-Play with <DemoLink id="ecosystem-simulation">Little world</DemoLink>. Change one condition, such as food or sensing, and watch how the creatures respond. Then imagine a rule the demo doesn't have.
+Play with <DemoLink id="ecosystem-simulation">Little world</DemoLink>. Change food or sensing, then imagine a rule it doesn't have.
 
-### Separate the world from its picture
+### Separate the rule from the picture
 
-A simulation needs **state**, a **rule for change** and a **way to display it**. A position belongs to state; deciding where to move belongs to the rule; drawing a shape belongs to the display.
+A simulation has **state**, a **rule for change** and a **display**. Describe your rule in plain language. What must an entity know to follow it? What happens at an edge or when it reaches its goal?
 
-Describe one rule in plain language. What does an entity need to know to follow it? Position might be enough for bouncing off a wall. Seeking a target also needs information about that target. Start with only the state your rule uses.
+In `demos/ecosystem-simulation/`, explore `world.ts` for rules, `index.tsx` for controls and rendering, and `world.test.ts` for small behavioural examples. Adapt the demo or [create your own experiment](#/create).
 
-Decide what happens at a boundary or when the goal is reached. Wrapping, bouncing and stopping create different worlds; none is the required answer.
-
-### Find a starting point
-
-Adapt the demo, [create an experiment](#/create) or use a project of your own. In `demos/ecosystem-simulation/`, explore:
-
-- `world.ts`: how state advances without drawing the interface.
-- `index.tsx`: how controls and rendering connect to the world.
-- `world.test.ts`: small examples of what the rules should do.
-
-Use the [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) to investigate drawing shapes and [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) for scheduling updates. The working demo is a reference, not a list of features to reproduce.
+Use the [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) for drawing and [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) for updates.
 
 ### Give time a meaning
 
-Does your rule advance once per turn or continuously? For continuous movement, elapsed time matters: moving a fixed distance every frame ties speed to the screen's refresh rate.
+Does your world advance in turns or continuously? Fixed movement per frame ties speed to refresh rate; elapsed time separates them. Decide what should happen after a background tab resumes. Preserve loop cleanup and a way to pause or restart.
 
-Think about what should happen after a background tab resumes. A large time jump may be undesirable. Keep animation cleanup and a way to pause or restart while you explore; duplicate loops can look like a faulty movement rule.
+Check a few predictable states: near an edge, at a target or between competing targets. Then change one condition. Does more speed cause overshooting? Do more entities cooperate or compete?
 
-### Probe your rule
-
-Choose a few states whose next step you can predict: near an edge, at a target or between two competing targets. Check those before adding more entities.
-
-Then change one condition. Does doubling speed change the behaviour you intended, or expose overshooting? Does adding another entity produce cooperation, competition or nothing at all?
-
-Follow the result that interests you. A single surprising behaviour is enough; food, multiple creatures and player controls are optional directions.
+Follow the behaviour that interests you. A single surprising rule is enough.

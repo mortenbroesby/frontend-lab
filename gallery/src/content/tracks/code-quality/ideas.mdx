@@ -1,7 +1,7 @@
 <section className="track-start" aria-labelledby="start-heading">
 
 <h2 id="start-heading">Make a piece of code easier to change.</h2>
-<p>Pick something that slows you down: a dependency nobody understands, a function that takes too long to follow, or a test you don't quite trust. Investigate it and try one improvement.</p>
+<p>Investigate a dependency, confusing function or test you don’t trust. Try one justified improvement.</p>
 <p>Bring your own repository, or use the Lab examples below.</p>
 
 </section>
@@ -14,21 +14,21 @@
 <p>Pick a package and find why it's installed and where it's used.</p>
 <p>Decide whether to keep it, update it or remove it.</p>
 <a className="track-start-link" href="#/track/code-quality/dependencies">Start tracing a dependency →</a>
-<p className="track-example">Want to look around first? <DemoLink id="dependency-map">Open Dependency Ripple</DemoLink> to explore the Lab's packages in your browser.</p>
+<p className="track-example"><DemoLink id="dependency-map">Open Dependency Ripple</DemoLink> to explore the Lab’s packages.</p>
 </section>
 <section aria-labelledby="code-heading">
 <h3 id="code-heading">Simplify difficult code</h3>
 <p>Pick a function you have to read twice. Identify what makes it difficult.</p>
 <p>Try a clearer name, an early return or a smaller responsibility while preserving its behavior.</p>
 <a className="track-start-link" href="#/track/code-quality/fallow">Start investigating difficult code →</a>
-<p className="track-example">The Fallow guide shows how to find a candidate and check its callers before editing. You can also start with code you already know.</p>
+<p className="track-example">Use Fallow to find a candidate, or start with code you know.</p>
 </section>
 <section aria-labelledby="test-heading">
 <h3 id="test-heading">Check a test you don't trust</h3>
 <p>Choose a mistake you think the test should catch. Make that change temporarily and run it.</p>
 <p>Find out whether the assertion protects the behavior you care about.</p>
 <a className="track-start-link" href="#/track/code-quality/test-confidence">Start checking a test →</a>
-<p className="track-example">The guide includes a worked example using the Lab's prime-counting function.</p>
+<p className="track-example">Includes an optional prime-counting example.</p>
 </section>
 <section aria-labelledby="boundary-heading">
 <h3 id="boundary-heading">Untangle a connection</h3>
@@ -43,15 +43,15 @@
 <section className="track-method" aria-labelledby="method-heading">
 <h2 id="method-heading">How to work on it</h2>
 <ol>
-<li><strong>Start with something specific.</strong><p>One package, function, test or connection is enough. Decide what you want to understand or improve.</p></li>
-<li><strong>Understand it before editing.</strong><p>Follow its callers, run the relevant check and establish what must keep working.</p></li>
-<li><strong>Try a change and compare.</strong><p>Did it answer your question or make the code easier to work with? Keep it if it helps. Leaving the code as it is can be the right result.</p></li>
+<li><strong>Start with something specific.</strong><p>Choose one question about the code.</p></li>
+<li><strong>Understand it before editing.</strong><p>Follow callers and establish what must keep working.</p></li>
+<li><strong>Try a change and compare.</strong><p>Keep what helps. Leaving code unchanged can be the right result.</p></li>
 </ol>
 </section>
 
 <section className="track-workspace" aria-label="Choose your workspace">
-<p><strong>Using your own project?</strong> Open it and choose an investigation above. The guides explain how to apply each approach outside the Lab.</p>
-<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a>, then follow a guide's worked example. No new app is required.</p>
+<p><strong>Using your own project?</strong> Choose an investigation above.</p>
+<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a> and use a guide’s example. No new app needed.</p>
 </section>
 
 <nav className="track-browse" aria-label="More in Code Quality">

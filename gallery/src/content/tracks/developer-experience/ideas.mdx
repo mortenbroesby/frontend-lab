@@ -1,8 +1,8 @@
 <section className="track-start" aria-labelledby="start-heading">
 
 <h2 id="start-heading">Make everyday development less frustrating.</h2>
-<p>Waiting for a test, guessing why a screen is slow, or repeating the same investigation? Pick one thing that interrupts your work and try a better way to do it.</p>
-<p>Bring a project you know, or use a Lab example. A useful result can be a shorter command, a repeatable debugging step or a clearer brief.</p>
+<p>Choose an interruption: slow checks, a sluggish screen or a repeated investigation.</p>
+<p>Bring your own project or use a Lab example. Aim for one useful improvement.</p>
 
 </section>
 
@@ -12,30 +12,30 @@
 <section aria-labelledby="feedback-heading">
 <h3 id="feedback-heading">Spend less time waiting for tests</h3>
 <p>Run the test relevant to your change automatically whenever you save.</p>
-<p>Choose a behaviour you are changing. Explore which checks give useful feedback and whether watch mode reduces interruptions.</p>
+<p>Choose a behaviour and investigate the checks it needs.</p>
 <a className="track-start-link" href="#/track/developer-experience/feedback-loop">Explore your feedback loop →</a>
-<p className="track-example">The guide includes a small example you can run in the Lab. Afterwards, run the broader checks to see what the focused test doesn’t cover.</p>
+<p className="track-example">Includes a small Lab exercise; targeted checks still leave gaps.</p>
 </section>
 <section aria-labelledby="profiling-heading">
 <h3 id="profiling-heading">Find what makes an interaction slow</h3>
 <p>Follow what happens when you type, open a panel or select an item.</p>
-<p>Record one interaction in React Profiler. Find the work behind it before deciding what to change.</p>
+<p>Record it in React Profiler before choosing a change.</p>
 <a className="track-start-link" href="#/track/developer-experience/rendering">Start recording an interaction →</a>
-<p className="track-example"><DemoLink id="react-render-detective">Explore React Render Detective</DemoLink> to see why components update. Its counters explain renders; they do not measure interaction speed.</p>
+<p className="track-example"><DemoLink id="react-render-detective">Explore React Render Detective</DemoLink>. Render counters aren’t speed measurements.</p>
 </section>
 <section aria-labelledby="responses-heading">
 <h3 id="responses-heading">Reach the UI state you need</h3>
-<p>Work on an empty list, a failed request or a slow response without waiting for the backend to produce it.</p>
-<p>Open an app that makes a request. Override one response with an empty result and inspect what the screen does.</p>
+<p>Explore empty, failed or slow responses without waiting for the backend.</p>
+<p>Override one response and inspect the result.</p>
 <a className="track-start-link" href="https://developer.chrome.com/docs/devtools/overrides">Start with DevTools overrides ↗</a>
-<p className="track-example">Chrome's external guide explains local response overrides. Try request blocking or throttling separately to explore failure and loading, then remove your overrides.</p>
+<p className="track-example">Explore overrides, blocking or throttling separately. Remove them afterwards.</p>
 </section>
 <section aria-labelledby="agents-heading">
 <h3 id="agents-heading">Stop repeating an agent brief</h3>
 <p>Turn a task you keep explaining into a workflow you can reuse and check.</p>
-<p>Start with a read-only review of one small diff. Specify the files, allowed actions and evidence you need, then compare the findings with your own inspection.</p>
+<p>Define scope, allowed actions and evidence for one repeatable task.</p>
 <a className="track-start-link" href="https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills">Turn the brief into a Copilot skill ↗</a>
-<p className="track-example">Or use the <a href="https://developers.openai.com/codex/skills">Codex skills guide</a>. Both are external resources. Try the workflow on a second change; you can rehearse it manually if you don't have an agent.</p>
+<p className="track-example">Or use the <a href="https://developers.openai.com/codex/skills">Codex skills guide</a>. Test the brief on another task; you can rehearse it manually.</p>
 </section>
 </div>
 </section>
@@ -43,15 +43,15 @@
 <section className="track-method" aria-labelledby="method-heading">
 <h2 id="method-heading">How to work on it</h2>
 <ol>
-<li><strong>Choose a recurring annoyance.</strong><p>Use one you can reproduce. Your own idea is welcome: a useful script, a debugger shortcut or one less setup step.</p></li>
-<li><strong>Try one alternative.</strong><p>Keep the task the same so you can compare. Use an existing tool before building one.</p></li>
-<li><strong>Keep what helps.</strong><p>Check whether it saves steps, gives a clearer answer or makes the task easier to repeat. Note what it misses before relying on it.</p></li>
+<li><strong>Choose a recurring annoyance.</strong><p>Pick something you can reproduce.</p></li>
+<li><strong>Try one alternative.</strong><p>Keep the task the same for a fair comparison.</p></li>
+<li><strong>Keep what helps.</strong><p>Compare effort and useful feedback. Check what it misses.</p></li>
 </ol>
 </section>
 
 <section className="track-workspace" aria-label="Choose your workspace">
-<p><strong>Using your own project?</strong> Choose a task you already perform and follow the relevant guide above.</p>
-<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a> for the test and profiling walkthroughs. You can explore Render Detective in your browser before installing anything.</p>
+<p><strong>Using your own project?</strong> Apply a guide to a task you already perform.</p>
+<p><strong>Using the Lab?</strong> <a href="#/guide/setup">Run it locally</a> for the test and profiling walkthroughs.</p>
 </section>
 
 <nav className="track-browse" aria-label="More in Developer Experience">

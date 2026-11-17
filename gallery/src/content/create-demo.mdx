@@ -1,8 +1,6 @@
 import { Button } from '@lab/ui/button';
 
-Choose a suggested idea, remix a demo or bring your own question.
-
-If you are adapting an existing demo, follow [local setup](#/guide/setup) and edit its folder under `demos/`. A guide investigation can start in your own project; you do not need to generate an app for it.
+To remix a demo, follow [local setup](#/guide/setup) and edit its folder under `demos/`. Use the generator below only when you want a new app.
 
 ### Start a new demo
 
@@ -12,7 +10,7 @@ From the repository root, after [local setup](#/guide/setup):
 npm run demo:new
 ```
 
-Choose a name, folder ID and track; add your name and a short description. These are editable later. Replace `your-id` below with your folder ID:
+Choose a name, folder ID, track and description. Replace `your-id` below with your folder ID:
 
 ```sh
 npm install
@@ -21,7 +19,7 @@ npm run dev --workspace @lab/demo-your-id
 
 Open the URL printed by Vite.
 
-Or run `npm run dev` to open the gallery; your demo appears automatically.
+Your demo also appears in the gallery (`npm run dev`).
 
 <div className="my-6 flex flex-wrap gap-3">
   <Button asChild><a href="#/">Explore tracks</a></Button>

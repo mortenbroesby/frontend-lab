@@ -1,68 +1,34 @@
 ## Find a missing test
 
-**What behaviour matters, and what evidence do our tests actually provide?** Start with one question about code people use.
+What behaviour matters, and what evidence do your tests provide? Choose an input boundary, state transition or failure path. Follow a caller into the implementation and tests.
 
-Use the Lab exercise below after [local setup](#/guide/setup), or follow the same steps in your own repository with its existing test runner.
+### Establish the contract
 
-### 1. Choose one behaviour and its contract
+Derive an expected outcome from a requirement or hand-worked example before writing an assertion. Don't copy the implementation's calculation into the test.
 
-Pick a real input boundary, state transition or failure path in your project. Trace a caller to the implementation and its tests. Write down one expected outcome from the requirement or a hand-worked example before writing an assertion.
-
-For a concrete Lab exercise, use `countPrimes` in `demos/web-worker-comparison/compute.ts`. It counts primes up to an integer limit and rejects invalid input. Its tests cover numeric inputs, but you can investigate whether they protect the runtime boundary against a string such as `"10"`.
-
-### 2. Establish what the tests already prove
-
-Run the relevant tests with your existing runner. In the Lab:
+For a Lab example, investigate `countPrimes` in `demos/web-worker-comparison/compute.ts` and its adjacent tests:
 
 ```sh
 npm test --workspace @lab/demo-web-worker-comparison
 ```
 
-Read `compute.test.ts` alongside the result. Correct arithmetic and input validation are separate claims; neither proves that the interface stays responsive. Check the current suite before adding a case—someone may already have covered your chosen behaviour.
+Correct arithmetic and input validation are separate claims. Neither proves interface responsiveness. Check whether the current suite already protects your chosen behaviour.
 
-### 3. Write a test that protects the contract
+### Check whether the test catches a mistake
 
-Add an assertion for the outcome you identified, using the project's existing test runner. Make sure its expected value comes from the contract rather than duplicating the implementation. Then temporarily introduce a plausible regression: the new test should fail. Restore your edit and confirm it passes again.
+Add a case if needed, then temporarily introduce a plausible regression. The test should fail for the expected reason. Restore only that deliberate edit and confirm it passes; don't commit the defect.
 
 <details>
-<summary>Worked example: reject a numeric string in the Lab</summary>
+<summary>Example: a numeric string at a runtime boundary</summary>
 
-For the Lab exercise, TypeScript types do not validate Worker messages at runtime. The current function rejects the string `"10"`. Use that contract to justify the expected error. The following temporary mutation checks that a test can protect the behaviour, not just pass today.
+`countPrimes` rejects `"10"`: TypeScript doesn't validate incoming Worker messages. Investigate whether the tests protect that contract.
 
-On an experiment branch, temporarily change just this expression in `compute.ts`:
-
-```ts
-Number.isInteger(limit)
-```
-
-to:
-
-```ts
-Number.isInteger(Number(limit))
-```
-
-This resembles a convenient coercion, but weakens validation: the function now accepts numeric strings. Run the existing tests. They still pass because their invalid-input cases contain numbers, not strings.
-
-Add this to `compute.test.ts`:
-
-```ts
-test('rejects numeric strings received at runtime', () => {
-  assert.throws(() => countPrimes('10' as unknown as number), RangeError);
-});
-```
-
-The cast deliberately models untrusted runtime input; it is not an example of normal typed calling code. Run the tests again. The new test should fail because the modified implementation does not throw.
-
-Restore `Number.isInteger(limit)` and rerun with the new test present. All tests should pass. Restore only your deliberate implementation edit; keep any unrelated work. Do not commit the regression.
-
-You have now observed three distinct results: the old suite passed a defect, the added test detected it, and the restored implementation satisfied it. The expected error comes from the function's input contract, not a copy of its algorithm.
+Temporarily replacing `Number.isInteger(limit)` with `Number.isInteger(Number(limit))` introduces coercion. Would the existing tests detect it? Choose an assertion from the rejection contract, then verify it catches this change. Restore the original validation afterwards.
 
 </details>
 
-### Take it further
+If a test stays green, investigate its inputs and assertions rather than assuming the code is safe. If it already catches the mistake, another test may add no value.
 
-Try a state transition or failure path next. Ask whether the appropriate check is a unit test or an integration test: an isolated function cannot prove its caller passes the right data. Run the surrounding tests after restoring any deliberate regression. If existing tests already protect the behaviour, there is no need to add another.
+For your next case, consider whether a unit test is enough: testing a function alone doesn't prove its caller supplies the right data. Rerun surrounding checks after restoring deliberate changes.
 
-Read: [Node test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html).
-
-[All Code Quality guides](#/track/code-quality/guides)
+Read [Node's test runner](https://nodejs.org/docs/latest-v24.x/api/test.html) and [strict assertions](https://nodejs.org/docs/latest-v24.x/api/assert.html).

@@ -1,63 +1,33 @@
 ## Make something happen on another screen
 
-A phone could control a slide, two browsers could share a drawing, or a button could send a reaction across the room. Choose an interaction you'd like to explore—or invent your own.
+Choose an interaction: a remote control, shared drawing, reaction—or your own idea. Try <DemoLink id="device-rally">Device Rally</DemoLink> in two browsers, then disconnect and rejoin. What travels between screens, and what stays local?
 
-Try <DemoLink id="device-rally">Device Rally</DemoLink> in two browsers. Send a cheer, disconnect one browser and join again. Notice which information stays on each screen and which travels between them. Use the demo as a reference when you need it; your experiment can work differently.
+### Understand the pieces
 
-### Understand the connection
+- **Discovery:** Trystero introduces peers with matching app IDs and room codes through signaling services.
+- **Connection:** WebRTC establishes a network path. Discovery doesn't guarantee a connection.
+- **Messages:** your app decides what to send and how the receiving screen responds.
 
-There are three separate jobs behind a cross-device interaction:
+A reaction is an event; a selected colour is state. Should a newcomer receive the current value or only future changes? Messages don't automatically provide shared history.
 
-- **Discovery:** browsers need a way to find peers. Trystero uses signaling services to introduce browsers with the same app ID and room code.
-- **Connection:** WebRTC establishes a path between peers. Finding another browser doesn't guarantee the network will let them connect.
-- **Messages:** your application decides what to send and what a received message means for its interface.
+### Find your starting point
 
-[Trystero's documentation](https://github.com/dmotz/trystero) is a starting point for rooms and messages. [MDN's WebRTC protocol guide](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols) explains the network side, including STUN and TURN.
-
-### Choose what needs to travel
-
-Start with one visible effect on the receiving screen. Before implementing it, decide what information that screen needs.
-
-A reaction is an **event**: something happened. A selected colour is **state**: something is currently true. That distinction matters when someone joins late. Should they see only future changes, or receive the current value too? Messages aren't automatically a shared history.
-
-You could explore a remote control, a shared pointer or a cooperative game. Pick whichever interests you; one interaction is enough to start.
-
-### Find your way into the code
-
-Work in your own app, adapt Device Rally or [create a Lab demo](#/create). For a new Lab workspace, this installs the version used by Device Rally; replace `your-id` with your demo's folder ID:
+Use your own app, adapt the demo or [create an experiment](#/create). For a new Lab workspace, install Device Rally's Trystero version, replacing `your-id`:
 
 ```sh
 npm install --save-exact trystero@0.27.0 --workspace @lab/demo-your-id
 ```
 
-Use the documentation alongside `demos/device-rally/index.tsx`. Follow one cheer from the button to the receiving screen, then find the parts your idea needs:
+Follow one cheer through `demos/device-rally/index.tsx`: `joinRoom` finds the group, `makeAction` defines the channel, and `send` and `onMessage` carry the interaction. Look at peer listeners, message validation and cleanup with `leave` before adapting it.
 
-| What you're investigating | Where to look |
-| --- | --- |
-| How browsers find the same group | `joinRoom`, the app ID and room code |
-| How an interaction becomes a message | `makeAction` and `send` |
-| How a message changes the interface | `onMessage` and the receiving state update |
-| How the interface knows someone is connected | Peer join and leave listeners |
-| What happens when the component unmounts | Listener cleanup and `leave` |
+Use [Trystero's documentation](https://github.com/dmotz/trystero) for the APIs and [MDN's WebRTC guide](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols) for signaling, STUN and TURN.
 
-The demo separates connection state from the cheer count. Keep that distinction visible while experimenting: “no peer connected” and “connected but no message received” point to different problems. Check received data before using it; TypeScript types don't validate a network message.
+### Challenge your design
 
-### Try to break your assumption
+Send in both directions, join after a change, or reconnect. Does each screen have the information it needs? Does one message still produce one update?
 
-Once your interaction works, choose a change that tests how you think it works:
+Start with two localhost windows, internet access and matching room details. For separate computers, each can run a local copy; a phone visiting your laptop needs trusted HTTPS. Plain LAN HTTP isn't supported by this setup.
 
-- **Send from the other browser.** Is the interaction symmetric, or does one screen have a different role?
-- **Join after something changes.** Does the new screen have enough information to show the right thing?
-- **Close and reopen a browser.** Does it reconnect cleanly? Does one message still produce one update?
+Use a unique room code and throwaway data: public signaling and a room name aren't authentication. Restricted networks may block connections; TURN relay setup is outside this guide. Local success doesn't prove another network will work.
 
-Use what happens to choose your next change. You don't need to implement every behaviour above.
-
-### When nothing connects
-
-Start with two windows on **localhost**, internet access and matching app IDs and room codes. Use a room code unique to your experiment. This setup uses public signaling; a room name isn't authentication, so use throwaway data.
-
-For separate computers, each can run its own local copy. A phone visiting your laptop needs **trusted HTTPS**; plain HTTP at a LAN address isn't supported by this setup. Two local windows help isolate application problems, but don't prove that a particular device or network will work.
-
-If discovery works but the connection doesn't, network restrictions may be the cause. TURN can relay connections that can't go directly between peers; setting up a relay is beyond this experiment. Use the MDN guide above to understand that distinction before changing your application logic.
-
-Only need tabs in the same browser? [Explore BroadcastChannel](#/track/modern-web/tab-settings) instead.
+For same-browser tabs, [explore BroadcastChannel](#/track/modern-web/tab-settings).

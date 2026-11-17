@@ -1,62 +1,39 @@
 ## Give movement a purpose
 
-What should someone understand when your interface changes? An item moved, a panel opened, an action succeeded? Choose a working interaction and decide what movement could clarify.
+What should someone understand: an item moved, a panel opened, an action succeeded? Choose a working interaction and give movement a job.
 
-Explore <DemoLink id="motion-with-purpose">Motion with purpose</DemoLink>. Compare Still, Motion and Motion + Lottie while editing and saving a card. Vary the transition duration. Which treatment helps you follow the change, and when does it start delaying or distracting you?
+Compare Still, Motion and Motion + Lottie in <DemoLink id="motion-with-purpose">Motion with purpose</DemoLink>. Vary the duration. When does movement clarify the change, and when does it distract?
 
-The demo stores its title in local React state for the page visit. It doesn't make a network request or measure performance. Replay only repeats the illustration; it doesn't save again. The interface transition and the artwork have separate timelines.
+The demo saves only local React state. Replay repeats the illustration, not the save. It makes no network request or performance measurement.
 
-### Choose a technique for the job
+### Choose a technique
 
-| What you want to explore | Useful starting point |
+| Need | Starting point |
 | --- | --- |
-| A colour, focus or opacity transition | CSS |
+| Colour, focus or opacity transitions | CSS |
 | React elements entering, leaving or changing layout | Motion |
-| An authored illustration with its own timeline | Lottie |
+| An authored illustration with a timeline | Lottie |
 
-You don't need both libraries. An SVG describes shapes that CSS or Motion can animate directly. Lottie JSON describes shapes and a timeline for a player to interpret; it may also reference images or fonts.
+SVG describes shapes; Lottie JSON adds a timeline and may reference images or fonts. You don't need both libraries.
 
-Read [Motion's SVG guide](https://motion.dev/docs/react-svg-animation) for vector shapes, its [layout guide](https://motion.dev/docs/react-layout-animations) for layout changes, or [Lottie Web's usage documentation](https://github.com/airbnb/lottie-web#usage) for animation assets. Follow the mechanism your interaction needs.
+Explore [Motion's layout](https://motion.dev/docs/react-layout-animations), [SVG](https://motion.dev/docs/react-svg-animation) or [exit animation](https://motion.dev/docs/react-animate-presence) guides according to your interaction. Compare one parameter at a time: duration sets how long; [easing](https://motion.dev/docs/react-transitions) sets how progress changes.
 
-### Investigate one transition
+### Follow the reference
 
-Choose what changes before deciding how it moves. Should the person follow a continuous object, notice new content or simply receive confirmation?
-
-Duration controls how long movement lasts; easing controls its progress. Compare treatments while keeping the interaction and other parameters stable. [Motion transitions](https://motion.dev/docs/react-transitions) explains the available controls. [AnimatePresence](https://motion.dev/docs/react-animate-presence) is relevant when an element needs to animate out before React removes it.
-
-Try your own app, [create an experiment](#/create), or run the reference after [local setup](#/guide/setup):
+After [local setup](#/guide/setup):
 
 ```sh
 npm run dev --workspace @lab/demo-motion-with-purpose
 ```
 
-| File in `demos/motion-with-purpose/` | What to investigate |
-| --- | --- |
-| `index.tsx` | How interface state and Motion transitions relate |
-| `SaveSeal.tsx` | How the Lottie player starts, replays and cleans up |
-| `save-seal.json` | The vector artwork and timeline |
-| `ASSET.md` | The asset's origin, format and reuse terms |
+In `demos/motion-with-purpose/`, `index.tsx` connects state and transitions; `SaveSeal.tsx` owns the Lottie player and cleanup. Follow a save: committing data must remain independent of animation completion. Networked confirmation should follow the real operation's outcome.
 
-Follow a save through the source. What commits the new value, and what merely illustrates the result? Keep them separate: animation completion shouldn't determine whether data is saved. In a networked app, confirmation should follow the real operation's outcome.
+Download the demo's animation to explore `save-seal.json`. `ASSET.md` documents its hand-authored, CC0 origin; it isn't an After Effects export. Its final frame works without movement.
 
-### Explore an animated vector file
+For replacement artwork, check license, assets and [player compatibility](https://lottiefiles.com/supported-features). The demo's lightweight SVG player supports shape-only artwork. [Lottie Web](https://github.com/airbnb/lottie-web) documents playback and authoring routes, including Bodymovin. Test in the actual player and release it on unmount.
 
-Use **Download the animation file** in the demo to inspect or reuse its hand-authored, CC0 Lottie asset. It isn't an After Effects export. Its final frame is a check on a disc, which can communicate the same result without movement.
+### Challenge the treatment
 
-For your own artwork, choose an asset whose license permits reuse. After Effects with Bodymovin is one authoring route; the [Lottie Web project](https://github.com/airbnb/lottie-web) documents the exporter and player. Check [supported features](https://lottiefiles.com/supported-features), referenced assets and compatibility with your chosen player build. This demo uses a lightweight SVG player for shape-only artwork.
+Interrupt or repeat the action. Enable Reduce Motion. Remove or delay the artwork. Can someone still use the controls and understand the result?
 
-Decide when the illustration should play, whether replay is useful and what should remain when it stops. Test the asset in the actual player, not only an authoring-tool preview. Keep its source and license alongside it, and release the player when its component unmounts.
-
-### Evaluate the interaction
-
-Choose a few situations that challenge the treatment:
-
-- Repeat or interrupt the action while it moves. Can the person continue using the interface?
-- Enable Reduce Motion. Is the same information available without unnecessary travel?
-- Load the artwork slowly or remove it. Does the layout stay stable and the result remain understandable?
-
-Preserve useful focus when controls disappear. Keep decorative artwork out of the accessibility tree when text already communicates its meaning. A short confirmation shouldn't become a perpetual loop.
-
-Read [Motion's reduced-motion guidance](https://motion.dev/docs/react-accessibility) and [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion). Keeping an interaction still is a valid design choice if movement doesn't help.
-
-[All Experimental Projects guides](#/track/experimental-projects/guides)
+Keep layout space reserved, focus useful and confirmation finite. Decorative artwork shouldn't duplicate accessible text. Read [Motion's reduced-motion guidance](https://motion.dev/docs/react-accessibility). Keeping an interaction still is a valid result.

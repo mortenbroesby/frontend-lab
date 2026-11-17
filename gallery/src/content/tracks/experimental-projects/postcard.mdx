@@ -1,35 +1,21 @@
 ## Draw with rules
 
-Invent a visual rule and see what it produces. You could explore a grid with deliberate irregularities, imaginary coral, lettering or a composition of your own. Decide what gives the image its character before adding controls.
+Explore a grid, imaginary coral, lettering or a composition of your own. Choose what gives the image its character: repetition, spacing, palette or empty space.
 
-Try <DemoLink id="generative-postcard">Generative postcard</DemoLink>. Keep a seed while changing a parameter, then change the seed. Which features belong to the rule and which come from chance?
+Try <DemoLink id="generative-postcard">Generative postcard</DemoLink>. Keep a seed while changing a parameter, then change the seed. Which features come from the rule, and which from chance?
 
-### Choose your constraints
+### Control the randomness
 
-A generative image is more than random positions. Shape, repetition, spacing, palette and empty space all affect the result.
+A seeded generator repeats the same sequence for the same seed and algorithm. Reordering its calls changes where those values end up. Calling `Math.random()` during rendering makes a composition harder to reproduce.
 
-Pick one relationship to explore: size might depend on distance, colour on direction, or spacing on an underlying grid. You choose the relationship and the shapes. A few marks are enough to see whether an idea is interesting.
+Choose what should vary and what should stay stable. Recreating an image needs its rules and parameters as well as its seed. This randomness is for artwork, not secrets.
 
-### Make chance repeatable
+### Explore your rule
 
-A seeded pseudo-random generator produces the same sequence for the same seed and algorithm. That lets you compare rule changes without changing every random choice too.
+In `demos/generative-postcard/`, `art.ts` generates the shapes; `index.tsx` connects them to SVG, controls and export. Follow one value to the mark it affects, then adapt the demo or [create an experiment](#/create).
 
-Decide which properties should vary and which should remain stable. Reordering calls to the generator changes which values reach which properties. Calling `Math.random()` while rendering makes it harder to reproduce a composition.
+Use the [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) for shapes, coordinates and transforms. Compare a rule change with the seed fixed, then try several seeds. Does it produce a family of interesting images or one lucky result?
 
-Reproducibility needs the rules and parameters as well as the seed. This kind of randomness is for artwork, not secrets or security tokens.
+If exporting matters, inspect the demo's use of [XMLSerializer](https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer). Open the file outside the app: it needs its own styling, dimensions and assets. Release temporary object URLs after use.
 
-### Explore the reference
-
-Use your own app, [create an experiment](#/create) or adapt the demo. In `demos/generative-postcard/`, `art.ts` contains generation rules and `index.tsx` connects those rules to SVG, controls and export. Follow one generated value to the shape it affects.
-
-The [SVG tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) explains shapes, coordinates and transforms. Choose the part your idea needs; you don't have to recreate the demo's dots or spiral.
-
-Keep one composition stable while changing a rule. Then try several seeds: does the rule produce a family of interesting images, or only one lucky result?
-
-### Decide what to keep
-
-If exporting matters, investigate how the demo turns SVG into a file using [XMLSerializer](https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer). Consider what the file needs outside the app: explicit styling, referenced assets and its own dimensions.
-
-Open an exported file independently. Does it still look right without the page's CSS? Can you recreate it from the saved seed and parameters? Release temporary object URLs when they are no longer needed.
-
-Export is optional. Your experiment might instead be an interactive drawing, a collection of variations or a rule that responds to input. Let the visual idea determine the next feature.
+Your outcome could be an image, an interactive drawing or a collection. Export is optional.

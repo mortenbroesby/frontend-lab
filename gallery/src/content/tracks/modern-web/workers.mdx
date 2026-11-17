@@ -1,42 +1,27 @@
 ## Give an interaction room to respond
 
-What should someone still be able to do while your page is busy? Choose an interaction—typing, dragging, cancelling or navigating—and some work that might interrupt it.
+Choose something that should stay usable while a page is busy: typing, dragging, cancelling or navigating.
 
-Try <DemoLink id="web-worker-comparison">Room to think</DemoLink>. Use the interaction pad while the same calculation runs on the main thread and in a Worker. Look at responsiveness as well as completion time: moving work doesn't necessarily make it finish sooner.
+Try <DemoLink id="web-worker-comparison">Room to think</DemoLink>. Use the interaction pad during both execution modes. Moving work can improve responsiveness without making it finish sooner.
 
-### Find work that can move
+### Find the boundary
 
-A Worker runs JavaScript away from the main thread. It can't manipulate the page's DOM or React state directly. The useful boundary is between computing a result and displaying it.
+A Worker runs JavaScript away from the main thread, without direct access to the DOM or React state. Which calculation could run using only its input and return a result?
 
-In your app, identify the input a calculation needs and the result its caller uses. Could it run without reading the page? Filtering data, processing pixels or analysing a document are possibilities; choose a job that matters to your experiment.
+Check a Performance recording first. A Worker won't solve a bottleneck in layout or painting.
 
-Use a Performance recording to check your suspicion. If layout or painting is the bottleneck, moving a calculation may not address it.
+In `demos/web-worker-comparison/`, trace `compute.ts` → `compute.worker.ts` → `index.tsx`: calculation, message handling, then interface updates. `frames.ts` observes animation-frame gaps. Use [MDN's Worker guide](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) and [Vite's Worker support](https://vite.dev/guide/features.html#web-workers) for implementation details.
 
-### Understand the boundary
+Messages have a cost: ordinary objects are cloned. Validate inputs, bound expensive work, handle errors and release unused Workers.
 
-Read [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) for the message model and [Vite's Worker support](https://vite.dev/guide/features.html#web-workers) for bundling a Worker in this repository.
+### Compare and decide
 
-The reference demo separates these responsibilities:
+Adapt the demo or use your own app. Compare the same calculation and input in both modes, repeating the interaction. One run isn't a benchmark.
 
-| File in `demos/web-worker-comparison/` | What to investigate |
-| --- | --- |
-| `compute.ts` | The calculation and its input contract |
-| `compute.worker.ts` | Receiving a request and returning a result |
-| `index.tsx` | Starting work, handling results and updating the interface |
-| `frames.ts` | Observing gaps between animation frames |
+Investigate what your interaction needs:
 
-Trace one request before adapting the code. Messages cross a boundary: ordinary objects are cloned, and moving large inputs can have a cost. Validate incoming data and bound expensive work. Release the Worker when its owner no longer needs it and make errors visible.
+- **Changing input:** can an old result overwrite a newer one? Request IDs can distinguish jobs.
+- **Cancellation:** does work stop or merely disappear? A synchronous loop can't process cancel messages until it yields; consider termination or chunking.
+- **Small jobs or large payloads:** does messaging outweigh the benefit?
 
-### Make a fair comparison
-
-Use the same input and calculation in both execution modes. Repeat the interaction and observe whether it remains usable. Frame gaps and a Performance recording can help explain what you feel; one run isn't a benchmark.
-
-Choose a follow-up based on what your interaction needs:
-
-- If someone changes the input mid-job, should the old result still be displayed?
-- If they cancel, does computation stop or does the interface merely hide it?
-- For a tiny job or large payload, does messaging cost outweigh the benefit?
-
-A busy synchronous Worker can't handle a cancel message until its current work yields. Investigate termination or chunked work if cancellation matters. Request identifiers can help distinguish results when jobs overlap.
-
-Adapt the demo, [create an experiment](#/create), or apply the boundary to your own app. Keeping work on the main thread is a valid outcome if the evidence supports it.
+Keep work on the main thread if the evidence supports it.

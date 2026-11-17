@@ -1,33 +1,21 @@
 ## Let tabs share what matters
 
-A preference, a selected document or a draft could follow someone between tabs. Choose something that would be useful to keep in sync. What should remain independent in each tab?
+Choose something to synchronise: a preference, selected document or draft. What should remain independent?
 
-Open <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink> in two tabs of the same browser profile. Change a setting, then open another tab or reload one. Live updates and remembering a value are different problems.
+Try <DemoLink id="cross-tab-messaging">One setting, two tabs</DemoLink>, then reload or open another tab. Live updates and remembering a value are different problems.
 
-### Messages aren't memory
+### Understand the mechanism
 
-BroadcastChannel lets channel instances exchange messages within the same origin and storage partition. It doesn't connect separate devices; use [Connect two browsers](#/track/modern-web/devices) for that.
+BroadcastChannel exchanges messages within the same origin and storage partition. It doesn't connect separate devices; use [Connect two browsers](#/track/modern-web/devices) for that.
 
-A message describes something happening now. It doesn't automatically give a new tab the current state or survive a reload. Storage can remember a value, but you still need to decide how it relates to live updates.
+A message isn't saved history. Decide whether a new tab should start fresh, read storage or ask another tab—and what happens when two tabs change a value together.
 
-Choose a small piece of information to share. Consider whether a new tab should start fresh, read a saved value or ask an existing tab. If two tabs change it together, what would a reasonable outcome look like?
+Follow `postMessage` and the receiving handler in `demos/cross-tab-messaging/index.tsx`, alongside the [BroadcastChannel reference](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel). A channel doesn't receive its own messages. Forwarding received updates can create an echo loop. Preserve message validation and connection cleanup.
 
-### Find the mechanism
+### Try your idea
 
-Use your own app, adapt the demo or [create an experiment](#/create). The [BroadcastChannel reference](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) explains channel names, sending, receiving and closing a connection.
+Adapt the demo or use your own app. Test a late join, simultaneous changes or a reload against the behaviour you chose.
 
-In `demos/cross-tab-messaging/index.tsx`, trace a local change through `postMessage` to the receiving handler. Look for which code updates local state and which sends a message. A channel doesn't deliver a message back to its sending instance; blindly forwarding received messages can create an echo loop.
+If persistence matters, investigate [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), including parsing and unavailable storage. It isn't required just to demonstrate messaging.
 
-Keep message validation and connection cleanup when adapting the example. A TypeScript annotation doesn't establish what another sender actually sent.
-
-### Test the behaviour you chose
-
-Try a situation that challenges your design:
-
-- Open a tab after the value has changed. Where does its starting value come from?
-- Change both tabs quickly. Does the eventual result match your intended rule?
-- Reload or close one tab. Which information should survive?
-
-If persistence matters, investigate [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), including parsing and unavailable storage. You don't need persistence merely to demonstrate messaging.
-
-If nothing arrives, check the origin, browser profile and channel name before changing the state logic. Begin with a single message you can inspect, then connect it to your chosen interaction.
+If nothing arrives, check the origin, browser profile and channel name before changing your state logic.

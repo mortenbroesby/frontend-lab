@@ -1,45 +1,37 @@
 ## Find your shortest useful feedback loop
 
-Where do you lose time while changing code: waiting for checks, finding the right command or discovering mistakes too late? Choose one recurring interruption in your own workflow and investigate an alternative.
+Where do you lose time: waiting for checks, finding commands or discovering mistakes late? Choose one recurring interruption. A faster command is useful only if it still checks what matters.
 
-A useful loop gives you evidence about the change you're making. The shortest command isn't necessarily the best one if it leaves the relevant behaviour unchecked.
+### Choose the evidence you need
 
-### Find the question behind a check
+Find the implementation, callers and tests for a behaviour you're editing. What would a pass establish—and leave unknown?
 
-Choose a behaviour you're editing. Locate its implementation, callers and existing tests. What would a passing test establish—and what would it leave unknown?
+Investigate your runner's filtering and watch options. Filtering selects checks; watch mode repeats them. Confirm that your filter selects tests before trusting a green result.
 
-Look up your runner's filtering and watch options. A filter narrows what executes; watch mode repeats checks after changes. They solve different problems. Confirm that a filter actually selects tests before trusting a green result.
-
-If you need a small example, the Lab has `gallery/exercises/tooling/commands.mjs` and its adjacent test file. Run the existing checks from the root with Node 24:
+For a small Lab example, inspect `gallery/exercises/tooling/commands.mjs` and its adjacent test file. From the root with Node 24:
 
 ```sh
 node --test gallery/exercises/tooling/commands.test.mjs
 ```
 
-Read a test and choose a behaviour to investigate. Use [Node's test runner documentation](https://nodejs.org/docs/latest-v24.x/api/test.html) to discover how to select that test and rerun it as you edit. Your own project's runner is equally suitable.
+Use the [Node test runner documentation](https://nodejs.org/docs/latest-v24.x/api/test.html) to investigate selection and watching, or use your own project's runner.
 
-### Check the feedback, not just the command
+### Test the loop
 
-Try a temporary change that you expect your selected test to detect. Does it fail for the reason you expected? Restore only that deliberate edit and confirm the test passes again. Don't commit an intentional defect.
+Temporarily introduce a mistake your chosen test should catch. Does it fail for the expected reason? Restore only your deliberate edit and confirm it passes. Don't commit the defect.
 
-If it stays green, investigate whether the filter missed the test or the test missed the behaviour. [Find a missing test](#/track/code-quality/test-confidence) explores that distinction.
+If it stays green, did the filter miss the test or the test miss the behaviour? [Find a missing test](#/track/code-quality/test-confidence) explores that distinction.
 
-Compare this loop with your usual one. Consider steps, waiting and clarity of feedback. A single timing isn't a benchmark, and fewer tests may not run faster.
+Compare waiting, steps and clarity with your usual workflow. One timing isn't a benchmark.
 
-### Investigate what can safely be skipped
+### Decide what can be skipped
 
-Caching is a separate question: when is previous output still valid? Before adding a cache, find out whether task selection or watch mode already solves your problem.
-
-For an existing Turbo project, the [run reference](https://turborepo.dev/docs/reference/run) explains filters, affected selection and dry runs. In the Lab, this inspects one demo's build plan without building it:
+Before adding caching, check whether selection or watching solves the problem. For Turbo, inspect a plan without building:
 
 ```sh
 npm exec -- turbo run build --filter=@lab/demo-react-render-detective --dry=json
 ```
 
-Explore `tasks[].inputs` and the project's `turbo.json`. Which source files, shared packages and configuration should invalidate the result? Affected selection depends on Git history and a comparison base; it isn't the same as a cache hit.
+Explore `tasks[].inputs`, `turbo.json` and the [run reference](https://turborepo.dev/docs/reference/run). Which source, dependencies and configuration should invalidate output? Test a relevant change and an unrelated one, then restore them. Removing necessary inputs to get cache hits makes results unreliable.
 
-Choose a dependency you expect to matter. Compare the plan or cache behaviour before and after a temporary change, then restore your edit. Also consider an unrelated change: should it require the same work? Cached output must remain correct; removing inputs merely to get hits isn't an improvement.
-
-### Keep the useful part
-
-Keep a command or workflow if it answers your question with less friction. Decide when broader checks are still needed, particularly when a change crosses module boundaries. You can improve feedback without adopting Turbo or replacing your existing tools.
+Affected selection requires Git history and a comparison base; it differs from cache reuse. Keep broader checks for changes that cross boundaries. You don't need new tools to improve your loop.

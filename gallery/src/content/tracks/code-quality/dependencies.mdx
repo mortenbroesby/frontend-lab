@@ -1,43 +1,31 @@
 ## Trace a dependency's reach
 
-Before changing a package, find the code and checks that depend on it. You'll build a small impact map from actual manifests and imports, then choose a useful validation command. No graph tool is required.
+Before changing a package, find what uses it and what could break. Choose a dependency in your own project, or investigate `d3-force` in the Lab.
 
-### 1. Choose a real dependency
+### Follow the evidence
 
-Use a package you're considering upgrading or replacing in your own repository. Or, after [local setup](#/guide/setup), investigate `d3-force` in the Lab.
-
-From the repository root:
+From the Lab root:
 
 ```sh
 npm ls d3-force --workspaces
 ```
 
-This shows installed relationships. Open the consuming workspace's `package.json` to confirm what it declares. In the Lab, start at `demos/dependency-map/package.json`.
+Confirm declarations in the consumer's `package.json`, then follow imports to callers. In `demos/dependency-map/`, `index.tsx` uses D3 for layout; `graph.ts` calculates dependency reach.
 
-### 2. Follow consumers, not just package names
+Map the chain from package to behaviour. For shared workspaces, follow their consumers too; keep a visited list to avoid cycles. Distinguish build tooling from browser code.
 
-Search the consuming workspace for imports of the package using your editor. Follow the imported functions to their callers. For `d3-force`, inspect `demos/dependency-map/index.tsx`: it positions nodes, while `graph.ts` calculates dependency reach.
+A manifest says a dependency is declared. An import shows use. Neither alone establishes whether a version change affects the API your app relies on.
 
-Write a short chain such as `d3-force → dependency-map layout`. For a shared workspace, repeat the search for packages that import that workspace. Keep a visited list so cycles don't send you around indefinitely.
+### Choose proportionate checks
 
-A manifest edge says “declares a dependency.” A source import says where code uses it. Neither proves that a proposed version change affects the API being used. Separate build-time dependencies from code shipped to the browser.
-
-### 3. Choose the checks for your proposed change
-
-Identify the API or behaviour the change could affect. For a `d3-force` update, check layout creation and interaction as well as TypeScript compatibility. In the Lab:
+Identify the behaviour your proposed change could affect. For a D3 update, type compatibility and usable layout both matter. The Lab's existing check is:
 
 ```sh
 npm run check --workspace @lab/demo-dependency-map
 ```
 
-Run the demo locally and inspect the layout if you actually change the dependency. A passing build won't catch an unusable graph. Use the scripts and relevant tests in your own project; broaden checks when shared consumers are affected.
+If you change it, inspect the running graph too. A passing build doesn't prove a usable interface. Broaden checks when shared consumers are affected.
 
-You now have a reasoned validation scope, rather than choosing checks solely from a package's name.
+<DemoLink id="dependency-map">Dependency ripple</DemoLink> visualises declared workspace dependencies, including development dependencies. Arrows point from consumer to dependency; change impact travels back. It's a build-time snapshot, not source analysis or an external dependency tree.
 
-### Take it further
-
-Automate the manifest traversal or compare direct and transitive consumers. For enforcement rather than investigation, try [Protect an architecture boundary](#/track/code-quality/architecture).
-
-Optional reference: <DemoLink id="dependency-map">Dependency ripple</DemoLink> visualises this repository's declared dependencies. Its arrows point from consumer to dependency; change impact travels in the opposite direction. It includes development dependencies but doesn't inspect source use or external packages' dependency trees. The graph is a build-time snapshot.
-
-Read: [npm workspaces](https://docs.npmjs.com/cli/v11/using-npm/workspaces/) · [npm ls](https://docs.npmjs.com/cli/v11/commands/npm-ls).
+Read [npm workspaces](https://docs.npmjs.com/cli/v11/using-npm/workspaces/) and [npm ls](https://docs.npmjs.com/cli/v11/commands/npm-ls). To enforce a boundary, explore [architecture rules](#/track/code-quality/architecture).
