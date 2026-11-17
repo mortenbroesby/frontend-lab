@@ -81,6 +81,11 @@ export const tracks = [
     id: 'experimental-projects',
     guides: [
       {
+        slug: 'first-game',
+        title: 'Make your first browser game',
+        description: 'Choose a game framework, build one playable mechanic and make it your own.',
+      },
+      {
         slug: 'motion',
         title: 'Add motion with purpose',
         description:

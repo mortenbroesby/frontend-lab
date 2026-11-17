@@ -1,0 +1,56 @@
+## Make your first browser game
+
+A game can be one screen, one action and a reason to try again. You could steer a ship through falling rocks, bounce a ball into targets or build a puzzle where every move changes the board. Start with shapes; artwork can wait.
+
+### Pick a playable idea
+
+Choose one, or bring your own:
+
+- **Dodge:** move a square left and right to avoid falling obstacles. First milestone: one obstacle you can avoid. Stretch: patterns, a dash or increasing speed.
+- **Breakout:** keep a ball in play with a paddle. First milestone: bounce off the paddle and remove one brick. Stretch: unusual brick layouts or power-ups.
+- **A tiny puzzle:** click tiles to change their neighbours. First milestone: one board with a reachable winning state. Stretch: undo or generated puzzles.
+
+Write the rule in one sentence: “Move the paddle to keep the ball alive.” That gives you a first build without deciding the entire game.
+
+### Choose your tools
+
+| Tool | Choose it when… | Start here |
+| --- | --- | --- |
+| **Phaser** | You want a 2D game framework with scenes, input and physics rather than assembling those systems yourself. My suggested starting point for an arcade game. | [Installation and templates](https://docs.phaser.io/phaser/getting-started/installation), then [make your first game](https://docs.phaser.io/phaser/getting-started/making-your-first-phaser-game). Match the tutorial's Phaser version. |
+| **Excalibur** | You want to explore a TypeScript game engine organised around actors and scenes. | [Build Breakout](https://excaliburjs.com/docs/getting-started/): create a paddle, a ball and bricks. |
+| **PixiJS** | Drawing and animation are the experiment. It is a rendering engine; you supply gameplay rules and collision handling. | [Introduction](https://pixijs.com/8.x/guides/getting-started/intro) and [quick start](https://pixijs.com/8.x/guides/getting-started/quick-start). |
+| **React + DOM or Canvas** | You want a turn-based puzzle, or to understand a small game loop without another dependency. | Use React buttons for a tile puzzle, or follow [MDN's Canvas Breakout tutorial](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript). |
+
+Pick one route. You don't need to compare every engine before making something move.
+
+### Start in the Lab
+
+Follow [Create a demo](#/create) to generate a React + TypeScript workspace. Replace the starter in `demos/<your-id>/index.tsx` with your board or a container for the game canvas. Keep game code and assets beside it.
+
+If you choose Phaser, install it **only in your demo workspace**, from the repository root:
+
+```sh
+npm install phaser --workspace @lab/demo-your-id
+```
+
+Replace `your-id` with the ID printed by the generator. For the other routes, follow the chosen tool's installation instructions and scope its dependency to the same workspace. Keep external project generators outside this repository; the Lab generator already provides its build setup.
+
+For a canvas engine, let React own the surrounding controls and a container ref. Create the engine in an effect once the container exists, attach its canvas there, and destroy it in the effect's cleanup. Follow your engine's lifecycle API. Cleanup must also work when React mounts again during development.
+
+Let the engine update positions each frame; use React state for occasional changes such as score, pause and game over. A turn-based DOM puzzle can use React state for the whole board.
+
+### Build a complete little loop
+
+1. **Input → movement.** Make a shape respond to one control. For continuous movement, use elapsed time rather than a fixed distance per frame.
+2. **Movement → consequence.** Add one collision, target or puzzle rule. Can the player tell what happened?
+3. **Consequence → another attempt.** Add a win or loss state and a restart button. Reset the world, score and input state together.
+
+You have a playable first version when someone can start, act, reach an outcome and restart without refreshing the page.
+
+Then change one thing that affects how it feels: paddle speed, obstacle spacing or the reward for a risky move. Extra levels and artwork can come after the interaction feels good.
+
+### Make it playable on your phone too
+
+Offer touch buttons or pointer controls alongside keys. Keep touch handling inside the game surface so the rest of the page can still scroll. Stop gameplay when paused or hidden, and make restarting easy. If you add sound, start it after a user action and provide mute.
+
+For a first game, leave accounts, multiplayer and a level editor out of scope. A single satisfying round is enough.
