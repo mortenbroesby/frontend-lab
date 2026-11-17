@@ -1,6 +1,6 @@
 # Presentation working draft
 
-Status: a three-slide section (about 4–6 minutes) within a broader 20–30-minute technical spotlight. The broader storyline remains undecided. The deck is in `slides.tsx`; this document is our notebook for changing its story, collecting evidence and trying ideas. Neither the title nor the running order is final.
+Status: a three-slide Lightning section (about 6–8 minutes) within a broader 20–25-minute technical spotlight. The agreed direction is curiosity: show what the web can do, ground it in a real experience, and invite people to try something unfamiliar. The deck is in `slides.tsx`; this document is our notebook for changing its story, collecting evidence and trying ideas. Neither the title nor the running order is final.
 
 ## What we want
 
@@ -10,7 +10,29 @@ Possible broader-talk title: **The browser beyond the page.**
 
 Working subtitle: **Building a familiar world on an unfamiliar platform.**
 
-Proposed central idea: a required rendering platform does not have to dictate the developer-facing component model. In this project, the abstraction helped both component development and testing.
+The Lightning section illustrates how a required rendering platform need not dictate the developer-facing component model. That is one supporting story, not the subject of the entire talk.
+
+## Broader talk and rehearsal notes
+
+The following is a working outline, not additional implemented slides. The three existing slides have speaker cues in presenter mode: what to say, what to demonstrate, transitions and factual reminders.
+
+| Section | Purpose | Approximate time |
+| --- | --- | --- |
+| What else could we build? | Establish an honest invitation to explore | 2–3 minutes |
+| Show something unexpected | Let a visual example spark curiosity before explaining it | 3–4 minutes |
+| For us, this became a real project | The three-slide Lightning story and live TV interaction | 6–8 minutes |
+| What could you try? | Offer a few approachable directions, not an API catalogue | 4–5 minutes |
+| An invitation | Leave people with permission to experiment | 1 minute |
+
+Opening words to rehearse:
+
+> This is mostly an invitation to try something unfamiliar. The web can do much more than the applications we build every day. I'll show you a few things that surprised me, including something we built for TVs. Hopefully, you'll leave with something you want to try.
+
+The D3 showcase is the recommended opening visual; its selection and exact demonstration remain open. The bridge into the TV story is: “For us, this became a real project.” Keep the contractual constraint factual and move quickly to what the team learned through building.
+
+Closing words to rehearse:
+
+> You don't need to build a TV application. Pick something you haven't tried before and see what happens. Today is a good opportunity to do that.
 
 ## Confirmed recollections from our conversation
 
@@ -44,9 +66,9 @@ The first draft expanded this into nine slides. That was too much: the presenter
 
 | Slide | Purpose | Approximate time |
 | --- | --- | --- |
-| A web app on a TV | Establish the original app and required Lightning platform | 1 minute |
+| A web app on a TV | Establish the original app and required Lightning platform | 1–2 minutes |
 | No pointer. Where is your focus? | Explore remote navigation in the embedded Canvas TV | 2–3 minutes |
-| Familiar components. Different renderer. | Explain the custom renderer and testing benefit | 1–2 minutes |
+| Familiar components. Different renderer. | Explain the custom renderer and testing benefit | 2–3 minutes |
 
 This is a section, not a finished talk. Do not expand it into the whole presentation again without agreement. The later Solid migration belongs in optional speaker context, not another slide.
 
