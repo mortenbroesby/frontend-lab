@@ -2,15 +2,33 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { initialState, navigate, selectedTitle } from './navigation.ts';
 
-test('remote navigation clamps edges and remembers the column per row', () => {
-  assert.deepEqual(navigate(initialState, 'ArrowLeft'), initialState);
-  let state = navigate(navigate(initialState, 'ArrowRight'), 'ArrowRight');
+test('vertical movement keeps the visible column after independently scrolling rows', () => {
+  let state = initialState;
+  for (let i = 0; i < 9; i++) state = navigate(state, 'ArrowRight');
+  const upper = selectedTitle(state);
+  const slot = state.column;
   state = navigate(state, 'ArrowDown');
-  assert.equal(state.columns[1], 0);
+  assert.equal(state.column, slot);
+  assert.equal(state.row, 1);
+  assert.equal(state.starts[1], 0);
   state = navigate(state, 'ArrowUp');
-  assert.equal(state.columns[0], 2);
-  for (let i = 0; i < 20; i++) state = navigate(state, 'ArrowRight');
-  assert.equal(state.columns[0], 5);
+  assert.equal(selectedTitle(state), upper);
+  assert.equal(state.column, slot);
+  assert.deepEqual(navigate(state, 'ArrowUp'), state);
+});
+
+test('rows loop in both directions without resetting the scroll position', () => {
+  let state = navigate(initialState, 'ArrowLeft');
+  assert.equal(selectedTitle(state).title, 'Elsewhere');
+  assert.equal(state.starts[0], -1);
+  state = navigate(state, 'ArrowRight');
+  assert.equal(selectedTitle(state).title, 'The Quiet Orbit');
+  for (let i = 0; i < 120; i++) state = navigate(state, 'ArrowRight');
+  assert.equal(selectedTitle(state).title, 'The Quiet Orbit');
+  assert.equal(state.column, 3);
+  assert.equal(state.starts[0], 117);
+  for (let i = 0; i < 120; i++) state = navigate(state, 'ArrowLeft');
+  assert.equal(selectedTitle(state).title, 'The Quiet Orbit');
 });
 
 test('starting playback freezes catalogue navigation and Back restores selection', () => {

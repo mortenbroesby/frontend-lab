@@ -88,15 +88,11 @@ function TVIntro() {
       <section className="tv-intro">
         <div>
           <p className="tv-eyebrow">CANVAS / REMOTE CONTROL</p>
-          <h1>A different kind of screen.</h1>
+          <h1>Your next escape.</h1>
         </div>
         <p>
-          Remote is a TV interface drawn entirely in Canvas. Explore its fictional catalogue with
-          arrow keys, then press Enter to play a short animated scene. Escape brings you back to the
-          same selection. A TV remote has no pointer, so a visible focus and predictable movement
-          matter. Mountains and mist drift behind the catalogue. React manages the state while
-          Canvas draws every title, landscape and focus ring. This is an original interaction study,
-          not a recreation of Lightning or a streaming service.
+          A fictional streaming catalogue, drawn in Canvas. Browse with arrow keys; Enter plays a
+          short scene and Escape returns. Rows loop, and moving vertically keeps your column.
         </p>
       </section>
     </>

@@ -1,8 +1,19 @@
 import { rows } from './catalogue.ts';
-export type TVState = { row: number; columns: number[]; playing: boolean };
-export const initialState: TVState = { row: 0, columns: rows.map(() => 0), playing: false };
+
+// Column is a screen position; each row keeps its own continuous scroll origin.
+export type TVState = { row: number; column: number; starts: number[]; playing: boolean };
+export const initialState: TVState = {
+  row: 0,
+  column: 0,
+  starts: rows.map(() => 0),
+  playing: false,
+};
+export function programmeIndex(position: number, length: number) {
+  return ((position % length) + length) % length;
+}
 export function selectedTitle(state: TVState) {
-  return rows[state.row].programmes[state.columns[state.row]];
+  const programmes = rows[state.row].programmes;
+  return programmes[programmeIndex(state.starts[state.row] + state.column, programmes.length)];
 }
 export function navigate(state: TVState, key: string): TVState {
   if (key === 'Escape' || key === 'Backspace') return { ...state, playing: false };
@@ -15,13 +26,10 @@ export function navigate(state: TVState, key: string): TVState {
     };
   }
   if (key !== 'ArrowLeft' && key !== 'ArrowRight') return state;
-  const columns = [...state.columns];
-  columns[state.row] = Math.max(
-    0,
-    Math.min(
-      rows[state.row].programmes.length - 1,
-      columns[state.row] + (key === 'ArrowRight' ? 1 : -1),
-    ),
-  );
-  return { ...state, columns };
+  const direction = key === 'ArrowRight' ? 1 : -1;
+  const column = state.column + direction;
+  if (column >= 0 && column < 4) return { ...state, column };
+  const starts = [...state.starts];
+  starts[state.row] += direction;
+  return { ...state, starts };
 }

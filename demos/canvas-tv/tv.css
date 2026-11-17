@@ -27,8 +27,8 @@ body {
 .tv-intro {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  margin: 48px 0 32px;
+  gap: 32px;
+  margin: 32px 0 24px;
   align-items: center;
 }
 .tv-eyebrow {
@@ -53,7 +53,7 @@ body {
   position: relative;
   aspect-ratio: 16 / 9;
   border-radius: 12px;
-  background: #080e12;
+  background: #141414;
   outline-offset: 5px;
 }
 .tv-screen:focus-visible {
@@ -159,11 +159,11 @@ body {
 .tv-embedded {
   padding: 0;
   max-width: none;
-  background: #080e12;
+  background: #141414;
 }
 .tv-shell main:fullscreen,
 .tv-embedded main {
-  background: #080e12;
+  background: #141414;
   min-height: 100dvh;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

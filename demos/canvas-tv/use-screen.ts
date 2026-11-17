@@ -20,7 +20,7 @@ export function useScreen(state: TVState) {
     const start = performance.now();
     const playbackStart = state.playing ? time.current : 0;
     let previous = start;
-    let animated = !motion.matches;
+    let animated = false;
     let frame = 0;
     const draw = (now: number) => {
       const progress = transitionProgress(now - start, motion.matches);
@@ -38,7 +38,7 @@ export function useScreen(state: TVState) {
     };
     const resize = () => {
       cancelAnimationFrame(frame);
-      animated = !motion.matches;
+      animated = state.playing && !motion.matches;
       const width = Math.max(1, Math.round(element.clientWidth * Math.min(devicePixelRatio, 2)));
       element.width = width;
       element.height = Math.round((width * 9) / 16);
