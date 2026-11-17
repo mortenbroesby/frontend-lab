@@ -1,5 +1,5 @@
 {
-  "name": "front-end-lab",
+  "name": "frontend-lab",
   "private": true,
   "type": "module",
   "packageManager": "npm@11.6.2",
@@ -14,9 +14,9 @@
     "presentation"
   ],
   "scripts": {
-    "dev": "turbo run dev --filter=front-end-lab-gallery",
+    "dev": "turbo run dev --filter=frontend-lab-gallery",
     "build": "turbo run build",
-    "preview": "turbo run preview --filter=front-end-lab-gallery",
+    "preview": "turbo run preview --filter=frontend-lab-gallery",
     "demo:new": "turbo gen demo",
     "test:servers": "node --test tests/servers.test.mjs",
     "test:generator": "node --test turbo/generators/create-demo.test.mjs",

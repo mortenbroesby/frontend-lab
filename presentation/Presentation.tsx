@@ -179,7 +179,7 @@ export function Presentation() {
       <header className="presentation-header">
         <span>
           <LabMark />
-          The Front-End Lab
+          The Frontend Lab
         </span>
         <span>Working draft</span>
       </header>

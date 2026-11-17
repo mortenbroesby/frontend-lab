@@ -45,8 +45,8 @@ export const modules = [...new Set([...workspaceNames, ...links.map((link) => li
     name: id
       .replace('@lab/demo-', '')
       .replace('@lab/', '')
-      .replace('front-end-lab-gallery', 'gallery')
-      .replace('front-end-lab', 'repo tooling'),
+      .replace('frontend-lab-gallery', 'gallery')
+      .replace('frontend-lab', 'repo tooling'),
     category: workspaceNames.has(id) ? 0 : runtimeNames.has(id) ? 1 : 2,
     path: paths.get(id) ?? 'External dependency',
   }),

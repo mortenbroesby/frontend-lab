@@ -30,7 +30,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
         <header className="site-header">
           <a className="wordmark" href={galleryHref('/')}>
             <LabMark />
-            Front-End Lab
+            Frontend Lab
           </a>
           <nav aria-label="Lab">
             <CommandMenu links={commands} />

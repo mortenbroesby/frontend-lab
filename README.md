@@ -1,4 +1,4 @@
-<h1 align="center">🧪 The Front-End Lab</h1>
+<h1 align="center">🧪 The Frontend Lab</h1>
 
 <p align="center">
   Explore, experiment and build something interesting.

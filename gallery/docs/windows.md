@@ -16,7 +16,7 @@ do not copy `node_modules` between machines.
 For another device on your LAN, run:
 
 ```sh
-npm run dev --workspace front-end-lab-gallery -- --host 0.0.0.0
+npm run dev --workspace frontend-lab-gallery -- --host 0.0.0.0
 ```
 
 Open the printed network address. If Windows Firewall prompts, allow Node on

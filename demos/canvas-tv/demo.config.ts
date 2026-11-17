@@ -4,5 +4,5 @@ export default {
   description:
     'Leave the pointer behind. Explore a cinematic TV interface drawn entirely in Canvas, using a keyboard as your remote.',
   track: 'modern-web',
-  author: 'Front-End Lab',
+  author: 'Frontend Lab',
 } satisfies DemoDefinition;

@@ -113,7 +113,7 @@ export function App() {
   const route = useRoute();
   const page = resolvePage(route);
   useEffect(() => {
-    document.title = `${page.title} · The Front-End Lab`;
+    document.title = `${page.title} · The Frontend Lab`;
   }, [page.title]);
   return (
     <>
@@ -130,7 +130,7 @@ export function App() {
       <header className="site-header">
         <a className="wordmark" href="#/">
           <LabMark />
-          Front-End Lab
+          Frontend Lab
         </a>
         <LabNavigation route={route} />
       </header>

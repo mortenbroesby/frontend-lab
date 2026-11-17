@@ -121,7 +121,7 @@ function GardenHeader() {
     <header className="garden-header">
       <a className="garden-brand" href={galleryHref('/') ?? '#content'}>
         <LabMark />
-        <span>Front-End Lab</span>
+        <span>Frontend Lab</span>
       </a>
       <div>
         <CommandMenu

@@ -2,7 +2,7 @@
 
 Hosting is optional and temporary. Participants develop locally; removing hosting leaves demos unchanged.
 
-Vercel project: `front-end-lab` in `morten-broesbyolsens-projects`, connected to `mortenbroesby/front-end-lab`. Git integration builds `main` for production independently of GitHub Actions. Removing the CI workflow does not disconnect this integration. Before introducing internal source or data, disconnect the public project from the repository and review existing deployments and access. No hosting settings are changed by this repository cleanup.
+Vercel project: `front-end-lab` in `morten-broesbyolsens-projects`, connected to `mortenbroesby/frontend-lab`. Git integration builds `main` for production independently of GitHub Actions. Removing the CI workflow does not disconnect this integration. Before introducing internal source or data, disconnect the public project from the repository and review existing deployments and access. No hosting settings are changed by this repository cleanup.
 
 Production URL: https://front-end-lab-mortenbroesby.vercel.app.
 

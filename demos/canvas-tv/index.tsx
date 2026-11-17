@@ -77,7 +77,7 @@ function TVIntro() {
     <>
       <header className="tv-header">
         <span>
-          <LabMark /> Front-End Lab
+          <LabMark /> Frontend Lab
         </span>
         {back && (
           <Button variant="outline" asChild>

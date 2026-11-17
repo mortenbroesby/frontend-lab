@@ -21,7 +21,7 @@ export default function Art() {
     const url = URL.createObjectURL(new Blob([content], { type: 'image/svg+xml' }));
     const link = document.createElement('a');
     link.href = url;
-    link.download = `front-end-lab-${seed}-${count}-${layout}.svg`;
+    link.download = `frontend-lab-${seed}-${count}-${layout}.svg`;
     link.click();
     // Let the browser begin reading the blob before releasing it.
     setTimeout(() => URL.revokeObjectURL(url), 1000);

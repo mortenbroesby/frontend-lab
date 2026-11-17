@@ -18,7 +18,7 @@ The Lightning section illustrates how a required rendering platform need not dic
 
 | Slide | Purpose | Approximate time |
 | --- | --- | --- |
-| 1. The Front-End Lab | Entrance slide to leave up while people arrive | No speaking segment |
+| 1. The Frontend Lab | Entrance slide to leave up while people arrive | No speaking segment |
 | 2. Front-end beyond the page | A brief look at TVs, installations, visual tools and games | 2–3 minutes |
 | 3. The TV project | Define Lightning, link its official site and describe the project | 1–2 minutes |
 | 4. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |

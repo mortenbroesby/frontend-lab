@@ -1,6 +1,6 @@
 ---
 name: lab-ui
-description: Build or restyle Front-End Lab interfaces using the existing shared UI library. Use for gallery or demo layout, controls, themes and responsive styling.
+description: Build or restyle Frontend Lab interfaces using the existing shared UI library. Use for gallery or demo layout, controls, themes and responsive styling.
 ---
 
 # Use Lab UI

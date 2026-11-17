@@ -15,7 +15,7 @@ const demoHref = import.meta.env.LAB_STANDALONE
 
 function Entrance() {
   return (
-    <TitleSlide eyebrow="A chapter session" title="The Front-End Lab">
+    <TitleSlide eyebrow="A chapter session" title="The Frontend Lab">
       <p>Front-end development outside the usual web page.</p>
       <span className="slide-caption">Morten Broesby</span>
     </TitleSlide>
@@ -172,7 +172,7 @@ function Components() {
 export const slides: readonly Slide[] = [
   {
     id: 'welcome',
-    title: 'The Front-End Lab',
+    title: 'The Frontend Lab',
     Content: Entrance,
     notes: `ARRIVAL SLIDE
 Leave this on screen while people arrive. No explanation is needed yet.

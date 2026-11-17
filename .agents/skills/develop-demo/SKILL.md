@@ -1,6 +1,6 @@
 ---
 name: develop-demo
-description: Build or improve one Front-End Lab demo, verify it independently and provide a LAN preview.
+description: Build or improve one Frontend Lab demo, verify it independently and provide a LAN preview.
 ---
 
 # Develop a demo

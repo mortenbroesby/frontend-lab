@@ -1,6 +1,6 @@
 ---
 name: lab-ci
-description: Investigate and fix failing GitHub Actions checks for Front-End Lab commits or pull requests, including direct pushes to main.
+description: Investigate and fix failing GitHub Actions checks for Frontend Lab commits or pull requests, including direct pushes to main.
 ---
 
 # Investigate GitHub Actions

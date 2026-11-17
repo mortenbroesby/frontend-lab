@@ -1,4 +1,4 @@
-# The Front-End Lab gallery
+# The Frontend Lab gallery
 
 The app helps participants explore ideas, try standalone demos and follow practical guides. Use the [root README](../README.md) for setup; participant instructions live in the app.
 

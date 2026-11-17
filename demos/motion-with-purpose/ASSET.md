@@ -1,6 +1,6 @@
 # Save seal
 
-`save-seal.json` is original vector animation data created for the Front-End Lab. It was hand-authored in Lottie JSON, not exported from After Effects or downloaded from a marketplace. It contains only shape layers: a settling disc, a drawn check and an expanding ring. No images, fonts, expressions or remote references.
+`save-seal.json` is original vector animation data created for the Frontend Lab. It was hand-authored in Lottie JSON, not exported from After Effects or downloaded from a marketplace. It contains only shape layers: a settling disc, a drawn check and an expanding ring. No images, fonts, expressions or remote references.
 
 - Canvas: 128 × 128; 60 frames/second; 90 frames (1.5 seconds).
 - Layers: `Draw the check`, `Settle the seal`, `An expanding ring`.

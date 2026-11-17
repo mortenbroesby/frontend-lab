@@ -86,7 +86,7 @@ export function LabNavigation({ route }: { route: string }) {
           <div className="mobile-navigation-header">
             <DialogTitle className="wordmark">
               <LabMark />
-              Front-End Lab
+              Frontend Lab
             </DialogTitle>
             <DialogClose asChild>
               <Button variant="ghost" size="lg" aria-label="Close navigation menu">
