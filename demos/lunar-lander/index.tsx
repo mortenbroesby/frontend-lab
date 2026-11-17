@@ -108,7 +108,7 @@ export default function LunarLander() {
           </Button>
         </div>
       </div>
-      <div className="lander-viewport">
+      <div className="lander-viewport" onContextMenu={(event) => event.preventDefault()}>
         <canvas
           ref={game.canvas}
           tabIndex={0}
@@ -165,7 +165,11 @@ npm run build:wasm --workspace @lab/demo-lunar-lander`}</code>
 
 function FlightControls({ game, flying }: { game: ReturnType<typeof useFlight>; flying: boolean }) {
   return (
-    <div className="lander-controls" aria-label="Touch flight controls">
+    <div
+      className="lander-controls"
+      aria-label="Touch flight controls"
+      onContextMenu={(event) => event.preventDefault()}
+    >
       {controls.map(({ id, label, glyph }) => (
         <Button
           key={id}
@@ -173,6 +177,7 @@ function FlightControls({ game, flying }: { game: ReturnType<typeof useFlight>; 
           aria-label={label}
           disabled={!flying}
           onPointerDown={(event) => {
+            event.preventDefault();
             event.currentTarget.setPointerCapture(event.pointerId);
             game.touches.current.add(id);
           }}
