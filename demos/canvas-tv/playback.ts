@@ -1,8 +1,15 @@
 import type { Programme } from './catalogue';
+import { subtitleOptions, type TVState } from './navigation';
 import { scenery } from './scenery';
 
 /** A silent, original animated short, drawn across the whole TV canvas. */
-export function playback(ctx: CanvasRenderingContext2D, programme: Programme, seconds: number) {
+export function playback(
+  ctx: CanvasRenderingContext2D,
+  programme: Programme,
+  seconds: number,
+  state: TVState,
+  reducedMotion: boolean,
+) {
   const elapsed = seconds % 45;
   ctx.save();
   ctx.globalAlpha = Math.min(1, (45 - elapsed) / 1.5);
@@ -14,25 +21,77 @@ export function playback(ctx: CanvasRenderingContext2D, programme: Programme, se
   lights(ctx, programme.hue, elapsed);
   ctx.restore();
 
-  const shade = ctx.createLinearGradient(0, 530, 0, 720);
+  captions(ctx, state.subtitles, elapsed);
+  const reveal = reducedMotion ? 1 : Math.min(1, seconds / 0.55);
+  ctx.save();
+  ctx.translate(0, 220 * (1 - reveal) ** 3);
+  playbackControls(ctx, programme.title, elapsed, state);
+  ctx.restore();
+}
+
+function playbackControls(
+  ctx: CanvasRenderingContext2D,
+  title: string,
+  elapsed: number,
+  state: TVState,
+) {
+  const shade = ctx.createLinearGradient(0, 470, 0, 720);
   shade.addColorStop(0, 'transparent');
-  shade.addColorStop(1, '#04080dd9');
+  shade.addColorStop(0.35, '#101010e8');
+  shade.addColorStop(1, '#101010');
   ctx.fillStyle = shade;
-  ctx.fillRect(0, 530, 1280, 190);
-  ctx.fillStyle = '#f4f6f5';
-  ctx.font = '500 30px system-ui, sans-serif';
-  ctx.fillText(programme.title, 56, 623);
+  ctx.fillRect(0, 470, 1280, 250);
+  ctx.fillStyle = '#f5f5f5';
+  ctx.font = '600 28px system-ui, sans-serif';
+  ctx.fillText(title, 56, 534);
   ctx.font = '14px system-ui, sans-serif';
-  ctx.fillStyle = '#b9d3cb';
-  ctx.fillText('CANVAS ANIMATION · 45 SECOND LOOP', 56, 653);
+  ctx.fillStyle = '#a3a3a3';
+  ctx.fillText('GENERATED SCENE · DEMO SUBTITLES', 56, 562);
   ctx.textAlign = 'right';
-  ctx.fillText('Esc / Back to browse', 1224, 653);
-  ctx.fillText(`0:${String(Math.floor(elapsed)).padStart(2, '0')} / 0:45`, 1224, 623);
+  ctx.fillText(`0:${String(Math.floor(elapsed)).padStart(2, '0')} / 0:45`, 1224, 534);
+  ctx.fillText('← → Choose · OK Apply · Back Browse', 1224, 562);
   ctx.textAlign = 'left';
   ctx.fillStyle = '#ffffff30';
-  ctx.fillRect(56, 681, 1168, 3);
-  ctx.fillStyle = '#b9f7d1';
-  ctx.fillRect(56, 681, (elapsed / 45) * 1168, 3);
+  ctx.fillRect(56, 586, 1168, 3);
+  ctx.fillStyle = '#e50914';
+  ctx.fillRect(56, 586, (elapsed / 45) * 1168, 3);
+  subtitleOptions.forEach((label, index) => {
+    const x = 56 + index * 200;
+    ctx.beginPath();
+    ctx.roundRect(x, 614, 180, 56, 8);
+    ctx.fillStyle = index === state.subtitleFocus ? '#f5f5f5' : '#303030';
+    ctx.fill();
+    ctx.fillStyle = index === state.subtitleFocus ? '#171717' : '#f5f5f5';
+    ctx.font = '500 18px system-ui, sans-serif';
+    ctx.fillText(`${index === state.subtitles ? '✓ ' : ''}${label}`, x + 20, 649);
+  });
+}
+
+const captionLines = [
+  [
+    'A little further, beyond the ridge.',
+    'The lights are leading us home.',
+    'There is more to discover.',
+  ],
+  [
+    'Lidt længere, på den anden side af bjerget.',
+    'Lysene viser os hjem.',
+    'Der er mere at opdage.',
+  ],
+];
+function captions(ctx: CanvasRenderingContext2D, language: number, elapsed: number) {
+  if (language === 0) return;
+  const text = captionLines[language - 1][Math.floor(elapsed / 5) % 3];
+  ctx.font = '500 26px system-ui, sans-serif';
+  const width = ctx.measureText(text).width;
+  ctx.fillStyle = '#000000cc';
+  ctx.beginPath();
+  ctx.roundRect(620 - width / 2, 416, width + 40, 48, 6);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.fillText(text, 640, 449);
+  ctx.textAlign = 'left';
 }
 
 function lights(ctx: CanvasRenderingContext2D, hue: number, seconds: number) {

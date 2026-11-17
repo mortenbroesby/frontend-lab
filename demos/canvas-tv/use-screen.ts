@@ -19,7 +19,7 @@ export function useScreen(state: TVState) {
     const from = view.current;
     const to = targetView(state);
     const start = performance.now();
-    const playbackStart = state.playing ? time.current : 0;
+    if (!state.playing) time.current = 0;
     let previous = start;
     let animated = false;
     let frame = 0;
@@ -36,7 +36,7 @@ export function useScreen(state: TVState) {
       };
       time.current += (Math.min(now - previous, 50) / 1000) * Number(animated);
       previous = now;
-      paint(ctx, state, view.current, time.current - playbackStart);
+      paint(ctx, state, view.current, time.current, motion.matches);
       if (!document.hidden && (progress < 1 || animated)) frame = requestAnimationFrame(draw);
     };
     const resize = () => {

@@ -21,3 +21,5 @@ Choose **Connect phone**, then scan the QR code on a phone. Keep both screens op
 Pairing requires trusted HTTPS (or localhost for same-computer experiments), internet and WebRTC. Plain HTTP over a LAN will not pair. Trystero uses public Nostr signaling; controls travel over WebRTC. One phone can join; treat the random pairing link as permission to control this TV. No TURN relay is configured, so restrictive networks may prevent connection. Reconnect or scan a fresh code if a mobile browser suspends the page. No network connection starts until pairing is enabled.
 
 `use-phone.ts` owns connection cleanup and synchronization; `remote-protocol.ts` validates received controls and display snapshots. No cross-demo imports or custom backend.
+
+During playback, a control bar slides up with **Off**, **English** and **Dansk** demo subtitles. Left/right moves focus; OK applies the option. Captions are illustrative text for the silent generated scene, not a real subtitle track. The phone shows the active and focused options. Back returns to the catalogue. Reduced motion shows the controls immediately and keeps the scene still.

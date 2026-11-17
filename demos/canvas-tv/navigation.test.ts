@@ -57,3 +57,16 @@ test('all twelve rows stay reachable and visible, including the taller shelf', (
   for (let row = 11; row > 0; row--) state = navigate(state, 'ArrowUp');
   assert.equal(targetView(state).scrollY, 0);
 });
+
+test('playback arrows choose subtitles without moving the catalogue; OK applies them', () => {
+  const playing = navigate(initialState, 'Enter');
+  const english = navigate(playing, 'ArrowRight');
+  assert.equal(english.subtitleFocus, 1);
+  assert.equal(english.subtitles, 0);
+  const applied = navigate(english, 'Enter');
+  assert.equal(applied.subtitles, 1);
+  assert.equal(selectedTitle(applied), selectedTitle(initialState));
+  assert.equal(navigate(navigate(applied, 'ArrowRight'), 'ArrowRight').subtitleFocus, 2);
+  assert.equal(navigate(navigate(applied, 'ArrowLeft'), 'Enter').subtitles, 0);
+  assert.equal(navigate(applied, 'Escape').playing, false);
+});

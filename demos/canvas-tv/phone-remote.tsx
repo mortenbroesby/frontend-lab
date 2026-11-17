@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { Input } from '@lab/ui/input';
 import { Button } from '@lab/ui/button';
 import { useTheme } from '@lab/ui/theme-control';
-import { selectedTitle, type TVState } from './navigation';
+import { selectedTitle, playbackHint, type TVState } from './navigation';
 import { rows } from './catalogue';
 import { RemotePad } from './remote-pad';
 import type { Snapshot } from './remote-protocol';
@@ -26,7 +26,11 @@ export function PhoneRemote({ code }: { code: string }) {
       </p>
       <PhoneSelection selection={phone.selection} />
       <RemotePad disabled={!phone.connected} dispatch={phone.send} />
-      <p>Use the arrows to browse. OK plays; Back returns.</p>
+      <p>
+        {phone.selection?.playing
+          ? phone.selection.row
+          : 'Use the arrows to browse. OK plays; Back returns.'}
+      </p>
       <Button variant="outline" onClick={() => location.reload()}>
         Reconnect
       </Button>
@@ -48,7 +52,7 @@ export function PhonePairing({
   const snapshot = useMemo(
     () => ({
       title: selectedTitle(state).title,
-      row: rows[state.row].title,
+      row: state.playing ? playbackHint(state) : rows[state.row].title,
       playing: state.playing,
     }),
     [state],

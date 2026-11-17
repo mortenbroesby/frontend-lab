@@ -3,7 +3,7 @@ import { Button } from '@lab/ui/button';
 import { useTheme } from '@lab/ui/theme-control';
 import { LabMark } from '@lab/demo-kit/mark';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
-import { initialState, navigate, selectedTitle, type TVState } from './navigation';
+import { initialState, navigate, selectedTitle, playbackHint, type TVState } from './navigation';
 import { rows } from './catalogue';
 import { RemotePad } from './remote-pad';
 import { PhonePairing, PhoneRemote, phoneRoom } from './phone-remote';
@@ -160,7 +160,7 @@ function Selection({ state }: { state: TVState }) {
       Row {state.row + 1} of {rows.length}, {rows[state.row].title}.{' '}
       {state.playing ? 'Playing' : 'Selected'}: <strong>{programme.title}</strong> ·{' '}
       {programme.genre}. {programme.description}
-      {state.playing && ' Procedural animation; Back returns to the catalogue.'}
+      {state.playing && playbackHint(state)}
     </p>
   );
 }
