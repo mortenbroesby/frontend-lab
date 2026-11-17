@@ -33,7 +33,7 @@ function Possibilities() {
       <p>
         TV interfaces. Interactive installations. Visual tools. Games.
         <br />
-        <strong>A TV project, then a browser instrument.</strong>
+        <strong>A browser instrument, then a TV project.</strong>
       </p>
     </StatementSlide>
   );
@@ -161,7 +161,7 @@ function Instrument({ preview }: { preview?: boolean }) {
       )}
       <div className="tv-slide-footer">
         <span>Press Play · Shape the sound · Tab to continue</span>
-        <a href="#curiosity">Continue presentation →</a>
+        <a href="#television">Continue presentation →</a>
       </div>
     </div>
   );
@@ -203,7 +203,7 @@ export const slides: readonly Slide[] = [
 Leave this on screen while people arrive. No explanation is needed yet.
 
 WHEN READY
-“I want to show you a different use of front-end technology, using a project I worked on. We'll look at the interaction and then how the app worked.”`,
+“I want to show you two different uses of front-end technology: a small music experiment, then a TV project I worked on.”`,
   },
   {
     id: 'possibilities',
@@ -213,12 +213,46 @@ WHEN READY
 “We usually associate front-end development with websites. But the same skills show up in very different environments: TV interfaces, interactive installations, visual tools and games.”
 
 THE PURPOSE
-“I'm using one project as an example. It involved familiar front-end work, but with a different rendering system and input device.”
+“We'll start with something I was curious to try, then look at a real project with a different rendering system and input device.”
 
 BRIDGE TO OUR EXAMPLE
-“I worked on one of those: a TV application. Let me give you a quick look at how that worked.”
+“First, could we use the browser to make music, rather than just play a recording?”
 
 Keep the other settings brief. The TV project is the concrete firsthand example; don't imply its architecture represents every TV app today.`,
+  },
+  {
+    id: 'instrument-introduction',
+    title: 'Could the browser be an instrument?',
+    Content: InstrumentIntroduction,
+    notes: `A PERSONAL QUESTION · about 1 minute
+“I started with something I wanted to try: making music in the browser.”
+
+WHERE THE IDEA CAME FROM
+“I remembered those small demoscene intros with tracker music and wondered what we could make using browser APIs. Could the browser generate the music, and could we shape it while it plays?”
+
+TRANSITION
+“This is Browser Beat: a small experiment made for this session. Let's hear it.”
+
+Keep this personal and brief. It is a new experiment, not part of the TV project or a recreation of a particular historical intro.`,
+  },
+  {
+    id: 'instrument',
+    title: 'The browser as an instrument',
+    Content: Instrument,
+    notes: `TRY THE EXPERIMENT · 2–3 minutes
+Start with sound rather than another introduction. The previous slide has established why this experiment is here.
+
+TRY IT LIVE
+Press Play. Move the Tone fader to the right slowly, then add a little Echo. Change Tempo to hear the same loop at a different pace. Move Pitch to −12 or +12 for an octave down or up without changing the tempo. Faders also support arrow keys. Keep the volume comfortable and stop playback before discussing it.
+
+WHAT IS HAPPENING
+“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The waveform reads the live audio signal.
+
+TRANSITION
+“That was an experiment driven by curiosity. Next is a project where the platform was part of the brief: an application for TVs.” Click Continue presentation outside the instrument to open The TV project. Moving to another slide removes the iframe and stops its audio. The presenter preview is deliberately static and silent.
+
+IF AUDIO IS UNAVAILABLE
+Describe the signal path and show the controls. Do not spend the talk debugging the room's sound system.`,
   },
   {
     id: 'television',
@@ -287,41 +321,7 @@ Default tests mocked parts of rendering, including Canvas functionality; tests u
 Don't explain the diagram again. Use these three points to draw together what people just saw. The animation makes the demo enjoyable; the focus movement and return behaviour are the connection to the project.
 
 TRANSITION
-“That project came from a contractual requirement. The next experiment came from curiosity.”`,
-  },
-  {
-    id: 'instrument-introduction',
-    title: 'Could the browser be an instrument?',
-    Content: InstrumentIntroduction,
-    notes: `FROM A PROJECT REQUIREMENT TO A PERSONAL QUESTION · about 1 minute
-“The TV project involved an unfamiliar platform we had to use. For this one, I chose something I wanted to try.”
-
-WHERE THE IDEA CAME FROM
-“I remembered those small demoscene intros with tracker music and wondered what we could make using browser APIs. Could the browser generate the music, and could we shape it while it plays?”
-
-TRANSITION
-“This is Browser Beat: a small experiment made for this session. Let's hear it.”
-
-Keep this personal and brief. It is a new experiment, not part of the TV project or a recreation of a particular historical intro.`,
-  },
-  {
-    id: 'instrument',
-    title: 'The browser as an instrument',
-    Content: Instrument,
-    notes: `TRY THE EXPERIMENT · 2–3 minutes
-Start with sound rather than another introduction. The previous slide has established why this experiment is here.
-
-TRY IT LIVE
-Press Play. Move the Tone fader to the right slowly, then add a little Echo. Change Tempo to hear the same loop at a different pace. Move Pitch to −12 or +12 for an octave down or up without changing the tempo. Faders also support arrow keys. Keep the volume comfortable and stop playback before discussing it.
-
-WHAT IS HAPPENING
-“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The waveform reads the live audio signal.
-
-TRANSITION
-“That is the experiment. Any questions about how it works, or about the TV project?” Click Continue presentation outside the instrument to open Questions. Moving to another slide removes the iframe and stops its audio. The presenter preview is deliberately static and silent.
-
-IF AUDIO IS UNAVAILABLE
-Describe the signal path and show the controls. Do not spend the talk debugging the room's sound system.`,
+“Those were two different starting points: curiosity about browser audio, and a TV platform we were required to use. Any questions about either?”`,
   },
   {
     id: 'curiosity',

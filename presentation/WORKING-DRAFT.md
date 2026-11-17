@@ -4,7 +4,7 @@ Status: a nine-slide draft for a 20–30-minute technical spotlight, including d
 
 ## What we want
 
-An authentic presentation grounded in an actual project, not a technology showcase for its own sake. Briefly introduce alternative settings, show the TV interaction, then explain how that app worked at a high level. Keep the slides visual and brief; put context and uncertainty in speaker notes. Leave room for an interactive illustration and discussion.
+An authentic presentation grounded in an actual project, not a technology showcase for its own sake. Briefly introduce alternative settings, try Browser Beat, then show the TV interaction and explain how that app worked at a high level. Keep the slides visual and brief; put context and uncertainty in speaker notes. Leave room for an interactive illustration and discussion.
 
 Tone: plain and personal. Explain what we built, what was different and what we know. Avoid slogans, repeated invitations, claims of transformation or a sales-style closing. Let the example be interesting on its own. The time estimate is a guide; do not pad the talk to reach it.
 
@@ -20,17 +20,17 @@ The Lightning section illustrates how a required rendering platform need not dic
 | --- | --- | --- |
 | 1. The Frontend Lab | Entrance slide to leave up while people arrive | No speaking segment |
 | 2. Front-end beyond the page | A brief look at TVs, installations, visual tools and games | 2–3 minutes |
-| 3. The TV project | Define Lightning, link its official site and describe the project | 1–2 minutes |
-| 4. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
-| 5. How our app worked. | JSX → custom renderer → Lightning; explain the benefit without internals | 2–3 minutes |
-| 6. What was different | Briefly recap input, rendering and tooling | About 1 minute |
-| 7. Could the browser be an instrument? | Introduce the personal curiosity behind Browser Beat | About 1 minute |
-| 8. The browser as an instrument | Shape an original Web Audio loop in the inline Browser Beat | 2–3 minutes |
+| 3. Could the browser be an instrument? | Introduce the personal curiosity behind Browser Beat | About 1 minute |
+| 4. The browser as an instrument | Shape an original Web Audio loop in the inline Browser Beat | 2–3 minutes |
+| 5. The TV project | Define Lightning, link its official site and describe the project | 1–2 minutes |
+| 6. Try the interaction. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
+| 7. How our app worked. | JSX → custom renderer → Lightning; explain the benefit without internals | 2–3 minutes |
+| 8. What was different | Briefly recap input, rendering and tooling | About 1 minute |
 | 9. Questions? | Discussion without another motivational closing | Questions |
 
 The entrance is a landing screen, not another content section. Slide 2 introduces alternative front-end settings and invites people to think outside their usual work. These are brief examples, not a technology survey. The D3 showcase has been explicitly removed from the talk; the live demonstrations are the TV and Browser Beat. No changes are required to the standalone D3 demo.
 
-The transition into Lightning is: “I worked on one of those: a TV application. Let me give you a quick look at how that worked.” The project is a historical firsthand example, not a claim about how all TV apps are built today. The final slides return to experimentation without requiring a business case or finished product.
+The transition into Lightning is: “I worked on one of those: a TV application. Let me give you a quick look at how that worked.” The project is a historical firsthand example, not a claim about how all TV apps are built today. The TV is the final live demo, followed by the architecture, brief recap and questions.
 
 Every slide includes presenter notes: suggested wording, demonstration cues, transitions and reminders where facts remain uncertain. Rehearse the pacing; allow roughly 4–5 minutes for questions within the slot rather than filling it with more slides.
 
@@ -125,4 +125,4 @@ Edit slide content and notes in `slides.tsx`, then record new recollections here
 
 ## Browser instrument
 
-After the TV recap, a short introduction connects a project requirement to a personal question: could the browser be an instrument? It explains the memory of old demoscene music before opening Browser Beat. The live demo then leads directly to Questions; the related-exercises slide has been removed to avoid returning to the TV topic after the music demo. Browser Beat is a new experiment inspired by demoscene/tracker music, not part of the historical TV project. It uses native Web Audio and Canvas with React controls. Start the original loop, shape tempo, pitch, tone and echo, then stop. The presentation uses four stacked horizontal mixing-console faders and a live waveform; the full sequencer remains in the standalone demo. The slide embeds its performance view with audio/fullscreen permissions and keeps Continue presentation outside the iframe. Presenter previews are static and silent. Leaving the slide removes the instrument and its audio context.
+Browser Beat comes first, with a short introduction about the memory of old demoscene music. The live music demo then leads into the TV project, moving from personal curiosity to a required platform. The TV section closes the examples before Questions. Browser Beat is a new experiment inspired by demoscene/tracker music, not part of the historical TV project. It uses native Web Audio and Canvas with React controls. Start the original loop, shape tempo, pitch, tone and echo, then stop. The presentation uses four stacked horizontal mixing-console faders and a live waveform; the full sequencer remains in the standalone demo. The slide embeds its performance view with audio/fullscreen permissions and keeps Continue presentation outside the iframe. Presenter previews are static and silent. Leaving the slide removes the instrument and its audio context.
