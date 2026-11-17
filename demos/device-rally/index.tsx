@@ -19,7 +19,7 @@ function supportsPeerConnections() {
 
 function initialRoomCode() {
   const code = new URLSearchParams(location.search).get('rallyRoom') ?? '';
-  return /^[a-z0-9-]{1,24}$/.test(code) ? code : 'friday-lab';
+  return /^[a-z0-9-]{1,24}$/.test(code) ? code : 'front-end-lab';
 }
 
 export default function DeviceRally() {
@@ -60,7 +60,7 @@ export default function DeviceRally() {
         if (signal.aborted) return;
         room = joinRoom(
           {
-            appId: 'mortenbroesby/frontend-chapter-day/device-rally-v1',
+            appId: 'mortenbroesby/front-end-lab/device-rally-v1',
             identity: 'none',
             maxUsers: 12,
             maxReceiveBytes: 65536,

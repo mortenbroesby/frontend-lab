@@ -4,7 +4,7 @@ Contributor reference. For a first investigation, use the app’s Code Quality �
 
 ## Configuration
 
-The following choices describe this workshop repository, not defaults to copy into your own project.
+The following choices describe this Lab repository, not defaults to copy into your own project.
 
 - `.fallowrc.json` declares workspace patterns and the existing thresholds. Built-in discovery adds package exports, Vite, tests, generators and Workers. Recheck it when entries move.
 - Root scripts scan the current workspace outside Turbo’s cache. New error-level findings and worsening existing enforceable complexity findings fail the audit, commit hook and CI. Unchanged inherited findings remain allowed; estimated-coverage-only findings, test complexity and CSS suggestions stay advisory.

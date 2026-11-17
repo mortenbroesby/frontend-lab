@@ -4,7 +4,7 @@ Verify proportionally: use a focused existing test, type check or build to answe
 
 Browser tests, Playwright and browser CI are removed; no browser installation is needed. Reintroduce browser tests only when explicitly requested, such as for a testing demo.
 
-The standalone demo packages, gallery, generator and shared toolchain remain in place. Device Rally has partial physical-device evidence; see the session below. Workshop-network acceptance remains unverified.
+The standalone demo packages, gallery, generator and shared toolchain remain in place. Device Rally has partial physical-device evidence; see the session below. Target-network acceptance remains unverified.
 
 [Verification history](VERIFICATION-HISTORY.md) records earlier revisions, not current coverage or requirements. Report only checks run for this change.
 
@@ -53,7 +53,7 @@ The final layout pass completed all 20 check tasks. Fallow reported no dead code
 
 ### Resume physical-device acceptance
 
-Use a fresh or agreed room on trusted HTTPS with the phone page in the foreground. Confirm both peer counts, send a cheer each way, deliberately leave/rejoin and repeat. Record phone/browser and Wi-Fi/mobile data, plus whether it is the intended workshop network. Do not treat two laptop browser windows or the existing one-way evidence as completing this check.
+Use a fresh or agreed room on trusted HTTPS with the phone page in the foreground. Confirm both peer counts, send a cheer each way, deliberately leave/rejoin and repeat. Record phone/browser and Wi-Fi/mobile data, plus whether it is the intended network. Do not treat two laptop browser windows or the existing one-way evidence as completing this check.
 
 ## Focused lint rules
 

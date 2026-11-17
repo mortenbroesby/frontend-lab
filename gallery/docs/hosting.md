@@ -2,7 +2,9 @@
 
 Hosting is optional and temporary. Participants develop locally; removing hosting leaves demos unchanged.
 
-Vercel project: `frontend-chapter-day` in `morten-broesbyolsens-projects`, connected to `mortenbroesby/frontend-chapter-day`. Git integration builds `main` for production; no deployment secrets or extra GitHub workflow are needed.
+Vercel project: `front-end-lab` in `morten-broesbyolsens-projects`, connected to `mortenbroesby/front-end-lab`. Git integration builds `main` for production; no deployment secrets or extra GitHub workflow are needed.
+
+Production URL: https://front-end-lab-mortenbroesby.vercel.app.
 
 Project settings:
 

@@ -4,7 +4,7 @@ Four tracks, standalone demos and separate showcases. Help participants get star
 
 ## Scope
 
-- Build workshop demos people can run, change and understand today. Avoid production hardening, speculative features and future-proofing.
+- Build focused experiments people can run, change and understand. Avoid production hardening, speculative features and future-proofing.
 - Preserve standalone npm packages, metadata-driven discovery, one generator and shared tooling. Add infrastructure only for a current need.
 - No backwards compatibility: update callers and delete obsolete paths. No aliases, adapters or dual modes for legacy behaviour.
 - Prefer deletion, direct code, existing dependencies and browser APIs. Preserve accessibility, input safety, error handling and resource cleanup; never expose secrets.

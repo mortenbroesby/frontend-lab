@@ -19,8 +19,8 @@
 
 ---
 
-A React gallery for front-end experiments. Explore a demo, follow a track or
-bring your own idea—solo or together. Unfinished work is welcome.
+A shared space for front-end experimentation. Explore demos, follow guides,
+and build your own ideas—solo or together. Unfinished work is welcome.
 
 <a id="tracks"></a>
 ## 🧭 Choose a Track

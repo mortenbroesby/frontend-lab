@@ -62,7 +62,7 @@ Source review and HTTP checks do not establish interactive Windows browser suppo
 Still manually check current Edge/Chrome and Firefox on Windows: open the palette
 with Ctrl+K, use both action shortcuts, switch keyboard layouts, save an SVG,
 try worker interactions and connect Device Rally peers over HTTPS. Touch/pen,
-managed devices, Windows ARM64 and real workshop networks remain unverified.
+managed devices, Windows ARM64 and intended networks remain unverified.
 
 References: [Git line endings](https://git-scm.com/docs/gitattributes),
 [PowerShell execution policies](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies/),

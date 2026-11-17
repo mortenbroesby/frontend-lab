@@ -25,7 +25,7 @@ async function fixture(t) {
   return root;
 }
 const answers = {
-  id: 'chapter-quiz',
+  id: 'lab-quiz',
   track: 'experimental-projects',
   title: 'Quiz "hello" $&',
   author: 'Morten',
@@ -35,19 +35,16 @@ const answers = {
 test('creates a working template and typed metadata with safely escaped text', async (t) => {
   const root = await fixture(t);
   await createDemo(root, answers);
-  const registry = await readFile(join(root, 'demos/chapter-quiz/demo.config.ts'), 'utf8');
-  const metadata = (
-    await import(pathToFileURL(join(root, 'demos/chapter-quiz/demo.config.ts')).href)
-  ).default;
+  const registry = await readFile(join(root, 'demos/lab-quiz/demo.config.ts'), 'utf8');
+  const metadata = (await import(pathToFileURL(join(root, 'demos/lab-quiz/demo.config.ts')).href))
+    .default;
   assert.equal(metadata.title, answers.title);
   assert.equal(metadata.description, answers.description);
   assert.doesNotMatch(registry, /load:|import\(/);
-  const component = await readFile(join(root, 'demos/chapter-quiz/index.tsx'), 'utf8');
+  const component = await readFile(join(root, 'demos/lab-quiz/index.tsx'), 'utf8');
   assert.match(component, /export default function Demo/);
   assert.ok(component.includes(answers.title));
-  assert.ok(
-    (await readFile(join(root, 'demos/chapter-quiz/README.md'), 'utf8')).startsWith('# Quiz'),
-  );
+  assert.ok((await readFile(join(root, 'demos/lab-quiz/README.md'), 'utf8')).startsWith('# Quiz'));
 });
 
 test('rejects existing demo folders without modifying work', async (t) => {
@@ -56,14 +53,11 @@ test('rejects existing demo folders without modifying work', async (t) => {
   const before = await readFile(path, 'utf8');
   await mkdir(join(root, 'demos/generative-postcard'));
   await assert.rejects(createDemo(root, { ...answers, id: 'generative-postcard' }), /exist/i);
-  await mkdir(join(root, 'demos/chapter-quiz'));
-  await writeFile(join(root, 'demos/chapter-quiz/keep.txt'), 'participant work');
+  await mkdir(join(root, 'demos/lab-quiz'));
+  await writeFile(join(root, 'demos/lab-quiz/keep.txt'), 'participant work');
   await assert.rejects(createDemo(root, answers), /exist/i);
   assert.equal(await readFile(path, 'utf8'), before);
-  assert.equal(
-    await readFile(join(root, 'demos/chapter-quiz/keep.txt'), 'utf8'),
-    'participant work',
-  );
+  assert.equal(await readFile(join(root, 'demos/lab-quiz/keep.txt'), 'utf8'), 'participant work');
 });
 
 test('invalid names, tracks and empty metadata cause no writes', async (t) => {
@@ -95,7 +89,7 @@ test('different demos can be generated concurrently without editing shared files
     createDemo(root, { ...answers, id: 'another-demo' }),
   ]);
   assert.equal(await readFile(join(root, 'gallery/src/demo-registry.ts'), 'utf8'), 'do not edit');
-  for (const id of ['chapter-quiz', 'another-demo']) {
+  for (const id of ['lab-quiz', 'another-demo']) {
     assert.match(
       await readFile(join(root, 'demos', id, 'demo.config.ts'), 'utf8'),
       /satisfies DemoDefinition/,
@@ -116,8 +110,8 @@ test('asks for a name first without a default and suggests an editable folder ID
   assert.equal(name.default, undefined);
   for (const value of ['', '   ', undefined, 'Two\nlines'])
     assert.notEqual(name.validate(value), true);
-  assert.equal(name.validate('Chapter Quiz'), true);
-  assert.equal(id.default({ title: 'Chapter Quiz!' }), 'chapter-quiz');
+  assert.equal(name.validate('Lab Quiz'), true);
+  assert.equal(id.default({ title: 'Lab Quiz!' }), 'lab-quiz');
 });
 
 test('missing, whitespace-only and multiline names leave all files untouched', async (t) => {
@@ -155,11 +149,11 @@ test('every named track choice produces matching typed metadata', async (t) => {
 test('gives participants an exact route, editable file and persistent first change', async (t) => {
   const root = await fixture(t);
   const instructions = await createDemo(root, answers);
-  assert.match(instructions, /npm install[\s\S]*npm run dev --workspace @lab\/demo-chapter-quiz/);
+  assert.match(instructions, /npm install[\s\S]*npm run dev --workspace @lab\/demo-lab-quiz/);
   assert.match(instructions, /URL printed/i);
-  assert.match(instructions, /#\/demo\/chapter-quiz/);
-  assert.match(instructions, /demos\/chapter-quiz\/index\.tsx/);
-  const notes = await readFile(join(root, 'demos/chapter-quiz/README.md'), 'utf8');
+  assert.match(instructions, /#\/demo\/lab-quiz/);
+  assert.match(instructions, /demos\/lab-quiz\/index\.tsx/);
+  const notes = await readFile(join(root, 'demos/lab-quiz/README.md'), 'utf8');
   assert.match(notes, /npm run typecheck --workspace/);
   assert.match(notes, /updates automatically/i);
   assert.match(notes, /demo\.config\.ts/);
@@ -171,7 +165,7 @@ test('Modern Web generates an independent circle bootstrap, leaving the shared s
   const starter = join(root, 'turbo/generators/templates/BrowserStarter.tsx.template');
   const before = await readFile(starter, 'utf8');
   await createDemo(root, { ...answers, track: 'modern-web' });
-  const component = await readFile(join(root, 'demos/chapter-quiz/index.tsx'), 'utf8');
+  const component = await readFile(join(root, 'demos/lab-quiz/index.tsx'), 'utf8');
   assert.match(component, /export default function Demo/);
   assert.match(component, /<circle/);
   assert.match(component, /Circle radius/);
@@ -182,9 +176,9 @@ test('Modern Web generates an independent circle bootstrap, leaving the shared s
 test('every generated demo is its own app package', async (t) => {
   const root = await fixture(t);
   await createDemo(root, answers);
-  const folder = join(root, 'demos/chapter-quiz');
+  const folder = join(root, 'demos/lab-quiz');
   const pkg = JSON.parse(await readFile(join(folder, 'package.json'), 'utf8'));
-  assert.equal(pkg.name, '@lab/demo-chapter-quiz');
+  assert.equal(pkg.name, '@lab/demo-lab-quiz');
   assert.equal(pkg.dependencies['@lab/ui'], '*');
   assert.ok(pkg.scripts.dev && pkg.scripts.build && pkg.scripts.preview);
   assert.equal(pkg.scripts.typecheck, 'tsc --noEmit');
