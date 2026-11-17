@@ -30,7 +30,7 @@ export const tracks = [
     guides: [
       {
         slug: 'state-machines',
-        title: 'Make interaction states explicit',
+        title: 'What is a state machine?',
         description:
           'Explore XState through a TV remote whose buttons change meaning during playback.',
       },
