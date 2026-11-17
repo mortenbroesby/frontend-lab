@@ -8,11 +8,12 @@ import javascript from 'shiki/langs/javascript.mjs';
 import json from 'shiki/langs/json.mjs';
 import css from 'shiki/langs/css.mjs';
 import html from 'shiki/langs/html.mjs';
+import shell from 'shiki/langs/shellscript.mjs';
 import light from 'shiki/themes/github-light.mjs';
 import dark from 'shiki/themes/github-dark.mjs';
 
 const highlighter = createHighlighterCoreSync({
-  langs: [tsx, jsx, typescript, javascript, json, css, html],
+  langs: [tsx, jsx, typescript, javascript, json, css, html, shell],
   themes: [light, dark],
   engine: createJavaScriptRegexEngine(),
 });

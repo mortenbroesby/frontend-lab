@@ -1,13 +1,31 @@
 import { Idea, IdeaGrid, IdeaNote, Inspiration } from './Ideas';
 import { demos } from '../demo-registry';
-import { lazy, type ComponentType, type ComponentProps } from 'react';
+import { lazy, isValidElement, type ComponentType, type ComponentProps } from 'react';
+import { CodePreview } from '@lab/ui/code-preview';
 import type { MDXComponents, MDXProps } from 'mdx/types';
 
 // Compile trusted repository pages at build time; load only the selected page.
 const modules = import.meta.glob<{ default: ComponentType<MDXProps> }>('../content/**/*.mdx');
 const pages = Object.fromEntries(Object.entries(modules).map(([path, load]) => [path, lazy(load)]));
 
+function GuideCode({ children, ...props }: ComponentProps<'pre'>) {
+  if (
+    !isValidElement<ComponentProps<'code'>>(children) ||
+    typeof children.props.children !== 'string'
+  )
+    return <pre {...props}>{children}</pre>;
+  const language = children.props.className?.replace(/^language-/, '') ?? 'text';
+  return (
+    <CodePreview
+      code={children.props.children.replace(/\n$/, '')}
+      language={language}
+      filename={`${language} example`}
+    />
+  );
+}
+
 const components: MDXComponents = {
+  pre: GuideCode,
   Idea,
   IdeaGrid,
   IdeaNote,
