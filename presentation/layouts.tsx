@@ -22,16 +22,6 @@ export function TitleSlide({ eyebrow, title, children }: LayoutProps) {
   );
 }
 
-export function StatementSlide({ eyebrow, title, children }: LayoutProps) {
-  return (
-    <div className="slide-layout statement-layout">
-      <p className="slide-eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <div className="slide-description">{children}</div>
-    </div>
-  );
-}
-
 export function DiagramSlide({ eyebrow, title, children }: LayoutProps) {
   return (
     <div className="slide-layout diagram-layout">
@@ -42,29 +32,30 @@ export function DiagramSlide({ eyebrow, title, children }: LayoutProps) {
   );
 }
 
-export function DemonstrationSlide({ eyebrow, title, children }: LayoutProps) {
+export function StatementSlide({ eyebrow, title, children }: LayoutProps) {
   return (
-    <div className="slide-layout demonstration-layout">
-      <div>
-        <p className="slide-eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
-        <p className="slide-description">
-          One small change.
-          <br />
-          An immediate result.
-        </p>
-      </div>
-      <div className="slide-experiment">{children}</div>
+    <div className="slide-layout statement-layout">
+      <p className="slide-eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <div className="slide-description">{children}</div>
     </div>
   );
 }
 
-export function TakeawaySlide({ eyebrow, title, children }: LayoutProps) {
+export function ExperimentOptions({
+  options,
+}: {
+  options: readonly { label: string; title: string; description: string }[];
+}) {
   return (
-    <div className="slide-layout takeaway-layout">
-      <p className="slide-eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <div className="takeaway-items">{children}</div>
-    </div>
+    <ul className="experiment-options">
+      {options.map(({ label, title, description }) => (
+        <li key={label}>
+          <span>{label}</span>
+          <h2>{title}</h2>
+          <p>{description}</p>
+        </li>
+      ))}
+    </ul>
   );
 }

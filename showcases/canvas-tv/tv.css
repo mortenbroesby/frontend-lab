@@ -1,0 +1,218 @@
+@import '@lab/ui/styles.css';
+@source '.';
+
+body {
+  margin: 0;
+  background: var(--lab-surface);
+  color: var(--lab-ink);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.tv-shell {
+  max-width: 1440px;
+  margin: auto;
+  padding: 24px;
+}
+.tv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.tv-header > span {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 600;
+}
+.tv-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin: 48px 0 32px;
+  align-items: center;
+}
+.tv-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--lab-muted);
+}
+.tv-intro h1 {
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  margin: 12px 0;
+  text-wrap: balance;
+}
+.tv-intro > p {
+  color: var(--lab-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+.tv-screen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  background: #080e12;
+  outline-offset: 5px;
+}
+.tv-screen:focus-visible {
+  outline: 3px solid var(--lab-ink);
+}
+.tv-screen canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+.tv-unavailable {
+  position: absolute;
+  inset: 20%;
+  color: #fff;
+}
+.tv-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 24px;
+}
+.tv-controls p,
+.tv-selection {
+  font-size: 14px;
+  color: var(--lab-muted);
+  line-height: 1.6;
+}
+.tv-remote {
+  display: grid;
+  grid-template-areas: '. up .' 'left ok right' '. down .' '. back .';
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(4, 44px);
+  gap: 2px;
+  padding: 10px;
+  flex-shrink: 0;
+  border: 1px solid var(--lab-border);
+  border-radius: 28px;
+  background: var(--lab-surface);
+}
+.tv-remote button {
+  padding: 0;
+  border-radius: 50%;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+.tv-up {
+  grid-area: up;
+}
+.tv-left {
+  grid-area: left;
+}
+.tv-ok {
+  grid-area: ok;
+}
+.tv-right {
+  grid-area: right;
+}
+.tv-down {
+  grid-area: down;
+}
+.tv-back {
+  grid-area: back;
+  font-size: 12px;
+}
+.tv-selection {
+  min-height: 3.2em;
+}
+@media (max-width: 700px) {
+  .tv-shell {
+    padding: 16px;
+  }
+  .tv-intro {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 32px 0 24px;
+  }
+  .tv-controls {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.tv-launch > button {
+  margin-right: 8px;
+}
+
+.tv-header a {
+  color: inherit;
+}
+.tv-skip {
+  position: absolute;
+  z-index: 1;
+  padding: 12px;
+  background: var(--lab-surface);
+  color: var(--lab-ink);
+  transform: translateY(-200%);
+}
+.tv-skip:focus {
+  transform: translateY(0);
+}
+/* Embedded mode reserves space for the touch remote without covering the catalogue. */
+.tv-embedded {
+  padding: 0;
+  max-width: none;
+  background: #080e12;
+}
+.tv-shell main:fullscreen,
+.tv-embedded main {
+  background: #080e12;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: center;
+  align-items: center;
+  gap: 12px;
+  padding-right: 12px;
+}
+.tv-shell main:fullscreen .tv-screen,
+.tv-embedded .tv-screen {
+  width: 100%;
+  border-radius: 0;
+}
+.tv-shell main:fullscreen .tv-controls,
+.tv-embedded .tv-controls {
+  margin: 0;
+}
+.tv-shell main:fullscreen .tv-launch,
+.tv-shell main:fullscreen .tv-selection,
+.tv-embedded .tv-launch,
+.tv-embedded .tv-selection {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.tv-shell main:fullscreen .tv-launch button,
+.tv-embedded .tv-launch button,
+.tv-embedded .tv-skip {
+  display: none;
+}
+.tv-embedded .tv-screen:focus-visible {
+  outline: 1px solid #668079;
+  outline-offset: -1px;
+}
+@media (max-width: 600px) {
+  .tv-shell main:fullscreen,
+  .tv-embedded main {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
+    gap: 12px;
+  }
+  .tv-shell main:fullscreen .tv-controls,
+  .tv-embedded .tv-controls {
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .tv-controls {
+    align-items: center;
+  }
+}

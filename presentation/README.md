@@ -1,6 +1,6 @@
 # Presentation
 
-A standalone React deck with five example slides. These demonstrate layouts and interaction; they are not the eventual talk.
+An eight-slide React talk offering a peek at front-end beyond the usual web page, including a three-slide Lightning story and live TV interaction. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the confirmed recollections, proposed structure and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0
@@ -20,6 +20,6 @@ Presenter view keeps the current slide, next-slide preview, notes and an elapsed
 
 Edit `slides.tsx`. Each entry has a stable, unique `id`, a `title`, a React `Content` component and optional `notes`. Array order is presentation order. The URL hash preserves the current slide on reload.
 
-Use the five layout components in `layouts.tsx`, or compose a slide directly. Slides use a 16:9 canvas; container-relative typography keeps the composition consistent. Keep text brief and test your projector size.
+Use the layout components in `layouts.tsx`, or compose a slide directly. Slides use a 16:9 canvas; container-relative typography keeps the composition consistent. Keep text brief and test your projector size.
 
-Interactive slide components receive `preview`. Render a quiet, disabled representation when it is true. The next-slide preview is also inert and hidden from assistive technology. Put complex custom interactions inside `data-presentation-interactive` to reserve their keyboard events. Clean up effects when slides unmount. The included frequency experiment needs no effects or external services.
+Interactive slide components receive `preview`. Render a quiet, disabled representation when it is true. The next-slide preview is also inert and hidden from assistive technology. Put complex custom interactions inside `data-presentation-interactive` to reserve their keyboard events. Clean up effects when slides unmount. The TV slide embeds the independent Canvas TV showcase in an iframe (`?embed=1`), with no component imports between workspaces. Its arrow keys stay inside the TV. Tab through the remote controls to reach Continue presentation. Presenter previews use a static placeholder, not another live app. The combined gallery build supplies its URL automatically, including under a base path. For a standalone deck, set `VITE_GALLERY_URL` to the running gallery URL before starting or building.

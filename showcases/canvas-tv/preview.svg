@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+<title>Remote: a Canvas TV catalogue with directional focus</title>
+<defs><linearGradient id="sky" x2="1" y2="1"><stop stop-color="#080e12"/><stop offset="1" stop-color="#377c77"/></linearGradient><linearGradient id="fade"><stop stop-color="#080e12"/><stop offset="1" stop-color="#080e12" stop-opacity="0"/></linearGradient></defs>
+<rect width="800" height="450" rx="12" fill="#080e12"/>
+<path d="M250 0h550v285H250z" fill="url(#sky)"/>
+<circle cx="650" cy="85" r="37" fill="#bfdfd5"/>
+<path d="M250 220Q400 80 560 200T800 180V300H250Z" fill="#143b3b"/>
+<path d="M250 260Q480 130 650 240T800 220V320H250Z" fill="#10262b"/>
+<path d="M0 0h700v320H0z" fill="url(#fade)"/>
+<g font-family="system-ui,sans-serif"><text x="40" y="45" fill="#b9f7d1" font-size="18" font-weight="700">REMOTE</text><text x="40" y="145" fill="#f4f6f5" font-size="40" font-weight="600">The Quiet Orbit</text><text x="40" y="179" fill="#afc3c5" font-size="13">A different screen. A different way to explore.</text><text x="40" y="270" fill="#f4f6f5" font-size="15">Beyond the familiar</text></g>
+<g fill="#183b3b"><rect x="40" y="288" width="166" height="98" rx="7"/><rect x="224" y="288" width="166" height="98" rx="7" fill="#282b4b"/><rect x="408" y="288" width="166" height="98" rx="7" fill="#294735"/><rect x="592" y="288" width="166" height="98" rx="7" fill="#4a3525"/></g>
+<rect x="35" y="283" width="176" height="108" rx="10" stroke="#b9f7d1" stroke-width="3"/>
+<g fill="#c6dfd4"><circle cx="170" cy="315" r="13"/><circle cx="354" cy="315" r="13"/><circle cx="538" cy="315" r="13"/><circle cx="722" cy="315" r="13"/></g>
+<text x="40" y="425" font-family="system-ui,sans-serif" font-size="12" fill="#a8b9bc">↑ ↓ ← →   Navigate      Enter   Play      Esc   Back</text>
+</svg>

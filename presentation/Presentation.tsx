@@ -19,9 +19,11 @@ function SlideStage({ index, preview = false }: { index: number; preview?: boole
       <div key={slide.id} className="slide-content">
         <Content preview={preview} />
       </div>
-      <span className="slide-number" aria-hidden="true">
-        {String(index + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-      </span>
+      {slide.id !== 'remote' && (
+        <span className="slide-number" aria-hidden="true">
+          {String(index + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+        </span>
+      )}
     </section>
   );
 }
@@ -52,7 +54,7 @@ function PresenterPanel({
             <SlideStage index={index + 1} preview />
           </>
         ) : (
-          <p>End of the example deck.</p>
+          <p>End of the draft.</p>
         )}
       </div>
       <div className="speaker-notes">
@@ -179,7 +181,7 @@ export function Presentation() {
           <LabMark />
           The Front-End Lab
         </span>
-        <span>Example deck</span>
+        <span>Working draft</span>
       </header>
       <main id="presentation-stage" className="presentation-body" tabIndex={-1}>
         <div className="audience-stage">
