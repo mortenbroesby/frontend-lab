@@ -1,6 +1,6 @@
 # Lab UI
 
-30 component families for the gallery and standalone demos, adapted from [shadcn/ui’s New York v4 registry](https://ui.shadcn.com/docs/components) with focused Radix primitives. MIT attribution is in [LICENSE.md](LICENSE.md).
+Shared component families for the gallery and standalone demos, adapted from [shadcn/ui’s New York v4 registry](https://ui.shadcn.com/docs/components) with focused Radix primitives. MIT attribution is in [LICENSE.md](LICENSE.md).
 
 Run `npm run storybook` from the repository root to inspect individual components, edit controls and browse state examples on port 6006. `npm run storybook:build` produces a static site in `shared/ui/dist/storybook`.
 
@@ -22,6 +22,7 @@ For components working together, open **UI library** in the gallery or run `npm 
 | Layout and content | `card`, `badge`, `separator`, `table`, `avatar`, `scroll-area` |
 | Navigation | `tabs`, `accordion`, `breadcrumb`, `pagination` |
 | Overlays | `dialog`, `alert-dialog`, `sheet`, `popover`, `dropdown-menu`, `tooltip` |
+| Developer patterns | `snippet`, `kbd`, `empty-state` |
 | Feedback | `alert`, `progress`, `skeleton` |
 
 ## Use
@@ -74,3 +75,7 @@ Run `npm run test --workspace @lab/ui` for focused rendering contracts and `npm 
 Sources were imported from `https://ui.shadcn.com/r/styles/new-york-v4/<component>.json` on 16 November 2026. We maintain these files locally. Review upstream updates against our adaptations: focused package imports, scoped resets, button defaults, bounded overlays, slider labels, viewport focus and progress semantics. Do not overwrite them blindly.
 
 The playground covers the listed families. Rich editors, date pickers, combobox search, charts, toasts and data-grid behavior remain separate future additions.
+
+## Developer patterns
+
+Inspired by [Geist](https://vercel.com/geist/introduction), using Lab tokens and existing primitives. `Snippet` takes a `code` string and an optional copy-button `label`; it copies the exact text and reports clipboard failures (including insecure HTTP) without hiding the selectable command. `Kbd` is a native keyboard hint, not a shortcut handler. `EmptyState` takes `title`, `description`, optional decorative `icon`, and action children; callers own filtering and announcements. Reserve alerts for errors and empty states for useful next actions.

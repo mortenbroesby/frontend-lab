@@ -318,7 +318,7 @@
   gap: 0.3rem;
   flex-wrap: wrap;
 }
-pre {
+pre:not([data-slot]) {
   overflow-x: auto;
   max-width: 100%;
   padding: 1rem;

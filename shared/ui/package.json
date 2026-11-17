@@ -36,7 +36,10 @@
     "./separator": "./src/separator.tsx",
     "./badge": "./src/badge.tsx",
     "./select": "./src/select.tsx",
-    "./theme-control": "./src/theme-control.tsx"
+    "./theme-control": "./src/theme-control.tsx",
+    "./kbd": "./src/kbd.tsx",
+    "./empty-state": "./src/empty-state.tsx",
+    "./snippet": "./src/snippet.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
