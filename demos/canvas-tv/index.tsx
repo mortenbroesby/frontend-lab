@@ -158,9 +158,9 @@ function Selection({ state }: { state: TVState }) {
       aria-atomic="true"
     >
       Row {state.row + 1} of {rows.length}, {rows[state.row].title}.{' '}
-      {state.playing ? 'Playing' : 'Selected'}: <strong>{programme.title}</strong> ·{' '}
-      {programme.genre}. {programme.description}
-      {state.playing && playbackHint(state)}
+      {state.playback.value !== 'browsing' ? 'Playing' : 'Selected'}:{' '}
+      <strong>{programme.title}</strong> · {programme.genre}. {programme.description}
+      {state.playback.value !== 'browsing' && playbackHint(state)}
     </p>
   );
 }

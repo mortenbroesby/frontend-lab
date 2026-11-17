@@ -52,8 +52,8 @@ export function PhonePairing({
   const snapshot = useMemo(
     () => ({
       title: selectedTitle(state).title,
-      row: state.playing ? playbackHint(state) : rows[state.row].title,
-      playing: state.playing,
+      row: state.playback.value !== 'browsing' ? playbackHint(state) : rows[state.row].title,
+      playing: state.playback.value !== 'browsing',
     }),
     [state],
   );

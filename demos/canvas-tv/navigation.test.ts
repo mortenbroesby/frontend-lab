@@ -35,7 +35,7 @@ test('rows loop in both directions without resetting the scroll position', () =>
 test('starting playback freezes catalogue navigation and Back restores selection', () => {
   const selected = navigate(initialState, 'ArrowRight');
   const playback = navigate(selected, 'Enter');
-  assert.equal(playback.playing, true);
+  assert.equal(playback.playback.value, 'controls');
   assert.equal(selectedTitle(playback).title, selectedTitle(selected).title);
   assert.deepEqual(navigate(playback, 'ArrowDown'), playback);
   assert.deepEqual(navigate(navigate(playback, 'Escape'), 'Escape'), selected);
@@ -68,21 +68,20 @@ test('playback arrows choose subtitles without moving the catalogue; OK applies 
   assert.equal(selectedTitle(applied), selectedTitle(initialState));
   assert.equal(navigate(navigate(applied, 'ArrowRight'), 'ArrowRight').subtitleFocus, 2);
   assert.equal(navigate(navigate(applied, 'ArrowLeft'), 'Enter').subtitles, 0);
-  assert.equal(navigate(applied, 'Escape').playing, true);
+  assert.equal(navigate(applied, 'Escape').playback.value, 'watching');
 });
 
 test('Back and Up dismiss playback controls; Down or OK reopen without changing subtitles', () => {
   const playing = navigate(navigate(navigate(initialState, 'Enter'), 'ArrowRight'), 'Enter');
   const hidden = navigate(playing, 'Escape');
-  assert.equal(hidden.controlsVisible, false);
-  assert.equal(hidden.playing, true);
+  assert.equal(hidden.playback.value, 'watching');
   assert.equal(hidden.subtitles, 1);
   assert.deepEqual(navigate(playing, 'ArrowUp'), hidden);
   assert.deepEqual(navigate(hidden, 'ArrowUp'), hidden);
   assert.deepEqual(navigate(hidden, 'ArrowRight'), hidden);
   assert.deepEqual(navigate(hidden, 'ArrowDown'), playing);
   assert.deepEqual(navigate(hidden, 'Enter'), playing);
-  assert.equal(navigate(hidden, 'Backspace').playing, false);
+  assert.equal(navigate(hidden, 'Backspace').playback.value, 'browsing');
   assert.equal(targetView(hidden).overlay, 0);
   assert.equal(targetView(playing).overlay, 1);
 });

@@ -1,0 +1,54 @@
+## Why does Back do something different here?
+
+Open <DemoLink id="canvas-tv">Remote / Canvas TV</DemoLink>, start a title and press Back twice. The first press hides the controls; the second returns to browsing. The button is the same. The current state changes its meaning.
+
+A **state machine** names the modes an interaction can be in and the events that move it between them. Instead of following several booleans through conditionals, you can read the allowed transitions together.
+
+### Follow one interaction
+
+The TV uses three modes:
+
+| Current state | Event | Next state |
+| --- | --- | --- |
+| Browsing | OK | Controls visible |
+| Controls visible | Back or Up | Watching without controls |
+| Watching without controls | OK or Down | Controls visible |
+| Watching without controls | Back | Browsing |
+
+Try hiding the controls, then pressing Right. Nothing changes. Show them again and Right selects a subtitle option. A missing mode transition does not necessarily mean a button does nothing: OK with controls visible applies the selected subtitle without leaving that state.
+
+**State is the mode; data records the details.** The selected title, focused subtitle and applied language survive mode changes. They do not need a separate state for every combination. Here, the machine replaces `playing` and `controlsVisible`, making “browsing with playback controls visible” impossible to represent.
+
+### Read the working machine
+
+After [local setup](#/guide/setup), run:
+
+```sh
+npm run dev --workspace @lab/demo-canvas-tv
+```
+
+Open `demos/canvas-tv/playback-machine.ts`. It uses **`xstate/fsm`**, XState's compact finite-state-machine entry point. This demo pins **XState 6.0.0-beta.3**: the API is beta and may change. See the [compact FSM documentation](https://stately.ai/docs/xstate/v6/fsm) and [stable XState documentation](https://stately.ai/docs/xstate/v5/quick-start) when choosing for another project.
+
+One transition reads:
+
+```ts
+browsing: { on: { Enter: { target: 'controls' } } }
+```
+
+In `navigation.ts`, `playbackMachine.transition(snapshot, event)` calculates the next snapshot. React keeps it in the existing reducer. Catalogue movement and subtitle selection remain ordinary functions; drawing and animation stay outside the machine. Keyboard, touch remote and phone commands reach the same navigation function.
+
+### Explore a different rule
+
+Choose one change, or bring an interaction from your own application:
+
+- **Change what Back means.** Should it always leave playback? Sketch the affected arrows before editing. What happens to someone who only wanted the controls out of the way?
+- **Add a paused mode.** Which inputs should resume, show controls or leave? Decide whether pausing and control visibility are independent before multiplying states.
+- **Investigate a confusing form or dialog.** List its modes and events. Look for combinations of flags that should never coexist. Would explicit states make those rules easier to explain?
+
+Follow one sequence through the model, then try it in the interface. `navigation.test.ts` contains small checks for returning to the same title, hiding controls and keeping subtitles. Change a rule deliberately and see which expectation needs reconsidering.
+
+### Draw first, add machinery when useful
+
+Use [Stately's editor](https://stately.ai/editor) to sketch states and labelled arrows. Compare the sketch with the working transition table; this demo does not connect a live inspector.
+
+The compact FSM suits these flat, synchronous modes. For nested states, timers, effects or communicating actors, explore [full XState](https://stately.ai/docs). Its richer runtime also brings more concepts. A single open/closed toggle may be clearer as ordinary React state; choose a machine when making the allowed behaviour explicit helps you reason about it.

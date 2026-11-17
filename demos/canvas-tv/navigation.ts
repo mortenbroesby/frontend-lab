@@ -1,12 +1,12 @@
 import { rows } from './catalogue.ts';
+import { playbackMachine } from './playback-machine.ts';
 
 // Column is a screen position; each row keeps its own continuous scroll origin.
 export type TVState = {
   row: number;
   column: number;
   starts: number[];
-  playing: boolean;
-  controlsVisible: boolean;
+  playback: typeof playbackMachine.initialState;
   subtitles: number;
   subtitleFocus: number;
 };
@@ -14,8 +14,7 @@ export const initialState: TVState = {
   row: 0,
   column: 0,
   starts: rows.map(() => 0),
-  playing: false,
-  controlsVisible: false,
+  playback: playbackMachine.initialState,
   subtitles: 0,
   subtitleFocus: 0,
 };
@@ -27,9 +26,12 @@ export function selectedTitle(state: TVState) {
   return programmes[programmeIndex(state.starts[state.row] + state.column, programmes.length)];
 }
 export function navigate(state: TVState, key: string): TVState {
-  if (key === 'Escape' || key === 'Backspace') return goBack(state);
-  if (state.playing) return playbackNavigation(state, key);
-  if (key === 'Enter') return { ...state, playing: true, controlsVisible: true };
+  const [playback] = playbackMachine.transition(state.playback, {
+    type: key === 'Backspace' ? 'Escape' : key,
+  });
+  if (playback !== state.playback) return { ...state, playback };
+  if (playback.value === 'controls') return subtitleNavigation(state, key);
+  if (playback.value === 'watching') return state;
   if (key === 'ArrowUp' || key === 'ArrowDown') {
     return {
       ...state,
@@ -47,20 +49,9 @@ export function navigate(state: TVState, key: string): TVState {
 
 export const subtitleOptions = ['Off', 'English', 'Dansk'];
 export function playbackHint(state: TVState) {
-  if (!state.controlsVisible)
+  if (state.playback.value === 'watching')
     return `Demo subtitles: ${subtitleOptions[state.subtitles]}. Controls hidden. ↓ / OK show controls · Back browse.`;
   return `Demo subtitles: ${subtitleOptions[state.subtitles]}. Selected option: ${subtitleOptions[state.subtitleFocus]}. ← → choose · OK apply · ↑ / Back hide.`;
-}
-function goBack(state: TVState): TVState {
-  if (state.playing && state.controlsVisible) return { ...state, controlsVisible: false };
-  return { ...state, playing: false, controlsVisible: false };
-}
-function playbackNavigation(state: TVState, key: string): TVState {
-  if (key === 'ArrowUp') return { ...state, controlsVisible: false };
-  if (!state.controlsVisible) {
-    return ['ArrowDown', 'Enter'].includes(key) ? { ...state, controlsVisible: true } : state;
-  }
-  return subtitleNavigation(state, key);
 }
 function subtitleNavigation(state: TVState, key: string): TVState {
   if (key === 'Enter') return { ...state, subtitles: state.subtitleFocus };

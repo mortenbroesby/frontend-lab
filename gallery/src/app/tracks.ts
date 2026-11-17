@@ -29,6 +29,12 @@ export const tracks = [
     id: 'code-quality',
     guides: [
       {
+        slug: 'state-machines',
+        title: 'Make interaction states explicit',
+        description:
+          'Explore XState through a TV remote whose buttons change meaning during playback.',
+      },
+      {
         slug: 'dependencies',
         title: 'Trace a dependency’s reach',
         description: 'Follow consumers to choose where to investigate a package change.',

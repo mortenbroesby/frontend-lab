@@ -19,7 +19,7 @@ export function useScreen(state: TVState) {
     const from = view.current;
     const to = targetView(state);
     const start = performance.now();
-    if (!state.playing) time.current = 0;
+    if (state.playback.value === 'browsing') time.current = 0;
     let previous = start;
     let animated = false;
     let frame = 0;
@@ -42,7 +42,7 @@ export function useScreen(state: TVState) {
     };
     const resize = () => {
       cancelAnimationFrame(frame);
-      animated = state.playing && !motion.matches;
+      animated = state.playback.value !== 'browsing' && !motion.matches;
       const width = Math.max(1, Math.round(element.clientWidth * Math.min(devicePixelRatio, 2)));
       element.width = width;
       element.height = Math.round((width * 9) / 16);

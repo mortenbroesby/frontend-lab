@@ -22,7 +22,7 @@ export function targetView(state: TVState): View {
   const top = rowTop(state.row);
   const scrollY = Math.max(0, top + height - 670);
   return {
-    overlay: Number(state.playing && state.controlsVisible),
+    overlay: Number(state.playback.value === 'controls'),
     offsets: state.starts.map((start) => start * 242),
     x: 64 + state.column * 242,
     y: top - scrollY,

@@ -85,7 +85,7 @@ export function paint(ctx: Context, state: TVState, view: View, seconds: number)
   ctx.fillStyle = '#141414';
   ctx.fillRect(0, 0, 1280, 720);
   const programme = selectedTitle(state);
-  if (state.playing) {
+  if (state.playback.value !== 'browsing') {
     playback(ctx, programme, seconds, state, view.overlay);
     return;
   }
