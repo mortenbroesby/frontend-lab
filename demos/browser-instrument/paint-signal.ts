@@ -14,12 +14,14 @@ export function paintSignal(
     const height = (spectrum[bin] / 255) * 190;
     context.fillRect(bar * 15.625 + 2, 240 - height, 11.625, height);
   }
+  // Fit the presentation's quieter audio to the scope without amplifying silence.
+  const peak = spectrum ? 128 : Math.max(8, ...samples.map((value) => Math.abs(value - 128)));
   context.strokeStyle = '#c6ffdc';
   context.lineWidth = 2;
   context.beginPath();
   context.moveTo(0, 120);
   samples.forEach((value, index) =>
-    context.lineTo((index / 1023) * 1000, 120 + ((value - 128) / 128) * (spectrum ? 400 : 100)),
+    context.lineTo((index / 1023) * 1000, 120 + ((value - 128) / peak) * (spectrum ? 400 : 100)),
   );
   context.stroke();
 }

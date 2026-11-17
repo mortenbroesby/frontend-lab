@@ -495,14 +495,14 @@ body:has(.instrument-performance) {
 }
 .instrument-presentation .instrument-scope {
   background: none;
-  opacity: 0.45;
+  opacity: 1;
 }
 .instrument-presentation .scope-caption,
 .instrument-presentation .scope-footer {
   display: none;
 }
 .instrument-presentation .instrument-scope canvas {
-  height: 60px;
+  height: 100px;
 }
 .instrument-presentation .instrument-controls {
   grid-template-columns: 1fr;
