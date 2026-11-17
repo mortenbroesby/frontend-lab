@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
 import tailwindcss from '@tailwindcss/vite';
-import { demoLinks } from './mdx-demo-links';
+import { demoLinks } from './mdx-demo-links.ts';
 
 const root = resolve(import.meta.dirname, '..');
 const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => {

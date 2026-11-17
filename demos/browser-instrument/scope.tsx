@@ -16,17 +16,22 @@ export function Scope({
     if (!context) return;
     const samples = new Uint8Array(1024);
     const spectrum = new Uint8Array(512);
+    if (!instrument) {
+      samples.fill(128);
+      paintSignal(context, samples, waveformOnly ? undefined : spectrum);
+      return;
+    }
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     let frame = 0;
     const draw = () => {
       samples.fill(128);
       spectrum.fill(0);
-      if (instrument && !reduced.matches) {
+      if (!reduced.matches) {
         instrument.analyser.getByteTimeDomainData(samples);
         if (!waveformOnly) instrument.analyser.getByteFrequencyData(spectrum);
       }
       paintSignal(context, samples, waveformOnly ? undefined : spectrum);
-      if (instrument && !waveformOnly) onStep(instrument.currentStep());
+      if (!waveformOnly) onStep(instrument.currentStep());
       frame = requestAnimationFrame(draw);
     };
     draw();

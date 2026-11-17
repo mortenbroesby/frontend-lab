@@ -21,10 +21,13 @@ export function usePhone(
     Boolean(globalThis.crypto?.subtle) &&
     typeof RTCPeerConnection === 'function';
   function send(value: string | Snapshot) {
-    if (!peer.current || !sender.current) return;
-    void sender.current
-      .send(value, { target: peer.current })
-      .catch(() => setStatus('Could not send. Check the connection or reconnect.'));
+    const action = sender.current;
+    const target = peer.current;
+    if (!target || !action) return;
+    void action.send(value, { target }).catch(() => {
+      if (sender.current === action && peer.current === target)
+        setStatus('Could not send. Check the connection or reconnect.');
+    });
   }
   useEffect(() => {
     if (!code || !supported) return;
@@ -101,12 +104,14 @@ export function usePhone(
         );
         room.onError(
           () => {
+            clearTimeout(timer);
             if (!signal.aborted) setStatus('Connection error. Reconnect or try another network.');
           },
           { signal },
         );
         await room.ready;
       } catch {
+        clearTimeout(timer);
         if (!signal.aborted) setStatus('Could not connect. Check internet and reconnect.');
       }
     }
