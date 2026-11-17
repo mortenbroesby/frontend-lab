@@ -111,7 +111,11 @@ function PresentationControls({
         <Button
           variant="outline"
           disabled={!fullscreen.supported}
-          onClick={() => void fullscreen.toggle()}
+          onClick={() => {
+            void fullscreen.toggle().then((entered) => {
+              if (entered) setClean(true);
+            });
+          }}
         >
           {fullscreen.active ? 'Exit fullscreen' : 'Fullscreen'}
         </Button>
@@ -155,7 +159,7 @@ export function Presentation() {
   useTheme();
   const { index, move } = useSlides();
   const timer = useElapsedTime();
-  const [mode, setMode] = useState<'audience' | 'presenter' | 'clean'>('audience');
+  const [mode, setMode] = useState<'audience' | 'presenter' | 'clean'>('clean');
   const setPresenter = (active: boolean) => setMode(active ? 'presenter' : 'audience');
   const setClean = () => setMode('clean');
   return (

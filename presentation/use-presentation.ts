@@ -67,8 +67,10 @@ export function useFullscreen() {
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
       else await document.documentElement.requestFullscreen();
+      return Boolean(document.fullscreenElement);
     } catch {
       setError('Fullscreen is unavailable here. You can still present in this window.');
+      return false;
     }
   };
   return { active, error, toggle, supported: Boolean(document.fullscreenEnabled) };
