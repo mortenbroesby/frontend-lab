@@ -1,5 +1,9 @@
 ## What is a state machine?
 
+**Try an example first:** open [Stately’s stopwatch on CodeSandbox](https://codesandbox.io/p/sandbox/github/statelyai/xstate/tree/main/examples/stopwatch) and explore how its controls change the running state. It uses full XState; our TV below uses the compact FSM API.
+
+Prefer a diagram? [Stately’s introduction](https://stately.ai/docs/state-machines-and-statecharts) starts with a video-player model. Choose **Click to interact** to explore its states and transitions.
+
 Open <DemoLink id="canvas-tv">Remote / Canvas TV</DemoLink>, start a title and press Back twice. The first press hides the controls; the second returns to browsing. The button is the same. The current state changes its meaning.
 
 A **state machine** names the modes an interaction can be in and the events that move it between them. Instead of following several booleans through conditionals, you can read the allowed transitions together.
