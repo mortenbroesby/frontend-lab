@@ -19,12 +19,9 @@ export default function MotionWithPurpose() {
   const [editing, setEditing] = useState(false);
   const [revision, setRevision] = useState(0);
   const [replay, setReplay] = useState(0);
-  const reduced = useReducedMotion();
-  const animate = treatment !== 'Still' && !reduced;
-  const transition = { duration: animate ? duration / 1000 : 0, ease: 'easeOut' as const };
+  const { reduced, animate, transition } = useMotionTreatment(treatment, duration);
   const canReplay = revision > 0 && !editing;
   const revisionLabel = revision ? `Revision ${revision}` : 'Draft collection';
-  const guide = galleryHref('/track/experimental-projects/motion');
 
   function save(next: string) {
     setTitle(next);
@@ -105,6 +102,22 @@ export default function MotionWithPurpose() {
           onReplay={() => setReplay((value) => value + 1)}
         />
       </div>
+      <MotionNotes />
+    </div>
+  );
+}
+
+function useMotionTreatment(treatment: Treatment, duration: number) {
+  const reduced = useReducedMotion();
+  const animate = treatment !== 'Still' && !reduced;
+  const transition = { duration: animate ? duration / 1000 : 0, ease: 'easeOut' as const };
+  return { reduced, animate, transition };
+}
+
+function MotionNotes() {
+  const guide = galleryHref('/track/experimental-projects/motion');
+  return (
+    <>
       <div className="motion-notes">
         <section>
           <p className="eyebrow">Motion / Interface</p>
@@ -132,7 +145,7 @@ export default function MotionWithPurpose() {
           <a href={guide}>Add motion with purpose — follow the guide →</a>
         </p>
       )}
-    </div>
+    </>
   );
 }
 
