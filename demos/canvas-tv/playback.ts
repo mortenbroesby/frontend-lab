@@ -21,7 +21,10 @@ export function playback(
   lights(ctx, programme.hue, elapsed);
   ctx.restore();
 
+  ctx.save();
+  ctx.translate(0, 200 * (1 - overlay));
   captions(ctx, state.subtitles, elapsed);
+  ctx.restore();
   if (overlay === 0) return;
   ctx.save();
   ctx.translate(0, 250 * (1 - overlay));
