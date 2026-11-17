@@ -1,3 +1,4 @@
+import { TrackSymbol } from '@lab/demo-kit/track-symbol';
 import { DemoFrame } from './demo-frame';
 import { InstrumentFrame } from './instrument-frame';
 import type { ComponentType } from 'react';
@@ -61,21 +62,25 @@ function Tracks() {
           options={[
             {
               label: 'BROWSER',
+              icon: <TrackSymbol track="modern-web" />,
               title: 'Modern Web\nCapabilities',
               description: 'Try a browser capability you haven’t used.',
             },
             {
               label: 'CODE',
+              icon: <TrackSymbol track="code-quality" />,
               title: 'Code Quality &\nMaintainability',
               description: 'Investigate something difficult to understand or maintain.',
             },
             {
               label: 'WORKFLOW',
+              icon: <TrackSymbol track="developer-experience" />,
               title: 'Developer Experience\n& Tooling',
               description: 'Improve something that slows you down.',
             },
             {
               label: 'CURIOSITY',
+              icon: <TrackSymbol track="experimental-projects" />,
               title: 'Experimental\nProjects',
               description: 'Build something you’re curious about.',
             },
@@ -155,21 +160,25 @@ function NextDirections() {
           options={[
             {
               label: 'MODERN WEB',
+              icon: <TrackSymbol track="modern-web" />,
               title: 'Connect a phone.',
               description: 'Explore messages between a remote and a shared screen.',
             },
             {
               label: 'CODE QUALITY',
+              icon: <TrackSymbol track="code-quality" />,
               title: 'Understand the state.',
               description: 'Trace navigation rules and test what happens when you go back.',
             },
             {
               label: 'DEVELOPER EXPERIENCE',
+              icon: <TrackSymbol track="developer-experience" />,
               title: 'Make debugging easier.',
               description: 'Explore ways to inspect focus, events and transitions.',
             },
             {
               label: 'EXPERIMENTAL PROJECTS',
+              icon: <TrackSymbol track="experimental-projects" />,
               title: 'Invent another interface.',
               description: 'Turn the interaction into a game, visual world or something else.',
             },

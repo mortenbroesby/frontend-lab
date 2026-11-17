@@ -4,7 +4,7 @@ import { requirementLabels } from '@lab/demo-kit/types';
 import { demos } from '../demo-registry';
 import type { TrackId } from '../demo-contract';
 import { tracks } from './tracks';
-import { TrackSymbol } from './TrackSymbol';
+import { TrackSymbol } from '@lab/demo-kit/track-symbol';
 import { TrackIllustration } from './TrackIllustration';
 
 export function DemoGallery({ track }: { track?: TrackId }) {

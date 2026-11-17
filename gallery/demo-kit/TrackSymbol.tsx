@@ -1,4 +1,4 @@
-import type { TrackId } from '../demo-contract';
+import type { TrackId } from './types';
 
 const paths: Record<TrackId, string> = {
   'modern-web': 'M8 8h16v16H8z M12 4v4m8-4v4M12 24v4m8-4v4M4 12h4m-4 8h4m16-8h4m-4 8h4',

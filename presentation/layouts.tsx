@@ -45,13 +45,16 @@ export function StatementSlide({ eyebrow, title, children }: LayoutProps) {
 export function ExperimentOptions({
   options,
 }: {
-  options: readonly { label: string; title: string; description: string }[];
+  options: readonly { label: string; title: string; description: string; icon?: ReactNode }[];
 }) {
   return (
     <ul className="experiment-options">
-      {options.map(({ label, title, description }) => (
+      {options.map(({ label, title, description, icon }) => (
         <li key={label}>
-          <span>{label}</span>
+          <span className="experiment-label">
+            {icon}
+            {label}
+          </span>
           <h2>{title}</h2>
           <p>{description}</p>
         </li>

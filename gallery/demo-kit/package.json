@@ -10,6 +10,7 @@
     "./styles.css": "./styles.css",
     "./gallery-link": "./gallery-link.ts",
     "./mark": "./LabMark.tsx",
+    "./track-symbol": "./TrackSymbol.tsx",
     "./command-menu": "./CommandMenu.tsx"
   },
   "dependencies": {
