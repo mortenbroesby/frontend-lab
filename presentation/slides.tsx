@@ -1,3 +1,4 @@
+import { InstrumentFrame } from './instrument-frame';
 import type { ComponentType } from 'react';
 import { TitleSlide, DiagramSlide, StatementSlide, ExperimentOptions } from './layouts';
 
@@ -161,7 +162,7 @@ function Instrument({ preview }: { preview?: boolean }) {
   return (
     <div className="tv-slide instrument-slide" data-presentation-interactive>
       {instrumentHref ? (
-        <iframe
+        <InstrumentFrame
           title="Pocket tracker — interactive browser instrument"
           src={`${instrumentHref}?embed=1&presentation=1`}
           allow="autoplay; fullscreen"
