@@ -52,7 +52,7 @@ Turbo normally hashes package-local inputs. The gallery also hashes demo sources
 
 Open with **⌘K / Ctrl+K**, or **Menu → command palette** on mobile. Search navigation, demos and guides; use arrows to move, Enter to select and Escape to close. Appearance controls choose light, dark or system mode.
 
-**Ctrl+Enter** opens a local debug snapshot; **Shift+Enter** opens all demos. Reload clears unsaved in-memory state. The kit owns palette behavior in `demo-kit/CommandMenu.tsx`; the gallery supplies links from its metadata. Standalone demos use the same palette and link back when configured.
+The kit owns palette behavior in `demo-kit/CommandMenu.tsx`; the gallery supplies links from its metadata. Standalone demos use the same palette and link back when configured.
 
 ## Maintainer references
 

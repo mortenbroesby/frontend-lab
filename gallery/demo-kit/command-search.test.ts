@@ -1,11 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import {
-  matchesCommand,
-  isCommandShortcut,
-  developerShortcut,
-  commandLabel,
-} from './command-search.ts';
+import { matchesCommand, isCommandShortcut, commandLabel } from './command-search.ts';
 
 test('search matches all words across group and label, ignoring case and whitespace', () => {
   const command = { label: 'React Render Detective', group: 'Demos' };
@@ -30,31 +25,6 @@ test('palette shortcut accepts Cmd or Ctrl K, but ignores repeats, composition a
   for (const key of ['altKey', 'shiftKey', 'repeat', 'isComposing'] as const)
     assert.equal(isCommandShortcut({ ...event, [key]: true }), false);
   assert.equal(isCommandShortcut({ ...event, metaKey: false }), false);
-});
-
-test('palette actions use Enter modifiers without stealing layout-switch shortcuts', () => {
-  const event = {
-    key: 'Enter',
-    altKey: false,
-    shiftKey: false,
-    ctrlKey: true,
-    metaKey: false,
-    repeat: false,
-    isComposing: false,
-  };
-  assert.equal(developerShortcut(event), 'debug');
-  assert.equal(developerShortcut({ ...event, ctrlKey: false, shiftKey: true }), 'gallery');
-  for (const patch of [
-    { key: 'd', altKey: true, shiftKey: true },
-    { key: 'k' },
-    { ctrlKey: false },
-    { shiftKey: true },
-    { repeat: true },
-    { isComposing: true },
-    { altKey: true },
-    { metaKey: true },
-  ])
-    assert.equal(developerShortcut({ ...event, ...patch }), undefined);
 });
 
 test('command label matches the platform keyboard', () => {

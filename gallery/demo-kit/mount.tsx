@@ -20,9 +20,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
     [`/track/${demo.track}/examples`, 'Back to track'],
   ].flatMap(([route, label]) => {
     const href = galleryHref(route);
-    return href
-      ? [{ label, group: 'Navigation', href, shortcut: route === '/demos' ? 'G' : undefined }]
-      : [];
+    return href ? [{ label, group: 'Navigation', href }] : [];
   });
   createRoot(document.getElementById('root')!).render(
     <StrictMode>

@@ -37,7 +37,7 @@ export function LabNavigation({ route }: { route: string }) {
         }}
         links={[
           { label: 'Tracks', group: 'Navigation', href: '#/' },
-          { label: 'All demos', group: 'Navigation', href: '#/demos', shortcut: 'G' },
+          { label: 'All demos', group: 'Navigation', href: '#/demos' },
           { label: 'All guides', group: 'Navigation', href: '#/guides' },
           { label: 'Create a demo', group: 'Navigation', href: '#/create' },
           { label: 'Local setup', group: 'Navigation', href: '#/guide/setup' },

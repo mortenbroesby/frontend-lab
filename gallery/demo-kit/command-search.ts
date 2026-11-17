@@ -27,15 +27,3 @@ export function isCommandShortcut(
 export function commandLabel(platform: string) {
   return /Mac|iPhone|iPad|iPod/.test(platform) ? '⌘K' : 'Ctrl K';
 }
-
-export function developerShortcut(
-  event: Pick<
-    KeyboardEvent,
-    'key' | 'altKey' | 'shiftKey' | 'ctrlKey' | 'metaKey' | 'repeat' | 'isComposing'
-  >,
-) {
-  if (event.key !== 'Enter' || event.altKey || event.metaKey || event.repeat || event.isComposing)
-    return;
-  if (event.ctrlKey === event.shiftKey) return;
-  return event.ctrlKey ? 'debug' : 'gallery';
-}
