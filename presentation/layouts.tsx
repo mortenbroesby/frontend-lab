@@ -22,16 +22,6 @@ export function TitleSlide({ eyebrow, title, children }: LayoutProps) {
   );
 }
 
-export function StatementSlide({ eyebrow, title, children }: LayoutProps) {
-  return (
-    <div className="slide-layout statement-layout">
-      <p className="slide-eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <div className="slide-description">{children}</div>
-    </div>
-  );
-}
-
 export function DiagramSlide({ eyebrow, title, children }: LayoutProps) {
   return (
     <div className="slide-layout diagram-layout">
@@ -49,22 +39,12 @@ export function DemonstrationSlide({ eyebrow, title, children }: LayoutProps) {
         <p className="slide-eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
         <p className="slide-description">
-          One small change.
+          Your keyboard is the remote.
           <br />
-          An immediate result.
+          Follow the focus.
         </p>
       </div>
       <div className="slide-experiment">{children}</div>
-    </div>
-  );
-}
-
-export function TakeawaySlide({ eyebrow, title, children }: LayoutProps) {
-  return (
-    <div className="slide-layout takeaway-layout">
-      <p className="slide-eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <div className="takeaway-items">{children}</div>
     </div>
   );
 }

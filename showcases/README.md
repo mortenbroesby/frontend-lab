@@ -27,3 +27,7 @@ npm run preview --workspace @lab/showcase-signal-garden -- --host 0.0.0.0 --port
 Open the printed network URL on the same LAN. Standalone builds need no gallery; optionally set `VITE_GALLERY_URL` at build time to enable return navigation. Gallery builds include the return link automatically.
 
 `model.ts` generates the artwork and formation targets, `engine.ts` owns the D3 simulation and cleanup, and `paint.ts` draws Canvas frames. React owns the controls. Generated families and connections aren't a real dataset. Reduced motion starts paused; Play is an explicit opt-in. No server, network API or animation library is required.
+
+## Remote / Canvas TV
+
+Run `npm run dev --workspace @lab/showcase-canvas-tv -- --host 0.0.0.0`, or open it from the gallery. A 16:9 Canvas interface explores directional focus, row navigation and returning from title details. See [Canvas TV](canvas-tv/README.md) for its small implementation and keyboard controls.

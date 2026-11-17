@@ -1,12 +1,12 @@
 # Presentation working draft
 
-Status: first draft for discussion. Target: a 20–30-minute technical spotlight for front-end engineers. The deck is in `slides.tsx`; this document is our notebook for changing its story, collecting evidence and trying ideas. Neither the title nor the running order is final.
+Status: a three-slide section (about 4–6 minutes) within a broader 20–30-minute technical spotlight. The broader storyline remains undecided. The deck is in `slides.tsx`; this document is our notebook for changing its story, collecting evidence and trying ideas. Neither the title nor the running order is final.
 
 ## What we want
 
 An authentic presentation grounded in an actual project, not a technology showcase for its own sake. Show the result, explain a real constraint, then make the engineering decisions understandable. Keep the slides visual and brief; put context and uncertainty in speaker notes. Leave room for an interactive illustration and discussion.
 
-Working title: **Same components. Different screen.**
+Possible broader-talk title: **The browser beyond the page.**
 
 Working subtitle: **Building a familiar world on an unfamiliar platform.**
 
@@ -38,31 +38,29 @@ The story first looked like “The browser beyond the page,” with one or two L
 - **The browser beyond the page.** Broader; useful if the TV story stays short and leads into workshop experiments.
 - **Building a familiar world on an unfamiliar platform.** Closest to the team's developer-experience problem.
 
-The current draft develops the firsthand story across the whole spotlight. We can compress it back into two slides if the broader browser-capabilities direction is preferred.
+The first draft expanded this into nine slides. That was too much: the presenter clarified that the TV story should occupy only two or three slides. The current version has three, with a live showcase as its centrepiece.
 
-## Draft running order
+## Current three-slide section
 
-| Slide ID | Purpose | Approximate time | What would improve it |
-| --- | --- | --- | --- |
-| `front-end-lab` | Establish the story and working title | 1 min | Confirm title and speaker introduction |
-| `television` | Show what was actually built | 3 min | A shareable recording or screenshot; product and role context |
-| `constraint` | Explain the contractual Lightning requirement | 2 min | A concise description of the project context |
-| `friction` | Explain the imperative/component-model gap | 3 min | A specific example of developer friction |
-| `bridge` | Trace JSX through the custom renderer to Lightning | 4 min | A small real component and its primitive counterpart |
-| `illustration` | Make an update visible through a small interaction | 4 min | Replace conceptual code with a verified example if available |
-| `testing` | Explain why the abstraction also helped testing | 4 min | One real test, its assertions and mocked boundary |
-| `evolution` | Acknowledge the later move to Solid | 1 min, optional | Firsthand reason for the switch, otherwise omit |
-| `takeaways` | Return to the two practical benefits | 2 min | One honest maintenance tradeoff and discussion |
+| Slide | Purpose | Approximate time |
+| --- | --- | --- |
+| A web app on a TV | Establish the original app and required Lightning platform | 1 minute |
+| No pointer. Where is your focus? | Launch Canvas TV and explore remote navigation | 2–3 minutes |
+| Familiar components. Different renderer. | Explain the custom renderer and testing benefit | 1–2 minutes |
 
-About 24 minutes before questions. These are rehearsal estimates, not a fixed schedule. If time is tight, remove the Solid slide and shorten the illustration.
+This is a section, not a finished talk. Do not expand it into the whole presentation again without agreement. The later Solid migration belongs in optional speaker context, not another slide.
 
-## What the interactive slide actually does
+## The live showcase
 
-`experiment.tsx` is a small React DOM illustration. A button changes a highlighted card and a conceptual JSX snippet together. It demonstrates the distinction between describing desired output and the renderer responsible for displaying it.
+`showcases/canvas-tv/` is an independent React + Canvas 2D app, discoverable in the gallery. It draws a 16:9 streaming-style interface with original generated landscapes and fictional titles. React manages the selection and Canvas draws the actual interface; this is not HTML styled to look like Canvas.
 
-It does **not** run Lightning, implement a reconciler, reproduce the original API, or execute the original tests. Its visible caption says so. It uses no external services or continuous animation, and its preview is disabled. No original project assets or code have been supplied.
+Use arrow keys to move through two catalogue rows, Enter to view details and Escape to return. Horizontal movement scrolls the shelf; each row remembers its last selection. The visible focus ring is central to the experience. On-screen remote buttons also support touch and provide ordinary accessible controls, with a text announcement of the selected programme. Tab remains available to leave the screen. Reduced motion removes focus/scroll animation.
 
-The testing slide groups the component model, the default mocked environment and the real-primitives option. It is not a recovered test architecture or a literal execution pipeline.
+The presentation opens it in a new tab, keeping the slide available when the demo closes. The combined gallery build supplies the link; standalone presentation builds can set `VITE_GALLERY_URL`.
+
+This is **not Lightning**, the original application, a custom React renderer or a video streaming service. It illustrates the interaction model using native Canvas. Actual TV hardware compatibility is unverified. The original product and its technical history remain distinct from this example.
+
+A useful live sequence: put the pointer aside; move right until the row scrolls; move down, then back up; select a title; return. Discuss how focus, spatial movement and restoring a selection affect usability when there is no pointer.
 
 ## Open questions, in priority order
 

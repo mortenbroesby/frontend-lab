@@ -1,6 +1,6 @@
 # Presentation
 
-A standalone React deck with a first draft of the Lightning project story. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the confirmed recollections, proposed structure and open questions.
+A standalone React deck with a three-slide Lightning and TV interaction section for a broader talk. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the confirmed recollections, proposed structure and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0
@@ -20,6 +20,6 @@ Presenter view keeps the current slide, next-slide preview, notes and an elapsed
 
 Edit `slides.tsx`. Each entry has a stable, unique `id`, a `title`, a React `Content` component and optional `notes`. Array order is presentation order. The URL hash preserves the current slide on reload.
 
-Use the five layout components in `layouts.tsx`, or compose a slide directly. Slides use a 16:9 canvas; container-relative typography keeps the composition consistent. Keep text brief and test your projector size.
+Use the layout components in `layouts.tsx`, or compose a slide directly. Slides use a 16:9 canvas; container-relative typography keeps the composition consistent. Keep text brief and test your projector size.
 
-Interactive slide components receive `preview`. Render a quiet, disabled representation when it is true. The next-slide preview is also inert and hidden from assistive technology. Put complex custom interactions inside `data-presentation-interactive` to reserve their keyboard events. Clean up effects when slides unmount. The included renderer illustration uses React DOM, needs no effects or external services, and is not the original Lightning implementation.
+Interactive slide components receive `preview`. Render a quiet, disabled representation when it is true. The next-slide preview is also inert and hidden from assistive technology. Put complex custom interactions inside `data-presentation-interactive` to reserve their keyboard events. Clean up effects when slides unmount. The TV slide opens the independent Canvas TV showcase in a new tab. The combined gallery build supplies its URL automatically, including under a base path. For a standalone deck, set `VITE_GALLERY_URL` to the running gallery URL before starting or building.
