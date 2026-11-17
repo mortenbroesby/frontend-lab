@@ -663,7 +663,7 @@
   align-self: flex-end;
 }
 .demo-preview {
-  aspect-ratio: 2.5;
+  aspect-ratio: 2;
   overflow: hidden;
   margin: -1.5rem -1.5rem 1.5rem;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -689,7 +689,7 @@
 }
 
 .demo-preview img {
-  background: #101419;
+  background: #0c1110;
 }
 
 /* Activity-led landing pages shared by the migrated tracks. */

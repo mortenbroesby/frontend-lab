@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#101419"/><g stroke="#93b4ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M70 70h460M70 150h460M70 230h460" opacity=".2"/><g stroke-width="16"><path d="M80 110h280"/><path d="M80 190h50m25 0h50m25 0h50m25 0h50" stroke="#86efac"/></g><g fill="#86efac" stroke="none"><circle cx="80" cy="230" r="5"/><circle cx="115" cy="230" r="5"/><circle cx="150" cy="230" r="5"/><circle cx="185" cy="230" r="5"/><circle cx="220" cy="230" r="5"/><circle cx="255" cy="230" r="5"/><circle cx="290" cy="230" r="5"/><circle cx="325" cy="230" r="5"/><circle cx="360" cy="230" r="5"/><circle cx="395" cy="230" r="5"/><circle cx="430" cy="230" r="5"/><circle cx="465" cy="230" r="5"/><circle cx="500" cy="230" r="5"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" fill="none">
+  <title>Web Worker Comparison illustration</title>
+  <defs>
+    <radialGradient id="ambient"><stop stop-color="#1b3026"/><stop offset="1" stop-color="#0c1110"/></radialGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#223c31"/><stop offset="1" stop-color="#111d1a"/></linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" stroke="#a0bcae" stroke-opacity=".035"/></pattern>
+  </defs>
+  <rect width="600" height="300" fill="#0c1110"/>
+  <rect width="600" height="300" fill="url(#ambient)"/>
+  <rect width="600" height="300" fill="url(#grid)"/>
+  <path d="M24 44V24H44M556 24H576V44M24 256V276H44M556 276H576V256" stroke="#31463c"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="102" y="58" width="396" height="184" rx="8" fill="#111d1a" stroke="#345047"/><path d="M102 80h396" stroke="#294039" stroke-width="1" /><circle cx="114" cy="69" r="2" fill="#476158" stroke="none"/><circle cx="123" cy="69" r="2" fill="#476158" stroke="none"/><circle cx="132" cy="69" r="2" fill="#476158" stroke="none"/><path d="M128 151h344" stroke="#2c4538" stroke-width="1" /><rect x="130" y="102" width="217" height="23" rx="4" fill="#78a98b" stroke="none"/><path d="M362 113h106" stroke="#426651" stroke-width="2" /><rect x="130" y="179" width="39" height="23" rx="4" fill="#87ced1" stroke="none"/><rect x="186" y="179" width="39" height="23" rx="4" fill="#87ced1" stroke="none"/><rect x="242" y="179" width="39" height="23" rx="4" fill="#87ced1" stroke="none"/><rect x="298" y="179" width="39" height="23" rx="4" fill="#87ced1" stroke="none"/><path d="M356 191h17l6-17 10 32 10-24 6 9h63" stroke="#b7ef9b" stroke-width="2" />
+  </g>
+</svg>

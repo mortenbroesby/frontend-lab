@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
-<title>Remote: a Canvas TV catalogue with directional focus</title>
-<defs><linearGradient id="sky" x2="1" y2="1"><stop stop-color="#080e12"/><stop offset="1" stop-color="#377c77"/></linearGradient><linearGradient id="fade"><stop stop-color="#080e12"/><stop offset="1" stop-color="#080e12" stop-opacity="0"/></linearGradient></defs>
-<rect width="800" height="450" rx="12" fill="#080e12"/>
-<path d="M250 0h550v285H250z" fill="url(#sky)"/>
-<circle cx="650" cy="85" r="37" fill="#bfdfd5"/>
-<path d="M250 220Q400 80 560 200T800 180V300H250Z" fill="#143b3b"/>
-<path d="M250 260Q480 130 650 240T800 220V320H250Z" fill="#10262b"/>
-<path d="M0 0h700v320H0z" fill="url(#fade)"/>
-<g font-family="system-ui,sans-serif"><text x="40" y="45" fill="#b9f7d1" font-size="18" font-weight="700">REMOTE</text><text x="40" y="145" fill="#f4f6f5" font-size="40" font-weight="600">The Quiet Orbit</text><text x="40" y="179" fill="#afc3c5" font-size="13">A different screen. A different way to explore.</text><text x="40" y="270" fill="#f4f6f5" font-size="15">Beyond the familiar</text></g>
-<g fill="#183b3b"><rect x="40" y="288" width="166" height="98" rx="7"/><rect x="224" y="288" width="166" height="98" rx="7" fill="#282b4b"/><rect x="408" y="288" width="166" height="98" rx="7" fill="#294735"/><rect x="592" y="288" width="166" height="98" rx="7" fill="#4a3525"/></g>
-<rect x="35" y="283" width="176" height="108" rx="10" stroke="#b9f7d1" stroke-width="3"/>
-<g fill="#c6dfd4"><circle cx="170" cy="315" r="13"/><circle cx="354" cy="315" r="13"/><circle cx="538" cy="315" r="13"/><circle cx="722" cy="315" r="13"/></g>
-<text x="40" y="425" font-family="system-ui,sans-serif" font-size="12" fill="#a8b9bc">↑ ↓ ← →   Navigate      Enter   Play      Esc   Back</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" fill="none">
+  <title>Canvas Tv illustration</title>
+  <defs>
+    <radialGradient id="ambient"><stop stop-color="#1b3026"/><stop offset="1" stop-color="#0c1110"/></radialGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#223c31"/><stop offset="1" stop-color="#111d1a"/></linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" stroke="#a0bcae" stroke-opacity=".035"/></pattern>
+  </defs>
+  <rect width="600" height="300" fill="#0c1110"/>
+  <rect width="600" height="300" fill="url(#ambient)"/>
+  <rect width="600" height="300" fill="url(#grid)"/>
+  <path d="M24 44V24H44M556 24H576V44M24 256V276H44M556 276H576V256" stroke="#31463c"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="84" y="49" width="352" height="191" rx="8" fill="#111d1a" stroke="#345047"/><path d="M84 71h352" stroke="#294039" stroke-width="1" /><circle cx="96" cy="60" r="2" fill="#476158" stroke="none"/><circle cx="105" cy="60" r="2" fill="#476158" stroke="none"/><circle cx="114" cy="60" r="2" fill="#476158" stroke="none"/><path d="M103 174 166 102 220 150 274 112 331 172 416 128V182H103Z" stroke="#466b61" stroke-width="1" fill="#1b322c"/><path d="M104 182 185 139 239 174 298 146 416 180" stroke="#628b7a" stroke-width="1" /><circle cx="369" cy="104" r="15" fill="#bad8c6" stroke="none"/><rect x="112" y="188" width="83" height="37" rx="4" fill="#547a64" stroke="#b7ef9b"/><rect x="203" y="188" width="83" height="37" rx="4" fill="#244a44" stroke="#345c52"/><rect x="294" y="188" width="83" height="37" rx="4" fill="#1d3531" stroke="#345c52"/><rect x="455" y="81" width="52" height="148" rx="20" fill="#15221e" stroke="#456052"/><circle cx="481" cy="135" r="18" fill="#203b2c" stroke="#5f8068"/><circle cx="481" cy="135" r="6" fill="#b7ef9b" stroke="none"/><path d="M477 105h8M476 178h10" stroke="#87ced1" stroke-width="2" /><circle cx="481" cy="202" r="3" fill="#678577" stroke="none"/>
+  </g>
 </svg>

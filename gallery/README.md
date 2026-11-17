@@ -58,4 +58,4 @@ The kit owns palette behavior in `demo-kit/CommandMenu.tsx`; the gallery supplie
 
 [Design decisions](docs/decisions/README.md) · [Shared UI](../shared/ui/README.md) · [Verification](docs/VERIFICATION.md) · [Hosting](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
 
-Demo cards automatically use an optional `demos/<id>/preview.svg` poster (2:1 aspect ratio). Keep it small and self-contained, with no external assets. Demos without a poster use their track illustration; no gallery registration is needed.
+Demo cards automatically use an optional `demos/<id>/preview.svg` poster (2:1 aspect ratio). Use a `600 × 300` viewBox, a charcoal background and restrained green/cyan highlights. Keep one recognisable subject comfortably inside the frame, without repeating the card title. Follow an existing preview for grid, framing and stroke weight. Keep it small and self-contained, with no external assets. Demos without a poster use their track illustration; no gallery registration is needed.

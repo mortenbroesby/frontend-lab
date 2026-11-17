@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#101419"/><g stroke="#93b4ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M70 55v195h470" opacity=".4"/><g stroke-width="14"><path d="M100 85h290M100 125h90M100 165h180M100 205h55"/></g><path d="M425 55v195" stroke="#fbbf24" stroke-dasharray="5 7"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" fill="none">
+  <title>React Render Detective illustration</title>
+  <defs>
+    <radialGradient id="ambient"><stop stop-color="#1b3026"/><stop offset="1" stop-color="#0c1110"/></radialGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#223c31"/><stop offset="1" stop-color="#111d1a"/></linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" stroke="#a0bcae" stroke-opacity=".035"/></pattern>
+  </defs>
+  <rect width="600" height="300" fill="#0c1110"/>
+  <rect width="600" height="300" fill="url(#ambient)"/>
+  <rect width="600" height="300" fill="url(#grid)"/>
+  <path d="M24 44V24H44M556 24H576V44M24 256V276H44M556 276H576V256" stroke="#31463c"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="118" y="60" width="110" height="38" rx="6" fill="url(#glass)" stroke="#b7ef9b"/><path d="M173 98v33m-49 0h98m-98 0v23m98-23v23" stroke="#87ced1" stroke-width="1.5" /><rect x="101" y="154" width="47" height="44" rx="8" fill="#111d1a" stroke="#345047"/><rect x="199" y="154" width="47" height="44" rx="8" fill="#111d1a" stroke="#345047"/><path d="M278 69v162" stroke="#2e473b" stroke-width="1" /><path d="M314 112h174" stroke="#263d32" stroke-width="1" /><rect x="314" y="87" width="156" height="14" rx="3" fill="#b7ef9b" stroke="none"/><path d="M314 162h174" stroke="#263d32" stroke-width="1" /><rect x="314" y="137" width="101" height="14" rx="3" fill="#87ced1" stroke="none"/><path d="M314 212h174" stroke="#263d32" stroke-width="1" /><rect x="314" y="187" width="41" height="14" rx="3" fill="#b7ef9b" stroke="none"/><circle cx="124" cy="176" r="5" fill="#b7ef9b" stroke="none"/><circle cx="222" cy="176" r="5" fill="#87ced1" stroke="none"/><path d="M135 223h76" stroke="#5d7d6a" stroke-width="2" />
+  </g>
+</svg>
