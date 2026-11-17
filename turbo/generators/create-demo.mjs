@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 
-export function validateId(id) {
+function validateId(id) {
   return (
     typeof id === 'string' &&
     /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(id) &&
@@ -19,11 +19,29 @@ export function validateName(value) {
   );
 }
 
+function idFromName(name) {
+  const slug = name
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 55)
+    .replace(/-$/, '');
+  if (!slug) return 'demo';
+  return validateId(slug) ? slug : `demo-${slug}`;
+}
+
 export async function createDemo(root, answers) {
-  const { id, track } = answers;
   if (!validateName(answers.title))
     throw new Error('Demo name is required: enter 1–240 characters on one line.');
   const name = answers.title.trim();
+  const {
+    id = idFromName(name),
+    track = 'experimental-projects',
+    description = 'An experiment in progress.',
+    author = 'You',
+  } = answers;
   if (!validateId(id))
     throw new Error(
       'Use a unique lowercase kebab-case ID, up to 60 characters; template and system names are reserved.',
@@ -31,9 +49,9 @@ export async function createDemo(root, answers) {
   if (
     !['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'].includes(track)
   )
-    throw new Error('Choose a named track from the generator menu.');
-  for (const key of ['description', 'author']) {
-    if (typeof answers[key] !== 'string' || !answers[key].trim() || answers[key].length > 240) {
+    throw new Error('Use a valid track ID.');
+  for (const [key, value] of Object.entries({ description, author })) {
+    if (typeof value !== 'string' || !value.trim() || value.length > 240) {
       throw new Error(`${key} must contain 1–240 characters.`);
     }
   }
@@ -48,11 +66,7 @@ export async function createDemo(root, answers) {
     .replace(nameSlot, () =>
       modernWeb ? `{${JSON.stringify(name)}}` : `useState(${JSON.stringify(name)})`,
     )
-    .replace('export function BrowserStarter()', 'export default function Demo()')
-    .replace(
-      'To get your own copy, run <code>npm run demo:new</code> and choose Modern Web Capabilities. ',
-      'This is your independent circle starter. ',
-    );
+    .replace('export function BrowserStarter()', 'export default function Demo()');
   const firstChange = modernWeb
     ? 'Change the circle fill colour in index.tsx, save, then move the radius control.'
     : 'Change "An idea, taking shape" in index.tsx to your own heading and save.';
@@ -128,8 +142,8 @@ The build goes into demos/${id}/dist/. Add tests when you have logic worth testi
 export default {
   title: ${JSON.stringify(name)},
   track: ${JSON.stringify(track)},
-  description: ${JSON.stringify(answers.description.trim())},
-  author: ${JSON.stringify(answers.author.trim())},
+  description: ${JSON.stringify(description.trim())},
+  author: ${JSON.stringify(author.trim())},
 } satisfies DemoDefinition;
 `;
     // Load at execution time: Turbo's config bundler cannot bundle Prettier's runtime.

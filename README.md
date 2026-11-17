@@ -54,8 +54,7 @@ Windows works with native PowerShell or Command Prompt; WSL is not required. If 
 npm run demo:new
 ```
 
-Name it and choose a track: Modern Web starts with a circle; others with an idea
-card. Edit `demos/<your-id>/index.tsx`. The generator prints the route and the
+Give it a name; the generator creates an idea-card starter and its folder ID. Edit `demos/<your-id>/index.tsx`. The generator prints the route and the
 gallery discovers your demo automatically. See **Create a demo** in the app.
 
 ---

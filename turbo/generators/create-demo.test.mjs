@@ -97,21 +97,21 @@ test('different demos can be generated concurrently without editing shared files
   }
 });
 
-test('asks for a name first without a default and suggests an editable folder ID', () => {
+test('asks only for a name without a default', () => {
   let config;
   configureGenerator({
     setGenerator: (_name, value) => {
       config = value;
     },
   });
-  const [name, id] = config.prompts;
+  assert.equal(config.prompts.length, 1);
+  const [name] = config.prompts;
   assert.equal(name.name, 'title');
   assert.match(name.message, /Demo name/);
   assert.equal(name.default, undefined);
   for (const value of ['', '   ', undefined, 'Two\nlines'])
     assert.notEqual(name.validate(value), true);
   assert.equal(name.validate('Lab Quiz'), true);
-  assert.equal(id.default({ title: 'Lab Quiz!' }), 'lab-quiz');
 });
 
 test('missing, whitespace-only and multiline names leave all files untouched', async (t) => {
@@ -125,24 +125,30 @@ test('missing, whitespace-only and multiline names leave all files untouched', a
   assert.deepEqual(await readdir(join(root, 'demos')), []);
 });
 
-test('every named track choice produces matching typed metadata', async (t) => {
+test('a name alone creates a discoverable starter with safe defaults', async (t) => {
   const root = await fixture(t);
-  let config;
-  configureGenerator({
-    setGenerator: (_name, value) => {
-      config = value;
-    },
-  });
-  const choices = config.prompts.find((prompt) => prompt.name === 'track').choices;
-  assert.deepEqual(
-    choices.map((choice) => choice.value),
-    ['modern-web', 'code-quality', 'developer-experience', 'experimental-projects'],
-  );
-  for (const { name, value } of choices) {
-    assert.doesNotMatch(name, /^[A-D] ·/);
-    await createDemo(root, { ...answers, id: value, track: value });
-    const metadata = await readFile(join(root, 'demos', value, 'demo.config.ts'), 'utf8');
-    assert.ok(metadata.includes(`track: '${value}'`));
+  const instructions = await createDemo(root, { title: 'My First Demo!' });
+  const folder = join(root, 'demos/my-first-demo');
+  const metadata = (await import(pathToFileURL(join(folder, 'demo.config.ts')).href)).default;
+  assert.equal(metadata.title, 'My First Demo!');
+  assert.equal(metadata.track, 'experimental-projects');
+  assert.ok(metadata.description && metadata.author);
+  assert.match(await readFile(join(folder, 'index.tsx'), 'utf8'), /My First Demo!/);
+  assert.match(instructions, /@lab\/demo-my-first-demo/);
+  await assert.rejects(createDemo(root, { title: 'My First Demo!' }), /exist/i);
+});
+
+test('derived folder names handle accents, numbers and reserved names', async (t) => {
+  const root = await fixture(t);
+  for (const [title, id] of [
+    ['Café', 'cafe'],
+    ['3D Art', 'demo-3d-art'],
+    ['CON', 'demo-con'],
+    ['🎨', 'demo'],
+  ]) {
+    await createDemo(root, { title });
+    const pkg = JSON.parse(await readFile(join(root, 'demos', id, 'package.json'), 'utf8'));
+    assert.equal(pkg.name, `@lab/demo-${id}`);
   }
 });
 

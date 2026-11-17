@@ -10,7 +10,7 @@ From the repository root, after [local setup](#/guide/setup):
 npm run demo:new
 ```
 
-Choose a name, folder ID, track and description. Replace `your-id` below with your folder ID:
+Enter a demo name. The generator creates its folder ID automatically: **My First Demo** becomes `my-first-demo`. Use the commands it prints, or replace `your-id` below with that ID:
 
 ```sh
 npm install
@@ -28,14 +28,14 @@ Your demo also appears in the gallery (`npm run dev`).
 
 ### Make it yours
 
-Edit **`demos/<your-id>/index.tsx`**; saving updates the browser. Modern Web starts with a circle; other tracks use an idea card. Change or replace either.
+Edit **`demos/<your-id>/index.tsx`**; saving updates the browser. The starter contains a small idea card. Change or replace it.
 
-Your code, assets and notes belong in that folder. Change `demo.config.ts` to update the gallery title or description.
+Your code, assets and notes belong in that folder. New demos appear under Experimental Projects. Edit `demo.config.ts` whenever you want to change the track, description or author.
 
 <details>
 <summary>Check your demo</summary>
 
-Replace `your-id` with the folder ID you chose:
+Replace `your-id` with the generated folder ID:
 
 ```sh
 npm run check --workspace @lab/demo-your-id

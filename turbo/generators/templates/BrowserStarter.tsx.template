@@ -29,8 +29,7 @@ export function BrowserStarter() {
           onValueChange={([value]) => setRadius(value)}
         />
         <p>
-          To get your own copy, run <code>npm run demo:new</code> and choose Modern Web
-          Capabilities. Change the circle’s fill in <code>index.tsx</code>, save and refresh to
+          Change the circle’s fill in <code>index.tsx</code>, save and refresh to
           confirm it persists. Then add an interaction.
         </p>
       </div>
