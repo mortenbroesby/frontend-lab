@@ -439,7 +439,7 @@ body:has(.instrument-performance) {
     padding: 16px;
   }
   .instrument-performance .sequence-step {
-    height: 52px;
+    height: 100px;
   }
   .instrument-performance .sequence-row {
     padding: 8px 16px;
@@ -487,7 +487,8 @@ body:has(.instrument-performance) {
 .instrument-presentation .instrument-console {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0;
+  gap: 40px;
+  margin-block: auto;
   background: transparent;
   border: 0;
   overflow: visible;
@@ -501,7 +502,7 @@ body:has(.instrument-performance) {
   display: none;
 }
 .instrument-presentation .instrument-scope canvas {
-  height: 52px;
+  height: 100px;
 }
 .instrument-presentation .instrument-controls {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -520,8 +521,8 @@ body:has(.instrument-performance) {
 .rotary-dial {
   position: relative;
   display: block;
-  width: 148px;
-  height: 148px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: conic-gradient(
     from 225deg,
@@ -578,78 +579,9 @@ body:has(.instrument-performance) {
   color: var(--lab-muted);
   margin-left: 8px;
 }
-.piano-section {
-  margin-top: auto;
-}
-.piano-section p {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 0 16px;
-  font-size: 16px;
+.instrument-knob-hint {
+  text-align: center;
+  margin: 0;
   color: var(--lab-muted);
-}
-.piano-section p span {
-  font-size: 13px;
-}
-.piano-keys {
-  position: relative;
-  display: flex;
-  gap: 5px;
-  height: 180px;
-  padding: 8px;
-  border: 1px solid #35473b;
-  border-radius: 10px;
-  background: #080e0b;
-}
-.piano-key {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  border-radius: 3px 3px 7px 7px;
-  padding: 16px 0;
-  font: 14px monospace;
-}
-.piano-key:disabled {
-  opacity: 0.65;
-}
-.piano-white {
-  flex: 1;
-  height: 100%;
-  background: #dae5dc;
-  color: #435b4b;
-  border: 0;
-  box-shadow: inset 0 -6px #9cab9f;
-}
-.piano-white:hover {
-  background: #eaf6ed;
-  color: #253c2e;
-}
-.piano-black {
-  position: absolute;
-  z-index: 1;
-  top: 8px;
-  left: calc(8px + (100% - 16px) / 8 * var(--key-position) - 3.5%);
-  width: 7%;
-  height: 100px;
-  background: #1a2720;
-  border: 1px solid #49604f;
-  color: #91a998;
-  box-shadow:
-    0 5px 8px #0006,
-    inset 0 -5px #080e0b;
-}
-.piano-black:hover {
-  background: #293d30;
-  color: #d9f3e1;
-}
-.piano-key[data-lit='true'] {
-  background: #9cf6b8;
-  color: #153820;
-  box-shadow:
-    inset 0 -3px #5aab73,
-    0 0 18px #9cf6b833;
-}
-.piano-key:focus-visible {
-  outline: 3px solid #63c889;
-  outline-offset: -4px;
+  font-size: 14px;
 }

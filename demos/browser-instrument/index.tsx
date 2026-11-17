@@ -5,7 +5,6 @@ import { createInstrument } from './audio';
 import type { Instrument, Settings } from './audio';
 import { initialPattern, toggleStep } from './pattern';
 import { RotaryKnob } from './rotary-knob';
-import { Piano } from './piano';
 import { Scope } from './scope';
 import { PerformanceControls } from './performance-controls';
 import './instrument.css';
@@ -148,7 +147,9 @@ export default function InstrumentDemo() {
           />
         </div>
       </div>
-      {presentation && <Piano key={Boolean(instrument).toString()} instrument={instrument} />}
+      {presentation && (
+        <p className="instrument-knob-hint">Drag knobs up or down · Arrow keys when focused</p>
+      )}
       {!presentation && (
         <>
           <div className="sequencer-heading">
