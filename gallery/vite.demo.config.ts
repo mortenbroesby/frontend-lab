@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { themeBootstrap } from './theme-bootstrap.ts';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -6,5 +7,5 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   base: './',
   define: { 'import.meta.env.LAB_STANDALONE': true },
-  plugins: [tailwindcss(), react()],
+  plugins: [themeBootstrap(), tailwindcss(), react()],
 });

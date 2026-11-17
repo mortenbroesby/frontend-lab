@@ -1,6 +1,7 @@
 import { existsSync, globSync } from 'node:fs';
 import { basename, dirname, resolve } from 'node:path';
 import { defineConfig } from 'vite';
+import { themeBootstrap } from './theme-bootstrap.ts';
 import react from '@vitejs/plugin-react';
 import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
@@ -17,6 +18,7 @@ const entries = globSync('demos/*/demo.config.ts', { cwd: root }).map((path) => 
 export default defineConfig({
   root,
   plugins: [
+    themeBootstrap(),
     tailwindcss(),
     {
       enforce: 'pre',
