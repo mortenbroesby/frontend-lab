@@ -29,9 +29,11 @@ export function LabNavigation({ route }: { route: string }) {
           }
         }}
         links={[
+          { label: 'Tracks', group: 'Navigation', href: '#/' },
           { label: 'All demos', group: 'Navigation', href: '#/demos', shortcut: 'G' },
           { label: 'All guides', group: 'Navigation', href: '#/guides' },
           { label: 'Create a demo', group: 'Navigation', href: '#/create' },
+          { label: 'Local setup', group: 'Navigation', href: '#/guide/setup' },
           ...tracks.flatMap((track) =>
             track.guides.map((guide) => ({
               label: guide.title,
@@ -42,18 +44,6 @@ export function LabNavigation({ route }: { route: string }) {
           ...demos.map((demo) => ({ label: demo.title, group: 'Demos', href: demo.href })),
         ]}
       />
-      <div className="desktop-nav">
-        {links.map(([path, label]) => (
-          <a
-            className="site-nav-link"
-            key={path}
-            href={`#${path}`}
-            aria-current={route === path ? 'page' : undefined}
-          >
-            {label}
-          </a>
-        ))}
-      </div>
       <Dialog key={route}>
         <DialogTrigger asChild>
           <Button

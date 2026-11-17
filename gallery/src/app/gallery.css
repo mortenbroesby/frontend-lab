@@ -50,11 +50,6 @@
   text-wrap: balance;
   margin-bottom: 1.5rem;
 }
-.desktop-nav {
-  align-items: center;
-  display: flex;
-  gap: 0.3rem;
-}
 .mobile-nav-toggle {
   display: none;
 }
@@ -137,20 +132,7 @@
 .mobile-navigation-links a[aria-current='page'] .mobile-navigation-arrow {
   color: var(--lab-ink);
 }
-.site-nav-link {
-  font-size: 0.8rem;
-  color: var(--lab-muted);
-  text-decoration: none;
-  padding: 0.45rem 0.65rem;
-  border-radius: 0.3rem;
-}
-.site-nav-link:hover,
-.site-nav-link[aria-current='page'] {
-  color: var(--lab-ink);
-  background: var(--lab-hover);
-}
 @media (max-width: 600px) {
-  .desktop-nav,
   .command-desktop-trigger {
     display: none;
   }
@@ -263,10 +245,6 @@
   }
   .track-card-top {
     margin-bottom: 1.5rem;
-  }
-  .site-nav-link {
-    padding-left: 0;
-    padding-right: 0.8rem;
   }
   .starter-welcome {
     padding-left: 1rem;
