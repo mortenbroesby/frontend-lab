@@ -31,3 +31,31 @@ export function DiagramSlide({ eyebrow, title, children }: LayoutProps) {
     </div>
   );
 }
+
+export function StatementSlide({ eyebrow, title, children }: LayoutProps) {
+  return (
+    <div className="slide-layout statement-layout">
+      <p className="slide-eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <div className="slide-description">{children}</div>
+    </div>
+  );
+}
+
+export function ExperimentOptions({
+  options,
+}: {
+  options: readonly { label: string; title: string; description: string }[];
+}) {
+  return (
+    <ul className="experiment-options">
+      {options.map(({ label, title, description }) => (
+        <li key={label}>
+          <span>{label}</span>
+          <h2>{title}</h2>
+          <p>{description}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}

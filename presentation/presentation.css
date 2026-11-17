@@ -112,7 +112,7 @@ a {
 .slide-number {
   position: absolute;
   bottom: 2cqw;
-  right: 3cqw;
+  left: 6cqw;
   font-size: 1cqw;
   letter-spacing: 0.13em;
   color: #a9b4ac;
@@ -419,4 +419,46 @@ a {
   .tv-slide-footer span {
     display: none;
   }
+}
+
+.statement-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.statement-layout h1 {
+  max-width: 88%;
+  font-size: 6.8cqw;
+}
+.statement-layout .slide-description {
+  margin-top: 4cqw;
+}
+.experiment-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3cqw;
+  list-style: none;
+  padding: 0;
+  margin: 5cqw 0 0;
+}
+.experiment-options li {
+  border-top: 1px solid #4d7960;
+  padding-top: 2cqw;
+}
+.experiment-options span {
+  color: #84ecad;
+  font-size: 1.2cqw;
+  letter-spacing: 0.12em;
+}
+.experiment-options h2 {
+  font-size: 2.6cqw;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin: 2cqw 0 1.5cqw;
+}
+.experiment-options p {
+  color: #b1bcb5;
+  font-size: 1.7cqw;
+  line-height: 1.5;
+  margin: 0;
 }

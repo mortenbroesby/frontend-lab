@@ -1,6 +1,6 @@
 # Presentation
 
-A standalone React deck with a three-slide Lightning and TV interaction section for a broader talk. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the confirmed recollections, proposed structure and open questions.
+An eight-slide React talk inviting people to explore what the browser can do, including a three-slide Lightning story and live TV interaction. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the confirmed recollections, proposed structure and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0

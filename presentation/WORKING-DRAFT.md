@@ -1,6 +1,6 @@
 # Presentation working draft
 
-Status: a three-slide Lightning section (about 6–8 minutes) within a broader 20–25-minute technical spotlight. The agreed direction is curiosity: show what the web can do, ground it in a real experience, and invite people to try something unfamiliar. The deck is in `slides.tsx`; this document is our notebook for changing its story, collecting evidence and trying ideas. Neither the title nor the running order is final.
+Status: an eight-slide draft for a 20–25-minute technical spotlight, including discussion. The three-slide Lightning section stays within the broader invitation to explore. The deck and speaker notes are in `slides.tsx`; this notebook tracks decisions, recollections and open questions.
 
 ## What we want
 
@@ -12,27 +12,24 @@ Working subtitle: **Building a familiar world on an unfamiliar platform.**
 
 The Lightning section illustrates how a required rendering platform need not dictate the developer-facing component model. That is one supporting story, not the subject of the entire talk.
 
-## Broader talk and rehearsal notes
+## Agreed running order
 
-The following is a working outline, not additional implemented slides. The three existing slides have speaker cues in presenter mode: what to say, what to demonstrate, transitions and factual reminders.
-
-| Section | Purpose | Approximate time |
+| Slide | Purpose | Approximate time |
 | --- | --- | --- |
-| What else could we build? | Establish an honest invitation to explore | 2–3 minutes |
-| Show something unexpected | Let a visual example spark curiosity before explaining it | 3–4 minutes |
-| For us, this became a real project | The three-slide Lightning story and live TV interaction | 6–8 minutes |
-| What could you try? | Offer a few approachable directions, not an API catalogue | 4–5 minutes |
-| An invitation | Leave people with permission to experiment | 1 minute |
+| 1. The Front-End Lab | Entrance slide to leave up while people arrive | No speaking segment |
+| 2. What's possible? | Invite people to think beyond everyday web applications | 2–3 minutes |
+| 3. A web app. On a TV. | Introduce the real Lightning project and constraint | 1–2 minutes |
+| 4. No pointer. | Explore the inline TV using keyboard or touch remote | 2–3 minutes |
+| 5. Familiar components. Different renderer. | Explain the abstraction and testing benefit | 2–3 minutes |
+| 6. Change one assumption | Different input, rendering surface or connection | 3–4 minutes |
+| 7. Something you could try today | Three approachable experiments | 3–4 minutes |
+| 8. What are you curious about? | Closing invitation, followed by discussion | 1 minute + questions |
 
-Opening words to rehearse:
+The entrance is a landing screen, not another content section. Slide 2 expresses the presenter's intent: the modern browser has many possibilities, and today is an invitation to think outside our usual work. The D3 showcase has been explicitly removed from the talk; the TV is the only live demonstration. No changes are required to the standalone D3 showcase.
 
-> This is mostly an invitation to try something unfamiliar. The web can do much more than the applications we build every day. I'll show you a few things that surprised me, including something we built for TVs. Hopefully, you'll leave with something you want to try.
+The transition into Lightning is: “One experience that changed how I thought about web applications was building one for a TV.” The final slides return to experimentation without requiring a business case or finished product.
 
-The D3 showcase is the recommended opening visual; its selection and exact demonstration remain open. The bridge into the TV story is: “For us, this became a real project.” Keep the contractual constraint factual and move quickly to what the team learned through building.
-
-Closing words to rehearse:
-
-> You don't need to build a TV application. Pick something you haven't tried before and see what happens. Today is a good opportunity to do that.
+Every slide includes presenter notes: suggested wording, demonstration cues, transitions and reminders where facts remain uncertain. Rehearse the pacing; allow roughly 4–5 minutes for questions within the slot rather than filling it with more slides.
 
 ## Confirmed recollections from our conversation
 
@@ -70,7 +67,7 @@ The first draft expanded this into nine slides. That was too much: the presenter
 | No pointer. Where is your focus? | Explore remote navigation in the embedded Canvas TV | 2–3 minutes |
 | Familiar components. Different renderer. | Explain the custom renderer and testing benefit | 2–3 minutes |
 
-This is a section, not a finished talk. Do not expand it into the whole presentation again without agreement. The later Solid migration belongs in optional speaker context, not another slide.
+This remains a three-slide section within the eight-slide talk. Do not expand it into the whole presentation. The later Solid migration belongs in optional speaker context, not another slide.
 
 ## The live showcase
 
