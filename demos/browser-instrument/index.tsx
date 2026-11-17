@@ -9,7 +9,8 @@ import { PerformanceControls } from './performance-controls';
 import './instrument.css';
 
 const embedded = new URLSearchParams(window.location.search).has('embed');
-const instrumentClass = embedded ? 'pocket-instrument instrument-performance' : 'pocket-instrument';
+const presentation = embedded && new URLSearchParams(window.location.search).has('presentation');
+const instrumentClass = `pocket-instrument${embedded ? ' instrument-performance' : ''}${presentation ? ' instrument-presentation' : ''}`;
 const voices = ['Lead', 'Bass', 'Drums'];
 function Dial({
   label,
@@ -111,7 +112,7 @@ export default function InstrumentDemo() {
             </span>
             <span>LIVE WAVEFORM</span>
           </div>
-          <Scope instrument={instrument} onStep={setStep} />
+          <Scope instrument={instrument} onStep={setStep} waveformOnly={presentation} />
           <div className="scope-footer">
             <span>WEB AUDIO</span>
             <span>16 STEPS · 3 VOICES</span>
@@ -144,60 +145,66 @@ export default function InstrumentDemo() {
           />
         </div>
       </div>
-      <div className="sequencer-heading">
-        <h3>Step sequencer</h3>
-        <span>Tap a step to add or remove a note.</span>
-      </div>
-      <div className="sequencer-scroll">
-        <div className="sequencer">
-          {voices.map((voice, row) => (
-            <div
-              className="sequence-row"
-              key={voice}
-              style={
-                { '--voice-color': ['#b3a0ff', '#80d9ed', '#ffc778'][row] } as React.CSSProperties
-              }
-            >
-              <div className="voice-label">
-                <strong>
-                  <span className="voice-dot" aria-hidden="true" />
-                  {voice}
-                  <span className="voice-level">{Math.round(settings.levels[row] * 100)}%</span>
-                </strong>
-                <Slider
-                  aria-label={`${voice} volume`}
-                  value={[settings.levels[row] * 100]}
-                  min={0}
-                  max={100}
-                  onValueChange={([level]) =>
-                    setSettings((s) => ({
-                      ...s,
-                      levels: s.levels.map((v, i) => (i === row ? level / 100 : v)),
-                    }))
-                  }
-                />
-              </div>
-              {settings.pattern[row].map((on, column) => (
-                <Button
-                  key={column}
-                  variant="outline"
-                  className="sequence-step"
-                  aria-label={`${voice} step ${column + 1}`}
-                  aria-pressed={on}
-                  data-on={on}
-                  data-current={step === column}
-                  onClick={() =>
-                    setSettings((s) => ({ ...s, pattern: toggleStep(s.pattern, row, column) }))
+      {!presentation && (
+        <>
+          <div className="sequencer-heading">
+            <h3>Step sequencer</h3>
+            <span>Tap a step to add or remove a note.</span>
+          </div>
+          <div className="sequencer-scroll">
+            <div className="sequencer">
+              {voices.map((voice, row) => (
+                <div
+                  className="sequence-row"
+                  key={voice}
+                  style={
+                    {
+                      '--voice-color': ['#b3a0ff', '#80d9ed', '#ffc778'][row],
+                    } as React.CSSProperties
                   }
                 >
-                  <span>{String(column + 1).padStart(2, '0')}</span>
-                  <i aria-hidden="true" />
-                </Button>
+                  <div className="voice-label">
+                    <strong>
+                      <span className="voice-dot" aria-hidden="true" />
+                      {voice}
+                      <span className="voice-level">{Math.round(settings.levels[row] * 100)}%</span>
+                    </strong>
+                    <Slider
+                      aria-label={`${voice} volume`}
+                      value={[settings.levels[row] * 100]}
+                      min={0}
+                      max={100}
+                      onValueChange={([level]) =>
+                        setSettings((s) => ({
+                          ...s,
+                          levels: s.levels.map((v, i) => (i === row ? level / 100 : v)),
+                        }))
+                      }
+                    />
+                  </div>
+                  {settings.pattern[row].map((on, column) => (
+                    <Button
+                      key={column}
+                      variant="outline"
+                      className="sequence-step"
+                      aria-label={`${voice} step ${column + 1}`}
+                      aria-pressed={on}
+                      data-on={on}
+                      data-current={step === column}
+                      onClick={() =>
+                        setSettings((s) => ({ ...s, pattern: toggleStep(s.pattern, row, column) }))
+                      }
+                    >
+                      <span>{String(column + 1).padStart(2, '0')}</span>
+                      <i aria-hidden="true" />
+                    </Button>
+                  ))}
+                </div>
               ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </>
+      )}
       {!embedded && (
         <div className="instrument-note">
           <p>
@@ -232,8 +239,8 @@ function InstrumentHeader({
   return (
     <div className="instrument-top">
       <div>
-        <span className="instrument-eyebrow">PATTERN 01 / C MINOR</span>
-        {embedded ? <h1>Pocket tracker</h1> : <h2>Press play. Find your sound.</h2>}
+        {!presentation && <span className="instrument-eyebrow">PATTERN 01 / C MINOR</span>}
+        {embedded ? <h1>Browser Beat</h1> : <h2>Press play. Find your sound.</h2>}
         <p>An original loop, ready to reshape.</p>
       </div>
       <div className="instrument-actions">

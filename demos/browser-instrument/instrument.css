@@ -466,3 +466,51 @@ body:has(.instrument-performance) {
     height: 96px;
   }
 }
+
+/* A quiet, fixed widescreen composition for the live presentation. */
+.instrument-presentation {
+  height: 720px;
+  min-height: 720px;
+  padding: 64px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.instrument-presentation .instrument-top {
+  padding: 0;
+}
+.instrument-presentation h1 {
+  font-size: 48px;
+  margin: 0;
+}
+.instrument-presentation .instrument-console {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  background: transparent;
+  border: 0;
+  overflow: visible;
+}
+.instrument-presentation .instrument-scope {
+  background: none;
+  opacity: 0.6;
+}
+.instrument-presentation .scope-caption,
+.instrument-presentation .scope-footer {
+  display: none;
+}
+.instrument-presentation .instrument-scope canvas {
+  height: 180px;
+}
+.instrument-presentation .instrument-controls {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0;
+  gap: 64px;
+}
+.instrument-presentation .instrument-dial {
+  font-size: 24px;
+  gap: 24px;
+}
+.instrument-presentation .instrument-dial output {
+  font-size: 18px;
+}

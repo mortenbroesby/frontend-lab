@@ -163,12 +163,12 @@ function Instrument({ preview }: { preview?: boolean }) {
     <div className="tv-slide instrument-slide" data-presentation-interactive>
       {instrumentHref ? (
         <InstrumentFrame
-          title="Pocket tracker — interactive browser instrument"
+          title="Browser Beat — interactive browser instrument"
           src={`${instrumentHref}?embed=1&presentation=1`}
           allow="autoplay; fullscreen"
         />
       ) : (
-        <p>Set VITE_GALLERY_URL to the gallery URL to embed Pocket tracker in a standalone deck.</p>
+        <p>Set VITE_GALLERY_URL to the gallery URL to embed Browser Beat in a standalone deck.</p>
       )}
       <div className="tv-slide-footer">
         <span>Press Play · Shape the sound · Tab to continue</span>
@@ -308,10 +308,10 @@ TRANSITION
 “This one is a new experiment, not part of the TV project. I remembered those small demoscene intros with tracker music and wondered what we could make in a browser.”
 
 TRY IT LIVE
-Press Play. Move Tone slowly, then add a little Echo. Turn the lead volume down to hear the rhythm and bass, then bring it back. Toggle a few steps so people can hear the pattern change. Keep the volume comfortable and stop playback before discussing it.
+Press Play. Move Tone slowly, then add a little Echo. Change Tempo to hear the same loop at a different pace. Keep the volume comfortable and stop playback before discussing it.
 
 WHAT IS HAPPENING
-“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The waveform and frequency bars read the live audio signal.
+“The browser is generating the sound. React manages the controls, Web Audio schedules the notes and processes the signal, and Canvas draws what we hear.” The loop is original synthesized audio, not a recording or a historical tracker file. The subtle waveform reads the live audio signal.
 
 TRANSITION
 “Changing an input, a rendering surface or an output can lead to quite a different experiment.” Click Continue presentation outside the instrument. Moving to another slide removes the iframe and stops its audio. The presenter preview is deliberately static and silent.

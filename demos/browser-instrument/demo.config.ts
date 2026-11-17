@@ -1,7 +1,7 @@
 import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
-  title: 'Pocket tracker',
+  title: 'Browser Beat',
   track: 'experimental-projects',
   description:
     'Shape an original chiptune loop with a sequencer, synthesizer controls and a live oscilloscope.',

@@ -4,7 +4,9 @@ import { paintSignal } from './paint-signal';
 export function Scope({
   instrument,
   onStep,
+  waveformOnly = false,
 }: {
+  waveformOnly?: boolean;
   instrument: Instrument | null;
   onStep: (step: number) => void;
 }) {
@@ -21,21 +23,25 @@ export function Scope({
       spectrum.fill(0);
       if (instrument && !reduced.matches) {
         instrument.analyser.getByteTimeDomainData(samples);
-        instrument.analyser.getByteFrequencyData(spectrum);
+        if (!waveformOnly) instrument.analyser.getByteFrequencyData(spectrum);
       }
-      paintSignal(context, samples, spectrum);
-      if (instrument) onStep(instrument.currentStep());
+      paintSignal(context, samples, waveformOnly ? undefined : spectrum);
+      if (instrument && !waveformOnly) onStep(instrument.currentStep());
       frame = requestAnimationFrame(draw);
     };
     draw();
     return () => cancelAnimationFrame(frame);
-  }, [instrument, onStep]);
+  }, [instrument, onStep, waveformOnly]);
   return (
     <canvas
       ref={canvas}
       width="1000"
       height="240"
-      aria-label="Live waveform and frequency spectrum of the synthesized audio"
+      aria-label={
+        waveformOnly
+          ? 'Live waveform of the synthesized audio'
+          : 'Live waveform and frequency spectrum of the synthesized audio'
+      }
       role="img"
     />
   );
