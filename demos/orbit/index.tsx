@@ -66,7 +66,7 @@ function Chapter({ index }: { index: number }) {
 }
 
 export default function Orbit() {
-  const gallery = galleryHref('/demos');
+  const gallery = galleryHref('/');
   const story = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: story, offset: ['start start', 'end end'] });
   const reduced = useReducedMotion();
@@ -89,7 +89,7 @@ export default function Orbit() {
         </a>
         {gallery && (
           <Button asChild variant="ghost">
-            <a href={gallery}>← Back to demos</a>
+            <a href={gallery}>← Back to the Lab</a>
           </Button>
         )}
       </header>
