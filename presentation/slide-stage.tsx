@@ -1,6 +1,14 @@
 import { slides } from './slides';
 
-export function SlideStage({ index, preview = false }: { index: number; preview?: boolean }) {
+export function SlideStage({
+  index,
+  preview = false,
+  autoEnter = true,
+}: {
+  index: number;
+  preview?: boolean;
+  autoEnter?: boolean;
+}) {
   const slide = slides[index];
   const Content = slide.Content;
   return (
@@ -11,7 +19,7 @@ export function SlideStage({ index, preview = false }: { index: number; preview?
       aria-hidden={preview || undefined}
     >
       <div key={slide.id} className="slide-content">
-        <Content preview={preview} />
+        <Content preview={preview} autoEnter={autoEnter} />
       </div>
       {!['remote', 'instrument'].includes(slide.id) && (
         <span className="slide-number" aria-hidden="true">

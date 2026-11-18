@@ -31,3 +31,12 @@ export function isInteractive(target: EventTarget | null) {
     )
   );
 }
+
+export function navigateToSlide(
+  current: { index: number; autoEnter: boolean },
+  target: number,
+  total: number,
+) {
+  const index = moveSlide(current.index, target - current.index, total);
+  return index === current.index ? current : { index, autoEnter: index > current.index };
+}

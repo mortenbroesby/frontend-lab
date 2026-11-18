@@ -143,7 +143,7 @@ function PresentationFooter({
 
 export function Presentation() {
   useTheme();
-  const { index, move, input } = useSlides();
+  const { index, autoEnter, move, input } = useSlides();
   const timer = useElapsedTime();
   const { focus: focusScope } = usePresentationFocus();
   const appHref = galleryHref('/');
@@ -187,7 +187,7 @@ export function Presentation() {
       </header>
       <main id="presentation-stage" className="presentation-body" tabIndex={-1}>
         <div className="audience-stage">
-          <SlideStage index={index} />
+          <SlideStage index={index} autoEnter={autoEnter} />
         </div>
         {mode === 'presenter' && <PresenterPanel index={index} timer={timer} />}
       </main>

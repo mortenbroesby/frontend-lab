@@ -1,7 +1,7 @@
 import { slideDelta, type FocusAction } from '@lab/demo-kit/focus';
 import { usePresentationFocus } from './presentation-focus';
 import { useEffect, useEffectEvent, useState } from 'react';
-import { isInteractive, moveSlide, navigationAction } from './navigation';
+import { isInteractive, navigateToSlide, navigationAction } from './navigation';
 import { slides } from './slides';
 
 function initialSlide() {
@@ -13,11 +13,17 @@ function initialSlide() {
 }
 
 export function useSlides() {
-  const [index, setIndex] = useState(initialSlide);
+  const [{ index, autoEnter }, setPosition] = useState(() => ({
+    index: initialSlide(),
+    autoEnter: true,
+  }));
   const focus = usePresentationFocus();
-  const move = (delta: number) => setIndex((current) => moveSlide(current, delta, slides.length));
-  const input = (action: FocusAction) => {
-    if (!focus.input(action)) move(slideDelta(action));
+  const move = (delta: number) =>
+    setPosition((current) => navigateToSlide(current, current.index + delta, slides.length));
+  const input = (action: FocusAction, allowPrevious = true) => {
+    if (focus.input(action)) return;
+    if (action === 'back' && !allowPrevious) return;
+    move(slideDelta(action));
   };
   const routeInput = useEffectEvent(input);
   useEffect(() => {
@@ -29,9 +35,10 @@ export function useSlides() {
       const action = navigationAction(event, isInteractive(event.target));
       if (!action) return;
       event.preventDefault();
-      routeInput(action);
+      routeInput(action, event.key !== 'Escape');
     };
-    const readHash = () => setIndex(initialSlide());
+    const readHash = () =>
+      setPosition((current) => navigateToSlide(current, initialSlide(), slides.length));
     window.addEventListener('keydown', navigate);
     window.addEventListener('hashchange', readHash);
     return () => {
@@ -39,7 +46,7 @@ export function useSlides() {
       window.removeEventListener('hashchange', readHash);
     };
   }, []);
-  return { index, move, input };
+  return { index, autoEnter, move, input };
 }
 
 export function useElapsedTime() {

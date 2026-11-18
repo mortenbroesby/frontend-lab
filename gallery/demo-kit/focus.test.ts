@@ -9,9 +9,9 @@ test('keyboard and remote share six bounded commands', () => {
   assert.equal(focusAction('a'), undefined);
   assert.equal(isFocusAction('constructor'), false);
 });
-test('OK and Back do not advance slides', () => {
+test('Back moves to the previous slide while OK keeps the current slide', () => {
   assert.equal(slideDelta('select'), 0);
-  assert.equal(slideDelta('back'), 0);
+  assert.equal(slideDelta('back'), -1);
   assert.equal(slideDelta('left'), -1);
   assert.equal(slideDelta('right'), 1);
 });

@@ -24,6 +24,6 @@ export function focusAction(key: string): FocusAction | undefined {
 }
 export function slideDelta(action: FocusAction) {
   if (action === 'right' || action === 'down') return 1;
-  if (action === 'left' || action === 'up') return -1;
+  if (action === 'left' || action === 'up' || action === 'back') return -1;
   return 0;
 }
