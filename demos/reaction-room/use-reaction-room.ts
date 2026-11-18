@@ -18,7 +18,7 @@ export function useReactionRoom(joined: string | null) {
     if (!joined) return;
     const controller = new AbortController();
     setStatus('Opening room…');
-    connectRoom(joined, {
+    connectRoom(joined, sessionStorage.getItem('reaction-host') === joined, {
       signal: controller.signal,
       status: setStatus,
       peers: (count) => {

@@ -6,7 +6,9 @@ import { Input } from '@lab/ui/input';
 import { Label } from '@lab/ui/label';
 import { createRoomCode, validRoomCode } from './reactions';
 
-function openRoom(code: string | null) {
+function openRoom(code: string | null, host = false) {
+  if (host && code) sessionStorage.setItem('reaction-host', code);
+  else sessionStorage.removeItem('reaction-host');
   const url = new URL(location.href);
   if (code) url.searchParams.set('reactionRoom', code);
   else url.searchParams.delete('reactionRoom');
@@ -23,7 +25,7 @@ export function RoomLobby() {
       <p className="eyebrow">One room. Everyone’s reactions.</p>
       <h2>Bring the room to life.</h2>
       <p>Create a room and invite your group, or join with a code.</p>
-      <Button size="lg" onClick={() => openRoom(createRoomCode())}>
+      <Button size="lg" onClick={() => openRoom(createRoomCode(), true)}>
         Create a room
       </Button>
       <form
@@ -51,14 +53,12 @@ export function RoomLobby() {
           </Button>
         </div>
       </form>
-      <small>
-        Open this demo from the room server on each device. No accounts or saved history.
-      </small>
+      <small>The creator hosts the room. Keep that page open. No accounts or server setup.</small>
       <p>
         <a
           href={
             galleryHref('/track/modern-web/devices') ??
-            'https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API'
+            'https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API'
           }
         >
           How to connect the screens

@@ -63,8 +63,8 @@ function LiveRoom({ code }: { code: string }) {
       </section>
       <RoomShare code={code} />
       <footer className="reaction-footnote">
-        Live reactions, no saved history. Codes are public labels, not passwords. A running room
-        server connects the screens.
+        The creator’s browser connects the group. Keep it open and awake. Internet and HTTPS are
+        needed; some networks block peer-to-peer connections. Codes are not passwords.
         {guide && (
           <>
             {' '}

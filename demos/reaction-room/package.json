@@ -9,14 +9,13 @@
     "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run build",
-    "test": "node --test *.test.ts *.test.mjs",
-    "start": "node server.mjs"
+    "test": "node --test *.test.ts"
   },
   "dependencies": {
     "@lab/demo-kit": "*",
-    "react": "19.3.1",
     "@lab/ui": "*",
+    "peerjs": "^1.5.5",
     "qrcode.react": "4.2.0",
-    "ws": "8.23.0"
+    "react": "19.3.1"
   }
 }

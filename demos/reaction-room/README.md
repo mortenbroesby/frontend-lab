@@ -1,31 +1,33 @@
 # Reaction Room
 
-A shared reaction wall for up to 30 connected screens, including the projector. Create a generated room code, share its link or QR code, and tap one of six icons. Each icon pulses in a fixed place: new taps add spring momentum and increase the response speed. Five taps within 1.2 seconds create a small solo flame; eight taps from three connections within two seconds create a stronger group flame. Icons settle and fade out four seconds after their last tap.
+Create a room, share its code or QR link, and tap together. The creator’s browser hosts the room and forwards reactions to guests over WebRTC. Six icons pulse in place, gain momentum and warm up with rapid taps. No account, custom room server or environment variables are needed.
 
-## Run the whole demo
+## Run
 
-From the repository root, using Node 24:
+Open the demo from the HTTPS gallery. For two windows on this computer:
 
 ```sh
-npm run build --workspace @lab/demo-reaction-room
-npm start --workspace @lab/demo-reaction-room
+npm run dev --workspace @lab/demo-reaction-room
 ```
 
-Open `http://<laptop-LAN-IP>:4395` on every device. The process serves the built app and WebSocket rooms together, bound to `0.0.0.0`. `PORT` and `HOST` override the defaults. Everyone needs access to that server; no internet or WebRTC signaling service is needed on the same LAN. A QR code opened from localhost only works on that computer: open the LAN address before sharing with phones.
+Use HTTPS for phones; plain LAN HTTP is not supported. Both host and guests need internet for PeerJS’s public signalling service. Once connected, reaction messages travel through the host’s WebRTC connections. No database or history is stored.
 
-For frontend editing, run the server and set `VITE_REACTION_SERVER_URL=http://localhost:4395` when starting the demo's existing Vite dev command. Use the LAN address instead when testing another device.
+## How it works
 
-## Connections and hosting
+- **Create:** a generated code registers a namespaced PeerJS ID. Only this tab remembers its host role in session storage; invite links contain the room code, not that role.
+- **Join:** a guest connects to that ID. Guests connect only to the creator, never to every other guest.
+- **React:** the host validates and forwards batches to other guests. Local taps animate immediately and are not echoed back to their sender.
+- **Leave:** the host updates the screen count. Closing the host ends the live session; guests can retry after the host returns. There is no host migration or replay of missed reactions.
 
-The server keeps rooms in memory. It assigns sender IDs, validates six allowed icons, caps each room at 30 sockets, rate-limits senders, removes disconnected peers and broadcasts the authoritative participant count. Empty rooms disappear; restart loses all rooms. Codes are public labels, not authentication. Counts describe screens, not identifiable people.
+`connect-room.ts` owns PeerJS lifecycle and errors. `host-room.ts` owns routing, the 30-screen ceiling and per-guest rate limits. `use-reaction-room.ts` batches taps and keeps four seconds of local animation history. The protocol accepts only the six supported icons, at most two per batch. UI rendering remains independent of the transport.
 
-The client batches at most two taps per 200 ms and limits taps to roughly ten per second. It shows local taps immediately, keeps four seconds of reaction history and six persistent icon elements. Damped springs preserve velocity across taps; animation stops when a spring settles. Totals are per visit; late arrivals do not replay history. Reduced motion uses stationary icons. Disconnect disables sending; Retry reconnects without replaying missed taps.
+## Experiment limits
 
-Public hosting is **not configured**. Use one long-running Node process with WebSocket upgrades behind HTTPS. Static hosting alone cannot run this server. If the gallery is hosted separately, build it with `VITE_REACTION_SERVER_URL=https://your-room-server` and set the server's `ALLOWED_ORIGINS` to the gallery's exact origin (comma-separated for multiple origins). The client uses `/rooms/<code>` on that origin and upgrades HTTPS to WSS. Same-origin deployments need no environment setting. Multiple server instances would need shared rooms or sticky routing; that is outside this small workshop server.
+Keep the host page open, awake and preferably on a laptop. Phone backgrounding can suspend the host. Public signalling availability, network restrictions and host capacity affect joining and latency; some networks require a TURN relay. No custom TURN service is configured. A 30-screen ceiling is a bound, not a guarantee for every device or network. Split into smaller rooms if needed.
 
-## Why a server?
+Room codes are public labels, not authentication. A duplicated host tab cannot claim an ID already in use; leave and join it as a guest. Refreshing the host disconnects guests; retry once it is ready again. Do not use the demo for sensitive data.
 
-The previous Trystero/WebRTC version worked in a 12-browser check but fragmented at 30, including with its experimental scaling plugin. The chapter-wide version uses one WebSocket connection per screen. The TV demo remains a separate WebRTC example.
+[PeerJS documentation](https://peerjs.com/docs/) explains signalling and connection limitations.
 
 ## Verification
 
@@ -34,4 +36,4 @@ npm test --workspace @lab/demo-reaction-room
 npm run check --workspace @lab/demo-reaction-room
 ```
 
-The server test connects 30 clients, verifies delivery to every other client, rejects a 31st, reopens a seat after departure, isolates rooms and rejects invalid payloads/origins. Browser verification connected 30 tabs and sent eight taps from each: all 30 received 240 reactions, all entered fire state. The subsequent pulse treatment uses six persistent icons rather than individual particles. Create/join/leave, cooling, fullscreen and phone-width layout were also checked. These are laptop browser checks, not acceptance on 30 physical devices or the chapter's network.
+Unit tests cover routing without sender echoes, room capacity, seat release, payload validation, rate limits and animation. Browser verification connected one host and 29 guests through public PeerJS signalling. Every screen received all 180 reactions from six taps per screen. Host departure disabled guests; retry after a host refresh restored the connection. These laptop-tab checks are not physical-device/network acceptance.

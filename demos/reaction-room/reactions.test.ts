@@ -1,4 +1,4 @@
-import { parseServerMessage } from './room-protocol.ts';
+import { parseHostMessage } from './room-protocol.ts';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createRoomCode, validRoomCode, validBatch } from './reactions.ts';
@@ -15,7 +15,7 @@ test('reaction messages are small and contain only supported icons', () => {
   for (const value of [null, '🚀', [], ['nope'], ['🚀', '🚀', '🚀']])
     assert.equal(validBatch(value), false);
 });
-test('server messages reject malformed values and impossible room counts', () => {
+test('host messages reject malformed values and impossible room counts', () => {
   for (const value of [
     null,
     {},
@@ -24,8 +24,8 @@ test('server messages reject malformed values and impossible room counts', () =>
     { type: 'welcome', count: 0 },
     { type: 'reactions', sender: 'a', emojis: ['no'] },
   ])
-    assert.equal(parseServerMessage(value), null);
-  assert.deepEqual(parseServerMessage({ type: 'presence', count: 30 }), {
+    assert.equal(parseHostMessage(value), null);
+  assert.deepEqual(parseHostMessage({ type: 'presence', count: 30 }), {
     type: 'presence',
     count: 30,
   });

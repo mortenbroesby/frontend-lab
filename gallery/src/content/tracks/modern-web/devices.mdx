@@ -4,23 +4,16 @@ Choose an interaction: shared drawing, reactions, a remote control—or your own
 
 ### Start with a shared reaction wall
 
-<DemoLink id="reaction-room">Reaction Room</DemoLink> uses a small WebSocket server so a whole group can join without connecting every browser directly to every other browser. Start it from the repository root:
+<DemoLink id="reaction-room">Reaction Room</DemoLink> turns the creator’s browser into a host. Open it over HTTPS, create a room, and share its code or QR link. Everyone joins directly from their browser—no server command or account.
 
-```sh
-npm run build --workspace @lab/demo-reaction-room
-npm start --workspace @lab/demo-reaction-room
-```
-
-Open `http://<laptop-LAN-IP>:4395` on each device on the same network. Create one room and share its code or QR link. Open the LAN address on your laptop before sharing: a localhost link points at the recipient's own device. For two windows on one computer, `http://localhost:4395` is enough.
-
-The server runs while that terminal is open. A static gallery deployment alone cannot connect this demo; public use needs a hosted room server with HTTPS and WebSocket support.
+Keep the creator’s page open and awake, preferably on a laptop. PeerJS’s public signalling service introduces the browsers; reactions then travel over WebRTC through the host. Internet is needed, and some networks block these connections. Try a smaller group or another network if joining stalls.
 
 ### Follow one reaction
 
-- **Connect:** the browser opens `/rooms/<code>` on the room server. The server assigns a sender ID and shares the participant count.
-- **Send:** `use-reaction-room.ts` batches rapid taps into small messages. `connect-room.ts` handles the socket and incoming messages.
-- **Broadcast:** `room-server.mjs` validates each batch and sends it to the other screens in that room.
-- **Render:** each browser animates its own icons. `reactions.ts` detects a recent burst from several senders; animation frames never cross the network.
+- **Connect:** each guest finds the host using the room code. Guests do not connect to each other.
+- **Send:** `use-reaction-room.ts` batches rapid taps. `connect-room.ts` manages the WebRTC connections through PeerJS.
+- **Forward:** `host-room.ts` validates batches and sends them to the other connected screens. The sender already showed its own tap locally.
+- **Render:** `reaction-motion.ts` turns recent reactions into pulses and heat. Animation frames never cross the network.
 
 A reaction is an event; a selected colour is state. New arrivals receive future reactions, not a replay. Try changing that distinction: what would a shared drawing or collaborative colour picker need when someone joins late?
 
@@ -28,14 +21,14 @@ A reaction is an event; a selected colour is state. New arrivals receive future 
 
 **Change what the group controls.** Replace reactions with votes for a colour, a shared tempo or a collaborative drawing. Begin by defining the smallest message that represents one action.
 
-**Explore disconnection.** Close one window, reconnect, or stop the server. Decide whether your experiment should discard missed events, replay them or send a fresh state snapshot. Compare the result on two screens.
+**Explore disconnection.** Close one window, reconnect, or close the host page. Decide whether your experiment should discard missed events, replay them or send a fresh state snapshot. Compare the result on two screens.
 
-**Try peer-to-peer.** The <DemoLink id="canvas-tv">Canvas TV</DemoLink> phone remote uses Trystero and WebRTC. Compare its one-to-one pairing with Reaction Room's server-mediated room. WebRTC needs signaling and may need TURN on restrictive networks; the current TV pairing needs HTTPS on phones.
+**Compare connection shapes.** The <DemoLink id="canvas-tv">Canvas TV</DemoLink> phone remote uses Trystero for one-to-one pairing. Compare that with Reaction Room’s host-and-guests design. What happens if the host leaves? Could a new host take over, and what state would it need?
 
 ### Useful starting points
 
 - [MDN: WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) — send and receive messages over a browser connection.
-- [ws examples](https://github.com/websockets/ws#usage-examples) — the Node server library used here.
+- [PeerJS](https://peerjs.com/docs/) — connect browsers through a public signalling service without operating your own server.
 - [Trystero](https://github.com/dmotz/trystero) — peer discovery and WebRTC messaging without building your own signaling flow.
 - [MDN: WebRTC protocols](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols) — signaling, STUN and TURN.
 
