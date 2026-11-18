@@ -19,4 +19,4 @@ Browser checks covered desktop and phone-sized layouts, finish selection and red
 
 ## Presentation mode
 
-The deck opens Orbit with `?embed=1&presentation=1` in a fixed 1280×720 viewport. This removes the page navigation, footer, replay link and rotation hints/reset buttons. Chapters fit a viewport each, with typography and object sizing tuned for the slide. Scroll, drag, keyboard rotation, reduced motion and the finish choices remain available. The deck supplies the Continue presentation link; the ordinary demo retains its Back to the Lab navigation.
+The deck opens Orbit with `?embed=1&presentation=1` in a 1280px-wide viewport scaled to fill the slide width. Its height follows the space above the slide footer, avoiding side margins. The speaker is visible immediately. This removes the page navigation, footer, replay link and rotation hints/reset buttons. Chapters fit a viewport each, with typography and object sizing tuned for the slide. Scroll, drag, keyboard rotation, reduced motion and the finish choices remain available. The deck supplies the Continue presentation link; the ordinary demo retains its Back to the Lab navigation.

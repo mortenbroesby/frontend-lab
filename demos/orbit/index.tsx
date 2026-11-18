@@ -99,7 +99,12 @@ export default function Orbit() {
         <div className="orbit-stage">
           <div className="orbit-halo" />
           <div className="orbit-orbit" />
-          <Speaker progress={still ? rest : scrollYProgress} still={still} colour={finish.shell} />
+          <Speaker
+            progress={still ? rest : scrollYProgress}
+            still={still}
+            colour={finish.shell}
+            entryOffset={presentation ? '0%' : '200%'}
+          />
           <span className="orbit-stage-caption">ORBIT / OBJECT STUDY Nº 01</span>
         </div>
         {[0, 1, 2].map((index) => (

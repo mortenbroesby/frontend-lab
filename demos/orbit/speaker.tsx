@@ -10,12 +10,14 @@ export function Speaker({
   still,
   className = 'orbit-product',
   spotlight = false,
+  entryOffset = '200%',
 }: {
   progress: MotionValue<number>;
   colour: string;
   still: boolean;
   className?: string;
   spotlight?: boolean;
+  entryOffset?: string;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const scene = useRef<ReturnType<typeof createSpeakerScene> | null>(null);
@@ -23,7 +25,7 @@ export function Speaker({
   const [unavailable, setUnavailable] = useState(false);
   // Spring the object's position after mapping scroll, so the short end ranges
   // cannot amplify a smoothed progress value into a sudden launch.
-  const targetY = useTransform(progress, [0, 0.24, 0.76, 1], ['200%', '0%', '0%', '200%']);
+  const targetY = useTransform(progress, [0, 0.24, 0.76, 1], [entryOffset, '0%', '0%', '200%']);
   const y = useSpring(targetY, { stiffness: 50, damping: 27, mass: 3, restDelta: 0.01 });
   const rotation = useSpring(progress, { stiffness: 55, damping: 25, mass: 2, restDelta: 0.0001 });
   const pose = still ? progress : rotation;

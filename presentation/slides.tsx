@@ -368,7 +368,12 @@ function LiveExample({
   return (
     <div className="tv-slide" data-presentation-interactive>
       {href ? (
-        <WidescreenFrame src={`${href}?embed=1&presentation=1`} title={title} allow="fullscreen" />
+        <WidescreenFrame
+          src={`${href}?embed=1&presentation=1`}
+          title={title}
+          allow="fullscreen"
+          fillWidth={id === 'orbit'}
+        />
       ) : (
         <p>Set VITE_GALLERY_URL to embed this demo.</p>
       )}
