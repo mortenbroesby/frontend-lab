@@ -333,15 +333,12 @@ body {
 }
 
 /* A projected 16:9 story: the deck owns navigation and explanatory links. */
-.orbit[data-presentation='true']
-  :is(
-    .orbit-nav,
-    .orbit-footer,
-    .orbit-replay,
-    .orbit-scroll,
-    .orbit-object-hint,
-    .orbit-stage-caption
-  ) {
+.orbit[data-presentation='true'] .orbit-nav,
+.orbit[data-presentation='true'] .orbit-footer,
+.orbit[data-presentation='true'] .orbit-replay,
+.orbit[data-presentation='true'] .orbit-scroll,
+.orbit[data-presentation='true'] .orbit-object-hint,
+.orbit[data-presentation='true'] .orbit-stage-caption {
   display: none;
 }
 .orbit[data-presentation='true'] .orbit-chapter {
@@ -351,7 +348,8 @@ body {
 .orbit[data-presentation='true'] .orbit-copy {
   padding-bottom: 0;
 }
-.orbit[data-presentation='true'] :is(h1, h2) {
+.orbit[data-presentation='true'] h1,
+.orbit[data-presentation='true'] h2 {
   font-size: clamp(42px, 5.4vw, 72px);
   margin-bottom: 24px;
 }
