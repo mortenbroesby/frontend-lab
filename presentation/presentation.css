@@ -530,11 +530,46 @@ a {
   flex: none;
 }
 
+/* Track previews read as an introduction beside a short menu of experiments. */
 .track-peek {
   height: 100%;
 }
+.track-peek .diagram-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 5cqw;
+}
+.track-peek .slide-eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: 4cqw;
+}
+.track-peek h1 {
+  max-width: none;
+  font-size: 4.5cqw;
+  align-self: start;
+}
 .track-peek svg {
-  width: 2cqw;
-  height: 2cqw;
-  flex: none;
+  position: absolute;
+  bottom: 9cqw;
+  left: 6cqw;
+  width: 9cqw;
+  height: 9cqw;
+  color: #84ecad;
+}
+.track-peek .experiment-options {
+  grid-template-columns: 1fr;
+  gap: 2cqw;
+  margin: 0;
+}
+.track-peek li {
+  padding-top: 1cqw;
+}
+.track-peek h2 {
+  font-size: 2.3cqw;
+  margin: 0.6cqw 0;
+}
+.track-peek li p {
+  font-size: 1.5cqw;
+  line-height: 1.4;
 }

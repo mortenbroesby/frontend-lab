@@ -54,6 +54,19 @@ function Workshop() {
   );
 }
 
+function TrackChoice() {
+  return (
+    <StatementSlide eyebrow="Choose your starting point" title="Four tracks to choose from.">
+      <p>
+        Explore a browser capability. Improve some code.
+        <br />
+        Make development easier. Build your own idea.
+      </p>
+      <p>Choose what interests you. Work solo or together.</p>
+    </StatementSlide>
+  );
+}
+
 function ModernWeb() {
   return (
     <div className="track-peek">
@@ -439,6 +452,13 @@ WHEN READY
 “Choose a question or an idea that interests you. You can work alone or with people from other squads. A useful outcome might be discovering an existing solution, comparing approaches or building something small.”
 
 No production-ready deliverable is expected. The tracks provide starting points; participants can follow their curiosity. Keep logistics separate from this introduction.`,
+  },
+  {
+    id: 'tracks',
+    title: 'Four tracks to choose from',
+    Content: TrackChoice,
+    notes: `CHOOSING A TRACK · 30 seconds
+There are four tracks, each with ideas and guides to help people begin. You can bring your own idea and work alone or with others. The next slides offer a few examples from each track.`,
   },
   {
     id: 'modern-web',

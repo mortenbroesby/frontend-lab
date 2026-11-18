@@ -1,6 +1,6 @@
 # Presentation
 
-A 16-slide introduction to the chapter day: the four tracks, Browser Beat, alternative inputs and rendering through a TV example, then starting points for participants. Historical project details stay in presenter notes. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the running order, confirmed recollections and open questions.
+A 17-slide introduction to the chapter day: the four tracks, Browser Beat, alternative inputs and rendering through a TV example, then starting points for participants. Historical project details stay in presenter notes. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the running order, confirmed recollections and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0
