@@ -1,5 +1,5 @@
 import { SlideStage } from './slide-stage';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { usePresentationFocus } from './presentation-focus';
 import { RemotePairing } from './presenter-remote';
 import { Button } from '@lab/ui/button';
@@ -13,12 +13,27 @@ import { useElapsedTime, useFullscreen, useSlides } from './use-presentation';
 function PresenterPanel({
   index,
   timer,
+  hidden,
+  remoteConnected,
+  children,
 }: {
   index: number;
   timer: ReturnType<typeof useElapsedTime>;
+  hidden: boolean;
+  remoteConnected: boolean;
+  children: ReactNode;
 }) {
   return (
-    <aside className="presenter-panel" aria-label="Presenter tools">
+    <aside className="presenter-panel" aria-label="Presenter tools" hidden={hidden}>
+      <section className="presenter-remote-setup" aria-label="Presenter remote setup">
+        <h2>Presenter remote</h2>
+        <p>
+          {remoteConnected
+            ? 'Your remote is connected. Notes are shown there.'
+            : 'Use a second screen for notes and slide controls.'}
+        </p>
+        {children}
+      </section>
       <div className="presenter-clock">
         <div>
           <span>Elapsed time</span>
@@ -39,7 +54,7 @@ function PresenterPanel({
           <p>End of the presentation.</p>
         )}
       </div>
-      <div className="speaker-notes">
+      <div className="speaker-notes" hidden={remoteConnected}>
         <h2>Speaker notes</h2>
         <p>{slides[index].notes || 'No notes for this slide.'}</p>
       </div>
@@ -160,7 +175,8 @@ export function Presentation() {
     }),
     [index, timer.formatted, focusScope],
   );
-  const { mode, setMode, setPresenter, setClean, onRemoteConnection } = usePresentationMode();
+  const { mode, setMode, setPresenter, setClean, onRemoteConnection, remoteConnected } =
+    usePresentationMode();
   return (
     <div className={`presentation-app is-${mode}`}>
       <a
@@ -178,7 +194,6 @@ export function Presentation() {
           <LabMark />
           The Frontend Lab
         </span>
-        <RemotePairing state={remoteState} input={input} onConnectionChange={onRemoteConnection} />
         {appHref && (
           <Button variant="ghost" asChild>
             <a href={appHref}>← Back to app</a>
@@ -189,7 +204,18 @@ export function Presentation() {
         <div className="audience-stage">
           <SlideStage index={index} onDemoExit={exitDemo} />
         </div>
-        {mode === 'presenter' && <PresenterPanel index={index} timer={timer} />}
+        <PresenterPanel
+          index={index}
+          timer={timer}
+          hidden={mode !== 'presenter'}
+          remoteConnected={remoteConnected}
+        >
+          <RemotePairing
+            state={remoteState}
+            input={input}
+            onConnectionChange={onRemoteConnection}
+          />
+        </PresenterPanel>
       </main>
       {mode === 'clean' ? (
         <Button className="restore-controls" variant="outline" onClick={() => setMode('audience')}>
@@ -222,6 +248,7 @@ function usePresentationMode() {
     setMode,
     setClean,
     onRemoteConnection,
-    setPresenter: remoteConnected ? undefined : setPresenter,
+    setPresenter,
+    remoteConnected,
   };
 }

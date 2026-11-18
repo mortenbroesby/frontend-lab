@@ -4,7 +4,7 @@ Goal: a phone controls the audience screen and displays its current notes, slide
 
 ## Implementation
 
-- Pair explicitly from presentation controls, using a random 128-bit token in a QR/link fragment. Disconnect ends the session; another pairing creates a new token.
+- Pair explicitly from Presenter view, using a random 128-bit token in a QR/link fragment. Disconnect ends the session; another pairing creates a new token.
 - Reuse installed Trystero and qrcode.react libraries, already used by Canvas TV. Keep presentation code independent of demo modules.
 - Use WebRTC data channels with public signalling; no paid backend or new hosting service. HTTPS is required on phones. Some networks block peer connectivity; show this clearly rather than promising universal access. A managed relay remains a separate decision if real-device testing needs it.
 - The audience window owns navigation and timer state. The phone receives snapshots, never runs embedded demos, and sends only validated arrows, OK and Back commands. Validate incoming payloads and accept one paired peer.

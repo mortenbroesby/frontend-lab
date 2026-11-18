@@ -14,11 +14,11 @@ The gallery build includes `/presentation/` (relative to its hosting base). Open
 
 The deck opens with edge-to-edge slides and no surrounding chrome. Use arrow keys or Space outside interactive controls. Show controls reveals navigation, presenter tools and Back to app. Choose Fullscreen to fill the display and hide controls again; Escape exits browser fullscreen. Browsers require a click to enter fullscreen. Slides keep their 16:9 proportions, with matching dark space on other screen shapes.
 
-Presenter view keeps the current slide, next-slide preview, notes and an elapsed timer in one window. **Do not project presenter view:** notes are visible in that window. Connecting a phone remote switches the main screen to clean slides and hides the Presenter view option. Disconnecting leaves notes hidden; show controls and explicitly choose Presenter view to restore them. The timer starts when the presentation opens and continues across view changes; Reset timer restarts it. Reloading resets it.
+Presenter view keeps the current slide, next-slide preview, notes and an elapsed timer in one window. **Do not project presenter view:** notes are visible in that window. Connecting a phone remote switches the main screen to clean slides. Presenter view remains available to manage the connection, but its notes stay hidden while the remote is connected. Switching views does not end pairing. The timer starts when the presentation opens and continues across view changes; Reset timer restarts it. Reloading resets it.
 
 ## Phone remote
 
-1. Open **Show controls → Presenter remote → Start pairing** on the audience screen.
+1. Open **Show controls → Presenter view → Presenter remote → Start pairing** on the audience screen.
 2. Scan the QR code with your phone, or open the pairing link on another device.
 3. Wait for **Connected**, then use the directional remote. Arrows navigate slides; Back goes to the previous slide; OK enters an interactive demo. In the TV, arrows and OK control its interface, and Back moves outward through playback, catalogue and slides. The Focus label shows where commands go. The phone shows a preview of the current slide, notes, the next title and the audience timer. Interactive slides use static previews: the phone does not run a second TV or synthesizer. Hide the laptop controls to return to clean slides; pairing stays active.
 
