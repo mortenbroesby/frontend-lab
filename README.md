@@ -35,8 +35,6 @@ npm run dev
 
 Open the printed address and choose a track.
 
-Moving this repository internally? See the [migration checklist](gallery/docs/internal-migration.md).
-
 Windows works with native PowerShell or Command Prompt; WSL is not required. If PowerShell blocks `npm.ps1`, use `npm.cmd` instead of `npm` in these commands. See [Windows setup and compatibility](gallery/docs/windows.md).
 
 <a id="create-a-demo"></a>
