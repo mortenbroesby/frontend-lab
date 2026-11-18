@@ -2,19 +2,27 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useTransform } from 'motion/react';
 import type { MotionValue } from 'motion/react';
 import { Button } from '@lab/ui/button';
-import { createSpeakerScene } from './speaker-scene';
+import { createLaptopScene } from './laptop-scene';
 
-export function Speaker({ progress, colour }: { progress: MotionValue<number>; colour: string }) {
+export function Laptop({
+  progress,
+  colour,
+  still,
+}: {
+  progress: MotionValue<number>;
+  colour: string;
+  still: boolean;
+}) {
   const canvas = useRef<HTMLCanvasElement>(null);
-  const scene = useRef<ReturnType<typeof createSpeakerScene> | null>(null);
-  const drag = useRef<number | null>(null);
+  const scene = useRef<ReturnType<typeof createLaptopScene> | null>(null);
+  const drag = useRef<{ x: number; time: number; speed: number } | null>(null);
   const [unavailable, setUnavailable] = useState(false);
   const y = useTransform(progress, [0, 0.14, 0.94, 1], ['90%', '0%', '0%', '160%']);
   const opacity = useTransform(progress, [0, 0.08, 0.96, 1], [0, 1, 1, 0]);
   useEffect(() => {
-    let view: ReturnType<typeof createSpeakerScene>;
+    let view: ReturnType<typeof createLaptopScene>;
     try {
-      view = createSpeakerScene(canvas.current!);
+      view = createLaptopScene(canvas.current!);
     } catch {
       setUnavailable(true);
       return;
@@ -37,17 +45,27 @@ export function Speaker({ progress, colour }: { progress: MotionValue<number>; c
         ref={canvas}
         className="orbit-canvas"
         tabIndex={0}
-        aria-label="3D speaker. Drag horizontally to rotate. Arrow keys turn and tilt; Home resets."
+        aria-label="3D laptop. Drag horizontally to rotate. Arrow keys turn and tilt; Home resets."
         onPointerDown={(event) => {
-          drag.current = event.clientX;
+          scene.current?.stop();
+          drag.current = { x: event.clientX, time: performance.now(), speed: 0 };
           event.currentTarget.setPointerCapture(event.pointerId);
         }}
         onPointerMove={(event) => {
           if (drag.current === null) return;
-          scene.current?.rotate((event.clientX - drag.current) * 0.012);
-          drag.current = event.clientX;
+          const now = performance.now();
+          const delta = (event.clientX - drag.current.x) * 0.012;
+          scene.current?.rotate(delta);
+          drag.current = {
+            x: event.clientX,
+            time: now,
+            speed: delta / Math.max((now - drag.current.time) / 1000, 0.008),
+          };
         }}
         onPointerUp={() => {
+          const last = drag.current;
+          if (last && !still && performance.now() - last.time < 100)
+            scene.current?.release(last.speed);
           drag.current = null;
         }}
         onPointerCancel={() => {

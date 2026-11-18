@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { useScroll, useReducedMotion, useMotionValue } from 'motion/react';
-import { Speaker } from './speaker';
+import { useSpring, useScroll, useReducedMotion, useMotionValue } from 'motion/react';
+import { Laptop } from './laptop';
 import { Button } from '@lab/ui/button';
 import {
   Dialog,
@@ -17,7 +17,7 @@ const chapters = [
   ['arrival', 'Meet Orbit'],
   ['detail', 'Closer, still'],
   ['inside', 'A different angle'],
-  ['finish', 'Find your frequency'],
+  ['finish', 'Find your finish'],
 ] as const;
 const finishes = [
   { name: 'Moonstone', shell: '#b9b6ad', glow: '#d6c6aa' },
@@ -33,10 +33,10 @@ function Chapter({ index }: { index: number }) {
         <>
           More room
           <br />
-          for sound.
+          to create.
         </>
       ),
-      body: 'Meet Orbit. An imagined speaker with a softer presence.',
+      body: 'Meet Orbit. An imagined laptop, ready for your next idea.',
     },
     {
       eyebrow: '01 / A quieter kind of design',
@@ -47,7 +47,7 @@ function Chapter({ index }: { index: number }) {
           Everything felt.
         </>
       ),
-      body: 'A perforated grille. A warm metal edge. One uninterrupted curve.',
+      body: 'A luminous display. A machined shell. Open to possibility.',
     },
     {
       eyebrow: '02 / A different angle',
@@ -80,6 +80,12 @@ function Chapter({ index }: { index: number }) {
 export default function Orbit() {
   const story = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: story, offset: ['start start', 'end end'] });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 85,
+    damping: 24,
+    mass: 0.8,
+    restDelta: 0.0001,
+  });
   const reduced = useReducedMotion();
   const [calm, setCalm] = useState(false);
 
@@ -100,7 +106,7 @@ export default function Orbit() {
         <div className="orbit-stage">
           <div className="orbit-halo" />
           <div className="orbit-orbit" />
-          <Speaker progress={still ? rest : scrollYProgress} colour={finish.shell} />
+          <Laptop progress={still ? rest : smoothProgress} still={still} colour={finish.shell} />
           <span className="orbit-stage-caption">ORBIT / OBJECT STUDY Nº 01</span>
         </div>
         {[0, 1, 2].map((index) => (
@@ -112,10 +118,10 @@ export default function Orbit() {
             <h2>
               Find your
               <br />
-              frequency.
+              finish.
             </h2>
             <p className="orbit-description">Same shape. A different feeling.</p>
-            <div className="orbit-finishes" role="group" aria-label="Speaker colour">
+            <div className="orbit-finishes" role="group" aria-label="Laptop colour">
               {finishes.map((colour) => (
                 <Button
                   key={colour.name}

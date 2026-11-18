@@ -1,0 +1,90 @@
+import * as THREE from 'three';
+import { createLaptop } from './laptop-model';
+
+export function createLaptopScene(canvas: HTMLCanvasElement) {
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 30);
+  camera.position.set(0, 0.6, 6.5);
+  camera.lookAt(0, 0.35, 0);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x303347, 3));
+  const key = new THREE.DirectionalLight(0xffeed7, 5);
+  key.position.set(-3, 4, 5);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xa1c9ff, 4);
+  rim.position.set(3, 1, -3);
+  scene.add(rim);
+  const model = createLaptop();
+  scene.add(model.object);
+  let progress = 0;
+  let yaw = 0;
+  let pitch = 0;
+  const phase = (value: number, start: number, end: number) =>
+    THREE.MathUtils.smoothstep(value, start, end);
+  function render() {
+    model.object.rotation.set(
+      0.24 + phase(progress, 0.46, 0.74) * Math.PI * 2 + pitch,
+      -0.45 + phase(progress, 0.18, 0.42) * Math.PI * 2 + yaw,
+      -0.08,
+    );
+    model.lid.rotation.x = 1.48 - phase(progress, 0.04, 0.22) * 1.76;
+    renderer.render(scene, camera);
+  }
+  let frame = 0;
+  let velocity = 0;
+  let previous = 0;
+  function coast(now: number) {
+    const dt = Math.min((now - previous) / 1000, 0.032);
+    previous = now;
+    yaw += velocity * dt;
+    velocity *= Math.exp(-5 * dt);
+    render();
+    if (Math.abs(velocity) > 0.01) frame = requestAnimationFrame(coast);
+  }
+  const observer = new ResizeObserver(() => {
+    const { width, height } = canvas.getBoundingClientRect();
+    renderer.setSize(width, height, false);
+    camera.aspect = width / Math.max(height, 1);
+    camera.updateProjectionMatrix();
+    render();
+  });
+  observer.observe(canvas);
+  return {
+    progress(value: number) {
+      progress = value;
+      render();
+    },
+    colour(value: string) {
+      model.shell.color.set(value);
+      render();
+    },
+    stop() {
+      cancelAnimationFrame(frame);
+    },
+    release(speed: number) {
+      cancelAnimationFrame(frame);
+      velocity = THREE.MathUtils.clamp(speed, -5, 5);
+      previous = performance.now();
+      frame = requestAnimationFrame(coast);
+    },
+    rotate(x: number, y = 0) {
+      yaw += x;
+      pitch += y;
+      render();
+    },
+    reset() {
+      cancelAnimationFrame(frame);
+      yaw = 0;
+      pitch = 0;
+      render();
+    },
+    dispose() {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      model.dispose();
+      renderer.dispose();
+    },
+  };
+}
