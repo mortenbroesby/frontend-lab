@@ -4,14 +4,6 @@
   Explore, experiment and build something interesting.
 </p>
 
-
-
-<p align="center">
-  <a href="#start-here">Run locally</a>
-  <span> | </span>
-  <a href="#create-a-demo">Create a demo</a>
-</p>
-
 ---
 
 A shared space for front-end experimentation. Explore demos, follow guides,
