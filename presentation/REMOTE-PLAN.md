@@ -27,3 +27,9 @@ Protocol tests cover malformed messages, session tokens and valid slide ranges. 
 ## Focus routing
 
 `@lab/demo-kit/focus` defines six commands and the keyboard mapping. The presentation routes input to its mounted demo first, then to slide navigation if unhandled. The TV owns its playback and catalogue state; origin-checked iframe messages carry input and the current focus label, not application state. Leaving the slide removes the input handler. Back unwinds TV playback, catalogue and finally presentation focus; OK re-enters from the TV slide. No second pairing is needed for the presentation phone.
+
+## Focus review
+
+The supported path is slides → TV catalogue → TV playback. Browser Beat and arbitrary demos do not register a focus handler. Native form controls and dialogs retain their own keyboard behaviour; browser fullscreen shortcuts remain browser-owned.
+
+A review reproduced and fixed two lifecycle failures: an iframe reload no longer loses the activation handshake, and Back escapes even when the initial TV load fails. Held Back/OK keys no longer repeat through TV levels. Registration cleanup only removes its own handler. Browser verification covers reload, blocked iframe loading, restored slide navigation and held-key behaviour, alongside the phone and keyboard journeys above. Cross-network phone reliability still depends on the WebRTC transport.

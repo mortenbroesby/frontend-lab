@@ -10,14 +10,14 @@ export function TVFrame({ href }: { href: string }) {
   const frame = useRef<HTMLIFrameElement>(null);
   const returnPoint = useRef<HTMLDivElement>(null);
   const wasActive = useRef(false);
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(0);
   const url = new URL(href, location.href);
   url.searchParams.set('embed', '1');
   url.searchParams.set('presentationOrigin', location.origin);
   const origin = url.origin;
 
   const receiveMessage = useEffectEvent((data: EmbedMessage) => {
-    if (data.type === 'lab:demo-ready') setReady(true);
+    if (data.type === 'lab:demo-ready') setReady((revision) => revision + 1);
     if (data.type === 'lab:demo-focus') setScope(data.scope);
     if (data.type === 'lab:demo-return') setActive(false);
   });
@@ -35,9 +35,16 @@ export function TVFrame({ href }: { href: string }) {
     };
   }, [origin, setActive, setScope]);
 
+  const controlTV = useEffectEvent((action: FocusAction) => {
+    if (!ready) {
+      if (action === 'back') setActive(false);
+      return;
+    }
+    frame.current?.contentWindow?.postMessage({ type: 'lab:demo-input', action }, origin);
+  });
   const input = useEffectEvent((action: FocusAction) => {
     if (active) {
-      frame.current?.contentWindow?.postMessage({ type: 'lab:demo-input', action }, origin);
+      controlTV(action);
       return true;
     }
     if (action !== 'select' || !ready) return false;
@@ -54,9 +61,10 @@ export function TVFrame({ href }: { href: string }) {
     else if (wasActive.current) returnPoint.current?.focus();
   });
   useEffect(() => {
-    if (!ready) return;
-    post(active ? 'lab:demo-enter' : 'lab:demo-exit');
-    restoreFocus();
+    if (ready) {
+      post(active ? 'lab:demo-enter' : 'lab:demo-exit');
+      restoreFocus();
+    } else if (!active) restoreFocus();
     wasActive.current = active;
   }, [active, ready, origin]);
 

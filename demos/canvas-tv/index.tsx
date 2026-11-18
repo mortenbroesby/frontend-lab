@@ -48,6 +48,7 @@ function TV() {
         event.metaKey,
         event.shiftKey,
         event.nativeEvent.isComposing,
+        event.repeat && ['Escape', 'Backspace', 'Enter'].includes(event.key),
       ].some(Boolean)
     )
       return;

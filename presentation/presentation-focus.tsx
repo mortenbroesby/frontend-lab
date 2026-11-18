@@ -17,7 +17,7 @@ export function PresentationFocus({ children }: { children: ReactNode }) {
   const register = useCallback((next: Handler) => {
     handler.current = next;
     return () => {
-      handler.current = null;
+      if (handler.current === next) handler.current = null;
     };
   }, []);
   const input = useCallback((action: FocusAction) => handler.current?.(action) ?? false, []);
