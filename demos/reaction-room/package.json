@@ -8,12 +8,15 @@
     "build": "vite build --config ../../gallery/vite.demo.config.ts",
     "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run build"
+    "check": "npm run typecheck && npm run build",
+    "test": "node --test *.test.ts *.test.mjs",
+    "start": "node server.mjs"
   },
   "dependencies": {
     "@lab/demo-kit": "*",
     "react": "19.3.1",
-    "trystero": "0.27.0",
-    "@lab/ui": "*"
+    "@lab/ui": "*",
+    "qrcode.react": "4.2.0",
+    "ws": "8.23.0"
   }
 }

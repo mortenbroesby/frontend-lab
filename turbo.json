@@ -32,7 +32,8 @@
         "dist/**"
       ],
       "env": [
-        "VITE_GALLERY_URL"
+        "VITE_GALLERY_URL",
+        "VITE_REACTION_SERVER_URL"
       ]
     },
     "test": {

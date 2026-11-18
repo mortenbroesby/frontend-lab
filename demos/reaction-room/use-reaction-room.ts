@@ -1,124 +1,89 @@
 import { useEffect, useRef, useState } from 'react';
-import type { MessageAction, Room } from 'trystero';
+import { connectRoom } from './connect-room';
+import type { Reaction } from './reactions';
 
-// A route remount must wait for Trystero to release the previous room registration.
-let leaving = Promise.resolve();
-
-function supportsPeerConnections() {
-  return (
-    window.isSecureContext &&
-    Boolean(globalThis.crypto?.subtle) &&
-    typeof RTCPeerConnection === 'function'
-  );
-}
-
+type Particle = Reaction & { id: number };
+const empty = { events: [] as Particle[], total: 0, now: 0 };
 export function useReactionRoom(joined: string | null) {
-  const [status, setStatus] = useState('Discovering peers…');
+  const [status, setStatus] = useState('Create a room or join your group.');
   const [peers, setPeers] = useState(0);
-  const [cheers, setCheers] = useState({ total: 0, emoji: '👋' });
-  const action = useRef<MessageAction<string> | null>(null);
-  const supported = supportsPeerConnections();
+  const [ready, setReady] = useState(false);
+  const [wall, setWall] = useState(empty);
+  const incoming = useRef<Reaction[]>([]);
+  const outgoing = useRef<string[]>([]);
+  const action = useRef<((emojis: string[]) => void) | null>(null);
+  const lastTap = useRef(0);
 
   useEffect(() => {
-    if (joined === null) return;
-    if (!supported) {
-      setStatus(
-        'Requires WebRTC and localhost on each device or trusted HTTPS. Plain HTTP LAN addresses will not work.',
-      );
-      return;
-    }
+    if (!joined) return;
     const controller = new AbortController();
-    const { signal } = controller;
-    let room: Room | undefined;
-    setPeers(0);
-    setCheers({ total: 0, emoji: '👋' });
-    setStatus('Discovering peers… Open this demo on another device with the same code.');
-    const timer = window.setTimeout(() => {
-      if (!room || Object.keys(room.getPeers()).length === 0) {
-        setStatus(
-          'No peers yet. Check the code and internet. Signaling or WebRTC may be blocked; leave and try another network.',
-        );
-      }
-    }, 20000);
-
-    async function connect() {
-      try {
-        const { joinRoom } = await import('trystero');
-        await leaving;
-        if (signal.aborted) return;
-        room = joinRoom(
-          {
-            appId: 'mortenbroesby/front-end-lab/reaction-room-v1',
-            identity: 'none',
-            maxUsers: 12,
-            maxReceiveBytes: 65536,
-          },
-          joined!,
-        );
-        action.current = room.makeAction<string>('cheer');
-        action.current.onMessage(
-          (emoji) => {
-            if (['🚀', '✨', '💜'].includes(emoji))
-              setCheers((previous) => ({ total: previous.total + 1, emoji }));
-          },
-          { signal },
-        );
-        const updatePeers = () => {
-          const count = Object.keys(room!.getPeers()).length;
-          setPeers(count);
-          setStatus(
-            count
-              ? `Connected to ${count} other ${count === 1 ? 'device' : 'devices'}. Send a reaction!`
-              : 'Waiting for a device with the same room code.',
-          );
-          if (count) clearTimeout(timer);
-        };
-        room.onPeerJoin(updatePeers, { signal });
-        room.onPeerLeave(updatePeers, { signal });
-        room.onError(
-          (error) => {
-            clearTimeout(timer);
-            setStatus(
-              `Connection error (${error.code}). Check internet and room code. Restricted networks may need TURN (not configured). Leave and retry, or refresh both pages.`,
-            );
-          },
-          { signal },
-        );
-        await room.ready;
-      } catch {
-        if (!signal.aborted) {
-          clearTimeout(timer);
-          setStatus('Cannot join. Check internet and browser support; leave and retry.');
-        }
-      }
-    }
-    void connect();
+    setStatus('Opening room…');
+    connectRoom(joined, {
+      signal: controller.signal,
+      status: setStatus,
+      peers: (count) => {
+        setPeers(count);
+      },
+      receive: (batch, sender) => {
+        const at = Date.now();
+        incoming.current = [
+          ...incoming.current,
+          ...batch.map((emoji) => ({ emoji, sender, at })),
+        ].slice(-600);
+      },
+      disconnected: () => {
+        action.current = null;
+        outgoing.current = [];
+        setPeers(0);
+        setReady(false);
+      },
+      ready: (current) => {
+        action.current = current;
+        setReady(true);
+      },
+    });
     return () => {
       controller.abort();
-      clearTimeout(timer);
       action.current = null;
-      leaving = room?.leave().catch(() => {}) ?? leaving;
     };
-  }, [joined, supported]);
+  }, [joined]);
+
+  useEffect(() => {
+    if (!joined) return;
+    const paint = window.setInterval(() => {
+      const batch = incoming.current.splice(0);
+      const now = Date.now();
+      setWall((previous) => {
+        if (!batch.length && !previous.events.length) return previous;
+        return {
+          total: previous.total + batch.length,
+          now,
+          events: [
+            ...previous.events,
+            ...batch.map((event, i) => ({ ...event, id: previous.total + i })),
+          ]
+            .filter((event) => now - event.at < 4000)
+            .slice(-1200),
+        };
+      });
+    }, 100);
+    const send = window.setInterval(() => {
+      const batch = outgoing.current.splice(0, 2);
+      if (!batch.length || !action.current) return;
+      action.current(batch);
+    }, 200);
+    return () => {
+      clearInterval(paint);
+      clearInterval(send);
+    };
+  }, [joined]);
 
   function cheer(emoji: string) {
-    const current = action.current;
-    if (!current || !peers) return;
-    void current.send(emoji).then(
-      () => {
-        if (action.current === current)
-          setCheers((previous) => ({ total: previous.total + 1, emoji }));
-      },
-      () => {
-        if (action.current === current)
-          setStatus('Reaction failed. Check the connection and retry.');
-      },
-    );
+    if (!ready || performance.now() - lastTap.current < 100) return;
+    if (outgoing.current.length >= 2) return;
+    lastTap.current = performance.now();
+    outgoing.current.push(emoji);
+    incoming.current.push({ emoji, sender: 'self', at: Date.now() });
   }
-
-  function leave() {
-    setPeers(0);
-    setStatus('Left the room. Choose a code to rejoin.');
-  }
-  return { status, peers, cheers, cheer, leave, supported };
+  return { status, peers, wall, cheer, ready };
 }
