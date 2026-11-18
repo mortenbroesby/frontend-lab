@@ -3,22 +3,10 @@ import type { CSSProperties } from 'react';
 import { useScroll, useReducedMotion, useMotionValue } from 'motion/react';
 import { Speaker } from './speaker';
 import { Button } from '@lab/ui/button';
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from '@lab/ui/dialog';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import './orbit.css';
 
-const chapters = [
-  ['arrival', 'Meet Orbit'],
-  ['detail', 'Closer, still'],
-  ['inside', 'A different angle'],
-  ['finish', 'Find your finish'],
-] as const;
+const chapterIds = ['arrival', 'detail', 'inside'] as const;
 const finishes = [
   { name: 'Moonstone', shell: '#b9b6ad', glow: '#d6c6aa' },
   { name: 'Terracotta', shell: '#ba705b', glow: '#ff916b' },
@@ -62,7 +50,7 @@ function Chapter({ index }: { index: number }) {
     },
   ][index]!;
   return (
-    <section className="orbit-chapter" id={chapters[index]![0]}>
+    <section className="orbit-chapter" id={chapterIds[index]}>
       <div className="orbit-copy">
         <p className="orbit-eyebrow">{content.eyebrow}</p>
         {index === 0 ? <h1>{content.title}</h1> : <h2>{content.title}</h2>}
@@ -81,10 +69,9 @@ export default function Orbit() {
   const story = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: story, offset: ['start start', 'end end'] });
   const reduced = useReducedMotion();
-  const [calm, setCalm] = useState(false);
 
   const [finish, setFinish] = useState(finishes[0]!);
-  const still = Boolean(reduced) || calm;
+  const still = Boolean(reduced);
   const rest = useMotionValue(0.74);
   return (
     <div
@@ -95,7 +82,11 @@ export default function Orbit() {
       <a className="orbit-skip" href="#finish">
         Skip to colour choices
       </a>
-      <OrbitNav still={still} reduced={Boolean(reduced)} onToggle={() => setCalm(!calm)} />
+      <header className="orbit-nav">
+        <a href="#arrival" className="orbit-logo" aria-label="Orbit, back to start">
+          ◉ orbit
+        </a>
+      </header>
       <main ref={story} className="orbit-story">
         <div className="orbit-stage">
           <div className="orbit-halo" />
@@ -148,59 +139,6 @@ export default function Orbit() {
       </main>
       <OrbitFooter />
     </div>
-  );
-}
-
-function OrbitNav({
-  still,
-  reduced,
-  onToggle,
-}: {
-  still: boolean;
-  reduced: boolean;
-  onToggle: () => void;
-}) {
-  const [menu, setMenu] = useState(false);
-  const home = galleryHref('/demos');
-  return (
-    <header className="orbit-nav">
-      <a href="#arrival" className="orbit-logo" aria-label="Orbit, back to start">
-        ◉ orbit
-      </a>
-      <div>
-        <Button variant="ghost" onClick={onToggle} aria-pressed={still} disabled={reduced}>
-          {still ? 'Still view' : 'Pause motion'}
-        </Button>
-        <Dialog open={menu} onOpenChange={setMenu}>
-          <DialogTrigger asChild>
-            <Button variant="ghost">
-              Explore <span aria-hidden="true">＋</span>
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="orbit-menu">
-            <DialogTitle>Take the long way.</DialogTitle>
-            <DialogDescription>Four moments. One continuous story.</DialogDescription>
-            <nav aria-label="Story chapters">
-              {chapters.map(([id, title], i) => (
-                <a
-                  className="orbit-chapter-link"
-                  key={id}
-                  href={`#${id}`}
-                  onClick={() => setMenu(false)}
-                >
-                  <span className="orbit-menu-number">0{i + 1}</span>
-                  {title}
-                  <span className="orbit-menu-arrow" aria-hidden="true">
-                    ↗
-                  </span>
-                </a>
-              ))}
-            </nav>
-            {home && <a href={home}>← All Lab demos</a>}
-          </DialogContent>
-        </Dialog>
-      </div>
-    </header>
   );
 }
 
