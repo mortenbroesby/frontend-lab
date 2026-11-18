@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createSpeaker } from './speaker-model';
+import { createPreviewSpotlight } from './preview-spotlight';
 
 export function createSpeakerScene(canvas: HTMLCanvasElement) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -40,6 +41,7 @@ export function createSpeakerScene(canvas: HTMLCanvasElement) {
     );
     renderer.render(scene, camera);
   }
+  const spotlight = createPreviewSpotlight(scene, canvas, render);
   let frame = 0;
   let velocity = 0;
   let previous = 0;
@@ -60,6 +62,7 @@ export function createSpeakerScene(canvas: HTMLCanvasElement) {
   });
   observer.observe(canvas);
   return {
+    spotlight: spotlight.enable,
     progress(value: number) {
       progress = value;
       render();
@@ -90,6 +93,7 @@ export function createSpeakerScene(canvas: HTMLCanvasElement) {
     },
     dispose() {
       observer.disconnect();
+      spotlight.dispose();
       cancelAnimationFrame(frame);
       model.dispose();
       environment.dispose();

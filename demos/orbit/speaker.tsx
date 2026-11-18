@@ -9,11 +9,13 @@ export function Speaker({
   colour,
   still,
   className = 'orbit-product',
+  spotlight = false,
 }: {
   progress: MotionValue<number>;
   colour: string;
   still: boolean;
   className?: string;
+  spotlight?: boolean;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const scene = useRef<ReturnType<typeof createSpeakerScene> | null>(null);
@@ -45,6 +47,9 @@ export function Speaker({
   useEffect(() => {
     scene.current?.colour(colour);
   }, [colour, pose]);
+  useEffect(() => {
+    scene.current?.spotlight(spotlight);
+  }, [spotlight, pose]);
   return (
     <motion.div className={className} style={{ y: still ? 0 : y }}>
       <canvas
