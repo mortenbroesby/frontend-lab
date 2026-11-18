@@ -36,12 +36,12 @@ export function LabNavigation({ route }: { route: string }) {
           }
         }}
         links={[
+          { label: 'Presentation', group: 'Navigation', href: presentationHref },
           { label: 'Tracks', group: 'Navigation', href: '#/' },
           { label: 'All demos', group: 'Navigation', href: '#/demos' },
           { label: 'All guides', group: 'Navigation', href: '#/guides' },
           { label: 'Create a demo', group: 'Navigation', href: '#/create' },
           { label: 'Local setup', group: 'Navigation', href: '#/guide/setup' },
-          { label: 'Presentation', group: 'Tools', href: presentationHref },
           ...tracks.flatMap((track) =>
             track.guides.map((guide) => ({
               label: guide.title,
