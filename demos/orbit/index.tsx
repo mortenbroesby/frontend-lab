@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion, useMotionValue } from 'motion/react';
-import type { MotionValue } from 'motion/react';
+import { useScroll, useReducedMotion, useMotionValue } from 'motion/react';
+import { Speaker } from './speaker';
 import { Button } from '@lab/ui/button';
 import {
   Dialog,
@@ -25,34 +25,6 @@ const finishes = [
   { name: 'Deep sea', shell: '#547e83', glow: '#77d7dd' },
 ];
 
-function Speaker({ progress }: { progress: MotionValue<number> }) {
-  const rotate = useTransform(progress, [0, 0.18, 0.42, 1], [-18, -18, 342, 342]);
-  const rotateX = useTransform(progress, [0, 0.46, 0.74, 1], [0, 0, 360, 360]);
-  const y = useTransform(progress, [0, 0.14, 0.94, 1], ['90%', '0%', '0%', '160%']);
-  const opacity = useTransform(progress, [0, 0.08, 0.96, 1], [0, 1, 1, 0]);
-  return (
-    <motion.div
-      className="orbit-product"
-      style={{ rotate, rotateX, y, opacity, transformPerspective: 1000 }}
-      aria-hidden="true"
-    >
-      <div className="orbit-product-shadow" />
-      <div className="orbit-shell">
-        <span className="orbit-wordmark">O R B I T</span>
-      </div>
-      <div className="orbit-grille">
-        <div className="orbit-mesh" />
-        <div className="orbit-touch">
-          <span>−</span>
-          <i />
-          <span>+</span>
-        </div>
-      </div>
-      <div className="orbit-indicator" />
-    </motion.div>
-  );
-}
-
 function Chapter({ index }: { index: number }) {
   const content = [
     {
@@ -75,7 +47,7 @@ function Chapter({ index }: { index: number }) {
           Everything felt.
         </>
       ),
-      body: 'A woven surface. A warm metal edge. One uninterrupted curve.',
+      body: 'A perforated grille. A warm metal edge. One uninterrupted curve.',
     },
     {
       eyebrow: '02 / A different angle',
@@ -128,7 +100,7 @@ export default function Orbit() {
         <div className="orbit-stage">
           <div className="orbit-halo" />
           <div className="orbit-orbit" />
-          <Speaker progress={still ? rest : scrollYProgress} />
+          <Speaker progress={still ? rest : scrollYProgress} colour={finish.shell} />
           <span className="orbit-stage-caption">ORBIT / OBJECT STUDY Nº 01</span>
         </div>
         {[0, 1, 2].map((index) => (
@@ -231,7 +203,7 @@ function OrbitFooter() {
   return (
     <footer className="orbit-footer">
       <p>A fictional product. A real scroll experiment.</p>
-      <p>Built with CSS artwork and Motion. No video. No 3D model.</p>
+      <p>A real-time 3D model, built with Three.js and Motion.</p>
       <div>
         {guide && <a href={guide}>Explore the motion guide ↗</a>}
         {home && <a href={home}>Back to the Lab ↗</a>}

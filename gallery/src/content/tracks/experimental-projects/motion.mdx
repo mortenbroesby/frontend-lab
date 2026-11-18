@@ -6,9 +6,9 @@ Try <DemoLink id="motion-with-purpose">Motion with purpose</DemoLink>: an intera
 
 ### Let scrolling tell a story
 
-Try <DemoLink id="orbit">Orbit</DemoLink>: a full-screen product story with one layered speaker illustration. Scroll slowly, reverse direction, then jump to a chapter through **Explore**. Choose a finish at the end, or use **Pause motion** for a still view.
+Try <DemoLink id="orbit">Orbit</DemoLink>: a full-screen product story with an interactive 3D speaker. Scroll slowly, reverse direction, then jump to a chapter through **Explore**. Drag the object to inspect its sides and back. Choose a finish at the end, or use **Pause motion** for a still view.
 
-In `demos/orbit/index.tsx`, follow `useScroll` into the transforms in `Speaker`. The sticky stage holds the artwork while the text sections move normally. Change one progress range: does the spin or flip happen when its explanation arrives? Try the phone layout and reduced-motion setting too.
+In `demos/orbit/index.tsx`, follow `useScroll` into `speaker.tsx` and the rotations in `speaker-scene.ts`. The sticky stage holds the 3D canvas while the text sections move normally. Change one progress range: does the spin or flip happen when its explanation arrives? Try the phone layout and reduced-motion setting too.
 
 Read [Motion's useScroll guide](https://motion.dev/docs/react-use-scroll). Keep native scrolling; an animation should follow the reader's pace.
 
@@ -57,3 +57,5 @@ npm run dev --workspace @lab/demo-motion-with-purpose
 Try the keyboard, close a detail view with Escape, and change filters mid-transition. Enable your device's Reduce Motion setting. Are the same actions and results still available, and does focus return to the print you opened?
 
 Use [Motion's accessibility guidance](https://motion.dev/docs/react-accessibility). Animation should explain a state change, not delay it or become a requirement for understanding it.
+
+The model uses [Three.js](https://threejs.org/manual/#en/fundamentals) geometry and lighting. Scroll changes its pose; pointer input adds a rotation. Rendering happens only when the pose, finish or canvas size changes.
