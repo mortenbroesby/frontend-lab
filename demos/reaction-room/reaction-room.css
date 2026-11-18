@@ -36,9 +36,20 @@
   color: var(--lab-muted);
 }
 .reaction-join-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
   gap: 0.5rem;
 }
+.reaction-join-row input,
+.reaction-join-row button {
+  min-height: 44px;
+  box-sizing: border-box;
+}
+.reaction-join-row input {
+  min-width: 0;
+}
+
 .reaction-room {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 15rem;
@@ -224,6 +235,7 @@
   margin: 0;
 }
 .reaction-share {
+  align-self: start;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -237,6 +249,12 @@
 .reaction-code {
   font-family: monospace;
   overflow-wrap: anywhere;
+}
+.reaction-share button {
+  min-height: 44px;
+}
+.reaction-share [role='status']:empty {
+  display: none;
 }
 .reaction-share p {
   font-size: 0.8rem;
@@ -282,19 +300,6 @@
   }
   .reaction-stage {
     overflow: clip;
-  }
-  .reaction-share {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-  }
-  .reaction-share .reaction-qr {
-    grid-column: 2;
-    grid-row: 1 / span 4;
-  }
-  .reaction-qr svg {
-    width: 112px;
-    height: 112px;
   }
   .reaction-room:fullscreen {
     display: block;

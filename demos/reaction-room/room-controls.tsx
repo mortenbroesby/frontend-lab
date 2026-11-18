@@ -10,7 +10,7 @@ function openRoom(code: string | null) {
   const url = new URL(location.href);
   if (code) url.searchParams.set('reactionRoom', code);
   else url.searchParams.delete('reactionRoom');
-  // A fresh endpoint avoids the library's immediate leave/rejoin registration race.
+  // Navigation starts a fresh room session and clears its local reactions.
   location.assign(url.href);
 }
 export function RoomLobby() {
@@ -22,10 +22,7 @@ export function RoomLobby() {
       </div>
       <p className="eyebrow">One room. Everyone’s reactions.</p>
       <h2>Bring the room to life.</h2>
-      <p>
-        Create a room, share the code and tap together. Tap again to build momentum. A fast solo
-        burst glows; a group can turn up the heat.
-      </p>
+      <p>Create a room and invite your group, or join with a code.</p>
       <Button size="lg" onClick={() => openRoom(createRoomCode())}>
         Create a room
       </Button>
