@@ -686,3 +686,8 @@ a {
     width: 100%;
   }
 }
+
+/* Reserve horizontal gestures for slides; keep vertical scrolling and pinch zoom native. */
+.audience-stage {
+  touch-action: pan-y pinch-zoom;
+}

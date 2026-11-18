@@ -1,3 +1,4 @@
+import { useSlideSwipe } from './use-slide-swipe';
 import { SlideStage } from './slide-stage';
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { usePresentationFocus } from './presentation-focus';
@@ -159,6 +160,7 @@ function PresentationFooter({
 export function Presentation() {
   useTheme();
   const { index, move, input, exitDemo } = useSlides();
+  const swipe = useSlideSwipe(index, move);
   const timer = useElapsedTime();
   const { focus: focusScope } = usePresentationFocus();
   const appHref = galleryHref('/');
@@ -201,7 +203,7 @@ export function Presentation() {
         )}
       </header>
       <main id="presentation-stage" className="presentation-body" tabIndex={-1}>
-        <div className="audience-stage">
+        <div className="audience-stage" {...swipe}>
           <SlideStage index={index} onDemoExit={exitDemo} />
         </div>
         <PresenterPanel

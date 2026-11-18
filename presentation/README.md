@@ -12,7 +12,7 @@ The gallery build includes `/presentation/` (relative to its hosting base). Open
 
 ## Present
 
-The deck opens with edge-to-edge slides and no surrounding chrome. Use arrow keys or Space outside interactive controls. Show controls reveals navigation, presenter tools and Back to app. Choose Fullscreen to fill the display and hide controls again; Escape exits browser fullscreen. Browsers require a click to enter fullscreen. Slides keep their 16:9 proportions, with matching dark space on other screen shapes.
+The deck opens with edge-to-edge slides and no surrounding chrome. Use arrow keys or Space outside interactive controls. On touch screens, swipe left on a slide to advance or right to go back. Vertical scrolling and pinch zoom remain available. Embedded demos keep their own touch controls; swipes inside the TV or synthesizer do not change slides. Show controls reveals navigation, presenter tools and Back to app. Choose Fullscreen to fill the display and hide controls again; Escape exits browser fullscreen. Browsers require a click to enter fullscreen. Slides keep their 16:9 proportions, with matching dark space on other screen shapes.
 
 Presenter view keeps the current slide, next-slide preview, notes and an elapsed timer in one window. **Do not project presenter view:** notes are visible in that window. Connecting a phone remote switches the main screen to clean slides. Presenter view remains available to manage the connection, but its notes stay hidden while the remote is connected. Switching views does not end pairing. The timer starts when the presentation opens and continues across view changes; Reset timer restarts it. Reloading resets it.
 
