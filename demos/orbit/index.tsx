@@ -66,6 +66,7 @@ function Chapter({ index }: { index: number }) {
 }
 
 export default function Orbit() {
+  const gallery = galleryHref('/demos');
   const story = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: story, offset: ['start start', 'end end'] });
   const reduced = useReducedMotion();
@@ -86,6 +87,11 @@ export default function Orbit() {
         <a href="#arrival" className="orbit-logo" aria-label="Orbit, back to start">
           ◉ orbit
         </a>
+        {gallery && (
+          <Button asChild variant="ghost">
+            <a href={gallery}>← Back to demos</a>
+          </Button>
+        )}
       </header>
       <main ref={story} className="orbit-story">
         <div className="orbit-stage">
