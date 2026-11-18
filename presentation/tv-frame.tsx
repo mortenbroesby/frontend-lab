@@ -1,6 +1,5 @@
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import type { FocusAction } from '@lab/demo-kit/focus';
-import { Button } from '@lab/ui/button';
 import { isEmbedMessage, type EmbedMessage } from '@lab/demo-kit/embed-protocol';
 import { DemoFrame } from './demo-frame';
 import { usePresentationFocus } from './presentation-focus';
@@ -57,9 +56,6 @@ export function TVFrame({ href, onExit }: { href: string; onExit?: () => void })
         <DemoFrame ref={frame} title="Canvas TV — interactive remote navigation" src={url.href} />
       </div>
       <div className="tv-slide-footer">
-        <Button variant="outline" onClick={onExit}>
-          Previous slide
-        </Button>
         <a href="#next-directions">Continue presentation →</a>
       </div>
     </div>
