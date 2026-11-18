@@ -1,22 +1,31 @@
 import * as THREE from 'three';
-import { createLaptop } from './laptop-model';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { createSpeaker } from './speaker-model';
 
-export function createLaptopScene(canvas: HTMLCanvasElement) {
+export function createSpeakerScene(canvas: HTMLCanvasElement) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
   const scene = new THREE.Scene();
+  const studio = new RoomEnvironment();
+  const generator = new THREE.PMREMGenerator(renderer);
+  const environment = generator.fromScene(studio, 0.04);
+  scene.environment = environment.texture;
+  scene.environmentIntensity = 0.7;
+  studio.dispose();
+  generator.dispose();
   const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 30);
-  camera.position.set(0, 0.6, 6.5);
-  camera.lookAt(0, 0.35, 0);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x303347, 3));
-  const key = new THREE.DirectionalLight(0xffeed7, 5);
+  camera.position.set(0, 0, 4.4);
+  camera.lookAt(0, 0, 0);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x303347, 1.5));
+  const key = new THREE.DirectionalLight(0xffeed7, 3);
   key.position.set(-3, 4, 5);
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xa1c9ff, 4);
+  const rim = new THREE.DirectionalLight(0xa1c9ff, 2);
   rim.position.set(3, 1, -3);
   scene.add(rim);
-  const model = createLaptop();
+  const model = createSpeaker();
   scene.add(model.object);
   let progress = 0;
   let yaw = 0;
@@ -29,7 +38,6 @@ export function createLaptopScene(canvas: HTMLCanvasElement) {
       -0.45 + phase(progress, 0.18, 0.42) * Math.PI * 2 + yaw,
       -0.08,
     );
-    model.lid.rotation.x = 1.48 - phase(progress, 0.04, 0.22) * 1.76;
     renderer.render(scene, camera);
   }
   let frame = 0;
@@ -84,6 +92,7 @@ export function createLaptopScene(canvas: HTMLCanvasElement) {
       observer.disconnect();
       cancelAnimationFrame(frame);
       model.dispose();
+      environment.dispose();
       renderer.dispose();
     },
   };

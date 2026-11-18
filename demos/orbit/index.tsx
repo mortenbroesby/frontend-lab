@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useSpring, useScroll, useReducedMotion, useMotionValue } from 'motion/react';
-import { Laptop } from './laptop';
+import { Speaker } from './speaker';
 import { Button } from '@lab/ui/button';
 import {
   Dialog,
@@ -33,10 +33,10 @@ function Chapter({ index }: { index: number }) {
         <>
           More room
           <br />
-          to create.
+          for sound.
         </>
       ),
-      body: 'Meet Orbit. An imagined laptop, ready for your next idea.',
+      body: 'Meet Orbit. An imagined speaker with a softer presence.',
     },
     {
       eyebrow: '01 / A quieter kind of design',
@@ -47,7 +47,7 @@ function Chapter({ index }: { index: number }) {
           Everything felt.
         </>
       ),
-      body: 'A luminous display. A machined shell. Open to possibility.',
+      body: 'A fine metal grille. A satin shell. Sound, without the noise.',
     },
     {
       eyebrow: '02 / A different angle',
@@ -106,7 +106,7 @@ export default function Orbit() {
         <div className="orbit-stage">
           <div className="orbit-halo" />
           <div className="orbit-orbit" />
-          <Laptop progress={still ? rest : smoothProgress} still={still} colour={finish.shell} />
+          <Speaker progress={still ? rest : smoothProgress} still={still} colour={finish.shell} />
           <span className="orbit-stage-caption">ORBIT / OBJECT STUDY Nº 01</span>
         </div>
         {[0, 1, 2].map((index) => (
@@ -121,7 +121,7 @@ export default function Orbit() {
               finish.
             </h2>
             <p className="orbit-description">Same shape. A different feeling.</p>
-            <div className="orbit-finishes" role="group" aria-label="Laptop colour">
+            <div className="orbit-finishes" role="group" aria-label="Speaker colour">
               {finishes.map((colour) => (
                 <Button
                   key={colour.name}

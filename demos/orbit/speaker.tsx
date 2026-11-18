@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useTransform } from 'motion/react';
 import type { MotionValue } from 'motion/react';
 import { Button } from '@lab/ui/button';
-import { createLaptopScene } from './laptop-scene';
+import { createSpeakerScene } from './speaker-scene';
 
-export function Laptop({
+export function Speaker({
   progress,
   colour,
   still,
@@ -14,15 +14,15 @@ export function Laptop({
   still: boolean;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
-  const scene = useRef<ReturnType<typeof createLaptopScene> | null>(null);
+  const scene = useRef<ReturnType<typeof createSpeakerScene> | null>(null);
   const drag = useRef<{ x: number; time: number; speed: number } | null>(null);
   const [unavailable, setUnavailable] = useState(false);
   const y = useTransform(progress, [0, 0.14, 0.94, 1], ['90%', '0%', '0%', '160%']);
   const opacity = useTransform(progress, [0, 0.08, 0.96, 1], [0, 1, 1, 0]);
   useEffect(() => {
-    let view: ReturnType<typeof createLaptopScene>;
+    let view: ReturnType<typeof createSpeakerScene>;
     try {
-      view = createLaptopScene(canvas.current!);
+      view = createSpeakerScene(canvas.current!);
     } catch {
       setUnavailable(true);
       return;
@@ -45,7 +45,7 @@ export function Laptop({
         ref={canvas}
         className="orbit-canvas"
         tabIndex={0}
-        aria-label="3D laptop. Drag horizontally to rotate. Arrow keys turn and tilt; Home resets."
+        aria-label="3D speaker. Drag horizontally to rotate. Arrow keys turn and tilt; Home resets."
         onPointerDown={(event) => {
           scene.current?.stop();
           drag.current = { x: event.clientX, time: performance.now(), speed: 0 };
