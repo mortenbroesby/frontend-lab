@@ -14,7 +14,7 @@ The gallery build includes `/presentation/` (relative to its hosting base). Open
 
 The deck opens with edge-to-edge slides and no surrounding chrome. Use arrow keys or Space outside interactive controls. Show controls reveals navigation, presenter tools and Back to app. Choose Fullscreen to fill the display and hide controls again; Escape exits browser fullscreen. Browsers require a click to enter fullscreen. Slides keep their 16:9 proportions, with matching dark space on other screen shapes.
 
-Presenter view keeps the current slide, next-slide preview, notes and an elapsed timer in one window. **Do not project presenter view:** notes are visible in that window. The timer starts when the presentation opens and continues across view changes; Reset timer restarts it. Reloading resets it.
+Presenter view keeps the current slide, next-slide preview, notes and an elapsed timer in one window. **Do not project presenter view:** notes are visible in that window. Connecting a phone remote switches the main screen to clean slides and hides the Presenter view option. Disconnecting leaves notes hidden; show controls and explicitly choose Presenter view to restore them. The timer starts when the presentation opens and continues across view changes; Reset timer restarts it. Reloading resets it.
 
 ## Phone remote
 

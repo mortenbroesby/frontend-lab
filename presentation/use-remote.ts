@@ -19,7 +19,11 @@ export function useRemote(
   const supported = window.isSecureContext && typeof RTCPeerConnection === 'function';
 
   useEffect(() => {
-    if (!code || !supported) return;
+    if (!code || !supported) {
+      setConnected(false);
+      setSnapshot(null);
+      return;
+    }
     const controller = new AbortController();
     let room: Room | undefined;
     let peer: string | null = null;

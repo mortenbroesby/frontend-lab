@@ -22,7 +22,9 @@ export function PresenterRemote({ code }: { code: string }) {
   useTheme();
   const remote = useRemote(code, null, ignoreInput);
   const state = remote.snapshot;
-  useEffect(() => window.scrollTo(0, 0), [state?.index]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [state?.index]);
   return (
     <main className="presenter-remote">
       <p className="remote-eyebrow">Frontend Lab · Presenter remote</p>
@@ -78,22 +80,35 @@ function pairingUrl(code: string | null) {
 export function RemotePairing({
   state,
   input,
+  onConnectionChange,
 }: {
   state: RemoteState;
   input: (action: FocusAction) => void;
+  onConnectionChange: (connected: boolean) => void;
 }) {
+  const [open, setOpen] = useState(false);
   const [code, setCode] = useState<string | null>(null);
   const remote = useRemote(code, state, input);
+  useEffect(() => {
+    onConnectionChange(remote.connected);
+    if (remote.connected) setOpen(false);
+  }, [remote.connected, onConnectionChange]);
   const url = pairingUrl(code);
   function togglePairing() {
     setCode(code ? null : crypto.randomUUID().replaceAll('-', ''));
   }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Presenter remote</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        onCloseAutoFocus={(event) => {
+          if (!remote.connected) return;
+          event.preventDefault();
+          document.getElementById('presentation-stage')?.focus();
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Use your phone as a presenter remote</DialogTitle>
           <DialogDescription>

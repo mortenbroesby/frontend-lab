@@ -1,5 +1,5 @@
 import { SlideStage } from './slide-stage';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { usePresentationFocus } from './presentation-focus';
 import { RemotePairing } from './presenter-remote';
 import { Button } from '@lab/ui/button';
@@ -57,7 +57,7 @@ function PresentationControls({
   index: number;
   move: (delta: number) => void;
   presenter: boolean;
-  setPresenter: (value: boolean) => void;
+  setPresenter: ((value: boolean) => void) | undefined;
   setClean: (value: boolean) => void;
 }) {
   const fullscreen = useFullscreen();
@@ -86,9 +86,11 @@ function PresentationControls({
       </div>
       <p className="shortcut-hint">Arrow keys or Space to advance</p>
       <div className="presentation-actions">
-        <Button variant="ghost" aria-pressed={presenter} onClick={() => setPresenter(!presenter)}>
-          Presenter view
-        </Button>
+        {setPresenter && (
+          <Button variant="ghost" aria-pressed={presenter} onClick={() => setPresenter(!presenter)}>
+            Presenter view
+          </Button>
+        )}
         <Button variant="ghost" onClick={() => setClean(true)}>
           Hide controls
         </Button>
@@ -158,9 +160,7 @@ export function Presentation() {
     }),
     [index, timer.formatted, focusScope],
   );
-  const [mode, setMode] = useState<'audience' | 'presenter' | 'clean'>('clean');
-  const setPresenter = (active: boolean) => setMode(active ? 'presenter' : 'audience');
-  const setClean = () => setMode('clean');
+  const { mode, setMode, setPresenter, setClean, onRemoteConnection } = usePresentationMode();
   return (
     <div className={`presentation-app is-${mode}`}>
       <a
@@ -178,7 +178,7 @@ export function Presentation() {
           <LabMark />
           The Frontend Lab
         </span>
-        <RemotePairing state={remoteState} input={input} />
+        <RemotePairing state={remoteState} input={input} onConnectionChange={onRemoteConnection} />
         {appHref && (
           <Button variant="ghost" asChild>
             <a href={appHref}>← Back to app</a>
@@ -206,4 +206,22 @@ export function Presentation() {
       )}
     </div>
   );
+}
+
+function usePresentationMode() {
+  const [mode, setMode] = useState<'audience' | 'presenter' | 'clean'>('clean');
+  const [remoteConnected, setRemoteConnected] = useState(false);
+  const onRemoteConnection = useCallback((connected: boolean) => {
+    setRemoteConnected(connected);
+    if (connected) setMode('clean');
+  }, []);
+  const setPresenter = (active: boolean) => setMode(active ? 'presenter' : 'audience');
+  const setClean = () => setMode('clean');
+  return {
+    mode,
+    setMode,
+    setClean,
+    onRemoteConnection,
+    setPresenter: remoteConnected ? undefined : setPresenter,
+  };
 }
