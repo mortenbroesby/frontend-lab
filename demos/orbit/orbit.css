@@ -1,0 +1,419 @@
+:root {
+  color-scheme: dark;
+}
+body {
+  margin: 0;
+}
+.orbit {
+  background: #0b0c0e;
+  color: #eee;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+}
+.orbit *,
+.orbit-menu * {
+  box-sizing: border-box;
+}
+.orbit a {
+  color: inherit;
+  text-decoration: none;
+}
+.orbit a:focus-visible {
+  outline: 2px solid #cbe7e8;
+  outline-offset: 6px;
+}
+.orbit-nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px clamp(20px, 5vw, 80px);
+  background: #0b0c0ee6;
+  border-bottom: 1px solid #ffffff12;
+  backdrop-filter: blur(16px);
+}
+.orbit-logo {
+  font-size: 1.5rem;
+  font-weight: 650;
+  letter-spacing: -0.07em;
+}
+.orbit-nav > div {
+  display: flex;
+  gap: 8px;
+}
+.orbit-nav button {
+  color: #e1dfda;
+}
+.orbit-story {
+  position: relative;
+}
+.orbit-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  overflow: clip;
+  pointer-events: none;
+}
+.orbit-halo {
+  position: absolute;
+  width: 100%;
+  height: 140%;
+  top: -20%;
+  left: 20%;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--orbit-glow) 17%, transparent),
+    transparent 60%
+  );
+  transition: background 600ms;
+}
+.orbit-orbit {
+  position: absolute;
+  width: 65vw;
+  height: 65vw;
+  top: 50%;
+  left: 70%;
+  translate: -50% -50%;
+  border: 1px solid #ffffff09;
+  border-radius: 50%;
+}
+.orbit-product {
+  position: absolute;
+  width: min(36vw, 460px);
+  aspect-ratio: 1;
+  left: 55%;
+  top: 28%;
+  isolation: isolate;
+}
+.orbit-shell {
+  position: absolute;
+  inset: 12% 0 0;
+  border-radius: 45% 45% 47% 47%;
+  background:
+    linear-gradient(105deg, #fff8 0%, transparent 16%, #0006 68%, #fff3 94%), var(--orbit-shell);
+  box-shadow:
+    inset 0 -18px 24px #0009,
+    inset -3px 0 2px #fff5,
+    12px 30px 50px #0008;
+  transition: background 600ms;
+}
+.orbit-wordmark {
+  position: absolute;
+  bottom: 8%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 9px;
+  color: #0008;
+  font-weight: 700;
+}
+.orbit-grille {
+  position: absolute;
+  inset: 0 0 12%;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #f4eee3, #646669 35%, #15171a 75%, #aaa 98%);
+  padding: 2%;
+  box-shadow:
+    0 8px 12px #0009,
+    inset 0 2px 2px #fff9;
+}
+.orbit-mesh {
+  position: absolute;
+  inset: 2%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 30% 20%, #ffffff26, transparent 65%),
+    repeating-linear-gradient(0deg, #101214 0px, #101214 1px, transparent 1px, transparent 4px),
+    repeating-linear-gradient(90deg, #111315 0px, #111315 1px, #34373a 1px, #34373a 4px);
+  box-shadow:
+    inset 8px 14px 25px #ffffff12,
+    inset -12px -16px 32px #000d;
+}
+.orbit-touch {
+  position: absolute;
+  top: 14%;
+  left: 35%;
+  width: 30%;
+  height: 12%;
+  border-radius: 50%;
+  background: linear-gradient(#26282a, #17191c);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #bcbfc1;
+  box-shadow: 0 1px 2px #fff2;
+  font-size: 18px;
+}
+.orbit-touch i {
+  width: 4px;
+  height: 4px;
+  background: #dce8dc;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #c5eece;
+}
+.orbit-driver {
+  position: absolute;
+  inset: 7% 9% 17%;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #37343a 0%, #111216 3%, #555058 4%, #151619 6%);
+  border: 8px solid #292a2d;
+  box-shadow: 0 20px 40px #000b;
+}
+.orbit-driver > div {
+  position: absolute;
+  inset: 26%;
+  border-radius: 50%;
+  background: radial-gradient(at 35% 25%, #bfa38d, #5c493e 45%, #171719 80%);
+  box-shadow: 0 5px 25px #000;
+}
+.orbit-driver > span {
+  position: absolute;
+  inset: -6%;
+  border: 1px dashed #b3a49080;
+  border-radius: 50%;
+}
+.orbit-indicator {
+  position: absolute;
+  bottom: 5%;
+  left: 47%;
+  width: 6%;
+  height: 2px;
+  background: #e5e7cc;
+  box-shadow: 0 0 12px #fff8;
+}
+.orbit-product-shadow {
+  position: absolute;
+  inset: 90% -10% -15%;
+  background: radial-gradient(ellipse, #000b, transparent 65%);
+}
+.orbit-stage-caption {
+  position: absolute;
+  bottom: 25px;
+  right: 5%;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: #bcbcb5;
+}
+.orbit-chapter {
+  min-height: 120svh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 90px clamp(24px, 7vw, 110px);
+  scroll-margin-top: 0;
+  pointer-events: none;
+}
+.orbit-copy {
+  max-width: 49%;
+  padding-bottom: 14svh;
+}
+.orbit-copy a,
+.orbit-copy button {
+  pointer-events: auto;
+}
+.orbit-eyebrow {
+  color: #bbb6ad;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 0 0 28px;
+}
+.orbit-copy h1,
+.orbit-copy h2 {
+  font-size: clamp(42px, 6.1vw, 100px);
+  font-weight: 600;
+  letter-spacing: -0.07em;
+  line-height: 1.02;
+  margin: 0 0 28px;
+  text-wrap: balance;
+}
+.orbit-description {
+  max-width: 310px;
+  color: #a8a8ac;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.6;
+}
+.orbit-scroll {
+  display: inline-flex;
+  gap: 22px;
+  margin-top: 35px;
+  font-size: 12px;
+  color: #d1cdc4;
+}
+.orbit-finishes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+.orbit-finishes button {
+  background: #141518;
+  color: #bbb;
+  border-color: #ffffff20;
+  padding: 12px;
+  height: auto;
+  border-radius: 999px;
+}
+.orbit-finish-button[aria-pressed='true'] {
+  border-color: #e9e5dc;
+  color: #fff;
+}
+.orbit-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--swatch);
+}
+.orbit-selected {
+  color: #a8a8ac;
+  font-size: 12px;
+}
+.orbit-replay {
+  display: inline-block;
+  margin-top: 25px;
+  border-bottom: 1px solid #fff5;
+  padding-bottom: 5px;
+}
+.orbit-footer {
+  padding: 65px 7vw;
+  border-top: 1px solid #ffffff18;
+  background: #0b0c0e;
+  position: relative;
+  color: #99999f;
+  font-size: 0.8125rem;
+}
+.orbit-footer div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 24px;
+  color: #eee;
+}
+.orbit-menu {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  padding: max(70px, 10vh) 10vw;
+  background: #101113;
+  color: #eee;
+  align-content: center;
+}
+.orbit-menu nav {
+  display: grid;
+  margin: 24px 0;
+}
+.orbit-chapter-link {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ffffff20;
+  font-size: clamp(24px, 4vw, 56px);
+  letter-spacing: -0.04em;
+}
+.orbit-menu-number,
+.orbit-menu-arrow {
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 0;
+}
+.orbit-menu-arrow {
+  margin-left: auto;
+}
+.orbit-skip {
+  position: fixed;
+  top: -100px;
+  left: 20px;
+  z-index: 60;
+  background: #fff;
+  color: #111;
+  padding: 16px;
+}
+.orbit-skip:focus {
+  top: 80px;
+}
+@media (max-width: 700px) {
+  .orbit-nav {
+    padding: 14px 20px;
+  }
+  .orbit-nav button {
+    font-size: 12px;
+    padding-inline: 10px;
+  }
+  .orbit-product {
+    width: min(60vw, 290px);
+    left: 50%;
+    margin-left: max(-30vw, -145px);
+    top: 55%;
+  }
+  .orbit-halo {
+    left: 0;
+    top: 5%;
+  }
+  .orbit-orbit {
+    left: 50%;
+    top: 65%;
+    width: 110vw;
+    height: 110vw;
+  }
+  .orbit-chapter {
+    min-height: 120svh;
+    align-items: flex-start;
+    padding: 105px 24px 40px;
+  }
+  .orbit-copy {
+    max-width: 100%;
+    width: 100%;
+    padding: 16px;
+    margin-inline: -16px;
+    background: linear-gradient(110deg, #0b0c0ef5, #0b0c0e90);
+    border-radius: var(--radius-lg);
+  }
+  .orbit-copy h1,
+  .orbit-copy h2 {
+    font-size: clamp(38px, 10vw, 58px);
+    margin-bottom: 16px;
+  }
+  .orbit-eyebrow {
+    margin-bottom: 16px;
+    font-size: 0.625rem;
+  }
+  .orbit-description {
+    max-width: 310px;
+    font-size: 14px;
+  }
+  .orbit-scroll {
+    margin-top: 12px;
+  }
+  .orbit-finishes {
+    margin-top: 14px;
+    gap: 6px;
+  }
+  .orbit-finishes button {
+    font-size: 11px;
+    padding: 8px;
+  }
+  .orbit-selected {
+    margin-bottom: 0;
+  }
+  .orbit-replay {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+  .orbit-stage-caption {
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit * {
+    transition: none;
+  }
+}
