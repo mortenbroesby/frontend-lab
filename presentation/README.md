@@ -1,6 +1,6 @@
 # Presentation
 
-An 18-slide introduction to the chapter day: the four tracks, Browser Beat, Orbit, Canvas TV, then a closing invitation followed by Reaction Room as an informal audience finale. Historical project details stay in presenter notes. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the running order, confirmed recollections and open questions.
+A 17-slide introduction to the chapter day: the four tracks, Browser Beat, Orbit, Canvas TV, then a closing invitation and questions. Historical project details stay in presenter notes. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the running order, confirmed recollections and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0
@@ -36,4 +36,4 @@ Interactive slide components receive `preview`. Render a quiet, disabled represe
 
 The TV’s optional **Connect phone** QR code also works inside the slide. Use trusted HTTPS and internet on both screens. The phone controls the TV, not the deck; leaving the slide closes its connection. A standalone deck needs `VITE_GALLERY_URL` for demo embeds and the Back to app link.
 
-Orbit and Reaction Room also embed independent apps in the shared widescreen frame. Their presenter previews are static. Scroll inside Orbit and use Continue presentation below it. On the final slide, create a Reaction Room; its QR opens the ordinary phone UI. Keep the slide open while people join. Moving away unmounts the host; returning requires creating a new room. The notes include a brief fallback if the network does not cooperate.
+Orbit also embeds an independent app in the shared widescreen frame. Its presenter preview is static. Scroll inside Orbit and use Continue presentation below it.

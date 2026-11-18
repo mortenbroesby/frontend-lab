@@ -1,6 +1,6 @@
 # Presentation working draft
 
-Status: a 18-slide introduction to the chapter day and a 25–30-minute spotlight, including demos and questions. Slide content and presenter notes live in `slides.tsx`.
+Status: a 17-slide introduction to the chapter day and a 25–30-minute spotlight, including demos and questions. Slide content and presenter notes live in `slides.tsx`.
 
 ## Focus and tone
 
@@ -28,10 +28,9 @@ Participants can work alone or together, compare existing solutions, investigate
 | 14. Draw the screen. Track the focus. | Remote input → focus state → Canvas rendering |
 | 15. Try the TV interface | Canvas and remote navigation |
 | 16. Where would you take it? | Connect the examples back to all four tracks |
-| 17. Choose your starting point | Closing invitation and questions before the audience experiment |
-| 18. Reaction Room — join in | Optional shared finale; move on if connections fail |
+| 17. Choose your starting point | Closing invitation and questions |
 
-The four demos remain independent applications embedded in the deck. Continue links follow the running order. The D3 showcase is not part of this talk. All slides include presenter notes. Keep Orbit to about one minute and the audience experiment to two or three. The invitation to explore comes first, so the ending does not depend on Reaction Room connecting. Rehearse to fit the time rather than adding filler.
+The three demos remain independent applications embedded in the deck. Continue links follow the running order. The D3 showcase is not part of this talk. All slides include presenter notes. Keep Orbit to about one minute. End with the invitation to explore and questions. Rehearse to fit the time rather than adding filler.
 
 ## Confirmed recollections from our conversation
 

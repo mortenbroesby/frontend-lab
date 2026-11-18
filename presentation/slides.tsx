@@ -397,19 +397,6 @@ function Orbit({ preview }: { preview?: boolean }) {
   );
 }
 
-function Reactions({ preview }: { preview?: boolean }) {
-  const lab = galleryHref('/');
-  return (
-    <LiveExample
-      preview={preview}
-      id="reaction-room"
-      title="Reaction Room — join in"
-      hint="Create a room · Scan the QR · Tap together"
-      action={lab && <a href={lab}>Open the Frontend Lab →</a>}
-    />
-  );
-}
-
 function DiagramItems({ items }: { items: [string, string, string][] }) {
   return items.map(([label, title, description]) => (
     <li key={label}>
@@ -465,7 +452,7 @@ export const slides: readonly Slide[] = [
 Leave this on screen while people arrive.
 
 WHEN READY
-“Today is a chance to explore something outside our normal delivery work. First, a quick look at the tracks, then four experiments with sound, scrolling, TV navigation and connected browsers.”`,
+“Today is a chance to explore something outside our normal delivery work. First, a quick look at the tracks, then three experiments with sound, scrolling and TV navigation.”`,
   },
   {
     id: 'workshop',
@@ -630,24 +617,6 @@ You do not have to extend these demos. An existing codebase or a recurring workf
 
 Use Open the Frontend Lab to return to the gallery. Track pages offer ideas, guides and demos. Participants can work independently or in small groups, using their own project where appropriate.
 
-Take questions here before the final shared experiment. Answer historical project details honestly; say when a detail needs checking.
-
-TRANSITION
-“Before we go and explore, let’s try one thing together. Open your phone camera and join the reaction room.”`,
-  },
-  {
-    id: 'reactions',
-    title: 'Reaction Room — join in',
-    Content: Reactions,
-    notes: `AUDIENCE EXPERIMENT · 2–3 minutes
-Click Create a room on the presentation screen. Leave this slide open: its browser is the host. Invite people to scan the QR or enter the code in Reaction Room. Tap an icon together and watch the pulses gain momentum.
-
-Each guest connects to this browser using WebRTC. PeerJS’s public service introduces the browsers; we do not run a separate room server. The limit is 30 connected screens including this one. Laptop browser tests worked at that size; workshop phones and networks may differ.
-
-IF IT DOESN’T CONNECT
-Give it a short moment, then say: “Oh well—that’s part of experimenting. Different networks behave differently. Let’s get on with trying our ideas.” No live troubleshooting or promise to make everyone connect. The invitation and questions have already happened.
-
-FINISH
-Use Open the Frontend Lab below the demo to return to the app. Navigating away or closing the slide ends the host session. Returning starts at Create a room; no hidden room runs in presenter previews.`,
+Keep this slide up for questions, then invite people to choose a track. Answer historical project details honestly; say when a detail needs checking.`,
   },
 ];

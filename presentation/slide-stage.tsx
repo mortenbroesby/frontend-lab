@@ -21,7 +21,7 @@ export function SlideStage({
       <div key={slide.id} className="slide-content">
         <Content preview={preview} onDemoExit={onDemoExit} />
       </div>
-      {!['remote', 'instrument', 'orbit', 'reactions'].includes(slide.id) && (
+      {!['remote', 'instrument', 'orbit'].includes(slide.id) && (
         <span className="slide-number" aria-hidden="true">
           {String(index + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
         </span>
