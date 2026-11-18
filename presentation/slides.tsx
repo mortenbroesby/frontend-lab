@@ -357,25 +357,19 @@ function DiagramItems({ items }: { items: [string, string, string][] }) {
 
 function Components() {
   return (
-    <DiagramSlide
-      eyebrow="A different rendering target"
-      title="The interface doesn’t have to be HTML."
-    >
-      <ol className="system-diagram rendering-options">
+    <DiagramSlide eyebrow="Inside the TV demo" title="Draw the screen. Track the focus.">
+      <ol className="system-diagram">
         <DiagramItems
           items={[
-            ['DOM', 'Elements', 'The browser lays out and paints HTML and CSS.'],
-            ['CANVAS', 'Drawing', 'Your code or a renderer draws the interface.'],
+            ['INPUT', 'Remote buttons', 'Arrows move. OK opens. Back returns.'],
+            ['STATE', 'Focus', 'Remember which item is selected and where to return.'],
+            ['RENDER', 'Canvas', 'Draw the interface and its selection highlight.'],
           ]}
         />
       </ol>
       <p className="diagram-caption">
-        Lightning is a JavaScript framework for TV interfaces. It was the rendering platform on a TV
-        project I worked on.
+        The selected item lives in application state. Canvas makes that selection visible.
       </p>
-      <a className="slide-resource" href="https://lightningjs.io/" target="_blank" rel="noreferrer">
-        Lightning overview and documentation ↗
-      </a>
     </DiagramSlide>
   );
 }
@@ -513,13 +507,14 @@ Focus is part of the interface state, not just decoration. Explain directional n
   },
   {
     id: 'components',
-    title: 'The interface doesn’t have to be HTML',
+    title: 'Draw the screen. Track the focus.',
     Content: Components,
-    notes: `RENDERING · 2 minutes
-“HTML and CSS are one way to describe an interface. With Canvas, code or a rendering library draws it. That changes which responsibilities the platform handles for us.”
+    notes: `CANVAS AND FOCUS · 1–2 minutes
+“This interface is drawn on Canvas. A remote button changes the application state: which row and item are selected, or whether playback is open. The renderer draws the screen from that state, including the selection highlight.”
 
-A BRIEF REAL EXAMPLE
-“I worked on an animated TV application using Lightning, rendered to canvas and controlled with a remote.” The link provides context for anyone unfamiliar with Lightning. Current documentation is not evidence of which historical version we used. Canvas is an alternative for particular constraints, not a general replacement for HTML; layout, semantics and accessibility need deliberate attention.
+“Directional focus is a rule we implement: where should Right go, and where should Back return? Remembering that selection makes the interface feel predictable.”
+
+Canvas does not provide the DOM's layout, semantics or focus behaviour for drawn items. Those responsibilities need deliberate implementation; Canvas is useful for particular constraints, not a general replacement for HTML. This demo also has HTML controls around the Canvas.
 
 ONLY IF ASKED
 Lightning was required by the agreement with Comcast for Xfinity devices. Its imperative API led us to build a custom React renderer so engineers could use familiar JSX. This accelerated component work and helped us build testing tools. Default tests mocked rendering, including Canvas; real-primitives tests also existed. The team later switched to Solid.js. Exact versions, testing APIs and migration reasons remain unconfirmed.

@@ -24,7 +24,7 @@ Participants can work alone or together, compare existing solutions, investigate
 | 10. Browser Beat | Live music demo |
 | 11. What makes that possible? | React → Web Audio → speakers; Canvas visualises the signal |
 | 12. A screen without a pointer | Focus, directional navigation and returning |
-| 13. The interface doesn’t have to be HTML | DOM versus Canvas; introduce Lightning with a link |
+| 13. Draw the screen. Track the focus. | Remote input → focus state → Canvas rendering |
 | 14. Try the TV interface | Final live demo |
 | 15. Where would you take it? | Connect the examples back to all four tracks |
 | 16. Choose your starting point | Questions and a link into the Lab |
@@ -110,7 +110,7 @@ Do not turn the talk into a complete reconciler tutorial, a React-versus-Solid c
 
 Current documentation uses LightningJS, Lightning 3 Renderer and Blits (the higher-level application framework). That naming does not identify the version used in this historical project. Refer to the project as Lightning until its actual version is recovered.
 
-- [Lightning overview and documentation](https://lightningjs.io/) — linked from the TV slide; current site, not a version claim about our project.
+- [Lightning overview and documentation](https://lightningjs.io/) — background reference only, not shown on the slides; not a version claim about our project.
 - [Lightning 3 Renderer](https://www.lightningjs.io/api/renderer/)
 - [Blits introduction](https://lightningjs.io/v3-docs/blits/getting_started/intro.html)
 
