@@ -1,3 +1,4 @@
+import { SlideStage } from './slide-stage';
 import { useMemo, useState } from 'react';
 import { usePresentationFocus } from './presentation-focus';
 import { RemotePairing } from './presenter-remote';
@@ -8,28 +9,6 @@ import { LabMark } from '@lab/demo-kit/mark';
 import { useTheme } from '@lab/ui/theme-control';
 import { slides } from './slides';
 import { useElapsedTime, useFullscreen, useSlides } from './use-presentation';
-
-function SlideStage({ index, preview = false }: { index: number; preview?: boolean }) {
-  const slide = slides[index];
-  const Content = slide.Content;
-  return (
-    <section
-      className="slide-stage"
-      aria-label={slide.title}
-      inert={preview || undefined}
-      aria-hidden={preview || undefined}
-    >
-      <div key={slide.id} className="slide-content">
-        <Content preview={preview} />
-      </div>
-      {!['remote', 'instrument'].includes(slide.id) && (
-        <span className="slide-number" aria-hidden="true">
-          {String(index + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-        </span>
-      )}
-    </section>
-  );
-}
 
 function PresenterPanel({
   index,

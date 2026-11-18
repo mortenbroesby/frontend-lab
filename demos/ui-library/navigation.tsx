@@ -1,3 +1,4 @@
+import { DirectionPad } from '@lab/ui/direction-pad';
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@lab/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@lab/ui/accordion';
@@ -25,6 +26,7 @@ const pages = [
 ];
 
 export function Navigation() {
+  const [remoteAction, setRemoteAction] = useState('Try the remote');
   const [page, setPage] = useState(1);
   return (
     <section id="ui-navigation" className="ui-showcase-section" aria-labelledby="navigation-title">
@@ -34,6 +36,13 @@ export function Navigation() {
         <p>Arrow keys move between tabs. Tab reaches the content.</p>
       </div>
       <div className="ui-showcase-panel">
+        <DirectionPad
+          horizontal
+          onDirection={setRemoteAction}
+          onSelect={() => setRemoteAction('OK')}
+          onBack={() => setRemoteAction('Back')}
+        />
+        <p role="status">{remoteAction}</p>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>

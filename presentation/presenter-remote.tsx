@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { DirectionPad } from '@lab/ui/direction-pad';
+import { SlideStage } from './slide-stage';
+import { slides } from './slides';
+import { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@lab/ui/button';
 import {
@@ -19,6 +22,7 @@ export function PresenterRemote({ code }: { code: string }) {
   useTheme();
   const remote = useRemote(code, null, ignoreInput);
   const state = remote.snapshot;
+  useEffect(() => window.scrollTo(0, 0), [state?.index]);
   return (
     <main className="presenter-remote">
       <p className="remote-eyebrow">Frontend Lab · Presenter remote</p>
@@ -50,11 +54,12 @@ function RemoteContent({ state, connected, request }: RemoteContentProps) {
         <span>Elapsed {state.elapsed}</span>
       </div>
       <h1>{state.title}</h1>
-      <RemoteNavigation state={state} connected={connected} request={request} />
+      <RemoteSlidePreview state={state} />
       <section className="remote-notes" aria-label="Speaker notes">
         <h2>Presenter notes</h2>
         <p>{state.notes || 'No notes for this slide.'}</p>
       </section>
+      <RemoteNavigation state={state} connected={connected} request={request} />
       <p>
         <strong>Up next:</strong> {state.next || 'End of presentation'}
       </p>
@@ -121,34 +126,30 @@ export function RemotePairing({
   );
 }
 
-const commands = [
-  ['up', '↑', 'Up'],
-  ['left', '←', 'Left'],
-  ['select', 'OK', 'OK'],
-  ['right', '→', 'Right'],
-  ['down', '↓', 'Down'],
-  ['back', 'Back', 'Back'],
-] as const;
+const focusLabels = { slides: 'Slides', tv: 'TV', playback: 'Playback' };
 function RemoteNavigation({ state, connected, request }: RemoteContentProps) {
   return (
-    <section aria-label="Remote control">
-      <p role="status">
-        Focus: <strong>{state?.focus ?? 'slides'}</strong>
-      </p>
-      <nav className="focus-remote" aria-label="Directional remote">
-        {commands.map(([action, label, name]) => (
-          <Button
-            key={action}
-            className={`focus-${action}`}
-            variant="outline"
-            disabled={!connected}
-            aria-label={name}
-            onClick={() => request(action)}
-          >
-            {label}
-          </Button>
-        ))}
-      </nav>
+    <section className="remote-control-panel" aria-label="Remote control">
+      <DirectionPad
+        horizontal
+        disabled={!connected}
+        label={`Focus · ${focusLabels[state?.focus ?? 'slides']}`}
+        onDirection={request}
+        onSelect={() => request('select')}
+        onBack={() => request('back')}
+      />
     </section>
+  );
+}
+
+function RemoteSlidePreview({ state }: { state: RemoteState }) {
+  return (
+    <div className="remote-slide-preview" aria-label={`Current slide: ${state.title}`}>
+      {slides[state.index]?.title === state.title ? (
+        <SlideStage index={state.index} preview />
+      ) : (
+        <p>Reload this remote to load the current deck.</p>
+      )}
+    </div>
   );
 }

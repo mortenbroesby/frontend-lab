@@ -20,7 +20,7 @@ Presenter view keeps the current slide, next-slide preview, notes and an elapsed
 
 1. Open **Show controls → Presenter remote → Start pairing** on the audience screen.
 2. Scan the QR code with your phone, or open the pairing link on another device.
-3. Wait for **Connected**, then use the directional remote. Arrows navigate slides; OK enters an interactive demo. In the TV, arrows and OK control its interface, and Back moves outward through playback, catalogue and slides. The Focus label shows where commands go. The phone shows current notes, the next title and the audience timer. Hide the laptop controls to return to clean slides; pairing stays active.
+3. Wait for **Connected**, then use the directional remote. Arrows navigate slides; OK enters an interactive demo. In the TV, arrows and OK control its interface, and Back moves outward through playback, catalogue and slides. The Focus label shows where commands go. The phone shows a preview of the current slide, notes, the next title and the audience timer. Interactive slides use static previews: the phone does not run a second TV or synthesizer. Hide the laptop controls to return to clean slides; pairing stays active.
 
 Use HTTPS and internet on both screens. Localhost works for desktop testing, but an ordinary LAN HTTP URL cannot pair a phone. This uses WebRTC and public signalling; networks that block peer connections may prevent pairing. Reconnect reloads the phone view using the same pairing link. Controls disable while disconnected, and missed presses are not queued. Keep both screens awake.
 

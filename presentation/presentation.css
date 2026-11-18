@@ -575,35 +575,39 @@ a {
 }
 
 .presenter-remote {
-  width: min(100%, 44rem);
+  width: min(100%, 48rem);
   margin: auto;
-  padding: 1.5rem;
+  padding: 20px;
   box-sizing: border-box;
   color: var(--lab-ink);
 }
 .presenter-remote h1 {
-  font-size: 2rem;
+  font-size: 1.25rem;
   line-height: 1.15;
-  margin: 1rem 0;
+  margin: 12px 0;
 }
 .remote-eyebrow,
 .remote-hint {
   color: var(--lab-muted);
 }
 .remote-meta {
+  font-size: 0.8125rem;
+  color: var(--lab-muted);
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   font-variant-numeric: tabular-nums;
 }
 .remote-notes {
-  border-block: 1px solid var(--lab-line);
-  padding-block: 1rem;
+  padding-block: 0;
 }
 .remote-notes h2 {
-  font-size: 1rem;
+  color: var(--lab-muted);
+  font-weight: 500;
+  font-size: 0.8125rem;
 }
 .remote-notes p {
+  font-size: 1rem;
   white-space: pre-wrap;
   line-height: 1.6;
 }
@@ -632,30 +636,29 @@ a {
   min-height: 48px;
 }
 
-.focus-remote {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-block: 16px;
+/* The phone previews the same slide composition, without running live demos. */
+.remote-slide-preview .slide-stage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
 }
-.focus-remote button {
-  min-height: 56px;
+.remote-slide-preview {
+  margin-block: 20px;
 }
-.focus-up {
-  grid-area: 1 / 2;
+.remote-control-panel {
+  position: sticky;
+  bottom: 12px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  margin-block: 20px;
 }
-.focus-left {
-  grid-area: 2 / 1;
+.remote-control-panel .lab-remote {
+  box-shadow: 0 12px 36px #00000040;
 }
-.focus-select {
-  grid-area: 2 / 2;
-}
-.focus-right {
-  grid-area: 2 / 3;
-}
-.focus-down {
-  grid-area: 3 / 2;
-}
-.focus-back {
-  grid-area: 4 / 1 / 5 / 4;
+.remote-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }

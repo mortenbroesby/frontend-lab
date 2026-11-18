@@ -40,7 +40,8 @@
     "./kbd": "./src/kbd.tsx",
     "./empty-state": "./src/empty-state.tsx",
     "./snippet": "./src/snippet.tsx",
-    "./code-preview": "./src/code-preview.tsx"
+    "./code-preview": "./src/code-preview.tsx",
+    "./direction-pad": "./src/direction-pad.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

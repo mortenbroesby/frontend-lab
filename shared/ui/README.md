@@ -15,15 +15,15 @@ Use `docs show-story --storyId <story-id-from-list>` for a specific example, or 
 
 For components working together, open **UI library** in the gallery or run `npm run dev --workspace @lab/demo-ui-library`.
 
-| Use | Package exports |
-| --- | --- |
-| Actions | `button`, `toggle`, `toggle-group` |
-| Forms | `input`, `textarea`, `label`, `checkbox`, `radio-group`, `switch`, `select`, `slider` |
-| Layout and content | `card`, `badge`, `separator`, `table`, `avatar`, `scroll-area` |
-| Navigation | `tabs`, `accordion`, `breadcrumb`, `pagination` |
-| Overlays | `dialog`, `alert-dialog`, `sheet`, `popover`, `dropdown-menu`, `tooltip` |
-| Developer patterns | `snippet`, `code-preview`, `kbd`, `empty-state` |
-| Feedback | `alert`, `progress`, `skeleton` |
+| Use                | Package exports                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| Actions            | `button`, `toggle`, `toggle-group`, `direction-pad`                                   |
+| Forms              | `input`, `textarea`, `label`, `checkbox`, `radio-group`, `switch`, `select`, `slider` |
+| Layout and content | `card`, `badge`, `separator`, `table`, `avatar`, `scroll-area`                        |
+| Navigation         | `tabs`, `accordion`, `breadcrumb`, `pagination`                                       |
+| Overlays           | `dialog`, `alert-dialog`, `sheet`, `popover`, `dropdown-menu`, `tooltip`              |
+| Developer patterns | `snippet`, `code-preview`, `kbd`, `empty-state`                                       |
+| Feedback           | `alert`, `progress`, `skeleton`                                                       |
 
 ## Use
 
@@ -36,7 +36,7 @@ import { Label } from '@lab/ui/label';
   <Label htmlFor="title">Title</Label>
   <Input id="title" name="title" required />
   <Button type="submit">Save</Button>
-</form>
+</form>;
 ```
 
 Generated demos declare `@lab/ui`; other consumers need `"@lab/ui": "*"` and a root `npm install`. Import individual exports. The standard demo mount loads styles; custom entries must import `@lab/ui/styles.css`.
