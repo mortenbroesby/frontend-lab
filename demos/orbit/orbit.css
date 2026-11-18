@@ -350,3 +350,31 @@ body {
     transition: none;
   }
 }
+
+/* The finish chooser owns a stationary preview after the scroll object leaves. */
+.orbit-finish {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background: #0b0c0e;
+}
+.orbit-finish .orbit-copy {
+  max-width: 100%;
+  padding-bottom: 0;
+}
+.orbit-finish-preview {
+  width: min(100%, 400px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+@media (max-width: 700px) {
+  .orbit-finish {
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: 16px;
+    padding-bottom: 80px;
+  }
+  .orbit-finish-preview {
+    width: min(70vw, 280px);
+  }
+}

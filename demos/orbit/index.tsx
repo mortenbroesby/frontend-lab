@@ -137,6 +137,7 @@ export default function Orbit() {
               Experience it again <span aria-hidden="true">↗</span>
             </a>
           </div>
+          <Speaker className="orbit-finish-preview" progress={rest} still colour={finish.shell} />
         </section>
       </main>
       <OrbitFooter />

@@ -8,10 +8,12 @@ export function Speaker({
   progress,
   colour,
   still,
+  className = 'orbit-product',
 }: {
   progress: MotionValue<number>;
   colour: string;
   still: boolean;
+  className?: string;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const scene = useRef<ReturnType<typeof createSpeakerScene> | null>(null);
@@ -44,7 +46,7 @@ export function Speaker({
     scene.current?.colour(colour);
   }, [colour, pose]);
   return (
-    <motion.div className="orbit-product" style={{ y: still ? 0 : y }}>
+    <motion.div className={className} style={{ y: still ? 0 : y }}>
       <canvas
         ref={canvas}
         className="orbit-canvas"
