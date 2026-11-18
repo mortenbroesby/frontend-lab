@@ -1,3 +1,4 @@
+import { useWalkthrough } from '@lab/demo-kit/use-walkthrough';
 import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useScroll, useReducedMotion, useMotionValue } from 'motion/react';
@@ -6,6 +7,7 @@ import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import './orbit.css';
 
+const walkthroughLabels = ['Arrival', 'Detail', 'Turn the object', 'Choose a finish'];
 const chapterIds = ['arrival', 'detail', 'inside'] as const;
 const finishes = [
   { name: 'Moonstone', shell: '#b9b6ad', glow: '#d6c6aa' },
@@ -75,6 +77,20 @@ export default function Orbit() {
   const [finish, setFinish] = useState(finishes[0]!);
   const still = Boolean(reduced);
   const rest = useMotionValue(0.74);
+  useWalkthrough(
+    walkthroughLabels,
+    (index, signal) => {
+      const id = [...chapterIds, 'finish'][index]!;
+      document.getElementById(id)?.scrollIntoView({ behavior: still ? 'instant' : 'smooth' });
+      setFinish(finishes[index === 3 ? 1 : 0]!);
+      signal.addEventListener(
+        'abort',
+        () => window.scrollTo({ top: window.scrollY, behavior: 'instant' }),
+        { once: true },
+      );
+    },
+    () => window.scrollTo({ top: window.scrollY, behavior: 'instant' }),
+  );
   return (
     <div
       className="orbit"

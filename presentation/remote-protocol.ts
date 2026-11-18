@@ -1,12 +1,18 @@
+import { isWalkthroughState, type WalkthroughState } from '@lab/demo-kit/walkthrough';
 import {
   isFocusAction,
   isFocusScope,
   type FocusAction,
   type FocusScope,
 } from '@lab/demo-kit/focus';
+export type RemoteAction = FocusAction | 'next-slide' | 'demo-play' | 'demo-stop';
+function isRemoteAction(value: unknown): value is RemoteAction {
+  return isFocusAction(value) || ['next-slide', 'demo-play', 'demo-stop'].includes(value as string);
+}
 export type RemoteState = {
   kind: 'state';
   focus: FocusScope;
+  walkthrough: WalkthroughState | null;
   index: number;
   total: number;
   title: string;
@@ -17,7 +23,7 @@ export type RemoteState = {
 export type RemoteMessage =
   | RemoteState
   | { kind: 'hello'; role: 'host' | 'remote' }
-  | { kind: 'input'; action: FocusAction; request: string };
+  | { kind: 'input'; action: RemoteAction; request: string; slide: number };
 
 export function remoteRoom(hash: string): string | null {
   return /^#remote=([a-f0-9]{32})$/.exec(hash)?.[1] ?? null;
@@ -30,13 +36,21 @@ export function isRemoteMessage(value: unknown): value is RemoteMessage {
   const v = value as Record<string, unknown>;
   if (v.kind === 'hello') return v.role === 'host' || v.role === 'remote';
   if (v.kind === 'input')
-    return isFocusAction(v.action) && text(v.request, 64) && v.request.length > 0;
+    return (
+      isRemoteAction(v.action) &&
+      Number.isInteger(v.slide) &&
+      Number(v.slide) >= 0 &&
+      Number(v.slide) < 200 &&
+      text(v.request, 64) &&
+      v.request.length > 0
+    );
   return isRemoteState(v);
 }
 function isRemoteState(v: Record<string, unknown>): boolean {
   return (
     v.kind === 'state' &&
     isFocusScope(v.focus) &&
+    (v.walkthrough === null || isWalkthroughState(v.walkthrough)) &&
     validPosition(v) &&
     text(v.title, 300) &&
     text(v.notes, 12000) &&

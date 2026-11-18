@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from '@lab/ui/dialog';
 import { useTheme } from '@lab/ui/theme-control';
-import type { FocusAction } from '@lab/demo-kit/focus';
+import type { RemoteAction } from './remote-protocol';
 import { useRemote } from './use-remote';
 import type { RemoteState } from './remote-protocol';
 
@@ -45,7 +45,7 @@ export function PresenterRemote({ code }: { code: string }) {
 type RemoteContentProps = {
   state: RemoteState | null;
   connected: boolean;
-  request: (action: FocusAction) => void;
+  request: (action: RemoteAction) => void;
 };
 function RemoteContent({ state, connected, request }: RemoteContentProps) {
   if (!state) return <h1>Connect your presentation</h1>;
@@ -57,11 +57,11 @@ function RemoteContent({ state, connected, request }: RemoteContentProps) {
       </div>
       <h1>{state.title}</h1>
       <RemoteSlidePreview state={state} />
+      <RemoteNavigation state={state} connected={connected} request={request} />
       <section className="remote-notes" aria-label="Speaker notes">
         <h2>Presenter notes</h2>
         <p>{state.notes || 'No notes for this slide.'}</p>
       </section>
-      <RemoteNavigation state={state} connected={connected} request={request} />
       <p>
         <strong>Up next:</strong> {state.next || 'End of presentation'}
       </p>
@@ -83,7 +83,7 @@ export function RemotePairing({
   onConnectionChange,
 }: {
   state: RemoteState;
-  input: (action: FocusAction) => void;
+  input: (action: RemoteAction) => void;
   onConnectionChange: (connected: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
@@ -142,17 +142,64 @@ export function RemotePairing({
 }
 
 const focusLabels = { slides: 'Slides', tv: 'TV', playback: 'Playback' };
-function RemoteNavigation({ state, connected, request }: RemoteContentProps) {
+function DemoRemote({
+  tour,
+  connected,
+  request,
+}: {
+  tour: NonNullable<RemoteState['walkthrough']>;
+  connected: boolean;
+  request: RemoteContentProps['request'];
+}) {
+  const playback = tour.playing
+    ? { action: 'demo-stop' as const, label: 'Stop demo' }
+    : { action: 'demo-play' as const, label: 'Play demo' };
+  return (
+    <>
+      <p role="status">
+        {tour.index + 1} of {tour.total} · {tour.label}
+      </p>
+      {tour.message && <p role="status">{tour.message}</p>}
+      <div className="remote-demo-actions">
+        <Button variant="outline" disabled={!connected} onClick={() => request('back')}>
+          ← Back
+        </Button>
+        <Button disabled={!connected} onClick={() => request('right')}>
+          {tour.index === tour.total - 1 ? 'Next slide →' : 'Next part →'}
+        </Button>
+        <Button variant="outline" disabled={!connected} onClick={() => request(playback.action)}>
+          {playback.label}
+        </Button>
+      </div>
+    </>
+  );
+}
+function RemoteNavigation({
+  state,
+  connected,
+  request,
+}: Omit<RemoteContentProps, 'state'> & { state: RemoteState }) {
   return (
     <section className="remote-control-panel" aria-label="Remote control">
-      <DirectionPad
-        horizontal
-        disabled={!connected}
-        label={`Focus · ${focusLabels[state?.focus ?? 'slides']}`}
-        onDirection={request}
-        onSelect={() => request('select')}
-        onBack={() => request('back')}
-      />
+      {state.walkthrough ? (
+        <DemoRemote tour={state.walkthrough} connected={connected} request={request} />
+      ) : (
+        <DirectionPad
+          horizontal
+          disabled={!connected}
+          label={`Focus · ${focusLabels[state.focus]}`}
+          onDirection={request}
+          onSelect={() => request('select')}
+          onBack={() => request('back')}
+        />
+      )}
+      <Button
+        variant="outline"
+        disabled={!connected || state.index === state.total - 1}
+        onClick={() => request('next-slide')}
+      >
+        {state.walkthrough ? 'Skip demo →' : 'Next slide →'}
+      </Button>
     </section>
   );
 }

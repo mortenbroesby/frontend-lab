@@ -1,8 +1,12 @@
+import type { RemoteAction } from './remote-protocol';
+import type { WalkthroughState } from '@lab/demo-kit/walkthrough';
 import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
-import type { FocusAction, FocusScope } from '@lab/demo-kit/focus';
+import type { FocusScope } from '@lab/demo-kit/focus';
 
-type Handler = (action: FocusAction) => boolean;
+type Handler = (action: RemoteAction) => boolean;
 const Handoff = createContext<{
+  walkthrough: WalkthroughState | null;
+  setWalkthrough: (state: WalkthroughState | null) => void;
   active: boolean;
   setActive: (active: boolean) => void;
   focus: FocusScope;
@@ -11,6 +15,7 @@ const Handoff = createContext<{
   register: (handler: Handler) => () => void;
 } | null>(null);
 export function PresentationFocus({ children }: { children: ReactNode }) {
+  const [walkthrough, setWalkthrough] = useState<WalkthroughState | null>(null);
   const [active, setActive] = useState(false);
   const [scope, setScope] = useState<FocusScope>('tv');
   const handler = useRef<Handler | null>(null);
@@ -20,10 +25,19 @@ export function PresentationFocus({ children }: { children: ReactNode }) {
       if (handler.current === next) handler.current = null;
     };
   }, []);
-  const input = useCallback((action: FocusAction) => handler.current?.(action) ?? false, []);
+  const input = useCallback((action: RemoteAction) => handler.current?.(action) ?? false, []);
   return (
     <Handoff
-      value={{ active, setActive, focus: active ? scope : 'slides', setScope, input, register }}
+      value={{
+        walkthrough,
+        setWalkthrough,
+        active,
+        setActive,
+        focus: active ? scope : 'slides',
+        setScope,
+        input,
+        register,
+      }}
     >
       {children}
     </Handoff>

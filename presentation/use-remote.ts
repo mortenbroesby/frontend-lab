@@ -1,4 +1,4 @@
-import type { FocusAction } from '@lab/demo-kit/focus';
+import type { RemoteAction } from './remote-protocol';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import type { Room } from 'trystero';
 import { isRemoteMessage, type RemoteMessage, type RemoteState } from './remote-protocol';
@@ -7,7 +7,7 @@ let leaving = Promise.resolve();
 export function useRemote(
   code: string | null,
   state: RemoteState | null,
-  input: (action: FocusAction) => void,
+  input: (action: RemoteAction) => void,
 ) {
   const remote = state === null;
   const [snapshot, setSnapshot] = useState<RemoteState | null>(null);
@@ -93,7 +93,8 @@ export function useRemote(
           if (requests.size > 256) requests.delete(requests.values().next().value!);
         }
         function receiveInput(data: Extract<RemoteMessage, { kind: 'input' }>) {
-          if (!peer || remote || requests.has(data.request)) return;
+          if (remote || requests.has(data.request)) return;
+          if (data.slide !== latestState()!.index) return;
           rememberRequest(data.request);
           runCommand(data.action);
         }
@@ -107,7 +108,7 @@ export function useRemote(
         function dispatch(data: RemoteMessage, peerId: string) {
           if (data.kind === 'hello') receiveHello(data, peerId);
           else if (data.kind === 'state') receiveState(data);
-          else receiveInput(data);
+          else if (peer) receiveInput(data);
         }
         action.onMessage(
           (data, { peerId }) => {
@@ -160,7 +161,12 @@ export function useRemote(
     connected,
     status,
     supported,
-    request: (action: FocusAction) =>
-      send.current({ kind: 'input', action, request: crypto.randomUUID() }),
+    request: (action: RemoteAction) =>
+      send.current({
+        kind: 'input',
+        action,
+        request: crypto.randomUUID(),
+        slide: snapshot?.index ?? 0,
+      }),
   };
 }

@@ -1,4 +1,5 @@
-import { slideDelta, type FocusAction } from '@lab/demo-kit/focus';
+import type { RemoteAction } from './remote-protocol';
+import { remoteSlideDelta } from './walkthrough-navigation';
 import { usePresentationFocus } from './presentation-focus';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { isInteractive, moveSlide, navigationAction } from './navigation';
@@ -21,10 +22,14 @@ export function useSlides() {
     backAllowedAt.current = performance.now() + 400;
     move(-1);
   };
-  const input = (action: FocusAction, allowPrevious = true) => {
+  const input = (action: RemoteAction, allowPrevious = true) => {
     if (performance.now() < backAllowedAt.current) return;
+    if (action === 'next-slide') {
+      move(1);
+      return;
+    }
     if (focus.input(action)) return;
-    move(allowPrevious ? slideDelta(action) : 0);
+    move(remoteSlideDelta(action, allowPrevious));
   };
   const routeInput = useEffectEvent(input);
   useEffect(() => {

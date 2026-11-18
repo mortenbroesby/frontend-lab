@@ -62,3 +62,9 @@ Use a fresh or agreed room on trusted HTTPS with the phone page in the foregroun
 Only imported Node `test()` registrations are allowlisted in test files, because the test runner owns their outcome. Other Promises in those files remain checked. Await, return or handle rejection as appropriate; `void` marks intentional detachment but does not handle a rejection by itself.
 
 Temporary fixtures verified that unhandled Promises, async callbacks passed to `forEach`, missing JSX keys, constant object comparisons and async Promise executors fail. Awaited/caught Promises and Node test registrations pass; an unrelated async function named `test` still fails. The fixtures were removed after verification. No accessibility rules or additional lint directories were added.
+
+## Presenter remote walkthroughs
+
+Two local browser screens paired through the real WebRTC remote. Orbit reported Arrival, Detail and Turn the object as autoplay progressed. Browser Beat reported blocked audio with the audience-screen Play instruction; after a native click there, remote autoplay moved Tone to 6500 Hz, Echo to 55% and Pitch to +12, then stopped playback on Finish without changing slides. TV Next slide advanced directly; Back returned to TV and a further Back returned to the preceding explanation slide. Remote reload reconnected to the current slide. The rendered controls were reviewed; they sit above notes rather than covering them.
+
+Focused tests cover step bounds, cancellation, interrupted async work, automatic completion, failed audio-step reporting, protocol bounds and slide handoff. The full 34-task repository check passed, followed by affected presentation checks and Fallow's changed-code audit. No new browser infrastructure was installed. Physical iPhone, projector audio and narrow-viewport acceptance remain unverified; localhost pairing is not evidence of LAN HTTP phone support (pairing requires HTTPS).

@@ -17,7 +17,10 @@ export function DemoFrame(props: ComponentProps<'iframe'>) {
     <iframe
       {...props}
       loading="lazy"
-      onLoad={() => setLoaded(true)}
+      onLoad={(event) => {
+        setLoaded(true);
+        props.onLoad?.(event);
+      }}
       style={{ ...props.style, visibility: visible ? 'visible' : 'hidden' }}
     />
   );

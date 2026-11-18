@@ -9,8 +9,8 @@ test('pairing accepts only a full random session token', () => {
 });
 
 test('commands are limited to one step, with a unique request id', () => {
-  assert.ok(isRemoteMessage({ kind: 'input', action: 'right', request: 'request-1' }));
-  assert.ok(isRemoteMessage({ kind: 'input', action: 'left', request: 'request-2' }));
+  assert.ok(isRemoteMessage({ kind: 'input', action: 'right', request: 'request-1', slide: 2 }));
+  assert.ok(isRemoteMessage({ kind: 'input', action: 'left', request: 'request-2', slide: 2 }));
   for (const value of [
     null,
     {},
@@ -25,6 +25,7 @@ test('snapshots have bounded text and valid slide positions', () => {
   const state = {
     kind: 'state',
     focus: 'slides',
+    walkthrough: null,
     index: 2,
     total: 17,
     title: 'Tracks',
@@ -45,6 +46,14 @@ test('snapshots have bounded text and valid slide positions', () => {
 });
 
 test('return-to-slides commands require a request id', () => {
-  assert.ok(isRemoteMessage({ kind: 'input', action: 'back', request: 'return-1' }));
+  assert.ok(isRemoteMessage({ kind: 'input', action: 'back', request: 'return-1', slide: 2 }));
   assert.equal(isRemoteMessage({ kind: 'input', action: 'back', request: '' }), false);
+});
+
+test('walkthrough controls are bounded and target a known slide', () => {
+  for (const action of ['next-slide', 'demo-play', 'demo-stop']) {
+    assert.ok(isRemoteMessage({ kind: 'input', action, slide: 12, request: 'r' }));
+    assert.equal(isRemoteMessage({ kind: 'input', action, slide: -1, request: 'r' }), false);
+    assert.equal(isRemoteMessage({ kind: 'input', action, request: 'r' }), false);
+  }
 });

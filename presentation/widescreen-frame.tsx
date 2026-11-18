@@ -1,3 +1,4 @@
+import { useFrameWalkthrough } from './use-frame-walkthrough';
 import { DemoFrame } from './demo-frame';
 import { useEffect, useRef, useState } from 'react';
 
@@ -13,6 +14,10 @@ export function WidescreenFrame({
   allow: string;
   fillWidth?: boolean;
 }) {
+  const frame = useRef<HTMLIFrameElement>(null);
+  const url = new URL(src, location.href);
+  url.searchParams.set('presentationOrigin', location.origin);
+  const loaded = useFrameWalkthrough(frame, url.href);
   const container = useRef<HTMLDivElement>(null);
   const [viewport, setViewport] = useState({ scale: 0, height: 720 });
   useEffect(() => {
@@ -29,7 +34,9 @@ export function WidescreenFrame({
   return (
     <div className="widescreen-frame" ref={container}>
       <DemoFrame
-        src={src}
+        ref={frame}
+        onLoad={loaded}
+        src={url.href}
         title={title}
         allow={allow}
         style={{

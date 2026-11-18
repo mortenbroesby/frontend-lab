@@ -1,5 +1,6 @@
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
-import type { FocusAction } from '@lab/demo-kit/focus';
+import type { RemoteAction } from './remote-protocol';
+import { isFocusAction } from '@lab/demo-kit/focus';
 import { isEmbedMessage, type EmbedMessage } from '@lab/demo-kit/embed-protocol';
 import { DemoFrame } from './demo-frame';
 import { usePresentationFocus } from './presentation-focus';
@@ -37,7 +38,8 @@ export function TVFrame({ href, onExit }: { href: string; onExit?: () => void })
     };
   }, [origin, setActive]);
 
-  const input = useEffectEvent((action: FocusAction) => {
+  const input = useEffectEvent((action: RemoteAction) => {
+    if (!isFocusAction(action)) return false;
     if (ready)
       frame.current?.contentWindow?.postMessage({ type: 'lab:demo-input', action }, origin);
     else if (action === 'back') exit();

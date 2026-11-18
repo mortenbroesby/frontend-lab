@@ -13,7 +13,9 @@
     "./track-symbol": "./TrackSymbol.tsx",
     "./command-menu": "./CommandMenu.tsx",
     "./embed-protocol": "./embed-protocol.ts",
-    "./focus": "./focus.ts"
+    "./focus": "./focus.ts",
+    "./walkthrough": "./walkthrough.ts",
+    "./use-walkthrough": "./use-walkthrough.ts"
   },
   "dependencies": {
     "react": "19.3.1",

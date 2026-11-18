@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import { usePlayback } from './use-playback';
+import { useWalkthrough } from '@lab/demo-kit/use-walkthrough';
+import { sweepSettings } from './walkthrough';
+import { useRef, useState, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
 import { Slider } from '@lab/ui/slider';
-import { createInstrument } from './audio';
-import type { Instrument, Settings } from './audio';
+import type { Settings } from './audio';
 import { initialPattern, songs, toggleStep } from './pattern';
 import { Scope } from './scope';
 import { PerformanceControls } from './performance-controls';
@@ -11,6 +13,13 @@ import './instrument.css';
 const embedded = new URLSearchParams(window.location.search).has('embed');
 const presentation = embedded && new URLSearchParams(window.location.search).has('presentation');
 const instrumentClass = `pocket-instrument${embedded ? ' instrument-performance' : ''}${presentation ? ' instrument-presentation' : ''}`;
+const walkthroughLabels = [
+  'Start the loop',
+  'Open the filter',
+  'Add echo',
+  'An octave up',
+  'Finish',
+];
 const voices = ['Lead', 'Bass', 'Drums'];
 function Dial({
   label,
@@ -57,46 +66,30 @@ export default function InstrumentDemo() {
     levels: [0.7, 0.65, 0.7],
     pattern: initialPattern,
   });
-  const current = useRef(settings);
-  useEffect(() => {
-    current.current = settings;
-  }, [settings]);
-  const active = useRef<Instrument | null>(null);
-  const [instrument, setInstrument] = useState<Instrument | null>(null);
   const [step, setStep] = useState(-1);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  useEffect(
-    () => () => {
-      void active.current?.close();
-      active.current = null;
-    },
-    [],
-  );
-  async function togglePlayback() {
-    setError('');
-    setBusy(true);
-    try {
-      if (active.current) {
-        await active.current.close();
-        active.current = null;
-        setInstrument(null);
-        setStep(-1);
-      } else {
-        const next = createInstrument();
-        active.current = next;
-        await next.start(() => current.current);
-        setInstrument(next);
+  const { instrument, busy, error, startPlayback, stopPlayback, togglePlayback } =
+    usePlayback(settings);
+  useWalkthrough(
+    walkthroughLabels,
+    async (index, signal) => {
+      if (index === 4) {
+        stopPlayback();
+        return;
       }
-    } catch {
-      void active.current?.close();
-      active.current = null;
-      setInstrument(null);
-      setError('Audio could not start. Try Play again in a browser that supports Web Audio.');
-    } finally {
-      setBusy(false);
-    }
-  }
+      await startPlayback(signal);
+      if (signal.aborted) return;
+      const targets = [
+        { cutoff: 600, echo: 0, pitch: 0 },
+        { cutoff: 6500, echo: 0, pitch: 0 },
+        { cutoff: 6500, echo: 0.55, pitch: 0 },
+        { cutoff: 6500, echo: 0.55, pitch: 12 },
+      ];
+      await sweepSettings(settings, targets[index]!, signal, (patch) => {
+        setSettings((value) => ({ ...value, ...patch }));
+      });
+    },
+    stopPlayback,
+  );
   return (
     <div ref={stage} className={instrumentClass}>
       <InstrumentHeader

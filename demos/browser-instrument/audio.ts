@@ -106,7 +106,25 @@ export function createInstrument() {
   return {
     analyser,
     async start(read: () => Settings) {
-      await context.resume();
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+      try {
+        await Promise.race([
+          context.resume(),
+          new Promise<never>((_, reject) => {
+            timeout = setTimeout(
+              () =>
+                reject(
+                  new Error(
+                    'Tap Play on the presentation screen once to enable audio, then try the remote again.',
+                  ),
+                ),
+              1800,
+            );
+          }),
+        ]);
+      } finally {
+        clearTimeout(timeout);
+      }
       if (closed) return;
       nextTime = context.currentTime + 0.05;
       schedule(read());
