@@ -1,8 +1,9 @@
+import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { TrackSymbol } from '@lab/demo-kit/track-symbol';
 import { TVFrame } from './tv-frame';
 import { DemoFrame } from './demo-frame';
-import { InstrumentFrame } from './instrument-frame';
-import type { ComponentType } from 'react';
+import { WidescreenFrame } from './widescreen-frame';
+import type { ComponentType, ReactNode } from 'react';
 import { TitleSlide, DiagramSlide, StatementSlide, ExperimentOptions } from './layouts';
 
 type Slide = {
@@ -225,9 +226,7 @@ function InstrumentIntroduction() {
 }
 
 function Closing() {
-  const labHref = import.meta.env.LAB_STANDALONE
-    ? import.meta.env.VITE_GALLERY_URL
-    : import.meta.env.BASE_URL;
+  const labHref = galleryHref('/');
   return (
     <StatementSlide eyebrow="Questions, then time to explore" title="Choose your starting point.">
       <p>
@@ -236,7 +235,7 @@ function Closing() {
         Use a guide, adapt a demo or bring your own project.
       </p>
       {labHref && (
-        <a className="slide-resource" href={`${labHref.replace(/\/$/, '')}/#/`}>
+        <a className="slide-resource" href={labHref}>
           Open the Frontend Lab →
         </a>
       )}
@@ -329,7 +328,7 @@ function Instrument({ preview }: { preview?: boolean }) {
   return (
     <div className="tv-slide instrument-slide" data-presentation-interactive>
       {instrumentHref ? (
-        <InstrumentFrame
+        <WidescreenFrame
           title="Browser Beat — interactive browser instrument"
           src={`${instrumentHref}?embed=1&presentation=1`}
           allow="autoplay; fullscreen"
@@ -342,6 +341,67 @@ function Instrument({ preview }: { preview?: boolean }) {
         <a href="#sound-system">Continue presentation →</a>
       </div>
     </div>
+  );
+}
+
+function LiveExample({
+  preview,
+  id,
+  title,
+  hint,
+  action,
+}: {
+  preview?: boolean;
+  id: string;
+  title: string;
+  hint: string;
+  action: ReactNode;
+}) {
+  if (preview)
+    return (
+      <div className="tv-slide-preview">
+        <p>LIVE BROWSER DEMO</p>
+        <h1>{title}</h1>
+      </div>
+    );
+  const href = demoUrl(id);
+  return (
+    <div className="tv-slide" data-presentation-interactive>
+      {href ? (
+        <WidescreenFrame src={`${href}?embed=1`} title={title} allow="fullscreen" />
+      ) : (
+        <p>Set VITE_GALLERY_URL to embed this demo.</p>
+      )}
+      <div className="tv-slide-footer">
+        <span>{hint}</span>
+        {action}
+      </div>
+    </div>
+  );
+}
+
+function Orbit({ preview }: { preview?: boolean }) {
+  return (
+    <LiveExample
+      preview={preview}
+      id="orbit"
+      title="Orbit — a scroll story"
+      hint="Scroll inside the demo · Try a different finish"
+      action={<a href="#television">Continue presentation →</a>}
+    />
+  );
+}
+
+function Reactions({ preview }: { preview?: boolean }) {
+  const lab = galleryHref('/');
+  return (
+    <LiveExample
+      preview={preview}
+      id="reaction-room"
+      title="Reaction Room — join in"
+      hint="Create a room · Scan the QR · Tap together"
+      action={lab && <a href={lab}>Open the Frontend Lab →</a>}
+    />
   );
 }
 
@@ -400,7 +460,7 @@ export const slides: readonly Slide[] = [
 Leave this on screen while people arrive.
 
 WHEN READY
-“Today is a chance to explore something outside our normal delivery work. First, a quick look at the tracks, then two examples of what front-end skills can do.”`,
+“Today is a chance to explore something outside our normal delivery work. First, a quick look at the tracks, then four experiments with sound, scrolling, TV navigation and connected browsers.”`,
   },
   {
     id: 'workshop',
@@ -494,7 +554,21 @@ Show the controls and explain the signal path. Avoid spending the session troubl
 The loop is original synthesized audio, not a recording. React does not need to render every audio sample. Keep the explanation at the level of responsibilities, not a tour of the source.
 
 TRANSITION
-“Now change the input instead of the output. Imagine using a screen without a pointer.”`,
+“Sound is one way to respond to an interaction. Now let’s use scrolling to move through a scene.”`,
+  },
+  {
+    id: 'orbit',
+    title: 'Orbit — a scroll story',
+    Content: Orbit,
+    notes: `SCROLL AND MOTION · 1 minute
+“Here, scrolling controls a scene rather than just moving a page. The browser connects our gesture to the rotation, lighting and reveal of an object.”
+
+Scroll slowly through the speaker’s turn, then try a finish. Keep it brief: this is an example of Motion and Three.js working together, not a product pitch. Reduced motion intentionally shows a still object.
+
+TRANSITION
+“That used a familiar gesture. What changes when there is no pointer or scroll wheel, just a remote?”
+
+Use Continue presentation below the demo, or the presenter remote. Scroll and keyboard input inside the iframe belong to Orbit.`,
   },
   {
     id: 'television',
@@ -526,7 +600,7 @@ TRANSITION
     id: 'remote',
     title: 'Try the TV interface',
     Content: Remote,
-    notes: `FINAL LIVE DEMO · 2–3 minutes
+    notes: `TV DEMO · 2–3 minutes
 “This is a new React and Canvas illustration, not our original Lightning app.”
 
 Move right until the shelf scrolls. Move down and back up: the row remembers the selection. Press Enter to play, then Escape to return. On a phone, use the on-screen arrows, OK and Back. Ask “Where should focus return?” before going back.
@@ -551,6 +625,24 @@ You do not have to extend these demos. An existing codebase or a recurring workf
 
 Use Open the Frontend Lab to return to the gallery. Track pages offer ideas, guides and demos. Participants can work independently or in small groups, using their own project where appropriate.
 
-Keep this slide up for questions. Answer historical project details honestly; say when a detail needs checking. No additional motivational closing or requirement to present a finished result.`,
+Take questions here before the final shared experiment. Answer historical project details honestly; say when a detail needs checking.
+
+TRANSITION
+“Before we go and explore, let’s try one thing together. Open your phone camera and join the reaction room.”`,
+  },
+  {
+    id: 'reactions',
+    title: 'Reaction Room — join in',
+    Content: Reactions,
+    notes: `AUDIENCE EXPERIMENT · 2–3 minutes
+Click Create a room on the presentation screen. Leave this slide open: its browser is the host. Invite people to scan the QR or enter the code in Reaction Room. Tap an icon together and watch the pulses gain momentum.
+
+Each guest connects to this browser using WebRTC. PeerJS’s public service introduces the browsers; we do not run a separate room server. The limit is 30 connected screens including this one. Laptop browser tests worked at that size; workshop phones and networks may differ.
+
+IF IT DOESN’T CONNECT
+Give it a short moment, then say: “Oh well—that’s part of experimenting. Different networks behave differently. Let’s get on with trying our ideas.” No live troubleshooting or promise to make everyone connect. The invitation and questions have already happened.
+
+FINISH
+Use Open the Frontend Lab below the demo to return to the app. Navigating away or closing the slide ends the host session. Returning starts at Create a room; no hidden room runs in presenter previews.`,
   },
 ];

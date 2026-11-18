@@ -480,14 +480,14 @@ a {
   outline: 2px solid currentColor;
   outline-offset: 4px;
 }
-/* Keep the instrument's 16:9 control surface intact at every slide size. */
-.instrument-frame {
+/* Keep embedded demos at a consistent widescreen viewport. */
+.widescreen-frame {
   position: relative;
   min-height: 0;
   overflow: hidden;
   background: #0d1312;
 }
-.instrument-frame iframe {
+.widescreen-frame iframe {
   color-scheme: dark;
   background: #0d1312;
   position: absolute;

@@ -1,6 +1,6 @@
 # Presentation working draft
 
-Status: a 17-slide introduction to the chapter day and a 25–30-minute spotlight, including demos and questions. Slide content and presenter notes live in `slides.tsx`.
+Status: a 18-slide introduction to the chapter day and a 25–30-minute spotlight, including demos and questions. Slide content and presenter notes live in `slides.tsx`.
 
 ## Focus and tone
 
@@ -23,13 +23,15 @@ Participants can work alone or together, compare existing solutions, investigate
 | 9. Could the browser be an instrument? | Brief personal inspiration |
 | 10. Browser Beat | Live music demo |
 | 11. What makes that possible? | React → Web Audio → speakers; Canvas visualises the signal |
-| 12. A screen without a pointer | Focus, directional navigation and returning |
-| 13. Draw the screen. Track the focus. | Remote input → focus state → Canvas rendering |
-| 14. Try the TV interface | Final live demo |
-| 15. Where would you take it? | Connect the examples back to all four tracks |
-| 16. Choose your starting point | Questions and a link into the Lab |
+| 12. Orbit — a scroll story | Brief scroll-driven 3D demonstration |
+| 13. A screen without a pointer | Focus, directional navigation and returning |
+| 14. Draw the screen. Track the focus. | Remote input → focus state → Canvas rendering |
+| 15. Try the TV interface | Canvas and remote navigation |
+| 16. Where would you take it? | Connect the examples back to all four tracks |
+| 17. Choose your starting point | Closing invitation and questions before the audience experiment |
+| 18. Reaction Room — join in | Optional shared finale; move on if connections fail |
 
-The two demos remain independent applications embedded in the deck. Continue links follow the running order. The D3 showcase is not part of this talk. All slides include presenter notes; rehearse to fit the time rather than adding filler.
+The four demos remain independent applications embedded in the deck. Continue links follow the running order. The D3 showcase is not part of this talk. All slides include presenter notes. Keep Orbit to about one minute and the audience experiment to two or three. The invitation to explore comes first, so the ending does not depend on Reaction Room connecting. Rehearse to fit the time rather than adding filler.
 
 ## Confirmed recollections from our conversation
 

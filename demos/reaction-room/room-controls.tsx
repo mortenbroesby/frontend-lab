@@ -71,6 +71,7 @@ export function RoomShare({ code }: { code: string }) {
   const [feedback, setFeedback] = useState('');
   const url = new URL(location.href);
   url.searchParams.set('reactionRoom', code);
+  url.searchParams.delete('embed');
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(url.href);

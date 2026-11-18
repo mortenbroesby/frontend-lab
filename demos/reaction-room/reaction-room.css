@@ -332,3 +332,11 @@
   opacity: 0.6;
   transform: scale(0.75);
 }
+
+/* The presentation supplies its own header; keep the invite beside the wall. */
+.reaction-embedded {
+  padding: 1rem;
+}
+.reaction-embedded .reaction-wall {
+  min-height: 16rem;
+}

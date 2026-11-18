@@ -2,7 +2,7 @@ import { DemoFrame } from './demo-frame';
 import { useEffect, useRef, useState } from 'react';
 
 /** A fixed widescreen viewport keeps the live controls from wrapping inside a slide. */
-export function InstrumentFrame({
+export function WidescreenFrame({
   src,
   title,
   allow,
@@ -23,7 +23,7 @@ export function InstrumentFrame({
     return () => observer.disconnect();
   }, []);
   return (
-    <div className="instrument-frame" ref={container}>
+    <div className="widescreen-frame" ref={container}>
       <DemoFrame
         src={src}
         title={title}

@@ -1,6 +1,6 @@
 # Presentation
 
-A 17-slide introduction to the chapter day: the four tracks, Browser Beat, alternative inputs and rendering through a TV example, then starting points for participants. Historical project details stay in presenter notes. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the running order, confirmed recollections and open questions.
+An 18-slide introduction to the chapter day: the four tracks, Browser Beat, Orbit, Canvas TV, then a closing invitation followed by Reaction Room as an informal audience finale. Historical project details stay in presenter notes. [WORKING-DRAFT.md](WORKING-DRAFT.md) captures the running order, confirmed recollections and open questions.
 
 ```sh
 npm run dev --workspace @lab/presentation -- --host 0.0.0.0
@@ -35,3 +35,5 @@ Use the layout components in `layouts.tsx`, or compose a slide directly. Slides 
 Interactive slide components receive `preview`. Render a quiet, disabled representation when it is true. The next-slide preview is also inert and hidden from assistive technology. Put complex custom interactions inside `data-presentation-interactive` to reserve their keyboard events. Clean up effects when slides unmount. The TV slide embeds the independent Canvas TV demo in an iframe (`?embed=1`), with no component imports between workspaces. Reaching the TV slide always enters the TV, including when moving backward. There is no entry overlay. Back unwinds playback controls, playback and the catalogue, then moves directly to the previous slide and its notes. **Continue presentation** moves forward. A brief 400 ms guard after leaving the TV absorbs repeated Back taps. Keyboard Escape follows the TV’s Back hierarchy but does not rewind ordinary slides; Backspace does. Presenter previews use a static placeholder, not another live app. The combined gallery build supplies its URL automatically, including under a base path. For a standalone deck, set `VITE_GALLERY_URL` to the running gallery URL before starting or building.
 
 The TV’s optional **Connect phone** QR code also works inside the slide. Use trusted HTTPS and internet on both screens. The phone controls the TV, not the deck; leaving the slide closes its connection. A standalone deck needs `VITE_GALLERY_URL` for demo embeds and the Back to app link.
+
+Orbit and Reaction Room also embed independent apps in the shared widescreen frame. Their presenter previews are static. Scroll inside Orbit and use Continue presentation below it. On the final slide, create a Reaction Room; its QR opens the ordinary phone UI. Keep the slide open while people join. Moving away unmounts the host; returning requires creating a new room. The notes include a brief fallback if the network does not cooperate.
