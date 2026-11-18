@@ -1,6 +1,6 @@
 # Presentation working draft
 
-Status: a 13-slide introduction to the chapter day and a 25–30-minute spotlight, including demos and questions. Slide content and presenter notes live in `slides.tsx`.
+Status: a 16-slide introduction to the chapter day and a 25–30-minute spotlight, including demos and questions. Slide content and presenter notes live in `slides.tsx`.
 
 ## Focus and tone
 
@@ -14,17 +14,20 @@ Participants can work alone or together, compare existing solutions, investigate
 | --- | --- |
 | 1. The Frontend Lab | Quiet entrance slide |
 | 2. Today is for experimenting | Set expectations for hands-on exploration |
-| 3. Four ways to explore | Introduce the four agreed tracks equally |
-| 4. Change one assumption | Consider sound, alternative inputs and shared screens |
-| 5. Could the browser be an instrument? | Brief personal inspiration |
-| 6. Browser Beat | Live music demo |
-| 7. What makes that possible? | React → Web Audio → speakers; Canvas visualises the signal |
-| 8. A screen without a pointer | Focus, directional navigation and returning |
-| 9. The interface doesn’t have to be HTML | DOM versus Canvas; introduce Lightning with a link |
-| 10. Familiar skills, different constraints | State, components and tooling |
-| 11. Try the TV interface | Final live demo |
-| 12. Where would you take it? | Connect the examples back to all four tracks |
-| 13. Choose your starting point | Questions and a link into the Lab |
+| 3. Modern Web Capabilities | Make the browser do something new. |
+| 4. Code Quality & Maintainability | Work with code you already have. |
+| 5. Developer Experience & Tooling | Start with something that slows you down. |
+| 6. Experimental Projects | Build something you want to play with. |
+| 7. Change one assumption | Consider sound, alternative inputs and shared screens |
+| 8. Could the browser be an instrument? | Brief personal inspiration |
+| 9. Browser Beat | Live music demo |
+| 10. What makes that possible? | React → Web Audio → speakers; Canvas visualises the signal |
+| 11. A screen without a pointer | Focus, directional navigation and returning |
+| 12. The interface doesn’t have to be HTML | DOM versus Canvas; introduce Lightning with a link |
+| 13. Familiar skills, different constraints | State, components and tooling |
+| 14. Try the TV interface | Final live demo |
+| 15. Where would you take it? | Connect the examples back to all four tracks |
+| 16. Choose your starting point | Questions and a link into the Lab |
 
 The two demos remain independent applications embedded in the deck. Continue links follow the running order. The D3 showcase is not part of this talk. All slides include presenter notes; rehearse to fit the time rather than adding filler.
 

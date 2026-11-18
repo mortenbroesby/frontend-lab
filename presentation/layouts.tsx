@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { LabMark } from '@lab/demo-kit/mark';
 
-type LayoutProps = { eyebrow: string; title: string; children?: ReactNode };
+type LayoutProps = { eyebrow: ReactNode; title: string; children?: ReactNode };
 
 export function TitleSlide({ eyebrow, title, children }: LayoutProps) {
   return (

@@ -54,40 +54,147 @@ function Workshop() {
   );
 }
 
-function Tracks() {
+function ModernWeb() {
   return (
-    <DiagramSlide eyebrow="Choose a direction" title="Four ways to explore.">
-      <div className="track-options track-overview">
+    <div className="track-peek">
+      <DiagramSlide
+        eyebrow={
+          <>
+            <TrackSymbol track="modern-web" />
+            Make the browser do something new.
+          </>
+        }
+        title="Modern Web Capabilities"
+      >
         <ExperimentOptions
           options={[
             {
-              label: 'BROWSER',
-              icon: <TrackSymbol track="modern-web" />,
-              title: 'Modern Web\nCapabilities',
-              description: 'Try a browser capability you haven’t used.',
+              label: 'CONNECT',
+              title: 'Connect two screens.',
+              description: 'Send a message from your phone to your laptop.',
             },
             {
-              label: 'CODE',
-              icon: <TrackSymbol track="code-quality" />,
-              title: 'Code Quality &\nMaintainability',
-              description: 'Investigate something difficult to understand or maintain.',
+              label: 'COMPUTE',
+              title: 'Keep it responsive.',
+              description: 'Move a busy calculation into a Web Worker.',
             },
             {
-              label: 'WORKFLOW',
-              icon: <TrackSymbol track="developer-experience" />,
-              title: 'Developer Experience\n& Tooling',
-              description: 'Improve something that slows you down.',
-            },
-            {
-              label: 'CURIOSITY',
-              icon: <TrackSymbol track="experimental-projects" />,
-              title: 'Experimental\nProjects',
-              description: 'Build something you’re curious about.',
+              label: 'CREATE',
+              title: 'Draw something live.',
+              description: 'Explore Canvas, SVG or a browser animation.',
             },
           ]}
         />
-      </div>
-    </DiagramSlide>
+      </DiagramSlide>
+    </div>
+  );
+}
+
+function CodeQuality() {
+  return (
+    <div className="track-peek">
+      <DiagramSlide
+        eyebrow={
+          <>
+            <TrackSymbol track="code-quality" />
+            Work with code you already have.
+          </>
+        }
+        title="Code Quality & Maintainability"
+      >
+        <ExperimentOptions
+          options={[
+            {
+              label: 'UNDERSTAND',
+              title: 'Trace a dependency.',
+              description: 'See what relies on it before making a change.',
+            },
+            {
+              label: 'TEST',
+              title: 'Build one rule test-first.',
+              description: 'Try red, green, refactor on a small behaviour.',
+            },
+            {
+              label: 'SIMPLIFY',
+              title: 'Follow a finding.',
+              description: 'Use Fallow or another tool, then inspect the evidence.',
+            },
+          ]}
+        />
+      </DiagramSlide>
+    </div>
+  );
+}
+
+function DeveloperExperience() {
+  return (
+    <div className="track-peek">
+      <DiagramSlide
+        eyebrow={
+          <>
+            <TrackSymbol track="developer-experience" />
+            Start with something that slows you down.
+          </>
+        }
+        title="Developer Experience & Tooling"
+      >
+        <ExperimentOptions
+          options={[
+            {
+              label: 'FEEDBACK',
+              title: 'Run fewer tests.',
+              description: 'Find the smallest useful check for one change.',
+            },
+            {
+              label: 'WORKFLOW',
+              title: 'Remove a manual step.',
+              description: 'Make a small script, CLI or local API mock.',
+            },
+            {
+              label: 'AGENTS',
+              title: 'Try a repeatable task.',
+              description: 'Explore a Codex or Copilot skill and review its output.',
+            },
+          ]}
+        />
+      </DiagramSlide>
+    </div>
+  );
+}
+
+function ExperimentalProjects() {
+  return (
+    <div className="track-peek">
+      <DiagramSlide
+        eyebrow={
+          <>
+            <TrackSymbol track="experimental-projects" />
+            Build something you want to play with.
+          </>
+        }
+        title="Experimental Projects"
+      >
+        <ExperimentOptions
+          options={[
+            {
+              label: 'PLAY',
+              title: 'Make a tiny game.',
+              description: 'One control, one challenge and a restart button.',
+            },
+            {
+              label: 'DRAW',
+              title: 'Invent a visual rule.',
+              description: 'Grow a pattern or make an interactive data picture.',
+            },
+            {
+              label: 'LISTEN',
+              title: 'Shape a sound.',
+              description: 'Turn a slider or gesture into a musical control.',
+            },
+          ]}
+        />
+      </DiagramSlide>
+    </div>
   );
 }
 
@@ -334,16 +441,40 @@ WHEN READY
 No production-ready deliverable is expected. The tracks provide starting points; participants can follow their curiosity. Keep logistics separate from this introduction.`,
   },
   {
-    id: 'tracks',
-    title: 'Four ways to explore',
-    Content: Tracks,
-    notes: `THE FOUR TRACKS · 2 minutes
-Give each track one sentence. Modern Web explores browser capabilities. Code Quality investigates real code. Developer Experience addresses recurring friction. Experimental Projects leaves the idea open.
-
-All four are equally valid. Bring an existing repository where appropriate; a new app is not a requirement. Guides and examples help participants start independently.
-
-TRANSITION
-“The examples I’ll show are visual and interactive, but we can also look at their state, testing and tooling.”`,
+    id: 'modern-web',
+    title: 'Modern Web Capabilities',
+    Content: ModernWeb,
+    notes: `TRACK 1 OF 4 · 30–45 seconds
+Make the browser do something new. Offer these as possible starting points, not tasks everyone must complete.
+Send a message from your phone to your laptop. Move a busy calculation into a Web Worker. Explore Canvas, SVG or a browser animation.
+Participants can work independently or together. Guides in the Lab explain how to begin.`,
+  },
+  {
+    id: 'code-quality',
+    title: 'Code Quality & Maintainability',
+    Content: CodeQuality,
+    notes: `TRACK 2 OF 4 · 30–45 seconds
+Work with code you already have. Offer these as possible starting points, not tasks everyone must complete.
+See what relies on it before making a change. Try red, green, refactor on a small behaviour. Use Fallow or another tool, then inspect the evidence.
+Participants can work independently or together. Guides in the Lab explain how to begin.`,
+  },
+  {
+    id: 'developer-experience',
+    title: 'Developer Experience & Tooling',
+    Content: DeveloperExperience,
+    notes: `TRACK 3 OF 4 · 30–45 seconds
+Start with something that slows you down. Offer these as possible starting points, not tasks everyone must complete.
+Find the smallest useful check for one change. Make a small script, CLI or local API mock. Explore a Codex or Copilot skill and review its output.
+Participants can work independently or together. Guides in the Lab explain how to begin.`,
+  },
+  {
+    id: 'experimental-projects',
+    title: 'Experimental Projects',
+    Content: ExperimentalProjects,
+    notes: `TRACK 4 OF 4 · 30–45 seconds
+Build something you want to play with. Offer these as possible starting points, not tasks everyone must complete.
+One control, one challenge and a restart button. Grow a pattern or make an interactive data picture. Turn a slider or gesture into a musical control.
+Participants can work independently or together. Guides in the Lab explain how to begin.`,
   },
   {
     id: 'possibilities',

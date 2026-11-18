@@ -519,16 +519,21 @@ a {
   display: none;
 }
 
-.track-overview h2 {
-  white-space: pre-line;
-}
-
 .experiment-options .experiment-label {
   display: flex;
   align-items: center;
   gap: 0.7cqw;
 }
 .experiment-label svg {
+  width: 2cqw;
+  height: 2cqw;
+  flex: none;
+}
+
+.track-peek {
+  height: 100%;
+}
+.track-peek svg {
   width: 2cqw;
   height: 2cqw;
   flex: none;
