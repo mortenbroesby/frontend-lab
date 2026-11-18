@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { useSpring, useScroll, useReducedMotion, useMotionValue } from 'motion/react';
+import { useScroll, useReducedMotion, useMotionValue } from 'motion/react';
 import { Speaker } from './speaker';
 import { Button } from '@lab/ui/button';
 import {
@@ -80,18 +80,12 @@ function Chapter({ index }: { index: number }) {
 export default function Orbit() {
   const story = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: story, offset: ['start start', 'end end'] });
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 85,
-    damping: 24,
-    mass: 0.8,
-    restDelta: 0.0001,
-  });
   const reduced = useReducedMotion();
   const [calm, setCalm] = useState(false);
 
   const [finish, setFinish] = useState(finishes[0]!);
   const still = Boolean(reduced) || calm;
-  const rest = useMotionValue(0.94);
+  const rest = useMotionValue(0.74);
   return (
     <div
       className="orbit"
@@ -106,7 +100,7 @@ export default function Orbit() {
         <div className="orbit-stage">
           <div className="orbit-halo" />
           <div className="orbit-orbit" />
-          <Speaker progress={still ? rest : smoothProgress} still={still} colour={finish.shell} />
+          <Speaker progress={still ? rest : scrollYProgress} still={still} colour={finish.shell} />
           <span className="orbit-stage-caption">ORBIT / OBJECT STUDY Nº 01</span>
         </div>
         {[0, 1, 2].map((index) => (

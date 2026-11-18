@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useTransform } from 'motion/react';
+import { motion, useSpring, useTransform } from 'motion/react';
 import type { MotionValue } from 'motion/react';
 import { Button } from '@lab/ui/button';
 import { createSpeakerScene } from './speaker-scene';
@@ -17,8 +17,12 @@ export function Speaker({
   const scene = useRef<ReturnType<typeof createSpeakerScene> | null>(null);
   const drag = useRef<{ x: number; time: number; speed: number } | null>(null);
   const [unavailable, setUnavailable] = useState(false);
-  const y = useTransform(progress, [0, 0.14, 0.94, 1], ['90%', '0%', '0%', '160%']);
-  const opacity = useTransform(progress, [0, 0.08, 0.96, 1], [0, 1, 1, 0]);
+  // Spring the object's position after mapping scroll, so the short end ranges
+  // cannot amplify a smoothed progress value into a sudden launch.
+  const targetY = useTransform(progress, [0, 0.24, 0.76, 1], ['200%', '0%', '0%', '200%']);
+  const y = useSpring(targetY, { stiffness: 50, damping: 27, mass: 3, restDelta: 0.01 });
+  const rotation = useSpring(progress, { stiffness: 55, damping: 25, mass: 2, restDelta: 0.0001 });
+  const pose = still ? progress : rotation;
   useEffect(() => {
     let view: ReturnType<typeof createSpeakerScene>;
     try {
@@ -28,19 +32,19 @@ export function Speaker({
       return;
     }
     scene.current = view;
-    view.progress(progress.get());
-    const unsubscribe = progress.on('change', view.progress);
+    view.progress(pose.get());
+    const unsubscribe = pose.on('change', view.progress);
     return () => {
       unsubscribe();
       view.dispose();
       scene.current = null;
     };
-  }, [progress]);
+  }, [pose]);
   useEffect(() => {
     scene.current?.colour(colour);
-  }, [colour, progress]);
+  }, [colour, pose]);
   return (
-    <motion.div className="orbit-product" style={{ y, opacity }}>
+    <motion.div className="orbit-product" style={{ y: still ? 0 : y }}>
       <canvas
         ref={canvas}
         className="orbit-canvas"
