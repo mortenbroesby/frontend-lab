@@ -66,6 +66,7 @@ function Chapter({ index }: { index: number }) {
 }
 
 export default function Orbit() {
+  const presentation = new URLSearchParams(location.search).get('presentation') === '1';
   const gallery = galleryHref('/');
   const story = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: story, offset: ['start start', 'end end'] });
@@ -78,6 +79,7 @@ export default function Orbit() {
     <div
       className="orbit"
       data-still={still}
+      data-presentation={presentation}
       style={{ '--orbit-shell': finish.shell, '--orbit-glow': finish.glow } as CSSProperties}
     >
       <a className="orbit-skip" href="#finish">

@@ -16,3 +16,7 @@ Scroll forward or backward and choose a finish. The assembled product enters fro
 The gallery discovers the metadata automatically. Build output is `demos/orbit/dist/`; it can be hosted independently. `VITE_GALLERY_URL` optionally enables return links in a standalone build.
 
 Browser checks covered desktop and phone-sized layouts, finish selection and reduced motion. Physical-phone performance remains unverified.
+
+## Presentation mode
+
+The deck opens Orbit with `?embed=1&presentation=1` in a fixed 1280×720 viewport. This removes the page navigation, footer, replay link and rotation hints/reset buttons. Chapters fit a viewport each, with typography and object sizing tuned for the slide. Scroll, drag, keyboard rotation, reduced motion and the finish choices remain available. The deck supplies the Continue presentation link; the ordinary demo retains its Back to the Lab navigation.
