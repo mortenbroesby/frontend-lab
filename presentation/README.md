@@ -16,6 +16,16 @@ The deck opens with edge-to-edge slides and no surrounding chrome. Use arrow key
 
 Presenter view keeps the current slide, next-slide preview, notes and an elapsed timer in one window. **Do not project presenter view:** notes are visible in that window. The timer starts when the presentation opens and continues across view changes; Reset timer restarts it. Reloading resets it.
 
+## Phone remote
+
+1. Open **Show controls → Presenter remote → Start pairing** on the audience screen.
+2. Scan the QR code with your phone, or open the pairing link on another device.
+3. Wait for **Connected**, then use Previous/Next. The phone shows current notes, the next title and the audience timer. Hide the laptop controls to return to clean slides; pairing stays active.
+
+Use HTTPS and internet on both screens. Localhost works for desktop testing, but an ordinary LAN HTTP URL cannot pair a phone. This uses WebRTC and public signalling; networks that block peer connections may prevent pairing. Reconnect reloads the phone view using the same pairing link. Controls disable while disconnected, and missed presses are not queued. Keep both screens awake.
+
+**Disconnect remote** ends the session. Starting again creates a new private link; anyone holding it can control that session. Reloading the audience window ends pairing. The presentation remote controls slides only; the TV demo's separate remote controls its TV interface.
+
 ## Author
 
 Edit `slides.tsx`. Each entry has a stable, unique `id`, a `title`, a React `Content` component and optional `notes`. Array order is presentation order. The URL hash preserves the current slide on reload.

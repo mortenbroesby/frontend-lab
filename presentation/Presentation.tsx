@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { RemotePairing } from './presenter-remote';
 import { Button } from '@lab/ui/button';
 import { Progress } from '@lab/ui/progress';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
@@ -163,6 +164,18 @@ export function Presentation() {
   const { index, move } = useSlides();
   const timer = useElapsedTime();
   const appHref = galleryHref('/');
+  const remoteState = useMemo(
+    () => ({
+      kind: 'state' as const,
+      index,
+      total: slides.length,
+      title: slides[index].title,
+      notes: slides[index].notes ?? '',
+      next: slides[index + 1]?.title ?? '',
+      elapsed: timer.formatted,
+    }),
+    [index, timer.formatted],
+  );
   const [mode, setMode] = useState<'audience' | 'presenter' | 'clean'>('clean');
   const setPresenter = (active: boolean) => setMode(active ? 'presenter' : 'audience');
   const setClean = () => setMode('clean');
@@ -183,6 +196,7 @@ export function Presentation() {
           <LabMark />
           The Frontend Lab
         </span>
+        <RemotePairing state={remoteState} move={move} />
         {appHref && (
           <Button variant="ghost" asChild>
             <a href={appHref}>← Back to app</a>

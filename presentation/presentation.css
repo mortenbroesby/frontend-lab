@@ -573,3 +573,58 @@ a {
   font-size: 1.5cqw;
   line-height: 1.4;
 }
+
+.presenter-remote {
+  width: min(100%, 44rem);
+  margin: auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  color: var(--lab-ink);
+}
+.presenter-remote h1 {
+  font-size: 2rem;
+  line-height: 1.15;
+  margin: 1rem 0;
+}
+.remote-eyebrow,
+.remote-hint {
+  color: var(--lab-muted);
+}
+.remote-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.remote-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  padding: 1rem 0;
+  background: var(--lab-surface);
+}
+.remote-navigation button {
+  min-height: 64px;
+}
+.remote-notes {
+  border-block: 1px solid var(--lab-line);
+  padding-block: 1rem;
+}
+.remote-notes h2 {
+  font-size: 1rem;
+}
+.remote-notes p {
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.remote-pairing {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+.remote-pairing p {
+  font-size: 0.875rem;
+  color: var(--lab-muted);
+}
