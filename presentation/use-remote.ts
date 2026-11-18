@@ -3,10 +3,12 @@ import type { Room } from 'trystero';
 import { isRemoteMessage, type RemoteMessage, type RemoteState } from './remote-protocol';
 
 let leaving = Promise.resolve();
+const noop = () => {};
 export function useRemote(
   code: string | null,
   state: RemoteState | null,
   move: (delta: number) => void,
+  returnToSlides: () => void = noop,
 ) {
   const remote = state === null;
   const [snapshot, setSnapshot] = useState<RemoteState | null>(null);
@@ -14,7 +16,10 @@ export function useRemote(
   const [status, setStatus] = useState('Waiting for the other screen…');
   const send = useRef<(message: RemoteMessage) => void>(() => {});
   const latestState = useEffectEvent(() => state);
-  const navigate = useEffectEvent(move);
+  const runCommand = useEffectEvent((data: Extract<RemoteMessage, { kind: 'move' | 'return' }>) => {
+    if (data.kind === 'return') returnToSlides();
+    else if (!state?.demoActive) move(data.delta);
+  });
   const supported = window.isSecureContext && typeof RTCPeerConnection === 'function';
 
   useEffect(() => {
@@ -87,10 +92,10 @@ export function useRemote(
           requests.add(request);
           if (requests.size > 256) requests.delete(requests.values().next().value!);
         }
-        function receiveMove(data: Extract<RemoteMessage, { kind: 'move' }>) {
+        function receiveMove(data: Extract<RemoteMessage, { kind: 'move' | 'return' }>) {
           if (!peer || remote || requests.has(data.request)) return;
           rememberRequest(data.request);
-          navigate(data.delta);
+          runCommand(data);
         }
         function receiveState(data: RemoteState) {
           if (!remote || !peer) return;
@@ -100,17 +105,9 @@ export function useRemote(
           setStatus('Connected to presentation');
         }
         function dispatch(data: RemoteMessage, peerId: string) {
-          switch (data.kind) {
-            case 'hello':
-              receiveHello(data, peerId);
-              break;
-            case 'move':
-              receiveMove(data);
-              break;
-            case 'state':
-              receiveState(data);
-              break;
-          }
+          if (data.kind === 'hello') receiveHello(data, peerId);
+          else if (data.kind === 'state') receiveState(data);
+          else receiveMove(data);
         }
         action.onMessage(
           (data, { peerId }) => {
@@ -163,6 +160,7 @@ export function useRemote(
     connected,
     status,
     supported,
+    returnToSlides: () => send.current({ kind: 'return', request: crypto.randomUUID() }),
     request: (delta: -1 | 1) => send.current({ kind: 'move', delta, request: crypto.randomUUID() }),
   };
 }

@@ -628,3 +628,18 @@ a {
   font-size: 0.875rem;
   color: var(--lab-muted);
 }
+
+.tv-handoff-stage {
+  position: relative;
+  min-height: 0;
+}
+.tv-handoff-entry {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(0 0 0 / 35%);
+}
+.tv-handoff-entry button {
+  min-height: 48px;
+}

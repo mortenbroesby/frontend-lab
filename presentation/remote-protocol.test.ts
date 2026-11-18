@@ -24,6 +24,7 @@ test('commands are limited to one step, with a unique request id', () => {
 test('snapshots have bounded text and valid slide positions', () => {
   const state = {
     kind: 'state',
+    demoActive: false,
     index: 2,
     total: 17,
     title: 'Tracks',
@@ -41,4 +42,9 @@ test('snapshots have bounded text and valid slide positions', () => {
     { elapsed: 5 },
   ])
     assert.equal(isRemoteMessage({ ...state, ...patch }), false);
+});
+
+test('return-to-slides commands require a request id', () => {
+  assert.ok(isRemoteMessage({ kind: 'return', request: 'return-1' }));
+  assert.equal(isRemoteMessage({ kind: 'return', request: '' }), false);
 });

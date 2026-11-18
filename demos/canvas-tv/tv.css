@@ -391,3 +391,10 @@ main:fullscreen .tv-pairing {
     height: 150px;
   }
 }
+
+.tv-return-slides {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+}

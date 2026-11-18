@@ -85,3 +85,9 @@ test('Back and Up dismiss playback controls; Down or OK reopen without changing 
   assert.equal(targetView(hidden).overlay, 0);
   assert.equal(targetView(playing).overlay, 1);
 });
+
+test('returning to the presentation stops playback and retains catalogue selection', () => {
+  const selected = navigate(initialState, 'ArrowRight');
+  const playing = navigate(selected, 'Enter');
+  assert.deepEqual(navigate(playing, 'presentation-exit'), selected);
+});

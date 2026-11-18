@@ -11,7 +11,8 @@
     "./gallery-link": "./gallery-link.ts",
     "./mark": "./LabMark.tsx",
     "./track-symbol": "./TrackSymbol.tsx",
-    "./command-menu": "./CommandMenu.tsx"
+    "./command-menu": "./CommandMenu.tsx",
+    "./embed-protocol": "./embed-protocol.ts"
   },
   "dependencies": {
     "react": "19.3.1",
@@ -20,6 +21,6 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "node --test command-search.test.ts"
+    "test": "node --test *.test.ts"
   }
 }

@@ -1,6 +1,7 @@
 import { StrictMode, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
 import { DemoBoundary } from '@lab/demo-kit/boundary';
+import { DemoHandoff } from './demo-handoff';
 import { Presentation } from './Presentation';
 import './presentation.css';
 import { remoteRoom } from './remote-protocol';
@@ -12,7 +13,13 @@ function subscribeToHash(listener: () => void) {
 }
 function PresentationEntry() {
   const room = useSyncExternalStore(subscribeToHash, () => remoteRoom(location.hash));
-  return room ? <PresenterRemote code={room} /> : <Presentation />;
+  return room ? (
+    <PresenterRemote code={room} />
+  ) : (
+    <DemoHandoff>
+      <Presentation />
+    </DemoHandoff>
+  );
 }
 
 createRoot(document.getElementById('root')!).render(

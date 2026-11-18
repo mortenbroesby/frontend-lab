@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from '@lab/ui/dialog';
 import { useTheme } from '@lab/ui/theme-control';
+import { useDemoHandoff } from './demo-handoff';
 import { useRemote } from './use-remote';
 import type { RemoteState } from './remote-protocol';
 
@@ -24,7 +25,12 @@ export function PresenterRemote({ code }: { code: string }) {
       <p role="status">
         {remote.supported ? remote.status : 'Open this page over HTTPS to connect.'}
       </p>
-      <RemoteContent state={state} connected={remote.connected} request={remote.request} />
+      <RemoteContent
+        state={state}
+        connected={remote.connected}
+        request={remote.request}
+        returnToSlides={remote.returnToSlides}
+      />
       <Button variant="outline" onClick={() => location.reload()}>
         Reconnect
       </Button>
@@ -35,7 +41,7 @@ export function PresenterRemote({ code }: { code: string }) {
   );
 }
 
-function RemoteNavigation({ state, connected, request }: RemoteContentProps) {
+function SlideButtons({ state, connected, request }: RemoteContentProps) {
   const canMove = connected && state !== null;
   return (
     <nav className="remote-navigation" aria-label="Slide navigation">
@@ -56,8 +62,9 @@ type RemoteContentProps = {
   state: RemoteState | null;
   connected: boolean;
   request: (delta: -1 | 1) => void;
+  returnToSlides: () => void;
 };
-function RemoteContent({ state, connected, request }: RemoteContentProps) {
+function RemoteContent({ state, connected, request, returnToSlides }: RemoteContentProps) {
   if (!state) return <h1>Connect your presentation</h1>;
   return (
     <>
@@ -66,7 +73,12 @@ function RemoteContent({ state, connected, request }: RemoteContentProps) {
         <span>Elapsed {state.elapsed}</span>
       </div>
       <h1>{state.title}</h1>
-      <RemoteNavigation state={state} connected={connected} request={request} />
+      <RemoteNavigation
+        state={state}
+        connected={connected}
+        request={request}
+        returnToSlides={returnToSlides}
+      />
       <section className="remote-notes" aria-label="Speaker notes">
         <h2>Presenter notes</h2>
         <p>{state.notes || 'No notes for this slide.'}</p>
@@ -94,7 +106,8 @@ export function RemotePairing({
   move: (delta: number) => void;
 }) {
   const [code, setCode] = useState<string | null>(null);
-  const remote = useRemote(code, state, move);
+  const { setActive } = useDemoHandoff();
+  const remote = useRemote(code, state, move, () => setActive(false));
   const url = pairingUrl(code);
   function togglePairing() {
     setCode(code ? null : crypto.randomUUID().replaceAll('-', ''));
@@ -135,4 +148,17 @@ export function RemotePairing({
       </DialogContent>
     </Dialog>
   );
+}
+
+function RemoteNavigation(props: RemoteContentProps) {
+  const { state, connected, returnToSlides } = props;
+  if (state?.demoActive)
+    return (
+      <nav className="remote-navigation" aria-label="Demo navigation">
+        <Button disabled={!connected} onClick={returnToSlides}>
+          Return to slides
+        </Button>
+      </nav>
+    );
+  return <SlideButtons {...props} />;
 }

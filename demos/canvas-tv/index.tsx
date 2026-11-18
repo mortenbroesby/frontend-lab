@@ -9,6 +9,7 @@ import { RemotePad } from './remote-pad';
 import { PhonePairing, PhoneRemote, phoneRoom } from './phone-remote';
 import { useScreen } from './use-screen';
 import demo from './demo.config';
+import { usePresentationHandoff } from './use-presentation-handoff';
 import './tv.css';
 
 const embedded = new URLSearchParams(window.location.search).has('embed');
@@ -22,9 +23,15 @@ function TV() {
   const [state, dispatch] = useReducer(navigate, initialState);
   const { canvas, available } = useScreen(state);
   const screen = useRef<HTMLDivElement>(null);
+  const handoff = usePresentationHandoff(screen, () => dispatch('presentation-exit'));
   useEffect(() => {
-    if (embedded) screen.current?.focus();
-  }, []);
+    if (embedded && !handoff.enabled) screen.current?.focus();
+  }, [handoff.enabled]);
+  const control = (key: string) => {
+    const returning = ['Escape', 'Backspace'].includes(key) && state.playback.value === 'browsing';
+    if (returning && handoff.active) handoff.exit();
+    else dispatch(key);
+  };
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (
       [
@@ -44,7 +51,7 @@ function TV() {
     )
       return;
     event.preventDefault();
-    dispatch(event.key);
+    control(event.key);
   };
   return (
     <div className={embedded ? 'tv-shell tv-embedded' : 'tv-shell'}>
@@ -53,6 +60,11 @@ function TV() {
       </a>
       <TVIntro />
       <main>
+        {handoff.active && (
+          <Button className="tv-return-slides" variant="outline" onClick={handoff.exit}>
+            Back to slides
+          </Button>
+        )}
         <div
           id="tv-screen"
           className="tv-screen"
@@ -71,8 +83,8 @@ function TV() {
             </p>
           )}
         </div>
-        <RemoteControls screen={screen} dispatch={dispatch} />
-        <PhonePairing state={state} dispatch={dispatch} />
+        <RemoteControls screen={screen} dispatch={control} presentation={handoff.enabled} />
+        <PhonePairing state={state} dispatch={control} />
         <Selection state={state} />
       </main>
     </div>
@@ -111,9 +123,11 @@ function TVIntro() {
 function RemoteControls({
   screen,
   dispatch,
+  presentation,
 }: {
   screen: RefObject<HTMLDivElement | null>;
   dispatch: (key: string) => void;
+  presentation: boolean;
 }) {
   const [error, setError] = useState('');
   const fullscreen = async () => {
@@ -133,14 +147,16 @@ function RemoteControls({
           <Button variant="outline" onClick={() => screen.current?.focus()}>
             Use keyboard remote
           </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              void fullscreen();
-            }}
-          >
-            Fullscreen TV
-          </Button>
+          {!presentation && (
+            <Button
+              variant="outline"
+              onClick={() => {
+                void fullscreen();
+              }}
+            >
+              Fullscreen TV
+            </Button>
+          )}
         </div>
         <RemotePad dispatch={dispatch} />
       </div>

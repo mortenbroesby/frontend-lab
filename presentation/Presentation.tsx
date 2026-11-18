@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useDemoHandoff } from './demo-handoff';
 import { RemotePairing } from './presenter-remote';
 import { Button } from '@lab/ui/button';
 import { Progress } from '@lab/ui/progress';
@@ -163,10 +164,12 @@ export function Presentation() {
   useTheme();
   const { index, move } = useSlides();
   const timer = useElapsedTime();
+  const { active: demoActive } = useDemoHandoff();
   const appHref = galleryHref('/');
   const remoteState = useMemo(
     () => ({
       kind: 'state' as const,
+      demoActive,
       index,
       total: slides.length,
       title: slides[index].title,
@@ -174,7 +177,7 @@ export function Presentation() {
       next: slides[index + 1]?.title ?? '',
       elapsed: timer.formatted,
     }),
-    [index, timer.formatted],
+    [index, timer.formatted, demoActive],
   );
   const [mode, setMode] = useState<'audience' | 'presenter' | 'clean'>('clean');
   const setPresenter = (active: boolean) => setMode(active ? 'presenter' : 'audience');

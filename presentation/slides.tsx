@@ -1,4 +1,5 @@
 import { TrackSymbol } from '@lab/demo-kit/track-symbol';
+import { TVFrame } from './tv-frame';
 import { DemoFrame } from './demo-frame';
 import { InstrumentFrame } from './instrument-frame';
 import type { ComponentType } from 'react';
@@ -335,19 +336,7 @@ function Remote({ preview }: { preview?: boolean }) {
         </h1>
       </div>
     );
-  return (
-    <div className="tv-slide remote-slide" data-presentation-interactive>
-      {demoHref ? (
-        <DemoFrame title="Canvas TV — interactive remote navigation" src={`${demoHref}?embed=1`} />
-      ) : (
-        <p>Set VITE_GALLERY_URL to the gallery URL to embed Canvas TV in a standalone deck.</p>
-      )}
-      <div className="tv-slide-footer">
-        <span>↑ ↓ ← → Navigate · Enter select · Escape back · Tab to leave TV</span>
-        <a href="#next-directions">Continue presentation →</a>
-      </div>
-    </div>
-  );
+  return demoHref ? <TVFrame href={demoHref} /> : <p>Set VITE_GALLERY_URL to embed Canvas TV.</p>;
 }
 
 function Instrument({ preview }: { preview?: boolean }) {

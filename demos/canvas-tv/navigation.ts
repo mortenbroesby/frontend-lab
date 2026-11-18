@@ -26,6 +26,7 @@ export function selectedTitle(state: TVState) {
   return programmes[programmeIndex(state.starts[state.row] + state.column, programmes.length)];
 }
 export function navigate(state: TVState, key: string): TVState {
+  if (key === 'presentation-exit') return { ...state, playback: playbackMachine.initialState };
   const [playback] = playbackMachine.transition(state.playback, {
     type: key === 'Backspace' ? 'Escape' : key,
   });
