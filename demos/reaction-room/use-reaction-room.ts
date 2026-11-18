@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { connectRoom } from './connect-room';
 import type { Reaction } from './reactions';
 
-type Particle = Reaction & { id: number };
-const empty = { events: [] as Particle[], total: 0, now: 0 };
+type ReactionEvent = Reaction & { id: number };
+const empty = { events: [] as ReactionEvent[], total: 0, now: 0 };
 export function useReactionRoom(joined: string | null) {
   const [status, setStatus] = useState('Create a room or join your group.');
   const [peers, setPeers] = useState(0);

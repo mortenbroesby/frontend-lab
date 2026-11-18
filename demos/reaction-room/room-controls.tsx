@@ -23,7 +23,8 @@ export function RoomLobby() {
       <p className="eyebrow">One room. Everyone’s reactions.</p>
       <h2>Bring the room to life.</h2>
       <p>
-        Create a room, share the code and tap together. Three people can turn a burst into fire.
+        Create a room, share the code and tap together. Tap again to build momentum. A fast solo
+        burst glows; a group can turn up the heat.
       </p>
       <Button size="lg" onClick={() => openRoom(createRoomCode())}>
         Create a room
@@ -104,8 +105,8 @@ export function RoomShare({ code }: { code: string }) {
       <p role="status">{feedback}</p>
       <p>Share this code or scan to join. Each screen takes one place, including the projector.</p>
       <p>
-        Fire needs 8 taps from at least 3 screens in 4 seconds. Keep tapping together to keep it
-        going.
+        Fast tapping warms an icon up, even on your own. A group burst burns brighter. Stop tapping
+        and it settles, then fades.
       </p>
       <Button variant="ghost" onClick={() => openRoom(null)}>
         Leave room

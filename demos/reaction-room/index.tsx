@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState, type RefObject, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
 import { useReactionRoom } from './use-reaction-room';
-import { capacity, reactions, hotReactions, validRoomCode } from './reactions';
+import { capacity, reactions, validRoomCode } from './reactions';
+import { reactionActivity } from './reaction-motion';
+import { ReactionPulse } from './reaction-pulse';
 import { RoomLobby, RoomShare } from './room-controls';
 import './reaction-room.css';
 
@@ -13,29 +15,39 @@ export default function ReactionRoom() {
 function LiveRoom({ code }: { code: string }) {
   const room = useReactionRoom(code);
   const screen = useRef<HTMLDivElement>(null);
-  const hot = hotReactions(room.wall.events, room.wall.now);
+  const activity = reactions.map((reaction) => ({
+    ...reaction,
+    ...reactionActivity(
+      room.wall.events.filter((event) => event.emoji === reaction.emoji),
+      room.wall.now,
+    ),
+  }));
   const guide = galleryHref('/track/modern-web/devices');
   return (
     <div className="reaction-room" ref={screen}>
       <section className="reaction-stage" aria-label="Live reactions">
         <RoomHeader code={code} count={room.ready ? room.peers + 1 : 0} screen={screen} />
-        <ReactionWall room={room} hot={hot} />
+        <ReactionWall room={room} activity={activity} />
         <div className="reaction-actions" aria-label="Send a reaction">
-          {reactions.map(({ emoji, label }) => (
+          {activity.map(({ emoji, label, heat }) => (
             <Button
               key={emoji}
               variant="outline"
               disabled={!room.ready}
               aria-label={`Send ${label.toLowerCase()}`}
-              data-hot={hot.includes(emoji)}
+              data-heat={heat}
               onClick={() => room.cheer(emoji)}
             >
               <span className="reaction-action-emoji" aria-hidden="true">
                 {emoji}
               </span>
               <span>{label}</span>
-              {hot.includes(emoji) && (
-                <span className="reaction-fire" aria-label="On fire">
+              {heat > 0 && (
+                <span
+                  className="reaction-fire"
+                  data-heat={heat}
+                  aria-label={heat === 2 ? 'On fire' : 'Warming up'}
+                >
                   🔥
                 </span>
               )}
@@ -63,40 +75,31 @@ function LiveRoom({ code }: { code: string }) {
     </div>
   );
 }
-function ReactionWall({ room, hot }: { room: ReturnType<typeof useReactionRoom>; hot: string[] }) {
-  const particles = room.wall.events.filter((event) => room.wall.now - event.at < 2400).slice(-64);
+type Activity = ReturnType<typeof reactionActivity> & { emoji: string; label: string };
+function ReactionWall({
+  room,
+  activity,
+}: {
+  room: ReturnType<typeof useReactionRoom>;
+  activity: Activity[];
+}) {
+  const heat = Math.max(...activity.map((item) => item.heat));
   return (
-    <div className="reaction-wall" data-testid="reaction-wall" data-hot={hot.length > 0}>
+    <div className="reaction-wall" data-testid="reaction-wall" data-heat={heat}>
       <div className="reaction-wall-grid" aria-hidden="true" />
       <div className="reaction-wall-message">
         <p className="eyebrow">
-          {hot.length ? 'The room is on fire' : 'Tap something. Start a wave.'}
-        </p>
-        <div className="reaction-hot" aria-label="Reactions on fire">
-          {hot.length ? hot.join(' ') + ' 🔥' : '✦'}
-        </div>
-        <p>
-          <strong data-testid="reaction-total">{room.wall.total}</strong> reactions this visit
+          {['Tap again. Build momentum.', 'Warming up', 'The room is on fire'][heat]}
         </p>
       </div>
-      <div className="reaction-particles" aria-hidden="true">
-        {particles.map((event) => (
-          <span
-            key={event.id}
-            className="reaction-particle"
-            data-hot={hot.includes(event.emoji)}
-            style={
-              {
-                '--x': `${8 + ((event.id * 37) % 84)}%`,
-                '--drift': `${((event.id * 53) % 120) - 60}px`,
-                '--turn': `${((event.id * 13) % 50) - 25}deg`,
-              } as CSSProperties
-            }
-          >
-            {event.emoji}
-          </span>
+      <div className="reaction-pulses" aria-label="Live reaction icons">
+        {activity.map((item) => (
+          <ReactionPulse key={item.emoji} emoji={item.emoji} label={item.label} activity={item} />
         ))}
       </div>
+      <p className="reaction-total">
+        <strong data-testid="reaction-total">{room.wall.total}</strong> reactions this visit
+      </p>
     </div>
   );
 }

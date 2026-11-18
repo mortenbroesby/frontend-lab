@@ -21,11 +21,3 @@ export function validBatch(value: unknown): value is string[] {
   if (!Array.isArray(value) || value.length < 1 || value.length > 2) return false;
   return value.every((emoji) => reactions.some((reaction) => reaction.emoji === emoji));
 }
-export function hotReactions(events: Reaction[], now: number) {
-  return reactions
-    .filter(({ emoji }) => {
-      const recent = events.filter((event) => event.emoji === emoji && now - event.at < 4000);
-      return recent.length >= 8 && new Set(recent.map((event) => event.sender)).size >= 3;
-    })
-    .map(({ emoji }) => emoji);
-}
