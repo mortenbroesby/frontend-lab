@@ -26,8 +26,24 @@ const finishes = [
 ];
 
 function Speaker({ progress }: { progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [0, 0.25, 0.5, 0.72, 1], [0.85, 1.12, 0.82, 0.82, 0.9]);
-  const rotate = useTransform(progress, [0, 0.25, 0.52, 0.74, 1], [-18, 8, -12, -12, 0]);
+  // Holds line up with chapter snap points; transitions happen between them.
+  const scale = useTransform(
+    progress,
+    [0, 0.18, 0.32, 0.42, 0.63, 0.76, 0.9, 1],
+    [0.85, 0.85, 1.45, 1.45, 0.8, 0.8, 0.9, 0.6],
+  );
+  const rotate = useTransform(
+    progress,
+    [0, 0.18, 0.32, 0.42, 0.63, 0.76, 0.9, 1],
+    [-18, -18, 24, 24, -12, -12, 0, -35],
+  );
+  const x = useTransform(
+    progress,
+    [0, 0.18, 0.32, 0.42, 0.63, 0.76, 0.84, 0.9, 0.96, 1],
+    ['0%', '0%', '28%', '28%', '0%', '0%', '130%', '0%', '0%', '140%'],
+  );
+  const y = useTransform(progress, [0.9, 0.96, 1], ['0%', '0%', '-45%']);
+  const opacity = useTransform(progress, [0.76, 0.82, 0.86, 0.9, 0.96, 1], [1, 0, 0, 1, 1, 0]);
   const topY = useTransform(
     progress,
     [0, 0.36, 0.52, 0.68, 0.88, 1],
@@ -40,7 +56,11 @@ function Speaker({ progress }: { progress: MotionValue<number> }) {
   );
   const coreOpacity = useTransform(progress, [0.36, 0.48, 0.72, 0.86], [0, 1, 1, 0]);
   return (
-    <motion.div className="orbit-product" style={{ scale, rotate }} aria-hidden="true">
+    <motion.div
+      className="orbit-product"
+      style={{ scale, rotate, x, y, opacity }}
+      aria-hidden="true"
+    >
       <div className="orbit-product-shadow" />
       <motion.div className="orbit-shell" style={{ y: bottomY }}>
         <span className="orbit-wordmark">O R B I T</span>
@@ -122,7 +142,7 @@ export default function Orbit() {
 
   const [finish, setFinish] = useState(finishes[0]!);
   const still = Boolean(reduced) || calm;
-  const rest = useMotionValue(1);
+  const rest = useMotionValue(0.94);
   return (
     <div
       className="orbit"

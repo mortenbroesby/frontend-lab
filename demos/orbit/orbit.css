@@ -1,8 +1,13 @@
 :root {
   color-scheme: dark;
+  background: #0b0c0e;
+  overscroll-behavior-y: none;
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
+  overscroll-behavior-y: none;
 }
 .orbit {
   background: #0b0c0e;
@@ -204,6 +209,7 @@ body {
   align-items: center;
   padding: 90px clamp(24px, 7vw, 110px);
   scroll-margin-top: 0;
+  scroll-snap-align: start;
   pointer-events: none;
 }
 .orbit-copy {
@@ -278,6 +284,7 @@ body {
   padding-bottom: 5px;
 }
 .orbit-footer {
+  scroll-snap-align: end;
   padding: 65px 7vw;
   border-top: 1px solid #ffffff18;
   background: #0b0c0e;
@@ -413,6 +420,10 @@ body {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
   .orbit * {
     transition: none;
   }
