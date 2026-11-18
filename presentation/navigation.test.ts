@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { navigationDelta, moveSlide } from './navigation.ts';
+import { navigationAction, moveSlide } from './navigation.ts';
 
 test('presentation shortcuts leave interactions and held keys alone', () => {
   const key = {
@@ -11,12 +11,12 @@ test('presentation shortcuts leave interactions and held keys alone', () => {
     metaKey: false,
     shiftKey: false,
   };
-  assert.equal(navigationDelta(key, false), 1);
-  assert.equal(navigationDelta({ ...key, key: ' ' }, false), 1);
-  assert.equal(navigationDelta({ ...key, key: 'ArrowLeft' }, false), -1);
-  assert.equal(navigationDelta(key, true), 0);
-  assert.equal(navigationDelta({ ...key, repeat: true }, false), 0);
-  assert.equal(navigationDelta({ ...key, metaKey: true }, false), 0);
+  assert.equal(navigationAction(key, false), 'right');
+  assert.equal(navigationAction({ ...key, key: ' ' }, false), 'right');
+  assert.equal(navigationAction({ ...key, key: 'ArrowLeft' }, false), 'left');
+  assert.equal(navigationAction(key, true), undefined);
+  assert.equal(navigationAction({ ...key, repeat: true }, false), undefined);
+  assert.equal(navigationAction({ ...key, metaKey: true }, false), undefined);
 });
 
 test('slide navigation stops at either end', () => {

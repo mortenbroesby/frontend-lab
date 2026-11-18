@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { isInteractive, moveSlide, navigationDelta } from './navigation';
+import { slideDelta, type FocusAction } from '@lab/demo-kit/focus';
+import { usePresentationFocus } from './presentation-focus';
+import { useEffect, useEffectEvent, useState } from 'react';
+import { isInteractive, moveSlide, navigationAction } from './navigation';
 import { slides } from './slides';
 
 function initialSlide() {
@@ -12,16 +14,22 @@ function initialSlide() {
 
 export function useSlides() {
   const [index, setIndex] = useState(initialSlide);
+  const focus = usePresentationFocus();
   const move = (delta: number) => setIndex((current) => moveSlide(current, delta, slides.length));
+  const input = (action: FocusAction) => {
+    if (!focus.input(action)) move(slideDelta(action));
+  };
+  const routeInput = useEffectEvent(input);
   useEffect(() => {
     window.history.replaceState(null, '', `#${slides[index].id}`);
   }, [index]);
   useEffect(() => {
     const navigate = (event: KeyboardEvent) => {
-      const delta = navigationDelta(event, isInteractive(event.target));
-      if (!delta || event.defaultPrevented || event.isComposing) return;
+      if (event.defaultPrevented || event.isComposing) return;
+      const action = navigationAction(event, isInteractive(event.target));
+      if (!action) return;
       event.preventDefault();
-      setIndex((current) => moveSlide(current, delta, slides.length));
+      routeInput(action);
     };
     const readHash = () => setIndex(initialSlide());
     window.addEventListener('keydown', navigate);
@@ -31,7 +39,7 @@ export function useSlides() {
       window.removeEventListener('hashchange', readHash);
     };
   }, []);
-  return { index, move };
+  return { index, move, input };
 }
 
 export function useElapsedTime() {

@@ -12,6 +12,8 @@ import demo from './demo.config';
 import { usePresentationHandoff } from './use-presentation-handoff';
 import './tv.css';
 
+const focusScope = { browsing: 'tv', controls: 'playback', watching: 'playback' } as const;
+
 const embedded = new URLSearchParams(window.location.search).has('embed');
 
 export default function CanvasTV() {
@@ -23,15 +25,20 @@ function TV() {
   const [state, dispatch] = useReducer(navigate, initialState);
   const { canvas, available } = useScreen(state);
   const screen = useRef<HTMLDivElement>(null);
-  const handoff = usePresentationHandoff(screen, () => dispatch('presentation-exit'));
+  const handoff = usePresentationHandoff(
+    screen,
+    () => dispatch('presentation-exit'),
+    control,
+    focusScope[state.playback.value],
+  );
   useEffect(() => {
     if (embedded && !handoff.enabled) screen.current?.focus();
   }, [handoff.enabled]);
-  const control = (key: string) => {
+  function control(key: string) {
     const returning = ['Escape', 'Backspace'].includes(key) && state.playback.value === 'browsing';
     if (returning && handoff.active) handoff.exit();
     else dispatch(key);
-  };
+  }
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (
       [

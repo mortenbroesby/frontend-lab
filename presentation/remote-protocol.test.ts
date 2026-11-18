@@ -9,13 +9,13 @@ test('pairing accepts only a full random session token', () => {
 });
 
 test('commands are limited to one step, with a unique request id', () => {
-  assert.ok(isRemoteMessage({ kind: 'move', delta: 1, request: 'request-1' }));
-  assert.ok(isRemoteMessage({ kind: 'move', delta: -1, request: 'request-2' }));
+  assert.ok(isRemoteMessage({ kind: 'input', action: 'right', request: 'request-1' }));
+  assert.ok(isRemoteMessage({ kind: 'input', action: 'left', request: 'request-2' }));
   for (const value of [
     null,
     {},
-    { kind: 'move', delta: 5, request: 'x' },
-    { kind: 'move', delta: 1 },
+    { kind: 'input', action: 'invalid', request: 'x' },
+    { kind: 'input', action: 'right' },
     { kind: 'hello', role: 'anything' },
   ])
     assert.equal(isRemoteMessage(value), false);
@@ -24,7 +24,7 @@ test('commands are limited to one step, with a unique request id', () => {
 test('snapshots have bounded text and valid slide positions', () => {
   const state = {
     kind: 'state',
-    demoActive: false,
+    focus: 'slides',
     index: 2,
     total: 17,
     title: 'Tracks',
@@ -45,6 +45,6 @@ test('snapshots have bounded text and valid slide positions', () => {
 });
 
 test('return-to-slides commands require a request id', () => {
-  assert.ok(isRemoteMessage({ kind: 'return', request: 'return-1' }));
-  assert.equal(isRemoteMessage({ kind: 'return', request: '' }), false);
+  assert.ok(isRemoteMessage({ kind: 'input', action: 'back', request: 'return-1' }));
+  assert.equal(isRemoteMessage({ kind: 'input', action: 'back', request: '' }), false);
 });

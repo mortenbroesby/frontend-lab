@@ -1,11 +1,12 @@
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import type { FocusAction } from '@lab/demo-kit/focus';
 import { Button } from '@lab/ui/button';
-import { isEmbedMessage } from '@lab/demo-kit/embed-protocol';
+import { isEmbedMessage, type EmbedMessage } from '@lab/demo-kit/embed-protocol';
 import { DemoFrame } from './demo-frame';
-import { useDemoHandoff } from './demo-handoff';
+import { usePresentationFocus } from './presentation-focus';
 
 export function TVFrame({ href }: { href: string }) {
-  const { active, setActive } = useDemoHandoff();
+  const { active, setActive, setScope, register } = usePresentationFocus();
   const frame = useRef<HTMLIFrameElement>(null);
   const returnPoint = useRef<HTMLDivElement>(null);
   const wasActive = useRef(false);
@@ -15,20 +16,35 @@ export function TVFrame({ href }: { href: string }) {
   url.searchParams.set('presentationOrigin', location.origin);
   const origin = url.origin;
 
+  const receiveMessage = useEffectEvent((data: EmbedMessage) => {
+    if (data.type === 'lab:demo-ready') setReady(true);
+    if (data.type === 'lab:demo-focus') setScope(data.scope);
+    if (data.type === 'lab:demo-return') setActive(false);
+  });
   useEffect(() => {
     setActive(true);
     const source = frame.current?.contentWindow;
     const receive = (event: MessageEvent) => {
       if (!isEmbedMessage(event, source, origin)) return;
-      if (event.data.type === 'lab:demo-ready') setReady(true);
-      if (event.data.type === 'lab:demo-return') setActive(false);
+      receiveMessage(event.data);
     };
     window.addEventListener('message', receive);
     return () => {
       window.removeEventListener('message', receive);
       setActive(false);
     };
-  }, [origin, setActive]);
+  }, [origin, setActive, setScope]);
+
+  const input = useEffectEvent((action: FocusAction) => {
+    if (active) {
+      frame.current?.contentWindow?.postMessage({ type: 'lab:demo-input', action }, origin);
+      return true;
+    }
+    if (action !== 'select' || !ready) return false;
+    setActive(true);
+    return true;
+  });
+  useEffect(() => register(input), [register]);
 
   const post = useEffectEvent((type: 'lab:demo-enter' | 'lab:demo-exit') => {
     frame.current?.contentWindow?.postMessage({ type }, origin);

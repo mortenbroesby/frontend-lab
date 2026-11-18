@@ -1,7 +1,7 @@
 import { StrictMode, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
 import { DemoBoundary } from '@lab/demo-kit/boundary';
-import { DemoHandoff } from './demo-handoff';
+import { PresentationFocus } from './presentation-focus';
 import { Presentation } from './Presentation';
 import './presentation.css';
 import { remoteRoom } from './remote-protocol';
@@ -16,9 +16,9 @@ function PresentationEntry() {
   return room ? (
     <PresenterRemote code={room} />
   ) : (
-    <DemoHandoff>
+    <PresentationFocus>
       <Presentation />
-    </DemoHandoff>
+    </PresentationFocus>
   );
 }
 

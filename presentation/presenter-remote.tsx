@@ -10,14 +10,14 @@ import {
   DialogTrigger,
 } from '@lab/ui/dialog';
 import { useTheme } from '@lab/ui/theme-control';
-import { useDemoHandoff } from './demo-handoff';
+import type { FocusAction } from '@lab/demo-kit/focus';
 import { useRemote } from './use-remote';
 import type { RemoteState } from './remote-protocol';
 
-const ignoreMove = () => {};
+const ignoreInput = () => {};
 export function PresenterRemote({ code }: { code: string }) {
   useTheme();
-  const remote = useRemote(code, null, ignoreMove);
+  const remote = useRemote(code, null, ignoreInput);
   const state = remote.snapshot;
   return (
     <main className="presenter-remote">
@@ -25,12 +25,7 @@ export function PresenterRemote({ code }: { code: string }) {
       <p role="status">
         {remote.supported ? remote.status : 'Open this page over HTTPS to connect.'}
       </p>
-      <RemoteContent
-        state={state}
-        connected={remote.connected}
-        request={remote.request}
-        returnToSlides={remote.returnToSlides}
-      />
+      <RemoteContent state={state} connected={remote.connected} request={remote.request} />
       <Button variant="outline" onClick={() => location.reload()}>
         Reconnect
       </Button>
@@ -41,30 +36,12 @@ export function PresenterRemote({ code }: { code: string }) {
   );
 }
 
-function SlideButtons({ state, connected, request }: RemoteContentProps) {
-  const canMove = connected && state !== null;
-  return (
-    <nav className="remote-navigation" aria-label="Slide navigation">
-      <Button
-        variant="outline"
-        disabled={!canMove || state.index === 0}
-        onClick={() => request(-1)}
-      >
-        ← Previous
-      </Button>
-      <Button disabled={!canMove || state.index === state.total - 1} onClick={() => request(1)}>
-        Next →
-      </Button>
-    </nav>
-  );
-}
 type RemoteContentProps = {
   state: RemoteState | null;
   connected: boolean;
-  request: (delta: -1 | 1) => void;
-  returnToSlides: () => void;
+  request: (action: FocusAction) => void;
 };
-function RemoteContent({ state, connected, request, returnToSlides }: RemoteContentProps) {
+function RemoteContent({ state, connected, request }: RemoteContentProps) {
   if (!state) return <h1>Connect your presentation</h1>;
   return (
     <>
@@ -73,12 +50,7 @@ function RemoteContent({ state, connected, request, returnToSlides }: RemoteCont
         <span>Elapsed {state.elapsed}</span>
       </div>
       <h1>{state.title}</h1>
-      <RemoteNavigation
-        state={state}
-        connected={connected}
-        request={request}
-        returnToSlides={returnToSlides}
-      />
+      <RemoteNavigation state={state} connected={connected} request={request} />
       <section className="remote-notes" aria-label="Speaker notes">
         <h2>Presenter notes</h2>
         <p>{state.notes || 'No notes for this slide.'}</p>
@@ -100,14 +72,13 @@ function pairingUrl(code: string | null) {
 }
 export function RemotePairing({
   state,
-  move,
+  input,
 }: {
   state: RemoteState;
-  move: (delta: number) => void;
+  input: (action: FocusAction) => void;
 }) {
   const [code, setCode] = useState<string | null>(null);
-  const { setActive } = useDemoHandoff();
-  const remote = useRemote(code, state, move, () => setActive(false));
+  const remote = useRemote(code, state, input);
   const url = pairingUrl(code);
   function togglePairing() {
     setCode(code ? null : crypto.randomUUID().replaceAll('-', ''));
@@ -150,15 +121,34 @@ export function RemotePairing({
   );
 }
 
-function RemoteNavigation(props: RemoteContentProps) {
-  const { state, connected, returnToSlides } = props;
-  if (state?.demoActive)
-    return (
-      <nav className="remote-navigation" aria-label="Demo navigation">
-        <Button disabled={!connected} onClick={returnToSlides}>
-          Return to slides
-        </Button>
+const commands = [
+  ['up', '↑', 'Up'],
+  ['left', '←', 'Left'],
+  ['select', 'OK', 'OK'],
+  ['right', '→', 'Right'],
+  ['down', '↓', 'Down'],
+  ['back', 'Back', 'Back'],
+] as const;
+function RemoteNavigation({ state, connected, request }: RemoteContentProps) {
+  return (
+    <section aria-label="Remote control">
+      <p role="status">
+        Focus: <strong>{state?.focus ?? 'slides'}</strong>
+      </p>
+      <nav className="focus-remote" aria-label="Directional remote">
+        {commands.map(([action, label, name]) => (
+          <Button
+            key={action}
+            className={`focus-${action}`}
+            variant="outline"
+            disabled={!connected}
+            aria-label={name}
+            onClick={() => request(action)}
+          >
+            {label}
+          </Button>
+        ))}
       </nav>
-    );
-  return <SlideButtons {...props} />;
+    </section>
+  );
 }

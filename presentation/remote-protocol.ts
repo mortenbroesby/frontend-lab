@@ -1,6 +1,12 @@
+import {
+  isFocusAction,
+  isFocusScope,
+  type FocusAction,
+  type FocusScope,
+} from '@lab/demo-kit/focus';
 export type RemoteState = {
   kind: 'state';
-  demoActive: boolean;
+  focus: FocusScope;
   index: number;
   total: number;
   title: string;
@@ -11,8 +17,7 @@ export type RemoteState = {
 export type RemoteMessage =
   | RemoteState
   | { kind: 'hello'; role: 'host' | 'remote' }
-  | { kind: 'return'; request: string }
-  | { kind: 'move'; delta: -1 | 1; request: string };
+  | { kind: 'input'; action: FocusAction; request: string };
 
 export function remoteRoom(hash: string): string | null {
   return /^#remote=([a-f0-9]{32})$/.exec(hash)?.[1] ?? null;
@@ -24,15 +29,14 @@ export function isRemoteMessage(value: unknown): value is RemoteMessage {
   if (!value || typeof value !== 'object') return false;
   const v = value as Record<string, unknown>;
   if (v.kind === 'hello') return v.role === 'host' || v.role === 'remote';
-  if (v.kind === 'return') return text(v.request, 64) && v.request.length > 0;
-  if (v.kind === 'move')
-    return (v.delta === -1 || v.delta === 1) && text(v.request, 64) && v.request.length > 0;
+  if (v.kind === 'input')
+    return isFocusAction(v.action) && text(v.request, 64) && v.request.length > 0;
   return isRemoteState(v);
 }
 function isRemoteState(v: Record<string, unknown>): boolean {
   return (
     v.kind === 'state' &&
-    typeof v.demoActive === 'boolean' &&
+    isFocusScope(v.focus) &&
     validPosition(v) &&
     text(v.title, 300) &&
     text(v.notes, 12000) &&

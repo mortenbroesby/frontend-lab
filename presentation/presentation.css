@@ -596,18 +596,6 @@ a {
   gap: 1rem;
   font-variant-numeric: tabular-nums;
 }
-.remote-navigation {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  position: sticky;
-  top: 0;
-  padding: 1rem 0;
-  background: var(--lab-surface);
-}
-.remote-navigation button {
-  min-height: 64px;
-}
 .remote-notes {
   border-block: 1px solid var(--lab-line);
   padding-block: 1rem;
@@ -642,4 +630,32 @@ a {
 }
 .tv-handoff-entry button {
   min-height: 48px;
+}
+
+.focus-remote {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-block: 16px;
+}
+.focus-remote button {
+  min-height: 56px;
+}
+.focus-up {
+  grid-area: 1 / 2;
+}
+.focus-left {
+  grid-area: 2 / 1;
+}
+.focus-select {
+  grid-area: 2 / 2;
+}
+.focus-right {
+  grid-area: 2 / 3;
+}
+.focus-down {
+  grid-area: 3 / 2;
+}
+.focus-back {
+  grid-area: 4 / 1 / 5 / 4;
 }

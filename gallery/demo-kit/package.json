@@ -12,7 +12,8 @@
     "./mark": "./LabMark.tsx",
     "./track-symbol": "./TrackSymbol.tsx",
     "./command-menu": "./CommandMenu.tsx",
-    "./embed-protocol": "./embed-protocol.ts"
+    "./embed-protocol": "./embed-protocol.ts",
+    "./focus": "./focus.ts"
   },
   "dependencies": {
     "react": "19.3.1",

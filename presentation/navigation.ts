@@ -1,9 +1,10 @@
+import { focusAction } from '@lab/demo-kit/focus';
 type Shortcut = Pick<
   KeyboardEvent,
   'key' | 'repeat' | 'altKey' | 'ctrlKey' | 'metaKey' | 'shiftKey'
 >;
 
-export function navigationDelta(event: Shortcut, interactive: boolean) {
+export function navigationAction(event: Shortcut, interactive: boolean) {
   if (
     interactive ||
     event.repeat ||
@@ -12,10 +13,8 @@ export function navigationDelta(event: Shortcut, interactive: boolean) {
     event.metaKey ||
     event.shiftKey
   )
-    return 0;
-  if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') return 1;
-  if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') return -1;
-  return 0;
+    return undefined;
+  return event.key === ' ' ? 'right' : focusAction(event.key);
 }
 
 export function moveSlide(current: number, delta: number, total: number) {
