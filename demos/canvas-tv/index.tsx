@@ -68,11 +68,6 @@ function TV() {
       </a>
       <TVIntro />
       <main>
-        {handoff.active && (
-          <Button className="tv-return-slides" variant="outline" onClick={handoff.exit}>
-            Back to slides
-          </Button>
-        )}
         <div
           id="tv-screen"
           className="tv-screen"
