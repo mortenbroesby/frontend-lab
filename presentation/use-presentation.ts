@@ -1,7 +1,7 @@
 import { slideDelta, type FocusAction } from '@lab/demo-kit/focus';
 import { usePresentationFocus } from './presentation-focus';
-import { useEffect, useEffectEvent, useState } from 'react';
-import { isInteractive, navigateToSlide, navigationAction } from './navigation';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { isInteractive, moveSlide, navigationAction } from './navigation';
 import { slides } from './slides';
 
 function initialSlide() {
@@ -13,17 +13,18 @@ function initialSlide() {
 }
 
 export function useSlides() {
-  const [{ index, autoEnter }, setPosition] = useState(() => ({
-    index: initialSlide(),
-    autoEnter: true,
-  }));
+  const [index, setIndex] = useState(initialSlide);
   const focus = usePresentationFocus();
-  const move = (delta: number) =>
-    setPosition((current) => navigateToSlide(current, current.index + delta, slides.length));
+  const backAllowedAt = useRef(0);
+  const move = (delta: number) => setIndex((current) => moveSlide(current, delta, slides.length));
+  const exitDemo = () => {
+    backAllowedAt.current = performance.now() + 400;
+    move(-1);
+  };
   const input = (action: FocusAction, allowPrevious = true) => {
+    if (performance.now() < backAllowedAt.current) return;
     if (focus.input(action)) return;
-    if (action === 'back' && !allowPrevious) return;
-    move(slideDelta(action));
+    move(allowPrevious ? slideDelta(action) : 0);
   };
   const routeInput = useEffectEvent(input);
   useEffect(() => {
@@ -37,8 +38,7 @@ export function useSlides() {
       event.preventDefault();
       routeInput(action, event.key !== 'Escape');
     };
-    const readHash = () =>
-      setPosition((current) => navigateToSlide(current, initialSlide(), slides.length));
+    const readHash = () => setIndex(initialSlide());
     window.addEventListener('keydown', navigate);
     window.addEventListener('hashchange', readHash);
     return () => {
@@ -46,7 +46,7 @@ export function useSlides() {
       window.removeEventListener('hashchange', readHash);
     };
   }, []);
-  return { index, autoEnter, move, input };
+  return { index, move, input, exitDemo };
 }
 
 export function useElapsedTime() {

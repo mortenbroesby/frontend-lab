@@ -3,11 +3,11 @@ import { slides } from './slides';
 export function SlideStage({
   index,
   preview = false,
-  autoEnter = true,
+  onDemoExit,
 }: {
   index: number;
   preview?: boolean;
-  autoEnter?: boolean;
+  onDemoExit?: () => void;
 }) {
   const slide = slides[index];
   const Content = slide.Content;
@@ -19,7 +19,7 @@ export function SlideStage({
       aria-hidden={preview || undefined}
     >
       <div key={slide.id} className="slide-content">
-        <Content preview={preview} autoEnter={autoEnter} />
+        <Content preview={preview} onDemoExit={onDemoExit} />
       </div>
       {!['remote', 'instrument'].includes(slide.id) && (
         <span className="slide-number" aria-hidden="true">

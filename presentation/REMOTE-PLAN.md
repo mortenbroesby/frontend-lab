@@ -26,7 +26,7 @@ Protocol tests cover malformed messages, session tokens and valid slide ranges. 
 
 ## Focus routing
 
-`@lab/demo-kit/focus` defines six commands and the keyboard mapping. The presentation routes input to its mounted demo first, then to slide navigation if unhandled. The TV owns its playback and catalogue state; origin-checked iframe messages carry input and the current focus label, not application state. Leaving the slide removes the input handler. Back unwinds TV playback, catalogue and finally presentation focus; at slide level it moves to the previous slide and notes. Backward arrival at the TV slide does not enter the TV; OK re-enters. Forward arrival and a direct URL still auto-enter. A 400 ms guard consumes trailing Back taps when leaving the TV. Keyboard Escape remains exit-only at slide level. No second pairing is needed for the presentation phone.
+`@lab/demo-kit/focus` defines six commands and the keyboard mapping. The presentation routes input to its mounted demo first, then to slide navigation if unhandled. The TV owns its playback and catalogue state; origin-checked iframe messages carry input and the current focus label, not application state. Leaving the slide removes the input handler. The TV always receives focus on arrival in either direction. Back unwinds playback and catalogue, then goes directly to the previous slide and notes. There is no inactive TV or entry overlay. A 400 ms guard consumes trailing Back taps after leaving the TV. Continue presentation advances to the next slide. Keyboard Escape remains exit-only at slide level. No second pairing is needed for the presentation phone.
 
 ## Focus review
 

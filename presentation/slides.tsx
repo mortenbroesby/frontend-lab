@@ -8,7 +8,7 @@ import { TitleSlide, DiagramSlide, StatementSlide, ExperimentOptions } from './l
 type Slide = {
   id: string;
   title: string;
-  Content: ComponentType<{ preview?: boolean; autoEnter?: boolean }>;
+  Content: ComponentType<{ preview?: boolean; onDemoExit?: () => void }>;
   notes?: string;
 };
 
@@ -324,7 +324,7 @@ function Television() {
   );
 }
 
-function Remote({ preview, autoEnter }: { preview?: boolean; autoEnter?: boolean }) {
+function Remote({ preview, onDemoExit }: { preview?: boolean; onDemoExit?: () => void }) {
   if (preview)
     return (
       <div className="tv-slide-preview">
@@ -337,7 +337,7 @@ function Remote({ preview, autoEnter }: { preview?: boolean; autoEnter?: boolean
       </div>
     );
   return demoHref ? (
-    <TVFrame href={demoHref} autoEnter={autoEnter} />
+    <TVFrame href={demoHref} onExit={onDemoExit} />
   ) : (
     <p>Set VITE_GALLERY_URL to embed Canvas TV.</p>
   );
@@ -574,7 +574,7 @@ TRANSITION
 
 Move right until the shelf scrolls. Move down and back up: the row remembers the selection. Press Enter to play, then Escape to return. On a phone, use the on-screen arrows, OK and Back. Ask “Where should focus return?” before going back.
 
-Playback is an original procedural animation, not streamed video. This does not demonstrate our custom renderer or Lightning itself. The TV receives keyboard focus automatically when moving forward; revisiting from a later slide leaves focus with the deck. Back to slides restores presentation control without advancing; Continue presentation then leads back to the four tracks.`,
+Playback is an original procedural animation, not streamed video. This does not demonstrate our custom renderer or Lightning itself. The TV receives keyboard focus automatically on every visit. Back unwinds the TV interface, then returns to the previous slide. Continue presentation leads forward to the four tracks.`,
   },
   {
     id: 'next-directions',
