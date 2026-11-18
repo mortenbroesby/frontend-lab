@@ -25,10 +25,9 @@ Participants can work alone or together, compare existing solutions, investigate
 | 11. What makes that possible? | React → Web Audio → speakers; Canvas visualises the signal |
 | 12. A screen without a pointer | Focus, directional navigation and returning |
 | 13. The interface doesn’t have to be HTML | DOM versus Canvas; introduce Lightning with a link |
-| 14. Familiar skills, different constraints | State, components and tooling |
-| 15. Try the TV interface | Final live demo |
-| 16. Where would you take it? | Connect the examples back to all four tracks |
-| 17. Choose your starting point | Questions and a link into the Lab |
+| 14. Try the TV interface | Final live demo |
+| 15. Where would you take it? | Connect the examples back to all four tracks |
+| 16. Choose your starting point | Questions and a link into the Lab |
 
 The two demos remain independent applications embedded in the deck. Continue links follow the running order. The D3 showcase is not part of this talk. All slides include presenter notes; rehearse to fit the time rather than adding filler.
 

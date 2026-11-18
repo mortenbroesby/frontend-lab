@@ -212,35 +212,6 @@ function ExperimentalProjects() {
   );
 }
 
-function Assumptions() {
-  return (
-    <DiagramSlide
-      eyebrow="Beyond the usual web page"
-      title="Familiar skills. Different constraints."
-    >
-      <ExperimentOptions
-        options={[
-          {
-            label: 'STATE',
-            title: 'Where am I?',
-            description: 'Track focus and restore the selection when someone returns.',
-          },
-          {
-            label: 'COMPONENTS',
-            title: 'What gets rendered?',
-            description: 'Separate the interface model from the way it is drawn.',
-          },
-          {
-            label: 'TOOLING',
-            title: 'How do I check it?',
-            description: 'Test navigation rules and inspect what the renderer is doing.',
-          },
-        ]}
-      />
-    </DiagramSlide>
-  );
-}
-
 function InstrumentIntroduction() {
   return (
     <StatementSlide eyebrow="A personal experiment" title="Could the browser be an instrument?">
@@ -551,16 +522,7 @@ A BRIEF REAL EXAMPLE
 “I worked on an animated TV application using Lightning, rendered to canvas and controlled with a remote.” The link provides context for anyone unfamiliar with Lightning. Current documentation is not evidence of which historical version we used. Canvas is an alternative for particular constraints, not a general replacement for HTML; layout, semantics and accessibility need deliberate attention.
 
 ONLY IF ASKED
-Lightning was required by the agreement with Comcast for Xfinity devices. Its imperative API led us to build a custom React renderer so engineers could use familiar JSX. This accelerated component work and helped us build testing tools. Default tests mocked rendering, including Canvas; real-primitives tests also existed. The team later switched to Solid.js. Exact versions, testing APIs and migration reasons remain unconfirmed.`,
-  },
-  {
-    id: 'assumptions',
-    title: 'Familiar skills, different constraints',
-    Content: Assumptions,
-    notes: `CONNECT TO EVERYDAY WORK · 1–2 minutes
-“State, components and events are still useful. The questions change: where does focus live, who draws the screen, and how do we inspect and test it?”
-
-This is the link to quality and tooling, not a recommendation to build a framework. Existing tools and small improvements are valid experiments.
+Lightning was required by the agreement with Comcast for Xfinity devices. Its imperative API led us to build a custom React renderer so engineers could use familiar JSX. This accelerated component work and helped us build testing tools. Default tests mocked rendering, including Canvas; real-primitives tests also existed. The team later switched to Solid.js. Exact versions, testing APIs and migration reasons remain unconfirmed.
 
 TRANSITION
 “Let’s try a small illustration of that interaction. Watch what happens to the selection when we come back.”`,
