@@ -234,7 +234,7 @@ body {
     width: min(60vw, 290px);
     left: 50%;
     margin-left: max(-30vw, -145px);
-    top: 43%;
+    top: 34%;
   }
   .orbit-halo {
     left: 0;
@@ -242,7 +242,7 @@ body {
   }
   .orbit-orbit {
     left: 50%;
-    top: 53%;
+    top: 44%;
     width: 110vw;
     height: 110vw;
   }
@@ -323,7 +323,8 @@ body {
   .orbit-finish {
     grid-template-columns: 1fr;
     align-content: start;
-    gap: 16px;
+    gap: 0;
+    padding-top: 80px;
     padding-bottom: 80px;
   }
   .orbit-finish-preview {
