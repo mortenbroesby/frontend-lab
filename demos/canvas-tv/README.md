@@ -26,4 +26,4 @@ Pairing requires trusted HTTPS (or localhost for same-computer experiments), int
 
 During playback, a control bar slides up with **Off**, **English** and **Dansk** demo subtitles. Left/right moves focus; OK applies the option. Captions are illustrative text for the silent generated scene, not a real subtitle track. The phone shows the active and focused options. Up or Back slides the overlay away while captions stay visible. Down or OK brings it back; Back with the overlay hidden returns to the catalogue. Reduced motion shows the controls immediately and keeps the scene still.
 
-When launched by the presentation, **Enter TV demo** hands focus to the TV. **Back to slides** returns without advancing. Escape/Back closes playback first, then returns. The standalone demo retains its normal navigation and fullscreen controls.
+Reaching the TV slide automatically hands focus to the TV. After returning, **Enter TV demo** lets you re-enter. **Back to slides** returns without advancing. Escape/Back closes playback first, then returns. The standalone demo retains its normal navigation and fullscreen controls.

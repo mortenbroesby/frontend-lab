@@ -16,6 +16,7 @@ export function TVFrame({ href }: { href: string }) {
   const origin = url.origin;
 
   useEffect(() => {
+    setActive(true);
     const source = frame.current?.contentWindow;
     const receive = (event: MessageEvent) => {
       if (!isEmbedMessage(event, source, origin)) return;

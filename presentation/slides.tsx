@@ -570,7 +570,7 @@ TRANSITION
 
 Move right until the shelf scrolls. Move down and back up: the row remembers the selection. Press Enter to play, then Escape to return. On a phone, use the on-screen arrows, OK and Back. Ask “Where should focus return?” before going back.
 
-Playback is an original procedural animation, not streamed video. This does not demonstrate our custom renderer or Lightning itself. Tab through the remote to Continue presentation, which leads back to the four tracks.`,
+Playback is an original procedural animation, not streamed video. This does not demonstrate our custom renderer or Lightning itself. The TV receives keyboard focus automatically. Back to slides restores presentation control without advancing; Continue presentation then leads back to the four tracks.`,
   },
   {
     id: 'next-directions',
