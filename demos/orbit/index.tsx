@@ -16,7 +16,7 @@ import './orbit.css';
 const chapters = [
   ['arrival', 'Meet Orbit'],
   ['detail', 'Closer, still'],
-  ['inside', 'Every layer matters'],
+  ['inside', 'A different angle'],
   ['finish', 'Find your frequency'],
 ] as const;
 const finishes = [
@@ -26,57 +26,28 @@ const finishes = [
 ];
 
 function Speaker({ progress }: { progress: MotionValue<number> }) {
-  // Holds line up with chapter snap points; transitions happen between them.
-  const scale = useTransform(
-    progress,
-    [0, 0.18, 0.32, 0.42, 0.63, 0.76, 0.9, 1],
-    [0.85, 0.85, 1.45, 1.45, 0.8, 0.8, 0.9, 0.6],
-  );
-  const rotate = useTransform(
-    progress,
-    [0, 0.18, 0.32, 0.42, 0.63, 0.76, 0.9, 1],
-    [-18, -18, 24, 24, -12, -12, 0, -35],
-  );
-  const x = useTransform(
-    progress,
-    [0, 0.18, 0.32, 0.42, 0.63, 0.76, 0.84, 0.9, 0.96, 1],
-    ['0%', '0%', '28%', '28%', '0%', '0%', '130%', '0%', '0%', '140%'],
-  );
-  const y = useTransform(progress, [0.9, 0.96, 1], ['0%', '0%', '-45%']);
-  const opacity = useTransform(progress, [0.76, 0.82, 0.86, 0.9, 0.96, 1], [1, 0, 0, 1, 1, 0]);
-  const topY = useTransform(
-    progress,
-    [0, 0.36, 0.52, 0.68, 0.88, 1],
-    ['0%', '0%', '-25%', '-25%', '0%', '0%'],
-  );
-  const bottomY = useTransform(
-    progress,
-    [0, 0.36, 0.52, 0.68, 0.88, 1],
-    ['0%', '0%', '25%', '25%', '0%', '0%'],
-  );
-  const coreOpacity = useTransform(progress, [0.36, 0.48, 0.72, 0.86], [0, 1, 1, 0]);
+  const rotate = useTransform(progress, [0, 0.18, 0.42, 1], [-18, -18, 342, 342]);
+  const rotateX = useTransform(progress, [0, 0.46, 0.74, 1], [0, 0, 360, 360]);
+  const y = useTransform(progress, [0, 0.14, 0.94, 1], ['90%', '0%', '0%', '160%']);
+  const opacity = useTransform(progress, [0, 0.08, 0.96, 1], [0, 1, 1, 0]);
   return (
     <motion.div
       className="orbit-product"
-      style={{ scale, rotate, x, y, opacity }}
+      style={{ rotate, rotateX, y, opacity, transformPerspective: 1000 }}
       aria-hidden="true"
     >
       <div className="orbit-product-shadow" />
-      <motion.div className="orbit-shell" style={{ y: bottomY }}>
+      <div className="orbit-shell">
         <span className="orbit-wordmark">O R B I T</span>
-      </motion.div>
-      <motion.div className="orbit-driver" style={{ opacity: coreOpacity }}>
-        <div />
-        <span />
-      </motion.div>
-      <motion.div className="orbit-grille" style={{ y: topY }}>
+      </div>
+      <div className="orbit-grille">
         <div className="orbit-mesh" />
         <div className="orbit-touch">
           <span>−</span>
           <i />
           <span>+</span>
         </div>
-      </motion.div>
+      </div>
       <div className="orbit-indicator" />
     </motion.div>
   );
@@ -107,15 +78,15 @@ function Chapter({ index }: { index: number }) {
       body: 'A woven surface. A warm metal edge. One uninterrupted curve.',
     },
     {
-      eyebrow: '02 / Open it up',
+      eyebrow: '02 / A different angle',
       title: (
         <>
-          Small object.
+          A new angle.
           <br />
-          Whole world.
+          Same Orbit.
         </>
       ),
-      body: 'Fabric, driver, enclosure. Scroll slowly and watch the layers find their own space.',
+      body: 'One continuous turn. Scroll slowly to flip the whole object, then bring it home.',
     },
   ][index]!;
   return (

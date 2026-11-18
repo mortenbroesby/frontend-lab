@@ -2,7 +2,6 @@
   color-scheme: dark;
   background: #0b0c0e;
   overscroll-behavior-y: none;
-  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
 }
 body {
@@ -159,27 +158,6 @@ body {
   border-radius: 50%;
   box-shadow: 0 0 10px #c5eece;
 }
-.orbit-driver {
-  position: absolute;
-  inset: 7% 9% 17%;
-  border-radius: 50%;
-  background: repeating-radial-gradient(circle, #37343a 0%, #111216 3%, #555058 4%, #151619 6%);
-  border: 8px solid #292a2d;
-  box-shadow: 0 20px 40px #000b;
-}
-.orbit-driver > div {
-  position: absolute;
-  inset: 26%;
-  border-radius: 50%;
-  background: radial-gradient(at 35% 25%, #bfa38d, #5c493e 45%, #171719 80%);
-  box-shadow: 0 5px 25px #000;
-}
-.orbit-driver > span {
-  position: absolute;
-  inset: -6%;
-  border: 1px dashed #b3a49080;
-  border-radius: 50%;
-}
 .orbit-indicator {
   position: absolute;
   bottom: 5%;
@@ -209,7 +187,6 @@ body {
   align-items: center;
   padding: 90px clamp(24px, 7vw, 110px);
   scroll-margin-top: 0;
-  scroll-snap-align: start;
   pointer-events: none;
 }
 .orbit-copy {
@@ -284,7 +261,6 @@ body {
   padding-bottom: 5px;
 }
 .orbit-footer {
-  scroll-snap-align: end;
   padding: 65px 7vw;
   border-top: 1px solid #ffffff18;
   background: #0b0c0e;
@@ -422,7 +398,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   :root {
     scroll-behavior: auto;
-    scroll-snap-type: none;
   }
   .orbit * {
     transition: none;
