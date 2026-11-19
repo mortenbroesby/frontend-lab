@@ -12,13 +12,15 @@ test('editing a step preserves the original loop', () => {
   assert.deepEqual(edited[1], initialPattern[1]);
 });
 
-test('three original tunes have complete, distinct sixteen-step arrangements', () => {
+test('three original tunes have complete, distinct four-bar melodies with sixteen-step gates', () => {
   assert.equal(songs.length, 3);
   assert.equal(new Set(songs.map((song) => song.name)).size, 3);
   assert.equal(new Set(songs.map((song) => song.melody.join(','))).size, 3);
   for (const song of songs) {
-    assert.equal(song.melody.length, 16);
+    assert.equal(song.melody.length, 64);
     assert.equal(song.bass.length, 4);
+    assert.equal(song.thirds.length, 4);
+    assert(song.melody.every((note) => Number.isInteger(note) && note >= 48 && note <= 96));
     assert.equal(song.pattern.length, 3);
     for (const voice of song.pattern) {
       assert.equal(voice.length, 16);

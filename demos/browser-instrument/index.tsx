@@ -60,9 +60,9 @@ export default function InstrumentDemo() {
   const [settings, setSettings] = useState<Settings>({
     song: 0,
     pitch: 0,
-    tempo: 112,
-    cutoff: 3800,
-    echo: 0.25,
+    tempo: 132,
+    cutoff: 6200,
+    echo: 0.18,
     levels: [0.7, 0.65, 0.7],
     pattern: initialPattern,
   });
@@ -117,7 +117,7 @@ export default function InstrumentDemo() {
           <Scope instrument={instrument} onStep={setStep} waveformOnly={presentation} />
           <div className="scope-footer">
             <span>WEB AUDIO</span>
-            <span>16 STEPS · 3 VOICES</span>
+            <span>4 BARS · 3 VOICES</span>
           </div>
         </div>
         <div className="instrument-controls">
@@ -221,10 +221,10 @@ export default function InstrumentDemo() {
       {!embedded && (
         <div className="instrument-note">
           <p>
-            Inspired by tracker music and tiny demoscene intros. The melody, bass and percussion are
-            generated live with oscillators. The grid changes the loop; the sliders shape its sound.
-            No recording is playing behind the controls. Start with the tone slider, then take a few
-            notes out.
+            Inspired by keygen music and demoscene intros: pulse melodies, rapid arpeggios, octave
+            bass and noise drums, synthesized live. The grid repeats across four bars; the sliders
+            shape its sound. No recording is playing behind the controls. Start with the tone
+            slider, then take a few notes out.
           </p>
           <Button
             variant="outline"
@@ -256,9 +256,9 @@ function InstrumentHeader({
   return (
     <div className="instrument-top">
       <div>
-        {!presentation && <span className="instrument-eyebrow">3 ORIGINAL LOOPS</span>}
+        {!presentation && <span className="instrument-eyebrow">3 ORIGINAL CHIPTUNES</span>}
         {embedded ? <h1>Browser Beat</h1> : <h2>Press play. Find your sound.</h2>}
-        <p>Three original loops, ready to reshape.</p>
+        <p>Cracktro melodies. Made in your browser.</p>
       </div>
       <div className="instrument-song-picker" role="group" aria-label="Choose a song">
         <Button variant="ghost" aria-label="Previous song" onClick={() => onSong(-1)}>

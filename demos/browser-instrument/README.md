@@ -1,6 +1,6 @@
 # Browser Beat
 
-A small browser instrument inspired by tracker music. Choose one of three original loops with the previous/next buttons, press Play, edit its 16 steps, then shape the sound with tempo, tone, echo and voice levels. Audio is synthesized with Web Audio; no recordings, services or hardware are required. Start/stop is explicit and leaving the app closes the audio context. Reduced motion replaces the oscilloscope with a static line.
+A small browser instrument inspired by keygen music and demoscene trackers. Choose one of three original loops with the previous/next buttons, press Play, edit its 16 steps, then shape the sound with tempo, tone, echo and voice levels. Audio is synthesized with Web Audio; no recordings, services or hardware are required. Start/stop is explicit and leaving the app closes the audio context. Reduced motion replaces the oscilloscope with a static line.
 
 From the repository root:
 
@@ -8,7 +8,7 @@ From the repository root:
 npm run dev --workspace @lab/demo-browser-instrument -- --host 0.0.0.0
 ```
 
-`pattern.ts` holds the three tunes: Midnight Circuit, Neon Coast and Moon Arcade. Each has its own melody, bass line and grid. The Pitch fader shifts melody and bass from −12 to +12 semitones (one octave each way), with 0 as the original pitch; drums and tempo stay unchanged. Switching tunes keeps the pitch, playback and sound controls unchanged, replacing any step edits with the selected tune’s grid. `audio.ts` schedules notes against the audio clock; React controls settings and Canvas draws the waveform. Try changing the melody or oscillator types. Keep levels conservative when experimenting with sound.
+`pattern.ts` holds the three tunes: Midnight Circuit, Neon Coast and Moon Arcade. Each has a four-bar melody and chord progression; the 16-step grid repeats as a gate over each bar. Pulse leads, rapid three-note arpeggios, octave bass and synthesized noise drums evoke a cracktro soundtrack. Echo follows the tempo. The Pitch fader shifts melody and bass from −12 to +12 semitones (one octave each way), with 0 as the original pitch; drums and tempo stay unchanged. Switching tunes keeps the pitch, playback and sound controls unchanged, replacing any step edits with the selected tune’s grid. `audio.ts` schedules notes against the audio clock; React controls settings and Canvas draws the waveform. Try changing the melody or oscillator types or chord intervals. Keep levels conservative when experimenting with sound.
 
 The sequencer wraps into groups of eight steps, or four on phones, keeping every step visible without horizontal scrolling. Controls work with touch and keyboard; use arrow keys on a focused slider. Reset pattern restores the selected tune’s grid without changing the sound controls.
 

@@ -1,3 +1,4 @@
+import { createDrums } from './drums';
 import { frequency, songs, stepDuration } from './pattern';
 export type Settings = {
   song: number;
@@ -60,48 +61,53 @@ export function createInstrument() {
     };
   }
 
-  function drum(time: number, beat: number, level: number) {
-    const oscillator = context.createOscillator();
-    const envelope = context.createGain();
-    const sound =
-      beat % 4 === 0
-        ? { type: 'sine' as const, start: 150, end: 42, gain: 0.8 }
-        : { type: 'triangle' as const, start: 1800, end: 300, gain: 0.15 };
-    oscillator.type = sound.type;
-    oscillator.frequency.setValueAtTime(sound.start, time);
-    oscillator.frequency.exponentialRampToValueAtTime(sound.end, time + 0.08);
-    envelope.gain.setValueAtTime(level * sound.gain, time);
-    envelope.gain.exponentialRampToValueAtTime(0.001, time + 0.13);
-    oscillator.connect(envelope).connect(master);
-    oscillator.start(time);
-    oscillator.stop(time + 0.14);
-    oscillator.onended = () => {
-      oscillator.disconnect();
-      envelope.disconnect();
-    };
-  }
+  const drum = createDrums(context, master);
 
   function schedule(settings: Settings) {
     filter.frequency.setTargetAtTime(settings.cutoff, context.currentTime, 0.03);
     wet.gain.setTargetAtTime(settings.echo, context.currentTime, 0.03);
+    delay.delayTime.setTargetAtTime(stepDuration(settings.tempo) * 3, context.currentTime, 0.03);
     // Skip missed time after a suspended/background tab rather than burst old notes.
     nextTime = Math.max(nextTime, context.currentTime);
     while (nextTime < context.currentTime + 0.1) {
       playStep(settings, step, nextTime);
-      queued.push({ time: nextTime, step });
+      queued.push({ time: nextTime, step: step % 16 });
       nextTime += stepDuration(settings.tempo);
-      step = (step + 1) % 16;
+      step = (step + 1) % 64;
     }
     while (queued.length > 32) queued.shift();
   }
   function playStep(settings: Settings, beat: number, time: number) {
     const { pattern, levels } = settings;
-    const { melody, bass } = songs[settings.song];
-    if (pattern[0][beat])
-      tone(melody[beat], time, 0.18, 'square', levels[0] * 0.12, settings.pitch);
-    if (pattern[1][beat])
-      tone(bass[Math.floor(beat / 4)], time, 0.22, 'sawtooth', levels[1] * 0.2, settings.pitch);
-    if (pattern[2][beat]) drum(time, beat, levels[2]);
+    const song = songs[settings.song];
+    const column = beat % 16;
+    const bar = Math.floor(beat / 16);
+    const length = stepDuration(settings.tempo);
+    const root = song.bass[bar];
+    if (pattern[0][column]) {
+      tone(song.melody[beat], time, length * 0.85, 'square', levels[0] * 0.1, settings.pitch);
+      // Tracker-style chord illusion: three rapid notes share one sixteenth.
+      [0, song.thirds[bar], 7].forEach((interval, i) => {
+        tone(
+          root + 24 + interval,
+          time + (length * i) / 3,
+          (length / 3) * 0.8,
+          'square',
+          levels[0] * 0.035,
+          settings.pitch,
+        );
+      });
+    }
+    if (pattern[1][column])
+      tone(
+        root + [0, 0, 12, 0][column % 4],
+        time,
+        length * 1.3,
+        'triangle',
+        levels[1] * 0.45,
+        settings.pitch,
+      );
+    if (pattern[2][column]) drum(time, column, levels[2]);
   }
   return {
     analyser,
