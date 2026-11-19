@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { motion, useSpring, useTransform } from 'motion/react';
 import type { MotionValue } from 'motion/react';
 import { Button } from '@lab/ui/button';
@@ -10,14 +10,14 @@ export function Speaker({
   still,
   className = 'orbit-product',
   spotlight = false,
-  entryOffset = '200%',
+  interactive = true,
 }: {
   progress: MotionValue<number>;
   colour: string;
   still: boolean;
   className?: string;
   spotlight?: boolean;
-  entryOffset?: string;
+  interactive?: boolean;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const scene = useRef<ReturnType<typeof createSpeakerScene> | null>(null);
@@ -25,7 +25,11 @@ export function Speaker({
   const [unavailable, setUnavailable] = useState(false);
   // Spring the object's position after mapping scroll, so the short end ranges
   // cannot amplify a smoothed progress value into a sudden launch.
-  const targetY = useTransform(progress, [0, 0.24, 0.76, 1], [entryOffset, '0%', '0%', '200%']);
+  const targetY = useTransform(
+    progress,
+    [0, 1 / 3, 2 / 3, 0.86, 1],
+    ['-12%', '0%', '18%', '30%', '200%'],
+  );
   const y = useSpring(targetY, { stiffness: 50, damping: 27, mass: 3, restDelta: 0.01 });
   const rotation = useSpring(progress, { stiffness: 55, damping: 25, mass: 2, restDelta: 0.0001 });
   const pose = still ? progress : rotation;
@@ -52,13 +56,18 @@ export function Speaker({
   useEffect(() => {
     scene.current?.spotlight(spotlight);
   }, [spotlight, pose]);
+  const label = interactive
+    ? '3D speaker. Drag horizontally to rotate. Arrow keys turn and tilt; Home resets.'
+    : '3D speaker. Scroll to tilt and turn through the story.';
   return (
-    <motion.div className={className} style={{ y: still ? 0 : y }}>
+    <motion.div className={className} data-interactive={interactive} style={{ y: still ? 0 : y }}>
       <canvas
         ref={canvas}
         className="orbit-canvas"
+        inert={!interactive}
         tabIndex={0}
-        aria-label="3D speaker. Drag horizontally to rotate. Arrow keys turn and tilt; Home resets."
+        role="img"
+        aria-label={label}
         onPointerDown={(event) => {
           scene.current?.stop();
           drag.current = { x: event.clientX, time: performance.now(), speed: 0 };
@@ -85,33 +94,58 @@ export function Speaker({
           drag.current = null;
         }}
         onKeyDown={(event) => {
-          const directions: Record<string, [number, number]> = {
-            ArrowLeft: [-0.2, 0],
-            ArrowRight: [0.2, 0],
-            ArrowUp: [0, -0.2],
-            ArrowDown: [0, 0.2],
-          };
-          if (event.key === 'Home') {
-            event.preventDefault();
-            scene.current?.reset();
-          }
-          const direction = directions[event.key];
-          if (direction) {
-            event.preventDefault();
-            scene.current?.rotate(...direction);
-          }
+          rotateWithKeyboard(event, scene.current);
         }}
       />
-      {unavailable ? (
-        <p className="orbit-object-hint">This 3D view needs WebGL. Try another browser.</p>
-      ) : (
-        <div className="orbit-object-hint">
-          <span>Drag to turn · Scroll to explore</span>
-          <Button variant="ghost" size="sm" onClick={() => scene.current?.reset()}>
-            Reset angle
-          </Button>
-        </div>
-      )}
+      <SpeakerHint
+        unavailable={unavailable}
+        interactive={interactive}
+        reset={() => scene.current?.reset()}
+      />
     </motion.div>
   );
+}
+
+function SpeakerHint({
+  unavailable,
+  interactive,
+  reset,
+}: {
+  unavailable: boolean;
+  interactive: boolean;
+  reset: () => void;
+}) {
+  if (unavailable)
+    return <p className="orbit-object-hint">This 3D view needs WebGL. Try another browser.</p>;
+  return (
+    <div className="orbit-object-hint">
+      <span>{interactive ? 'Drag sideways to turn' : 'Scroll to tilt and turn'}</span>
+      {interactive && (
+        <Button variant="ghost" size="sm" onClick={reset}>
+          Reset angle
+        </Button>
+      )}
+    </div>
+  );
+}
+
+function rotateWithKeyboard(
+  event: KeyboardEvent<HTMLCanvasElement>,
+  view: ReturnType<typeof createSpeakerScene> | null,
+) {
+  const directions: Record<string, [number, number]> = {
+    ArrowLeft: [-0.2, 0],
+    ArrowRight: [0.2, 0],
+    ArrowUp: [0, -0.2],
+    ArrowDown: [0, 0.2],
+  };
+  if (event.key === 'Home') {
+    event.preventDefault();
+    view?.reset();
+  }
+  const direction = directions[event.key];
+  if (direction) {
+    event.preventDefault();
+    view?.rotate(...direction);
+  }
 }

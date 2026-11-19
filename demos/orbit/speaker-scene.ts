@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createSpeaker } from './speaker-model';
+import { scrollPose } from './scroll-pose';
 import { createPreviewSpotlight } from './preview-spotlight';
 
 export function createSpeakerScene(canvas: HTMLCanvasElement) {
@@ -31,14 +32,9 @@ export function createSpeakerScene(canvas: HTMLCanvasElement) {
   let progress = 0;
   let yaw = 0;
   let pitch = 0;
-  const phase = (value: number, start: number, end: number) =>
-    THREE.MathUtils.smoothstep(value, start, end);
   function render() {
-    model.object.rotation.set(
-      0.24 + phase(progress, 0.46, 0.74) * Math.PI * 2 + pitch,
-      -0.45 + phase(progress, 0.18, 0.42) * Math.PI * 2 + yaw,
-      -0.08,
-    );
+    const pose = scrollPose(progress);
+    model.object.rotation.set(pose.pitch + pitch, pose.yaw + yaw, pose.roll);
     renderer.render(scene, camera);
   }
   const spotlight = createPreviewSpotlight(scene, canvas, render);

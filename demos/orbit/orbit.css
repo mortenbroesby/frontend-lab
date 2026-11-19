@@ -361,3 +361,8 @@ body {
 .orbit[data-presentation='true'] .orbit-finish-preview {
   width: min(100%, 62svh);
 }
+
+.orbit-product[data-interactive='false'] .orbit-canvas {
+  pointer-events: none;
+  cursor: auto;
+}

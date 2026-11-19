@@ -48,7 +48,7 @@ function Chapter({ index }: { index: number }) {
           Same Orbit.
         </>
       ),
-      body: 'One continuous turn. Scroll slowly to flip the whole object, then bring it home.',
+      body: 'Scroll to tilt, turn and see the other side. Keep going to choose a finish and turn it yourself.',
     },
   ][index]!;
   return (
@@ -76,7 +76,7 @@ export default function Orbit() {
 
   const [finish, setFinish] = useState(finishes[0]!);
   const still = Boolean(reduced);
-  const rest = useMotionValue(0.74);
+  const rest = useMotionValue(1);
   useWalkthrough(
     walkthroughLabels,
     (index, signal) => {
@@ -119,7 +119,7 @@ export default function Orbit() {
             progress={still ? rest : scrollYProgress}
             still={still}
             colour={finish.shell}
-            entryOffset={presentation ? '0%' : '200%'}
+            interactive={false}
           />
           <span className="orbit-stage-caption">ORBIT / OBJECT STUDY Nº 01</span>
         </div>
@@ -134,7 +134,9 @@ export default function Orbit() {
               <br />
               finish.
             </h2>
-            <p className="orbit-description">Same shape. A different feeling.</p>
+            <p className="orbit-description">
+              Choose a colour, then drag the speaker sideways to explore it.
+            </p>
             <div className="orbit-finishes" role="group" aria-label="Speaker colour">
               {finishes.map((colour) => (
                 <Button
