@@ -32,7 +32,7 @@ export function PresenterRemote({ code }: { code: string }) {
         {remote.supported ? remote.status : 'Open this page over HTTPS to connect.'}
       </p>
       <RemoteContent state={state} connected={remote.connected} request={remote.request} />
-      <Button variant="outline" onClick={() => location.reload()}>
+      <Button variant="outline" onClick={remote.reconnect}>
         Reconnect
       </Button>
       <p className="remote-hint">

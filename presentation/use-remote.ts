@@ -1,3 +1,4 @@
+import { createRemotePeer } from './remote-peer';
 import type { RemoteAction } from './remote-protocol';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import type { Room } from 'trystero';
@@ -12,6 +13,8 @@ export function useRemote(
   const remote = state === null;
   const [snapshot, setSnapshot] = useState<RemoteState | null>(null);
   const [connected, setConnected] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  const failures = useRef(0);
   const [status, setStatus] = useState('Waiting for the other screen…');
   const send = useRef<(message: RemoteMessage) => void>(() => {});
   const latestState = useEffectEvent(() => state);
@@ -26,28 +29,36 @@ export function useRemote(
     }
     const controller = new AbortController();
     let room: Room | undefined;
-    let peer: string | null = null;
-    let seenAt = 0;
+    const peer = createRemotePeer(remote);
+    let retrying = false;
+    const retry = () => {
+      if (retrying || controller.signal.aborted) return;
+      retrying = true;
+      failures.current = Math.min(failures.current + 1, 2);
+      setAttempt((value) => value + 1);
+    };
     const requests = new Set<string>();
     setConnected(false);
     setSnapshot(null);
-    setStatus('Waiting for the other screen…');
+    setStatus('Connecting… Keep both screens open.');
     const hello: RemoteMessage = { kind: 'hello', role: remote ? 'remote' : 'host' };
     let transmit = (_message: RemoteMessage, _target: string) => {};
+    function checkHealth() {
+      if (peer.alive()) return;
+      setConnected(false);
+      if (peer.paired()) setStatus('Connection paused. Reconnecting automatically…');
+      if (peer.retryDue(Math.min(30000 * 2 ** failures.current, 120000))) retry();
+    }
     const interval = window.setInterval(() => {
-      if (peer) {
-        transmit(remote ? hello : latestState()!, peer);
-        if (Date.now() - seenAt > 6000) {
-          setConnected(false);
-          setStatus('Connection lost. Keep both screens open or reconnect.');
-        }
-      }
+      // Repeat greetings until both sides have acknowledged their roles.
+      for (const target of peer.targets()) transmit(hello, target);
+      if (!remote) send.current(latestState()!);
+      checkHealth();
     }, 1000);
+    resumePairing(peer, retry, controller.signal);
     const waiting = window.setTimeout(() => {
-      if (!peer)
-        setStatus(
-          'Still waiting. Use HTTPS and internet on both screens. Some networks block WebRTC.',
-        );
+      if (!peer.alive())
+        setStatus('Still pairing. Retrying automatically; keep both screens open and online.');
     }, 20000);
 
     async function join() {
@@ -67,21 +78,24 @@ export function useRemote(
         const action = room.makeAction<RemoteMessage>('presenter');
         transmit = (message, target) => {
           void action.send(message, { target }).catch(() => {
-            if (!controller.signal.aborted) {
+            if (!controller.signal.aborted && !peer.alive()) {
               setConnected(false);
-              setStatus('Could not send. Reconnect to try again.');
+              setStatus('Connection interrupted. Retrying automatically…');
             }
           });
         };
         send.current = (message) => {
-          if (peer && Date.now() - seenAt <= 6000) transmit(message, peer);
+          if (peer.alive()) for (const target of peer.targets()) transmit(message, target);
         };
-        room.onPeerJoin(({ peerId }) => transmit(hello, peerId), { signal: controller.signal });
-        function receiveHello(data: Extract<RemoteMessage, { kind: 'hello' }>, peerId: string) {
-          const expectedRole = remote ? 'host' : 'remote';
-          if (data.role !== expectedRole) return;
-          peer = peerId;
-          seenAt = Date.now();
+        room.onPeerJoin(
+          ({ peerId }) => {
+            peer.joined(peerId);
+            transmit(hello, peerId);
+          },
+          { signal: controller.signal },
+        );
+        function receiveHello(peerId: string) {
+          failures.current = 0;
           if (!remote) {
             setConnected(true);
             setStatus('Presenter remote connected');
@@ -99,40 +113,41 @@ export function useRemote(
           runCommand(data.action);
         }
         function receiveState(data: RemoteState) {
-          if (!remote || !peer) return;
-          seenAt = Date.now();
+          if (!remote) return;
+          failures.current = 0;
           setSnapshot(data);
           setConnected(true);
           setStatus('Connected to presentation');
         }
         function dispatch(data: RemoteMessage, peerId: string) {
-          if (data.kind === 'hello') receiveHello(data, peerId);
+          if (data.kind === 'hello') receiveHello(peerId);
           else if (data.kind === 'state') receiveState(data);
-          else if (peer) receiveInput(data);
+          else receiveInput(data);
         }
         action.onMessage(
           (data, { peerId }) => {
             if (!isRemoteMessage(data)) return;
-            if (peer !== null && peer !== peerId) return;
+            if (!peer.accept(data, peerId)) return;
             dispatch(data, peerId);
           },
           { signal: controller.signal },
         );
         room.onPeerLeave(
           ({ peerId }) => {
-            if (peer !== peerId) return;
-            peer = null;
-            seenAt = 0;
-            setConnected(false);
-            setStatus('Other screen disconnected. Waiting for it to return…');
+            peer.left(peerId);
+            if (!peer.alive()) {
+              setConnected(false);
+              setStatus('Other screen disconnected. Reconnecting automatically…');
+            }
           },
           { signal: controller.signal },
         );
         room.onError(
-          () => {
-            if (!controller.signal.aborted) {
+          (error) => {
+            console.warn('Presenter pairing:', error.code);
+            if (!controller.signal.aborted && !peer.alive()) {
               setConnected(false);
-              setStatus('Connection error. Reconnect or try another network.');
+              setStatus(`Pairing interrupted (${error.code}). Retrying automatically…`);
             }
           },
           { signal: controller.signal },
@@ -140,7 +155,7 @@ export function useRemote(
         await room.ready;
       } catch {
         if (!controller.signal.aborted)
-          setStatus('Could not connect. Check internet and reconnect.');
+          setStatus('Could not connect. Retrying automatically; check internet on both screens.');
       }
     }
     void join();
@@ -151,7 +166,7 @@ export function useRemote(
       send.current = () => {};
       leaving = room?.leave().catch(() => {}) ?? leaving;
     };
-  }, [code, remote, supported]);
+  }, [code, remote, supported, attempt]);
 
   useEffect(() => {
     if (state) send.current(state);
@@ -161,6 +176,10 @@ export function useRemote(
     connected,
     status,
     supported,
+    reconnect: () => {
+      failures.current = 0;
+      setAttempt((value) => value + 1);
+    },
     request: (action: RemoteAction) =>
       send.current({
         kind: 'input',
@@ -169,4 +188,17 @@ export function useRemote(
         slide: snapshot?.index ?? 0,
       }),
   };
+}
+
+function resumePairing(
+  peer: ReturnType<typeof createRemotePeer>,
+  retry: () => void,
+  signal: AbortSignal,
+) {
+  const resume = () => {
+    if (document.visibilityState === 'visible' && peer.retryDue(10000)) retry();
+  };
+  window.addEventListener('online', resume, { signal });
+  window.addEventListener('pageshow', resume, { signal });
+  document.addEventListener('visibilitychange', resume, { signal });
 }
