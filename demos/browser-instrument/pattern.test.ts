@@ -36,3 +36,12 @@ test('octave transposition doubles or halves pitch', () => {
   assert.equal(frequency(69, -12), 220);
   assert.equal(frequency(69, 0), 440);
 });
+
+test('Neon Coast has a slower, sparse, bass-led arrangement', () => {
+  const [chip, coast] = songs;
+  assert(coast.mix.tempo < chip.mix.tempo);
+  assert(coast.mix.levels[1] > coast.mix.levels[0]);
+  assert(coast.pattern[0].filter(Boolean).length < chip.pattern[0].filter(Boolean).length);
+  assert.equal(coast.voice.arpeggio, 0);
+  assert(coast.voice.bassLength > chip.voice.bassLength);
+});

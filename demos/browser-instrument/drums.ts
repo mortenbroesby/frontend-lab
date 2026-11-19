@@ -37,9 +37,9 @@ export function createDrums(context: AudioContext, output: AudioNode) {
       gain.disconnect();
     };
   }
-  return (time: number, beat: number, level: number) => {
-    hiss(time, 0.035, 6500, level * 0.18);
+  return (time: number, beat: number, level: number, softness: number) => {
+    hiss(time, 0.035, 6500, level * 0.18 * softness);
     if (beat % 8 === 0) kick(time, level * 0.65);
-    if (beat % 8 === 4) hiss(time, 0.14, 1200, level * 0.38);
+    if (beat % 8 === 4) hiss(time, 0.14, 1200, level * 0.38 * softness);
   };
 }

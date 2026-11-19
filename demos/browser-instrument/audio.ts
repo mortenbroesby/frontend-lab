@@ -45,6 +45,7 @@ export function createInstrument() {
     volume: number,
     pitch: number,
   ) {
+    if (volume <= 0) return;
     const oscillator = context.createOscillator();
     const envelope = context.createGain();
     oscillator.type = type;
@@ -85,7 +86,14 @@ export function createInstrument() {
     const length = stepDuration(settings.tempo);
     const root = song.bass[bar];
     if (pattern[0][column]) {
-      tone(song.melody[beat], time, length * 0.85, 'square', levels[0] * 0.1, settings.pitch);
+      tone(
+        song.melody[beat],
+        time,
+        length * song.voice.sustain,
+        song.voice.lead,
+        levels[0] * 0.1,
+        settings.pitch,
+      );
       // Tracker-style chord illusion: three rapid notes share one sixteenth.
       [0, song.thirds[bar], 7].forEach((interval, i) => {
         tone(
@@ -93,21 +101,21 @@ export function createInstrument() {
           time + (length * i) / 3,
           (length / 3) * 0.8,
           'square',
-          levels[0] * 0.035,
+          levels[0] * song.voice.arpeggio,
           settings.pitch,
         );
       });
     }
     if (pattern[1][column])
       tone(
-        root + [0, 0, 12, 0][column % 4],
+        root + [0, 0, song.voice.octave, 0][column % 4],
         time,
-        length * 1.3,
+        length * song.voice.bassLength,
         'triangle',
         levels[1] * 0.45,
         settings.pitch,
       );
-    if (pattern[2][column]) drum(time, column, levels[2]);
+    if (pattern[2][column]) drum(time, column, levels[2], song.voice.softness);
   }
   return {
     analyser,

@@ -64,10 +64,7 @@ export default function InstrumentDemo() {
   const [settings, setSettings] = useState<Settings>({
     song: 0,
     pitch: 0,
-    tempo: 132,
-    cutoff: 6200,
-    echo: 0.18,
-    levels: [0.7, 0.65, 0.7],
+    ...songs[0].mix,
     pattern: initialPattern,
   });
   const [step, setStep] = useState(-1);
@@ -101,7 +98,7 @@ export default function InstrumentDemo() {
         onSong={(direction) =>
           setSettings((previous) => {
             const song = (previous.song + direction + songs.length) % songs.length;
-            return { ...previous, song, pattern: songs[song].pattern };
+            return { ...previous, ...songs[song].mix, song, pattern: songs[song].pattern };
           })
         }
         stage={stage}
@@ -263,7 +260,7 @@ function InstrumentHeader({
       <div>
         {!presentation && <span className="instrument-eyebrow">3 ORIGINAL CHIPTUNES</span>}
         {embedded ? <h1>Browser Beat</h1> : <h2>Press play. Find your sound.</h2>}
-        <p>Cracktro melodies. Made in your browser.</p>
+        <p>Cracktro energy, coastal bass, arcade glow.</p>
       </div>
       <div className="instrument-song-picker" role="group" aria-label="Choose a song">
         <Button variant="ghost" aria-label="Previous song" onClick={() => onSong(-1)}>
