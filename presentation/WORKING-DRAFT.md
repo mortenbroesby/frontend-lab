@@ -10,14 +10,15 @@ Participants can work alone or together, compare existing solutions, investigate
 
 ## Personal thread and speaking cues
 
-Presenter notes are short prompts, not a script. Each starts with the slide number and ends with the next topic. Keep the audience-facing slides and their order unchanged.
+Presenter notes combine short prompts with a few natural sentences worth saying; they are not a script. Each starts with the slide number and ends with the next topic. Keep the audience-facing slides and their order unchanged.
 
 - Opening: an untraditional route into web development; expected to become a game developer; first job unexpectedly became building web pages; many years in TV and streaming.
-- Motivation: tinkering and playing; the web is more than text and images; browser possibilities still bring surprises.
+- Early tinkering: computers, software and hardware for as long as the presenter remembers. Around age 11, installing different firmware bricked a router. Do not invent the model, firmware, recovery or aftermath.
+- Motivation: taking things apart, finding out how they work, tinkering and playing; the web is more than text and images; browser possibilities still bring surprises.
 - The Lab: built with AI assistance to offer inspiration. Demos are examples, not required assignments. Already inspired participants can start immediately.
 - Working together: solo or in groups, pairing when useful. The presenter is available all day for questions and discussion, and also wants to experiment.
 - AI: the presenter intends to be light on AI today; participants choose for themselves.
-- Closing: an invitation to try something new, not a demand to produce or present something.
+- Closing: an invitation to try something new, take things apart and not fear breaking something while trying to improve it; not a demand to produce or present something.
 
 These personal details come directly from the presenter. Do not embellish the career story with dates, employers or motivations not supplied.
 

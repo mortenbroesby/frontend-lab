@@ -449,12 +449,17 @@ export const slides: readonly Slide[] = [
     title: 'The Frontend Lab',
     Content: Entrance,
     notes: `01 / 17 · WELCOME
-• Untraditional route into web development
-• Expected: game developer
-• First job → unexpectedly building web pages
+“As far back as I can remember, I've tinkered with computers — both software and hardware.”
+
+• Around 11 → tried different firmware on a router
+• Bricked it
+• Taking things apart; figuring out how they work
+
+“I thought I'd become a game developer. My first job unexpectedly turned into building web pages.”
+
+• Untraditional route into the web
 • Years in TV / streaming
-• Always drawn to tinkering and playing
-• Web = much more than text and images
+• Same curiosity — web = more than text and images
 
 NEXT → What today is for`,
   },
@@ -679,6 +684,8 @@ NEXT → Questions + handover`,
     title: 'Choose your starting point',
     Content: Closing,
     notes: `17 / 17 · OVER TO YOU
+“Don't be afraid to break something while trying to make it better. Take it apart, see how it works, and try again.”
+
 • Hope: try something new
 • Solo or pair up — whatever makes sense
 • Available all day: questions, ideas, discussions
