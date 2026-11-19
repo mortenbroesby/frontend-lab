@@ -889,3 +889,20 @@
   border: 1px solid var(--lab-line);
   border-radius: var(--radius-lg);
 }
+
+.worktree-folders .worktree-tree {
+  align-self: stretch;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+@media (max-width: 540px) {
+  .worktree-folders {
+    grid-template-columns: 1fr;
+  }
+}

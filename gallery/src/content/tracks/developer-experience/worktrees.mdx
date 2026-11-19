@@ -1,4 +1,4 @@
-import { FolderOpen, GitBranch, GitMerge } from 'lucide-react';
+import { GitBranch, GitMerge } from 'lucide-react';
 
 ## One project. Two working folders.
 
@@ -9,8 +9,16 @@ Think of two desks sharing one filing cabinet. Each desk has its own papers to w
 <figure className="worktree-picture">
   <div className="worktree-history"><GitBranch aria-hidden="true" /><strong>One shared Git history</strong><span>The project's saved commits</span></div>
   <div className="worktree-folders">
-    <div><span aria-hidden="true">↕</span><FolderOpen aria-hidden="true" /><strong>Repo</strong><code>main</code><span>Your current work stays here.</span></div>
-    <div><span aria-hidden="true">↕</span><FolderOpen aria-hidden="true" /><strong>Repo.worktrees</strong><span>↳ worktree-example</span><code>experiment/<wbr />worktrees</code><span>Try a change over here.</span></div>
+    <div>
+      <pre className="worktree-tree" role="img" aria-label="Repo folder containing README.md">{'Repo/\n└── README.md'}</pre>
+      <code>main</code>
+      <span>Your current work stays here.</span>
+    </div>
+    <div>
+      <pre className="worktree-tree" role="img" aria-label="Repo.worktrees folder containing worktree-example, with its own README.md">{'Repo.worktrees/\n└── worktree-example/\n    └── README.md'}</pre>
+      <code>experiment/<wbr />worktrees</code>
+      <span>Try a change over here.</span>
+    </div>
   </div>
   <figcaption>Two sets of working files. One repository behind them.</figcaption>
 </figure>
