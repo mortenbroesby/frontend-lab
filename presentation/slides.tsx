@@ -448,175 +448,244 @@ export const slides: readonly Slide[] = [
     id: 'welcome',
     title: 'The Frontend Lab',
     Content: Entrance,
-    notes: `ARRIVAL
-Leave this on screen while people arrive.
+    notes: `01 / 17 · WELCOME
+• Untraditional route into web development
+• Expected: game developer
+• First job → unexpectedly building web pages
+• Years in TV / streaming
+• Always drawn to tinkering and playing
+• Web = much more than text and images
 
-WHEN READY
-“Today is a chance to explore something outside our normal delivery work. First, a quick look at the tracks, then three experiments with sound, scrolling and TV navigation.”`,
+NEXT → What today is for`,
   },
   {
     id: 'workshop',
     title: 'Today is for experimenting',
     Content: Workshop,
-    notes: `THE DAY · 1 minute
-“Choose a question or an idea that interests you. You can work alone or with people from other squads. A useful outcome might be discovering an existing solution, comparing approaches or building something small.”
+    notes: `02 / 17 · TODAY
+• Explore; follow curiosity
+• Lab + demos = inspiration, not assignments
+• Already inspired? Go ahead and start
+• Solo or together — pair however it makes sense
+• No production-ready result needed
 
-No production-ready deliverable is expected. The tracks provide starting points; participants can follow their curiosity. Keep logistics separate from this introduction.`,
+AI
+• Yes, AI helped me build this site
+• My plan today: light on AI
+• Your choice how you work
+
+NEXT → Four possible starting points`,
   },
   {
     id: 'tracks',
     title: 'Four tracks to choose from',
     Content: TrackChoice,
-    notes: `CHOOSING A TRACK · 30 seconds
-There are four tracks, each with ideas and guides to help people begin. You can bring your own idea and work alone or with others. The next slides offer a few examples from each track.`,
+    notes: `03 / 17 · FOUR TRACKS
+• Ways in, not fixed lanes
+• Ideas / demos / guides in the Lab
+• Own project or own idea equally welcome
+
+NEXT → Modern Web`,
   },
   {
     id: 'modern-web',
     title: 'Modern Web Capabilities',
     Content: ModernWeb,
-    notes: `TRACK 1 OF 4 · 30–45 seconds
-Make the browser do something new. Offer these as possible starting points, not tasks everyone must complete.
-Send a message from your phone to your laptop. Move a busy calculation into a Web Worker. Explore Canvas, SVG or a browser animation.
-Participants can work independently or together. Guides in the Lab explain how to begin.`,
+    notes: `04 / 17 · MODERN WEB
+• What else can the browser do?
+• Phone ↔ laptop
+• Workers → responsive UI
+• Canvas / SVG → live visuals
+• Pick one behaviour; play with it
+
+NEXT → Code Quality`,
   },
   {
     id: 'code-quality',
     title: 'Code Quality & Maintainability',
     Content: CodeQuality,
-    notes: `TRACK 2 OF 4 · 30–45 seconds
-Work with code you already have. Offer these as possible starting points, not tasks everyone must complete.
-See what relies on it before making a change. Try red, green, refactor on a small behaviour. Use Fallow or another tool, then inspect the evidence.
-Participants can work independently or together. Guides in the Lab explain how to begin.`,
+    notes: `05 / 17 · CODE QUALITY
+• Existing code; one question
+• Dependency → who uses it?
+• Small behaviour → red / green / refactor
+• Fallow or another tool → investigate findings
+• Understand before changing
+
+NEXT → Developer Experience`,
   },
   {
     id: 'developer-experience',
     title: 'Developer Experience & Tooling',
     Content: DeveloperExperience,
-    notes: `TRACK 3 OF 4 · 30–45 seconds
-Start with something that slows you down. Offer these as possible starting points, not tasks everyone must complete.
-Find the smallest useful check for one change. Make a small script, CLI or local API mock. Explore a Codex or Copilot skill and review its output.
-Participants can work independently or together. Guides in the Lab explain how to begin.`,
+    notes: `06 / 17 · DEVELOPER EXPERIENCE
+• Something that annoys you daily
+• Faster feedback / fewer unnecessary checks
+• Script, CLI, local mock
+• Worktrees / parallel tasks
+• Agent workflow if useful
+• Existing solution counts too
+
+NEXT → Experimental Projects`,
   },
   {
     id: 'experimental-projects',
     title: 'Experimental Projects',
     Content: ExperimentalProjects,
-    notes: `TRACK 4 OF 4 · 30–45 seconds
-Build something you want to play with. Offer these as possible starting points, not tasks everyone must complete.
-One control, one challenge and a restart button. Grow a pattern or make an interactive data picture. Turn a slider or gesture into a musical control.
-Participants can work independently or together. Guides in the Lab explain how to begin.`,
+    notes: `07 / 17 · EXPERIMENTAL PROJECTS
+• Something you want to play with
+• Tiny game
+• Generative picture / moving world
+• Sound / musical controls
+• Curiosity is enough
+
+NEXT → Beyond the usual web page`,
   },
   {
     id: 'possibilities',
     title: 'Change one assumption',
     Content: Possibilities,
-    notes: `OPEN THE QUESTION · 1–2 minutes
-“We often start with a page and a pointer. Change one assumption and the same front-end skills lead somewhere different.”
+    notes: `08 / 17 · CHANGE ONE ASSUMPTION
+• Browser possibilities still surprise me
+• More than text, images and forms
+• What if the output were sound?
+• What if scrolling moved a scene?
+• What if the input were a TV remote?
 
-Give people a moment to consider the questions. Do not turn this into a catalogue of APIs. Two examples follow: browser-generated music, then a remote-controlled interface.`,
+NEXT → Music / personal inspiration`,
   },
   {
     id: 'instrument-introduction',
     title: 'Could the browser be an instrument?',
     Content: InstrumentIntroduction,
-    notes: `PERSONAL CURIOSITY · 1 minute
-“I remembered those small demoscene intros with tracker music. Could the browser generate music, and could we shape it while it plays?”
+    notes: `09 / 17 · BROWSER AS AN INSTRUMENT
+• Old intros / tracker music
+• Small programs; memorable music
+• Could I make something like that in a browser?
+• Shape the sound while it plays
+• New experiment, not an old tracker file
 
-Browser Beat is a new experiment made for this session, not a historical tracker file or part of the TV project. “Let’s hear it.”`,
+NEXT → Browser Beat — hear it`,
   },
   {
     id: 'instrument',
     title: 'Browser Beat',
     Content: Instrument,
-    notes: `LIVE MUSIC · 2–3 minutes
-Press Play. Slowly change Tone, then add Echo. Change Tempo, and move Pitch to −12 or +12 to hear an octave shift without changing tempo. Faders support arrow keys too.
+    notes: `10 / 17 · BROWSER BEAT
+• Comfortable volume → Play
+• Tone → hear the change
+• Echo → add space
+• Tempo → speed
+• Pitch ±12 → octave, same tempo
+• Stop sound before explaining
 
-Keep the volume comfortable. Stop playback before discussing it. Continue presentation opens the signal diagram; leaving the slide removes the iframe and stops its audio. Presenter previews are static and silent.
+IF NEEDED → tap Play on audience screen
+NO AUDIO → show controls; move on
 
-IF AUDIO IS UNAVAILABLE
-Show the controls and explain the signal path. Avoid spending the session troubleshooting the room’s sound system.`,
+NEXT → How the sound works`,
   },
   {
     id: 'sound-system',
     title: 'What makes that possible?',
     Content: SoundSystem,
-    notes: `EXPLAIN WHAT THEY HEARD · 1–2 minutes
-“React handles the controls. Web Audio schedules notes and processes the sound. The speakers play that signal; Canvas draws a waveform from it.”
+    notes: `11 / 17 · THE SOUND PATH
+• React → controls
+• Web Audio → notes, timing, effects
+• Speakers → sound
+• Canvas → waveform
+• Synthesised, not a recording
+• No React render for each audio sample
 
-The loop is original synthesized audio, not a recording. React does not need to render every audio sample. Keep the explanation at the level of responsibilities, not a tour of the source.
-
-TRANSITION
-“Sound is one way to respond to an interaction. Now let’s use scrolling to move through a scene.”`,
+NEXT → Orbit — sound to movement`,
   },
   {
     id: 'orbit',
     title: 'Orbit — a scroll story',
     Content: Orbit,
-    notes: `SCROLL AND MOTION · 1 minute
-“Here, scrolling controls a scene rather than just moving a page. The browser connects our gesture to the rotation, lighting and reveal of an object.”
+    notes: `12 / 17 · ORBIT
+• Scroll → move through a scene
+• Slow turn → lighting → reveal
+• Try a finish
+• Motion + Three.js
+• Familiar gesture; different result
+• Keep this brief
 
-Scroll slowly through the speaker’s turn, then try a finish. Keep it brief: this is an example of Motion and Three.js working together, not a product pitch. Reduced motion intentionally shows a still object.
-
-TRANSITION
-“That used a familiar gesture. What changes when there is no pointer or scroll wheel, just a remote?”
-
-Use Continue presentation below the demo, or the presenter remote. Scroll and keyboard input inside the iframe belong to Orbit.`,
+REMOTE → Next part / Play demo
+NEXT → TV — no pointer, no scroll wheel`,
   },
   {
     id: 'television',
     title: 'A screen without a pointer',
     Content: Television,
-    notes: `REMOTE INPUT · 1–2 minutes
-Ask where focus should start, how it moves between rows and where it should return after playback. Give people a moment to predict the behaviour.
+    notes: `13 / 17 · A SCREEN WITHOUT A POINTER
+• My TV / streaming background
+• Familiar frontend skills; different constraints
+• Remote: directions, OK, Back
+• Where should selection start?
+• Where should Back return?
+• Focus = part of the state
 
-Focus is part of the interface state, not just decoration. Explain directional navigation before showing the TV. Do not imply every TV app uses the same rendering system.`,
+NEXT → Canvas + focus, high level`,
   },
   {
     id: 'components',
     title: 'Draw the screen. Track the focus.',
     Content: Components,
-    notes: `CANVAS AND FOCUS · 1–2 minutes
-“This interface is drawn on Canvas. A remote button changes the application state: which row and item are selected, or whether playback is open. The renderer draws the screen from that state, including the selection highlight.”
+    notes: `14 / 17 · DRAW + TRACK FOCUS
+• Remote input → state → Canvas
+• State: row / item / playback
+• Canvas draws the screen + highlight
+• We define movement and return behaviour
+• Drawn items don't inherit DOM layout or semantics
+• This demo also has HTML controls
 
-“Directional focus is a rule we implement: where should Right go, and where should Back return? Remembering that selection makes the interface feel predictable.”
+IF ASKED → Lightning requirement; JSX custom renderer;
+testing tools; later Solid (details in working draft)
 
-Canvas does not provide the DOM's layout, semantics or focus behaviour for drawn items. Those responsibilities need deliberate implementation; Canvas is useful for particular constraints, not a general replacement for HTML. This demo also has HTML controls around the Canvas.
-
-ONLY IF ASKED
-Lightning was required by the agreement with Comcast for Xfinity devices. Its imperative API led us to build a custom React renderer so engineers could use familiar JSX. This accelerated component work and helped us build testing tools. Default tests mocked rendering, including Canvas; real-primitives tests also existed. The team later switched to Solid.js. Exact versions, testing APIs and migration reasons remain unconfirmed.
-
-TRANSITION
-“Let’s try a small illustration of that interaction. Watch what happens to the selection when we come back.”`,
+NEXT → Try the TV`,
   },
   {
     id: 'remote',
     title: 'Try the TV interface',
     Content: Remote,
-    notes: `TV DEMO · 2–3 minutes
-“This is a new React and Canvas illustration, not our original Lightning app.”
+    notes: `15 / 17 · TV DEMO
+• Illustration — not our original Lightning app
+• Right → shelf scrolls
+• Down → up → remembered selection
+• OK / Enter → play
+• Back / Escape → return
+• Ask: where should focus land?
+• Playback = generated animation
 
-Move right until the shelf scrolls. Move down and back up: the row remembers the selection. Press Enter to play, then Escape to return. On a phone, use the on-screen arrows, OK and Back. Ask “Where should focus return?” before going back.
+LEAVE → remote Next slide / Continue presentation
+BACK → unwinds TV, then previous slide
 
-Playback is an original procedural animation, not streamed video. This does not demonstrate our custom renderer or Lightning itself. The TV receives keyboard focus automatically on every visit. Back unwinds the TV interface, then returns to the previous slide. Continue presentation leads forward to the four tracks.`,
+NEXT → Their ideas`,
   },
   {
     id: 'next-directions',
     title: 'Where would you take it?',
     Content: NextDirections,
-    notes: `CONNECT THE DEMOS TO THE TRACKS · 2 minutes
-“These examples are starting points. You could explore device communication, investigate the navigation state, improve a debugging workflow or invent a different interface.”
+    notes: `16 / 17 · WHERE WOULD YOU TAKE IT?
+• Examples = a spark, not a to-do list
+• Connect screens / investigate focus / improve a tool
+• Remix, bring your own idea, or use your own code
+• Discovering something useful is enough
+• Already know what to try? Start
 
-You do not have to extend these demos. An existing codebase or a recurring workflow problem is equally useful. Discovering a good existing solution counts; building a new tool is not compulsory.`,
+NEXT → Questions + handover`,
   },
   {
     id: 'curiosity',
     title: 'Choose your starting point',
     Content: Closing,
-    notes: `QUESTIONS AND HANDOVER · 3–5 minutes
-“Any questions before we start? If you already have an idea, open a track and find a useful starting point.”
+    notes: `17 / 17 · OVER TO YOU
+• Hope: try something new
+• Solo or pair up — whatever makes sense
+• Available all day: questions, ideas, discussions
+• I'll be tinkering too
+• Still surprised by what the browser can do
 
-Use Open the Frontend Lab to return to the gallery. Track pages offer ideas, guides and demos. Participants can work independently or in small groups, using their own project where appropriate.
-
-Keep this slide up for questions, then invite people to choose a track. Answer historical project details honestly; say when a detail needs checking.`,
+OPEN THE LAB → choose an idea / demo / guide
+• Questions?`,
   },
 ];

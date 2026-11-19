@@ -8,6 +8,19 @@ Introduce the day, show what is possible, then help people choose something to e
 
 Participants can work alone or together, compare existing solutions, investigate a real codebase or build a small experiment. No production-ready result is expected. Keep schedules and logistics separate from the main story.
 
+## Personal thread and speaking cues
+
+Presenter notes are short prompts, not a script. Each starts with the slide number and ends with the next topic. Keep the audience-facing slides and their order unchanged.
+
+- Opening: an untraditional route into web development; expected to become a game developer; first job unexpectedly became building web pages; many years in TV and streaming.
+- Motivation: tinkering and playing; the web is more than text and images; browser possibilities still bring surprises.
+- The Lab: built with AI assistance to offer inspiration. Demos are examples, not required assignments. Already inspired participants can start immediately.
+- Working together: solo or in groups, pairing when useful. The presenter is available all day for questions and discussion, and also wants to experiment.
+- AI: the presenter intends to be light on AI today; participants choose for themselves.
+- Closing: an invitation to try something new, not a demand to produce or present something.
+
+These personal details come directly from the presenter. Do not embellish the career story with dates, employers or motivations not supplied.
+
 ## Agreed running order
 
 | Slide | Purpose |
@@ -60,15 +73,9 @@ The story first looked like “The browser beyond the page,” with one or two L
 
 The first draft expanded this into nine slides. That was too much: the presenter clarified that the TV story should occupy only two or three slides. The current version has three, with a live showcase as its centrepiece.
 
-## Current three-slide section
+## Current TV section
 
-| Slide | Purpose | Approximate time |
-| --- | --- | --- |
-| The TV project | Explain Lightning and the original project | 1–2 minutes |
-| No pointer. Where is your focus? | Explore remote navigation in the embedded Canvas TV | 2–3 minutes |
-| How our app worked. | Explain the component-to-renderer flow and its benefit at a high level | 2–3 minutes |
-
-This remains a three-slide section within the eight-slide talk. Do not expand it into the whole presentation. The later Solid migration belongs in optional speaker context, not another slide.
+Slides 13–15 cover remote input, Canvas and focus, then the interactive TV. Keep the personal TV background brief; technical history is optional context for questions. Browser Beat and Orbit precede this section.
 
 ## The live showcase
 
@@ -76,7 +83,7 @@ This remains a three-slide section within the eight-slide talk. Do not expand it
 
 Use arrow keys to move through two catalogue rows, Enter to play a full-frame animated short and Escape to return. Horizontal movement scrolls the shelf; each row remembers its last selection. The visible focus ring is central to the experience. On-screen remote buttons also support touch and provide ordinary accessible controls, with a text announcement of the selected programme. Tab remains available to leave the screen. Reduced motion removes focus/scroll animation and freezes the scenery. The background has moving mountain layers, drifting mist and a changing night sky, with automatic support for the system reduced-motion preference.
 
-The presentation embeds the actual demo inline through its `?embed=1` view. No new tab is needed. The iframe keeps TV arrow keys separate from slide navigation; Tab leads to Continue presentation. Presenter previews stay static. The combined gallery build supplies the URL; standalone presentation builds can set `VITE_GALLERY_URL`. The standalone demo remains available in the gallery.
+The presentation embeds the actual demo inline through its `?embed=1` view. No new tab is needed. The iframe keeps TV arrow keys separate from slide navigation; Use Continue presentation or the presenter remote’s Next slide to move forward. Presenter previews stay static. The combined gallery build supplies the URL; standalone presentation builds can set `VITE_GALLERY_URL`. The standalone demo remains available in the gallery.
 
 This is **not Lightning**, the original application, a custom React renderer or a video streaming service. It illustrates the interaction model using native Canvas. Actual TV hardware compatibility is unverified. The original product and its technical history remain distinct from this example.
 
