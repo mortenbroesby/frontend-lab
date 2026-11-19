@@ -1,3 +1,5 @@
+import { Radio, Cpu, Rocket, ChartNetwork, PanelsTopLeft } from 'lucide-react';
+
 <section className="track-start" aria-labelledby="start-heading">
 
 <h2 id="start-heading">Make the browser do something new.</h2>
@@ -10,34 +12,34 @@
 <h2 id="options-heading">What would you like to build?</h2>
 <div className="track-options">
 <section aria-labelledby="devices-heading">
-<h3 id="devices-heading">Connect two browsers</h3>
+<h3 id="devices-heading"><Radio aria-hidden="true" focusable="false" />Connect two browsers</h3>
 <p>Make an interaction on one screen affect another.</p>
 <p>Try a remote control, shared slider or your own idea.</p>
 <a className="track-start-link" href="#/track/modern-web/devices">Explore connecting browsers →</a>
 <p className="track-example"><DemoLink id="reaction-room">Try Reaction Room</DemoLink>. Needs internet and trusted HTTPS on devices; localhost windows work too. Some networks block connections.</p>
 </section>
 <section aria-labelledby="workers-heading">
-<h3 id="workers-heading">Keep a busy page responsive</h3>
+<h3 id="workers-heading"><Cpu aria-hidden="true" focusable="false" />Keep a busy page responsive</h3>
 <p>Run a calculation while buttons and inputs still respond.</p>
 <p>Compare the same interaction with work on and off the main thread.</p>
 <a className="track-start-link" href="#/track/modern-web/workers">Explore work off the main thread →</a>
 <p className="track-example"><DemoLink id="web-worker-comparison">Try the Worker comparison</DemoLink>. Compare responsiveness, not just completion time.</p>
 </section>
 <section aria-labelledby="wasm-heading">
-<h3 id="wasm-heading">Run Rust in the browser</h3>
+<h3 id="wasm-heading"><Rocket aria-hidden="true" focusable="false" />Run Rust in the browser</h3>
 <p>Build a tiny game with Rust physics and a Canvas view. Decide what crosses the language boundary.</p>
 <a className="track-start-link" href="https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Loading_and_running">Explore loading WebAssembly ↗</a>
 <p className="track-example"><DemoLink id="lunar-lander">Try Lunar Lander</DemoLink>. Play immediately; Rust tooling is only needed to change the physics.</p>
 </section>
 <section aria-labelledby="graphics-heading">
-<h3 id="graphics-heading">Make data interactive</h3>
+<h3 id="graphics-heading"><ChartNetwork aria-hidden="true" focusable="false" />Make data interactive</h3>
 <p>Drag a shape, rearrange a diagram or change the rules of a simulation.</p>
 <p>Choose a few shapes and one interaction.</p>
 <a className="track-start-link" href="https://d3js.org/getting-started">Start with D3's guide ↗</a>
 <p className="track-example"><DemoLink id="signal-garden">Explore Signal Garden</DemoLink> or <DemoLink id="dependency-map">Dependency Ripple</DemoLink>.</p>
 </section>
 <section aria-labelledby="tabs-heading">
-<h3 id="tabs-heading">Keep two tabs in sync</h3>
+<h3 id="tabs-heading"><PanelsTopLeft aria-hidden="true" focusable="false" />Keep two tabs in sync</h3>
 <p>Change a preference in one tab and watch another tab update.</p>
 <p>Choose what should stay in sync, then explore what happens when a new tab opens or a page reloads.</p>
 <a className="track-start-link" href="#/track/modern-web/tab-settings">Explore sharing between tabs →</a>

@@ -1,3 +1,5 @@
+import { Gauge, Terminal, Workflow, Bot } from 'lucide-react';
+
 <section className="track-start" aria-labelledby="start-heading">
 
 <h2 id="start-heading">Make everyday development less frustrating.</h2>
@@ -10,21 +12,21 @@
 <h2 id="options-heading">What would you like to improve?</h2>
 <div className="track-options">
 <section aria-labelledby="feedback-heading">
-<h3 id="feedback-heading">Faster Feedback Loops</h3>
+<h3 id="feedback-heading"><Gauge aria-hidden="true" focusable="false" />Faster Feedback Loops</h3>
 <p>Spend less time waiting to learn whether a change works.</p>
 <p>Choose a test, try watch mode, inspect a build cache or compare affected-project selection with a full run.</p>
 <a className="track-start-link" href="#/track/developer-experience/feedback-loop">Find your shortest useful check →</a>
 <p className="track-example">Stretch: deliberately change an input and check that a cached result is invalidated.</p>
 </section>
 <section aria-labelledby="tools-heading">
-<h3 id="tools-heading">Developer Tools</h3>
+<h3 id="tools-heading"><Terminal aria-hidden="true" focusable="false" />Developer Tools</h3>
 <p>Make a repeated task easier with a small CLI, Git utility or debugging helper.</p>
 <p>Find an existing command first, then decide whether a script would add anything useful.</p>
 <a className="track-start-link" href="#/track/developer-experience/developer-tools">Build or adopt a useful tool →</a>
 <p className="track-example">Optional starting point: the Lab's Node command inventory. Stretch: handle missing input and failed commands clearly.</p>
 </section>
 <section aria-labelledby="workflows-heading">
-<h3 id="workflows-heading">Development Workflows</h3>
+<h3 id="workflows-heading"><Workflow aria-hidden="true" focusable="false" />Development Workflows</h3>
 <p>Reach the UI state you need without waiting for a backend or repeating setup steps.</p>
 <p>Try a local API override, compare workspace commands or automate one development-environment task.</p>
 <a className="track-start-link" href="https://developer.chrome.com/docs/devtools/overrides">Try one local response override ↗</a>
@@ -32,7 +34,7 @@
 <p>For interaction debugging, <a href="#/track/developer-experience/rendering">profile a React interaction</a> with <DemoLink id="react-render-detective">React Render Detective</DemoLink>.</p>
 </section>
 <section aria-labelledby="agents-heading">
-<h3 id="agents-heading">Agentic Workflows</h3>
+<h3 id="agents-heading"><Bot aria-hidden="true" focusable="false" />Agentic Workflows</h3>
 <p>Make a development task repeatable with a Codex or Copilot skill, an assisted change or a review workflow.</p>
 <p>Compare a plain request with a short, testable set of instructions.</p>
 <a className="track-start-link" href="#/track/developer-experience/agent-workflows">Try a reusable agent task →</a>

@@ -1,3 +1,5 @@
+import { PackageSearch, CodeXml, Repeat2, ShieldCheck, Waypoints } from 'lucide-react';
+
 <section className="track-start" aria-labelledby="start-heading">
 
 <h2 id="start-heading">Make a piece of code easier to change.</h2>
@@ -10,34 +12,34 @@
 <h2 id="quality-options-heading">What would you like to work on?</h2>
 <div className="track-options">
 <section aria-labelledby="dependency-heading">
-<h3 id="dependency-heading">Understand a dependency</h3>
+<h3 id="dependency-heading"><PackageSearch aria-hidden="true" focusable="false" />Understand a dependency</h3>
 <p>Pick a package and find why it's installed and where it's used.</p>
 <p>Decide whether to keep it, update it or remove it.</p>
 <a className="track-start-link" href="#/track/code-quality/dependencies">Start tracing a dependency →</a>
 <p className="track-example"><DemoLink id="dependency-map">Open Dependency Ripple</DemoLink> to explore the Lab’s packages.</p>
 </section>
 <section aria-labelledby="code-heading">
-<h3 id="code-heading">Simplify difficult code</h3>
+<h3 id="code-heading"><CodeXml aria-hidden="true" focusable="false" />Simplify difficult code</h3>
 <p>Pick a function you have to read twice. Identify what makes it difficult.</p>
 <p>Try a clearer name, an early return or a smaller responsibility while preserving its behavior.</p>
 <a className="track-start-link" href="#/track/code-quality/fallow">Start investigating difficult code →</a>
 <p className="track-example">Use Fallow to find a candidate, or <a href="#/track/code-quality/state-machines">explore a state machine</a> through the TV remote.</p>
 </section>
 <section aria-labelledby="tdd-heading">
-<h3 id="tdd-heading">Build a behaviour test-first</h3>
+<h3 id="tdd-heading"><Repeat2 aria-hidden="true" focusable="false" />Build a behaviour test-first</h3>
 <p>Choose a small rule. Write the expected result before implementing it.</p>
 <p>Try the red–green–refactor cycle with a navigation example or your own feature.</p>
 <a className="track-start-link" href="#/track/code-quality/tdd">Try test-driven development →</a>
 </section>
 <section aria-labelledby="test-heading">
-<h3 id="test-heading">Check a test you don't trust</h3>
+<h3 id="test-heading"><ShieldCheck aria-hidden="true" focusable="false" />Check a test you don't trust</h3>
 <p>Choose a mistake you think the test should catch. Make that change temporarily and run it.</p>
 <p>Find out whether the assertion protects the behavior you care about.</p>
 <a className="track-start-link" href="#/track/code-quality/test-confidence">Start checking a test →</a>
 <p className="track-example">Includes an optional prime-counting example.</p>
 </section>
 <section aria-labelledby="boundary-heading">
-<h3 id="boundary-heading">Untangle a connection</h3>
+<h3 id="boundary-heading"><Waypoints aria-hidden="true" focusable="false" />Untangle a connection</h3>
 <p>Follow an import between two features that seem unrelated. Find out why it's there.</p>
 <p>Clarify who owns the code, or protect a useful boundary with a dependency rule.</p>
 <a className="track-start-link" href="#/track/code-quality/architecture">Start tracing a boundary →</a>
