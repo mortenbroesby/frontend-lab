@@ -68,6 +68,11 @@ export const tracks = [
     id: 'developer-experience',
     guides: [
       {
+        slug: 'worktrees',
+        title: 'Work in parallel with Git worktrees',
+        description: 'Create a separate workspace, commit a change, integrate it and clean up.',
+      },
+      {
         slug: 'developer-tools',
         title: 'Make a small developer tool',
         description:

@@ -1,0 +1,110 @@
+## Work on two things without switching branches
+
+**A worktree is another folder for the same Git repository, with its own checked-out branch.** Keep your current work open while you try an idea, review a change or give an agent a separate workspace.
+
+Branches and commits are shared; edited files and staging are separate. A worktree is not a backup or a security sandbox.
+
+<div className="guide-flow" role="group" aria-label="Worktree lifecycle">
+  <div><strong>Create</strong><span>A folder and a branch for one task</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Work and commit</strong><span>Edit and verify in that folder</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Integrate</strong><span>Bring the committed change back</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Clean up</strong><span>Remove the folder, then the finished branch</span></div>
+</div>
+
+### 1. Create a workspace
+
+Use a repository you can experiment in. These names are examples: choose another branch and sibling folder if they already exist.
+
+In your existing repository's root, run:
+
+```sh
+git status --short
+git worktree add -b experiment/worktrees ../lab-worktree HEAD
+git worktree list
+```
+
+This starts from your current **commit**. Uncommitted edits stay in the original folder; they aren't copied. The list should now show both folders and their branches. Git normally prevents checking out the same branch in two worktrees.
+
+Keep this terminal in the original folder. Open a second terminal in that same folder, then:
+
+```sh
+cd ../lab-worktree
+git branch --show-current
+```
+
+**Expected:** `experiment/worktrees`. Open this folder in a separate editor window too.
+
+### 2. Make one small change
+
+Improve one sentence in this worktree's `README.md`. Look at the original folder: its file should be unchanged.
+
+In the new terminal:
+
+```sh
+git diff -- README.md
+git add README.md
+git diff --cached
+git commit -m "Clarify a README instruction"
+```
+
+For code changes, run the relevant checks before committing. You can close the editor and return later; the worktree stays until you remove it.
+
+<details>
+<summary>Running the Lab from a worktree</summary>
+
+Each folder needs its own dependencies and local configuration. After [local setup](#/guide/setup), run inside the new folder:
+
+```sh
+npm ci
+npm run dev --workspace frontend-lab-gallery -- --port 5174
+```
+
+Use a free port and open the URL printed by Vite. Don't share `node_modules` with another worktree. Ignored files such as local environment settings aren't copied; supply only the configuration this experiment needs.
+
+</details>
+
+### 3. Bring the change back
+
+Return to the **original terminal**. The example below integrates into local `main`; use your project's target branch and review process instead where required.
+
+```sh
+git status --short
+```
+
+If it shows unfinished work, stop here and finish or save that work before integrating. Then:
+
+```sh
+git switch main
+git diff main...experiment/worktrees
+git merge experiment/worktrees
+```
+
+Review the diff before merging. If Git opens an editor, save the merge message to finish. If changes conflict, resolve the marked files, stage them and commit, or use `git merge --abort` to return to the pre-merge state. Rerun relevant checks after integration.
+
+**Expected:** the README improvement is now in your original folder. A worktree doesn't push anything automatically. If your team uses pull requests, push the experiment branch and complete that review instead of the local merge above.
+
+### 4. Remove the finished workspace
+
+Stop its dev server. Save anything you want to keep, including ignored files: removal deletes the folder's contents, not just tracked files.
+
+From the original terminal:
+
+```sh
+git -C ../lab-worktree status --short --ignored
+git worktree remove ../lab-worktree
+git branch -d experiment/worktrees
+git worktree list
+```
+
+**Expected:** the extra folder is gone, and the change remains on `main`. Folder removal and branch deletion are separate operations. If Git refuses either, inspect why; don't add a force flag. A squash-merged branch can still appear unmerged to Git—verify its changes before deciding to delete it.
+
+### Try another use
+
+- **Review without interrupting your work:** create a worktree for an existing branch with `git worktree add ../lab-review branch-name`.
+- **Compare implementations:** run each folder on a different port and try the same interaction.
+- **Work with an agent:** give it the worktree's exact path and one task. Review its diff before integrating; separate folders don't prevent merge conflicts.
+
+Read [Git's worktree reference](https://git-scm.com/docs/git-worktree) for add, list and remove, and [Git's merge guide](https://git-scm.com/docs/git-merge) for conflict handling.
