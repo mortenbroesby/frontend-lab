@@ -377,13 +377,13 @@ function LiveExample({
     );
   const href = demoUrl(id);
   return (
-    <div className="tv-slide" data-presentation-interactive>
+    <div className="tv-slide orbit-slide" data-presentation-interactive>
       {href ? (
         <WidescreenFrame
           src={`${href}?embed=1&presentation=1`}
           title={title}
           allow="fullscreen"
-          fillWidth={id === 'orbit'}
+          responsive
         />
       ) : (
         <p>Set VITE_GALLERY_URL to embed this demo.</p>
@@ -402,7 +402,7 @@ function Orbit({ preview }: { preview?: boolean }) {
       preview={preview}
       id="orbit"
       title="Orbit — a scroll story"
-      hint="Scroll inside the demo · Try a different finish"
+      hint="Scroll down for the tour · Blend a colour at the end"
       action={<a href="#television">Continue presentation →</a>}
     />
   );
@@ -618,7 +618,7 @@ NEXT → Orbit — sound to movement`,
     notes: `12 / 17 · ORBIT
 “We usually scroll to read more. Here, the same gesture lets us move through a scene.”
 • Slow turn → lighting → reveal
-• Try a finish
+• At the end → drag the colour gradient
 • Motion + Three.js
 • Familiar gesture; different result
 • Keep this brief

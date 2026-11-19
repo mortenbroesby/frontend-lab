@@ -6,8 +6,8 @@ export default {
   description: 'Scroll to tilt and turn a speaker, then choose a finish and spin it yourself.',
   author: 'Lab examples',
   explore: {
-    file: 'index.tsx',
-    change: 'Change one finish colour and scroll to its colour selector.',
+    file: 'finishes.ts',
+    change: 'Change one palette stop, then drag the colour slider through it.',
     guide: '/track/experimental-projects/motion',
   },
 } satisfies DemoDefinition;

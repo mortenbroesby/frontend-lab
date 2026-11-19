@@ -3,17 +3,17 @@ import { useFrameWalkthrough } from './use-frame-walkthrough';
 import { DemoFrame } from './demo-frame';
 import { useEffect, useRef, useState } from 'react';
 
-/** A fixed widescreen viewport keeps the live controls from wrapping inside a slide. */
+/** Fixed widescreen controls by default; responsive demos use the actual available viewport. */
 export function WidescreenFrame({
   src,
   title,
   allow,
-  fillWidth = false,
+  responsive = false,
 }: {
   src: string;
   title: string;
   allow: string;
-  fillWidth?: boolean;
+  responsive?: boolean;
 }) {
   const frame = useRef<HTMLIFrameElement>(null);
   const url = new URL(src, location.href);
@@ -23,17 +23,17 @@ export function WidescreenFrame({
   const [viewport, setViewport] = useState({ scale: 0, height: 720 });
   useEffect(() => {
     const element = container.current;
-    if (!element) return;
+    if (!element || responsive) return;
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-      const scale = fillWidth ? width / 1280 : Math.min(width / 1280, height / 720);
-      setViewport({ scale, height: fillWidth && scale > 0 ? height / scale : 720 });
+      const scale = Math.min(width / 1280, height / 720);
+      setViewport({ scale, height: 720 });
     });
     observer.observe(element);
     return () => observer.disconnect();
-  }, [fillWidth]);
+  }, [responsive]);
   return (
-    <div className="widescreen-frame" ref={container}>
+    <div className="widescreen-frame" data-responsive={responsive} ref={container}>
       <DemoFrame
         ref={frame}
         key={connection.attempt}
@@ -41,10 +41,14 @@ export function WidescreenFrame({
         src={url.href}
         title={title}
         allow={allow}
-        style={{
-          height: viewport.height,
-          transform: `translate(-50%, -50%) scale(${viewport.scale})`,
-        }}
+        style={
+          responsive
+            ? undefined
+            : {
+                height: viewport.height,
+                transform: `translate(-50%, -50%) scale(${viewport.scale})`,
+              }
+        }
       />
       <DemoLoading status={connection.status} retry={connection.retry} />
     </div>

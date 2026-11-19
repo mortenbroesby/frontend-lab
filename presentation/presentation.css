@@ -720,3 +720,25 @@ a {
   background: var(--lab-surface);
   color: var(--lab-ink);
 }
+
+/* Orbit is a scrollable tour, so give it the available screen rather than a scaled 16:9 page. */
+.widescreen-frame[data-responsive='true'] iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+.is-clean .audience-stage:has(.orbit-slide) {
+  width: 100%;
+}
+.is-clean .audience-stage > .slide-stage:has(.orbit-slide) {
+  aspect-ratio: auto;
+  height: 100dvh;
+}
+@media (max-width: 600px) {
+  .audience-stage > .slide-stage:has(.orbit-slide) {
+    aspect-ratio: auto;
+    height: 85svh;
+  }
+}

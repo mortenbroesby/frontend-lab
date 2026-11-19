@@ -2,6 +2,8 @@ import { useWalkthrough } from '@lab/demo-kit/use-walkthrough';
 import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useScroll, useReducedMotion, useMotionValue } from 'motion/react';
+import { FinishControls } from './finish-controls';
+import { finishAt } from './finishes';
 import { Speaker } from './speaker';
 import { Button } from '@lab/ui/button';
 import { galleryHref } from '@lab/demo-kit/gallery-link';
@@ -9,11 +11,6 @@ import './orbit.css';
 
 const walkthroughLabels = ['Arrival', 'Detail', 'Turn the object', 'Choose a finish'];
 const chapterIds = ['arrival', 'detail', 'inside'] as const;
-const finishes = [
-  { name: 'Moonstone', shell: '#b9b6ad', glow: '#d6c6aa' },
-  { name: 'Terracotta', shell: '#ba705b', glow: '#ff916b' },
-  { name: 'Deep sea', shell: '#547e83', glow: '#77d7dd' },
-];
 
 function Chapter({ index }: { index: number }) {
   const content = [
@@ -37,7 +34,7 @@ function Chapter({ index }: { index: number }) {
           Everything felt.
         </>
       ),
-      body: 'A fine metal grille. A satin shell. Sound, without the noise.',
+      body: 'Scroll a little further. The speaker tilts so you can see its shape and surface.',
     },
     {
       eyebrow: '02 / A different angle',
@@ -74,7 +71,8 @@ export default function Orbit() {
   const { scrollYProgress } = useScroll({ target: story, offset: ['start start', 'end end'] });
   const reduced = useReducedMotion();
 
-  const [finish, setFinish] = useState(finishes[0]!);
+  const [colour, setColour] = useState(0);
+  const finish = finishAt(colour);
   const still = Boolean(reduced);
   const rest = useMotionValue(1);
   useWalkthrough(
@@ -82,7 +80,7 @@ export default function Orbit() {
     (index, signal) => {
       const id = [...chapterIds, 'finish'][index]!;
       document.getElementById(id)?.scrollIntoView({ behavior: still ? 'instant' : 'smooth' });
-      setFinish(finishes[index === 3 ? 1 : 0]!);
+      setColour(index === 3 ? 20 : 0);
       signal.addEventListener(
         'abort',
         () => window.scrollTo({ top: window.scrollY, behavior: 'instant' }),
@@ -96,7 +94,7 @@ export default function Orbit() {
       className="orbit"
       data-still={still}
       data-presentation={presentation}
-      style={{ '--orbit-shell': finish.shell, '--orbit-glow': finish.glow } as CSSProperties}
+      style={{ '--orbit-shell': finish.shell, '--orbit-glow': finish.shell } as CSSProperties}
     >
       <a className="orbit-skip" href="#finish">
         Skip to colour choices
@@ -111,6 +109,12 @@ export default function Orbit() {
           </Button>
         )}
       </header>
+      <nav className="orbit-tour" aria-label="Speaker tour">
+        <a href="#arrival">01 · Meet Orbit</a>
+        <a href="#detail">02 · Tilt</a>
+        <a href="#inside">03 · Turn</a>
+        <a href="#finish">04 · Colour</a>
+      </nav>
       <main ref={story} className="orbit-story">
         <div className="orbit-stage">
           <div className="orbit-halo" />
@@ -135,26 +139,9 @@ export default function Orbit() {
               finish.
             </h2>
             <p className="orbit-description">
-              Choose a colour, then drag the speaker sideways to explore it.
+              Blend your own colour. Drag the speaker sideways to see it from another angle.
             </p>
-            <div className="orbit-finishes" role="group" aria-label="Speaker colour">
-              {finishes.map((colour) => (
-                <Button
-                  key={colour.name}
-                  className="orbit-finish-button"
-                  variant="outline"
-                  aria-pressed={finish.name === colour.name}
-                  onClick={() => setFinish(colour)}
-                  style={{ '--swatch': colour.shell } as CSSProperties}
-                >
-                  <span className="orbit-swatch" aria-hidden="true" />
-                  {colour.name}
-                </Button>
-              ))}
-            </div>
-            <p className="orbit-selected" aria-live="polite">
-              {finish.name} edition
-            </p>
+            <FinishControls value={colour} onChange={setColour} />
             <a href="#arrival" className="orbit-replay">
               Experience it again <span aria-hidden="true">↗</span>
             </a>
