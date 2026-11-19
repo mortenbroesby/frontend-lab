@@ -66,6 +66,36 @@ git branch --show-current
 
 **Expected:** `experiment/worktrees`. Open this folder in a separate editor window too.
 
+<details>
+<summary>How does Git reserve the branch for this folder?</summary>
+
+**It happens automatically when you check out the branch.** No separate locking command is needed.
+
+Each worktree has its own `HEAD`: Git's record of what you're working on. Here, it points to the shared branch `refs/heads/experiment/worktrees`. The linked folder's `.git` file points to its bookkeeping directory inside the original repository.
+
+From the original terminal, inspect the association:
+
+```sh
+git worktree list --porcelain
+git -C ../lab-worktree symbolic-ref HEAD
+```
+
+The second command prints `refs/heads/experiment/worktrees`. Now try:
+
+```sh
+git switch experiment/worktrees
+```
+
+**Expected: Git refuses**, because that branch is already checked out in the other folder. Git checks the registered worktrees before allowing a checkout. This prevents two sets of working files from advancing the same branch independently.
+
+Switching the linked worktree to another branch, or removing it, releases that association. Closing its editor does not. This is a local safeguard, not a lock on GitHub or someone else's clone.
+
+**Different meaning of “lock”:** `git worktree lock` protects a worktree from ordinary removal, moving and metadata pruning. It doesn't pin its branch or prevent edits and commits. You don't need it for this exercise.
+
+See [Git's worktree reference](https://git-scm.com/docs/git-worktree#_details) for the underlying bookkeeping.
+
+</details>
+
 ### 2. Make one small change
 
 Improve one sentence in this worktree's `README.md`. Look at the original folder: its file should be unchanged.
