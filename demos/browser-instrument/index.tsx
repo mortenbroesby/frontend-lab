@@ -20,10 +20,12 @@ const walkthroughLabels = [
   'An octave up',
   'Finish',
 ];
+const pitchStops = [-12, -7, 0, 7, 12];
 const voices = ['Lead', 'Bass', 'Drums'];
 function Dial({
   label,
   value,
+  displayValue = value,
   min,
   max,
   unit,
@@ -31,6 +33,7 @@ function Dial({
 }: {
   label: string;
   value: number;
+  displayValue?: number;
   min: number;
   max: number;
   unit: string;
@@ -41,11 +44,12 @@ function Dial({
       <span className="instrument-dial-label">
         {label}
         <output>
-          {value} {unit}
+          {displayValue} {unit}
         </output>
       </span>
       <Slider
         aria-label={label}
+        aria-valuetext={`${displayValue} ${unit}`}
         value={[value]}
         min={min}
         max={max}
@@ -131,11 +135,12 @@ export default function InstrumentDemo() {
           />
           <Dial
             label="Pitch"
-            value={settings.pitch}
-            min={-12}
-            max={12}
+            value={pitchStops.indexOf(settings.pitch)}
+            displayValue={settings.pitch}
+            min={0}
+            max={pitchStops.length - 1}
             unit="semitones"
-            onChange={(pitch) => setSettings((s) => ({ ...s, pitch }))}
+            onChange={(position) => setSettings((s) => ({ ...s, pitch: pitchStops[position] }))}
           />
           <Dial
             label="Tone"
