@@ -24,21 +24,24 @@ const instrumentHref = demoUrl('browser-instrument');
 
 function Entrance() {
   return (
-    <TitleSlide eyebrow="A chapter session" title="The Frontend Lab">
-      <p>Front-end development outside the usual web page.</p>
+    <TitleSlide eyebrow="A day to tinker" title="The Frontend Lab">
+      <p>Take things apart. See what the browser can do.</p>
     </TitleSlide>
   );
 }
 
 function Possibilities() {
   return (
-    <StatementSlide eyebrow="A different starting point" title="Change one assumption.">
+    <StatementSlide
+      eyebrow="Still finding things that surprise me"
+      title="More than text and images."
+    >
       <p>
         What if the browser makes sound?
         <br />
         What if there is no pointer?
         <br />
-        What if two screens share an interaction?
+        What if scrolling moves a whole scene?
       </p>
     </StatementSlide>
   );
@@ -48,9 +51,11 @@ function Workshop() {
   return (
     <StatementSlide eyebrow="Chapter day" title="Today is for experimenting.">
       <p>
-        Choose something interesting. Work solo or together.
+        These demos are starting points. Bring your own idea.
         <br />
-        Aim for a small experiment, not a finished product.
+        Already inspired? Go ahead and start.
+        <br />
+        Work solo or pair up — whatever makes sense.
       </p>
     </StatementSlide>
   );
@@ -64,7 +69,7 @@ function TrackChoice() {
         <br />
         Make development easier. Build your own idea.
       </p>
-      <p>Choose what interests you. Work solo or together.</p>
+      <p>Starting points, not fixed lanes. Your own project is welcome.</p>
     </StatementSlide>
   );
 }
@@ -157,13 +162,13 @@ function DeveloperExperience() {
           options={[
             {
               label: 'FEEDBACK',
-              title: 'Run fewer tests.',
+              title: 'Get feedback sooner.',
               description: 'Find the smallest useful check for one change.',
             },
             {
               label: 'WORKFLOW',
               title: 'Remove a manual step.',
-              description: 'Make a small script, CLI or local API mock.',
+              description: 'Try a script, local mock or parallel worktree.',
             },
             {
               label: 'AGENTS',
@@ -228,11 +233,11 @@ function InstrumentIntroduction() {
 function Closing() {
   const labHref = galleryHref('/');
   return (
-    <StatementSlide eyebrow="Questions, then time to explore" title="Choose your starting point.">
+    <StatementSlide eyebrow="I'll be experimenting too" title="Try something new.">
       <p>
-        Pick a track. Browse the ideas.
+        Take it apart. Change something. Try again.
         <br />
-        Use a guide, adapt a demo or bring your own project.
+        I'll be around for questions, ideas and discussions.
       </p>
       {labHref && (
         <a className="slide-resource" href={labHref}>
@@ -245,7 +250,10 @@ function Closing() {
 
 function NextDirections() {
   return (
-    <DiagramSlide eyebrow="The same example, four directions" title="Where would you take it?">
+    <DiagramSlide
+      eyebrow="Examples to borrow from — or leave behind"
+      title="Where would you take it?"
+    >
       <div className="track-options">
         <ExperimentOptions
           options={[
@@ -282,7 +290,10 @@ function NextDirections() {
 
 function Television() {
   return (
-    <StatementSlide eyebrow="A different input device" title="A screen without a pointer.">
+    <StatementSlide
+      eyebrow="A different side of frontend — TV and streaming"
+      title="A screen without a pointer."
+    >
       <p>
         How do you know where you are?
         <br />
@@ -468,16 +479,13 @@ NEXT → What today is for`,
     title: 'Today is for experimenting',
     Content: Workshop,
     notes: `02 / 17 · TODAY
-• Explore; follow curiosity
-• Lab + demos = inspiration, not assignments
+“I built this Lab to give you ideas, not a list of things you have to finish.”
 • Already inspired? Go ahead and start
 • Solo or together — pair however it makes sense
 • No production-ready result needed
 
 AI
-• Yes, AI helped me build this site
-• My plan today: light on AI
-• Your choice how you work
+“Yes, I used AI to build this site. I want to be light on it today, but how you work is up to you.”
 
 NEXT → Four possible starting points`,
   },
@@ -486,7 +494,7 @@ NEXT → Four possible starting points`,
     title: 'Four tracks to choose from',
     Content: TrackChoice,
     notes: `03 / 17 · FOUR TRACKS
-• Ways in, not fixed lanes
+“These are four ways to get started. You can follow an idea across tracks, or bring something of your own.”
 • Ideas / demos / guides in the Lab
 • Own project or own idea equally welcome
 
@@ -497,7 +505,7 @@ NEXT → Modern Web`,
     title: 'Modern Web Capabilities',
     Content: ModernWeb,
     notes: `04 / 17 · MODERN WEB
-• What else can the browser do?
+“Pick a browser capability you haven't used before and see what you can make it do.”
 • Phone ↔ laptop
 • Workers → responsive UI
 • Canvas / SVG → live visuals
@@ -510,7 +518,7 @@ NEXT → Code Quality`,
     title: 'Code Quality & Maintainability',
     Content: CodeQuality,
     notes: `05 / 17 · CODE QUALITY
-• Existing code; one question
+“You don't need a new app for this track. Take a piece of code you already have and understand it a little better.”
 • Dependency → who uses it?
 • Small behaviour → red / green / refactor
 • Fallow or another tool → investigate findings
@@ -523,7 +531,7 @@ NEXT → Developer Experience`,
     title: 'Developer Experience & Tooling',
     Content: DeveloperExperience,
     notes: `06 / 17 · DEVELOPER EXPERIENCE
-• Something that annoys you daily
+“If something annoys you every day, this is a chance to try a better way of doing it.”
 • Faster feedback / fewer unnecessary checks
 • Script, CLI, local mock
 • Worktrees / parallel tasks
@@ -537,7 +545,7 @@ NEXT → Experimental Projects`,
     title: 'Experimental Projects',
     Content: ExperimentalProjects,
     notes: `07 / 17 · EXPERIMENTAL PROJECTS
-• Something you want to play with
+“This is closest to how I like to explore: make something because I want to play with it.”
 • Tiny game
 • Generative picture / moving world
 • Sound / musical controls
@@ -547,11 +555,10 @@ NEXT → Beyond the usual web page`,
   },
   {
     id: 'possibilities',
-    title: 'Change one assumption',
+    title: 'More than text and images',
     Content: Possibilities,
-    notes: `08 / 17 · CHANGE ONE ASSUMPTION
-• Browser possibilities still surprise me
-• More than text, images and forms
+    notes: `08 / 17 · MORE THAN A PAGE
+“The browser still surprises me. I want to show a few things that make me want to keep tinkering.”
 • What if the output were sound?
 • What if scrolling moved a scene?
 • What if the input were a TV remote?
@@ -563,8 +570,7 @@ NEXT → Music / personal inspiration`,
     title: 'Could the browser be an instrument?',
     Content: InstrumentIntroduction,
     notes: `09 / 17 · BROWSER AS AN INSTRUMENT
-• Old intros / tracker music
-• Small programs; memorable music
+“I remember those small intros with really memorable music. I wanted to see whether I could make something with that feeling in a browser.”
 • Could I make something like that in a browser?
 • Shape the sound while it plays
 • New experiment, not an old tracker file
@@ -576,6 +582,8 @@ NEXT → Browser Beat — hear it`,
     title: 'Browser Beat',
     Content: Instrument,
     notes: `10 / 17 · BROWSER BEAT
+“Let's hear what happens when we change just a few controls.”
+
 • Comfortable volume → Play
 • Tone → hear the change
 • Echo → add space
@@ -593,8 +601,9 @@ NEXT → How the sound works`,
     title: 'What makes that possible?',
     Content: SoundSystem,
     notes: `11 / 17 · THE SOUND PATH
-• React → controls
-• Web Audio → notes, timing, effects
+“React handles the controls; Web Audio makes the sound. They don't have to do the same job.”
+
+• Web Audio → timing and effects
 • Speakers → sound
 • Canvas → waveform
 • Synthesised, not a recording
@@ -607,7 +616,7 @@ NEXT → Orbit — sound to movement`,
     title: 'Orbit — a scroll story',
     Content: Orbit,
     notes: `12 / 17 · ORBIT
-• Scroll → move through a scene
+“We usually scroll to read more. Here, the same gesture lets us move through a scene.”
 • Slow turn → lighting → reveal
 • Try a finish
 • Motion + Three.js
@@ -622,8 +631,7 @@ NEXT → TV — no pointer, no scroll wheel`,
     title: 'A screen without a pointer',
     Content: Television,
     notes: `13 / 17 · A SCREEN WITHOUT A POINTER
-• My TV / streaming background
-• Familiar frontend skills; different constraints
+“I spent years working in TV and streaming. A lot of the skills were familiar, but a remote changes how you think about an interface.”
 • Remote: directions, OK, Back
 • Where should selection start?
 • Where should Back return?
@@ -636,7 +644,7 @@ NEXT → Canvas + focus, high level`,
     title: 'Draw the screen. Track the focus.',
     Content: Components,
     notes: `14 / 17 · DRAW + TRACK FOCUS
-• Remote input → state → Canvas
+“The remote changes our state, and Canvas draws the result. We have to decide where the focus goes and where Back takes us.”
 • State: row / item / playback
 • Canvas draws the screen + highlight
 • We define movement and return behaviour
@@ -653,7 +661,7 @@ NEXT → Try the TV`,
     title: 'Try the TV interface',
     Content: Remote,
     notes: `15 / 17 · TV DEMO
-• Illustration — not our original Lightning app
+“This is a small illustration of that idea, not the original TV app. Watch what happens to the selection when we come back.”
 • Right → shelf scrolls
 • Down → up → remembered selection
 • OK / Enter → play
@@ -671,7 +679,7 @@ NEXT → Their ideas`,
     title: 'Where would you take it?',
     Content: NextDirections,
     notes: `16 / 17 · WHERE WOULD YOU TAKE IT?
-• Examples = a spark, not a to-do list
+“You don't have to extend anything I've shown. If it gave you a different idea, follow that instead.”
 • Connect screens / investigate focus / improve a tool
 • Remix, bring your own idea, or use your own code
 • Discovering something useful is enough
@@ -681,7 +689,7 @@ NEXT → Questions + handover`,
   },
   {
     id: 'curiosity',
-    title: 'Choose your starting point',
+    title: 'Try something new',
     Content: Closing,
     notes: `17 / 17 · OVER TO YOU
 “Don't be afraid to break something while trying to make it better. Take it apart, see how it works, and try again.”

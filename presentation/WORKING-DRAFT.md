@@ -10,7 +10,7 @@ Participants can work alone or together, compare existing solutions, investigate
 
 ## Personal thread and speaking cues
 
-Presenter notes combine short prompts with a few natural sentences worth saying; they are not a script. Each starts with the slide number and ends with the next topic. Keep the audience-facing slides and their order unchanged.
+Presenter notes combine short prompts with a few natural sentences worth saying; they are not a script. Each starts with the slide number and ends with the next topic. Keep the 17-slide order and independent demos. Visible copy now echoes the invitation to tinker, start freely and ask questions; personal anecdotes stay in the notes.
 
 - Opening: an untraditional route into web development; expected to become a game developer; first job unexpectedly became building web pages; many years in TV and streaming.
 - Early tinkering: computers, software and hardware for as long as the presenter remembers. Around age 11, installing different firmware bricked a router. Do not invent the model, firmware, recovery or aftermath.
@@ -33,7 +33,7 @@ These personal details come directly from the presenter. Do not embellish the ca
 | 5. Code Quality & Maintainability | Work with code you already have. |
 | 6. Developer Experience & Tooling | Start with something that slows you down. |
 | 7. Experimental Projects | Build something you want to play with. |
-| 8. Change one assumption | Consider sound, alternative inputs and shared screens |
+| 8. More than text and images | Personal curiosity; sound, alternative inputs and scrolling |
 | 9. Could the browser be an instrument? | Brief personal inspiration |
 | 10. Browser Beat | Live music demo |
 | 11. What makes that possible? | React → Web Audio → speakers; Canvas visualises the signal |
@@ -42,7 +42,7 @@ These personal details come directly from the presenter. Do not embellish the ca
 | 14. Draw the screen. Track the focus. | Remote input → focus state → Canvas rendering |
 | 15. Try the TV interface | Canvas and remote navigation |
 | 16. Where would you take it? | Connect the examples back to all four tracks |
-| 17. Choose your starting point | Closing invitation and questions |
+| 17. Try something new | Take things apart, experiment and ask questions |
 
 The three demos remain independent applications embedded in the deck. Continue links follow the running order. The D3 showcase is not part of this talk. All slides include presenter notes. Keep Orbit to about one minute. End with the invitation to explore and questions. Rehearse to fit the time rather than adding filler.
 
