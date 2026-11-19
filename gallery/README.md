@@ -59,3 +59,7 @@ The kit owns palette behavior in `demo-kit/CommandMenu.tsx`; the gallery supplie
 [Design decisions](docs/decisions/README.md) · [Shared UI](../shared/ui/README.md) · [Verification](docs/VERIFICATION.md) · [Hosting](docs/hosting.md) · [Internal repository migration](docs/internal-migration.md)
 
 Demo cards automatically use an optional `demos/<id>/preview.svg` poster (2:1 aspect ratio). Use a `600 × 300` viewBox, a charcoal background and restrained green/cyan highlights. Keep one recognisable subject comfortably inside the frame, without repeating the card title. Follow an existing preview for grid, framing and stroke weight. Keep it small and self-contained, with no external assets. Demos without a poster use their track illustration; no gallery registration is needed.
+
+### Optional editing guidance
+
+A demo can declare `explore: { file, change, guide? }` in `demo.config.ts`. `file` is relative to its own folder; `change` suggests one concrete edit; `guide` is an internal `/track/<track>/<guide>` route. The gallery and standard demo shell render a collapsed **Explore the code** panel with the folder and workspace command. Custom full-screen demos expose this through their gallery card without extra overlays. The generator fills the first edit automatically; no extra prompts are required. Workspace tests check that referenced source files and guide documents exist.

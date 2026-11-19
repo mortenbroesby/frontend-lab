@@ -12,6 +12,7 @@ export function discoverDemos(modules: Record<string, unknown>) {
       const demo = value as Partial<DemoDefinition>;
       validateMetadata(demo, path);
       validateTracks(demo.tracks, path);
+      validateExplore(demo.explore, path);
       return { ...(demo as DemoDefinition), id };
     });
 }
@@ -51,4 +52,25 @@ function validateTracks(tracks: unknown, path: string) {
   if (tracks.some((track) => !known.includes(track)) || new Set(tracks).size !== tracks.length) {
     throw new Error(`${path}: tracks must contain unique, valid named tracks.`);
   }
+}
+
+function validateExplore(explore: DemoDefinition['explore'], path: string) {
+  if (explore === undefined) return;
+  if (!explore || typeof explore !== 'object')
+    throw new Error(`${path}: explore must be an object.`);
+  validateExplorePaths(explore, path);
+  validateFirstChange(explore.change, path);
+}
+function matches(value: unknown, pattern: RegExp) {
+  return typeof value === 'string' && pattern.test(value);
+}
+function validateExplorePaths(explore: NonNullable<DemoDefinition['explore']>, path: string) {
+  if (!matches(explore.file, /^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*\.[a-zA-Z0-9]+$/))
+    throw new Error(`${path}: explore.file must name a file inside the demo.`);
+  if (explore.guide !== undefined && !matches(explore.guide, /^\/track\/[a-z-]+\/[a-z-]+$/))
+    throw new Error(`${path}: explore.guide must be a track guide route.`);
+}
+function validateFirstChange(change: unknown, path: string) {
+  if (typeof change !== 'string' || !change.trim() || change.length > 400)
+    throw new Error(`${path}: explore.change must contain 1–400 characters.`);
 }

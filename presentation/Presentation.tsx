@@ -162,13 +162,14 @@ export function Presentation() {
   const { index, move, input, exitDemo } = useSlides();
   const swipe = useSlideSwipe(index, move);
   const timer = useElapsedTime();
-  const { focus: focusScope, walkthrough } = usePresentationFocus();
+  const { focus: focusScope, walkthrough, demoStatus } = usePresentationFocus();
   const appHref = galleryHref('/');
   const remoteState = useMemo(
     () => ({
       kind: 'state' as const,
       focus: focusScope,
       walkthrough,
+      demoStatus,
       index,
       total: slides.length,
       title: slides[index].title,
@@ -176,7 +177,7 @@ export function Presentation() {
       next: slides[index + 1]?.title ?? '',
       elapsed: timer.formatted,
     }),
-    [index, timer.formatted, focusScope, walkthrough],
+    [index, timer.formatted, focusScope, walkthrough, demoStatus],
   );
   const { mode, setMode, setPresenter, setClean, onRemoteConnection, remoteConnected } =
     usePresentationMode();

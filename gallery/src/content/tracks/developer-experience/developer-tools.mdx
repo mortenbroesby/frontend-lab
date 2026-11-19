@@ -1,0 +1,28 @@
+## Turn a repeated task into a small tool
+
+**What do you keep looking up or typing?** Pick one task you did recently. First check whether Git, your editor or an existing npm script already solves it; adopting that solution is a useful result.
+
+### Choose one useful input and output
+
+| Friction | First experiment | Optional stretch |
+| --- | --- | --- |
+| Finding the right command | Run the Lab's command inventory below. Filter it to one workspace or task. | Explain when a command is missing instead of silently returning nothing. |
+| Preparing a change for review | Run `git diff --stat` and `git diff --check`. Decide what information your own review needs beyond these commands. | Group changed files by workspace; distinguish staged, unstaged and untracked files. |
+| Repeating a debugging setup | Write down the steps to reach one UI state. Replace the repeated part with an editor task or a tiny script. | Add a dry run before any action that changes files. |
+
+### Try the existing command inventory
+
+After [local setup](#/guide/setup), from the repository root:
+
+```sh
+node gallery/exercises/tooling/commands.mjs package.json
+node --test gallery/exercises/tooling/commands.test.mjs
+```
+
+Read those two files. Pick a change that would help you find a command faster: a filter, a shorter display or a clearer empty result. Add one example of the expected output, then change the script. The existing Node script is an optional starting point; you can work in your own repository instead.
+
+### Keep the tool smaller than the problem
+
+Try it against an empty result and a failing underlying command. Does it explain what happened and return a useful exit code? Compare it with doing the task directly. Remove the wrapper if it adds more steps than it saves.
+
+If you invoke another process from Node, prefer an executable plus an argument array to building a shell string. See [Node child processes](https://nodejs.org/docs/latest-v24.x/api/child_process.html). Use [Git's diff reference](https://git-scm.com/docs/git-diff) to understand exactly which changes your command includes.

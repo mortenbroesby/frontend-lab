@@ -1,3 +1,4 @@
+import { ExploreCode } from '@lab/demo-kit/explore-code';
 import { useState } from 'react';
 import { Input } from '@lab/ui/input';
 import { requirementLabels } from '@lab/demo-kit/types';
@@ -34,7 +35,10 @@ export function DemoGallery({ track }: { track?: TrackId }) {
       </div>
       <div className="demo-grid">
         {entries.map((demo) => (
-          <DemoCard key={demo.id} demo={demo} track={track} />
+          <div className="demo-entry" key={demo.id}>
+            <DemoCard demo={demo} track={track} />
+            <ExploreCode demo={demo} id={demo.id} />
+          </div>
         ))}
       </div>
       {!entries.length && <EmptyDemos track={track} searching={Boolean(query.trim())} />}

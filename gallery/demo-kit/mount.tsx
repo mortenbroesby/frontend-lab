@@ -1,3 +1,4 @@
+import { ExploreCode } from './ExploreCode';
 import { CommandMenu } from './CommandMenu';
 import { LabMark } from './LabMark';
 import { StrictMode } from 'react';
@@ -55,6 +56,7 @@ export function mountDemo(Component: ComponentType, demo: DemoDefinition, id: st
             <Component />
           </DemoBoundary>
         </section>
+        <ExploreCode demo={demo} id={id} />
       </main>
     </StrictMode>,
   );

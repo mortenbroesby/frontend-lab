@@ -12,5 +12,11 @@ export interface DemoDefinition {
   tracks: readonly [TrackId, ...TrackId[]];
   description: string;
   author: string;
+  /** Optional editing guidance, owned by the demo. Paths are relative to its folder. */
+  explore?: {
+    file: string;
+    change: string;
+    guide?: `/track/${TrackId}/${string}`;
+  };
   requirements?: readonly (keyof typeof requirementLabels)[];
 }

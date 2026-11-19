@@ -10,25 +10,33 @@
 <h2 id="options-heading">What would you like to improve?</h2>
 <div className="track-options">
 <section aria-labelledby="feedback-heading">
-<h3 id="feedback-heading">Spend less time waiting for tests</h3>
-<p>Run the test relevant to your change automatically whenever you save.</p>
-<p>Choose a behaviour and investigate the checks it needs.</p>
-<a className="track-start-link" href="#/track/developer-experience/feedback-loop">Explore your feedback loop →</a>
-<p className="track-example">Includes a small Lab exercise; targeted checks still leave gaps.</p>
+<h3 id="feedback-heading">Faster Feedback Loops</h3>
+<p>Spend less time waiting to learn whether a change works.</p>
+<p>Choose a test, try watch mode, inspect a build cache or compare affected-project selection with a full run.</p>
+<a className="track-start-link" href="#/track/developer-experience/feedback-loop">Find your shortest useful check →</a>
+<p className="track-example">Stretch: deliberately change an input and check that a cached result is invalidated.</p>
 </section>
-<section aria-labelledby="profiling-heading">
-<h3 id="profiling-heading">Find what makes an interaction slow</h3>
-<p>Follow what happens when you type, open a panel or select an item.</p>
-<p>Record it in React Profiler before choosing a change.</p>
-<a className="track-start-link" href="#/track/developer-experience/rendering">Start recording an interaction →</a>
-<p className="track-example"><DemoLink id="react-render-detective">Explore React Render Detective</DemoLink>. Render counters aren’t speed measurements.</p>
+<section aria-labelledby="tools-heading">
+<h3 id="tools-heading">Developer Tools</h3>
+<p>Make a repeated task easier with a small CLI, Git utility or debugging helper.</p>
+<p>Find an existing command first, then decide whether a script would add anything useful.</p>
+<a className="track-start-link" href="#/track/developer-experience/developer-tools">Build or adopt a useful tool →</a>
+<p className="track-example">Optional starting point: the Lab's Node command inventory. Stretch: handle missing input and failed commands clearly.</p>
 </section>
-<section aria-labelledby="responses-heading">
-<h3 id="responses-heading">Reach the UI state you need</h3>
-<p>Explore empty, failed or slow responses without waiting for the backend.</p>
-<p>Override one response and inspect the result.</p>
-<a className="track-start-link" href="https://developer.chrome.com/docs/devtools/overrides">Start with DevTools overrides ↗</a>
-<p className="track-example">Explore overrides, blocking or throttling separately. Remove them afterwards.</p>
+<section aria-labelledby="workflows-heading">
+<h3 id="workflows-heading">Development Workflows</h3>
+<p>Reach the UI state you need without waiting for a backend or repeating setup steps.</p>
+<p>Try a local API override, compare workspace commands or automate one development-environment task.</p>
+<a className="track-start-link" href="https://developer.chrome.com/docs/devtools/overrides">Try one local response override ↗</a>
+<p className="track-example">Stretch: compare the same empty or failed response with a mock in your own project. Remove overrides afterwards.</p>
+<p>For interaction debugging, <a href="#/track/developer-experience/rendering">profile a React interaction</a> with <DemoLink id="react-render-detective">React Render Detective</DemoLink>.</p>
+</section>
+<section aria-labelledby="agents-heading">
+<h3 id="agents-heading">Agentic Workflows</h3>
+<p>Make a development task repeatable with a Codex or Copilot skill, an assisted change or a review workflow.</p>
+<p>Compare a plain request with a short, testable set of instructions.</p>
+<a className="track-start-link" href="#/track/developer-experience/agent-workflows">Try a reusable agent task →</a>
+<p className="track-example">Stretch: evaluate the review on both a known mistake and a correct change. Existing tool access is optional.</p>
 </section>
 </div>
 </section>
@@ -36,9 +44,10 @@
 <section className="track-method" aria-labelledby="method-heading">
 <h2 id="method-heading">How to work on it</h2>
 <ol>
-<li><strong>Choose a recurring annoyance.</strong><p>Pick something you can reproduce.</p></li>
-<li><strong>Try one alternative.</strong><p>Keep the task the same for a fair comparison.</p></li>
-<li><strong>Keep what helps.</strong><p>Compare effort and useful feedback. Check what it misses.</p></li>
+<li><strong>Identify friction.</strong><p>Choose a recurring interruption you can reproduce.</p></li>
+<li><strong>Explore alternatives.</strong><p>Look for an existing solution before building your own.</p></li>
+<li><strong>Experiment.</strong><p>Try one alternative on the same task.</p></li>
+<li><strong>Demonstrate the result.</strong><p>Repeat the task and compare useful feedback, effort and remaining gaps.</p></li>
 </ol>
 </section>
 

@@ -68,6 +68,18 @@ export const tracks = [
     id: 'developer-experience',
     guides: [
       {
+        slug: 'developer-tools',
+        title: 'Make a small developer tool',
+        description:
+          'Compare existing commands with a focused CLI, Git utility or debugging helper.',
+      },
+      {
+        slug: 'agent-workflows',
+        title: 'Try a repeatable agent workflow',
+        description: 'Compare a plain request with a Codex or Copilot skill you can evaluate.',
+      },
+
+      {
         slug: 'feedback-loop',
         title: 'Find your shortest feedback loop',
         description: 'Use real tests, watch mode and build caches to narrow your next check.',

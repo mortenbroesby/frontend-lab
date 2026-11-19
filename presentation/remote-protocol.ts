@@ -1,3 +1,4 @@
+import { isDemoStatus, type DemoStatus } from './demo-readiness.ts';
 import { isWalkthroughState, type WalkthroughState } from '@lab/demo-kit/walkthrough';
 import {
   isFocusAction,
@@ -5,13 +6,17 @@ import {
   type FocusAction,
   type FocusScope,
 } from '@lab/demo-kit/focus';
-export type RemoteAction = FocusAction | 'next-slide' | 'demo-play' | 'demo-stop';
+export type RemoteAction = FocusAction | 'next-slide' | 'demo-play' | 'demo-stop' | 'demo-retry';
 function isRemoteAction(value: unknown): value is RemoteAction {
-  return isFocusAction(value) || ['next-slide', 'demo-play', 'demo-stop'].includes(value as string);
+  return (
+    isFocusAction(value) ||
+    ['next-slide', 'demo-play', 'demo-stop', 'demo-retry'].includes(value as string)
+  );
 }
 export type RemoteState = {
   kind: 'state';
   focus: FocusScope;
+  demoStatus: DemoStatus | null;
   walkthrough: WalkthroughState | null;
   index: number;
   total: number;
@@ -50,12 +55,19 @@ function isRemoteState(v: Record<string, unknown>): boolean {
   return (
     v.kind === 'state' &&
     isFocusScope(v.focus) &&
-    (v.walkthrough === null || isWalkthroughState(v.walkthrough)) &&
+    validDemoState(v) &&
     validPosition(v) &&
     text(v.title, 300) &&
     text(v.notes, 12000) &&
     text(v.next, 300) &&
     text(v.elapsed, 20)
+  );
+}
+
+function validDemoState(v: Record<string, unknown>) {
+  return (
+    (v.demoStatus === null || isDemoStatus(v.demoStatus)) &&
+    (v.walkthrough === null || isWalkthroughState(v.walkthrough))
   );
 }
 

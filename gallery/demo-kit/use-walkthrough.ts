@@ -19,7 +19,7 @@ export function useWalkthrough(
     });
     const receive = (event: MessageEvent) => {
       if (!isEmbedMessage(event, parent, origin)) return;
-      if (event.data.type === 'lab:demo-enter') tour.publish();
+      if (['lab:demo-enter', 'lab:demo-ping'].includes(event.data.type)) tour.publish();
       if (event.data.type === 'lab:walkthrough-command') tour.command(event.data.action);
     };
     const interrupt = () => tour.interrupt();

@@ -26,6 +26,7 @@ test('snapshots have bounded text and valid slide positions', () => {
     kind: 'state',
     focus: 'slides',
     walkthrough: null,
+    demoStatus: null,
     index: 2,
     total: 17,
     title: 'Tracks',
@@ -51,7 +52,7 @@ test('return-to-slides commands require a request id', () => {
 });
 
 test('walkthrough controls are bounded and target a known slide', () => {
-  for (const action of ['next-slide', 'demo-play', 'demo-stop']) {
+  for (const action of ['next-slide', 'demo-play', 'demo-stop', 'demo-retry']) {
     assert.ok(isRemoteMessage({ kind: 'input', action, slide: 12, request: 'r' }));
     assert.equal(isRemoteMessage({ kind: 'input', action, slide: -1, request: 'r' }), false);
     assert.equal(isRemoteMessage({ kind: 'input', action, request: 'r' }), false);

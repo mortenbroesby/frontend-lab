@@ -12,7 +12,8 @@ export type EmbedMessage =
   | { type: 'lab:demo-input'; action: FocusAction }
   | { type: 'lab:demo-focus'; scope: FocusScope }
   | {
-      type: 'lab:demo-ready' | 'lab:demo-enter' | 'lab:demo-exit' | 'lab:demo-return';
+      type:
+        'lab:demo-ping' | 'lab:demo-ready' | 'lab:demo-enter' | 'lab:demo-exit' | 'lab:demo-return';
     };
 export function isEmbedMessage(
   event: { source: unknown; origin: string; data: unknown },
@@ -28,7 +29,11 @@ export function isEmbedMessage(
     return 'state' in data && isWalkthroughState(data.state);
   if (data.type === 'lab:demo-input') return 'action' in data && isFocusAction(data.action);
   if (data.type === 'lab:demo-focus') return 'scope' in data && isFocusScope(data.scope);
-  return ['lab:demo-ready', 'lab:demo-enter', 'lab:demo-exit', 'lab:demo-return'].includes(
-    data.type as string,
-  );
+  return [
+    'lab:demo-ping',
+    'lab:demo-ready',
+    'lab:demo-enter',
+    'lab:demo-exit',
+    'lab:demo-return',
+  ].includes(data.type as string);
 }

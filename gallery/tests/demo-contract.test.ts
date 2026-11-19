@@ -94,3 +94,19 @@ test('shared demos return to a declared source track, with a safe direct-link de
   assert.equal(demoTrack(shared, '?track=developer-experience'), 'modern-web');
   assert.equal(demoTrack(shared, '?track=https://example.com'), 'modern-web');
 });
+
+test('editing guidance is optional, with local source paths and internal guide routes', () => {
+  const path = '../../demos/example/demo.config.ts';
+  const explore = { file: 'rust/src/lib.rs', change: 'Change gravity.' };
+  assert.equal(discoverDemos({ [path]: { ...demo, explore } })[0].explore?.file, explore.file);
+  for (const patch of [
+    { file: '../outside.ts' },
+    { file: '/absolute.ts' },
+    { change: '' },
+    { guide: 'https://example.com' },
+  ])
+    assert.throws(
+      () => discoverDemos({ [path]: { ...demo, explore: { ...explore, ...patch } } }),
+      /explore/,
+    );
+});

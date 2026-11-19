@@ -15,7 +15,8 @@
     "./embed-protocol": "./embed-protocol.ts",
     "./focus": "./focus.ts",
     "./walkthrough": "./walkthrough.ts",
-    "./use-walkthrough": "./use-walkthrough.ts"
+    "./use-walkthrough": "./use-walkthrough.ts",
+    "./explore-code": "./ExploreCode.tsx"
   },
   "dependencies": {
     "react": "19.3.1",

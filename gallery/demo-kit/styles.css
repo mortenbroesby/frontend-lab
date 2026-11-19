@@ -407,3 +407,11 @@ pre:not([data-slot]) {
   color: var(--lab-muted);
   font-size: 0.85rem;
 }
+
+.demo-code {
+  margin-top: 12px;
+}
+.demo-code p {
+  margin-block: 12px;
+  overflow-wrap: anywhere;
+}

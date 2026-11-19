@@ -1,3 +1,4 @@
+import { DemoLoading } from './demo-loading';
 import { useFrameWalkthrough } from './use-frame-walkthrough';
 import { DemoFrame } from './demo-frame';
 import { useEffect, useRef, useState } from 'react';
@@ -17,7 +18,7 @@ export function WidescreenFrame({
   const frame = useRef<HTMLIFrameElement>(null);
   const url = new URL(src, location.href);
   url.searchParams.set('presentationOrigin', location.origin);
-  const loaded = useFrameWalkthrough(frame, url.href);
+  const connection = useFrameWalkthrough(frame, url.href);
   const container = useRef<HTMLDivElement>(null);
   const [viewport, setViewport] = useState({ scale: 0, height: 720 });
   useEffect(() => {
@@ -35,7 +36,8 @@ export function WidescreenFrame({
     <div className="widescreen-frame" ref={container}>
       <DemoFrame
         ref={frame}
-        onLoad={loaded}
+        key={connection.attempt}
+        inert={connection.status !== 'ready'}
         src={url.href}
         title={title}
         allow={allow}
@@ -44,6 +46,7 @@ export function WidescreenFrame({
           transform: `translate(-50%, -50%) scale(${viewport.scale})`,
         }}
       />
+      <DemoLoading status={connection.status} retry={connection.retry} />
     </div>
   );
 }

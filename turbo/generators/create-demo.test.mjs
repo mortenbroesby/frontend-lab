@@ -157,9 +157,15 @@ test('gives participants an exact route, editable file and persistent first chan
   const instructions = await createDemo(root, answers);
   assert.match(instructions, /npm install[\s\S]*npm run dev --workspace @lab\/demo-lab-quiz/);
   assert.match(instructions, /URL printed/i);
-  assert.match(instructions, /#\/demo\/lab-quiz/);
+  const route = instructions.match(/Gallery path: (\S+)/)?.[1];
+  assert.equal(route, 'demos/lab-quiz/index.html');
+  const entry = await readFile(join(root, route), 'utf8');
+  assert.match(entry, /main\.tsx/);
+  assert.doesNotMatch(instructions, /#\/demo\//);
   assert.match(instructions, /demos\/lab-quiz\/index\.tsx/);
   const notes = await readFile(join(root, 'demos/lab-quiz/README.md'), 'utf8');
+  assert.ok(notes.includes(route));
+  assert.doesNotMatch(notes, /#\/demo\//);
   assert.match(notes, /npm run typecheck --workspace/);
   assert.match(notes, /updates automatically/i);
   assert.match(notes, /demo\.config\.ts/);

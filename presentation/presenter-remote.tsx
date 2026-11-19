@@ -174,13 +174,24 @@ function DemoRemote({
     </>
   );
 }
-function RemoteNavigation({
+function RemoteDemoControls({
   state,
   connected,
   request,
 }: Omit<RemoteContentProps, 'state'> & { state: RemoteState }) {
+  if (state.demoStatus === 'loading')
+    return <p role="status">Loading demo… Use Next slide to skip.</p>;
+  if (state.demoStatus === 'unavailable')
+    return (
+      <>
+        <p role="status">The demo is not responding. Retry or continue to the next slide.</p>
+        <Button variant="outline" disabled={!connected} onClick={() => request('demo-retry')}>
+          Retry demo
+        </Button>
+      </>
+    );
   return (
-    <section className="remote-control-panel" aria-label="Remote control">
+    <>
       {state.walkthrough ? (
         <DemoRemote tour={state.walkthrough} connected={connected} request={request} />
       ) : (
@@ -193,6 +204,17 @@ function RemoteNavigation({
           onBack={() => request('back')}
         />
       )}
+    </>
+  );
+}
+function RemoteNavigation({
+  state,
+  connected,
+  request,
+}: Omit<RemoteContentProps, 'state'> & { state: RemoteState }) {
+  return (
+    <section className="remote-control-panel" aria-label="Remote control">
+      <RemoteDemoControls state={state} connected={connected} request={request} />
       <Button
         variant="outline"
         disabled={!connected || state.index === state.total - 1}

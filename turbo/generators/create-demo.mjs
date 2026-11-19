@@ -130,7 +130,7 @@ Install once after generation to link the new workspace. Open the URL printed by
 Edit demos/${id}/index.tsx and save; the browser updates automatically. ${firstChange}
 
 The gallery discovers demo.config.ts automatically; no registration needed.
-With npm run dev at the root, open the gallery URL followed by #/demo/${id}.
+With npm run dev at the root, open demos/${id}/index.html relative to the gallery URL.
 
 Check this demo: npm run check --workspace @lab/demo-${id}.
 For types only: npm run typecheck --workspace @lab/demo-${id}.
@@ -144,6 +144,7 @@ export default {
   tracks: [${JSON.stringify(track)}],
   description: ${JSON.stringify(description.trim())},
   author: ${JSON.stringify(author.trim())},
+  explore: { file: "index.tsx", change: ${JSON.stringify(firstChange)} },
 } satisfies DemoDefinition;
 `;
     // Load at execution time: Turbo's config bundler cannot bundle Prettier's runtime.
@@ -176,6 +177,8 @@ Install once after generation to link the new workspace. Open the URL printed by
 Edit demos/${id}/index.tsx and save; the browser updates automatically.
 ${firstChange}
 
-Gallery (optional): npm run dev, then its printed URL + #/demo/${id}.
+Gallery (optional): npm run dev.
+Gallery path: demos/${id}/index.html
+Open this path relative to the gallery URL (keep any hosting base path).
 Check: npm run check --workspace @lab/demo-${id}.`;
 }

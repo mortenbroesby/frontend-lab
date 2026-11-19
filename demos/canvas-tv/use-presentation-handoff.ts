@@ -45,7 +45,10 @@ export function usePresentationHandoff(
   useEffect(() => {
     if (!origin) return;
     const receive = (event: MessageEvent) => {
-      if (isEmbedMessage(event, window.parent, origin)) receiveMessage(event.data);
+      if (!isEmbedMessage(event, window.parent, origin)) return;
+      if (event.data.type === 'lab:demo-ping')
+        window.parent.postMessage({ type: 'lab:demo-ready' }, origin);
+      else receiveMessage(event.data);
     };
     window.addEventListener('message', receive);
     window.parent.postMessage({ type: 'lab:demo-ready' }, origin);

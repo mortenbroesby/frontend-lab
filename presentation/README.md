@@ -41,3 +41,7 @@ Orbit and Browser Beat use the same independent iframe bridge for remote walkthr
 Browser Beat sweeps the actual tone, echo and pitch sliders, then stops the sound. Browsers may require one **Play** tap on the audience screen before remote audio works; a blocked start shows that instruction on the remote. Orbit scrolls through the object story and changes its finish, respecting reduced motion. Leaving a slide destroys its iframe and resources. Remote previews remain static.
 
 Demo steps stay in their own workspaces. `@lab/demo-kit/use-walkthrough` provides cancellation and a source/origin-checked message contract; the presentation only receives step labels and status. Standalone demos do not activate this bridge. Remote commands carry the current slide index so delayed commands cannot act on another slide.
+
+### Demo readiness
+
+TV, Orbit and Browser Beat report app readiness over the existing origin-checked iframe bridge. Until the demo responds, its directional inputs stay in the demo instead of advancing the slides. After eight seconds without a response, the presentation and remote offer **Retry demo**; retry creates a fresh iframe. **Next slide** on the remote and the existing Continue presentation link remain deliberate ways to skip. A late response can recover without reloading. Loading checks do not unlock audio or change browser permissions.
