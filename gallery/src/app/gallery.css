@@ -876,8 +876,11 @@
 .worktree-picture figcaption {
   margin-top: 0.75rem;
 }
-.worktree-folders code {
-  overflow-wrap: anywhere;
+.worktree-branch {
+  display: flex;
+  align-items: center;
+  align-self: start;
+  gap: 0.4rem;
 }
 .worktree-merge {
   display: flex;

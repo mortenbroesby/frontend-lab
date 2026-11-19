@@ -10,13 +10,13 @@ Think of two desks sharing one filing cabinet. Each desk has its own papers to w
   <div className="worktree-history"><GitBranch aria-hidden="true" /><strong>One shared Git history</strong><span>The project's saved commits</span></div>
   <div className="worktree-folders">
     <div>
+      <span className="worktree-branch"><GitBranch aria-hidden="true" size={16} />Branch: <code>main</code></span>
       <pre className="worktree-tree" role="img" aria-label="Repo folder containing README.md">{'Repo/\n└── README.md'}</pre>
-      <code>main</code>
       <span>Your current work stays here.</span>
     </div>
     <div>
+      <span className="worktree-branch"><GitBranch aria-hidden="true" size={16} />Branch: <code>example</code></span>
       <pre className="worktree-tree" role="img" aria-label="Repo.worktrees folder containing worktree-example, with its own README.md">{'Repo.worktrees/\n└── worktree-example/\n    └── README.md'}</pre>
-      <code>experiment/<wbr />worktrees</code>
       <span>Try a change over here.</span>
     </div>
   </div>
@@ -59,7 +59,7 @@ In your existing repository's root, run:
 
 ```sh
 git status --short
-git worktree add -b experiment/worktrees ../Repo.worktrees/worktree-example HEAD
+git worktree add -b example ../Repo.worktrees/worktree-example HEAD
 git worktree list
 ```
 
@@ -72,14 +72,14 @@ cd ../Repo.worktrees/worktree-example
 git branch --show-current
 ```
 
-**Expected:** `experiment/worktrees`. Open this folder in a separate editor window too.
+**Expected:** `example`. Open this folder in a separate editor window too.
 
 <details>
 <summary>How does Git reserve the branch for this folder?</summary>
 
 **It happens automatically when you check out the branch.** No separate locking command is needed.
 
-Each worktree has its own `HEAD`: Git's record of what you're working on. Here, it points to the shared branch `refs/heads/experiment/worktrees`. The linked folder's `.git` file points to its bookkeeping directory inside the original repository.
+Each worktree has its own `HEAD`: Git's record of what you're working on. Here, it points to the shared branch `refs/heads/example`. The linked folder's `.git` file points to its bookkeeping directory inside the original repository.
 
 From the original terminal, inspect the association:
 
@@ -88,10 +88,10 @@ git worktree list --porcelain
 git -C ../Repo.worktrees/worktree-example symbolic-ref HEAD
 ```
 
-The second command prints `refs/heads/experiment/worktrees`. Now try:
+The second command prints `refs/heads/example`. Now try:
 
 ```sh
-git switch experiment/worktrees
+git switch example
 ```
 
 **Expected: Git refuses**, because that branch is already checked out in the other folder. Git checks the registered worktrees before allowing a checkout. This prevents two sets of working files from advancing the same branch independently.
@@ -145,8 +145,8 @@ If it shows unfinished work, stop here and finish or save that work before integ
 
 ```sh
 git switch main
-git diff main...experiment/worktrees
-git merge experiment/worktrees
+git diff main...example
+git merge example
 ```
 
 Review the diff before merging. If Git opens an editor, save the merge message to finish. If changes conflict, resolve the marked files, stage them and commit, or use `git merge --abort` to return to the pre-merge state. Rerun relevant checks after integration.
@@ -162,7 +162,7 @@ From the original terminal:
 ```sh
 git -C ../Repo.worktrees/worktree-example status --short --ignored
 git worktree remove ../Repo.worktrees/worktree-example
-git branch -d experiment/worktrees
+git branch -d example
 git worktree list
 ```
 
