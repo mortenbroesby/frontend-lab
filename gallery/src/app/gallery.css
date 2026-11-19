@@ -837,3 +837,55 @@
   color: var(--track-colour, var(--lab-ink));
   stroke-width: 1.75;
 }
+
+.worktree-picture {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+.worktree-history,
+.worktree-folders > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem;
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+  background: var(--lab-surface);
+  min-width: 0;
+}
+.worktree-history {
+  border-top: 3px solid var(--track-colour, var(--lab-focus));
+}
+.worktree-folders {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.worktree-picture svg,
+.worktree-merge svg {
+  color: var(--track-colour, var(--lab-focus));
+  flex: none;
+}
+.worktree-picture span,
+.worktree-picture figcaption {
+  color: var(--lab-muted);
+  font-size: 0.875rem;
+}
+.worktree-picture figcaption {
+  margin-top: 0.75rem;
+}
+.worktree-folders code {
+  overflow-wrap: anywhere;
+}
+.worktree-merge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-lg);
+}

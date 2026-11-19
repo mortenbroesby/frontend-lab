@@ -1,8 +1,37 @@
-## Work on two things without switching branches
+import { FolderOpen, GitBranch, GitMerge } from 'lucide-react';
 
-**A worktree is another folder for the same Git repository, with its own checked-out branch.** Keep your current work open while you try an idea, review a change or give an agent a separate workspace.
+## One project. Two working folders.
 
-Branches and commits are shared; edited files and staging are separate. A worktree is not a backup or a security sandbox.
+**A worktree lets you open the same project in two folders and work on something different in each.** No need to put one task away before starting another.
+
+Think of two desks sharing one filing cabinet. Each desk has its own papers to work on. The cabinet holds the project's saved history.
+
+<figure className="worktree-picture">
+  <div className="worktree-history"><GitBranch aria-hidden="true" /><strong>One shared Git history</strong><span>The project's saved commits</span></div>
+  <div className="worktree-folders">
+    <div><span aria-hidden="true">↕</span><FolderOpen aria-hidden="true" /><strong>Original folder</strong><code>main</code><span>Your current work stays here.</span></div>
+    <div><span aria-hidden="true">↕</span><FolderOpen aria-hidden="true" /><strong>New worktree</strong><code>experiment/<wbr />worktrees</code><span>Try a change over here.</span></div>
+  </div>
+  <figcaption>Two sets of working files. One repository behind them.</figcaption>
+</figure>
+
+### What happens when you edit?
+
+Change the README in the new folder. The original README stays as it was.
+
+- **Save** updates the file in that folder.
+- **Commit** records the change on the experiment branch. The original files still don't change.
+- **Merge** brings that committed change into your target branch.
+
+<div className="worktree-merge" role="group" aria-label="Merging brings a committed change from the experiment branch into main">
+  <span>Experiment's commit</span><GitMerge aria-hidden="true" /><strong>Merge into main</strong>
+</div>
+
+A **branch** is a line of saved work. A **worktree** is the folder where you edit it. Worktrees share branches and commits, but each has its own files and selection of changes to commit.
+
+**Use one when:** you want to try an idea, review someone else's change or give an agent a separate workspace while keeping your current task open. It isn't a backup or a security sandbox.
+
+### The lifecycle
 
 <div className="guide-flow" role="group" aria-label="Worktree lifecycle">
   <div><strong>Create</strong><span>A folder and a branch for one task</span></div>
