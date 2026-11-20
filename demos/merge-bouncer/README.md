@@ -1,19 +1,57 @@
 # Merge Bouncer
 
-The game fills the browser viewport. Choose **Fullscreen** to hide browser chrome on supported devices.
+A three-lane arcade game about reviewing pull requests. You’re the office knight at the brass gate. A clerk brings you a four-line button fix. The next courier claims to have fixed a typo in 912 lines. Which one do you let into `main`?
 
-Choose **Start game** from the title screen. Navigate with the arrow keys and Enter, or tap a choice. **Help** explains the goal, controls and timing. Open **Pause → Help** for a reminder during a shift. **Settings** remembers sound and reduced motion on this browser. During a shift, choose **Pause → Settings** to adjust either, then resume.
+## Run the demo
 
-Clerks shamble down the hall with envelopes. Interns in purple sprint with folders. Read the PR label above each courier to judge the change.
+From the repository root, use Node 24 and the npm version pinned in [package.json](../../package.json). On a fresh checkout, run `npm ci` once. Then start the game:
 
-Use A/D to change lanes and W/S to step forward or back at the gate. Arrow keys also move the knight. On touchscreens, tap a lane and an action. When a pull request enters the brass gate, merge (Space), test (N) or bounce (M). Testing schedules a same-lane return with a definitive verdict. A missed bad change counts as a regression. Extend the 45-second release once with E.
+```sh
+npm run dev --workspace @lab/demo-merge-bouncer
+```
 
-Bounce a bad PR to bank one duck scout. Press Q or tap the duck beside the knight to reveal the verdict of the nearest approaching PR in another lane. If there is no target yet, the duck waits and you keep the scout.
+Open the address Vite prints and choose **Start game**. To play on a phone on the same Wi-Fi, append `-- --host 0.0.0.0` to the command and open Vite’s **Network** address on the phone.
 
-Clean merges and correctly bounced bugs earn 100 points times your chain, up to 5×. Testing keeps the chain. Wrong calls and missed PRs break it. Five clean merges clear the hall for the Merge Troll. Move to the center lane, test its shielded PR at the gate, then bounce it on its return to ship the release. Merging it or letting it pass ends the shift.
+## Your first shift
 
-From the repository root, run `npm run dev --workspace @lab/demo-merge-bouncer`. Edit the handcrafted arrivals in `rules.ts` to change the difficulty. Phaser draws the board in `board.ts`; the round rules also run independently with `npm test --workspace @lab/demo-merge-bouncer`.
+1. Stay in the middle lane for the first courier. Read the PR label, wait for the courier to reach the brass gate, then **Merge** the button fix.
+2. Watch the other lanes. Purple interns run faster than clerks. **Bounce** a risky change or **Test** one you’re unsure about. A tested PR returns in the same lane with a verdict.
+3. Merge five clean PRs within the 45-second release window to summon the **Merge Troll**. It carries a shielded, 9,999-line PR down the center lane. **Test** it at the gate, then **Bounce** it on its return to win.
 
-Open **Upgrades** during a round to pause at the upgrade desk. A clean merge or a correctly bounced bug earns one story point. Two points buy one piece of gear for the current shift. Spending leaves your arcade score intact.
+Merging a bad PR or letting one slip past costs a strike. Three strikes end the shift. The troll gets its own 18-second clock, and letting it through ends the game immediately.
 
-The in-game GitHub repository and numbered pull requests are fictional. The [GitHub mark](https://github.githubassets.com/favicons/favicon-dark.svg) is bundled locally.
+## Controls
+
+| Action | Keyboard | Touch |
+| --- | --- | --- |
+| Move | A/D or ←/→ to switch lanes. W/S or ↑/↓ to step forward or back. | Tap a lane. |
+| Merge / Test / Bounce | Space / N / M | Tap the matching action. |
+| Scout another lane | Q | Tap the duck. |
+| Extend the clock once | E | Tap **+10 sec**. |
+
+**Pause → Help** keeps the clock stopped while you check the controls. **Settings** remembers sound and reduced-motion preferences in this browser. **Fullscreen** is available on supported devices.
+
+## Scoring and upgrades
+
+A clean merge or a correctly bounced bug earns one story point and builds a score multiplier up to 5×. Testing preserves the chain. Bouncing a bug also banks a duck scout that can reveal an approaching PR in another lane.
+
+Open **Upgrades** to pause the shift and spend two story points. The **Fold-out gate** lets you review earlier. The **Spring-loaded stamp** shortens the wait between reviews. Each lasts for the current shift.
+
+## Change the game
+
+For a first experiment, mark the opening courier as a runner in the `release` list and replay the shift. Watch how much sooner you need to react.
+
+| To change… | Start here |
+| --- | --- |
+| Arrivals, verdicts, scoring or the boss encounter | [rules.ts](./rules.ts) |
+| How creatures move and scale across the hall | [board.ts](./board.ts) and [hall.ts](./hall.ts) |
+| Keyboard, touch or the in-game HUD | [index.tsx](./index.tsx) |
+
+Phaser draws the hall. React handles input and menus. The round rules run independently of both, so you can check timing and win conditions without opening a browser:
+
+```sh
+npm test --workspace @lab/demo-merge-bouncer
+npm run check --workspace @lab/demo-merge-bouncer
+```
+
+The repository and pull requests inside the game are fictional. The [GitHub mark](https://github.githubassets.com/favicons/favicon-dark.svg) is bundled locally.
