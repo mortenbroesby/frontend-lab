@@ -1,7 +1,16 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
-import { act, initialRound, reviewStart, step, type Action, type Round } from './rules';
+import {
+  act,
+  initialRound,
+  reviewStart,
+  step,
+  type Action,
+  type ImpactKind,
+  type Round,
+} from './rules';
 import { playCue } from './sound';
+import inspectorUrl from './duck-inspector.png';
 import './style.css';
 
 const keys: Record<string, Action | undefined> = {
@@ -109,7 +118,7 @@ function useRound() {
     if (mode !== 'running') return;
     const previous = round.current.impact;
     act(round.current, action);
-    if (previous !== round.current.impact) playCue(sound, action);
+    if (previous !== round.current.impact) playCue(sound, round.current.impact);
     if (round.current.status !== 'playing') setMode(round.current.status);
     refresh();
   }
@@ -211,6 +220,22 @@ function ControlBank({ active, choose }: { active: boolean; choose: (a: Action) 
     </div>
   );
 }
+const duckLines: Partial<Record<ImpactKind, string>> = {
+  block: 'Quack of order!',
+  scout: 'Duly noted.',
+};
+
+function DuckAside({ round }: { round: Round }) {
+  const impact = round.impact;
+  if (!impact || round.elapsed - impact.at > 1.1) return null;
+  const line = duckLines[impact.kind];
+  if (!line) return null;
+  return (
+    <span key={impact.at} className="mb-aside" aria-hidden="true">
+      {line}
+    </span>
+  );
+}
 function LaneControls({ r, choose }: { r: Round; choose: (action: Action) => void }) {
   return (
     <>
@@ -235,20 +260,9 @@ function LaneControls({ r, choose }: { r: Round; choose: (action: Action) => voi
           disabled={!r.duckReady}
           onClick={() => choose('scout')}
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 32 32"
-            width="31"
-            height="31"
-            shapeRendering="crispEdges"
-          >
-            <path fill="#361f33" d="M2 15h7v2h5V8h3V5h9v3h2v7h4v4h-5v5h-4v3H8v-2H4v-4H2z" />
-            <path fill="#ffcf55" d="M4 17h6v2h6V9h3V7h5v2h2v9h-2v5h-4v2H9v-2H6v-3H4z" />
-            <path fill="#ff924a" d="M25 14h7v3h-7z" />
-            <path fill="#20192e" d="M22 10h2v3h-2z" />
-            <path className="mb-wing" fill="#fff29e" d="M8 18h8v2h-2v2H9z" />
-          </svg>
+          <img src={inspectorUrl} width="40" height="40" alt="" draggable={false} />
         </button>
+        <DuckAside round={r} />
       </div>
     </>
   );

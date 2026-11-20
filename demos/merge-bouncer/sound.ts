@@ -1,24 +1,37 @@
-import type { Action } from './rules';
+import type { ImpactKind, Round } from './rules';
 
-const tones: Partial<Record<Action, [number, number]>> = {
-  merge: [330, 495],
-  bounce: [160, 52],
-  test: [220, 740],
+type Note = [delay: number, from: number, to: number, voice: OscillatorType];
+const knock: Note = [0, 160, 52, 'triangle'];
+const cues: Partial<Record<ImpactKind, Note[]>> = {
+  merge: [[0, 330, 495, 'triangle']],
+  block: [knock, [0.34, 730, 395, 'sawtooth']],
+  reject: [knock],
+  regression: [[0, 220, 98, 'triangle']],
+  test: [[0, 220, 740, 'triangle']],
 };
 
-// The stamp is a short falling knock; the lab tube rises as the ticket leaves.
-export function playCue(context: AudioContext | null, action: Action) {
-  const tone = tones[action];
-  if (!context || !tone) return;
-  const [from, to] = tone;
+export function playCue(context: AudioContext | null, impact: Round['impact']) {
+  if (!context || !impact) return;
+  const now = context.currentTime;
+  cues[impact.kind]?.forEach(([delay, from, to, voice]) =>
+    chirp(context, now + delay, from, to, voice),
+  );
+}
+
+function chirp(
+  context: AudioContext,
+  now: number,
+  from: number,
+  to: number,
+  voice: OscillatorType,
+) {
   const oscillator = context.createOscillator();
   const gain = context.createGain();
-  const now = context.currentTime;
-  oscillator.type = 'triangle';
+  oscillator.type = voice;
   oscillator.frequency.setValueAtTime(from, now);
   oscillator.frequency.exponentialRampToValueAtTime(to, now + 0.1);
   gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(0.12, now + 0.005);
+  gain.gain.exponentialRampToValueAtTime(voice === 'triangle' ? 0.12 : 0.035, now + 0.005);
   gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
   oscillator.connect(gain).connect(context.destination);
   oscillator.onended = () => {

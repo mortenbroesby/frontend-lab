@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import knightUrl from './office-knight.png';
+import { drawShredder, shredderInset, shredderHeightAboveGate } from './shredder';
 import { dispatchPaper } from './paper-flight';
 import depotUrl from './depot.jpg';
 import { reviewStart, type Round } from './rules';
@@ -29,6 +30,8 @@ type Floor = ReturnType<typeof metrics>;
 function drawFloor(g: Graphics, floor: Floor, selected: number) {
   g.clear();
   for (let lane = 0; lane < 3; lane++) drawLane(g, floor, lane, lane === selected);
+  for (const x of [shredderInset, floor.width - shredderInset])
+    drawShredder(g, x, floor.zone - shredderHeightAboveGate);
 }
 
 function drawLane(
@@ -91,6 +94,14 @@ function drawCard(
   const top = y - 78;
   const active = card.lane === selected && card.progress >= reviewStart;
   drawCardFrame(g, x, top, width, active);
+  if (card.id % 3 === 2) {
+    // Someone in accounts put their espresso on the paperwork again.
+    g.lineStyle(2, 0x9e663e, 0.23)
+      .beginPath()
+      .arc(x + width - 21, top + 35, 11, 0.45, 5.8)
+      .strokePath();
+    g.fillStyle(0xa4754b, 0.24).fillEllipse(x + width - 12, top + 46, 4, 3);
+  }
   positionCardLabels(labels, card, x, top, width);
 }
 

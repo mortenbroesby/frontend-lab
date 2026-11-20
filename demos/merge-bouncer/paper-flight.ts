@@ -1,5 +1,6 @@
 import type Phaser from 'phaser';
 
+import { chewPaper, shredderInset, shredderHeightAboveGate } from './shredder';
 import type { ImpactKind } from './rules';
 
 // All destinations use playfield coordinates, including on high-density screens.
@@ -35,7 +36,10 @@ export function dispatchPaper(
     delay: 90,
     duration: 310,
     ease: 'Quad.easeIn',
-    onComplete: () => paper.destroy(),
+    onComplete: () => {
+      paper.destroy();
+      if (kind === 'block' || kind === 'reject') chewPaper(scene, dest.x, dest.y);
+    },
   });
 }
 
@@ -43,8 +47,8 @@ function destination(kind: ImpactKind, x: number, gate: number, width: number) {
   const side = x < width / 2 ? -1 : 1;
   const destinations = {
     block: {
-      x: side < 0 ? -12 : width + 12,
-      y: gate - 18,
+      x: side < 0 ? shredderInset : width - shredderInset,
+      y: gate - shredderHeightAboveGate,
       angle: side * 130,
       text: 'BOUNCED',
       color: '#ae3a24',
