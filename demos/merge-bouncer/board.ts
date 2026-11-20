@@ -4,9 +4,10 @@ import { drawShredder, shredderInset, shredderHeightAboveGate } from './shredder
 import { dispatchPaper } from './paper-flight';
 import depotUrl from './mail-hall.jpg';
 import courierUrl from './courier.png';
+import trollUrl from './merge-troll.png';
 import runnerUrl from './runner.png';
 import { hall, type Floor } from './hall';
-import { reviewStart, type Round } from './rules';
+import { trollId, reviewStart, type Round } from './rules';
 
 const ink = 0x0b0b19;
 const mint = 0x70f7e9;
@@ -56,7 +57,9 @@ function label(scene: Phaser.Scene, size: number, color: number, title = false) 
 
 function actor(scene: Phaser.Scene, card: RequestCard) {
   return {
-    body: scene.add.image(0, 0, card.runner ? 'runner' : 'courier').setOrigin(0.5, 1),
+    body: scene.add
+      .image(0, 0, card.id === trollId ? 'troll' : card.runner ? 'runner' : 'courier')
+      .setOrigin(0.5, 1),
     title: label(scene, 13, 0xfff0ce, true).setText(card.title).setDepth(4),
     info: label(scene, 11, 0xffedce)
       .setText('PR #' + card.id + ' · +' + card.lines)
@@ -66,6 +69,12 @@ function actor(scene: Phaser.Scene, card: RequestCard) {
 }
 type Actor = ReturnType<typeof actor>;
 function cardSignal(card: RequestCard) {
+  if (card.id === trollId)
+    return { text: card.verdict ? 'BAD PR · BOUNCE' : 'SHIELD · TEST', color: amber };
+  return buildSignal(card);
+}
+
+function buildSignal(card: RequestCard) {
   if (card.verdict === 'clean') return { text: 'CLEAN PR', color: 0xb4ffdb };
   if (card.verdict === 'bad') return { text: 'BAD PR', color: 0xffaf99 };
   return card.green
@@ -78,7 +87,8 @@ function drawCourier(g: Graphics, art: Actor, card: RequestCard, floor: Floor, w
   const distance = floor.depth(card.progress);
   const x = floor.xAt(card.lane, card.progress),
     feet = floor.yAt(card.progress);
-  const size = Math.min(122, floor.height * 0.26) * (0.4 + distance * 0.6);
+  const size =
+    Math.min(122, floor.height * 0.26) * (0.4 + distance * 0.6) * (card.id === trollId ? 1.45 : 1);
   const lift = Math.abs(stride) * size * 0.055;
   g.fillStyle(ink, 0.46).fillEllipse(x, feet, size * 0.69, size * 0.16);
   art.body
@@ -151,6 +161,7 @@ class Depot extends Phaser.Scene {
   preload() {
     this.load.image('depot', depotUrl);
     this.load.image('courier', courierUrl);
+    this.load.image('troll', trollUrl);
     this.load.image('runner', runnerUrl);
     this.load.image('office-knight', knightUrl);
   }

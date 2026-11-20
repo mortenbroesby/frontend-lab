@@ -10,7 +10,7 @@ Use A/D to change lanes and W/S to step forward or back at the gate. Arrow keys 
 
 Bounce a bad PR to bank one duck scout. Press Q or tap the duck beside the knight to reveal the verdict of the nearest approaching PR in another lane. If there is no target yet, the duck waits and you keep the scout.
 
-Clean merges and correctly bounced bugs earn 100 points times your chain, up to 5×. Testing keeps the chain. Wrong calls and missed PRs break it. Five clean merges still win the shift.
+Clean merges and correctly bounced bugs earn 100 points times your chain, up to 5×. Testing keeps the chain. Wrong calls and missed PRs break it. Five clean merges clear the hall for the Merge Troll. Move to the center lane, test its shielded PR at the gate, then bounce it on its return to ship the release. Merging it or letting it pass ends the shift.
 
 From the repository root, run `npm run dev --workspace @lab/demo-merge-bouncer`. Edit the handcrafted arrivals in `rules.ts` to change the difficulty. Phaser draws the board in `board.ts`; the round rules also run independently with `npm test --workspace @lab/demo-merge-bouncer`.
 

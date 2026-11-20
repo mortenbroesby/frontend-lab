@@ -66,13 +66,29 @@ test('a full release can be won without guessing the ambiguous typo', () => {
   play(24.495, 0, 'merge');
   play(27.735, 1, 'bounce');
   play(32.055, 0, 'merge');
+  assert.equal(r.status, 'playing');
+  assert.equal(r.cards.length, 1);
+  assert.equal(r.cards[0].title, 'The Merge Troll');
+  const missed = structuredClone(r);
+  step(missed, 7);
+  assert.equal(missed.status, 'lost');
+  const wrong = structuredClone(r);
+  step(wrong, 5);
+  act(wrong, 'right');
+  act(wrong, 'merge');
+  assert.equal(wrong.status, 'lost');
+  play(37.055, 1, 'bounce');
+  assert.match(r.feedback, /test/i);
+  play(37.075, 1, 'test');
+  assert.equal(r.pending.length, 1);
+  play(44.275, 1, 'bounce');
   assert.equal(r.status, 'won');
   assert.equal(r.merges, 5);
   assert.equal(r.regressions, 0);
   step(r, 90);
   act(r, 'left');
-  assert.equal(r.elapsed, 32.055);
-  assert.equal(r.lane, 0);
+  assert.equal(r.elapsed, 44.275);
+  assert.equal(r.lane, 1);
 });
 
 test('a missed clean PR earns nothing and the third missed bad PR ends play immediately', () => {

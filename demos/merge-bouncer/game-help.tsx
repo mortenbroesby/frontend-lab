@@ -1,7 +1,10 @@
 export function GameHelp() {
   return (
     <>
-      <p>Merge five clean pull requests before time runs out. Three regressions end the shift.</p>
+      <p>
+        Merge five clean pull requests to summon the Merge Troll. Test its shielded PR, then bounce
+        it when it returns to lane 2. Three regressions or a troll that gets through end the shift.
+      </p>
       <p>
         <strong>Move.</strong> Read the label above each courier. Use WASD or the arrow keys to
         move, or tap a lane.

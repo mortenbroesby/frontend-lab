@@ -74,6 +74,19 @@ const release: PullRequest[] = [
   },
 ];
 
+const troll: PullRequest = {
+  at: 0,
+  lane: 1,
+  title: 'The Merge Troll',
+  lines: 9999,
+  green: true,
+  truth: 'bad',
+};
+export const trollId = release.length + 1;
+function requestFor(id: number) {
+  return id === trollId ? troll : release[id - 1];
+}
+
 export const upgrades = [
   { id: 'gate', name: 'Fold-out gate', detail: 'Review a ticket about half a second earlier.' },
   { id: 'stamp', name: 'Spring-loaded stamp', detail: 'Halve the wait between reviews.' },
@@ -92,7 +105,8 @@ export function purchase(r: Round, id: Upgrade) {
   if (id === 'stamp') r.readyAt -= reviewCooldown / 2;
 }
 function travelTime(id: number) {
-  return release[id - 1].runner ? 3.6 : 4.32;
+  if (id === trollId) return 6;
+  return requestFor(id).runner ? 3.6 : 4.32;
 }
 const reviewCooldown = 1.3;
 const testDelay = 2.16;
@@ -113,6 +127,7 @@ export type Card = {
 export type Round = {
   elapsed: number;
   remaining: number;
+  deadline: number;
   storyPoints: number;
   installed: Record<Upgrade, boolean>;
   advance: number;
@@ -133,7 +148,7 @@ export type Round = {
 };
 
 function cardFor(id: number, started: number, tested: boolean): Card {
-  const { lane, title, lines, green, truth } = release[id - 1];
+  const { lane, title, lines, green, truth, runner } = requestFor(id);
   return {
     id,
     lane,
@@ -141,7 +156,7 @@ function cardFor(id: number, started: number, tested: boolean): Card {
     lines,
     green,
     travel: travelTime(id),
-    runner: Boolean(release[id - 1].runner),
+    runner: Boolean(runner),
     started,
     progress: 0,
     verdict: tested ? truth : undefined,
@@ -152,6 +167,7 @@ export function initialRound(): Round {
   return {
     elapsed: 0,
     remaining: 45,
+    deadline: 45,
     advance: 0,
     score: 0,
     storyPoints: 0,
@@ -172,6 +188,7 @@ export function initialRound(): Round {
 }
 
 function returnTime(r: Round, card: Card) {
+  if (card.id === trollId) return r.elapsed + testDelay;
   const scheduled = [
     ...release.map((pr, i) => ({ lane: pr.lane, at: pr.at, duration: travelTime(i + 1) })),
     ...r.pending.map((p) => ({ lane: p.lane, at: p.due, duration: travelTime(p.id) })),
@@ -201,9 +218,17 @@ function arrivals(r: Round, time: number) {
   r.pending = r.pending.filter((p) => p.due > time);
 }
 
+function missedReview(r: Round, c: Card) {
+  if (c.id === trollId) return 'The Merge Troll slipped past the gate.';
+  const bad = requestFor(c.id).truth === 'bad';
+  recordImpact(r, c.lane, bad ? 'regression' : 'miss', c.started + c.travel);
+  if (bad) r.regressions++;
+  return bad ? `${c.title} slipped through · regression` : `Missed ${c.title} · no point`;
+}
+
 export function step(r: Round, seconds: number) {
   if (r.status !== 'playing' || !Number.isFinite(seconds) || seconds <= 0) return;
-  const deadline = r.extended ? 55 : 45;
+  const deadline = r.deadline;
   let time = Math.min(deadline, r.elapsed + seconds);
   arrivals(r, time);
   const missed = r.cards
@@ -211,11 +236,8 @@ export function step(r: Round, seconds: number) {
     .sort((a, b) => a.started + a.travel - (b.started + b.travel));
   const messages: string[] = [];
   for (const c of missed) {
-    const bad = release[c.id - 1].truth === 'bad';
-    recordImpact(r, c.lane, bad ? 'regression' : 'miss', c.started + c.travel);
-    if (bad) r.regressions++;
-    messages.push(bad ? `${c.title} slipped through · regression` : `Missed ${c.title} · no point`);
-    if (r.regressions === 3) {
+    messages.push(missedReview(r, c));
+    if (r.regressions === 3 || c.id === trollId) {
       time = c.started + c.travel;
       r.status = 'lost';
       break;
@@ -246,6 +268,7 @@ export function act(r: Round, action: Action) {
     if (!r.extended) {
       r.extended = true;
       r.remaining += 10;
+      r.deadline += 10;
       r.feedback = 'Deadline extended · +10 seconds';
     }
     return;
@@ -256,6 +279,10 @@ export function act(r: Round, action: Action) {
 
 function scout(r: Round) {
   if (!r.duckReady) return;
+  if (r.merges === 5) {
+    r.feedback = 'Too much paperwork for one duck. Test the troll at the gate.';
+    return;
+  }
   const target = r.cards
     .filter((card) => card.lane !== r.lane && !card.verdict && card.progress < reviewStart(r))
     .sort((a, b) => b.progress - a.progress)[0];
@@ -285,6 +312,14 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
     r.feedback = 'Verdict known. Merge or bounce this PR.';
     return;
   }
+  if (c.id === trollId && action === 'bounce' && !c.verdict) {
+    r.feedback = 'Boss shield · test first, then bounce the returning troll.';
+    return;
+  }
+  resolveReview(r, c, action);
+}
+
+function resolveReview(r: Round, c: Card, action: 'merge' | 'bounce' | 'test') {
   r.cards = r.cards.filter((other) => other !== c);
   r.readyAt = r.elapsed + reviewCooldown / (r.installed.stamp ? 2 : 1);
   if (action === 'test') {
@@ -292,6 +327,13 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
     const due = returnTime(r, c);
     r.pending.push({ id: c.id, lane: c.lane, due });
     r.feedback = `Testing ${c.title} · returns to lane ${c.lane + 1} in ${Math.ceil(due - r.elapsed)}s`;
+  } else if (c.id === trollId) {
+    const blocked = action === 'bounce';
+    recordImpact(r, c.lane, blocked ? 'block' : 'regression');
+    r.status = blocked ? 'won' : 'lost';
+    r.feedback = blocked
+      ? 'Merge Troll bounced. Release shipped!'
+      : 'The Merge Troll made it into main.';
   } else if (action === 'bounce') {
     bounce(r, c);
   } else {
@@ -311,13 +353,22 @@ function merge(r: Round, c: Card) {
     recordImpact(r, c.lane, 'merge');
     r.merges++;
     r.feedback = `Merged ${c.title} · +1 clean merge`;
-    if (r.merges === 5) r.status = 'won';
+    if (r.merges === 5) beginBoss(r);
   } else {
     recordImpact(r, c.lane, 'regression');
     r.regressions++;
     r.feedback = `Merged ${c.title} · regression`;
     if (r.regressions === 3) r.status = 'lost';
   }
+}
+
+function beginBoss(r: Round) {
+  r.cards = [cardFor(trollId, r.elapsed, false)];
+  r.nextArrival = release.length;
+  r.pending = [];
+  r.remaining = 18;
+  r.deadline = r.elapsed + r.remaining;
+  r.feedback = 'Boss in lane 2! Test the Merge Troll, then bounce it on return.';
 }
 
 function recordImpact(r: Round, lane: number, kind: ImpactKind, at = r.elapsed) {

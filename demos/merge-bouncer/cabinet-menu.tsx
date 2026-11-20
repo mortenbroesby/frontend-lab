@@ -40,7 +40,11 @@ const loadLabels = {
 
 const copy = {
   paused: ['Tea break', 'The duck is covering your shift. Clock paused.', 'Resume round'],
-  won: ['Release shipped!', 'The duck has approved your promotion to Senior Knight.', 'Play again'],
+  won: [
+    'Release shipped!',
+    'Merge Troll bounced. The duck signs off on your release.',
+    'Play again',
+  ],
   lost: ['Release blocked', '', 'Play again'],
 };
 
