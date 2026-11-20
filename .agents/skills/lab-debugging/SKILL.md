@@ -1,9 +1,11 @@
 ---
 name: lab-debugging
-description: Investigate a reproducible bug, failing check or unexpected demo behaviour before changing code. Use for local failures and regressions; use lab-ci for GitHub Actions evidence.
+description: Investigate a reproducible bug, failing check or unexpected demo behaviour before changing code. Use for failed builds, local checks and regressions.
 ---
 
 # Debug a Lab failure
+
+This repository runs checks locally. When a hosted build fails, identify the provider, commit and first failing command before reproducing it.
 
 1. State expected versus observed behaviour and one checkable success condition. Capture the failing command or interaction, revision and relevant working-tree changes. Read the full first useful error; downstream failures may be consequences.
 2. Reproduce with the smallest existing check. Trace the relevant caller, input and implementation; compare a working example and recent changes. For browser failures, inspect console/network evidence and the actual interaction with existing browser tools.

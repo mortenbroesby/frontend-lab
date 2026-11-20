@@ -1,68 +1,31 @@
 # The Frontend Lab
 
-Four tracks and standalone demos. Help participants get started independently.
+Help participants choose one of four tracks and build small experiments independently. Prefer existing browser APIs, dependencies and shared components. Update callers and remove obsolete paths when contracts change.
 
-## Scope
+## Where to work
 
-- Build focused experiments people can run, change and understand. Avoid production hardening, speculative features and future-proofing.
-- Preserve standalone npm packages, metadata-driven discovery, one generator and shared tooling. Add infrastructure only for a current need.
-- No backwards compatibility: update callers and delete obsolete paths. No aliases, adapters or dual modes for legacy behaviour.
-- Prefer deletion, direct code, existing dependencies and browser APIs. Preserve accessibility, input safety, error handling and resource cleanup; never expose secrets.
+| Task | Start here | Verify the change |
+| --- | --- | --- |
+| Create or change a standalone demo | [Demo workflow](.agents/skills/develop-demo/SKILL.md) | Run the workspace’s `check` and any demo tests. For new demos, verify gallery discovery. |
+| Edit a track or guide | [Gallery authoring](gallery/README.md#author-a-track-page) | Run `npm run build --workspace frontend-lab-gallery` and open the affected route. |
+| Change a shared control | [UI workflow](.agents/skills/lab-ui/SKILL.md) and [UI guide](shared/ui/README.md) | Verify its Storybook example, keyboard interaction and the consuming screen. |
+| Diagnose a failing check | [Debugging workflow](.agents/skills/lab-debugging/SKILL.md) | Reproduce the failure and rerun the same check after the fix. |
+| Change workspace imports or tasks | [Architecture decision](gallery/docs/decisions/elegant-frontend-architecture.md) and [Turbo workflow](.agents/skills/turborepo/SKILL.md) | Run `npm run check:architecture` and the affected workspace tasks. |
 
-## Agent skills
+Codex and Copilot CLI share the [skill catalog](.agents/skills/README.md). Update affected skills when commands or contracts change.
 
-Use the shared [skill index](.agents/skills/README.md) for demo development, Lab UI, UI review, debugging, CI, Turborepo and Fallow. Load only the skill relevant to the task; keep one copy for Codex and Copilot. Update affected skill references when commands, paths or contracts change.
+## Ownership
 
-## Architecture
+- Each `demos/<id>/` workspace owns its implementation, tests and standalone entry. Use the named generator and typed metadata for automatic discovery.
+- The gallery owns navigation, participant MDX and discovery. Link to demo HTML. Keep demo internals private to their workspace.
+- The presentation owns its standalone slide deck and presenter state. Preserve its direct URL, command palette and Konami entry points. Keep it independent of demo internals and out of ordinary navigation.
+- Put reusable UI in `shared/ui` and shared demo infrastructure in `@lab/demo-kit`. Use individual UI exports, the Lab theme and existing Storybook examples. Keep both packages independent of app logic. Preserve accessibility, scoped styling and reduced motion.
+- Write concise, undated participant guides with a motivating question, a concrete first action and relevant references. Keep essential choices visible. Keep full implementations in demos and compile only trusted repository MDX. Record architectural decisions in `gallery/docs/decisions/`.
 
-Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architecture.md); keep small demos flat.
+## Installation and delivery
 
-- `gallery/src/app/` owns routing and composition. The gallery reads demo metadata and HTML URLs, never demo components.
-- `presentation/` owns the standalone slide deck and presenter state. The combined Vite build includes its HTML entry; the gallery only links to it through the command palette and Konami code. Keep it out of ordinary navigation and independent of demo implementations.
-- Each `demos/<id>/` npm workspace owns its entry, build output, UI, state, scoped styles, effects, helpers and focused tests. No imports from other demos or gallery internals. Adding a demo must not require shell edits.
-- Reusable shadcn components and tokens live in `shared/ui` (`@lab/ui`). Use individual exports for ordinary controls; keep UI independent of app logic. Keep native controls only for a concrete demo-specific interaction (such as the worker tap pad or colour picker). Both Vite configs run Tailwind without Preflight. Follow the [UI guide](shared/ui/README.md); demonstrate new components in `demos/ui-library` and preserve keyboard, focus, labels and reduced-motion behavior.
-- Import shared kit code through `@lab/demo-kit` exports. The kit cannot import apps or contain demo-specific state or service calls.
-- Keep pure calculations separate from React/effects when useful, with tests beside them. Extract shared utilities only for multiple real consumers; no empty workspaces or speculative abstractions.
-- Entry files assemble dependencies; root scripts coordinate workspaces. Gallery tests must not own demo logic.
-- Run `npm run check:architecture` for import or ownership changes. Dependency-cruiser also runs in `npm run check`. Fix misplaced code rather than weakening rules.
-
-
-## Development
-
-- Name demo folders for the experiment, using descriptive kebab-case (for example `cross-tab-messaging`). Match the package name to `@lab/demo-<folder-id>`.
-- Use `npm run demo:new` and the [develop-demo skill](.agents/skills/develop-demo/SKILL.md). Require a name; preserve ID validation, overwrite protection and typed discovery. Keep starters separate from finished examples.
-- Use Node 24, the npm version pinned in package.json (`packageManager`), npm workspaces, Turborepo and the root lockfile. Follow [the dependency policy](gallery/docs/dependency-policy.md): retain the seven-day resolution delay and reviewed install-script decisions; do not bypass them to make an install pass. Install only when dependencies change.
+- Follow the [dependency policy](gallery/docs/dependency-policy.md). Use Node 24, the npm version pinned in `package.json`, npm workspaces and the root lockfile.
 - Keep Node/npm version changes in their own commit, separate from feature work. Keep exact npm versions in `package.json`; preserve the order of `.npmrc` policy settings and append new settings at the end. Change hosting configuration and notes only when hosting changes.
-- Each demo extends `tsconfig.base.json` and owns `typecheck`, `build` and `check` scripts; tests are optional. Preserve Turbo's kit type dependencies and the gallery/dependency-map cross-workspace inputs.
-- Run `npm run format` and `npm run lint` (React hooks, focused correctness and type-aware Promise rules). Generated code must pass too.
-
-## Verification and delivery
-
-- Use bounded checks that answer a concrete question: an existing test, type check or build. Add a small test only for an important point or nontrivial logic. No extensive suites, coverage targets, exhaustive matrices or redundant checks. Documentation and mechanical edits rarely need tests.
-- `npm run check` combines format, hooks, architecture, logic, type and build checks; it need not run for every edit.
-- No browser tests or infrastructure unless explicitly requested. A future browser-testing demo belongs in its own package.
+- Run focused checks while editing. Root `npm run check` covers formatting, lint, architecture, tests, types and builds. Add tests for meaningful behaviour. Add browser-test infrastructure only when requested.
+- Run `npm run analyze:changes` before committing and pushing. Resolve introduced findings and preserve the [Fallow baselines](.baselines/README.md). See the [Fallow workflow](.agents/skills/fallow/SKILL.md).
 - Work directly on `main`: fetch and integrate remote changes before editing and check again before pushing. Other sessions may be changing the same files; inspect overlapping changes, preserve their behaviour and rerun affected checks after integration. Commit and push scoped work. Open PRs only when requested. Report checks and remaining limits; tests are not production acceptance.
-
-## Documentation
-
-- Track landing pages explain the activity, offer concrete things to work on and show how to begin. Keep essential choices visible, pair each option with a first action and relevant guide/demo, and keep all-content browsing secondary. Adapt the grouping to the track rather than forcing generic intent categories. All four tracks use this activity-led approach.
-
-- Guides teach investigation rather than prescribe a finished implementation. Offer a motivating question, concepts, relevant documentation or demo source, and ways to evaluate choices. Keep exact setup commands and small explanatory snippets where useful; put complete implementations in demos. Worked examples are optional references, and participants may choose their own idea and outcome.
-
-- Write concise, participant-focused copy without event dates or schedules. Prefer concrete actions and useful examples. Avoid sales language, compulsory presentations, reflection prompts and instructions to report what participants learned. Say each thing once; do not repeat setup or onboarding on every page. Prefer a short explanation and a useful reference over a second walkthrough. Remove sentences that repeat the heading, restate the previous paragraph or narrate what the guide will explain. Link canonical guidance. Keep the README a local starting point, not a guide directory.
-- Participant MDX lives in `gallery/src/content/` and track subfolders. Generator templates live in `turbo/generators/templates/`. Treat MDX as trusted app code, never remote or user-supplied content.
-- Keep meaningful choices and tradeoffs in `gallery/docs/decisions/`.
-- Use the Frontend Lab theme; do not require Sapphire. Support local or hosted use. Keep temporary hosting out of participant copy; use [hosting notes](gallery/docs/hosting.md).
-
-## References
-
-- [README](README.md): tracks and quick start.
-- [Gallery guide](gallery/README.md): architecture, commands and troubleshooting.
-- [Demo guide](gallery/src/content/create-demo.mdx): participant workflow.
-- [Verification](gallery/docs/VERIFICATION.md): evidence and limits.
-
-## Fallow
-
-Codex and Copilot CLI share `.agents/skills/fallow`; follow its installed-version instructions. Config: `.fallowrc.json`. Snapshot and refresh instructions: [.baselines](.baselines/README.md). Run `npm run analyze:changes` before commits and pushes; resolve introduced findings. Do not refresh baselines to hide new findings. The official Git hook audits staged changes. GitHub Actions workflows are intentionally absent; run checks locally before pushing. See the [Fallow contributor notes](gallery/docs/fallow.md).
-
-Use the CLI. Keep one shared Fallow skill, no repo MCP entries, per-agent hooks or duplicate task maps.
