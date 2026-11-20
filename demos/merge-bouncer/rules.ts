@@ -1,5 +1,6 @@
 type Verdict = 'clean' | 'bad';
-export type Action = 'left' | 'right' | 'merge' | 'test' | 'bounce' | 'extend' | 'scout';
+export type Action =
+  'forward' | 'backward' | 'left' | 'right' | 'merge' | 'test' | 'bounce' | 'extend' | 'scout';
 
 export type ImpactKind = 'merge' | 'block' | 'reject' | 'miss' | 'test' | 'scout' | 'regression';
 
@@ -114,6 +115,7 @@ export type Round = {
   remaining: number;
   storyPoints: number;
   installed: Record<Upgrade, boolean>;
+  advance: number;
   score: number;
   chain: number;
   impact?: { kind: ImpactKind; lane: number; points: number; at: number };
@@ -150,6 +152,7 @@ export function initialRound(): Round {
   return {
     elapsed: 0,
     remaining: 45,
+    advance: 0,
     score: 0,
     storyPoints: 0,
     installed: { gate: false, stamp: false },
@@ -231,6 +234,10 @@ export function step(r: Round, seconds: number) {
 
 export function act(r: Round, action: Action) {
   if (r.status !== 'playing') return;
+  if (action === 'forward' || action === 'backward') {
+    r.advance = Math.max(0, Math.min(3, r.advance + (action === 'forward' ? 1 : -1)));
+    return;
+  }
   if (action === 'left' || action === 'right') {
     r.lane = Math.max(0, Math.min(2, r.lane + (action === 'left' ? -1 : 1)));
     return;

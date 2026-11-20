@@ -178,10 +178,17 @@ class Depot extends Phaser.Scene {
     const { clientWidth: width, clientHeight: height } = this.game.canvas;
     const zoom = this.scale.width / width;
     this.cameras.main.setOrigin(0, 0).setZoom(zoom);
-    this.backdrop.setDisplaySize(width, height);
+
     const key = `${width}/${height}/${lane}/${threshold}`;
     if (this.floorKey !== key) {
       this.floor = hall(width, height, threshold);
+      const { artWidth, artHeight, farSpacing } = this.floor;
+      this.backdrop
+        .setDisplaySize(artWidth, artHeight)
+        .setPosition((width - artWidth) / 2, (height - artHeight) * 0.42);
+      this.game.canvas
+        .closest<HTMLElement>('.mb-stage')
+        ?.style.setProperty('--mb-door-spacing', farSpacing + 'px');
       drawFloor(this.floorArt, this.floor, lane);
       this.floorKey = key;
     }
@@ -195,31 +202,32 @@ class Depot extends Phaser.Scene {
     const { height } = floor;
     this.headers.forEach((head, lane) => {
       const center = floor.xAt(lane, 1);
-      head.setPosition(center, 8);
+      head.setPosition(center, Math.min(76, floor.height * 0.22));
       const next = round.pending.find((item) => item.lane === lane);
       this.signals[lane]
-        .setPosition(center, 26)
+        .setPosition(center, Math.min(76, floor.height * 0.22) + 16)
         .setText(next ? 'TEST IN ' + Math.max(0, Math.ceil(next.due - round.elapsed)) + 's' : '');
     });
     this.zoneLabel.setPosition(8, floor.zone + 16).setText('→ main');
-    const reviewerX = floor.xAt(round.lane, 1);
-    g.fillStyle(pink, 0.13).fillEllipse(reviewerX, height - 18, 47, 12);
-    this.drawKnight(reviewerX, height, delta, round);
+    const reviewerX = floor.xAt(round.lane, 1 - round.advance * 0.06);
+    const feet = height * (1 - round.advance * 0.05);
+    g.fillStyle(pink, 0.13).fillEllipse(reviewerX, feet - 8, 47, 12);
+    this.drawKnight(reviewerX, feet, delta, round);
     this.showImpact(round, floor);
     this.drawRequests(round, floor);
   }
 
-  private drawKnight(reviewerX: number, height: number, delta: number, round: Round) {
+  private drawKnight(reviewerX: number, feet: number, delta: number, round: Round) {
     let x = reviewerX;
     let strike = 0;
     if (!this.reduced) {
       x = Phaser.Math.Linear(this.reviewer.x || reviewerX, reviewerX, 1 - Math.exp(-delta / 40));
       if (round.impact) strike = Math.max(0, 1 - (round.elapsed - round.impact.at) / 0.25);
     }
-    const size = Math.min(150, height * 0.32);
+    const size = Math.min(150, this.floor.height * 0.32) * (1 - round.advance * 0.045);
     this.reviewer
       .setDisplaySize(size, size)
-      .setPosition(x, height - 2 - Math.sin(strike * Math.PI) * 17)
+      .setPosition(x, feet - 2 - Math.sin(strike * Math.PI) * 17)
       .setAngle((x - reviewerX) * 0.1 + Math.sin(strike * Math.PI * 2) * 15);
   }
 

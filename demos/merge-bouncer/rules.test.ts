@@ -215,3 +215,14 @@ test('a runner overtakes the normal review schedule and keeps its pace after tes
   assert.equal(returned?.progress, 0);
   assert.equal(returned?.lane, runner.lane);
 });
+
+test('W/S depth movement is bounded and independent of the selected lane', () => {
+  const r = initialRound();
+  for (let i = 0; i < 6; i++) act(r, 'forward');
+  assert.equal(r.advance, 3);
+  act(r, 'left');
+  assert.equal(r.advance, 3);
+  for (let i = 0; i < 6; i++) act(r, 'backward');
+  assert.equal(r.advance, 0);
+  assert.equal(r.lane, 0);
+});

@@ -124,7 +124,7 @@ function TitlePanel({
 }) {
   const [title, description, action] = copy[mode];
   return (
-    <section aria-label={title}>
+    <section className="mb-title-panel" aria-label={title}>
       <div className="mb-cast" aria-hidden="true">
         <img src={knight} alt="" />
         <img src={duck} alt="" />
@@ -132,7 +132,7 @@ function TitlePanel({
       <h2>{title}</h2>
       <p>{description || feedback}</p>
       <p hidden={mode !== 'ready'}>
-        Tap a lane or use ← →. At the gate, merge clean, bounce bugs or test a hunch.
+        Move with WASD or tap a lane. Space merges, N tests and M bounces.
       </p>
       <div className="mb-menu-actions">
         <Button autoFocus={mode !== 'ready'} disabled={load !== 'ready'} onClick={play}>

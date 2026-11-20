@@ -14,6 +14,7 @@ import {
 import { playCue } from './sound';
 import { CabinetMenu, usePreferences, type MenuMode } from './cabinet-menu';
 import { UpgradeShop } from './upgrade-shop';
+import { ScreenTools } from './screen-tools';
 import githubMark from './github-mark.svg';
 import { touchLane } from './hall';
 import inspectorUrl from './duck-inspector.png';
@@ -22,16 +23,22 @@ import './style.css';
 const keys: Record<string, Action | undefined> = {
   arrowleft: 'left',
   arrowright: 'right',
-  d: 'scout',
-  j: 'merge',
-  k: 'test',
-  l: 'bounce',
+  a: 'left',
+  d: 'right',
+  w: 'forward',
+  s: 'backward',
+  arrowup: 'forward',
+  arrowdown: 'backward',
+  q: 'scout',
+  ' ': 'merge',
+  n: 'test',
+  m: 'bounce',
   e: 'extend',
 };
 const controls = [
-  ['merge', 'J', 'Merge'],
-  ['test', 'K', 'Test'],
-  ['bounce', 'L', 'Bounce'],
+  ['merge', 'Space', 'Merge'],
+  ['test', 'N', 'Test'],
+  ['bounce', 'M', 'Bounce'],
 ] as const;
 type Mode = MenuMode | 'running' | 'shop';
 
@@ -178,7 +185,13 @@ function CabinetHud({ round: r, mode }: { round: Round; mode: Mode }) {
   );
 }
 function shortcut(e: KeyboardEvent) {
-  if (e.altKey || e.metaKey || e.ctrlKey) return;
+  if ((['Alt', 'Meta', 'Control', 'Shift'] as const).some((key) => e.getModifierState(key))) return;
+  const target = e.target as HTMLElement;
+  const interactive =
+    e.key === ' '
+      ? 'button,a,input,textarea,select,[contenteditable]'
+      : 'input,textarea,select,[contenteditable]';
+  if (target.closest(interactive)) return;
   return keys[e.key.toLowerCase()];
 }
 function ControlBank({ choose }: { choose: (a: Action) => void }) {
@@ -226,10 +239,13 @@ function LaneControls({ r, choose }: { r: Round; choose: (action: Action) => voi
           />
         ))}
       </div>
-      <div className="mb-duck-lane" style={{ left: ((r.lane + 0.5) * 100) / 3 + '%' }}>
+      <div
+        className="mb-duck-lane"
+        style={{ bottom: r.advance * 5 + '%', left: ((r.lane + 0.5) * 100) / 3 + '%' }}
+      >
         <button
           className="mb-duck"
-          title="Duck scout (D)"
+          title="Duck scout (Q)"
           aria-label="Send duck scout"
           disabled={!r.duckReady}
           onClick={() => choose('scout')}
@@ -277,19 +293,28 @@ export default function Demo() {
     <section
       ref={game}
       data-reduced={preferences.reduceMotion.value}
+      data-mode={mode}
       className="mb-game"
       tabIndex={0}
       aria-label="Merge Bouncer game"
+      onClick={(event) => {
+        if (
+          event.detail &&
+          (event.target as HTMLElement).closest('[data-tool],.mb-lanes button,.mb-duck')
+        )
+          game.current?.focus({ preventScroll: true });
+      }}
       onKeyDown={keyDown}
     >
       <div className="mb-repo">
         <img src={githubMark} alt="GitHub" width="20" height="20" />
-        <span>
+        <span className="mb-repo-name">
           sir-clacks / <strong>mailroom</strong>
         </span>
-        <span className="mb-repo-tab">Pull requests</span>
+        <CabinetHud round={r} mode={mode} />
+        <ScreenTools />
       </div>
-      <CabinetHud round={r} mode={mode} />
+
       <div className="mb-stage">
         <div className="mb-canvas" aria-hidden="true" ref={field} />
         {mode === 'running' ? (
@@ -310,21 +335,23 @@ export default function Demo() {
       </div>
       {active && (
         <>
-          <ControlBank choose={choose} />
-          <div className="mb-status">
-            <strong>Lane {r.lane + 1}</strong>
-            <span role="status">{r.feedback}</span>
-            <Button variant="outline" size="sm" onClick={pause}>
-              Pause
-            </Button>
-          </div>
-          <div className="mb-utilities">
-            <button className="mb-shop-trigger" onClick={openShop}>
-              Upgrades · {r.storyPoints} SP
-            </button>
-            <button disabled={r.extended} onClick={() => choose('extend')}>
-              +10 sec (E)
-            </button>
+          <div className="mb-dock">
+            <ControlBank choose={choose} />
+            <div className="mb-status">
+              <strong>Lane {r.lane + 1}</strong>
+              <span role="status">{r.feedback}</span>
+              <Button variant="outline" size="sm" onClick={pause}>
+                Pause
+              </Button>
+            </div>
+            <div className="mb-utilities">
+              <button className="mb-shop-trigger" onClick={openShop}>
+                Upgrades · {r.storyPoints} SP
+              </button>
+              <button disabled={r.extended} onClick={() => choose('extend')}>
+                +10 sec (E)
+              </button>
+            </div>
           </div>
           <span className="sr-only">
             {r.cards.map((c) => describeCard(c, reviewStart(r))).join('. ')}
