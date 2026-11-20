@@ -24,7 +24,7 @@ type Mode = 'ready' | 'running' | 'paused' | 'won' | 'lost';
 const overlays = {
   ready: [
     'Sir Clacks & the duck',
-    'Your squire is a rubber duck. Your sword opens letters. Somehow, you’re in charge of shipping five clean merges before the clock runs out.',
+    'Ship five clean PRs before the night shift ends. Three regressions close the depot.',
     'Start round',
   ],
   paused: ['Tea break', 'The duck is covering your shift. Clock paused.', 'Resume round'],
@@ -75,7 +75,7 @@ function useRound() {
       last = now;
       if (round.current.status !== 'playing') setMode(round.current.status);
       refresh();
-    }, 80);
+    }, 32);
     function hidden() {
       if (document.hidden) setMode('paused');
     }
@@ -102,16 +102,22 @@ function CabinetHud({ round: r }: { round: Round }) {
   return (
     <div className="mb-hud">
       <span>
-        Release clock
+        Score<b className="mb-score">{r.score.toLocaleString()}</b>
+      </span>
+      <span>
+        Chain<b className="mb-chain">×{Math.min(5, r.chain)}</b>
+      </span>
+      <span>
+        Clock
         <b>
           {Math.floor(t / 60)}:{String(t % 60).padStart(2, '0')}
         </b>
       </span>
       <span>
-        Clean merges<b>{r.merges} / 5</b>
+        Shipped<b>{r.merges} / 5</b>
       </span>
       <span>
-        Regressions<b>{r.regressions} / 3</b>
+        Strikes<b>{r.regressions} / 3</b>
       </span>
     </div>
   );
@@ -136,10 +142,7 @@ function Overlay({
         <h2>{title}</h2>
         <p>{text}</p>
         {mode === 'ready' && (
-          <p>
-            Test a suspicious PR for a verdict. Bounce a bad one to earn a duck scout. Send the
-            duck ahead to inspect another lane. Three regressions end the shift.
-          </p>
+          <p>Merge clean. Bounce bugs. Test a hunch. Chain good calls for up to 5× points.</p>
         )}
         <Button disabled={load !== 'ready'} onClick={play}>
           {loading ? 'Powering up…' : label}

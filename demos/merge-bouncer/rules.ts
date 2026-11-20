@@ -1,6 +1,8 @@
 type Verdict = 'clean' | 'bad';
 export type Action = 'left' | 'right' | 'merge' | 'test' | 'bounce' | 'extend' | 'scout';
 
+export type ImpactKind = 'merge' | 'block' | 'miss' | 'test' | 'scout' | 'regression';
+
 type PullRequest = {
   at: number;
   lane: number;
@@ -13,27 +15,27 @@ type PullRequest = {
 // The two closely spaced pairs ask the reviewer to choose which lane to cover.
 const release: PullRequest[] = [
   { at: 0, lane: 1, title: 'Fix button label', lines: 4, green: true, truth: 'clean' },
-  { at: 4.5, lane: 0, title: 'Fix typo', lines: 912, green: true, truth: 'bad' },
-  { at: 10, lane: 2, title: 'Add focus ring', lines: 8, green: true, truth: 'clean' },
-  { at: 15, lane: 1, title: 'Skip auth check', lines: 2, green: false, truth: 'bad' },
-  { at: 15.12, lane: 2, title: 'Label search box', lines: 3, green: true, truth: 'clean' },
-  { at: 21, lane: 1, title: 'Trim empty input', lines: 11, green: true, truth: 'clean' },
-  { at: 25, lane: 2, title: 'Refactor cache', lines: 154, green: true, truth: 'bad' },
-  { at: 29.5, lane: 0, title: 'Restore tab order', lines: 7, green: true, truth: 'clean' },
-  { at: 34, lane: 1, title: 'Remove bounds check', lines: 5, green: false, truth: 'bad' },
-  { at: 34.12, lane: 2, title: 'Fix icon padding', lines: 6, green: true, truth: 'clean' },
-  { at: 40, lane: 0, title: 'Refresh snapshots', lines: 237, green: true, truth: 'clean' },
-  { at: 44.5, lane: 2, title: 'Link help page', lines: 4, green: true, truth: 'clean' },
-  { at: 49, lane: 1, title: 'Ignore save errors', lines: 9, green: false, truth: 'bad' },
-  { at: 53.5, lane: 0, title: 'Fix menu contrast', lines: 8, green: true, truth: 'clean' },
-  { at: 58.5, lane: 2, title: 'Label close button', lines: 3, green: true, truth: 'clean' },
-  { at: 63, lane: 1, title: 'Fix date format', lines: 12, green: true, truth: 'clean' },
+  { at: 3.24, lane: 0, title: 'Fix typo', lines: 912, green: true, truth: 'bad' },
+  { at: 7.2, lane: 2, title: 'Add focus ring', lines: 8, green: true, truth: 'clean' },
+  { at: 10.8, lane: 1, title: 'Skip auth check', lines: 2, green: false, truth: 'bad' },
+  { at: 10.8864, lane: 2, title: 'Label search box', lines: 3, green: true, truth: 'clean' },
+  { at: 15.12, lane: 1, title: 'Trim empty input', lines: 11, green: true, truth: 'clean' },
+  { at: 18, lane: 2, title: 'Refactor cache', lines: 154, green: true, truth: 'bad' },
+  { at: 21.24, lane: 0, title: 'Restore tab order', lines: 7, green: true, truth: 'clean' },
+  { at: 24.48, lane: 1, title: 'Remove bounds check', lines: 5, green: false, truth: 'bad' },
+  { at: 24.5664, lane: 2, title: 'Fix icon padding', lines: 6, green: true, truth: 'clean' },
+  { at: 28.8, lane: 0, title: 'Refresh snapshots', lines: 237, green: true, truth: 'clean' },
+  { at: 32.04, lane: 2, title: 'Link help page', lines: 4, green: true, truth: 'clean' },
+  { at: 35.28, lane: 1, title: 'Ignore save errors', lines: 9, green: false, truth: 'bad' },
+  { at: 38.52, lane: 0, title: 'Fix menu contrast', lines: 8, green: true, truth: 'clean' },
+  { at: 42.12, lane: 2, title: 'Label close button', lines: 3, green: true, truth: 'clean' },
+  { at: 45.36, lane: 1, title: 'Fix date format', lines: 12, green: true, truth: 'clean' },
 ];
 
 export const reviewStart = 0.75;
-const travel = 6;
-const reviewCooldown = 1.8;
-const testDelay = 3;
+const travel = 4.32;
+const reviewCooldown = 1.3;
+const testDelay = 2.16;
 
 export type Card = {
   id: number;
@@ -49,6 +51,9 @@ export type Card = {
 export type Round = {
   elapsed: number;
   remaining: number;
+  score: number;
+  chain: number;
+  impact?: { kind: ImpactKind; lane: number; points: number; at: number };
   merges: number;
   regressions: number;
   duckReady: boolean;
@@ -79,7 +84,9 @@ function cardFor(id: number, started: number, tested: boolean): Card {
 export function initialRound(): Round {
   return {
     elapsed: 0,
-    remaining: 60,
+    remaining: 45,
+    score: 0,
+    chain: 0,
     merges: 0,
     regressions: 0,
     duckReady: false,
@@ -124,7 +131,7 @@ function arrivals(r: Round, time: number) {
 
 export function step(r: Round, seconds: number) {
   if (r.status !== 'playing' || !Number.isFinite(seconds) || seconds <= 0) return;
-  const deadline = r.extended ? 70 : 60;
+  const deadline = r.extended ? 55 : 45;
   let time = Math.min(deadline, r.elapsed + seconds);
   arrivals(r, time);
   const missed = r.cards
@@ -133,6 +140,7 @@ export function step(r: Round, seconds: number) {
   const messages: string[] = [];
   for (const c of missed) {
     const bad = release[c.id - 1].truth === 'bad';
+    recordImpact(r, c.lane, bad ? 'regression' : 'miss', c.started + travel);
     if (bad) r.regressions++;
     messages.push(bad ? `${c.title} slipped through · regression` : `Missed ${c.title} · no point`);
     if (r.regressions === 3) {
@@ -179,6 +187,7 @@ function scout(r: Round) {
     r.feedback = 'Duck on standby. Wait for an approaching PR in another lane.';
     return;
   }
+  recordImpact(r, target.lane, 'scout');
   target.verdict = release[target.id - 1].truth;
   r.duckReady = false;
   r.feedback = `Duck report · lane ${target.lane + 1} · ${target.title} is ${target.verdict}`;
@@ -203,26 +212,46 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
   r.cards = r.cards.filter((other) => other !== c);
   r.readyAt = r.elapsed + reviewCooldown;
   if (action === 'test') {
+    recordImpact(r, c.lane, 'test');
     const due = returnTime(r, c.lane);
     r.pending.push({ id: c.id, lane: c.lane, due });
     r.feedback = `Testing ${c.title} · returns to lane ${c.lane + 1} in ${Math.ceil(due - r.elapsed)}s`;
   } else if (action === 'bounce') {
-    const caught = release[c.id - 1].truth === 'bad';
-    if (caught) r.duckReady = true;
-    r.feedback = caught ? `Caught ${c.title} · duck scout ready!` : `Bounced clean PR · ${c.title}`;
+    bounce(r, c);
   } else {
     merge(r, c);
   }
 }
 
+function bounce(r: Round, c: Card) {
+  const caught = release[c.id - 1].truth === 'bad';
+  recordImpact(r, c.lane, caught ? 'block' : 'miss');
+  if (caught) r.duckReady = true;
+  r.feedback = caught ? `Caught ${c.title} · duck scout ready!` : `Bounced clean PR · ${c.title}`;
+}
+
 function merge(r: Round, c: Card) {
   if (release[c.id - 1].truth === 'clean') {
+    recordImpact(r, c.lane, 'merge');
     r.merges++;
     r.feedback = `Merged ${c.title} · +1 clean merge`;
     if (r.merges === 5) r.status = 'won';
   } else {
+    recordImpact(r, c.lane, 'regression');
     r.regressions++;
     r.feedback = `Merged ${c.title} · regression`;
     if (r.regressions === 3) r.status = 'lost';
   }
+}
+
+function recordImpact(r: Round, lane: number, kind: ImpactKind, at = r.elapsed) {
+  let points = 0;
+  if (kind === 'merge' || kind === 'block') {
+    r.chain++;
+    points = 100 * Math.min(r.chain, 5);
+    r.score += points;
+  } else if (kind === 'miss' || kind === 'regression') {
+    r.chain = 0;
+  }
+  r.impact = { kind, lane, points, at };
 }

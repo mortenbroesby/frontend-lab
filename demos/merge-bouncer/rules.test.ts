@@ -6,7 +6,7 @@ test('early and wrong-lane inputs cannot merge a PR', () => {
   const r = initialRound();
   act(r, 'merge');
   assert.equal(r.merges, 0);
-  step(r, 4.5);
+  step(r, 3.24);
   act(r, 'right');
   act(r, 'merge');
   assert.equal(r.cards[0].id, 1);
@@ -17,7 +17,7 @@ test('early and wrong-lane inputs cannot merge a PR', () => {
 
 test('test return is announced, stays in lane and has a definitive verdict', () => {
   const r = initialRound();
-  step(r, 9);
+  step(r, 6.48);
   act(r, 'left');
   act(r, 'test');
   const { due, lane } = r.pending[0];
@@ -35,12 +35,12 @@ test('test return is announced, stays in lane and has a definitive verdict', () 
 
 test('two simultaneous arrivals force a choice even with perfect timing', () => {
   const r = initialRound();
-  step(r, 19.5);
+  step(r, 14.05);
   act(r, 'bounce');
   act(r, 'right');
   act(r, 'right');
   act(r, 'merge');
-  step(r, 1.63);
+  step(r, 1.1736);
   assert.equal(r.merges, 0);
   assert.equal(r.regressions, 1);
   assert.equal(
@@ -56,41 +56,41 @@ test('a full release can be won without guessing the ambiguous typo', () => {
     while (r.lane !== lane) act(r, lane < r.lane ? 'left' : 'right');
     act(r, decision);
   };
-  play(4.5, 1, 'merge');
-  play(9, 0, 'test');
-  play(14.5, 2, 'merge');
-  play(16.5, 0, 'bounce');
-  play(19.5, 1, 'bounce');
-  play(25.5, 1, 'merge');
-  play(29.5, 2, 'bounce');
-  play(34, 0, 'merge');
-  play(38.5, 1, 'bounce');
-  play(44.5, 0, 'merge');
+  play(3.2550000000000003, 1, 'merge');
+  play(6.495, 0, 'test');
+  play(10.455, 2, 'merge');
+  play(11.895000000000001, 0, 'bounce');
+  play(14.055, 1, 'bounce');
+  play(18.375, 1, 'merge');
+  play(21.255, 2, 'bounce');
+  play(24.495, 0, 'merge');
+  play(27.735, 1, 'bounce');
+  play(32.055, 0, 'merge');
   assert.equal(r.status, 'won');
   assert.equal(r.merges, 5);
   assert.equal(r.regressions, 0);
   step(r, 90);
   act(r, 'left');
-  assert.equal(r.elapsed, 44.5);
+  assert.equal(r.elapsed, 32.055);
   assert.equal(r.lane, 0);
 });
 
 test('a missed clean PR earns nothing and the third missed bad PR ends play immediately', () => {
   const r = initialRound();
-  step(r, 6);
+  step(r, 4.32);
   assert.equal(r.regressions, 0);
   assert.equal(r.merges, 0);
   step(r, 100);
   assert.equal(r.regressions, 3);
   assert.equal(r.status, 'lost');
-  assert.equal(r.elapsed, 31);
+  assert.equal(r.elapsed, 22.32);
   act(r, 'extend');
   assert.equal(r.extended, false);
 });
 
 test('extending near the deadline buys ten seconds exactly once', () => {
   const r = initialRound();
-  for (let i = 0; i < 59; i++) {
+  for (let i = 0; i < 44; i++) {
     step(r, 1);
     const card = r.cards.find((c) => c.progress >= 0.75 && [2, 4, 7, 9, 13].includes(c.id));
     if (card) {
@@ -103,14 +103,14 @@ test('extending near the deadline buys ten seconds exactly once', () => {
   act(r, 'extend');
   assert.equal(r.remaining, 11);
   step(r, 30);
-  assert.equal(r.elapsed, 70);
+  assert.equal(r.elapsed, 55);
   assert.equal(r.remaining, 0);
   assert.equal(r.status, 'lost');
 });
 
 test('merging a bad PR costs one regression without scoring', () => {
   const r = initialRound();
-  step(r, 9);
+  step(r, 6.48);
   act(r, 'left');
   act(r, 'merge');
   assert.equal(r.regressions, 1);
@@ -121,19 +121,39 @@ test('merging a bad PR costs one regression without scoring', () => {
 
 test('the duck earns one scout, waits for a target, then reveals it across lanes', () => {
   const r = initialRound();
-  step(r, 4.5);
+  step(r, 3.24);
   act(r, 'bounce');
   assert.equal(r.duckReady, false);
-  step(r, 4.5);
+  step(r, 3.24);
   act(r, 'left');
   act(r, 'bounce');
   assert.equal(r.duckReady, true);
   act(r, 'scout');
   assert.equal(r.duckReady, true);
-  step(r, 1);
+  step(r, 0.8);
   act(r, 'scout');
   assert.equal(r.cards[0].verdict, 'clean');
   assert.equal(r.duckReady, false);
   assert.equal(r.lane, 0);
   assert.equal(r.merges, 0);
+});
+
+test('successive catches build score, testing preserves the chain and a miss breaks it', () => {
+  const r = initialRound();
+  step(r, 3.25);
+  act(r, 'merge');
+  step(r, 3.25);
+  act(r, 'left');
+  act(r, 'bounce');
+  assert.equal(r.chain, 2);
+  assert.equal(r.score, 300);
+  assert.equal(r.impact?.kind, 'block');
+  step(r, 4);
+  act(r, 'right');
+  act(r, 'right');
+  act(r, 'test');
+  assert.equal(r.chain, 2);
+  step(r, 6);
+  assert.equal(r.chain, 0);
+  assert.equal(r.score, 300);
 });
