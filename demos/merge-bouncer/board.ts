@@ -32,13 +32,15 @@ function drawFloor(g: Graphics, floor: Floor, selected: number) {
 function drawDesks(g: Graphics, x: number, zone: number, screen: number) {
   // Cubicle desks face each aisle; a bright screen and a keyboard read from overhead.
   for (let deskY = 67; deskY < zone - 36; deskY += 84) {
-    const deskX = x + 5;
-    g.fillStyle(0x28223d).fillRect(deskX, deskY, 19, 25);
+    const deskX = x + 5 + 3 * Math.sin(deskY);
+    g.fillStyle(0x28223d).fillRoundedRect(deskX, deskY, 19, 25, 6);
     g.fillStyle(0x47405d).fillRect(deskX, deskY + 22, 19, 2);
     g.fillStyle(0x0c0f20).fillRect(deskX + 2, deskY + 3, 15, 10);
     g.fillStyle(screen).fillRect(deskX + 4, deskY + 5, 11, 5);
     g.fillStyle(0x59516d).fillRect(deskX + 4, deskY + 16, 10, 3);
-    g.fillStyle(0x302942).fillRect(deskX + 6, deskY + 27, 7, 5);
+    g.fillStyle(0x443453).fillEllipse(deskX + 9, deskY + 30, 10, 7);
+    g.lineStyle(2, 0x785268).strokeEllipse(deskX + 29, deskY + 17, 10, 7);
+    g.fillStyle(0xe7ab89).fillCircle(deskX + 20, deskY + 11, 3);
   }
 }
 
@@ -55,15 +57,12 @@ function drawLane(
   const center = x + laneWidth / 2;
   g.fillStyle(palette.floor).fillRect(x + 2, 4, laneWidth - 4, height - 8);
   g.fillStyle(palette.zone).fillRect(x + 2, zone, laneWidth - 4, height - zone - 4);
-  g.lineStyle(1, grid).strokeRect(x + 2, 4, laneWidth - 4, height - 8);
+  g.lineStyle(1, grid).strokeRoundedRect(x + 2, 4, laneWidth - 4, height - 8, 12);
   for (let y = 59; y < zone - 8; y += 32) {
-    g.lineStyle(1, 0x262237).lineBetween(x + 4, y - 9, x + laneWidth - 4, y - 9);
-    g.lineStyle(1, 0x383153)
-      .lineBetween(center - 5, y, center, y + 3)
-      .lineBetween(center, y + 3, center + 5, y);
-    g.fillStyle(grid)
-      .fillRect(x + 4, y, 4, 1)
-      .fillRect(x + laneWidth - 8, y, 4, 1);
+    // Scuffed carpet and wandering footsteps between the cubicles.
+    const footX = center + Math.sin(y / 29 + lane) * 9;
+    g.fillStyle(0x393149).fillEllipse(footX - 3, y, 4, 6);
+    g.fillStyle(0x332b41).fillEllipse(footX + 4, y + 7, 4, 6);
   }
   const rail = palette.rail;
   g.fillStyle(rail, 0.13).fillRect(x + 3, zone - 5, laneWidth - 6, 14);
@@ -213,6 +212,17 @@ function positionCardLabels(
     labels.signal.setColor(cssColor(status.color));
 }
 
+// Rubber-duck debugging is a two-person job on this shift.
+function drawSquire(g: Graphics, x: number, y: number) {
+  g.fillStyle(0x100f21, 0.6).fillEllipse(x, y + 7, 23, 7);
+  g.fillStyle(0xffcf69)
+    .fillEllipse(x, y + 2, 19, 12)
+    .fillCircle(x + 4, y - 5, 6);
+  g.fillStyle(0xffec9c).fillEllipse(x - 2, y + 1, 9, 6);
+  g.fillStyle(0xff9973).fillEllipse(x + 10, y - 4, 7, 3);
+  g.fillStyle(ink).fillCircle(x + 6, y - 6, 1.4);
+  g.fillStyle(0xf07fce).fillTriangle(x - 10, y + 2, x - 12, y - 4, x - 5, y);
+}
 class Depot extends Phaser.Scene {
   private readonly getRound: () => Round;
   constructor(getRound: () => Round) {
@@ -273,6 +283,7 @@ class Depot extends Phaser.Scene {
     const reviewerX = Math.round(floor.gutter + (round.lane + 0.5) * floor.laneWidth);
     g.fillStyle(pink, 0.13).fillEllipse(reviewerX, height - 18, 47, 12);
     this.reviewer.setPosition(reviewerX, height - 28);
+    drawSquire(g, reviewerX - 27, height - 19);
     this.drawRequests(round, floor);
   }
 

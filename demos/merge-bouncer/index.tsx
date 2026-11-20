@@ -22,12 +22,16 @@ const controls = [
 type Mode = 'ready' | 'running' | 'paused' | 'won' | 'lost';
 const overlays = {
   ready: [
-    'Office Knight',
-    'Guard the release gate. Read each request as it approaches. Merge five clean changes before the clock runs out.',
+    'Sir Clacks & the duck',
+    'Your squire is a rubber duck. Your sword opens letters. Somehow, you’re in charge of shipping five clean merges before the clock runs out.',
     'Start round',
   ],
-  paused: ['Shift paused', 'The release clock is paused.', 'Resume round'],
-  won: ['Release shipped!', 'Five clean merges. Your shift is complete.', 'Play again'],
+  paused: ['Tea break', 'The duck is covering your shift. Clock paused.', 'Resume round'],
+  won: [
+    'Release shipped!',
+    'Five clean merges. The duck has approved your promotion to Senior Knight.',
+    'Play again',
+  ],
   lost: ['Release blocked', undefined, 'Play again'],
 };
 

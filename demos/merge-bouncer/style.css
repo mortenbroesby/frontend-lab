@@ -100,7 +100,7 @@
   color: #e7f4ff;
   background: var(--mb-ink);
   border: 2px solid #68609d;
-  border-radius: 6px;
+  border-radius: 20px 14px 24px 16px;
   box-shadow: 4px 4px 0 #292445;
   overflow: hidden;
 }
@@ -147,7 +147,7 @@
   color: #f1eafa;
   border: 1px solid #766b90;
   box-shadow: 0 2px 0 #55466e;
-  border-radius: 4px;
+  border-radius: 12px 8px 13px 9px;
 }
 .mb-controls kbd {
   color: var(--mb-cyan);
@@ -157,7 +157,7 @@
   background: #18142a;
   border: 2px solid var(--mb-cyan);
   box-shadow: 5px 5px 0 #a94789;
-  border-radius: 2px;
+  border-radius: 26px 17px 31px 12px;
 }
 .mb-overlay h2 {
   color: var(--mb-pink);
