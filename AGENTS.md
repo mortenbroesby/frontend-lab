@@ -31,7 +31,8 @@ Follow [our EFA interpretation](gallery/docs/decisions/elegant-frontend-architec
 
 - Name demo folders for the experiment, using descriptive kebab-case (for example `cross-tab-messaging`). Match the package name to `@lab/demo-<folder-id>`.
 - Use `npm run demo:new` and the [develop-demo skill](.agents/skills/develop-demo/SKILL.md). Require a name; preserve ID validation, overwrite protection and typed discovery. Keep starters separate from finished examples.
-- Use Node 24, npm 11.21.2, npm workspaces, Turborepo and the root lockfile. Follow [the dependency policy](gallery/docs/dependency-policy.md): retain the seven-day resolution delay and reviewed install-script decisions; do not bypass them to make an install pass. Install only when dependencies change.
+- Use Node 24, the npm version pinned in package.json (`packageManager`), npm workspaces, Turborepo and the root lockfile. Follow [the dependency policy](gallery/docs/dependency-policy.md): retain the seven-day resolution delay and reviewed install-script decisions; do not bypass them to make an install pass. Install only when dependencies change.
+- Keep Node/npm version changes in their own commit, separate from feature work. Keep exact npm versions in `package.json`; preserve the order of `.npmrc` policy settings and append new settings at the end. Change hosting configuration and notes only when hosting changes.
 - Each demo extends `tsconfig.base.json` and owns `typecheck`, `build` and `check` scripts; tests are optional. Preserve Turbo's kit type dependencies and the gallery/dependency-map cross-workspace inputs.
 - Run `npm run format` and `npm run lint` (React hooks, focused correctness and type-aware Promise rules). Generated code must pass too.
 

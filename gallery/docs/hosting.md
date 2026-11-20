@@ -9,7 +9,7 @@ Production URL: https://front-end-lab-mortenbroesby.vercel.app.
 Project settings:
 
 - Repository root; framework preset Vite; Node 24.x.
-- Install: `npm install --global npm@11.21.2 --ignore-scripts && npm ci`, pinned in `vercel.json` to match `packageManager`. Vercel’s default npm version may validate optional lockfile dependencies differently.
+- Install: `vercel.json` reads the npm version pinned in package.json (`packageManager`), bootstraps it with install scripts disabled, then runs `npm ci`. See [the dependency policy](dependency-policy.md). Vercel’s default npm version may validate optional lockfile dependencies differently.
 - Build: `npm run build`.
 - Output: `gallery/dist`, set in the repository’s `vercel.json`.
 - Production domain is public; preview and deployment-specific URLs use Vercel authentication. Repository source remains private.

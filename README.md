@@ -26,7 +26,7 @@ Try Signal Garden in Modern Web to explore a D3-powered particle world. Every de
 <a id="start-here"></a>
 ## 🚀 Run Locally
 
-Clone the repo. With **Node 24** and npm 11.21.2, run from its root:
+Clone the repo. With **Node 24** and [the npm version pinned in package.json (`packageManager`)](gallery/docs/dependency-policy.md), run from its root:
 
 ```sh
 npm ci

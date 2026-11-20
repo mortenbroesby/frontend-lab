@@ -1,9 +1,11 @@
 # Dependency installation
 
-Use Node 24 and **npm 11.21.2**. Older npm versions do not enforce all these settings and are rejected by `devEngines`.
+Use Node 24 and the npm version pinned in package.json (`packageManager`). Older npm versions do not enforce all these settings and are rejected by `devEngines`.
+
+From the cloned repository root, run this in macOS/Linux's shell or PowerShell (not Command Prompt):
 
 ```sh
-npm install --global npm@11.21.2 --ignore-scripts
+npm install --global "$(node -p "require('./package.json').packageManager")" --ignore-scripts
 npm ci
 ```
 

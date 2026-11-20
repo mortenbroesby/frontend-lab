@@ -1,4 +1,4 @@
 {
   "outputDirectory": "gallery/dist",
-  "installCommand": "npm install --global npm@11.21.2 --ignore-scripts && npm ci"
+  "installCommand": "npm install --global \"$(node -p \"require('./package.json').packageManager\")\" --ignore-scripts && npm ci"
 }

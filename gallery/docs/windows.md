@@ -6,7 +6,7 @@ Install Git for Windows and Node 24, including npm. Clone into a writable folder
 open PowerShell or Command Prompt there, and follow the root README. No WSL,
 Git Bash, Rust or Unix tools are required for the normal workflow.
 
-Use `npm install --global npm@11.21.2 --ignore-scripts` to match the repository's npm version.
+Use the npm version pinned in package.json (`packageManager`). Follow the [bootstrap instructions](dependency-policy.md) in PowerShell if your installed version differs.
 If PowerShell reports that `npm.ps1` cannot run, use `npm.cmd` for every command
 (for example, `npm.cmd ci`). Do not change your execution policy just for this repo.
 Keep optional dependencies enabled: the compiler, bundler and analyzers install
