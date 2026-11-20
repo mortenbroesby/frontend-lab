@@ -1,10 +1,19 @@
-import { Radio, Cpu, Rocket, ChartNetwork, PanelsTopLeft } from 'lucide-react';
+import { Radio, Cpu, Rocket, ChartNetwork, PanelsTopLeft, Globe } from 'lucide-react';
+import { Alert, AlertTitle, AlertDescription } from '@lab/ui/alert';
 
 <section className="track-start" aria-labelledby="start-heading">
 
 <h2 id="start-heading">Make the browser do something new.</h2>
 <p>Connect screens, keep a busy page responsive or make data interactive. Choose one behaviour to explore.</p>
 <p>Use an existing demo for inspiration, start a Lab experiment or bring your own project.</p>
+
+<Alert role="note">
+  <Globe aria-hidden="true" />
+  <AlertTitle>Will it work in your browser?</AlertTitle>
+  <AlertDescription>
+    <span>Look up your API on <a href="https://caniuse.com/">Can I Use</a>. Check your browser version and the support notes, then try it on the device you’ll use.</span>
+  </AlertDescription>
+</Alert>
 
 </section>
 
@@ -29,6 +38,7 @@ import { Radio, Cpu, Rocket, ChartNetwork, PanelsTopLeft } from 'lucide-react';
 <h3 id="wasm-heading"><Rocket aria-hidden="true" focusable="false" />Run Rust in the browser</h3>
 <p>Build a tiny game with Rust physics and a Canvas view. Decide what crosses the language boundary.</p>
 <a className="track-start-link" href="https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Loading_and_running">Explore loading WebAssembly ↗</a>
+<p><a href="https://caniuse.com/wasm">WebAssembly browser support ↗</a></p>
 <p className="track-example"><DemoLink id="lunar-lander">Try Lunar Lander</DemoLink>. Play immediately; Rust tooling is only needed to change the physics.</p>
 </section>
 <section aria-labelledby="graphics-heading">
