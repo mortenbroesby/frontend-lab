@@ -1,7 +1,7 @@
 type Verdict = 'clean' | 'bad';
 export type Action = 'left' | 'right' | 'merge' | 'test' | 'bounce' | 'extend' | 'scout';
 
-export type ImpactKind = 'merge' | 'block' | 'miss' | 'test' | 'scout' | 'regression';
+export type ImpactKind = 'merge' | 'block' | 'reject' | 'miss' | 'test' | 'scout' | 'regression';
 
 type PullRequest = {
   at: number;
@@ -225,7 +225,7 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
 
 function bounce(r: Round, c: Card) {
   const caught = release[c.id - 1].truth === 'bad';
-  recordImpact(r, c.lane, caught ? 'block' : 'miss');
+  recordImpact(r, c.lane, caught ? 'block' : 'reject');
   if (caught) r.duckReady = true;
   r.feedback = caught ? `Caught ${c.title} · duck scout ready!` : `Bounced clean PR · ${c.title}`;
 }
@@ -250,7 +250,7 @@ function recordImpact(r: Round, lane: number, kind: ImpactKind, at = r.elapsed) 
     r.chain++;
     points = 100 * Math.min(r.chain, 5);
     r.score += points;
-  } else if (kind === 'miss' || kind === 'regression') {
+  } else if (['miss', 'regression', 'reject'].includes(kind)) {
     r.chain = 0;
   }
   r.impact = { kind, lane, points, at };

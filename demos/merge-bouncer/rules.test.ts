@@ -123,6 +123,7 @@ test('the duck earns one scout, waits for a target, then reveals it across lanes
   const r = initialRound();
   step(r, 3.24);
   act(r, 'bounce');
+  assert.equal(r.impact?.kind, 'reject');
   assert.equal(r.duckReady, false);
   step(r, 3.24);
   act(r, 'left');

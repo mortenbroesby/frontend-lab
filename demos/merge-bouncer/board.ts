@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import knightUrl from './office-knight.svg?no-inline';
+import knightUrl from './office-knight.png';
+import { dispatchPaper } from './paper-flight';
 import depotUrl from './depot.jpg';
 import { reviewStart, type Round } from './rules';
 
@@ -37,7 +38,7 @@ function drawLane(
   selected: boolean,
 ) {
   const x = gutter + lane * laneWidth;
-  const rail = selected ? mint : pink;
+  const rail = selected ? 0xffdf8a : 0xc69860;
   if (selected) g.fillStyle(mint, 0.05).fillRect(x, 0, laneWidth, height);
   g.fillStyle(rail, 0.09).fillRoundedRect(x + 3, zone, laneWidth - 6, height - zone, 6);
   g.fillStyle(rail, 0.13).fillRect(x + 3, zone - 5, laneWidth - 6, 14);
@@ -62,19 +63,19 @@ function label(scene: Phaser.Scene, size: number, color: number, title = false) 
 
 function cardLabels(scene: Phaser.Scene) {
   return {
-    title: label(scene, 14, 0xf7f5ff, true),
-    size: label(scene, 11, 0xd1cfe6),
+    title: label(scene, 14, 0x211c30, true),
+    size: label(scene, 11, 0x453d48),
     signal: label(scene, 11, mint),
   };
 }
 type CardLabels = ReturnType<typeof cardLabels>;
 
 function cardSignal(card: RequestCard) {
-  if (card.verdict === 'clean') return { text: 'CLEAN PR', color: mint };
-  if (card.verdict === 'bad') return { text: 'BAD PR', color: crimson };
+  if (card.verdict === 'clean') return { text: 'CLEAN PR', color: 0x186048 };
+  if (card.verdict === 'bad') return { text: 'BAD PR', color: 0x943619 };
   return card.green
-    ? { text: 'Build passed', color: mint }
-    : { text: 'Build failed', color: amber };
+    ? { text: 'Build passed', color: 0x186048 }
+    : { text: 'Build failed', color: 0x943619 };
 }
 
 function drawCard(
@@ -94,26 +95,20 @@ function drawCard(
 }
 
 function drawCardFrame(g: Graphics, x: number, top: number, width: number, active: boolean) {
-  const y = top + 78;
-  const { border, fill, weight } = active
-    ? { border: mint, fill: 0x1a384c, weight: 2 }
-    : { border: 0x837ba8, fill: 0x23243d, weight: 1 };
-  if (active) g.fillStyle(mint, 0.17).fillRect(x - 3, top - 3, width + 6, 84);
-  g.fillStyle(0x04040d, 0.6).fillRoundedRect(x + 2, top + 4, width, 78, 2);
-  g.fillStyle(fill).fillRoundedRect(x, top, width, 78, 2);
-  g.lineStyle(weight, border).strokeRoundedRect(x, top, width, 78, 2);
-  g.fillStyle(border, 0.8).fillRoundedRect(x, top, 3, 78, 1);
-  g.lineStyle(1, border, 0.36).lineBetween(x + 9, top + 40, x + width - 9, top + 40);
-  for (let i = 0; i < 5; i++)
-    g.fillStyle(border, 0.5).fillRect(x + width - 25 + i * 3, top + 57, 1, 10);
-  g.fillStyle(border).fillTriangle(
-    x + width / 2 - 4,
-    y,
-    x + width / 2 + 4,
-    y,
-    x + width / 2,
-    y + 4,
+  const edge = active ? 0xffbd64 : 0xa78c67;
+  g.fillStyle(ink, 0.6).fillRoundedRect(x + 3, top + 5, width, 78, 4);
+  g.fillStyle(0xffefc8).fillRoundedRect(x, top, width, 78, 4);
+  g.lineStyle(active ? 3 : 1, edge).strokeRoundedRect(x, top, width, 78, 4);
+  g.lineStyle(1, edge, 0.55).lineBetween(x + 8, top + 40, x + width - 9, top + 40);
+  g.fillStyle(0xc3a47d).fillTriangle(
+    x + width - 13,
+    top + 78,
+    x + width,
+    top + 65,
+    x + width,
+    top + 78,
   );
+  g.lineStyle(2, 0x586178).strokeRoundedRect(x + width - 18, top - 3, 5, 12, 2);
 }
 
 function positionCardLabels(
@@ -127,29 +122,20 @@ function positionCardLabels(
   if (labels.title.style.wordWrapWidth !== width - 10) {
     labels.title.setFontSize(width < 125 ? 12 : 14).setWordWrapWidth(width - 10, true);
   }
-  labels.size.setPosition(x + 8, top + 46).setText(card.lines + ' lines');
+  labels.size.setPosition(x + 8, top + 46).setText('+' + card.lines + ' lines');
   const status = cardSignal(card);
   labels.signal.setPosition(x + 8, top + 61).setText(status.text);
   if (labels.signal.style.color !== cssColor(status.color))
     labels.signal.setColor(cssColor(status.color));
 }
 
-// Rubber-duck debugging is a two-person job on this shift.
-function drawSquire(g: Graphics, x: number, y: number) {
-  g.fillStyle(0x100f21, 0.6).fillEllipse(x, y + 7, 23, 7);
-  g.fillStyle(0xffcf69)
-    .fillEllipse(x, y + 2, 19, 12)
-    .fillCircle(x + 4, y - 5, 6);
-  g.fillStyle(0xffec9c).fillEllipse(x - 2, y + 1, 9, 6);
-  g.fillStyle(0xff9973).fillEllipse(x + 10, y - 4, 7, 3);
-  g.fillStyle(ink).fillCircle(x + 6, y - 6, 1.4);
-  g.fillStyle(0xf07fce).fillTriangle(x - 10, y + 2, x - 12, y - 4, x - 5, y);
-}
 class Depot extends Phaser.Scene {
   private readonly getRound: () => Round;
-  constructor(getRound: () => Round) {
+  private readonly ready: () => void;
+  constructor(getRound: () => Round, ready: () => void) {
     super();
     this.getRound = getRound;
+    this.ready = ready;
   }
   private floorArt!: Graphics;
   private movingArt!: Graphics;
@@ -168,15 +154,15 @@ class Depot extends Phaser.Scene {
 
   preload() {
     this.load.image('depot', depotUrl);
-    this.load.svg('office-knight', knightUrl, { scale: 2 });
+    this.load.image('office-knight', knightUrl);
   }
 
   create() {
-    this.backdrop = this.add.image(0, 0, 'depot').setOrigin(0);
+    this.backdrop = this.add.image(0, 0, 'depot').setOrigin(0).setAlpha(0.62);
     this.floorArt = this.add.graphics();
     this.movingArt = this.add.graphics();
 
-    this.reviewer = this.add.image(0, 0, 'office-knight').setDisplaySize(66, 61).setDepth(2);
+    this.reviewer = this.add.image(0, 0, 'office-knight').setDisplaySize(76, 76).setDepth(2);
     this.result = label(this, 17, mint, true).setOrigin(0.5).setDepth(3).setVisible(false);
     for (let i = 0; i < 3; i++) {
       this.headers.push(
@@ -187,6 +173,7 @@ class Depot extends Phaser.Scene {
       this.signals.push(label(this, 10, amber).setOrigin(0.5, 0));
     }
     this.zoneLabel = label(this, 10, mint).setOrigin(0, 0.5);
+    this.ready();
   }
 
   private layout(lane: number) {
@@ -216,15 +203,15 @@ class Depot extends Phaser.Scene {
         .setPosition(center, 26)
         .setText(next ? 'TEST IN ' + Math.max(0, Math.ceil(next.due - round.elapsed)) + 's' : '');
     });
-    this.zoneLabel.setPosition(floor.gutter + 8, floor.zone + 16).setText('GATE');
+    this.zoneLabel.setPosition(floor.gutter + 8, floor.zone + 16).setText('REVIEW');
     const reviewerX = Math.round(floor.gutter + (round.lane + 0.5) * floor.laneWidth);
     g.fillStyle(pink, 0.13).fillEllipse(reviewerX, height - 18, 47, 12);
-    this.drawKnight(g, reviewerX, height, delta, round);
+    this.drawKnight(reviewerX, height, delta, round);
     this.showImpact(round, floor);
     this.drawRequests(round, floor);
   }
 
-  private drawKnight(g: Graphics, reviewerX: number, height: number, delta: number, round: Round) {
+  private drawKnight(reviewerX: number, height: number, delta: number, round: Round) {
     let x = reviewerX;
     let strike = 0;
     if (!this.reduced) {
@@ -233,8 +220,7 @@ class Depot extends Phaser.Scene {
     }
     this.reviewer
       .setPosition(x, height - 27 - Math.sin(strike * Math.PI) * 17)
-      .setAngle((x - reviewerX) * 0.1);
-    drawSquire(g, x - 29, height - 17);
+      .setAngle((x - reviewerX) * 0.1 + Math.sin(strike * Math.PI * 2) * 15);
   }
 
   private showImpact(round: Round, floor: Floor) {
@@ -243,13 +229,14 @@ class Depot extends Phaser.Scene {
     this.lastImpact = impact;
     this.tweens.killTweensOf(this.result);
     this.result.setVisible(Boolean(impact));
-    if (impact) this.animateVerdict(impact, floor);
+    if (impact) this.animateVerdict(impact, floor, round.chain);
   }
 
-  private animateVerdict(impact: NonNullable<Round['impact']>, floor: Floor) {
+  private animateVerdict(impact: NonNullable<Round['impact']>, floor: Floor, chain: number) {
     const styles = {
       merge: ['SHIPPED', mint],
       block: ['PARRIED', amber],
+      reject: ['CLEAN PR', pink],
       scout: ['SCANNED', amber],
       test: ['TO THE LAB', 0xa5beff],
       regression: ['REGRESSION', crimson],
@@ -263,7 +250,7 @@ class Depot extends Phaser.Scene {
       .setColor(cssColor(color))
       .setStroke('#101021', 5)
       .setFontSize(Math.min(24, floor.laneWidth / 8))
-      .setText(impact.points ? word + ' +' + impact.points : word)
+      .setText(impact.points ? word + ' ×' + Math.min(5, chain) : word)
       .setAlpha(1);
     this.tweens.add({
       targets: this.result,
@@ -273,6 +260,7 @@ class Depot extends Phaser.Scene {
       duration: 400,
     });
     if (this.reduced) return;
+    dispatchPaper(this, impact.kind, x, floor.zone, floor.width);
     this.drawBurst(x, floor, color);
   }
 
@@ -310,7 +298,7 @@ class Depot extends Phaser.Scene {
   }
 }
 
-export function mountBoard(parent: HTMLElement, getRound: () => Round) {
+export function mountBoard(parent: HTMLElement, getRound: () => Round, ready: () => void) {
   const density = Math.min(window.devicePixelRatio || 1, 2);
   const game = new Phaser.Game({
     type: Phaser.CANVAS,
@@ -318,7 +306,7 @@ export function mountBoard(parent: HTMLElement, getRound: () => Round) {
     width: Math.max(1, Math.round(parent.clientWidth * density)),
     height: Math.max(1, Math.round(parent.clientHeight * density)),
     backgroundColor: ink,
-    scene: new Depot(getRound),
+    scene: new Depot(getRound, ready),
     banner: false,
     autoFocus: false,
     audio: { noAudio: true },

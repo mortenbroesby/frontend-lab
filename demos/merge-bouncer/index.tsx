@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
 import { act, initialRound, reviewStart, step, type Action, type Round } from './rules';
+import { playCue } from './sound';
 import './style.css';
 
 const keys: Record<string, Action | undefined> = {
@@ -13,12 +14,9 @@ const keys: Record<string, Action | undefined> = {
   e: 'extend',
 };
 const controls = [
-  ['left', '←', 'Left'],
-  ['right', '→', 'Right'],
   ['merge', 'J', 'Merge'],
   ['test', 'K', 'Test'],
   ['bounce', 'L', 'Bounce'],
-  ['extend', 'E', '+10 sec'],
 ] as const;
 type Mode = 'ready' | 'running' | 'paused' | 'won' | 'lost';
 const overlays = {
@@ -44,8 +42,13 @@ function useBoard(field: RefObject<HTMLDivElement | null>, round: { current: Rou
     void import('./board')
       .then(({ mountBoard }) => {
         if (closed || !field.current) return;
-        dispose = mountBoard(field.current, () => round.current);
-        setLoad('ready');
+        dispose = mountBoard(
+          field.current,
+          () => round.current,
+          () => {
+            if (!closed) setLoad('ready');
+          },
+        );
       })
       .catch(() => {
         if (!closed) setLoad('failed');
@@ -85,27 +88,54 @@ function useRound() {
       document.removeEventListener('visibilitychange', hidden);
     };
   }, [mode, round]);
+  const audio = useRef<AudioContext | null>(null);
+  const [muted, setMuted] = useState(false);
+  useEffect(
+    () => () => {
+      void audio.current?.close();
+    },
+    [],
+  );
   function play() {
+    if (typeof AudioContext !== 'undefined') {
+      audio.current ??= new AudioContext();
+      void audio.current.resume().catch(() => {});
+    }
     if (mode !== 'paused') round.current = initialRound();
     setMode('running');
   }
+  const sound = muted ? null : audio.current;
   function choose(action: Action) {
     if (mode !== 'running') return;
+    const previous = round.current.impact;
     act(round.current, action);
+    if (previous !== round.current.impact) playCue(sound, action);
     if (round.current.status !== 'playing') setMode(round.current.status);
     refresh();
   }
-  return { round, mode, play, choose, pause: () => setMode('paused') };
+  return {
+    round,
+    mode,
+    play,
+    choose,
+    muted,
+    toggleSound: () => setMuted(!muted),
+    pause: () => setMode('paused'),
+  };
 }
 function CabinetHud({ round: r }: { round: Round }) {
   const t = Math.ceil(r.remaining);
   return (
     <div className="mb-hud">
       <span>
-        Score<b className="mb-score">{r.score.toLocaleString()}</b>
-      </span>
-      <span>
-        Chain<b className="mb-chain">×{Math.min(5, r.chain)}</b>
+        Shipped
+        <b className="mb-mail" aria-label={r.merges + ' of 5 shipped'}>
+          {[1, 2, 3, 4, 5].map((slot) => (
+            <i key={slot} data-lit={slot <= r.merges} aria-hidden="true">
+              ✉
+            </i>
+          ))}
+        </b>
       </span>
       <span>
         Clock
@@ -114,10 +144,15 @@ function CabinetHud({ round: r }: { round: Round }) {
         </b>
       </span>
       <span>
-        Shipped<b>{r.merges} / 5</b>
+        Score<b className="mb-score">{r.score}</b>
       </span>
       <span>
-        Strikes<b>{r.regressions} / 3</b>
+        Strikes
+        <b aria-label={r.regressions + ' of 3 strikes'}>
+          {[1, 2, 3].map((slot) => (
+            <i key={slot} className="mb-lamp" data-lit={slot <= r.regressions} aria-hidden="true" />
+          ))}
+        </b>
       </span>
     </div>
   );
@@ -142,7 +177,10 @@ function Overlay({
         <h2>{title}</h2>
         <p>{text}</p>
         {mode === 'ready' && (
-          <p>Merge clean. Bounce bugs. Test a hunch. Chain good calls for up to 5× points.</p>
+          <p>
+            Tap a lane or move with ← →. At the brass gate, merge clean, bounce bugs or test a
+            hunch.
+          </p>
         )}
         <Button disabled={load !== 'ready'} onClick={play}>
           {loading ? 'Powering up…' : label}
@@ -155,39 +193,64 @@ function shortcut(e: KeyboardEvent) {
   if (e.altKey || e.metaKey || e.ctrlKey) return;
   return keys[e.key.toLowerCase()];
 }
-function ControlBank({
-  active,
-  round: r,
-  choose,
-}: {
-  active: boolean;
-  round: Round;
-  choose: (a: Action) => void;
-}) {
-  const disabled: Partial<Record<Action, boolean>> = { extend: r.extended };
-  const used = r.extended ? 'Used' : '+10 sec';
+function ControlBank({ active, choose }: { active: boolean; choose: (a: Action) => void }) {
   return (
     <div className="mb-controls" aria-label="Game controls">
       {controls.map(([action, key, label]) => (
         <Button
           key={action}
           variant="outline"
-          disabled={!active || disabled[action]}
+          disabled={!active}
+          data-tool={action}
           onClick={() => choose(action)}
         >
           <kbd>{key}</kbd>
-          {action === 'extend' ? used : label}
+          {label}
         </Button>
       ))}
-      <Button
-        className="mb-scout"
-        variant="outline"
-        disabled={!active || !r.duckReady}
-        onClick={() => choose('scout')}
-      >
-        <kbd>D</kbd> {r.duckReady ? 'Send duck scout' : 'Duck scout · catch a bad PR to charge'}
-      </Button>
     </div>
+  );
+}
+function LaneControls({ r, choose }: { r: Round; choose: (action: Action) => void }) {
+  return (
+    <>
+      <div className="mb-lanes">
+        {[0, 1, 2].map((lane) => (
+          <button
+            key={lane}
+            aria-label={'Move to lane ' + (lane + 1)}
+            aria-pressed={r.lane === lane}
+            onClick={() => {
+              const direction = lane < r.lane ? 'left' : 'right';
+              for (let n = Math.abs(r.lane - lane); n > 0; n--) choose(direction);
+            }}
+          />
+        ))}
+      </div>
+      <div className="mb-duck-lane" style={{ left: ((r.lane + 0.5) * 100) / 3 + '%' }}>
+        <button
+          className="mb-duck"
+          title="Duck scout (D)"
+          aria-label="Send duck scout"
+          disabled={!r.duckReady}
+          onClick={() => choose('scout')}
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 32 32"
+            width="31"
+            height="31"
+            shapeRendering="crispEdges"
+          >
+            <path fill="#361f33" d="M2 15h7v2h5V8h3V5h9v3h2v7h4v4h-5v5h-4v3H8v-2H4v-4H2z" />
+            <path fill="#ffcf55" d="M4 17h6v2h6V9h3V7h5v2h2v9h-2v5h-4v2H9v-2H6v-3H4z" />
+            <path fill="#ff924a" d="M25 14h7v3h-7z" />
+            <path fill="#20192e" d="M22 10h2v3h-2z" />
+            <path className="mb-wing" fill="#fff29e" d="M8 18h8v2h-2v2H9z" />
+          </svg>
+        </button>
+      </div>
+    </>
   );
 }
 function describeCard(c: Round['cards'][number]) {
@@ -200,7 +263,7 @@ function describeCard(c: Round['cards'][number]) {
   );
 }
 export default function Demo() {
-  const { round, mode, play, pause, choose } = useRound();
+  const { round, mode, play, pause, choose, muted, toggleSound } = useRound();
   const field = useRef<HTMLDivElement>(null);
   const game = useRef<HTMLElement>(null);
   const load = useBoard(field, round);
@@ -230,10 +293,13 @@ export default function Demo() {
       <CabinetHud round={r} />
       <div className="mb-stage">
         <div className="mb-canvas" aria-hidden="true" ref={field} />
-        {mode !== 'running' && (
+        {mode === 'running' ? (
+          <LaneControls r={r} choose={choose} />
+        ) : (
           <Overlay mode={mode} load={load} play={start} feedback={r.feedback} />
         )}
       </div>
+      <ControlBank active={active} choose={choose} />
       <div className="mb-status">
         <strong>Lane {r.lane + 1}</strong>
         <span role="status">{r.feedback}</span>
@@ -243,7 +309,14 @@ export default function Demo() {
           </Button>
         )}
       </div>
-      <ControlBank active={active} round={r} choose={choose} />
+      <div className="mb-utilities">
+        <button disabled={!active || r.extended} onClick={() => choose('extend')}>
+          +10 sec (E)
+        </button>
+        <label>
+          <input type="checkbox" checked={!muted} onChange={toggleSound} /> Sound
+        </label>
+      </div>
       <span className="sr-only">{r.cards.map(describeCard).join('. ')}</span>
     </section>
   );
