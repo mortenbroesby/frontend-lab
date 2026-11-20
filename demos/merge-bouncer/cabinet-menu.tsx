@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
+import { TitleScreen } from './title-screen';
 import knight from './office-knight.png';
 import duck from './duck-inspector.png';
 
@@ -37,11 +38,6 @@ const loadLabels = {
 };
 
 const copy = {
-  ready: [
-    'Merge Bouncer',
-    'Merge five clean pull requests into main before the night shift ends. Three regressions close the depot.',
-    'Start round',
-  ],
   paused: ['Tea break', 'The duck is covering your shift. Clock paused.', 'Resume round'],
   won: ['Release shipped!', 'The duck has approved your promotion to Senior Knight.', 'Play again'],
   lost: ['Release blocked', '', 'Play again'],
@@ -56,7 +52,46 @@ type Props = {
   home: () => void;
 };
 
-export function CabinetMenu({ mode, load, feedback, play, preferences, home }: Props) {
+function Options({ preferences }: { preferences: Props['preferences'] }) {
+  return (
+    <>
+      {' '}
+      <label>
+        <input
+          type="checkbox"
+          checked={preferences.sound.value}
+          onChange={(e) => preferences.sound.change(e.target.checked)}
+        />{' '}
+        Arcade sounds
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={preferences.reduceMotion.value}
+          onChange={(e) => preferences.reduceMotion.change(e.target.checked)}
+        />{' '}
+        Always reduce motion
+      </label>
+      <p>System reduced motion is respected automatically.</p>
+    </>
+  );
+}
+
+export function CabinetMenu(props: Props) {
+  if (props.mode === 'ready')
+    return (
+      <TitleScreen
+        ready={props.load === 'ready'}
+        failed={props.load === 'failed'}
+        play={props.play}
+        settings={<Options preferences={props.preferences} />}
+      />
+    );
+  return <ShiftMenu {...props} mode={props.mode} />;
+}
+
+type ShiftProps = Omit<Props, 'mode'> & { mode: Exclude<MenuMode, 'ready'> };
+function ShiftMenu({ mode, load, feedback, play, preferences, home }: ShiftProps) {
   const [settings, setSettings] = useState(false);
   const opener = useRef<HTMLButtonElement>(null);
   const back = useRef<HTMLButtonElement>(null);
@@ -79,23 +114,7 @@ export function CabinetMenu({ mode, load, feedback, play, preferences, home }: P
       {settings ? (
         <section aria-label="Settings" className="mb-options">
           <h2>Settings</h2>
-          <label>
-            <input
-              type="checkbox"
-              checked={preferences.sound.value}
-              onChange={(e) => preferences.sound.change(e.target.checked)}
-            />{' '}
-            Arcade sounds
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={preferences.reduceMotion.value}
-              onChange={(e) => preferences.reduceMotion.change(e.target.checked)}
-            />{' '}
-            Always reduce motion
-          </label>
-          <p>System reduced motion is respected automatically.</p>
+          <Options preferences={preferences} />
           <Button ref={back} onClick={() => setSettings(false)}>
             Back
           </Button>
@@ -118,7 +137,7 @@ function TitlePanel({
   home,
   opener,
   openSettings,
-}: Omit<Props, 'preferences'> & {
+}: Omit<ShiftProps, 'preferences'> & {
   opener: RefObject<HTMLButtonElement | null>;
   openSettings: () => void;
 }) {
@@ -131,11 +150,9 @@ function TitlePanel({
       </div>
       <h2>{title}</h2>
       <p>{description || feedback}</p>
-      <p hidden={mode !== 'ready'}>
-        Move with WASD or tap a lane. Space merges, N tests and M bounces.
-      </p>
+
       <div className="mb-menu-actions">
-        <Button autoFocus={mode !== 'ready'} disabled={load !== 'ready'} onClick={play}>
+        <Button autoFocus disabled={load !== 'ready'} onClick={play}>
           {load === 'ready' ? action : loadLabels[load]}
         </Button>
         <Button ref={opener} variant="outline" onClick={openSettings}>

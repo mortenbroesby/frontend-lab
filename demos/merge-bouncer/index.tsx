@@ -149,8 +149,7 @@ function useRound(soundEnabled: boolean) {
     },
   };
 }
-function CabinetHud({ round: r, mode }: { round: Round; mode: Mode }) {
-  if (mode === 'ready') return null;
+function CabinetHud({ round: r }: { round: Round }) {
   const t = Math.ceil(r.remaining);
   return (
     <div className="mb-hud">
@@ -306,15 +305,16 @@ export default function Demo() {
       }}
       onKeyDown={keyDown}
     >
-      <div className="mb-repo">
-        <img src={githubMark} alt="GitHub" width="20" height="20" />
-        <span className="mb-repo-name">
-          sir-clacks / <strong>mailroom</strong>
-        </span>
-        <CabinetHud round={r} mode={mode} />
-        <ScreenTools />
-      </div>
-
+      {mode !== 'ready' && (
+        <div className="mb-repo">
+          <img src={githubMark} alt="GitHub" width="20" height="20" />
+          <span className="mb-repo-name">
+            sir-clacks / <strong>mailroom</strong>
+          </span>
+          <CabinetHud round={r} />
+          <ScreenTools />
+        </div>
+      )}
       <div className="mb-stage">
         <div className="mb-canvas" aria-hidden="true" ref={field} />
         {mode === 'running' ? (

@@ -1,0 +1,145 @@
+.mb-title-screen {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  background: #11172d url('./title-art.jpg') 65% center/cover no-repeat;
+  color: #fff0c5;
+}
+.mb-title-tools {
+  position: absolute;
+  top: max(0.6rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 1;
+}
+.mb-title-tools .mb-tools {
+  padding: 0 0.65rem;
+  background: #101426bc;
+  border-radius: 0.35rem;
+}
+.mb-front {
+  margin: 4rem 0 3rem clamp(1.25rem, 7vw, 8rem);
+  max-width: min(32rem, 44vw);
+  font-family: system-ui, sans-serif;
+}
+.mb-logotype {
+  margin: 0 0 clamp(1rem, 5vh, 3rem);
+  font:
+    italic 1000 clamp(3.75rem, min(8.8vw, 15vh), 9rem)/0.8 system-ui,
+    sans-serif;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+  transform-origin: left bottom;
+  text-shadow:
+    0.035em 0.05em #552431,
+    0.065em 0.09em #191227;
+}
+.mb-logotype span,
+.mb-logotype strong {
+  display: block;
+}
+.mb-logotype span {
+  color: #ffdb91;
+  font-size: 0.81em;
+}
+.mb-logotype strong {
+  color: #fff1c8;
+  font-weight: inherit;
+}
+.mb-start-choices {
+  display: grid;
+  justify-items: start;
+  gap: 0.22rem;
+}
+.mb-start-choices[hidden] {
+  display: none;
+}
+.mb-start-choices button,
+.mb-title-page button {
+  min-height: 44px;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  color: #fff4d7;
+  font:
+    700 clamp(1.1rem, 2.1vw, 1.7rem)/1.2 system-ui,
+    sans-serif;
+  text-shadow: 0 2px 4px #0e1023;
+}
+.mb-start-choices button {
+  position: relative;
+  padding: 0.3rem 0.9rem 0.3rem 1.75rem;
+  text-align: left;
+}
+.mb-start-choices button:focus,
+.mb-start-choices button:hover {
+  background: linear-gradient(90deg, #662e40dd, transparent);
+  color: #ffdc87;
+}
+:where(.mb-start-choices) button:is(:focus, :hover)::before {
+  content: '';
+  top: calc(50% - 0.22em);
+  border-block: 0.22em solid transparent;
+  border-left: 0.35em solid currentColor;
+  position: absolute;
+  left: 0.3rem;
+}
+.mb-start-choices button:focus-visible,
+.mb-title-page button:focus-visible {
+  outline: 2px solid #ffd37d;
+  outline-offset: 2px;
+}
+.mb-title-page {
+  padding: 0.75rem 1rem;
+  background: #11162be8;
+  border-left: 3px solid #c78e59;
+}
+.mb-title-page h2 {
+  margin: 0;
+  font:
+    800 1.35rem/1.2 system-ui,
+    sans-serif;
+}
+.mb-title-page p {
+  margin: 0.6rem 0;
+  line-height: 1.4;
+}
+.mb-title-page label {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 44px;
+}
+.mb-title-page input {
+  accent-color: #ffd37d;
+}
+@media (max-aspect-ratio: 1/1) {
+  .mb-title-screen {
+    align-items: end;
+    background-image:
+      linear-gradient(0deg, #101426 2%, #101426ed 25%, #10142600 70%), url('./title-art.jpg');
+    background-position: 73% top;
+    background-size:
+      auto,
+      auto 74%;
+  }
+  .mb-front {
+    margin: 4rem 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+    max-width: 26rem;
+  }
+  .mb-logotype {
+    font-size: clamp(3.75rem, 15vw, 6rem);
+  }
+}
+@media (max-height: 450px) and (orientation: landscape) {
+  .mb-front {
+    margin-block: 1rem;
+    max-width: 52vw;
+  }
+  .mb-title-page p {
+    margin: 0.3rem 0;
+  }
+}
