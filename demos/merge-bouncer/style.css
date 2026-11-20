@@ -138,11 +138,14 @@
   grid-template-columns: repeat(3, 1fr);
 }
 .mb-lanes button {
+  position: absolute;
+  inset: 0;
   background: transparent;
   border: 0;
   touch-action: manipulation;
 }
 .mb-lanes button:focus-visible {
+  background: #ffe3a129;
   outline: 2px dashed #ffe3a1;
   outline-offset: -4px;
 }

@@ -9,27 +9,68 @@ type PullRequest = {
   title: string;
   lines: number;
   green: boolean;
+  runner?: boolean;
   truth: Verdict;
 };
 
 // The two closely spaced pairs ask the reviewer to choose which lane to cover.
 const release: PullRequest[] = [
   { at: 0, lane: 1, title: 'Fix button label', lines: 4, green: true, truth: 'clean' },
-  { at: 3.24, lane: 0, title: 'Fix typo', lines: 912, green: true, truth: 'bad' },
-  { at: 7.2, lane: 2, title: 'Add focus ring', lines: 8, green: true, truth: 'clean' },
+  { at: 3.24, lane: 0, runner: true, title: 'Fix typo', lines: 912, green: true, truth: 'bad' },
+  {
+    at: 7.2,
+    lane: 2,
+    runner: true,
+    title: 'Add focus ring',
+    lines: 8,
+    green: true,
+    truth: 'clean',
+  },
   { at: 10.8, lane: 1, title: 'Skip auth check', lines: 2, green: false, truth: 'bad' },
   { at: 10.8864, lane: 2, title: 'Label search box', lines: 3, green: true, truth: 'clean' },
   { at: 15.12, lane: 1, title: 'Trim empty input', lines: 11, green: true, truth: 'clean' },
   { at: 18, lane: 2, title: 'Refactor cache', lines: 154, green: true, truth: 'bad' },
-  { at: 21.24, lane: 0, title: 'Restore tab order', lines: 7, green: true, truth: 'clean' },
+  {
+    at: 21.24,
+    lane: 0,
+    runner: true,
+    title: 'Restore tab order',
+    lines: 7,
+    green: true,
+    truth: 'clean',
+  },
   { at: 24.48, lane: 1, title: 'Remove bounds check', lines: 5, green: false, truth: 'bad' },
   { at: 24.5664, lane: 2, title: 'Fix icon padding', lines: 6, green: true, truth: 'clean' },
   { at: 28.8, lane: 0, title: 'Refresh snapshots', lines: 237, green: true, truth: 'clean' },
-  { at: 32.04, lane: 2, title: 'Link help page', lines: 4, green: true, truth: 'clean' },
-  { at: 35.28, lane: 1, title: 'Ignore save errors', lines: 9, green: false, truth: 'bad' },
+  {
+    at: 32.04,
+    lane: 2,
+    runner: true,
+    title: 'Link help page',
+    lines: 4,
+    green: true,
+    truth: 'clean',
+  },
+  {
+    at: 35.28,
+    lane: 1,
+    runner: true,
+    title: 'Ignore save errors',
+    lines: 9,
+    green: false,
+    truth: 'bad',
+  },
   { at: 38.52, lane: 0, title: 'Fix menu contrast', lines: 8, green: true, truth: 'clean' },
   { at: 42.12, lane: 2, title: 'Label close button', lines: 3, green: true, truth: 'clean' },
-  { at: 45.36, lane: 1, title: 'Fix date format', lines: 12, green: true, truth: 'clean' },
+  {
+    at: 45.36,
+    lane: 1,
+    runner: true,
+    title: 'Fix date format',
+    lines: 12,
+    green: true,
+    truth: 'clean',
+  },
 ];
 
 export const upgrades = [
@@ -49,7 +90,9 @@ export function purchase(r: Round, id: Upgrade) {
   r.installed[id] = true;
   if (id === 'stamp') r.readyAt -= reviewCooldown / 2;
 }
-const travel = 4.32;
+function travelTime(id: number) {
+  return release[id - 1].runner ? 3.6 : 4.32;
+}
 const reviewCooldown = 1.3;
 const testDelay = 2.16;
 
@@ -59,6 +102,8 @@ export type Card = {
   title: string;
   lines: number;
   green: boolean;
+  travel: number;
+  runner: boolean;
   started: number;
   progress: number;
   verdict?: Verdict;
@@ -93,6 +138,8 @@ function cardFor(id: number, started: number, tested: boolean): Card {
     title,
     lines,
     green,
+    travel: travelTime(id),
+    runner: Boolean(release[id - 1].runner),
     started,
     progress: 0,
     verdict: tested ? truth : undefined,
@@ -121,15 +168,17 @@ export function initialRound(): Round {
   };
 }
 
-function returnTime(r: Round, lane: number) {
+function returnTime(r: Round, card: Card) {
   const scheduled = [
-    ...release.filter((pr) => pr.lane === lane).map((pr) => pr.at),
-    ...r.pending.filter((pr) => pr.lane === lane).map((pr) => pr.due),
-    ...r.cards.filter((pr) => pr.lane === lane).map((pr) => pr.started),
-  ].sort((a, b) => a - b);
+    ...release.map((pr, i) => ({ lane: pr.lane, at: pr.at, duration: travelTime(i + 1) })),
+    ...r.pending.map((p) => ({ lane: p.lane, at: p.due, duration: travelTime(p.id) })),
+    ...r.cards.map((c) => ({ lane: c.lane, at: c.started, duration: c.travel })),
+  ]
+    .filter((pr) => pr.lane === card.lane)
+    .sort((a, b) => a.at - b.at);
   let due = r.elapsed + testDelay;
-  for (const at of scheduled) {
-    if (Math.abs(at - due) < travel) due = at + travel;
+  for (const { at, duration } of scheduled) {
+    if (due < at + duration && due + card.travel > at) due = at + duration;
   }
   return due;
 }
@@ -155,24 +204,24 @@ export function step(r: Round, seconds: number) {
   let time = Math.min(deadline, r.elapsed + seconds);
   arrivals(r, time);
   const missed = r.cards
-    .filter((c) => c.started + travel <= time)
-    .sort((a, b) => a.started - b.started);
+    .filter((c) => c.started + c.travel <= time)
+    .sort((a, b) => a.started + a.travel - (b.started + b.travel));
   const messages: string[] = [];
   for (const c of missed) {
     const bad = release[c.id - 1].truth === 'bad';
-    recordImpact(r, c.lane, bad ? 'regression' : 'miss', c.started + travel);
+    recordImpact(r, c.lane, bad ? 'regression' : 'miss', c.started + c.travel);
     if (bad) r.regressions++;
     messages.push(bad ? `${c.title} slipped through · regression` : `Missed ${c.title} · no point`);
     if (r.regressions === 3) {
-      time = c.started + travel;
+      time = c.started + c.travel;
       r.status = 'lost';
       break;
     }
   }
   r.elapsed = time;
   r.remaining = deadline - time;
-  r.cards = r.cards.filter((c) => c.started <= time && c.started + travel > time);
-  for (const c of r.cards) c.progress = (time - c.started) / travel;
+  r.cards = r.cards.filter((c) => c.started <= time && c.started + c.travel > time);
+  for (const c of r.cards) c.progress = (time - c.started) / c.travel;
   if (messages.length) r.feedback = messages.join(' / ');
   if (r.remaining === 0) {
     r.status = 'lost';
@@ -233,7 +282,7 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
   r.readyAt = r.elapsed + reviewCooldown / (r.installed.stamp ? 2 : 1);
   if (action === 'test') {
     recordImpact(r, c.lane, 'test');
-    const due = returnTime(r, c.lane);
+    const due = returnTime(r, c);
     r.pending.push({ id: c.id, lane: c.lane, due });
     r.feedback = `Testing ${c.title} · returns to lane ${c.lane + 1} in ${Math.ceil(due - r.elapsed)}s`;
   } else if (action === 'bounce') {

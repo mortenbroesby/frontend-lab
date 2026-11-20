@@ -2,6 +2,8 @@
 
 Choose **Start round** from the title menu. **Settings** remembers sound and reduced motion on this browser. During a shift, choose **Pause → Settings** to adjust either, then resume.
 
+Clerks shamble down the hall with envelopes. Interns in purple sprint with folders. Read the PR label above each courier to judge the change.
+
 Move between three lanes with ← → or by tapping a lane. When a pull request enters the brass gate, merge (J), test (K) or bounce (L). Testing schedules a same-lane return with a definitive verdict. A missed bad change counts as a regression. Extend the 45-second release once with E.
 
 Bounce a bad PR to bank one duck scout. Press D or tap the duck beside the knight to reveal the verdict of the nearest approaching PR in another lane. If there is no target yet, the duck waits and you keep the scout.

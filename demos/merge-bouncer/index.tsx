@@ -15,6 +15,7 @@ import { playCue } from './sound';
 import { CabinetMenu, usePreferences, type MenuMode } from './cabinet-menu';
 import { UpgradeShop } from './upgrade-shop';
 import githubMark from './github-mark.svg';
+import { touchLane } from './hall';
 import inspectorUrl from './duck-inspector.png';
 import './style.css';
 
@@ -215,6 +216,7 @@ function LaneControls({ r, choose }: { r: Round; choose: (action: Action) => voi
         {[0, 1, 2].map((lane) => (
           <button
             key={lane}
+            style={{ clipPath: touchLane(lane) }}
             aria-label={'Move to lane ' + (lane + 1)}
             aria-pressed={r.lane === lane}
             onClick={() => {

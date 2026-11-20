@@ -196,3 +196,22 @@ test('the spring stamp lets a reviewer cover both lanes of the first overlapping
   purchase(r, 'stamp');
   assert.equal(r.storyPoints, 2);
 });
+
+test('a runner overtakes the normal review schedule and keeps its pace after testing', () => {
+  const r = initialRound();
+  const clerk = r.cards[0];
+  step(r, 3.24);
+  const runner = r.cards.find((card) => card.id === 2);
+  assert.ok(runner);
+  assert.ok(runner.travel < clerk.travel);
+  step(r, 0.75 * runner.travel + 0.001);
+  act(r, 'left');
+  act(r, 'test');
+  const pending = r.pending[0];
+  assert.equal(pending.id, runner.id);
+  step(r, pending.due - r.elapsed);
+  const returned = r.cards.find((card) => card.id === runner.id);
+  assert.equal(returned?.travel, runner.travel);
+  assert.equal(returned?.progress, 0);
+  assert.equal(returned?.lane, runner.lane);
+});

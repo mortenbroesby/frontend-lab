@@ -2,7 +2,10 @@ import Phaser from 'phaser';
 import knightUrl from './office-knight.png';
 import { drawShredder, shredderInset, shredderHeightAboveGate } from './shredder';
 import { dispatchPaper } from './paper-flight';
-import depotUrl from './depot.jpg';
+import depotUrl from './mail-hall.jpg';
+import courierUrl from './courier.png';
+import runnerUrl from './runner.png';
+import { hall, type Floor } from './hall';
 import { reviewStart, type Round } from './rules';
 
 const ink = 0x0b0b19;
@@ -10,49 +13,36 @@ const mint = 0x70f7e9;
 const amber = 0xffd783;
 const crimson = 0xff92ba;
 const pink = 0xf56bb5;
-const grid = 0x534675;
+
 const cssColor = (value: number) => '#' + value.toString(16).padStart(6, '0');
 
 type Graphics = Phaser.GameObjects.Graphics;
 type Label = Phaser.GameObjects.Text;
 type RequestCard = Round['cards'][number];
 
-function metrics(width: number, height: number, threshold: number) {
-  const gutter = width < 460 ? 5 : 15;
-  const laneWidth = (width - 2 * gutter) / 3;
-  const entry = Math.min(135, height * 0.6);
-  const exit = height - Math.min(62, height * 0.15);
-  const yAt = (progress: number) => entry + progress * (exit - entry);
-  return { gutter, laneWidth, yAt, zone: yAt(threshold), exit, width, height };
-}
-type Floor = ReturnType<typeof metrics>;
-
 function drawFloor(g: Graphics, floor: Floor, selected: number) {
+  const { xAt, yAt, threshold, zone, width } = floor;
   g.clear();
-  for (let lane = 0; lane < 3; lane++) drawLane(g, floor, lane, lane === selected);
-  for (const x of [shredderInset, floor.width - shredderInset])
-    drawShredder(g, x, floor.zone - shredderHeightAboveGate);
-}
-
-function drawLane(
-  g: Graphics,
-  { gutter, laneWidth, height, zone }: Floor,
-  lane: number,
-  selected: boolean,
-) {
-  const x = gutter + lane * laneWidth;
-  const rail = selected ? 0xffdf8a : 0xc69860;
-  if (selected) g.fillStyle(mint, 0.05).fillRect(x, 0, laneWidth, height);
-  g.fillStyle(rail, 0.09).fillRoundedRect(x + 3, zone, laneWidth - 6, height - zone, 6);
-  g.fillStyle(rail, 0.13).fillRect(x + 3, zone - 5, laneWidth - 6, 14);
-  g.fillStyle(rail, 0.8).fillRect(x + 3, zone - 1, laneWidth - 6, 2);
-  for (let mark = x + 6; mark < x + laneWidth - 11; mark += 14) {
-    g.lineStyle(2, rail, 0.65).lineBetween(mark, zone + 7, mark + 5, zone + 2);
+  for (let i = 0; i < 4; i++) {
+    g.lineStyle(1, mint, 0.34).lineBetween(xAt(i - 0.5, 0), yAt(0), xAt(i - 0.5, 1), yAt(1));
   }
-  g.fillStyle(0x111021, 0.74).fillRect(x + 3, 5, laneWidth - 6, 38);
-  g.lineStyle(1, grid).lineBetween(x + 3, 43, x + laneWidth - 3, 43);
+  const left = selected - 0.5,
+    right = selected + 0.5;
+  g.fillStyle(mint, 0.1)
+    .beginPath()
+    .moveTo(xAt(left, 0), yAt(0))
+    .lineTo(xAt(right, 0), yAt(0))
+    .lineTo(xAt(right, 1), yAt(1))
+    .lineTo(xAt(left, 1), yAt(1))
+    .closePath()
+    .fillPath();
+  g.lineStyle(4, 0xe4b56e, 0.72).lineBetween(xAt(-0.5, threshold), zone, xAt(2.5, threshold), zone);
+  for (let lane = 0; lane < 3; lane++) {
+    g.fillStyle(0xffe8a8).fillEllipse(xAt(lane, threshold), zone, 8, 3);
+  }
+  for (const x of [shredderInset, width - shredderInset])
+    drawShredder(g, x, zone - shredderHeightAboveGate);
 }
-
 function label(scene: Phaser.Scene, size: number, color: number, title = false) {
   return scene.add
     .text(0, 0, '', {
@@ -64,92 +54,70 @@ function label(scene: Phaser.Scene, size: number, color: number, title = false) 
     .setDepth(1);
 }
 
-function cardLabels(scene: Phaser.Scene) {
+function actor(scene: Phaser.Scene, card: RequestCard) {
   return {
-    number: label(scene, 11, 0x215c43, true),
-    title: label(scene, 14, 0x211c30, true),
-    size: label(scene, 11, 0x453d48),
-    signal: label(scene, 11, mint),
+    body: scene.add.image(0, 0, card.runner ? 'runner' : 'courier').setOrigin(0.5, 1),
+    title: label(scene, 13, 0xfff0ce, true).setText(card.title).setDepth(4),
+    info: label(scene, 11, 0xffedce)
+      .setText('PR #' + card.id + ' · +' + card.lines)
+      .setDepth(4),
+    signal: label(scene, 11, mint).setDepth(4),
   };
 }
-type CardLabels = ReturnType<typeof cardLabels>;
-
+type Actor = ReturnType<typeof actor>;
 function cardSignal(card: RequestCard) {
-  if (card.verdict === 'clean') return { text: 'CLEAN PR', color: 0x186048 };
-  if (card.verdict === 'bad') return { text: 'BAD PR', color: 0x943619 };
+  if (card.verdict === 'clean') return { text: 'CLEAN PR', color: 0xb4ffdb };
+  if (card.verdict === 'bad') return { text: 'BAD PR', color: 0xffaf99 };
   return card.green
-    ? { text: '✓ Build passed', color: 0x186048 }
-    : { text: '× Build failed', color: 0x943619 };
+    ? { text: '✓ Build passed', color: 0xb4ffdb }
+    : { text: '× Build failed', color: 0xffaf99 };
 }
 
-function drawCard(
+function drawCourier(g: Graphics, art: Actor, card: RequestCard, floor: Floor, walkTime: number) {
+  const stride = Math.sin(walkTime * (card.runner ? 14 : 8));
+  const distance = floor.depth(card.progress);
+  const x = floor.xAt(card.lane, card.progress),
+    feet = floor.yAt(card.progress);
+  const size = Math.min(122, floor.height * 0.26) * (0.4 + distance * 0.6);
+  const lift = Math.abs(stride) * size * 0.055;
+  g.fillStyle(ink, 0.46).fillEllipse(x, feet, size * 0.69, size * 0.16);
+  art.body
+    .setDisplaySize(size, size)
+    .setPosition(x, feet - lift)
+    .setAngle(stride * 4)
+    .setDepth(1 + distance);
+  drawNameplate(g, art, card, floor, x, feet - size - lift);
+}
+
+function drawNameplate(
   g: Graphics,
-  labels: CardLabels,
+  art: Actor,
   card: RequestCard,
   floor: Floor,
-  selected: number,
-) {
-  const width = Math.min(floor.laneWidth - 10, 226);
-  const x = floor.gutter + (card.lane + 0.5) * floor.laneWidth - width / 2;
-  const y = floor.yAt(card.progress);
-  const top = y - 90;
-  const active = card.lane === selected && y >= floor.zone;
-  drawCardFrame(g, x, top, width, active);
-  if (card.id % 3 === 2) {
-    // Someone in accounts put their espresso on the paperwork again.
-    g.lineStyle(2, 0x9e663e, 0.23)
-      .beginPath()
-      .arc(x + width - 21, top + 35, 11, 0.45, 5.8)
-      .strokePath();
-    g.fillStyle(0xa4754b, 0.24).fillEllipse(x + width - 12, top + 46, 4, 3);
-  }
-  positionCardLabels(labels, card, x, top, width);
-}
-
-function drawCardFrame(g: Graphics, x: number, top: number, width: number, active: boolean) {
-  const edge = active ? 0xffbd64 : 0xa78c67;
-  g.fillStyle(ink, 0.6).fillRoundedRect(x + 3, top + 5, width, 90, 4);
-  g.fillStyle(0xffefc8).fillRoundedRect(x, top, width, 90, 4);
-  g.lineStyle(active ? 3 : 1, edge).strokeRoundedRect(x, top, width, 90, 4);
-  g.lineStyle(1, edge, 0.55).lineBetween(x + 8, top + 56, x + width - 9, top + 56);
-  g.fillStyle(0xc3a47d).fillTriangle(
-    x + width - 13,
-    top + 90,
-    x + width,
-    top + 77,
-    x + width,
-    top + 90,
-  );
-  // Open pull request: two commits and an arrow returning to the base branch.
-  g.lineStyle(1.5, 0x215c43).lineBetween(x + 9, top + 8, x + 9, top + 14);
-  g.strokeCircle(x + 9, top + 6, 1.6).strokeCircle(x + 9, top + 16, 1.6);
-  g.beginPath()
-    .moveTo(x + 17, top + 14)
-    .lineTo(x + 17, top + 9)
-    .lineTo(x + 14, top + 7)
-    .strokePath();
-  g.strokeCircle(x + 17, top + 16, 1.6);
-  g.fillStyle(0x215c43).fillTriangle(x + 12, top + 7, x + 15, top + 4, x + 15, top + 10);
-  g.lineStyle(2, 0x586178).strokeRoundedRect(x + width - 18, top - 3, 5, 12, 2);
-}
-
-function positionCardLabels(
-  labels: CardLabels,
-  card: RequestCard,
   x: number,
-  top: number,
-  width: number,
+  crown: number,
 ) {
-  labels.number.setPosition(x + 23, top + 3).setText('PR #' + card.id);
-  labels.title.setPosition(x + 8, top + 19).setText(card.title);
-  if (labels.title.style.wordWrapWidth !== width - 10) {
-    labels.title.setFontSize(width < 125 ? 12 : 14).setWordWrapWidth(width - 10, true);
+  const column = floor.width / 3;
+  const width = Math.min(167, column - 5);
+  const left = Phaser.Math.Clamp(
+    x - width / 2,
+    column * card.lane + 2,
+    column * (card.lane + 1) - width - 2,
+  );
+  if (art.title.style.wordWrapWidth !== width - 8) {
+    art.title.setWordWrapWidth(width - 8, true).setFontSize(width < 117 ? 11 : 13);
   }
-  labels.size.setPosition(x + 8, top + 59).setText('+' + card.lines + ' lines');
+  const height = art.title.height + 32;
+  const top = Math.max(2, crown - height - 3);
+  g.lineStyle(1, 0xffdc9a, 0.75).lineBetween(left + width / 2, top + height, x, crown + 2);
+  g.fillStyle(0x101923, 0.93).fillRoundedRect(left, top, width, height, 4);
+  g.lineStyle(1, 0xad9365, 0.9).strokeRoundedRect(left, top, width, height, 4);
+  art.info.setPosition(left + 4, top + 2);
+  art.title.setPosition(left + 4, top + 15);
   const status = cardSignal(card);
-  labels.signal.setPosition(x + 8, top + 73).setText(status.text);
-  if (labels.signal.style.color !== cssColor(status.color))
-    labels.signal.setColor(cssColor(status.color));
+  art.signal.setPosition(left + 4, top + height - 15);
+  if (art.signal.text !== status.text)
+    art.signal.setColor(cssColor(status.color)).setText(status.text);
 }
 
 class Depot extends Phaser.Scene {
@@ -168,7 +136,7 @@ class Depot extends Phaser.Scene {
   private headers: Label[] = [];
   private signals: Label[] = [];
   private zoneLabel!: Label;
-  private captions = new Map<number, CardLabels>();
+  private couriers = new Map<number, Actor>();
   private floor!: Floor;
   private floorKey = '';
 
@@ -182,15 +150,17 @@ class Depot extends Phaser.Scene {
 
   preload() {
     this.load.image('depot', depotUrl);
+    this.load.image('courier', courierUrl);
+    this.load.image('runner', runnerUrl);
     this.load.image('office-knight', knightUrl);
   }
 
   create() {
-    this.backdrop = this.add.image(0, 0, 'depot').setOrigin(0).setAlpha(0.62);
+    this.backdrop = this.add.image(0, 0, 'depot').setOrigin(0).setAlpha(0.91);
     this.floorArt = this.add.graphics();
     this.movingArt = this.add.graphics();
 
-    this.reviewer = this.add.image(0, 0, 'office-knight').setDisplaySize(76, 76).setDepth(2);
+    this.reviewer = this.add.image(0, 0, 'office-knight').setOrigin(0.5, 1).setDepth(2);
     this.result = label(this, 17, mint, true).setOrigin(0.5).setDepth(3).setVisible(false);
     for (let i = 0; i < 3; i++) {
       this.headers.push(
@@ -200,7 +170,7 @@ class Depot extends Phaser.Scene {
       );
       this.signals.push(label(this, 10, amber).setOrigin(0.5, 0));
     }
-    this.zoneLabel = label(this, 10, mint).setOrigin(0, 0.5);
+    this.zoneLabel = label(this, 11, mint).setStroke('#101825', 3).setOrigin(0, 0.5);
     this.ready();
   }
 
@@ -211,7 +181,7 @@ class Depot extends Phaser.Scene {
     this.backdrop.setDisplaySize(width, height);
     const key = `${width}/${height}/${lane}/${threshold}`;
     if (this.floorKey !== key) {
-      this.floor = metrics(width, height, threshold);
+      this.floor = hall(width, height, threshold);
       drawFloor(this.floorArt, this.floor, lane);
       this.floorKey = key;
     }
@@ -224,15 +194,15 @@ class Depot extends Phaser.Scene {
     const g = this.movingArt.clear();
     const { height } = floor;
     this.headers.forEach((head, lane) => {
-      const center = floor.gutter + (lane + 0.5) * floor.laneWidth;
+      const center = floor.xAt(lane, 1);
       head.setPosition(center, 8);
       const next = round.pending.find((item) => item.lane === lane);
       this.signals[lane]
         .setPosition(center, 26)
         .setText(next ? 'TEST IN ' + Math.max(0, Math.ceil(next.due - round.elapsed)) + 's' : '');
     });
-    this.zoneLabel.setPosition(floor.gutter + 8, floor.zone + 16).setText('→ main');
-    const reviewerX = Math.round(floor.gutter + (round.lane + 0.5) * floor.laneWidth);
+    this.zoneLabel.setPosition(8, floor.zone + 16).setText('→ main');
+    const reviewerX = floor.xAt(round.lane, 1);
     g.fillStyle(pink, 0.13).fillEllipse(reviewerX, height - 18, 47, 12);
     this.drawKnight(reviewerX, height, delta, round);
     this.showImpact(round, floor);
@@ -246,8 +216,10 @@ class Depot extends Phaser.Scene {
       x = Phaser.Math.Linear(this.reviewer.x || reviewerX, reviewerX, 1 - Math.exp(-delta / 40));
       if (round.impact) strike = Math.max(0, 1 - (round.elapsed - round.impact.at) / 0.25);
     }
+    const size = Math.min(150, height * 0.32);
     this.reviewer
-      .setPosition(x, height - 27 - Math.sin(strike * Math.PI) * 17)
+      .setDisplaySize(size, size)
+      .setPosition(x, height - 2 - Math.sin(strike * Math.PI) * 17)
       .setAngle((x - reviewerX) * 0.1 + Math.sin(strike * Math.PI * 2) * 15);
   }
 
@@ -271,13 +243,13 @@ class Depot extends Phaser.Scene {
       miss: ['DROPPED', pink],
     } as const;
     const [word, color] = styles[impact.kind];
-    const x = floor.gutter + (impact.lane + 0.5) * floor.laneWidth;
+    const x = floor.xAt(impact.lane, floor.threshold);
     const y = floor.zone - 16;
     this.result
       .setPosition(x, y)
       .setColor(cssColor(color))
       .setStroke('#101021', 5)
-      .setFontSize(Math.min(24, floor.laneWidth / 8))
+      .setFontSize(Math.min(24, floor.width / 24))
       .setText(impact.points ? word + ' ×' + Math.min(5, chain) : word)
       .setAlpha(1);
     this.tweens.add({
@@ -294,7 +266,7 @@ class Depot extends Phaser.Scene {
 
   private drawBurst(x: number, floor: Floor, color: number) {
     const burst = this.add.graphics().setPosition(x, floor.zone).setDepth(2);
-    burst.lineStyle(3, color).strokeEllipse(0, 0, floor.laneWidth * 0.5, 21);
+    burst.lineStyle(3, color).strokeEllipse(0, 0, floor.width / 6, 21);
     for (let i = 0; i < 10; i++) {
       const a = (Math.PI * i) / 5;
       burst.lineBetween(Math.cos(a) * 20, Math.sin(a) * 11, Math.cos(a) * 34, Math.sin(a) * 21);
@@ -310,18 +282,19 @@ class Depot extends Phaser.Scene {
 
   private drawRequests(round: Round, floor: Floor) {
     for (const card of round.cards) {
-      const captions = this.captions.get(card.id) ?? cardLabels(this);
-      this.captions.set(card.id, captions);
-      drawCard(this.movingArt, captions, card, floor, round.lane);
+      const courier = this.couriers.get(card.id) ?? actor(this, card);
+      this.couriers.set(card.id, courier);
+      const walkTime = this.reduced ? 0 : round.elapsed - card.started;
+      drawCourier(this.movingArt, courier, card, floor, walkTime);
     }
     this.removeDepartedCards(round.cards);
   }
 
   private removeDepartedCards(cards: RequestCard[]) {
-    for (const [id, captions] of this.captions) {
+    for (const [id, courier] of this.couriers) {
       if (cards.some((card) => card.id === id)) continue;
-      for (const text of Object.values(captions)) text.destroy();
-      this.captions.delete(id);
+      for (const part of Object.values(courier)) part.destroy();
+      this.couriers.delete(id);
     }
   }
 }
