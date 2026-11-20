@@ -57,7 +57,6 @@ function label(scene: Phaser.Scene, size: number, color: number, title = false) 
       fontStyle: title ? 'bold' : 'normal',
       color: cssColor(color),
     })
-    .setResolution(Math.min(2, window.devicePixelRatio || 1))
     .setDepth(1);
 }
 
