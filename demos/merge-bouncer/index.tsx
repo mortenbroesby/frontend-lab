@@ -199,7 +199,7 @@ function ControlBank({ choose }: { choose: (a: Action) => void }) {
       {controls.map(([action, key, label]) => (
         <Button key={action} variant="outline" data-tool={action} onClick={() => choose(action)}>
           <kbd>{key}</kbd>
-          {label}
+          <span>{label}</span>
         </Button>
       ))}
     </div>
@@ -328,6 +328,7 @@ export default function Demo() {
             load={load}
             play={start}
             feedback={r.feedback}
+            merges={r.merges}
             home={home}
             preferences={preferences}
           />

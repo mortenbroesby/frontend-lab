@@ -98,6 +98,7 @@ test('a missed clean PR earns nothing and the third missed bad PR ends play imme
   assert.equal(r.merges, 0);
   step(r, 100);
   assert.equal(r.regressions, 3);
+  assert.equal(r.feedback, 'Refactor cache slipped through · regression');
   assert.equal(r.status, 'lost');
   assert.equal(r.elapsed, 22.32);
   act(r, 'extend');

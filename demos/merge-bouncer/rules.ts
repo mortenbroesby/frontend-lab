@@ -238,6 +238,8 @@ export function step(r: Round, seconds: number) {
   for (const c of missed) {
     messages.push(missedReview(r, c));
     if (r.regressions === 3 || c.id === trollId) {
+      // Only the final missed review belongs on the loss screen.
+      messages.splice(0, messages.length - 1);
       time = c.started + c.travel;
       r.status = 'lost';
       break;

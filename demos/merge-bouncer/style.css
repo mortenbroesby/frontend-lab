@@ -85,27 +85,11 @@ body {
   gap: 0.45rem;
   padding: 0 2.5% 0.75rem;
 }
-.mb-controls button,
 .mb-status button {
   color: #eff9ff;
   background: #202a3c;
   border: 1px solid #49576e;
   border-radius: 8px;
-}
-.mb-controls button {
-  min-height: 44px;
-  touch-action: manipulation;
-  box-shadow: inset 0 -3px #101724;
-}
-.mb-controls button:active {
-  transform: translateY(2px);
-  box-shadow: none;
-}
-.mb-controls kbd {
-  color: #b8c8d5;
-  font:
-    600 0.75rem ui-monospace,
-    monospace;
 }
 @media (max-width: 640px) {
   .mb-controls {
@@ -196,22 +180,65 @@ body {
   padding: 0.65rem 2.5% 0.35rem;
 }
 .mb-controls button {
-  color: #201d2a;
-  font-weight: 800;
-  min-height: 48px;
-  box-shadow: inset 0 -4px #16152545;
+  --cap: #b7f3ca;
+  --base: #38755d;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  justify-content: center;
+  gap: 0 0.3rem;
+  padding: 0.15rem 0.25rem;
+  min-height: 49px;
+  touch-action: manipulation;
+  background: linear-gradient(var(--cap), color-mix(in srgb, var(--cap), var(--base) 24%));
+  color: #251d2a;
+  border: 2px solid #211a28;
+  border-radius: 7px;
+  box-shadow:
+    inset 0 2px #fff7,
+    inset 0 -4px var(--base),
+    0 2px #080c14;
+  font:
+    850 clamp(0.8rem, 1.5vw, 1rem)/1 system-ui,
+    sans-serif;
 }
-.mb-controls [data-tool='merge'] {
-  background: #9de4c3;
+[data-tool]::before {
+  content: '';
+  width: clamp(16px, 6.5cqw, 30px);
+  aspect-ratio: 1;
+  grid-row: span 2;
+  align-self: center;
+  background: url('./action-tools.png') var(--sprite, left) center / 300% 100% no-repeat;
+  image-rendering: pixelated;
 }
 .mb-controls [data-tool='test'] {
-  background: #c0acee;
+  --cap: #d9c6ff;
+  --base: #745493;
+  --sprite: center;
 }
 .mb-controls [data-tool='bounce'] {
-  background: #ffb080;
+  --cap: #ffc089;
+  --base: #a45439;
+  --sprite: right;
 }
 .mb-controls kbd {
-  color: #393245;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  margin-block: 2px 3px;
+  font:
+    700 0.65rem/1 ui-monospace,
+    monospace;
+  opacity: 0.85;
+}
+.mb-controls button:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px var(--base);
+}
+.mb-controls button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
 }
 .mb-utilities {
   display: flex;
@@ -462,6 +489,7 @@ body {
   border-top: 1px solid var(--edge);
 }
 .mb-dock .mb-controls {
+  container-type: inline-size;
   padding: 0;
   align-self: center;
   grid-row: span 2;
@@ -546,4 +574,29 @@ body {
   .mb-menu {
     align-items: safe center;
   }
+}
+
+.mb-game[data-mode='lost'] .mb-menu {
+  background: radial-gradient(ellipse at center, #39111b99, #100a10ee);
+}
+.mb-menu .mb-lost {
+  padding-inline: clamp(1rem, 4vw, 2rem);
+  border: 2px solid #a65548;
+  border-top: 8px solid transparent;
+  background:
+    linear-gradient(#291c24, #231820) padding-box,
+    repeating-linear-gradient(130deg, #ffc082 0 10px, #422b33 10px 20px) border-box;
+}
+.mb-lost .mb-cast {
+  display: none;
+}
+.mb-lost h2 {
+  color: #ffae94;
+  text-transform: uppercase;
+}
+.mb-menu .mb-receipt {
+  padding-block: 0.6rem;
+  border-block: 1px dashed #966b6d;
+  color: #ffd1b6;
+  font-family: ui-monospace, monospace;
 }

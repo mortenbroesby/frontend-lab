@@ -45,13 +45,14 @@ const copy = {
     'Merge Troll bounced. The duck signs off on your release.',
     'Play again',
   ],
-  lost: ['Release blocked', '', 'Play again'],
+  lost: ['Release blocked', '', 'Retry shift'],
 };
 
 type Props = {
   mode: MenuMode;
   load: 'loading' | 'ready' | 'failed';
   feedback: string;
+  merges: number;
   play: () => void;
   preferences: ReturnType<typeof usePreferences>;
   home: () => void;
@@ -96,7 +97,7 @@ export function CabinetMenu(props: Props) {
 }
 
 type ShiftProps = Omit<Props, 'mode'> & { mode: Exclude<MenuMode, 'ready'> };
-function ShiftMenu({ mode, load, feedback, play, preferences, home }: ShiftProps) {
+function ShiftMenu({ mode, load, feedback, merges, play, preferences, home }: ShiftProps) {
   const [page, setPage] = useState<'Settings' | 'Help' | null>(null);
   const help = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
@@ -127,7 +128,7 @@ function ShiftMenu({ mode, load, feedback, play, preferences, home }: ShiftProps
         </section>
       ) : (
         <TitlePanel
-          {...{ mode, load, feedback, play, home, opener, help }}
+          {...{ mode, load, feedback, merges, play, home, opener, help }}
           openSettings={() => setPage('Settings')}
           openHelp={() => setPage('Help')}
         />
@@ -140,6 +141,7 @@ function TitlePanel({
   mode,
   load,
   feedback,
+  merges,
   play,
   home,
   opener,
@@ -154,7 +156,7 @@ function TitlePanel({
 }) {
   const [title, description, action] = copy[mode];
   return (
-    <section className="mb-title-panel" aria-label={title}>
+    <section className={`mb-title-panel mb-${mode}`} aria-label={title}>
       <div className="mb-cast" aria-hidden="true">
         <img src={knight} alt="" />
         <img src={duck} alt="" />
@@ -162,6 +164,11 @@ function TitlePanel({
       <h2>{title}</h2>
       <p>{description || feedback}</p>
 
+      {mode === 'lost' && (
+        <p className="mb-receipt">
+          {merges}/5 clean merges. The deployment is cancelled. Your next shift starts at zero.
+        </p>
+      )}
       <div className="mb-menu-actions">
         <Button autoFocus disabled={load !== 'ready'} onClick={play}>
           {load === 'ready' ? action : loadLabels[load]}
