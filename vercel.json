@@ -1,4 +1,4 @@
 {
   "outputDirectory": "gallery/dist",
-  "installCommand": "npx --yes npm@11.6.2 ci"
+  "installCommand": "npm install --global npm@11.21.2 --ignore-scripts && npm ci"
 }

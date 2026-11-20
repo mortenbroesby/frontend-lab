@@ -2,9 +2,10 @@
   "name": "frontend-lab",
   "private": true,
   "type": "module",
-  "packageManager": "npm@11.6.2",
+  "packageManager": "npm@11.21.2",
   "engines": {
-    "node": ">=24.0.0 <25"
+    "node": ">=24.0.0 <25",
+    "npm": "11.21.2"
   },
   "workspaces": [
     "gallery",
@@ -60,5 +61,22 @@
     "turbo": "2.11.11",
     "typescript": "7.0.2",
     "vite": "8.3.8"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0 <25",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "11.21.2",
+      "onFail": "error"
+    }
+  },
+  "allowScripts": {
+    "@swc/core": false,
+    "esbuild": false,
+    "fsevents": false
   }
 }
