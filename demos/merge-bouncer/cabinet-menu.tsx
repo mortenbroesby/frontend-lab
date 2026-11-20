@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '@lab/ui/button';
+import { GameHelp } from './game-help';
 import { TitleScreen } from './title-screen';
 import knight from './office-knight.png';
 import duck from './duck-inspector.png';
@@ -92,37 +93,39 @@ export function CabinetMenu(props: Props) {
 
 type ShiftProps = Omit<Props, 'mode'> & { mode: Exclude<MenuMode, 'ready'> };
 function ShiftMenu({ mode, load, feedback, play, preferences, home }: ShiftProps) {
-  const [settings, setSettings] = useState(false);
+  const [page, setPage] = useState<'Settings' | 'Help' | null>(null);
+  const help = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
   const back = useRef<HTMLButtonElement>(null);
-  const returning = useRef(false);
+  const returning = useRef<typeof page>(null);
   useLayoutEffect(() => {
-    if (settings) back.current?.focus();
-    else if (returning.current) opener.current?.focus();
-    returning.current = settings;
-  }, [settings]);
+    if (page) back.current?.focus();
+    else if (returning.current) (returning.current === 'Help' ? help : opener).current?.focus();
+    returning.current = page;
+  }, [page]);
   return (
     <div
       className="mb-menu"
       onKeyDown={(e) => {
-        if (settings && e.key === 'Escape') {
+        if (page && e.key === 'Escape') {
           e.stopPropagation();
-          setSettings(false);
+          setPage(null);
         }
       }}
     >
-      {settings ? (
-        <section aria-label="Settings" className="mb-options">
-          <h2>Settings</h2>
-          <Options preferences={preferences} />
-          <Button ref={back} onClick={() => setSettings(false)}>
+      {page ? (
+        <section aria-label={page} className="mb-options">
+          <h2>{page}</h2>
+          {page === 'Help' ? <GameHelp /> : <Options preferences={preferences} />}
+          <Button ref={back} onClick={() => setPage(null)}>
             Back
           </Button>
         </section>
       ) : (
         <TitlePanel
-          {...{ mode, load, feedback, play, home, opener }}
-          openSettings={() => setSettings(true)}
+          {...{ mode, load, feedback, play, home, opener, help }}
+          openSettings={() => setPage('Settings')}
+          openHelp={() => setPage('Help')}
         />
       )}
     </div>
@@ -137,9 +140,13 @@ function TitlePanel({
   home,
   opener,
   openSettings,
+  help,
+  openHelp,
 }: Omit<ShiftProps, 'preferences'> & {
   opener: RefObject<HTMLButtonElement | null>;
   openSettings: () => void;
+  help: RefObject<HTMLButtonElement | null>;
+  openHelp: () => void;
 }) {
   const [title, description, action] = copy[mode];
   return (
@@ -154,6 +161,9 @@ function TitlePanel({
       <div className="mb-menu-actions">
         <Button autoFocus disabled={load !== 'ready'} onClick={play}>
           {load === 'ready' ? action : loadLabels[load]}
+        </Button>
+        <Button ref={help} variant="outline" onClick={openHelp}>
+          Help
         </Button>
         <Button ref={opener} variant="outline" onClick={openSettings}>
           Settings

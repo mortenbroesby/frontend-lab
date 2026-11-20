@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { GameHelp } from './game-help';
 import { ScreenTools } from './screen-tools';
 import './title-screen.css';
 
@@ -64,29 +65,16 @@ export function TitleScreen({ ready, failed, play, settings }: Props) {
           <button ref={start} disabled={!ready} onClick={play}>
             {ready ? 'Start game' : 'Loading…'}
           </button>
-          <button onClick={(e) => open('controls', e.currentTarget)}>How to play</button>
+          <button onClick={(e) => open('controls', e.currentTarget)}>Help</button>
           <button onClick={(e) => open('settings', e.currentTarget)}>Settings</button>
         </nav>
         {failed && <p role="alert">The playfield couldn’t load. Reload to try again.</p>}
         {page !== 'menu' && (
           <section className="mb-title-page">
             <h2 tabIndex={-1} ref={heading}>
-              {page === 'settings' ? 'Settings' : 'How to play'}
+              {page === 'settings' ? 'Settings' : 'Help'}
             </h2>
-            {page === 'settings' ? (
-              settings
-            ) : (
-              <>
-                <p>
-                  Merge five clean pull requests before the night shift ends. Three regressions
-                  close the depot.
-                </p>
-                <p>
-                  Move with <b>WASD</b> or tap a lane. At the brass gate, press <b>Space</b> to
-                  merge, <b>N</b> to test or <b>M</b> to bounce.
-                </p>
-              </>
-            )}
+            {page === 'settings' ? settings : <GameHelp />}
             <button onClick={() => setPage('menu')}>← Back</button>
           </section>
         )}

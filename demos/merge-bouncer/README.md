@@ -2,7 +2,7 @@
 
 The game fills the browser viewport. Choose **Fullscreen** to hide browser chrome on supported devices.
 
-Choose **Start game** from the title screen. Navigate with the arrow keys and Enter, or tap a choice. **How to play** lists the controls. **Settings** remembers sound and reduced motion on this browser. During a shift, choose **Pause → Settings** to adjust either, then resume.
+Choose **Start game** from the title screen. Navigate with the arrow keys and Enter, or tap a choice. **Help** explains the goal, controls and timing. Open **Pause → Help** for a reminder during a shift. **Settings** remembers sound and reduced motion on this browser. During a shift, choose **Pause → Settings** to adjust either, then resume.
 
 Clerks shamble down the hall with envelopes. Interns in purple sprint with folders. Read the PR label above each courier to judge the change.
 
