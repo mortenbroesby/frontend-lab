@@ -68,6 +68,12 @@ export const tracks = [
     id: 'developer-experience',
     guides: [
       {
+        slug: 'api-mocking',
+        title: 'Build without waiting for the backend',
+        description:
+          'Explore success, empty, slow and failed responses, then make scenarios reusable.',
+      },
+      {
         slug: 'worktrees',
         title: 'Work in parallel with Git worktrees',
         description: 'Create a separate workspace, commit a change, integrate it and clean up.',

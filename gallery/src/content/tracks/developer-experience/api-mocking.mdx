@@ -1,0 +1,72 @@
+## Build without waiting for the backend
+
+**Can you build the loading, empty and error states before the API is ready?** Choose one screen that loads data. Make each response predictable, then change the interface while keeping the same scenario.
+
+<div className="guide-flow" role="group" aria-label="Explore a UI without a backend">
+  <div><strong>Choose a response</strong><span>Success, empty, slow or failed</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Load the screen</strong><span>See what the person using it experiences</span></div>
+  <span aria-hidden="true">↓</span>
+  <div><strong>Change one behaviour</strong><span>Repeat the same response to compare</span></div>
+</div>
+
+### Start with one request
+
+Use an existing project's read-only request, such as a list or search. Open DevTools → **Network**, trigger it and inspect the response. Use invented data with the same structure.
+
+**No API to work with?** [Create a demo](#/create), then add `public/items.json` inside its generated folder:
+
+```json
+[{ "id": "1", "name": "Notebook" }]
+```
+
+In `index.tsx`, use this loader as the starting point for a small list:
+
+```ts
+async function loadItems() {
+  const response = await fetch(`${import.meta.env.BASE_URL}items.json`);
+  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+  return response.json();
+}
+```
+
+Call it from a Load button. Track loading, items and an error message in React state; clear loading in `finally`. Render the returned names, an empty message or a retry action. This is a real HTTP request to a local JSON file, not a backend or a complete exercise implementation.
+
+**First check:** the request appears in Network and the list shows “Notebook”. Changing the JSON and loading again changes the list. A TypeScript type alone does not validate a response at runtime.
+
+### Try four responses without installing anything
+
+These steps use Chrome DevTools. Keep it open while experimenting.
+
+| Scenario | How to reach it | What to explore |
+| --- | --- | --- |
+| Success | Load the original JSON. | Try a long name or several items. Does the layout cope? |
+| Empty | Right-click the request → **Override content**. Select an override folder, allow access and replace the body with `[]`. Save and load again. | Is “nothing found” different from “still loading”? Preserve your API's envelope if it uses one, such as `{ "items": [] }`. |
+| Slow | Disable overrides under **Sources → Overrides**. In Network, enable **Disable cache**, choose a slow throttling preset and load again. | Is loading visible? What happens if someone presses Load twice? |
+| Failed | Restore normal throttling. Block this request using DevTools' request-blocking controls, then load again. | Does an error appear? Unblock the request and try Retry. Does the screen recover? |
+
+A blocked request is a **network failure**, not an HTTP 500. Changing a JSON body to an error message also does not change its HTTP status. `fetch` rejects for network failures; HTTP error responses need the `response.ok` check above.
+
+When finished, disable overrides, remove the request block and restore normal network settings. Load the original response once more. [Chrome's override guide](https://developer.chrome.com/docs/devtools/overrides) explains how overrides are stored locally and persist across reloads.
+
+### Make the scenarios reusable
+
+DevTools overrides live on your machine. If a teammate or a test needs the same scenario, explore [Mock Service Worker (MSW)](https://mswjs.io/docs/). It intercepts requests so the application's fetching code can stay unchanged.
+
+An optional handler could model a slow server failure:
+
+```ts
+import { http, HttpResponse } from 'msw/http';
+import { delay } from 'msw/utils/delay';
+
+export const handlers = [
+  http.get('/api/items', async () => {
+    await delay(1500);
+    return HttpResponse.json({ message: 'Try again' }, { status: 503 });
+  }),
+];
+```
+
+This is a handler example, not an installed Lab feature. Match your actual request URL and follow the [browser setup guide](https://mswjs.io/guides/integrations/browser) to register the worker and await its startup before requests run. Enable it only for development. Browser workers need HTTPS or localhost; plain HTTP on a LAN address is insufficient.
+
+**Choose a stretch:** make a failed request succeed on retry, return searches out of order, or reuse a scenario in a test. Keep fixtures aligned with the real API contract: a working mock does not prove the backend agrees.
