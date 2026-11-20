@@ -6,7 +6,7 @@
   "dependencies": {
     "@lab/demo-kit": "*",
     "@lab/ui": "*",
-    "motion": "^14.14.0",
+    "motion": "14.14.0",
     "react": "19.3.1"
   },
   "scripts": {

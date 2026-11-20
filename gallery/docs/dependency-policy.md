@@ -13,7 +13,7 @@ The bootstrap installs a reviewed, pinned npm version; it does not inherit the p
 
 ## Give new releases time
 
-`min-release-age=7` excludes registry versions published less than seven days ago during new dependency resolution, including transitive dependencies. `save-exact=true` pins newly added direct dependencies. Commit and review the root lockfile alongside manifest changes.
+`min-release-age=7` excludes registry versions published less than seven days ago during new dependency resolution, including transitive dependencies. `save-exact=true` pins newly added direct dependencies. Keep all registry dependencies at exact versions; local workspace links retain `*`. Commit and review the root lockfile alongside manifest changes.
 
 **This is a resolution delay, not a universal installation block.** With the pinned npm version, `npm ci` accepts versions already recorded in the lockfile, even if they are too new. Review lockfile updates accordingly. Git dependencies, local tarballs and commands run through `npx` are not covered by this project policy. An organisation-wide guarantee requires enforcement at an approved registry or proxy.
 
