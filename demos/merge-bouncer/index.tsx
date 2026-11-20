@@ -6,6 +6,7 @@ import './style.css';
 const keys: Record<string, Action | undefined> = {
   arrowleft: 'left',
   arrowright: 'right',
+  d: 'scout',
   j: 'merge',
   k: 'test',
   l: 'bounce',
@@ -136,8 +137,8 @@ function Overlay({
         <p>{text}</p>
         {mode === 'ready' && (
           <p>
-            Test a suspicious PR for a verdict. Bounce a bad one before it slips past. Three
-            regressions end the shift.
+            Test a suspicious PR for a verdict. Bounce a bad one to earn a duck scout. Send the
+            duck ahead to inspect another lane. Three regressions end the shift.
           </p>
         )}
         <Button disabled={load !== 'ready'} onClick={play}>
@@ -175,6 +176,14 @@ function ControlBank({
           {action === 'extend' ? used : label}
         </Button>
       ))}
+      <Button
+        className="mb-scout"
+        variant="outline"
+        disabled={!active || !r.duckReady}
+        onClick={() => choose('scout')}
+      >
+        <kbd>D</kbd> {r.duckReady ? 'Send duck scout' : 'Duck scout · catch a bad PR to charge'}
+      </Button>
     </div>
   );
 }

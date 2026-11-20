@@ -118,3 +118,22 @@ test('merging a bad PR costs one regression without scoring', () => {
   step(r, 2);
   assert.equal(r.regressions, 1);
 });
+
+test('the duck earns one scout, waits for a target, then reveals it across lanes', () => {
+  const r = initialRound();
+  step(r, 4.5);
+  act(r, 'bounce');
+  assert.equal(r.duckReady, false);
+  step(r, 4.5);
+  act(r, 'left');
+  act(r, 'bounce');
+  assert.equal(r.duckReady, true);
+  act(r, 'scout');
+  assert.equal(r.duckReady, true);
+  step(r, 1);
+  act(r, 'scout');
+  assert.equal(r.cards[0].verdict, 'clean');
+  assert.equal(r.duckReady, false);
+  assert.equal(r.lane, 0);
+  assert.equal(r.merges, 0);
+});

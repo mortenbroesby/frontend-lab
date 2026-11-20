@@ -1,5 +1,5 @@
 type Verdict = 'clean' | 'bad';
-export type Action = 'left' | 'right' | 'merge' | 'test' | 'bounce' | 'extend';
+export type Action = 'left' | 'right' | 'merge' | 'test' | 'bounce' | 'extend' | 'scout';
 
 type PullRequest = {
   at: number;
@@ -51,6 +51,7 @@ export type Round = {
   remaining: number;
   merges: number;
   regressions: number;
+  duckReady: boolean;
   extended: boolean;
   lane: number;
   status: 'playing' | 'won' | 'lost';
@@ -81,6 +82,7 @@ export function initialRound(): Round {
     remaining: 60,
     merges: 0,
     regressions: 0,
+    duckReady: false,
     extended: false,
     lane: 1,
     status: 'playing',
@@ -164,7 +166,22 @@ export function act(r: Round, action: Action) {
     }
     return;
   }
-  review(r, action);
+  if (action === 'scout') scout(r);
+  else review(r, action);
+}
+
+function scout(r: Round) {
+  if (!r.duckReady) return;
+  const target = r.cards
+    .filter((card) => card.lane !== r.lane && !card.verdict && card.progress < reviewStart)
+    .sort((a, b) => b.progress - a.progress)[0];
+  if (!target) {
+    r.feedback = 'Duck on standby. Wait for an approaching PR in another lane.';
+    return;
+  }
+  target.verdict = release[target.id - 1].truth;
+  r.duckReady = false;
+  r.feedback = `Duck report · lane ${target.lane + 1} · ${target.title} is ${target.verdict}`;
 }
 
 function review(r: Round, action: 'merge' | 'bounce' | 'test') {
@@ -180,7 +197,7 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
     return;
   }
   if (action === 'test' && c.verdict) {
-    r.feedback = 'Test complete. Merge or bounce this PR.';
+    r.feedback = 'Verdict known. Merge or bounce this PR.';
     return;
   }
   r.cards = r.cards.filter((other) => other !== c);
@@ -190,7 +207,9 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
     r.pending.push({ id: c.id, lane: c.lane, due });
     r.feedback = `Testing ${c.title} · returns to lane ${c.lane + 1} in ${Math.ceil(due - r.elapsed)}s`;
   } else if (action === 'bounce') {
-    r.feedback = `Bounced ${c.title}`;
+    const caught = release[c.id - 1].truth === 'bad';
+    if (caught) r.duckReady = true;
+    r.feedback = caught ? `Caught ${c.title} · duck scout ready!` : `Bounced clean PR · ${c.title}`;
   } else {
     merge(r, c);
   }

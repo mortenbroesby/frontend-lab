@@ -152,8 +152,8 @@ function cardLabels(scene: Phaser.Scene) {
 type CardLabels = ReturnType<typeof cardLabels>;
 
 function cardSignal(card: RequestCard) {
-  if (card.verdict === 'clean') return { text: 'TEST: CLEAN', color: mint };
-  if (card.verdict === 'bad') return { text: 'TEST: BAD', color: crimson };
+  if (card.verdict === 'clean') return { text: 'CLEAN PR', color: mint };
+  if (card.verdict === 'bad') return { text: 'BAD PR', color: crimson };
   return card.green
     ? { text: 'Build passed', color: mint }
     : { text: 'Build failed', color: amber };
