@@ -53,39 +53,6 @@
   width: 100%;
   height: 100%;
 }
-.mb-overlay {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  align-items: end;
-  overflow: auto;
-  background: linear-gradient(0deg, #08101bf5 0%, #0a1521dc 29%, #10162900 85%);
-  padding: clamp(0.8rem, 4%, 2.25rem);
-}
-.mb-overlay > div {
-  max-width: 34rem;
-}
-.mb-overlay h2 {
-  margin: 0;
-  font:
-    italic 900 clamp(1.65rem, 5vw, 4rem)/1 system-ui,
-    sans-serif;
-  letter-spacing: -0.055em;
-  color: inherit;
-  text-shadow: 2px 3px #28455c;
-}
-.mb-overlay p {
-  margin: 0.45rem 0;
-  color: inherit;
-  line-height: 1.35;
-  font-size: clamp(0.8rem, 2vw, 1rem);
-}
-.mb-overlay button {
-  margin-top: 0.35rem;
-  background: var(--mb-mint);
-  color: #111e28;
-  font-weight: 750;
-}
 .mb-status {
   display: flex;
   align-items: center;
@@ -267,12 +234,6 @@
   padding: 0 0.25rem;
   cursor: pointer;
 }
-.mb-utilities label {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  cursor: pointer;
-}
 
 .mb-aside {
   position: absolute;
@@ -296,4 +257,98 @@
   height: 40px;
   object-fit: contain;
   pointer-events: none;
+}
+
+.mb-menu {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  display: grid;
+  align-items: center;
+  padding: clamp(1rem, 5%, 2.5rem);
+  background:
+    linear-gradient(100deg, #111526 8%, #161a2aed 60%, #18172d88),
+    url('./depot.jpg') center/cover;
+  container-type: inline-size;
+}
+.mb-menu section {
+  position: relative;
+  isolation: isolate;
+}
+.mb-menu h2 {
+  margin: 0;
+  color: #ffe7ac;
+  font:
+    italic 950 clamp(2rem, 9cqw, 4.75rem)/0.98 system-ui,
+    sans-serif;
+  letter-spacing: -0.055em;
+  text-shadow: 2px 3px #55304b;
+}
+.mb-menu p {
+  max-width: 38ch;
+  margin: 0.55rem 0;
+  font-size: clamp(0.8rem, 2.6cqw, 1rem);
+  line-height: 1.35;
+}
+.mb-menu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+.mb-menu button {
+  min-height: 44px;
+  color: #fff4da;
+  background: #302d40;
+  border: 1px solid #9a8796;
+}
+.mb-menu-actions button:first-child {
+  background: #ffe29a;
+  color: #302238;
+  font-weight: 800;
+}
+.mb-cast {
+  display: flex;
+  align-items: flex-end;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+.mb-cast img:first-child {
+  width: clamp(60px, 20cqw, 155px);
+}
+.mb-cast img:last-child {
+  width: clamp(32px, 9cqw, 64px);
+  margin-left: -0.8rem;
+}
+.mb-options label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.mb-options input {
+  accent-color: #ffe29a;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.mb-options button {
+  margin-top: 0.5rem;
+}
+.mb-game[data-reduced='true'] .mb-duck-lane {
+  transition: none;
+}
+.mb-game[data-reduced='true'] .mb-duck {
+  animation: none;
+}
+@container (max-width: 500px) {
+  .mb-cast {
+    position: static;
+    transform: none;
+    float: right;
+    margin-left: 0.4rem;
+  }
 }

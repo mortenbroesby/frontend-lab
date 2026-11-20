@@ -143,10 +143,12 @@ function positionCardLabels(
 class Depot extends Phaser.Scene {
   private readonly getRound: () => Round;
   private readonly ready: () => void;
-  constructor(getRound: () => Round, ready: () => void) {
+  private readonly reduceMotion: () => boolean;
+  constructor(getRound: () => Round, reduceMotion: () => boolean, ready: () => void) {
     super();
     this.getRound = getRound;
     this.ready = ready;
+    this.reduceMotion = reduceMotion;
   }
   private floorArt!: Graphics;
   private movingArt!: Graphics;
@@ -161,7 +163,10 @@ class Depot extends Phaser.Scene {
   private backdrop!: Phaser.GameObjects.Image;
   private result!: Label;
   private lastImpact?: Round['impact'];
-  private readonly reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  private readonly systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  private get reduced() {
+    return this.systemMotion.matches || this.reduceMotion();
+  }
 
   preload() {
     this.load.image('depot', depotUrl);
@@ -309,7 +314,12 @@ class Depot extends Phaser.Scene {
   }
 }
 
-export function mountBoard(parent: HTMLElement, getRound: () => Round, ready: () => void) {
+export function mountBoard(
+  parent: HTMLElement,
+  getRound: () => Round,
+  reduceMotion: () => boolean,
+  ready: () => void,
+) {
   const density = Math.min(window.devicePixelRatio || 1, 2);
   const game = new Phaser.Game({
     type: Phaser.CANVAS,
@@ -317,7 +327,7 @@ export function mountBoard(parent: HTMLElement, getRound: () => Round, ready: ()
     width: Math.max(1, Math.round(parent.clientWidth * density)),
     height: Math.max(1, Math.round(parent.clientHeight * density)),
     backgroundColor: ink,
-    scene: new Depot(getRound, ready),
+    scene: new Depot(getRound, reduceMotion, ready),
     banner: false,
     autoFocus: false,
     audio: { noAudio: true },
