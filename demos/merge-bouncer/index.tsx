@@ -3,6 +3,8 @@ import { Button } from '@lab/ui/button';
 import {
   act,
   initialRound,
+  purchase,
+  type Upgrade,
   reviewStart,
   step,
   type Action,
@@ -11,6 +13,7 @@ import {
 } from './rules';
 import { playCue } from './sound';
 import { CabinetMenu, usePreferences, type MenuMode } from './cabinet-menu';
+import { UpgradeShop } from './upgrade-shop';
 import inspectorUrl from './duck-inspector.png';
 import './style.css';
 
@@ -28,7 +31,7 @@ const controls = [
   ['test', 'K', 'Test'],
   ['bounce', 'L', 'Bounce'],
 ] as const;
-type Mode = MenuMode | 'running';
+type Mode = MenuMode | 'running' | 'shop';
 
 function useBoard(
   field: RefObject<HTMLDivElement | null>,
@@ -109,7 +112,7 @@ function useRound(soundEnabled: boolean) {
   }
   function play() {
     enableAudio();
-    if (mode !== 'paused') round.current = initialRound();
+    if (['ready', 'lost', 'won'].includes(mode)) round.current = initialRound();
     setMode('running');
   }
   const sound = soundEnabled ? audio.current : null;
@@ -128,9 +131,17 @@ function useRound(soundEnabled: boolean) {
     choose,
     home: () => setMode('ready'),
     pause: () => setMode('paused'),
+    openShop: () => setMode('shop'),
+    buy: (id: Upgrade) => {
+      if (mode === 'shop') {
+        purchase(round.current, id);
+        refresh();
+      }
+    },
   };
 }
-function CabinetHud({ round: r }: { round: Round }) {
+function CabinetHud({ round: r, mode }: { round: Round; mode: Mode }) {
+  if (mode === 'ready') return null;
   const t = Math.ceil(r.remaining);
   return (
     <div className="mb-hud">
@@ -227,9 +238,9 @@ function LaneControls({ r, choose }: { r: Round; choose: (action: Action) => voi
     </>
   );
 }
-function describeCard(c: Round['cards'][number]) {
+function describeCard(c: Round['cards'][number], threshold: number) {
   const clue = c.green ? 'build passed' : 'build failed';
-  const zone = c.progress >= reviewStart ? ', in review' : '';
+  const zone = c.progress >= threshold ? ', in review' : '';
   return (
     [`Lane ${c.lane + 1}: ${c.title}, ${c.lines} lines`, clue, c.verdict]
       .filter(Boolean)
@@ -238,7 +249,9 @@ function describeCard(c: Round['cards'][number]) {
 }
 export default function Demo() {
   const preferences = usePreferences();
-  const { round, mode, play, pause, choose, home } = useRound(preferences.sound.value);
+  const { round, mode, play, pause, choose, home, buy, openShop } = useRound(
+    preferences.sound.value,
+  );
   const field = useRef<HTMLDivElement>(null);
   const game = useRef<HTMLElement>(null);
   const load = useBoard(field, round, preferences.reduceMotion.value);
@@ -266,11 +279,13 @@ export default function Demo() {
       aria-label="Merge Bouncer game"
       onKeyDown={keyDown}
     >
-      {mode !== 'ready' && <CabinetHud round={r} />}
+      <CabinetHud round={r} mode={mode} />
       <div className="mb-stage">
         <div className="mb-canvas" aria-hidden="true" ref={field} />
         {mode === 'running' ? (
           <LaneControls r={r} choose={choose} />
+        ) : mode === 'shop' ? (
+          <UpgradeShop round={r} buy={buy} resume={start} />
         ) : (
           <CabinetMenu
             key={mode}
@@ -294,11 +309,16 @@ export default function Demo() {
             </Button>
           </div>
           <div className="mb-utilities">
+            <button className="mb-shop-trigger" onClick={openShop}>
+              Upgrades · {r.storyPoints} SP
+            </button>
             <button disabled={r.extended} onClick={() => choose('extend')}>
               +10 sec (E)
             </button>
           </div>
-          <span className="sr-only">{r.cards.map(describeCard).join('. ')}</span>
+          <span className="sr-only">
+            {r.cards.map((c) => describeCard(c, reviewStart(r))).join('. ')}
+          </span>
         </>
       )}
     </section>

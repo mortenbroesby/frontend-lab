@@ -352,3 +352,33 @@
     margin-left: 0.4rem;
   }
 }
+
+.mb-shop {
+  align-items: safe center;
+}
+.mb-shop h2 {
+  font-size: clamp(1.5rem, 6cqw, 3rem);
+}
+.mb-shop p {
+  max-width: 50ch;
+}
+.mb-stock {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+.mb-stock button {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  text-align: left;
+}
+.mb-stock span {
+  font-size: 0.8rem;
+  color: #e1d7cc;
+}
+.mb-stock b,
+.mb-utilities .mb-shop-trigger {
+  color: #ffe29a;
+}

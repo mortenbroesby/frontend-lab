@@ -17,13 +17,13 @@ type Graphics = Phaser.GameObjects.Graphics;
 type Label = Phaser.GameObjects.Text;
 type RequestCard = Round['cards'][number];
 
-function metrics(width: number, height: number) {
+function metrics(width: number, height: number, threshold: number) {
   const gutter = width < 460 ? 5 : 15;
   const laneWidth = (width - 2 * gutter) / 3;
   const entry = Math.min(125, height * 0.39);
   const exit = height - Math.min(62, height * 0.15);
   const yAt = (progress: number) => entry + progress * (exit - entry);
-  return { gutter, laneWidth, yAt, zone: yAt(reviewStart), exit, width, height };
+  return { gutter, laneWidth, yAt, zone: yAt(threshold), exit, width, height };
 }
 type Floor = ReturnType<typeof metrics>;
 
@@ -92,7 +92,7 @@ function drawCard(
   const x = floor.gutter + (card.lane + 0.5) * floor.laneWidth - width / 2;
   const y = floor.yAt(card.progress);
   const top = y - 78;
-  const active = card.lane === selected && card.progress >= reviewStart;
+  const active = card.lane === selected && y >= floor.zone;
   drawCardFrame(g, x, top, width, active);
   if (card.id % 3 === 2) {
     // Someone in accounts put their espresso on the paperwork again.
@@ -192,14 +192,14 @@ class Depot extends Phaser.Scene {
     this.ready();
   }
 
-  private layout(lane: number) {
+  private layout(lane: number, threshold: number) {
     const { clientWidth: width, clientHeight: height } = this.game.canvas;
     const zoom = this.scale.width / width;
     this.cameras.main.setOrigin(0, 0).setZoom(zoom);
     this.backdrop.setDisplaySize(width, height);
-    const key = `${width}/${height}/${lane}`;
+    const key = `${width}/${height}/${lane}/${threshold}`;
     if (this.floorKey !== key) {
-      this.floor = metrics(width, height);
+      this.floor = metrics(width, height, threshold);
       drawFloor(this.floorArt, this.floor, lane);
       this.floorKey = key;
     }
@@ -208,7 +208,7 @@ class Depot extends Phaser.Scene {
 
   update(_time: number, delta: number) {
     const round = this.getRound();
-    const floor = this.layout(round.lane);
+    const floor = this.layout(round.lane, reviewStart(round));
     const g = this.movingArt.clear();
     const { height } = floor;
     this.headers.forEach((head, lane) => {

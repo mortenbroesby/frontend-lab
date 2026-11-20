@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { act, initialRound, step } from './rules.ts';
+import { act, initialRound, purchase, step } from './rules.ts';
 
 test('early and wrong-lane inputs cannot merge a PR', () => {
   const r = initialRound();
@@ -157,4 +157,42 @@ test('successive catches build score, testing preserves the chain and a miss bre
   step(r, 6);
   assert.equal(r.chain, 0);
   assert.equal(r.score, 300);
+});
+
+test('earn one story point per correct review and spend once per upgrade', () => {
+  const r = initialRound();
+  purchase(r, 'gate');
+  assert.equal(r.installed.gate, false);
+  step(r, 3.24);
+  act(r, 'merge');
+  step(r, 3.24);
+  act(r, 'left');
+  act(r, 'bounce');
+  assert.equal(r.storyPoints, 2);
+  purchase(r, 'gate');
+  assert.equal(r.storyPoints, 0);
+  step(r, 3.45);
+  act(r, 'right');
+  act(r, 'right');
+  act(r, 'merge');
+  assert.equal(r.merges, 2);
+  assert.equal(r.storyPoints, 1);
+  purchase(r, 'gate');
+  assert.equal(r.storyPoints, 1);
+  assert.equal(initialRound().installed.gate, false);
+});
+
+test('the spring stamp lets a reviewer cover both lanes of the first overlapping pair', () => {
+  const r = initialRound();
+  r.storyPoints = 2;
+  purchase(r, 'stamp');
+  step(r, 14.05);
+  act(r, 'bounce');
+  act(r, 'right');
+  step(r, 0.66);
+  act(r, 'merge');
+  assert.equal(r.merges, 1);
+  assert.equal(r.storyPoints, 2);
+  purchase(r, 'stamp');
+  assert.equal(r.storyPoints, 2);
 });

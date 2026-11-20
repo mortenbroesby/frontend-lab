@@ -32,7 +32,23 @@ const release: PullRequest[] = [
   { at: 45.36, lane: 1, title: 'Fix date format', lines: 12, green: true, truth: 'clean' },
 ];
 
-export const reviewStart = 0.75;
+export const upgrades = [
+  { id: 'gate', name: 'Fold-out gate', detail: 'Review a ticket about half a second earlier.' },
+  { id: 'stamp', name: 'Spring-loaded stamp', detail: 'Halve the wait between reviews.' },
+] as const;
+export type Upgrade = (typeof upgrades)[number]['id'];
+export const upgradeCost = 2;
+
+export function reviewStart(r: Round) {
+  return r.installed.gate ? 0.62 : 0.75;
+}
+
+export function purchase(r: Round, id: Upgrade) {
+  if (r.status !== 'playing' || r.installed[id] || r.storyPoints < upgradeCost) return;
+  r.storyPoints -= upgradeCost;
+  r.installed[id] = true;
+  if (id === 'stamp') r.readyAt -= reviewCooldown / 2;
+}
 const travel = 4.32;
 const reviewCooldown = 1.3;
 const testDelay = 2.16;
@@ -51,6 +67,8 @@ export type Card = {
 export type Round = {
   elapsed: number;
   remaining: number;
+  storyPoints: number;
+  installed: Record<Upgrade, boolean>;
   score: number;
   chain: number;
   impact?: { kind: ImpactKind; lane: number; points: number; at: number };
@@ -86,6 +104,8 @@ export function initialRound(): Round {
     elapsed: 0,
     remaining: 45,
     score: 0,
+    storyPoints: 0,
+    installed: { gate: false, stamp: false },
     chain: 0,
     merges: 0,
     regressions: 0,
@@ -181,7 +201,7 @@ export function act(r: Round, action: Action) {
 function scout(r: Round) {
   if (!r.duckReady) return;
   const target = r.cards
-    .filter((card) => card.lane !== r.lane && !card.verdict && card.progress < reviewStart)
+    .filter((card) => card.lane !== r.lane && !card.verdict && card.progress < reviewStart(r))
     .sort((a, b) => b.progress - a.progress)[0];
   if (!target) {
     r.feedback = 'Duck on standby. Wait for an approaching PR in another lane.';
@@ -199,7 +219,7 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
     return;
   }
   const c = r.cards
-    .filter((c) => c.lane === r.lane && c.progress >= reviewStart)
+    .filter((c) => c.lane === r.lane && c.progress >= reviewStart(r))
     .sort((a, b) => b.progress - a.progress)[0];
   if (!c) {
     r.feedback = 'Wait for a PR in your review zone.';
@@ -210,7 +230,7 @@ function review(r: Round, action: 'merge' | 'bounce' | 'test') {
     return;
   }
   r.cards = r.cards.filter((other) => other !== c);
-  r.readyAt = r.elapsed + reviewCooldown;
+  r.readyAt = r.elapsed + reviewCooldown / (r.installed.stamp ? 2 : 1);
   if (action === 'test') {
     recordImpact(r, c.lane, 'test');
     const due = returnTime(r, c.lane);
@@ -247,6 +267,7 @@ function merge(r: Round, c: Card) {
 function recordImpact(r: Round, lane: number, kind: ImpactKind, at = r.elapsed) {
   let points = 0;
   if (kind === 'merge' || kind === 'block') {
+    r.storyPoints++;
     r.chain++;
     points = 100 * Math.min(r.chain, 5);
     r.score += points;
