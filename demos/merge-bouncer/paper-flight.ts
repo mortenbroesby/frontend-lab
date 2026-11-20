@@ -54,7 +54,7 @@ function destination(kind: ImpactKind, x: number, gate: number, width: number) {
       color: '#ae3a24',
     },
     test: { x, y: 25, angle: -22, text: 'LAB', color: '#6351a5' },
-    merge: { x, y: gate + 22, angle: -7, text: 'SHIPPED', color: '#19705c' },
+    merge: { x, y: gate + 22, angle: -7, text: 'MERGED', color: '#673a93' },
   };
   const routes: Partial<Record<ImpactKind, keyof typeof destinations>> = {
     reject: 'block',

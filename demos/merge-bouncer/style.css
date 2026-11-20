@@ -382,3 +382,24 @@
 .mb-utilities .mb-shop-trigger {
   color: #ffe29a;
 }
+
+.mb-repo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 3%;
+  font:
+    500 0.8rem/1.4 ui-monospace,
+    monospace;
+  background: #18202b;
+  color: #bfcbd8;
+  border-bottom: 1px solid #394451;
+}
+.mb-repo strong {
+  color: #f3f5f7;
+}
+.mb-repo-tab {
+  margin-left: auto;
+  color: #f2e5cc;
+  border-bottom: 2px solid #f39b83;
+}

@@ -11,3 +11,5 @@ Clean merges and correctly bounced bugs earn 100 points times your chain, up to 
 From the repository root, run `npm run dev --workspace @lab/demo-merge-bouncer`. Edit the handcrafted arrivals in `rules.ts` to change the difficulty. Phaser draws the board in `board.ts`; the round rules also run independently with `npm test --workspace @lab/demo-merge-bouncer`.
 
 Open **Upgrades** during a round to pause at the upgrade desk. A clean merge or a correctly bounced bug earns one story point. Two points buy one piece of gear for the current shift. Spending leaves your arcade score intact.
+
+The in-game GitHub repository and numbered pull requests are fictional. The [GitHub mark](https://github.githubassets.com/favicons/favicon-dark.svg) is bundled locally.

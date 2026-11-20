@@ -39,7 +39,7 @@ const loadLabels = {
 const copy = {
   ready: [
     'Merge Bouncer',
-    'Ship five clean PRs before the night shift ends. Three regressions close the depot.',
+    'Merge five clean pull requests into main before the night shift ends. Three regressions close the depot.',
     'Start round',
   ],
   paused: ['Tea break', 'The duck is covering your shift. Clock paused.', 'Resume round'],

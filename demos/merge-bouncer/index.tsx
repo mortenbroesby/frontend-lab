@@ -14,6 +14,7 @@ import {
 import { playCue } from './sound';
 import { CabinetMenu, usePreferences, type MenuMode } from './cabinet-menu';
 import { UpgradeShop } from './upgrade-shop';
+import githubMark from './github-mark.svg';
 import inspectorUrl from './duck-inspector.png';
 import './style.css';
 
@@ -242,7 +243,7 @@ function describeCard(c: Round['cards'][number], threshold: number) {
   const clue = c.green ? 'build passed' : 'build failed';
   const zone = c.progress >= threshold ? ', in review' : '';
   return (
-    [`Lane ${c.lane + 1}: ${c.title}, ${c.lines} lines`, clue, c.verdict]
+    [`Lane ${c.lane + 1}: pull request #${c.id}, ${c.title}, ${c.lines} lines`, clue, c.verdict]
       .filter(Boolean)
       .join(', ') + zone
   );
@@ -279,6 +280,13 @@ export default function Demo() {
       aria-label="Merge Bouncer game"
       onKeyDown={keyDown}
     >
+      <div className="mb-repo">
+        <img src={githubMark} alt="GitHub" width="20" height="20" />
+        <span>
+          sir-clacks / <strong>mailroom</strong>
+        </span>
+        <span className="mb-repo-tab">Pull requests</span>
+      </div>
       <CabinetHud round={r} mode={mode} />
       <div className="mb-stage">
         <div className="mb-canvas" aria-hidden="true" ref={field} />

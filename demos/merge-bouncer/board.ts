@@ -20,7 +20,7 @@ type RequestCard = Round['cards'][number];
 function metrics(width: number, height: number, threshold: number) {
   const gutter = width < 460 ? 5 : 15;
   const laneWidth = (width - 2 * gutter) / 3;
-  const entry = Math.min(125, height * 0.39);
+  const entry = Math.min(135, height * 0.6);
   const exit = height - Math.min(62, height * 0.15);
   const yAt = (progress: number) => entry + progress * (exit - entry);
   return { gutter, laneWidth, yAt, zone: yAt(threshold), exit, width, height };
@@ -66,6 +66,7 @@ function label(scene: Phaser.Scene, size: number, color: number, title = false) 
 
 function cardLabels(scene: Phaser.Scene) {
   return {
+    number: label(scene, 11, 0x215c43, true),
     title: label(scene, 14, 0x211c30, true),
     size: label(scene, 11, 0x453d48),
     signal: label(scene, 11, mint),
@@ -77,8 +78,8 @@ function cardSignal(card: RequestCard) {
   if (card.verdict === 'clean') return { text: 'CLEAN PR', color: 0x186048 };
   if (card.verdict === 'bad') return { text: 'BAD PR', color: 0x943619 };
   return card.green
-    ? { text: 'Build passed', color: 0x186048 }
-    : { text: 'Build failed', color: 0x943619 };
+    ? { text: '✓ Build passed', color: 0x186048 }
+    : { text: '× Build failed', color: 0x943619 };
 }
 
 function drawCard(
@@ -91,7 +92,7 @@ function drawCard(
   const width = Math.min(floor.laneWidth - 10, 226);
   const x = floor.gutter + (card.lane + 0.5) * floor.laneWidth - width / 2;
   const y = floor.yAt(card.progress);
-  const top = y - 78;
+  const top = y - 90;
   const active = card.lane === selected && y >= floor.zone;
   drawCardFrame(g, x, top, width, active);
   if (card.id % 3 === 2) {
@@ -107,18 +108,28 @@ function drawCard(
 
 function drawCardFrame(g: Graphics, x: number, top: number, width: number, active: boolean) {
   const edge = active ? 0xffbd64 : 0xa78c67;
-  g.fillStyle(ink, 0.6).fillRoundedRect(x + 3, top + 5, width, 78, 4);
-  g.fillStyle(0xffefc8).fillRoundedRect(x, top, width, 78, 4);
-  g.lineStyle(active ? 3 : 1, edge).strokeRoundedRect(x, top, width, 78, 4);
-  g.lineStyle(1, edge, 0.55).lineBetween(x + 8, top + 40, x + width - 9, top + 40);
+  g.fillStyle(ink, 0.6).fillRoundedRect(x + 3, top + 5, width, 90, 4);
+  g.fillStyle(0xffefc8).fillRoundedRect(x, top, width, 90, 4);
+  g.lineStyle(active ? 3 : 1, edge).strokeRoundedRect(x, top, width, 90, 4);
+  g.lineStyle(1, edge, 0.55).lineBetween(x + 8, top + 56, x + width - 9, top + 56);
   g.fillStyle(0xc3a47d).fillTriangle(
     x + width - 13,
-    top + 78,
+    top + 90,
     x + width,
-    top + 65,
+    top + 77,
     x + width,
-    top + 78,
+    top + 90,
   );
+  // Open pull request: two commits and an arrow returning to the base branch.
+  g.lineStyle(1.5, 0x215c43).lineBetween(x + 9, top + 8, x + 9, top + 14);
+  g.strokeCircle(x + 9, top + 6, 1.6).strokeCircle(x + 9, top + 16, 1.6);
+  g.beginPath()
+    .moveTo(x + 17, top + 14)
+    .lineTo(x + 17, top + 9)
+    .lineTo(x + 14, top + 7)
+    .strokePath();
+  g.strokeCircle(x + 17, top + 16, 1.6);
+  g.fillStyle(0x215c43).fillTriangle(x + 12, top + 7, x + 15, top + 4, x + 15, top + 10);
   g.lineStyle(2, 0x586178).strokeRoundedRect(x + width - 18, top - 3, 5, 12, 2);
 }
 
@@ -129,13 +140,14 @@ function positionCardLabels(
   top: number,
   width: number,
 ) {
-  labels.title.setPosition(x + 8, top + 4).setText(card.title);
+  labels.number.setPosition(x + 23, top + 3).setText('PR #' + card.id);
+  labels.title.setPosition(x + 8, top + 19).setText(card.title);
   if (labels.title.style.wordWrapWidth !== width - 10) {
     labels.title.setFontSize(width < 125 ? 12 : 14).setWordWrapWidth(width - 10, true);
   }
-  labels.size.setPosition(x + 8, top + 46).setText('+' + card.lines + ' lines');
+  labels.size.setPosition(x + 8, top + 59).setText('+' + card.lines + ' lines');
   const status = cardSignal(card);
-  labels.signal.setPosition(x + 8, top + 61).setText(status.text);
+  labels.signal.setPosition(x + 8, top + 73).setText(status.text);
   if (labels.signal.style.color !== cssColor(status.color))
     labels.signal.setColor(cssColor(status.color));
 }
@@ -219,7 +231,7 @@ class Depot extends Phaser.Scene {
         .setPosition(center, 26)
         .setText(next ? 'TEST IN ' + Math.max(0, Math.ceil(next.due - round.elapsed)) + 's' : '');
     });
-    this.zoneLabel.setPosition(floor.gutter + 8, floor.zone + 16).setText('REVIEW');
+    this.zoneLabel.setPosition(floor.gutter + 8, floor.zone + 16).setText('→ main');
     const reviewerX = Math.round(floor.gutter + (round.lane + 0.5) * floor.laneWidth);
     g.fillStyle(pink, 0.13).fillEllipse(reviewerX, height - 18, 47, 12);
     this.drawKnight(reviewerX, height, delta, round);
@@ -250,7 +262,7 @@ class Depot extends Phaser.Scene {
 
   private animateVerdict(impact: NonNullable<Round['impact']>, floor: Floor, chain: number) {
     const styles = {
-      merge: ['SHIPPED', mint],
+      merge: ['MERGED', 0xd3acff],
       block: ['PARRIED', amber],
       reject: ['CLEAN PR', pink],
       scout: ['SCANNED', amber],
