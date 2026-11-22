@@ -5,7 +5,10 @@
 - Prefer clean, carefully rendered imagery: no added grain, noisy overlays, malformed props or excessive clutter. Inspect artwork and interactive-object placement in portrait and landscape.
 - Give the game a beautiful, separate entrance screen with a clear Start Game action. Do not expose gameplay controls before entry.
 - Keep the easier puzzles, progress retention, Danish flags and supplied family-photo reveal.
-- Motion should be subtle and optional. Preserve Stillness, keyboard access, readable touch targets and concise accessible labels.
+- Motion stays on with no Stillness toggle, as requested. Keep animation subtle, preserve keyboard access, readable touch targets and concise accessible labels.
 - Check actual fullscreen capability. Page-filling layout is not browser fullscreen. For iPhones, provide accurate Home Screen guidance when element fullscreen is unavailable; do not promise unsupported behavior.
 
-- Player-facing text is Danish, including clues, hints, accessible labels, display help and the final greeting. Keep the phrasing natural, warm and concise.
+- Player-facing text is Danish, including clues, hints, accessible labels, display help and the final greeting. Keep the phrasing natural, warm and concise. Use “Hint” rather than “vink”.
+
+- When a door opens or unlocks, visibly show it open in the room artwork or rendered scene; a message or clickable hotspot alone is not enough.
+- Bring the darkroom and attic artwork up to the main room’s clean, polished standard in both portrait and landscape. Replace malformed props, grain and other AI-generated artifacts while preserving puzzle clarity and the cozy, mysterious atmosphere.

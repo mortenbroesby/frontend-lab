@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PaperDialog } from './inspection';
 
-export function DisplayControls({ reduced, onMotion }: { reduced: boolean; onMotion: () => void }) {
+export function DisplayControls() {
   const [fullscreen, setFullscreen] = useState(false);
   const [help, setHelp] = useState(false);
   const [screenAvailable, setScreenAvailable] = useState(() => !!document.fullscreenEnabled);
@@ -29,14 +29,6 @@ export function DisplayControls({ reduced, onMotion }: { reduced: boolean; onMot
   return (
     <>
       <div className="header-actions">
-        <button
-          onClick={onMotion}
-          aria-pressed={reduced}
-          aria-label="Begræns bevægelse"
-          title={reduced ? 'Stilhed' : 'Levende lys'}
-        >
-          {reduced ? 'Stilhed' : 'Levende lys'}
-        </button>
         {screenAvailable ? (
           <button
             className="fullscreen-control"

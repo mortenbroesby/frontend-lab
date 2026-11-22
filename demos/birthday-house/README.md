@@ -27,7 +27,7 @@ A public tunnel needs its exact hostname allowed through `__VITE_ADDITIONAL_SERV
 
 Touch the buns, cake and coffee directly to perform the breakfast ritual; tap other objects to inspect them. Both upright phones and wide screens show the complete room composition. Tab moves between objects and brings them into view; Enter opens them. The notebook records only clues you choose to keep. Show glimmers makes interactive objects easier to find. A little nudge gives progressively clearer hints on request.
 
-There is no timer, penalty, jump scare or audio requirement. Living light adds gentle camera movement, real flickering lights, drifting mist and dust, rippling developing water, and a foreground layer. Stillness disables these effects and follows the system’s reduced-motion preference initially. Fullscreen uses the browser feature where available; the game otherwise fills the page. Refreshing starts a fresh game. Start again asks before resetting your discoveries.
+There is no timer, penalty, jump scare or audio requirement. Living light adds gentle camera movement, real flickering lights, drifting mist and dust, rippling developing water, and a foreground layer. Animations stay enabled, including when the system prefers reduced motion; there is no motion toggle. Fullscreen uses the browser feature where available; the game otherwise fills the page. Refreshing starts a fresh game. Start again asks before resetting your discoveries.
 
 The birthday custom of paper Dannebrog flags in buns and on cakes is described by [Denmark’s official site](https://denmark.dk/people-and-culture/dannebrog-800-years). The images also include rectangular Danish flag garlands. The puzzles are invented for this game.
 
@@ -51,15 +51,15 @@ The game is in Danish, including its clues, hints, accessible labels, entrance a
 
 The modeled 3D room has been removed at the user's request. Babylon.js 9.36.0 presents clean, lossless 2D breakfast artwork without relighting or a duplicate foreground crop. Gentle candle glows, coffee steam, dust and cabinet lights provide subtle motion. The darkroom and attic retain their painted depth layers, developing-water shader, traveling plate, projector beam and hinged reveal. All rooms use framed cameras rather than free walking.
 
-A little illustrated husnisse sits on the breakfast-room windowsill. He peeks out and bows with a little lantern stardust when tapped or activated with the keyboard. This optional encounter never gates a puzzle. Stillness keeps him still.
+A little illustrated husnisse sits on the breakfast-room windowsill. He peeks out and bows with a little lantern stardust when tapped or activated with the keyboard. This optional encounter never gates a puzzle.
 
-Object taps create brief warm ripples; discoveries sparkle and completed puzzles receive a brighter glow. Dialogs and the final photograph arrive gently. Stillness disables these animations. Wrong answers and repeated discoveries do not celebrate progress.
+Object taps create brief warm ripples; discoveries sparkle and completed puzzles receive a brighter glow. Dialogs and the final photograph arrive gently. Wrong answers and repeated discoveries do not celebrate progress.
 
 The separate entrance loads first; Start Game loads the renderer on demand. The toolbar uses compact icons with accessible labels, and object feedback is brief. Durable art and interaction direction is recorded in this demo's `AGENTS.md`.
 
-The exact Babylon release (12 November 2026) meets the repository’s seven-day release-age policy. Focused imports avoid unused engine systems. The renderer uses up to two physical pixels per CSS pixel (fixing the previous undersampling on dense phone screens). Portrait illustrations are 941 × 1672; wide illustrations are 1672 × 941. These are native generated dimensions, not 4K assets. The game fits each composition without enlarging a narrow crop. Only the current room’s meshes and lights are enabled; alternate orientations load on demand. Animation is capped around 30 fps and hidden pages stop drawing. Reduced motion holds the effects still and renders only changes after texture/shader readiness. WebGL is required.
+The exact Babylon release (12 November 2026) meets the repository’s seven-day release-age policy. Focused imports avoid unused engine systems. The renderer uses up to two physical pixels per CSS pixel (fixing the previous undersampling on dense phone screens). Portrait illustrations are 941 × 1672; wide illustrations are 1672 × 941. These are native generated dimensions, not 4K assets. The game fits each composition without enlarging a narrow crop. Only the current room’s meshes and lights are enabled; alternate orientations load on demand. Animation is capped around 30 fps and hidden pages stop drawing. WebGL is required.
 
-The final Fallow review has no dead-code findings, duplication, or cyclomatic/cognitive limit violations. It retains advisory CRAP scores for UI and rendering functions because browser exercise is not imported as line coverage. The complete browser journey, wrong answers, keyboard access, touch, orientation changes, replay, animated frames and reduced-motion frames were checked separately; real-device iPhone Safari acceptance remains unverified.
+The final Fallow review has no dead-code findings, duplication, or cyclomatic/cognitive limit violations. It retains advisory CRAP scores for UI and rendering functions because browser exercise is not imported as line coverage. The complete browser journey, wrong answers, keyboard access, touch, orientation changes, replay, animated frames were checked separately; real-device iPhone Safari acceptance remains unverified.
 
 ## iPhone display behavior
 

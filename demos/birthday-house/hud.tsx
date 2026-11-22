@@ -41,9 +41,9 @@ export function GameHUD({
           <span aria-hidden="true">◉</span>
           <small>{markers ? 'Skjul glimt' : 'Vis glimt'}</small>
         </button>
-        <button onClick={() => openHint()} aria-label="Et lille vink">
+        <button onClick={() => openHint()} aria-label="Hint">
           <span aria-hidden="true">?</span>
-          <small>Et lille vink</small>
+          <small>Hint</small>
         </button>
         <button onClick={() => openRestart()} aria-label="Begynd forfra">
           <span aria-hidden="true">↻</span>

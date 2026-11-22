@@ -34,9 +34,6 @@ export default function Demo() {
   function reactTo(next: Reaction) {
     setReaction((previous) => ({ ...next, serial: (previous?.serial ?? 0) + 1 }));
   }
-  const [reduced, setReduced] = useState(
-    () => matchMedia('(prefers-reduced-motion: reduce)').matches,
-  );
   function perform(action: Action, keep = false) {
     const next = act(game, action);
     setGame(next);
@@ -84,7 +81,7 @@ export default function Demo() {
   const close = () => setOverlay(null);
   const panBy = (delta: number) => setPan((value) => Math.min(1, Math.max(0, value + delta)));
   return (
-    <main className={`birthday-house ${reduced ? 'motion-off' : 'motion-on'}`}>
+    <main className="birthday-house motion-on">
       {started && (
         <Suspense fallback={<div className="scene-loading">Tænder lys i huset…</div>}>
           <PaintedScene
@@ -93,7 +90,7 @@ export default function Demo() {
             onReactionEnd={(serial) =>
               setReaction((current) => clearFinishedReaction(current, serial))
             }
-            reduced={reduced}
+            reduced={false}
             pan={pan}
             close={!!overlay}
             markers={markers}
@@ -111,13 +108,7 @@ export default function Demo() {
           FØDSELSDAGSHUSET
           <span>{locations[game.room]!.name}</span>
         </div>
-        <DisplayControls
-          reduced={reduced}
-          onMotion={() => {
-            setReaction(null);
-            setReduced(!reduced);
-          }}
-        />
+        <DisplayControls />
       </header>
       {!started ? (
         <SplashScreen
@@ -173,10 +164,10 @@ function Overlays({
   if (overlay === 'journal') return <Journal game={game} onClose={close} />;
   if (overlay === 'hint')
     return (
-      <PaperDialog title="Et lille vink" onClose={close}>
+      <PaperDialog title="Hint" onClose={close}>
         <p>{hint(game, hintLevel)}</p>
         <button className="ink-button" onClick={nextHint} disabled={hintLevel === 2}>
-          Et tydeligere vink
+          Et tydeligere hint
         </button>
       </PaperDialog>
     );
