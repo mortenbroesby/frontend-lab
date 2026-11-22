@@ -42,15 +42,19 @@ test('clues gate the three-room journey and survive backtracking', () => {
   });
 });
 
-test('incorrect orders reset safely; solutions cannot be skipped', () => {
+test('incorrect choices preserve progress without skipping solutions', () => {
   const s = initialState();
   assert.equal(act(s, 'attic').room, 0);
   assert.equal(act(s, 'insert').inserted, false);
-  assert.deepEqual(act(act(s, 'bun'), 'cup').sequence, []);
+  assert.deepEqual(act(act(s, 'bun'), 'cup').sequence, ['bun']);
+  assert.equal(act(act(s, 'bun'), 'cup').breakfast, false);
   let dark = act(act(act(act(s, 'bun'), 'cake'), 'cup'), 'darkroom');
   dark = act(dark, 'takeplate');
   dark = act(act(dark, 'develop'), 'fix');
-  assert.equal(dark.bath, 0);
+  assert.equal(dark.bath, 1);
+  dark = act(dark, 'stop');
+  assert.equal(dark.bath, 2);
+  assert.equal(act(dark, 'develop').bath, 2);
   assert.equal(dark.plate, false);
 });
 

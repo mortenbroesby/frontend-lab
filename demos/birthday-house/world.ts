@@ -10,9 +10,11 @@ import { roomView, type ObjectId, type RoomView } from './locations';
 import { initialState, type Game } from './game';
 import { paintedRoom, foregroundLayer, glowMaterial } from './engine-art';
 import { roomLighting } from './engine-light';
-import { breakfastPuzzle, darkroomPuzzle, atticPuzzle } from './engine-puzzles';
+import { darkroomPuzzle, atticPuzzle } from './engine-puzzles';
+import { birthdayRoom } from './birthday-room';
 
 function bundle(scene: Scene, view: RoomView, invalidate: () => void) {
+  if (view.room === 0) return birthdayRoom(scene, view);
   const start = scene.meshes.length;
   paintedRoom(scene, view, invalidate);
   foregroundLayer(scene, view, invalidate);
@@ -20,9 +22,10 @@ function bundle(scene: Scene, view: RoomView, invalidate: () => void) {
   const puzzle: {
     tick: (state: Game, time: number, reduced: boolean, dt: number) => void;
     setEnabled?: (enabled: boolean) => void;
-  } = [breakfastPuzzle, darkroomPuzzle, atticPuzzle][view.room]!(scene, view);
+  } = [darkroomPuzzle, atticPuzzle][view.room - 1]!(scene, view);
   const meshes = scene.meshes.slice(start);
   return {
+    project: undefined,
     enable(enabled: boolean) {
       meshes.forEach((m) => m.setEnabled(enabled));
       lighting.setEnabled(enabled);
@@ -145,6 +148,26 @@ export function createWorld(
     invalidate();
   };
   window.addEventListener('resize', resize);
+  function positionCamera(view: RoomView, dt: number) {
+    const ratio = canvas.clientWidth / canvas.clientHeight;
+    const visibleHeight = Math.max(view.height, view.width / ratio) / (close ? 1.12 : 1);
+    const range = Math.max(0, (view.width - visibleHeight * ratio) / 2);
+    const x =
+      (pan - 0.5) * (game.room === 0 ? 1.2 : range * 2) +
+      (reduced ? 0 : pointer.state.x * (game.room === 0 ? 4 : 1));
+    const y = (game.room === 0 ? (portrait ? 3 : 2.5) : 0) + (reduced ? 0 : pointer.state.y);
+    const distance = visibleHeight / (2 * Math.tan(camera.fov / 2));
+    camera.position = Vector3.Lerp(
+      camera.position,
+      new Vector3(x, y, -distance),
+      reduced ? 1 : 1 - Math.exp(-dt / 180),
+    );
+    camera.setTarget(
+      game.room === 0
+        ? new Vector3(camera.position.x * 0.3, portrait ? 1 : 0, 0.5)
+        : new Vector3(camera.position.x, camera.position.y, 0),
+    );
+  }
   function render(now: number) {
     if (document.hidden || now - lastFrame < 32) return;
     if (reduced && !dirty && now > settleUntil && renderedReady) return;
@@ -152,19 +175,9 @@ export function createWorld(
     lastFrame = now;
     dirty = false;
     const view = roomView(game.room, portrait);
-    const ratio = canvas.clientWidth / canvas.clientHeight;
-    const visibleHeight = Math.max(view.height, view.width / ratio) / (close ? 1.12 : 1);
-    const range = Math.max(0, (view.width - visibleHeight * ratio) / 2);
-    const x = (pan - 0.5) * range * 2 + (reduced ? 0 : pointer.state.x);
-    const y = reduced ? 0 : pointer.state.y;
-    const distance = visibleHeight / (2 * Math.tan(camera.fov / 2));
-    camera.position = Vector3.Lerp(
-      camera.position,
-      new Vector3(x, y, -distance),
-      reduced ? 1 : 1 - Math.exp(-dt / 180),
-    );
-    camera.setTarget(new Vector3(camera.position.x, camera.position.y, 0));
-    projectStage(canvas, stage, camera, view);
+    ambient.intensity = game.room === 0 ? 0.32 : 0.65;
+    positionCamera(view, dt);
+    if (game.room !== 0) projectStage(canvas, stage, camera, view);
     active?.tick(game, now / 1000, reduced, dt);
     if (!reduced)
       motes.forEach((m, i) => {
@@ -172,6 +185,7 @@ export function createWorld(
         if (m.position.y > 10) m.position.y = -10;
       });
     scene.render();
+    active?.project?.(stage, camera, canvas.clientWidth, canvas.clientHeight);
     renderedReady = scene.isReady();
     if (renderedReady && waitingForRoom && active) {
       waitingForRoom = false;

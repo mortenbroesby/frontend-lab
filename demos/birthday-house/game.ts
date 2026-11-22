@@ -35,14 +35,14 @@ export function initialState() {
 function breakfast(s: Game, action: Action): Game {
   const order = ['bun', 'cake', 'cup'];
   if (s.breakfast || !order.includes(action)) return s;
-  const sequence = action === order[s.sequence.length] ? [...s.sequence, action] : [];
+  const sequence = action === order[s.sequence.length] ? [...s.sequence, action] : s.sequence;
   return { ...s, sequence, breakfast: sequence.length === 3 };
 }
 function darkroom(s: Game, action: Action): Game {
   if (action === 'takeplate') return { ...s, negative: true };
   const order = ['develop', 'stop', 'fix'];
   if (s.plate || !s.negative || !order.includes(action)) return s;
-  const bath = action === order[s.bath] ? s.bath + 1 : 0;
+  const bath = action === order[s.bath] ? s.bath + 1 : s.bath;
   return { ...s, bath, plate: bath === 3 };
 }
 function attic(s: Game, action: Action): Game {
@@ -66,7 +66,7 @@ export function hint(s: Game, level = 0) {
     ? [
         'There is a sealed invitation beside the flowers. Someone has left you a little ritual.',
         'What rises before dawn? What is served with a wish? What chases sleep away?',
-        'Touch the brass seals beneath the buns, then the cake, then the coffee cup.',
+        'Touch the buns, then the cake, then the coffee cup.',
       ]
     : !s.negative
       ? [

@@ -42,19 +42,23 @@ export function PaintedScene(props: Props) {
   }, []);
   useEffect(() => {
     world.current?.update(props.game, props.reduced, props.pan, props.close, portrait);
-  }, [props.game, props.reduced, props.pan, props.close, portrait]);
+  }, [props.game, props.reduced, props.pan, props.close, props.active, portrait]);
   const location = roomView(props.game.room, portrait);
   return (
     <div className="painted-viewport">
       <canvas
         ref={canvas}
-        aria-label="A layered, painted room. Drag to look around, or use the room objects and look buttons."
+        aria-label="An interactive room. Drag gently to look around, or use Tab to explore the objects."
       />
-      <div ref={stage} className={`painted-stage ${props.markers ? 'show-markers' : ''}`}>
+      <div
+        ref={stage}
+        className={`painted-stage ${props.markers ? 'show-markers' : ''} ${props.game.room === 0 ? 'modeled-stage' : ''}`}
+      >
         {props.active &&
           location.spots.map((spot) => (
             <button
               key={spot.id}
+              data-object={spot.id}
               className={`room-spot ${spot.mark ? 'spot-special' : ''}`}
               style={{ left: `${spot.x}%`, top: `${spot.y}%` } as CSSProperties}
               aria-label={spot.name}

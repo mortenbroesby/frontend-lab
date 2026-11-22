@@ -745,3 +745,10 @@ body:has(.birthday-house) {
     serif;
   z-index: 5;
 }
+
+.birthday-house .modeled-stage .room-spot {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+}

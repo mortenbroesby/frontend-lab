@@ -40,7 +40,7 @@ export function PaperDialog({
 const stories: Partial<Record<ObjectId, { title: string; copy: string }>> = {
   note: {
     title: 'An invitation, in familiar handwriting',
-    copy: '“Begin with what rises before dawn. Then touch the thing that holds a wish. End with what chases sleep away. Three small kindnesses, and the house will let you in.”',
+    copy: '“Begin with what rises before dawn. Then touch the thing that holds a wish. End with what chases sleep away. Buns, then cake, then coffee. Three small kindnesses, and the house will let you in.”',
   },
   bun: {
     title: 'Still warm from the oven',
@@ -60,7 +60,7 @@ const stories: Partial<Record<ObjectId, { title: string; copy: string }>> = {
   },
   recipe: {
     title: 'A method for remembering',
-    copy: '“Moon wakes the silver. Rain stills its dreaming. A star keeps the memory, long after morning.” Below the verse, a glass plate passes through three baths.',
+    copy: '“Moon wakes the silver. Rain stills its dreaming. A star keeps the memory, long after morning.” The numbered sketch makes it clear: 1. Moon bath, 2. Rain bath, 3. Star bath. Your progress is safe if you try the wrong tray.',
   },
   develop: {
     title: 'The moon bath',
@@ -114,7 +114,7 @@ export function Inspection(props: Props) {
   if (!story) return null;
   return (
     <PaperDialog title={story.title} onClose={props.onClose}>
-      <DetailImage id={props.id} room={props.game.room} />
+      {props.game.room !== 0 && <DetailImage id={props.id} room={props.game.room} />}
       <p>{story.copy}</p>
       <InspectionActions {...props} />
     </PaperDialog>
@@ -175,7 +175,7 @@ function InspectionActions({ id, game, perform, onClose }: Props) {
   );
 }
 function Camera({ game, perform }: Props) {
-  const [focus, setFocus] = useState(3);
+  const [focus, setFocus] = useState(6);
   const sharp = focus === 7;
   return (
     <>
@@ -185,7 +185,7 @@ function Camera({ game, perform }: Props) {
         </div>
       </div>
       <p>
-        The maker has scratched <strong>VII</strong> beside the focus ring. Through the lens, a
+        The maker has scratched <strong>VII (7)</strong> beside the focus ring. Through the lens, a
         constellation shimmers.
       </p>
       <label className="focus-control">
@@ -203,7 +203,7 @@ function Camera({ game, perform }: Props) {
       <p className="quiet" role="status">
         {sharp
           ? 'The stars stand still. A catch releases behind the camera.'
-          : 'Turn the ring until the stars become sharp.'}
+          : 'Move the ring to VII (7) to bring the stars into focus.'}
       </p>
       <button
         className="ink-button"
@@ -237,7 +237,7 @@ function Lantern({ game, perform }: Props) {
     <>
       <p>
         The plate glows inside the lantern. Turn the wheels to match the constellations you found on
-        the glass.
+        the glass: <strong>Horizontal II (2)</strong> and <strong>Vertical III (3)</strong>.
       </p>
       <div className="brass-dials">
         <Dial label="Horizontal" value={game.horizontal} turn={() => perform('horizontal', true)} />

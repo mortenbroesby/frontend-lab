@@ -43,6 +43,10 @@ export default function Demo() {
   }
   function pick(id: ObjectId) {
     if (!started) return;
+    if (game.room === 0 && (id === 'bun' || id === 'cake' || id === 'cup')) {
+      perform(id);
+      return;
+    }
     const door = doors[id];
     if (door) {
       perform(door);
@@ -123,7 +127,9 @@ export default function Demo() {
             className="gold-button"
             onClick={() => {
               setStarted(true);
-              setNote('Explore the room. Something beside the flowers is waiting to be opened.');
+              setNote(
+                'Explore the room. Open the invitation beside the flowers, then touch the buns, cake, and coffee.',
+              );
             }}
           >
             Step inside <span>→</span>

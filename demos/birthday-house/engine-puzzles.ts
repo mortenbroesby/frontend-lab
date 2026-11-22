@@ -42,30 +42,6 @@ function water(scene: Scene, view: RoomView) {
   });
   return { surfaces, shader };
 }
-export function breakfastPuzzle(scene: Scene, view: RoomView) {
-  const m = glowMaterial(scene, 'awakened cabinet lights', '#ffcf70');
-  m.diffuseTexture = softTexture(scene, 'cabinet glow');
-  m.useAlphaFromDiffuseTexture = true;
-  const lights = [0, 1, 2].map((i) => {
-    const mesh = MeshBuilder.CreatePlane('little sun', { size: 0.45 }, scene);
-    mesh.position = position(
-      view,
-      (view.portrait ? 51 : 54.8) + i * (view.portrait ? 7 : 4.8),
-      view.portrait ? 34.5 : 21.8,
-      -0.1,
-    );
-    mesh.material = m;
-    mesh.isPickable = false;
-    return mesh;
-  });
-  return {
-    tick(s: Game) {
-      lights.forEach((m, i) => {
-        m.isVisible = s.sequence.length > i;
-      });
-    },
-  };
-}
 export function darkroomPuzzle(scene: Scene, view: RoomView) {
   const baths = water(scene, view);
   const plate = MeshBuilder.CreatePlane(
