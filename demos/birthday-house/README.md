@@ -51,6 +51,8 @@ The game is in Danish, including its clues, hints, accessible labels, entrance a
 
 The modeled 3D room has been removed at the user's request. Babylon.js 9.36.0 presents clean, lossless 2D breakfast artwork without relighting or a duplicate foreground crop. Gentle candle glows, coffee steam, dust and cabinet lights provide subtle motion. The darkroom and attic retain their painted depth layers, developing-water shader, traveling plate, projector beam and hinged reveal. All rooms use framed cameras rather than free walking.
 
+A little illustrated husnisse sits on the breakfast-room windowsill. He peeks out and bows with a little lantern stardust when tapped or activated with the keyboard. This optional encounter never gates a puzzle. Stillness keeps him still.
+
 Object taps create brief warm ripples; discoveries sparkle and completed puzzles receive a brighter glow. Dialogs and the final photograph arrive gently. Stillness disables these animations. Wrong answers and repeated discoveries do not celebrate progress.
 
 The separate entrance loads first; Start Game loads the renderer on demand. The toolbar uses compact icons with accessible labels, and object feedback is brief. Durable art and interaction direction is recorded in this demo's `AGENTS.md`.

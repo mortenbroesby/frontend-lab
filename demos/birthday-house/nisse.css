@@ -1,0 +1,125 @@
+.nisse-perch {
+  position: absolute;
+  width: 6.5%;
+  min-width: 48px;
+  max-width: 88px;
+  transform: translate(-50%, -100%);
+  z-index: 2;
+}
+.birthday-house .house-nisse {
+  display: block;
+  width: 100%;
+  min-height: 60px;
+  padding: 0;
+  border: 0;
+  background: none;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 40%;
+}
+.house-nisse img {
+  display: block;
+  width: 100%;
+  transform-origin: 50% 92%;
+  filter: drop-shadow(0 3px 3px #07161280);
+}
+.nisse-breathe {
+  display: block;
+  transform-origin: 50% 92%;
+}
+.motion-on .nisse-breathe {
+  animation: nisse-peek 12s ease-in-out infinite;
+}
+.motion-on .nisse-greeting {
+  animation: nisse-bow 1100ms ease-in-out both;
+}
+.nisse-wisps {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.nisse-wisps i {
+  position: absolute;
+  left: 78%;
+  top: 80%;
+  color: #ffe0a0;
+  font:
+    normal 12px Georgia,
+    serif;
+  text-shadow: 0 0 7px #eab35d;
+  opacity: 0;
+}
+.motion-on .nisse-firefly {
+  animation: nisse-drift 9s ease-in-out infinite;
+  animation-delay: calc(var(--wisp) * -1.8s);
+}
+.motion-on .nisse-star {
+  animation: nisse-spark 1200ms ease-out both;
+  animation-delay: calc(var(--wisp) * 55ms);
+}
+.nisse-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@keyframes nisse-peek {
+  0%,
+  68%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  76%,
+  88% {
+    transform: rotate(-5deg) translateY(-2px);
+  }
+  82% {
+    transform: rotate(-3deg) translateY(-3px);
+  }
+}
+@keyframes nisse-bow {
+  0%,
+  100% {
+    transform: rotate(0deg) scaleY(1);
+  }
+  28% {
+    transform: rotate(9deg) scaleY(0.88);
+  }
+  58% {
+    transform: rotate(-6deg) scaleY(1.04);
+  }
+  78% {
+    transform: rotate(3deg) scaleY(0.98);
+  }
+}
+@keyframes nisse-drift {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  30%,
+  60% {
+    opacity: 0.65;
+  }
+  80% {
+    opacity: 0;
+    transform: translate(calc((var(--wisp) - 2) * 16px), -65px) scale(1);
+  }
+}
+@keyframes nisse-spark {
+  from {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3);
+  }
+  25% {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0;
+    transform: translate(calc((var(--wisp) - 2) * 22px), calc(-35px - var(--wisp) * 8px))
+      rotate(55deg) scale(0.25);
+  }
+}

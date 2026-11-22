@@ -4,6 +4,7 @@ import { createWorld } from './world';
 import { roomView, type ObjectId } from './locations';
 import type { Game } from './game';
 import { usePortrait } from './viewport';
+import { HouseNisse } from './nisse';
 
 type Props = {
   game: Game;
@@ -86,6 +87,12 @@ export function PaintedScene(props: Props) {
               <small>{spot.name}</small>
             </button>
           ))}
+        <HouseNisse
+          key={String(props.reduced)}
+          portrait={portrait}
+          reduced={props.reduced}
+          visible={ready && props.game.room === 0}
+        />
         <InteractionEffects
           reaction={props.reaction}
           view={location}
