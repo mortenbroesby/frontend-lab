@@ -13,7 +13,7 @@ npm run check --workspace @lab/demo-birthday-house
 npm run test --workspace @lab/demo-birthday-house
 ```
 
-Replace `birthday-photo.jpg` and edit `birthday.ts` for the alt text and personal message. The bundled family photograph was supplied by the user and edited with Danish birthday bunting. Both portrait and landscape photographs fit without cropping. Rebuild to share changes. The gallery discovers `demo.config.ts` automatically.
+Replace `birthday-photo.png` and edit `birthday.ts` for the alt text and personal message. The bundled portrait of Casper was supplied by the user and edited with softly blurred background people, Danish birthday bunting and gold star decorations. Both portrait and landscape photographs fit without cropping. Rebuild to share changes. The gallery discovers `demo.config.ts` automatically.
 
 For a built LAN preview:
 
