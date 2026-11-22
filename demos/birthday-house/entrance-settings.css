@@ -1,0 +1,36 @@
+.splash-entry {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+}
+.entrance-settings-trigger {
+  min-height: 44px;
+  background: #101d26dc;
+  color: #fff0ce;
+  border: 1px solid #a28d6a;
+  border-radius: 4px;
+  font: inherit;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+}
+.entrance-settings fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 1.2rem 0;
+  border: 0;
+  padding: 0;
+}
+.entrance-settings legend {
+  font-weight: bold;
+}
+.entrance-settings label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.entrance-settings input {
+  accent-color: #72532e;
+}

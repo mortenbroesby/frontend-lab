@@ -1,6 +1,8 @@
 # The Birthday House
 
-A full-screen birthday adventure in three connected rooms. A dedicated cottage entrance screen leads into polished 2D rooms with restrained animated layers. The birthday table, photographic darkroom and attic share the original Birthday Portrait’s blue-hour light, timber, flowers and amber lamps. Room art has separate wide and portrait compositions. All three rooms use clean lossless PNG artwork. The original game and its port 4498 remain independent.
+A full-screen birthday adventure in three connected rooms. A dedicated cottage entrance screen leads into polished 2D rooms with restrained animated layers. The birthday table, photographic darkroom and attic share blue-hour light, timber, flowers and amber lamps. Room art has separate wide and portrait compositions. All three rooms use clean lossless PNG artwork.
+
+Choose **Indstillinger / Settings** at the entrance to play in Danish or English. The game remembers the choice in this browser.
 
 ## Run and personalise
 
@@ -21,7 +23,7 @@ For a built LAN preview:
 npm run preview --workspace @lab/demo-birthday-house -- --host 0.0.0.0 --port 4499 --strictPort
 ```
 
-A public tunnel needs its exact hostname allowed through `__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` when starting the preview. Use a separate tunnel from the original game.
+A public tunnel needs its exact hostname allowed through `__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` when starting the preview.
 
 ## Explore
 
