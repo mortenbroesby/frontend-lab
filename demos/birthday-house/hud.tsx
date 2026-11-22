@@ -28,17 +28,26 @@ export function GameHUD({
         </p>
       )}
       <footer className="game-toolbar">
-        <button onClick={() => openJournal()}>
-          <span aria-hidden="true">✧</span> Notebook{hasPlate && <i />}
+        <button onClick={() => openJournal()} aria-label="Notebook">
+          <span aria-hidden="true">✧</span>
+          <small>Notebook</small>
+          {hasPlate && <i />}
         </button>
-        <button onClick={() => toggleMarkers()} aria-pressed={markers}>
-          <span aria-hidden="true">◉</span> {markers ? 'Hide glimmers' : 'Show glimmers'}
+        <button
+          onClick={() => toggleMarkers()}
+          aria-pressed={markers}
+          aria-label={markers ? 'Hide glimmers' : 'Show glimmers'}
+        >
+          <span aria-hidden="true">◉</span>
+          <small>{markers ? 'Hide glimmers' : 'Show glimmers'}</small>
         </button>
-        <button onClick={() => openHint()}>
-          <span aria-hidden="true">?</span> A little nudge
+        <button onClick={() => openHint()} aria-label="A little nudge">
+          <span aria-hidden="true">?</span>
+          <small>A little nudge</small>
         </button>
         <button onClick={() => openRestart()} aria-label="Start again">
-          ↻
+          <span aria-hidden="true">↻</span>
+          <small>Start again</small>
         </button>
       </footer>
       {revealed && (

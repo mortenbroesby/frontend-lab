@@ -1,8 +1,8 @@
-import portraitBreakfast from './art/breakfast-portrait.jpg';
+import portraitBreakfast from './art/breakfast-clean-portrait.png';
 import portraitDarkroom from './art/darkroom-portrait.jpg';
 import portraitAttic from './art/attic-portrait.jpg';
 const portraitArt = [portraitBreakfast, portraitDarkroom, portraitAttic];
-import breakfast from './art/breakfast.jpg';
+import breakfast from './art/breakfast-clean.png';
 import darkroom from './art/darkroom.jpg';
 import attic from './art/attic.jpg';
 export type ObjectId =
@@ -31,13 +31,13 @@ export const locations: { name: string; subtitle: string; art: string; spots: Sp
     subtitle: 'A place has been kept for you.',
     art: breakfast,
     spots: [
-      { id: 'note', name: 'The sealed invitation', x: 20, y: 61, mark: '✉' },
-      { id: 'bun', name: 'The birthday buns', x: 27, y: 71 },
-      { id: 'cake', name: 'The birthday cake', x: 50, y: 61 },
-      { id: 'cup', name: 'The porcelain cup', x: 79, y: 72 },
-      { id: 'cabinet', name: 'The cabinet of little lights', x: 59, y: 23 },
-      { id: 'window', name: 'The blue-hour window', x: 13, y: 29 },
-      { id: 'darkroom', name: 'The darkroom door', x: 94, y: 45, mark: '↗' },
+      { id: 'note', name: 'The sealed invitation', x: 24, y: 67, mark: '✉' },
+      { id: 'bun', name: 'The birthday buns', x: 34, y: 79 },
+      { id: 'cake', name: 'The birthday cake', x: 52.3, y: 65 },
+      { id: 'cup', name: 'The porcelain cup', x: 72.7, y: 76.5 },
+      { id: 'cabinet', name: 'The cabinet of little lights', x: 64.4, y: 35.6 },
+      { id: 'window', name: 'The blue-hour window', x: 18, y: 33 },
+      { id: 'darkroom', name: 'The darkroom door', x: 89, y: 51, mark: '↗' },
     ],
   },
   {
@@ -72,13 +72,13 @@ export const locations: { name: string; subtitle: string; art: string; spots: Sp
 export type RoomView = ReturnType<typeof roomView>;
 const portraitPositions: Partial<Record<ObjectId, [number, number]>>[] = [
   {
-    note: [23, 58],
-    bun: [27, 66],
-    cake: [52, 61],
-    cup: [77, 66],
-    cabinet: [58, 34.5],
-    window: [16, 38],
-    darkroom: [94, 45],
+    note: [23, 61],
+    bun: [33, 67],
+    cake: [54, 60],
+    cup: [74, 65.6],
+    cabinet: [60, 37.9],
+    window: [19, 35],
+    darkroom: [86, 44.5],
   },
   {
     breakfast: [9, 46],

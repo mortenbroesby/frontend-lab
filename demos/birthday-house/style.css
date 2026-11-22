@@ -6,8 +6,8 @@ body:has(.birthday-house) {
   position: relative;
   isolation: isolate;
   width: 100%;
-  height: 100svh;
-  min-height: 100svh;
+  height: 100dvh;
+  min-height: 100dvh;
   overflow: clip;
   color: #fff0d4;
   background: #10232b;
@@ -121,35 +121,7 @@ body:has(.birthday-house) {
   letter-spacing: 0.26em;
   color: #efd19b;
 }
-.invitation {
-  position: absolute;
-  z-index: 3;
-  left: 7%;
-  top: 27%;
-  padding: 35px 45px 40px 0;
-  max-width: 620px;
-  text-shadow: 0 2px 16px #000;
-}
-.invitation:before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: -90px -110px -80px -150px;
-  background: radial-gradient(ellipse, #08131ddc 5%, #0b1523ac 45%, transparent 70%);
-  pointer-events: none;
-}
-.invitation h1 {
-  font:
-    normal clamp(48px, 5.5vw, 82px)/1.05 Georgia,
-    serif;
-  letter-spacing: -0.045em;
-  margin: 18px 0 24px;
-}
-.invitation > p:not(.eyebrow) {
-  font-size: 18px;
-  line-height: 1.6;
-  color: #f0dfc4;
-}
+
 .gold-button {
   border: 1px solid #f0d292;
   border-radius: 3px;
@@ -159,21 +131,11 @@ body:has(.birthday-house) {
   font-weight: 600 !important;
   box-shadow: 0 4px 20px #0003;
 }
-.invitation .gold-button {
-  display: block;
-  margin: 30px 0 17px;
-  width: 210px;
-  text-align: left;
-}
+
 .gold-button span {
   float: right;
 }
-.invitation small {
-  font:
-    11px system-ui,
-    sans-serif;
-  color: #e1d3bd;
-}
+
 .birthday-house .room-spot {
   position: absolute;
   pointer-events: auto;
@@ -625,21 +587,7 @@ body:has(.birthday-house) {
     padding: 6px 9px;
     font-size: 8px;
   }
-  .invitation {
-    left: 25px;
-    right: 15px;
-    top: 27%;
-    padding: 0;
-  }
-  .invitation h1 {
-    font-size: 53px;
-  }
-  .invitation > p:not(.eyebrow) {
-    font-size: 16px;
-  }
-  .invitation:before {
-    inset: -90px -80px -100px -100px;
-  }
+
   .game-toolbar {
     bottom: max(16px, env(safe-area-inset-bottom));
     padding: 3px 5px;
@@ -706,16 +654,6 @@ body:has(.birthday-house) {
   }
 }
 @media (max-height: 550px) {
-  .invitation {
-    top: 20%;
-  }
-  .invitation h1 {
-    font-size: 43px;
-    margin: 10px 0;
-  }
-  .invitation .gold-button {
-    margin: 15px 0;
-  }
   .paper-dialog {
     bottom: 12px;
     max-height: 91svh;
@@ -746,9 +684,192 @@ body:has(.birthday-house) {
   z-index: 5;
 }
 
-.birthday-house .modeled-stage .room-spot {
+.birthday-house .breakfast-stage .room-spot {
   width: 48px;
   height: 48px;
   min-width: 48px;
   min-height: 48px;
+}
+
+/* The scene stays primary; names remain available on focus and hover. */
+.birthday-house .game-toolbar {
+  width: auto;
+  gap: 4px;
+  border-radius: 32px;
+  padding: 4px 8px;
+  bottom: max(18px, env(safe-area-inset-bottom));
+}
+.birthday-house .game-toolbar button {
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  min-width: 44px;
+}
+.birthday-house .game-toolbar button span {
+  margin: 0;
+  font-size: 20px;
+}
+.game-toolbar button small {
+  position: absolute;
+  bottom: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  padding: 6px 10px;
+  background: #0b1824ee;
+  border: 1px solid #c4a36a66;
+  border-radius: 4px;
+  font-size: 11px;
+}
+.game-toolbar button:hover small,
+.game-toolbar button:focus-visible small {
+  opacity: 1;
+}
+.birthday-house .whisper {
+  bottom: 78px;
+  font-size: 14px;
+  padding: 8px 18px;
+}
+.birthday-house .breakfast-stage .room-spot {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px;
+  min-height: 48px;
+}
+.title-header {
+  justify-content: flex-end;
+}
+.splash-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #07131d;
+}
+.splash-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 52%;
+  animation: entrance-breathe 24s ease-in-out infinite alternate;
+}
+.splash-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(#03111d6b, transparent 40%, transparent 65%, #04101ed9),
+    radial-gradient(ellipse, transparent 50%, #020e1c66);
+}
+.splash-title {
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: min(90%, 580px);
+  color: #fff0cf;
+  text-shadow: 0 3px 22px #000c;
+}
+.splash-title p {
+  font:
+    10px/1.4 system-ui,
+    sans-serif;
+  letter-spacing: 0.4em;
+  color: #d6b77f;
+  margin-bottom: 14px;
+}
+.splash-title h1 {
+  font:
+    normal clamp(42px, 5.6vw, 80px)/0.98 Georgia,
+    serif;
+  letter-spacing: -0.035em;
+}
+.splash-title h1 em {
+  font-weight: normal;
+}
+.splash-entry {
+  position: absolute;
+  bottom: max(8%, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+}
+.splash-entry .gold-button {
+  min-width: 220px;
+  min-height: 56px;
+  border-radius: 4px;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  box-shadow:
+    0 6px 36px #040e1daa,
+    0 0 45px #edb65d22;
+}
+.splash-mist {
+  position: absolute;
+  inset: 55% -15% -10%;
+  background:
+    radial-gradient(ellipse at 30% 60%, #c7dddf22, transparent 50%),
+    radial-gradient(ellipse at 80% 60%, #b5d9e022, transparent 45%);
+  pointer-events: none;
+  animation: entrance-mist 30s ease-in-out infinite alternate;
+}
+@keyframes entrance-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.025);
+  }
+}
+@keyframes entrance-mist {
+  from {
+    transform: translateX(-3%);
+  }
+  to {
+    transform: translateX(3%);
+  }
+}
+.motion-off .splash-art,
+.motion-off .splash-mist {
+  animation: none;
+}
+@media (orientation: portrait) {
+  .splash-title {
+    top: 13%;
+  }
+  .splash-title h1 {
+    font-size: clamp(42px, 11vw, 68px);
+  }
+  .splash-entry {
+    bottom: 12%;
+  }
+  .splash-art {
+    object-position: 50% 50%;
+  }
+}
+@media (max-height: 500px) {
+  .splash-title {
+    top: 10%;
+  }
+  .splash-title h1 {
+    font-size: 38px;
+  }
+  .splash-title p {
+    margin-bottom: 8px;
+    font-size: 8px;
+  }
+  .splash-entry {
+    bottom: 8%;
+  }
+  .splash-entry .gold-button {
+    min-height: 46px;
+  }
+}
+
+.house-header {
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+}
+.house-header .paper-dialog {
+  pointer-events: auto;
 }

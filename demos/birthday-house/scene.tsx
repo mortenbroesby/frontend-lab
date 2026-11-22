@@ -52,7 +52,7 @@ export function PaintedScene(props: Props) {
       />
       <div
         ref={stage}
-        className={`painted-stage ${props.markers ? 'show-markers' : ''} ${props.game.room === 0 ? 'modeled-stage' : ''}`}
+        className={`painted-stage ${props.markers ? 'show-markers' : ''} ${props.game.room === 0 ? 'breakfast-stage' : ''}`}
       >
         {props.active &&
           location.spots.map((spot) => (

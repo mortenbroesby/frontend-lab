@@ -22,6 +22,11 @@ export function paintedMaterial(scene: Scene, name: string, url: string, onReady
 export function paintedRoom(scene: Scene, view: RoomView, invalidate: () => void) {
   const art = MeshBuilder.CreatePlane(view.name, { width: view.width, height: view.height }, scene);
   art.material = paintedMaterial(scene, view.name, view.art, invalidate);
+  if (view.room === 0) {
+    const mat = art.material as StandardMaterial;
+    mat.disableLighting = true;
+    mat.emissiveColor = Color3.White();
+  }
   art.isPickable = false;
   const targets = view.spots.map((spot) => {
     const mesh = MeshBuilder.CreatePlane(

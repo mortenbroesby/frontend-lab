@@ -40,55 +40,55 @@ export function PaperDialog({
 const stories: Partial<Record<ObjectId, { title: string; copy: string }>> = {
   note: {
     title: 'An invitation, in familiar handwriting',
-    copy: '“Begin with what rises before dawn. Then touch the thing that holds a wish. End with what chases sleep away. Buns, then cake, then coffee. Three small kindnesses, and the house will let you in.”',
+    copy: '“Buns, then cake, then coffee. A little birthday ritual.” Your lights stay lit if you try the wrong thing.',
   },
   bun: {
     title: 'Still warm from the oven',
-    copy: 'Little paper flags stand in the golden buns. Beneath the plate is a tiny brass seal, warm to the touch.',
+    copy: 'Warm buns. A tiny brass seal beneath the plate.',
   },
   cake: {
     title: 'A wish, waiting to be made',
-    copy: 'Raspberries, cream, and candles that never seem to burn down. A small brass seal is tucked beneath the cake stand.',
+    copy: 'A candle, a wish, and a brass seal beneath the cake.',
   },
   cup: {
     title: 'One cup, kept warm',
-    copy: 'Steam curls from the painted porcelain. You turn the saucer: another little brass seal, just like the others.',
+    copy: 'Warm coffee. One last brass seal under the saucer.',
   },
   cabinet: {
     title: 'The cabinet of little lights',
-    copy: 'A sun, a moon, a star. Three amber lenses in the carved wood are connected to the breakfast table by hair-thin brass wires.',
+    copy: 'Three sleeping lights. Buns → cake → coffee wakes them.',
   },
   recipe: {
     title: 'A method for remembering',
-    copy: '“Moon wakes the silver. Rain stills its dreaming. A star keeps the memory, long after morning.” The numbered sketch makes it clear: 1. Moon bath, 2. Rain bath, 3. Star bath. Your progress is safe if you try the wrong tray.',
+    copy: '1. Moon wakes. 2. Rain stills. 3. Star keeps. Try the baths in that order; your progress is safe.',
   },
   develop: {
     title: 'The moon bath',
-    copy: 'An engraved crescent marks the porcelain. The dark liquid holds the faint scent of old photographs.',
+    copy: 'The first bath. Moon wakes the silver.',
   },
   stop: {
     title: 'The rain bath',
-    copy: 'Three raindrops are painted inside the rim. The water is perfectly still.',
+    copy: 'The second bath. Rain stills the image.',
   },
   fix: {
     title: 'The star bath',
-    copy: 'A little gold star on the rim. Whatever the silver remembers here, it will keep.',
+    copy: 'The last bath. Star keeps the memory.',
   },
   frame: {
     title: 'The sleeping sun',
-    copy: 'Two carved shutters fit so closely that no light escapes. A brass sun at their meeting point seems to be waiting for another sun to touch it.',
+    copy: 'A sleeping sun. Aim the magic lantern here.',
   },
   letter: {
     title: 'Three wishes, and one promise',
-    copy: '“May there always be a light in the window. May ordinary mornings become your favourite memories. And may you always have someone beside you when the light is this good.”',
+    copy: '“May there always be a light in the window, and someone beside you.”',
   },
   window: {
     title: 'The world, holding its breath',
-    copy: 'The last blue of evening rests on the rooftops. Somewhere across the water, a window lights up. Tonight, this house has a secret of its own.',
+    copy: 'Blue hour. One warm window across the water.',
   },
   lamp: {
     title: 'A garden made of glass',
-    copy: 'Amber petals, rose-coloured glass. Someone has repaired the shade with a fine thread of gold. The little imperfections make it lovelier.',
+    copy: 'Rose glass, mended with gold. Still glowing.',
   },
 };
 const tableActions: Partial<Record<ObjectId, Action>> = { bun: 'bun', cake: 'cake', cup: 'cup' };
@@ -151,9 +151,7 @@ function InspectionActions({ id, game, perform, onClose }: Props) {
         <button className="ink-button" disabled={!game.negative} onClick={() => perform(bath)}>
           Lower the glass plate
         </button>
-        {!game.negative && (
-          <p className="quiet">You will need a glass plate. The old camera might hold one.</p>
-        )}
+        {!game.negative && <p className="quiet">Find the glass plate in the camera.</p>}
       </>
     );
   if (id === 'note')
@@ -185,8 +183,7 @@ function Camera({ game, perform }: Props) {
         </div>
       </div>
       <p>
-        The maker has scratched <strong>VII (7)</strong> beside the focus ring. Through the lens, a
-        constellation shimmers.
+        Focus on <strong>VII (7)</strong>. Let the stars settle.
       </p>
       <label className="focus-control">
         Focus ring · {['0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][focus]}
@@ -201,9 +198,7 @@ function Camera({ game, perform }: Props) {
         />
       </label>
       <p className="quiet" role="status">
-        {sharp
-          ? 'The stars stand still. A catch releases behind the camera.'
-          : 'Move the ring to VII (7) to bring the stars into focus.'}
+        {sharp ? 'Sharp. The catch releases.' : 'Turn to VII (7).'}
       </p>
       <button
         className="ink-button"
@@ -220,10 +215,7 @@ function Lantern({ game, perform }: Props) {
     return (
       <>
         <DetailImage id="projector" room={2} />
-        <p>
-          A narrow slot takes a photographic plate. Two brass wheels turn beneath the lens: one
-          marked with a horizon, the other with a rising star.
-        </p>
+        <p>A slot for your glass plate. A light waiting to wake.</p>
         <button
           className="ink-button"
           disabled={!game.plate}
@@ -236,8 +228,7 @@ function Lantern({ game, perform }: Props) {
   return (
     <>
       <p>
-        The plate glows inside the lantern. Turn the wheels to match the constellations you found on
-        the glass: <strong>Horizontal II (2)</strong> and <strong>Vertical III (3)</strong>.
+        Match the stars: <strong>Horizontal II (2)</strong>, <strong>Vertical III (3)</strong>.
       </p>
       <div className="brass-dials">
         <Dial label="Horizontal" value={game.horizontal} turn={() => perform('horizontal', true)} />

@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { GameHUD } from './hud';
-import { PaintedScene } from './scene';
+import { DisplayControls } from './display-controls';
+import { SplashScreen } from './splash';
+const PaintedScene = lazy(() =>
+  import('./scene').then((module) => ({ default: module.PaintedScene })),
+);
 import { Inspection, PaperDialog } from './inspection';
 import { Journal } from './journal';
 import { Reveal } from './reveal';
@@ -32,7 +36,7 @@ export default function Demo() {
     setGame(next);
     if (!keep) setOverlay(null);
     if (action === 'readnote' || action === 'readrecipe') {
-      setNote('A new page in your notebook.');
+      setNote('Kept in your notebook.');
       return;
     }
     setNote(feedback(game, next, action));
@@ -71,71 +75,39 @@ export default function Demo() {
   const panBy = (delta: number) => setPan((value) => Math.min(1, Math.max(0, value + delta)));
   return (
     <main className={`birthday-house ${reduced ? 'motion-off' : ''}`}>
-      <PaintedScene
-        game={game}
-        reduced={reduced}
-        pan={pan}
-        close={!!overlay}
-        markers={markers}
-        active={started}
-        onPick={pick}
-        onPan={panBy}
-        onFocus={(x) => setPan(x)}
-      />
-      <div className="edge-shade" />
-      <div className="room-transition" key={game.room} />
-      <header className="house-header">
-        <div className="wordmark">
-          THE BIRTHDAY HOUSE
-          <span>{started ? locations[game.room]!.name : 'A little mystery, made for you'}</span>
-        </div>
-        <div className="header-actions">
-          <button
-            onClick={() => setReduced(!reduced)}
-            aria-pressed={reduced}
-            aria-label="Reduce motion"
-          >
-            {reduced ? 'Stillness' : 'Living light'}
-          </button>
-          <button
-            onClick={() => {
-              document.documentElement
-                .requestFullscreen?.()
-                .catch(() => setNote('This browser is already showing the full page.'));
-            }}
-            disabled={!document.documentElement.requestFullscreen}
-            aria-label="Enter full screen"
-          >
-            ⛶
-          </button>
-        </div>
+      {started && (
+        <Suspense fallback={<div className="scene-loading">Lighting the house…</div>}>
+          <PaintedScene
+            game={game}
+            reduced={reduced}
+            pan={pan}
+            close={!!overlay}
+            markers={markers}
+            active={started}
+            onPick={pick}
+            onPan={panBy}
+            onFocus={(x) => setPan(x)}
+          />
+          <div className="edge-shade" />
+          <div className="room-transition" key={game.room} />
+        </Suspense>
+      )}
+      <header className={`house-header ${started ? '' : 'title-header'}`}>
+        {started && (
+          <div className="wordmark">
+            THE BIRTHDAY HOUSE
+            <span>{locations[game.room]!.name}</span>
+          </div>
+        )}
+        <DisplayControls reduced={reduced} onMotion={() => setReduced(!reduced)} />
       </header>
       {!started ? (
-        <section className="invitation">
-          <p className="eyebrow">AN INVITATION AT BLUE HOUR</p>
-          <h1>
-            Someone left
-            <br />
-            the lights on.
-          </h1>
-          <p>
-            A quiet house. A sleeping photograph.
-            <br />
-            And a secret, waiting just for you.
-          </p>
-          <button
-            className="gold-button"
-            onClick={() => {
-              setStarted(true);
-              setNote(
-                'Explore the room. Open the invitation beside the flowers, then touch the buns, cake, and coffee.',
-              );
-            }}
-          >
-            Step inside <span>→</span>
-          </button>
-          <small>Tap an object to explore. No clock. No hurry.</small>
-        </section>
+        <SplashScreen
+          onStart={() => {
+            setStarted(true);
+            setNote('The invitation is waiting.');
+          }}
+        />
       ) : (
         <GameHUD
           note={note}

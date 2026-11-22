@@ -1,0 +1,10 @@
+{
+  "name": "The Birthday House",
+  "short_name": "Birthday House",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#09151e",
+  "theme_color": "#09151e",
+  "icons": [{ "src": "house-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -7,9 +7,9 @@ import { position, softTexture, glowMaterial } from './engine-art';
 
 const lightsWide = [
   [
-    [60, 49],
-    [6, 56],
-    [69, 26],
+    [52.3, 54],
+    [43, 29],
+    [43, 29],
   ],
   [
     [52, 44],
@@ -24,9 +24,9 @@ const lightsWide = [
 ];
 const lightsTall = [
   [
-    [59, 48],
-    [11, 60],
-    [69.4, 35.2],
+    [54, 54.5],
+    [44.5, 30.7],
+    [44.5, 30.7],
   ],
   [
     [51, 49],
@@ -53,14 +53,14 @@ export function roomLighting(scene: Scene, view: RoomView) {
     const material = glowMaterial(scene, 'flame', '#ffc66d');
     material.diffuseTexture = texture;
     material.useAlphaFromDiffuseTexture = true;
-    material.alpha = 0.8;
+    material.alpha = view.room === 0 ? 0.22 : 0.8;
     flame.material = material;
     return { light, flame };
   });
   const fogMaterial = glowMaterial(scene, 'a breath of blue mist', '#9ab6d1');
   fogMaterial.diffuseTexture = texture;
   fogMaterial.useAlphaFromDiffuseTexture = true;
-  fogMaterial.alpha = 0.045;
+  fogMaterial.alpha = view.room === 0 ? 0.012 : 0.045;
   const fog = Array.from({ length: 5 }, (_, i) => {
     const m = MeshBuilder.CreatePlane(
       'drifting mist',
