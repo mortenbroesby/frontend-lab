@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { initialState, act } from './game.ts';
+import { initialState, act, hint } from './game.ts';
 
 test('clues gate the three-room journey and survive backtracking', () => {
   let s = initialState();
@@ -74,4 +74,17 @@ test('the notebook only records discovered clues and an exposed plate is require
   assert.equal(s.negative, true);
   assert.equal(s.recipe, true);
   assert.equal(s.note, true);
+});
+
+test('after development, darkroom hints guide the player to the newly opened attic', () => {
+  let s = initialState();
+  for (const action of ['bun', 'cake', 'cup', 'darkroom', 'takeplate', 'develop', 'stop'] as const)
+    s = act(s, action);
+  assert.equal(act(s, 'attic').room, 1);
+  assert.match(hint(s, 2), /stjernebadet/);
+  s = act(s, 'fix');
+  assert.match(hint(s), /Trappen til højre er åben/);
+  assert.match(hint(s, 2), /Til loftet/);
+  assert.equal(act(s, 'attic').room, 2);
+  assert.match(hint(act(s, 'attic'), 2), /vandret II/);
 });

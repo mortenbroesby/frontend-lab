@@ -1106,3 +1106,41 @@ body:has(.birthday-house) {
   background: #10222bba;
   color: #f1dec0;
 }
+
+/* A persistent destination cue, even when discovery glimmers are hidden. */
+.room-spot[data-route-open='true']::before {
+  content: '';
+  position: absolute;
+  inset: -30% -15%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #ffd88955, #efb4531a 45%, transparent 70%);
+  pointer-events: none;
+  animation: attic-invitation 3s ease-in-out infinite;
+}
+.room-spot[data-route-open='true'] span {
+  width: 36px;
+  height: 36px;
+  opacity: 1;
+  border-color: #ffe5ac;
+  background: #775024dd;
+  box-shadow: 0 0 24px #ffd27b99;
+}
+.room-spot[data-route-open='true'] small {
+  opacity: 1;
+  left: auto;
+  right: calc(50% - 18px);
+  transform: none;
+  border-color: #eac484;
+  background: #17242aee;
+}
+@keyframes attic-invitation {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}

@@ -7,7 +7,7 @@ function breakfastFeedback(s: Game) {
     : 'Skabet venter. Boller → kage → kaffe. Dine lys bliver ved med at lyse.';
 }
 function darkroomFeedback(s: Game) {
-  if (s.plate) return 'To stjerner vandret. Tre lodret. Loftet venter.';
+  if (s.plate) return 'Glaspladen er klar. Trappen til højre er nu åben.';
   if (!s.negative) return 'Tag først glaspladen fra kameraet.';
   return s.bath
     ? `Næste: ${s.bath === 1 ? 'regnbadet' : 'stjernebadet'}.`

@@ -62,6 +62,12 @@ export function act(s: Game, action: Action): Game {
   return [breakfast, darkroom, attic][s.room]!(s, action);
 }
 export function hint(s: Game, level = 0) {
+  if (s.plate && s.room === 1)
+    return [
+      'Trappen til højre er åben. Loftet venter.',
+      'Følg det gyldne lys ved trappen til højre.',
+      'Tryk på “Til loftet — åbent” ved trappen.',
+    ][Math.min(level, 2)]!;
   const clues = !s.breakfast
     ? [
         'Ved blomsterne ligger en invitation. Nogen har gemt et lille ritual til dig.',

@@ -37,7 +37,7 @@ The birthday custom of paper Dannebrog flags in buns and on cakes is described b
 1. Find the invitation beside the flowers. Its riddle describes buns → cake → coffee. Touch each object directly in the scene. Lights wake in the cabinet, unlocking the darkroom. A wrong choice preserves the lights you have already earned and gently names the next step.
 2. Inspect the darkroom camera. Its maker’s mark is VII; focus the lens at 7 and recover the glass plate. Developing baths cannot work without it.
 3. Find the wall recipe. Moon → rain → star corresponds to the three baths. The engine animates the plate between trays, then reveals two horizontal and three vertical stars. Wrong choices preserve completed baths and suggest the next one.
-4. Revisit breakfast and return. The plate and discovered notes remain in the notebook. Take the attic stairs.
+4. Revisit breakfast and return. The plate and discovered notes remain in the notebook. The staircase glows and shows “Til loftet — åbent” once the plate is developed, even with glimmers hidden. Hints in this room point to the staircase. Take the attic stairs.
 5. Insert the plate into the magic lantern. Set the horizontal wheel to II and the vertical wheel to III. A real spotlight and translucent light volume move across the shutters. Release the light; the engine turns the shutters on their hinges to reveal the photograph.
 6. Open the birthday message, close it, revisit another room, return, and reopen it. Replay clears doors, discoveries, plate, lights, dials and shutters.
 

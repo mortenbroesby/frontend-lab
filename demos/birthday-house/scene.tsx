@@ -69,6 +69,7 @@ export function PaintedScene(props: Props) {
             <button
               key={spot.id}
               data-object={spot.id}
+              data-route-open={spot.id === 'attic' && props.game.plate}
               className={`room-spot ${spot.mark ? 'spot-special' : ''}`}
               style={{ left: `${spot.x}%`, top: `${spot.y}%` } as CSSProperties}
               aria-label={spot.name}
@@ -90,7 +91,9 @@ export function PaintedScene(props: Props) {
               }}
             >
               <span aria-hidden="true">{spot.mark ?? '✧'}</span>
-              <small>{spot.name}</small>
+              <small>
+                {spot.id === 'attic' && props.game.plate ? 'Til loftet — åbent' : spot.name}
+              </small>
             </button>
           ))}
         <RoomLife view={location} />
