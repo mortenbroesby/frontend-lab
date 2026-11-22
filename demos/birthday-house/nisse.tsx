@@ -1,6 +1,20 @@
+import { tr } from './language.ts';
 import { useState, type CSSProperties } from 'react';
 import nisse from './art/nisse.svg';
 import './nisse.css';
+
+const perches = {
+  portrait: [
+    [14, 49],
+    [10, 59],
+    [91, 70],
+  ],
+  landscape: [
+    [24, 59],
+    [12, 61],
+    [91, 78],
+  ],
+} as const;
 
 export function HouseNisse({
   portrait,
@@ -19,19 +33,7 @@ export function HouseNisse({
 }) {
   const [greeting, setGreeting] = useState(0);
   if (!visible) return null;
-  const perch = (
-    portrait
-      ? [
-          [14, 49],
-          [10, 59],
-          [91, 70],
-        ]
-      : [
-          [24, 59],
-          [12, 61],
-          [91, 78],
-        ]
-  )[room]!;
+  const perch = (portrait ? perches.portrait : perches.landscape)[room]!;
   return (
     <div
       className={`nisse-perch nisse-room-${room}`}
@@ -39,8 +41,11 @@ export function HouseNisse({
     >
       <button
         className="house-nisse"
-        aria-label="Hils på den lille nisse"
-        title="En lille husnisse"
+        aria-label={tr('Leg med nissen (valgfrit)', 'Play with the house elf (optional)')}
+        title={tr(
+          'Nissens koptrick — en valgfri lille leg',
+          'The elf’s cup trick — an optional game',
+        )}
         onClick={() => {
           setGreeting((value) => value + 1);
           onGreet();
@@ -77,8 +82,11 @@ export function HouseNisse({
       <span className="nisse-status" role="status">
         {greeting > 0 &&
           (reduced
-            ? 'Nissen hilser på dig.'
-            : 'Nissen nikker og tryller med en lille messingknap.')}
+            ? tr('Nissen hilser på dig.', 'The elf greets you.')
+            : tr(
+                'Nissen nikker og tryller med en lille messingknap.',
+                'The elf nods and does a little magic with a brass button.',
+              ))}
       </span>
     </div>
   );

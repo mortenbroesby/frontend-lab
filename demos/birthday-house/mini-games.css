@@ -1,0 +1,219 @@
+.mini-intro,
+.mini-status {
+  text-align: center;
+}
+.mini-status {
+  min-height: 2.8em;
+  color: #765228;
+}
+.mini-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.lantern-board {
+  position: relative;
+  aspect-ratio: 10/7;
+  margin: 18px -8px;
+  border: 8px ridge #8b6940;
+  border-radius: 14px;
+  background: radial-gradient(ellipse at 40% 20%, #25424b, #0d2028 75%);
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 40px #030d14,
+    0 10px 25px #35261d33;
+}
+.lantern-board > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.lantern-beam {
+  fill: none;
+  stroke: #fff0b7;
+  stroke-width: 0.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 2px #ffe0a0);
+}
+.lantern-beam.halo {
+  stroke: #ffd389;
+  stroke-width: 3;
+  opacity: 0.18;
+}
+.lantern-nisse {
+  position: absolute;
+  width: 12%;
+  left: 1%;
+  bottom: 7%;
+  filter: drop-shadow(0 4px 3px #0008);
+}
+.lantern-board .mirror-control {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border: 3px ridge #e1bf7c;
+  border-radius: 50%;
+  background: radial-gradient(circle, #41606a, #162a34 68%);
+  box-shadow: 0 2px 8px #0008;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.mirror-control i {
+  position: absolute;
+  width: 70%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(#f5ffff, #89b6c1 55%, #d4ebed);
+  transform: rotate(var(--mirror-angle));
+  transition: transform 0.4s ease;
+  box-shadow: 0 0 8px #defcff44;
+}
+.mirror-control span {
+  position: absolute;
+  top: 100%;
+  margin-top: 5px;
+  color: #ffe2a1;
+  font:
+    12px Georgia,
+    serif;
+}
+.lantern-board .mirror-connected {
+  border-color: #fff0ba;
+  box-shadow: 0 0 20px #ffe7a955;
+  opacity: 1;
+}
+.lantern-solved {
+  box-shadow:
+    inset 0 0 40px #d8dca333,
+    0 0 30px #ffd88466;
+}
+.cup-host {
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 16px;
+}
+.cup-host img {
+  height: 86px;
+  filter: drop-shadow(0 3px 3px #34241744);
+}
+.cup-host span {
+  font-size: 24px;
+  color: #a57a32;
+  animation: cup-twinkle 3s ease-in-out infinite;
+}
+.cup-table {
+  height: 165px;
+  position: relative;
+  margin: 25px 0;
+  background: radial-gradient(ellipse at 50% 85%, #d6aa6388, transparent 68%);
+  border-bottom: 5px ridge #aa7643;
+}
+.cup-table .trick-cup {
+  position: absolute;
+  left: 3%;
+  bottom: 12px;
+  width: 29%;
+  height: 125px;
+  background: none;
+  border: 0;
+  padding: 0;
+  transform: translateX(calc(var(--cup-slot) * 112%));
+  transition: transform 0.8s cubic-bezier(0.45, 0, 0.2, 1);
+  opacity: 1;
+}
+.trick-cup svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: #f2e6c7;
+  stroke: #987139;
+  stroke-width: 2;
+  filter: drop-shadow(0 7px 4px #31211555);
+  transition: translate 0.5s ease;
+}
+.trick-cup .cup-flower {
+  fill: none;
+  stroke: #496b81;
+  stroke-width: 4;
+}
+.trick-cup.cup-raised svg {
+  translate: 0 -35px;
+}
+.hidden-button {
+  position: absolute;
+  bottom: 34%;
+  left: 40%;
+  color: #f7ce68;
+  background: radial-gradient(circle, #c99135, #6d461b);
+  border: 2px solid #e0ba70;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  box-shadow: 0 2px 5px #41271666;
+}
+@keyframes cup-twinkle {
+  50% {
+    opacity: 0.4;
+    transform: rotate(15deg);
+  }
+}
+@media (max-width: 430px) {
+  .lantern-board .mirror-control {
+    width: 44px;
+    height: 44px;
+  }
+  .cup-table {
+    height: 145px;
+  }
+  .cup-table .trick-cup {
+    height: 105px;
+  }
+}
+
+.paper-dialog.nisse-game,
+.paper-dialog.lantern-game {
+  background: radial-gradient(ellipse at top, #2d4448, #122932 75%);
+  color: #f2dfb9;
+  border: 3px ridge #a78550;
+  border-radius: 12px;
+  box-shadow:
+    0 20px 100px #020b12cc,
+    inset 0 0 50px #070d1422;
+}
+.nisse-game .paper-eyebrow,
+.lantern-game .paper-eyebrow,
+.nisse-game .mini-status,
+.lantern-game .mini-status,
+.nisse-game .quiet,
+.lantern-game .quiet {
+  color: #dcc295;
+}
+.nisse-game .text-button,
+.lantern-game .text-button,
+.nisse-game .paper-close,
+.lantern-game .paper-close {
+  color: #f2ddb5;
+}
+.nisse-game .ink-button,
+.lantern-game .ink-button {
+  background: linear-gradient(#c9a96b, #a87d3f);
+  color: #142730;
+  border-color: #f0d197;
+}
+.nisse-game button:focus-visible,
+.lantern-game button:focus-visible {
+  outline-color: #ffe0a0;
+}
+.nisse-game .cup-table {
+  background: radial-gradient(ellipse at 50% 85%, #c99d5b44, transparent 70%);
+}

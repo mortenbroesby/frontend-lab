@@ -51,12 +51,16 @@ const portraitLights = [
     [32, 43.8],
   ],
 ];
-export function RoomLife({ view }: { view: RoomView }) {
+export function RoomLife({ view, awake }: { view: RoomView; awake: boolean }) {
   const id = useId();
   const window = (view.portrait ? tall : wide)[view.room]!;
-  const villageLights = (view.portrait ? portraitLights : lights)[view.room]!;
   return (
-    <svg className="room-life" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <svg
+      className={`room-life ${awake ? 'room-life-awake' : ''}`}
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
       <defs>
         <radialGradient id={`${id}-glow`}>
           <stop stopColor="#ffe9a6" stopOpacity=".8" />
@@ -104,18 +108,7 @@ export function RoomLife({ view }: { view: RoomView }) {
             opacity=".075"
           />
         </g>
-        {villageLights.map(([x, y], i) => (
-          <ellipse
-            key={i}
-            className="village-light"
-            cx={x}
-            cy={y}
-            rx={view.portrait ? 0.65 : 0.26}
-            ry={view.portrait ? 0.32 : 0.45}
-            fill={`url(#${id}-glow)`}
-            style={{ '--house': i } as CSSProperties}
-          />
-        ))}
+        <VillageLights view={view} id={id} />
         <VillageWalker window={window} />
         <g className="window-drizzle">
           {[0, 1, 2, 3, 4, 5].map((i) => (
@@ -243,5 +236,25 @@ function RoomShadows({ id, view }: { id: string; view: RoomView }) {
         </g>
       )}
     </g>
+  );
+}
+
+function VillageLights({ view, id }: { view: RoomView; id: string }) {
+  const villageLights = (view.portrait ? portraitLights : lights)[view.room]!;
+  return (
+    <>
+      {villageLights.map(([x, y], i) => (
+        <ellipse
+          key={i}
+          className="village-light"
+          cx={x}
+          cy={y}
+          rx={view.portrait ? 0.65 : 0.26}
+          ry={view.portrait ? 0.32 : 0.45}
+          fill={`url(#${id}-glow)`}
+          style={{ '--house': i } as CSSProperties}
+        />
+      ))}
+    </>
   );
 }

@@ -1,3 +1,5 @@
+import { tr } from './language.ts';
+import { StarLantern } from './star-lantern';
 import { usePortrait } from './viewport';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { Game, Action } from './game';
@@ -28,95 +30,153 @@ export function PaperDialog({
   }, []);
   return (
     <dialog ref={ref} className={`paper-dialog ${className}`} onCancel={onClose}>
-      <button className="paper-close" onClick={onClose} aria-label="Tilbage til rummet">
+      <button
+        className="paper-close"
+        onClick={onClose}
+        aria-label={tr('Tilbage til rummet', 'Back to the room')}
+      >
         ×
       </button>
-      <p className="paper-eyebrow">SE LIDT NÆRMERE</p>
+      <p className="paper-eyebrow">{tr('SE LIDT NÆRMERE', 'TAKE A CLOSER LOOK')}</p>
       <h2>{title}</h2>
       {children}
     </dialog>
   );
 }
-const stories: Partial<Record<ObjectId, { title: string; copy: string }>> = {
-  note: {
-    title: 'En invitation med en velkendt håndskrift',
-    copy: '“Boller, så kage, så kaffe. Et lille fødselsdagsritual.” Lysene slukker ikke, hvis du prøver forkert.',
-  },
-  bun: {
-    title: 'Stadig lune fra ovnen',
-    copy: 'Lune boller. Et lille messingsegl under tallerkenen.',
-  },
-  cake: {
-    title: 'Et ønske, der venter',
-    copy: 'Et lys, et ønske og et messingsegl under kagen.',
-  },
-  cup: {
-    title: 'En kop, holdt varm',
-    copy: 'Varm kaffe. Det sidste messingsegl ligger under underkoppen.',
-  },
-  cabinet: {
-    title: 'Skabet med de små lys',
-    copy: 'Tre sovende lys. Boller → kage → kaffe vækker dem.',
-  },
-  recipe: {
-    title: 'En opskrift på minder',
-    copy: '1. Månen vækker. 2. Regnen giver ro. 3. Stjernen gemmer. Prøv badene i den rækkefølge. Intet går tabt.',
-  },
-  develop: {
-    title: 'Månebadet',
-    copy: 'Det første bad. Månen vækker sølvet.',
-  },
-  stop: {
-    title: 'Regnbadet',
-    copy: 'Det andet bad. Regnen giver billedet ro.',
-  },
-  fix: {
-    title: 'Stjernebadet',
-    copy: 'Det sidste bad. Stjernen bevarer mindet.',
-  },
-  frame: {
-    title: 'Den sovende sol',
-    copy: 'En sovende sol. Ret tryllelygten herhen.',
-  },
-  letter: {
-    title: 'Tre ønsker og ét løfte',
-    copy: '“Må der altid være lys i vinduet og nogen ved din side.”',
-  },
-  window: {
-    title: 'Verden holder vejret',
-    copy: 'Den blå time. Et varmt lys i vinduet på den anden side af vandet.',
-  },
-  lamp: {
-    title: 'En have af glas',
-    copy: 'Rosenfarvet glas, repareret med guld. Lyser endnu.',
-  },
-};
+function storyFor(id: ObjectId) {
+  const stories: Partial<Record<ObjectId, { title: string; copy: string }>> = {
+    note: {
+      title: tr('En invitation med en velkendt håndskrift', 'An invitation in a familiar hand'),
+      copy: tr(
+        '“Boller, så kage, så kaffe. Et lille fødselsdagsritual.” Lysene slukker ikke, hvis du prøver forkert.',
+        '“Buns, then cake, then coffee. A little birthday ritual.” If you guess wrong, your lights stay lit.',
+      ),
+    },
+    bun: {
+      title: tr('Stadig lune fra ovnen', 'Still warm from the oven'),
+      copy: tr(
+        'Lune boller. Et lille messingsegl under tallerkenen.',
+        'Warm buns. A small brass seal beneath the plate.',
+      ),
+    },
+    cake: {
+      title: tr('Et ønske, der venter', 'A wish in waiting'),
+      copy: tr(
+        'Et lys, et ønske og et messingsegl under kagen.',
+        'A candle, a wish and a brass seal beneath the cake.',
+      ),
+    },
+    cup: {
+      title: tr('En kop, holdt varm', 'A cup kept warm'),
+      copy: tr(
+        'Varm kaffe. Det sidste messingsegl ligger under underkoppen.',
+        'Hot coffee. The last brass seal is tucked beneath the saucer.',
+      ),
+    },
+    cabinet: {
+      title: tr('Skabet med de små lys', 'The cabinet of little lights'),
+      copy: tr(
+        'Tre sovende lys. Boller → kage → kaffe vækker dem.',
+        'Three sleeping lights. Buns → cake → coffee will wake them.',
+      ),
+    },
+    recipe: {
+      title: tr('En opskrift på minder', 'A recipe for memories'),
+      copy: tr(
+        'Tre spejle låner nissens lys. Op, hen og ned — til stjernerne vågner i glaspladen.',
+        'Three mirrors borrow the elf’s light. Up, across and down, until the stars wake in the glass plate.',
+      ),
+    },
+    develop: {
+      title: tr('Månebadet', 'The moon bath'),
+      copy: tr(
+        'Det første bad. Månen vækker sølvet.',
+        'The first bath. The moon wakes the silver.',
+      ),
+    },
+    stop: {
+      title: tr('Regnbadet', 'The rain bath'),
+      copy: tr(
+        'Det andet bad. Regnen giver billedet ro.',
+        'The second bath. The rain settles the image.',
+      ),
+    },
+    fix: {
+      title: tr('Stjernebadet', 'The star bath'),
+      copy: tr(
+        'Det sidste bad. Stjernen bevarer mindet.',
+        'The last bath. The star keeps the memory safe.',
+      ),
+    },
+    frame: {
+      title: tr('Den sovende sol', 'The sleeping sun'),
+      copy: tr(
+        'En sovende sol. Ret tryllelygten herhen.',
+        'A sleeping sun. Aim the magic lantern here.',
+      ),
+    },
+    letter: {
+      title: tr('Tre ønsker og ét løfte', 'Three wishes and a promise'),
+      copy: tr(
+        '“Må der altid være lys i vinduet og nogen ved din side.”',
+        '“May there always be a light in the window and someone by your side.”',
+      ),
+    },
+    window: {
+      title: tr('Verden holder vejret', 'The world holds its breath'),
+      copy: tr(
+        'Den blå time. Et varmt lys i vinduet på den anden side af vandet.',
+        'The blue hour. A warm light in a window across the water.',
+      ),
+    },
+    lamp: {
+      title: tr('En have af glas', 'A garden of glass'),
+      copy: tr(
+        'Rosenfarvet glas, repareret med guld. Lyser endnu.',
+        'Rose-tinted glass mended with gold. It still glows.',
+      ),
+    },
+  };
+  return stories[id];
+}
 const tableActions: Partial<Record<ObjectId, Action>> = { bun: 'bun', cake: 'cake', cup: 'cup' };
-const bathActions: Partial<Record<ObjectId, Action>> = {
-  develop: 'develop',
-  stop: 'stop',
-  fix: 'fix',
-};
 export function Inspection(props: Props) {
+  if (['develop', 'stop', 'fix'].includes(props.id))
+    return (
+      <PaperDialog
+        title={tr('Nissens stjernelygte', 'The elf’s star lantern')}
+        className="lantern-game"
+        onClose={props.onClose}
+      >
+        <StarLantern game={props.game} perform={props.perform} onClose={props.onClose} />
+      </PaperDialog>
+    );
   if (props.id === 'camera')
     return (
-      <PaperDialog title="Fotografens sidste billede" onClose={props.onClose}>
+      <PaperDialog
+        title={tr('Fotografens sidste billede', 'The photographer’s last picture')}
+        onClose={props.onClose}
+      >
         <Camera {...props} />
       </PaperDialog>
     );
   if (props.id === 'projector')
     return (
-      <PaperDialog title="Tryllelygten" onClose={props.onClose}>
+      <PaperDialog title={tr('Tryllelygten', 'The magic lantern')} onClose={props.onClose}>
         <Lantern {...props} />
       </PaperDialog>
     );
-  const story = stories[props.id];
+  return <StoryInspection {...props} />;
+}
+
+function StoryInspection(props: Props) {
+  const story = storyFor(props.id);
   if (!story) return null;
   return (
     <PaperDialog title={story.title} onClose={props.onClose}>
       {props.game.room !== 0 && <DetailImage id={props.id} room={props.game.room} />}
       <p>{story.copy}</p>
-      <InspectionActions {...props} />
+      <InspectionActions id={props.id} perform={props.perform} onClose={props.onClose} />
     </PaperDialog>
   );
 }
@@ -128,7 +188,7 @@ function DetailImage({ id, room }: { id: ObjectId; room: number }) {
     <div
       className="detail-painting"
       role="img"
-      aria-label="En malet detalje af genstanden"
+      aria-label={tr('En malet detalje af genstanden', 'A painted close-up of the object')}
       style={{
         backgroundImage: `url(${location.art})`,
         backgroundPosition: `${spot?.x ?? 50}% ${spot?.y ?? 50}%`,
@@ -136,39 +196,29 @@ function DetailImage({ id, room }: { id: ObjectId; room: number }) {
     />
   );
 }
-function InspectionActions({ id, game, perform, onClose }: Props) {
+function InspectionActions({ id, perform, onClose }: Pick<Props, 'id' | 'perform' | 'onClose'>) {
   const table = tableActions[id];
-  const bath = bathActions[id];
   if (table)
     return (
       <button className="ink-button" onClick={() => perform(table)}>
-        Rør ved messingseglet
+        {tr('Rør ved messingseglet', 'Touch the brass seal')}
       </button>
-    );
-  if (bath)
-    return (
-      <>
-        <button className="ink-button" disabled={!game.negative} onClick={() => perform(bath)}>
-          Sænk glaspladen
-        </button>
-        {!game.negative && <p className="quiet">Find glaspladen i kameraet.</p>}
-      </>
     );
   if (id === 'note')
     return (
       <button className="ink-button" onClick={() => perform('readnote')}>
-        Gem invitationen i notesbogen
+        {tr('Gem invitationen i notesbogen', 'Save the invitation in your notebook')}
       </button>
     );
   if (id === 'recipe')
     return (
       <button className="ink-button" onClick={() => perform('readrecipe')}>
-        Gem verset i notesbogen
+        {tr('Gem verset i notesbogen', 'Save the verse in your notebook')}
       </button>
     );
   return (
     <button className="ink-button" onClick={onClose}>
-      Tilbage til rummet
+      {tr('Tilbage til rummet', 'Back to the room')}
     </button>
   );
 }
@@ -183,29 +233,23 @@ function Camera({ game, perform }: Props) {
         </div>
       </div>
       <p>
-        Stil skarpt på <strong>VII (7)</strong>. Lad stjernerne falde til ro.
+        {tr('Stil skarpt på', 'Focus on')} <strong>VII (7)</strong>
+        {tr('. Lad stjernerne falde til ro.', '. Let the stars settle.')}
       </p>
-      <label className="focus-control">
-        Fokusring · {['0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][focus]}
-        <input
-          aria-label="Kameraets fokusring"
-          type="range"
-          min="0"
-          max="10"
-          step="1"
-          value={focus}
-          onChange={(e) => setFocus(Number(e.target.value))}
-        />
-      </label>
+      <FocusRing focus={focus} setFocus={setFocus} />
       <p className="quiet" role="status">
-        {sharp ? 'Skarpt. Låsen går op.' : 'Drej til VII (7).'}
+        {sharp
+          ? tr('Skarpt. Låsen går op.', 'In focus. The latch opens.')
+          : tr('Drej til VII (7).', 'Turn to VII (7).')}
       </p>
       <button
         className="ink-button"
         disabled={!sharp || game.negative}
         onClick={() => perform('takeplate')}
       >
-        {game.negative ? 'Glaspladen ligger i din notesbog' : 'Tag glaspladen'}
+        {game.negative
+          ? tr('Glaspladen ligger i din notesbog', 'The glass plate is in your notebook')
+          : tr('Tag glaspladen', 'Take the glass plate')}
       </button>
     </>
   );
@@ -215,27 +259,42 @@ function Lantern({ game, perform }: Props) {
     return (
       <>
         <DetailImage id="projector" room={2} />
-        <p>En sprække til glaspladen. Et lys, der venter på at vågne.</p>
+        <p>
+          {tr(
+            'En sprække til glaspladen. Et lys, der venter på at vågne.',
+            'A slot for the glass plate. A light waiting to wake.',
+          )}
+        </p>
         <button
           className="ink-button"
           disabled={!game.plate}
           onClick={() => perform('insert', true)}
         >
-          Sæt den fremkaldte plade i
+          {tr('Sæt den fremkaldte plade i', 'Slide in the developed plate')}
         </button>
       </>
     );
   return (
     <>
       <p>
-        Følg stjernerne: <strong>Vandret II (2)</strong>, <strong>Lodret III (3)</strong>.
+        {tr('Følg stjernerne:', 'Follow the stars:')}{' '}
+        <strong>{tr('Vandret II (2)', 'Horizontal II (2)')}</strong>,{' '}
+        <strong>{tr('Lodret III (3)', 'Vertical III (3)')}</strong>.
       </p>
       <div className="brass-dials">
-        <Dial label="Vandret" value={game.horizontal} turn={() => perform('horizontal', true)} />
-        <Dial label="Lodret" value={game.vertical} turn={() => perform('vertical', true)} />
+        <Dial
+          label={tr('Vandret', 'Horizontal')}
+          value={game.horizontal}
+          turn={() => perform('horizontal', true)}
+        />
+        <Dial
+          label={tr('Lodret', 'Vertical')}
+          value={game.vertical}
+          turn={() => perform('vertical', true)}
+        />
       </div>
       <button className="ink-button" onClick={() => perform('project')}>
-        Slip lyset fri
+        {tr('Slip lyset fri', 'Release the light')}
       </button>
     </>
   );
@@ -247,7 +306,7 @@ function Dial({ label, value, turn }: { label: string; value: number; turn: () =
       {label}
       <button
         className="brass-dial"
-        aria-label={`${label} drejeskive: ${['I', 'II', 'III', 'IV'][value]}`}
+        aria-label={`${label} ${tr('drejeskive', 'dial')}: ${['I', 'II', 'III', 'IV'][value]}`}
         onClick={() => {
           setTicks((count) => count + 1);
           turn();
@@ -260,7 +319,25 @@ function Dial({ label, value, turn }: { label: string; value: number; turn: () =
         />
         <span>{['I', 'II', 'III', 'IV'][value]}</span>
       </button>
-      <small>Drej ét hak</small>
+      <small>{tr('Drej ét hak', 'Turn one notch')}</small>
+    </label>
+  );
+}
+
+function FocusRing({ focus, setFocus }: { focus: number; setFocus: (value: number) => void }) {
+  return (
+    <label className="focus-control">
+      {tr('Fokusring ·', 'Focus ring ·')}{' '}
+      {['0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][focus]}
+      <input
+        aria-label={tr('Kameraets fokusring', 'Camera focus ring')}
+        type="range"
+        min="0"
+        max="10"
+        step="1"
+        value={focus}
+        onChange={(e) => setFocus(Number(e.target.value))}
+      />
     </label>
   );
 }

@@ -78,6 +78,7 @@ export function useSoundscape(game: Game) {
     unavailable,
     start,
     toggle,
+    reset: () => score.current?.reset(),
     play: (cue: SoundCue) => score.current?.play(cue),
   };
 }

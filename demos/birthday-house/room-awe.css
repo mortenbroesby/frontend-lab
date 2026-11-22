@@ -1,0 +1,133 @@
+.room-awe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.sky-awakening {
+  animation: ceiling-opens 5.5s ease both;
+}
+.aurora-ribbon {
+  transform-origin: 50px 10px;
+  animation: aurora-drift 18s ease-in-out infinite alternate;
+}
+.ceiling-star {
+  animation: ceiling-twinkle 4s ease-in-out infinite alternate;
+  animation-delay: var(--star-delay);
+}
+.ceiling-constellation {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: constellation-draw 3s 1.5s ease forwards;
+}
+@keyframes ceiling-opens {
+  0%,
+  15% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ceiling-twinkle {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes aurora-drift {
+  from {
+    transform: translateX(-6px) rotate(-4deg);
+  }
+  to {
+    transform: translateX(6px) rotate(4deg);
+  }
+}
+@keyframes constellation-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.passage {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at 50% 65%, #23343a, #09151c 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.26s ease;
+  visibility: hidden;
+}
+.passage-leaving,
+.passage-waiting,
+.passage-arriving {
+  visibility: visible;
+  pointer-events: auto;
+}
+.passage-leaving,
+.passage-waiting {
+  opacity: 1;
+}
+.passage-arriving {
+  opacity: 0;
+  transition-duration: 0.65s;
+}
+.passage i {
+  color: #d2ad71;
+  font:
+    26px Georgia,
+    serif;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.passage-waiting i {
+  opacity: 0.55;
+  animation: passage-lantern 1.5s ease-in-out infinite alternate;
+}
+@keyframes passage-lantern {
+  to {
+    opacity: 0.2;
+    transform: scale(0.85);
+  }
+}
+.room-life-awake .village-light {
+  animation: village-celebration 3s ease-in-out infinite alternate;
+  animation-delay: calc(var(--house) * 0.2s);
+}
+@keyframes village-celebration {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+    filter: drop-shadow(0 0 0.3px #ffe7a0);
+  }
+}
+
+.shooting-star {
+  animation: sky-wish 14s 2s linear infinite;
+  opacity: 0;
+}
+@keyframes sky-wish {
+  0%,
+  70% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  73% {
+    opacity: 0.8;
+  }
+  85%,
+  100% {
+    opacity: 0;
+    transform: translate(115px, 17px);
+  }
+}

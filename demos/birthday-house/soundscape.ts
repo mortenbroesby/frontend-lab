@@ -1,8 +1,21 @@
 import { createVoices } from './sound-voices';
+import { birthdayMelody, nisseMelody } from './birthday-melody';
+import { createMelodyPlayer } from './sound-melody';
 
 export type SoundCue =
-  'touch' | 'paper' | 'brass' | 'water' | 'door' | 'nisse' | 'progress' | 'developed' | 'finale';
+  | 'touch'
+  | 'paper'
+  | 'brass'
+  | 'water'
+  | 'door'
+  | 'nisse'
+  | 'progress'
+  | 'developed'
+  | 'finale'
+  | 'birthday'
+  | 'bonus';
 
+const milestones = new Set<SoundCue>(['birthday', 'bonus', 'finale', 'developed', 'progress']);
 const chords = [
   [50, 57, 60, 64],
   [53, 60, 64, 67],
@@ -15,6 +28,7 @@ const hz = (note: number) => 440 * 2 ** ((note - 69) / 12);
 /** Caller owns the AudioContext and its visibility/suspension policy. */
 export function createSoundscape(context: AudioContext) {
   let synth = createVoices(context);
+  const featured = createMelodyPlayer(() => synth);
   let room = 0;
   let progress = 0;
   let muted = false;
@@ -27,6 +41,7 @@ export function createSoundscape(context: AudioContext) {
   let lastCue = -1;
 
   function renew() {
+    featured.clear();
     synth.dispose();
     synth = createVoices(context);
     if (started) synth.weather();
@@ -60,6 +75,10 @@ export function createSoundscape(context: AudioContext) {
   function schedule() {
     if (disposed || muted || context.state !== 'running') return;
     const now = context.currentTime;
+    if (featured.tick(now)) {
+      nextBeat = now + 0.5;
+      return;
+    }
     // Background throttling or a suspended context never creates a catch-up burst.
     if (nextBeat < now - 0.5) nextBeat = now + 0.08;
     if (nextBeat < now + 0.5) {
@@ -94,12 +113,26 @@ export function createSoundscape(context: AudioContext) {
       synth.tone(hz(note), at + i * spacing, 3.4, gain, ((i % 3) - 1) * 0.3, 'bell'),
     );
   }
+  function canPlay(cue: SoundCue, at: number) {
+    return (
+      started &&
+      !disposed &&
+      !muted &&
+      context.state === 'running' &&
+      (at - lastCue >= 0.07 || milestones.has(cue))
+    );
+  }
   function play(cue: SoundCue) {
-    if (!started || disposed || muted || context.state !== 'running') return;
     const at = context.currentTime + 0.012;
-    if (at - lastCue < 0.07) return;
+    if (!canPlay(cue, at)) return;
     lastCue = at;
     switch (cue) {
+      case 'birthday':
+      case 'bonus':
+        renew();
+        featured.start(cue === 'birthday' ? birthdayMelody : nisseMelody, at + 0.08);
+        schedule();
+        break;
       case 'paper':
         synth.rustle(at, 0.22, 0.28, 2400, -0.2);
         synth.rustle(at + 0.1, 0.28, 0.12, 1300, 0.2);
@@ -142,6 +175,13 @@ export function createSoundscape(context: AudioContext) {
   return {
     start,
     play,
+    reset() {
+      if (disposed) return;
+      room = 0;
+      progress = 0;
+      beat = 0;
+      renew();
+    },
     setScene(nextRoom: number, nextProgress: number) {
       if (disposed) return;
       room = Math.max(0, Math.min(2, Math.floor(nextRoom) || 0));
@@ -164,6 +204,7 @@ export function createSoundscape(context: AudioContext) {
       if (disposed) return;
       disposed = true;
       clearInterval(timer);
+      featured.clear();
       synth.dispose();
     },
   };

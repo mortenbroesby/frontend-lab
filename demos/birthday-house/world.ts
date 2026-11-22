@@ -131,9 +131,11 @@ export function createWorld(
   let reduced = false;
   let pan = 0.5;
   let close = false;
+  let covered = false;
   let portrait = false;
   const cache = new Map<string, ReturnType<typeof bundle>>();
   let active: ReturnType<typeof bundle> | undefined;
+  let activeKey = '';
   const invalidate = () => {
     dirty = true;
     renderedReady = false;
@@ -168,7 +170,7 @@ export function createWorld(
     camera.setTarget(new Vector3(camera.position.x, camera.position.y, 0));
   }
   function render(now: number) {
-    if (document.hidden || now - lastFrame < 32) return;
+    if (covered || document.hidden || now - lastFrame < 32) return;
     if (reduced && !dirty && now > settleUntil && renderedReady) return;
     const elapsed = now - lastFrame;
     const dt = Math.min(elapsed, 100);
@@ -199,7 +201,16 @@ export function createWorld(
   }
   engine.runRenderLoop(() => render(performance.now()));
   return {
-    update(next: Game, reduce: boolean, nextPan: number, inspect: boolean, tall: boolean) {
+    update(
+      next: Game,
+      reduce: boolean,
+      nextPan: number,
+      inspect: boolean,
+      tall: boolean,
+      obscured: boolean,
+    ) {
+      if (covered !== obscured) lastFrame = performance.now();
+      covered = obscured;
       game = next;
       if (!next.revealed) finaleNotified = false;
       reduced = reduce;
@@ -208,9 +219,13 @@ export function createWorld(
       portrait = tall;
       invalidate();
       const key = `${game.room}-${portrait}`;
-      if (!cache.has(key)) {
+      if (key !== activeKey) {
         waitingForRoom = true;
         onReady(false);
+        positionCamera(roomView(game.room, portrait), 10000);
+        activeKey = key;
+      }
+      if (!cache.has(key)) {
         cache.set(key, bundle(scene, roomView(game.room, portrait), invalidate));
       }
       cache.forEach((b, k) => b.enable(k === key));

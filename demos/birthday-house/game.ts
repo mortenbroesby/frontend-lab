@@ -1,10 +1,13 @@
+import { tr } from './language.ts';
+import { connectedMirrors } from './mini-games.ts';
 export type Action =
   | 'bun'
   | 'cake'
   | 'cup'
-  | 'develop'
-  | 'stop'
-  | 'fix'
+  | 'mirror0'
+  | 'mirror1'
+  | 'mirror2'
+  | 'nissegift'
   | 'insert'
   | 'horizontal'
   | 'vertical'
@@ -21,7 +24,8 @@ export function initialState() {
     room: 0,
     sequence: [] as string[],
     breakfast: false,
-    bath: 0,
+    mirrors: [0, 0, 0],
+    nisseGift: false,
     plate: false,
     negative: false,
     note: false,
@@ -40,10 +44,11 @@ function breakfast(s: Game, action: Action): Game {
 }
 function darkroom(s: Game, action: Action): Game {
   if (action === 'takeplate') return { ...s, negative: true };
-  const order = ['develop', 'stop', 'fix'];
-  if (s.plate || !s.negative || !order.includes(action)) return s;
-  const bath = action === order[s.bath] ? s.bath + 1 : s.bath;
-  return { ...s, bath, plate: bath === 3 };
+  const index = ['mirror0', 'mirror1', 'mirror2'].indexOf(action);
+  if (s.plate || !s.negative || index < 0) return s;
+  const mirrors = [...s.mirrors];
+  mirrors[index] = (mirrors[index]! + 1) % 4;
+  return { ...s, mirrors, plate: connectedMirrors(mirrors) === 3 };
 }
 function attic(s: Game, action: Action): Game {
   if (action === 'insert' && s.plate) return { ...s, inserted: true };
@@ -54,6 +59,7 @@ function attic(s: Game, action: Action): Game {
   return s;
 }
 export function act(s: Game, action: Action): Game {
+  if (action === 'nissegift') return { ...s, nisseGift: true };
   if (action === 'readnote') return { ...s, note: true };
   if (action === 'readrecipe') return { ...s, recipe: true };
   if (action === 'breakfast') return { ...s, room: 0 };
@@ -64,32 +70,77 @@ export function act(s: Game, action: Action): Game {
 export function hint(s: Game, level = 0) {
   if (s.plate && s.room === 1)
     return [
-      'Trappen til højre er åben. Loftet venter.',
-      'Følg det gyldne lys ved trappen til højre.',
-      'Tryk på “Til loftet — åbent” ved trappen.',
+      tr(
+        'Trappen til højre er åben. Loftet venter.',
+        'The stairs on the right are open. The attic awaits.',
+      ),
+      tr(
+        'Følg det gyldne lys ved trappen til højre.',
+        'Follow the golden glow by the stairs on the right.',
+      ),
+      tr(
+        'Tryk på “Til loftet — åbent” ved trappen.',
+        'Choose “To the attic — open” by the stairs.',
+      ),
     ][Math.min(level, 2)]!;
   const clues = !s.breakfast
     ? [
-        'Ved blomsterne ligger en invitation. Nogen har gemt et lille ritual til dig.',
-        'Hvad hæver før daggry? Hvad serveres med et ønske? Hvad jager søvnen væk?',
-        'Rør ved bollerne, så kagen og til sidst kaffekoppen.',
+        tr(
+          'Ved blomsterne ligger en invitation. Nogen har gemt et lille ritual til dig.',
+          'There’s an invitation by the flowers. Someone has left you a little ritual.',
+        ),
+        tr(
+          'Hvad hæver før daggry? Hvad serveres med et ønske? Hvad jager søvnen væk?',
+          'What rises before dawn? What comes with a wish? What chases sleep away?',
+        ),
+        tr(
+          'Rør ved bollerne, så kagen og til sidst kaffekoppen.',
+          'Touch the buns, then the cake, then the coffee cup.',
+        ),
       ]
     : !s.negative
       ? [
-          'Fotografens kamera står klar til ét sidste billede.',
-          'Kig gennem bælgkameraet. Drej fokusringen, til stjernerne står skarpt.',
-          'Stil kameraets fokusring på VII, og tag glaspladen.',
+          tr(
+            'Fotografens kamera står klar til ét sidste billede.',
+            'The photographer’s camera is ready for one last picture.',
+          ),
+          tr(
+            'Kig gennem bælgkameraet. Drej fokusringen, til stjernerne står skarpt.',
+            'Look through the bellows camera. Turn the focus ring until the stars are sharp.',
+          ),
+          tr(
+            'Stil kameraets fokusring på VII, og tag glaspladen.',
+            'Set the focus ring to VII and take the glass plate.',
+          ),
         ]
       : !s.plate
         ? [
-            'Papiret på væggen gemmer fotografens opskrift.',
-            'Månen vækker sølvet. Regnen giver ro. Stjernen gemmer det for altid.',
-            'Sænk pladen i månebadet, så regnbadet og til sidst stjernebadet.',
+            tr(
+              'Nissens stjernelygte venter ved badene.',
+              'The elf’s star lantern is waiting by the trays.',
+            ),
+            tr(
+              'Drej de tre spejle, så lyset finder glaspladen.',
+              'Turn the three mirrors to guide the light onto the glass plate.',
+            ),
+            tr(
+              'Spejl 1: tre klik. Spejl 2: tre klik. Spejl 3: ét klik fra start.',
+              'From the starting positions, turn mirror 1 three times, mirror 2 three times and mirror 3 once.',
+            ),
           ]
         : [
-            'Din glasplade viser to stjernebilleder. Måske kan tryllelygten læse dem.',
-            'Det vandrette stjernebillede har to stjerner. Det lodrette har tre.',
-            'Sæt pladen i lygten. Vælg vandret II og lodret III, og slip lyset fri.',
+            tr(
+              'Din glasplade viser to stjernebilleder. Måske kan tryllelygten læse dem.',
+              'Your glass plate shows two constellations. Perhaps the magic lantern can read them.',
+            ),
+            tr(
+              'Det vandrette stjernebillede har to stjerner. Det lodrette har tre.',
+              'The horizontal constellation has two stars. The vertical one has three.',
+            ),
+            tr(
+              'Sæt pladen i lygten. Vælg vandret II og lodret III, og slip lyset fri.',
+              'Slide the plate into the lantern. Set horizontal to II and vertical to III, then release the light.',
+            ),
           ];
   return clues[Math.min(level, 2)]!;
 }

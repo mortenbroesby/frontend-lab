@@ -1,0 +1,263 @@
+.birthday-house dialog.portrait-reveal {
+  padding: max(22px, env(safe-area-inset-top)) 24px max(22px, env(safe-area-inset-bottom));
+  isolation: isolate;
+  background: #0b181d;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.portrait-backdrop {
+  position: fixed;
+  inset: -5%;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, #111c21bb, #152529dd),
+    var(--memory-image) center / cover;
+  filter: blur(24px) saturate(0.65);
+  transform: scale(1.08);
+}
+.portrait-reveal::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 42% 30%, #eab45a1c, transparent 55%),
+    linear-gradient(0deg, #06141f99, transparent 60%);
+  box-shadow: inset 0 0 16vw #020a10b3;
+}
+.portrait-reveal .portrait-gallery {
+  position: relative;
+  display: grid;
+  grid-template-areas: 'heading' 'painting' 'message' 'actions';
+  justify-items: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 1060px;
+  margin: auto;
+  text-align: center;
+}
+.portrait-heading {
+  grid-area: heading;
+  max-width: 460px;
+}
+.portrait-reveal .portrait-heading .eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.portrait-flag {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 15px;
+  filter: drop-shadow(0 2px 2px #0008);
+}
+.portrait-reveal .portrait-heading h1 {
+  margin: 12px 0 0;
+  font-size: clamp(29px, 6vw, 48px);
+  text-wrap: balance;
+  text-shadow: 0 3px 18px #0009;
+}
+.portrait-reveal .portrait-painting {
+  grid-area: painting;
+  width: min(68vw, 36svh);
+  max-width: 400px;
+  margin: 0;
+}
+.portrait-frame {
+  position: relative;
+  display: block;
+  padding: 12px;
+  border: 3px solid #9c7033;
+  outline: 1px solid #edcb7e;
+  background: linear-gradient(
+    135deg,
+    #f5dc96,
+    #916129 18%,
+    #dab46d 32%,
+    #60431f 50%,
+    #d9ae60 68%,
+    #82602e 85%,
+    #f3d08a
+  );
+  box-shadow:
+    inset 0 0 0 2px #f4d48a,
+    inset 0 0 0 5px #67421f,
+    inset 0 0 0 7px #cca460,
+    0 18px 36px #0009,
+    0 0 60px #d89b3d26;
+}
+.portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, #fff1c314 47%, transparent 60%);
+  background-size: 300% 100%;
+  animation: portrait-gilding 3.2s ease-out both;
+}
+.birthday-house .portrait-reveal .portrait-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  padding: 0;
+  border: 1px solid #41270f;
+  background: transparent;
+  object-fit: contain;
+  box-shadow:
+    0 0 0 2px #e8c57e,
+    0 0 0 4px #3c2c1b;
+  animation: none;
+}
+.portrait-corner {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 38px;
+  height: 38px;
+  pointer-events: none;
+  filter: drop-shadow(1px 2px 1px #3b230a99);
+}
+.portrait-corner-1 {
+  left: auto;
+  right: -5px;
+  transform: rotate(90deg);
+}
+.portrait-corner-2 {
+  top: auto;
+  bottom: -5px;
+  left: auto;
+  right: -5px;
+  transform: rotate(180deg);
+}
+.portrait-corner-3 {
+  top: auto;
+  bottom: -5px;
+  transform: rotate(270deg);
+}
+.portrait-reveal figcaption {
+  margin-top: 12px;
+  color: #e4cfa5;
+  text-shadow: 0 2px 5px #000;
+}
+.portrait-reveal .portrait-gallery .portrait-message {
+  grid-area: message;
+  max-width: 410px;
+  margin: 0;
+  color: #e9decb;
+  font-size: 15px;
+  line-height: 1.55;
+  text-wrap: pretty;
+  text-shadow: 0 2px 5px #000;
+}
+.portrait-gallery .portrait-actions {
+  grid-area: actions;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.portrait-reveal .portrait-actions button {
+  min-height: 44px;
+  background: #182b2ee8;
+  border-color: #c8a364;
+  box-shadow:
+    inset 0 1px #e7cc9326,
+    0 3px 12px #0004;
+}
+.portrait-confetti {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.portrait-confetti i {
+  position: absolute;
+  top: -20px;
+  left: calc(3% + var(--confetti) * 7%);
+  width: 5px;
+  height: 9px;
+  background: #e1b45f;
+  opacity: 0;
+  animation: portrait-confetti 13s linear infinite;
+  animation-delay: calc(var(--confetti) * -1.7s);
+}
+.portrait-confetti i:nth-child(3n) {
+  background: #a63535;
+}
+.portrait-confetti i:nth-child(3n + 1) {
+  border-radius: 50%;
+  height: 5px;
+  background: #f2dcb2;
+}
+@keyframes portrait-confetti {
+  0% {
+    opacity: 0;
+    transform: translate(0, -10px) rotate(0deg);
+  }
+  12%,
+  75% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(30px, 105svh) rotate(340deg);
+  }
+}
+@keyframes portrait-gilding {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@media (min-width: 740px) and (orientation: landscape) {
+  .portrait-reveal .portrait-gallery {
+    grid-template-columns: auto minmax(250px, 420px);
+    grid-template-areas: 'painting heading' 'painting message' 'painting actions';
+    column-gap: clamp(32px, 6vw, 88px);
+    row-gap: 24px;
+    justify-content: center;
+  }
+  .portrait-reveal .portrait-painting {
+    width: min(34vw, 51svh);
+    max-width: 440px;
+  }
+  .portrait-heading {
+    align-self: end;
+  }
+  .portrait-gallery .portrait-actions {
+    align-self: start;
+  }
+  .portrait-reveal .portrait-gallery .portrait-message {
+    font-size: 18px;
+  }
+}
+@media (max-height: 550px) {
+  .birthday-house dialog.portrait-reveal {
+    padding: 18px 24px;
+  }
+  .portrait-reveal .portrait-gallery {
+    row-gap: 12px;
+  }
+  .portrait-reveal .portrait-heading h1 {
+    font-size: 30px;
+  }
+  .portrait-reveal .portrait-gallery .portrait-message {
+    font-size: 14px;
+  }
+  .portrait-reveal .portrait-heading .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+}

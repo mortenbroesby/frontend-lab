@@ -21,7 +21,7 @@ test('musical milestones happen on earned progress, not repeated or wrong choice
 test('doors, paper, and developing baths have distinct tactile sounds', () => {
   const s = initialState();
   assert.equal(soundFor(s, act(s, 'readnote'), 'readnote'), 'paper');
-  const dark = { ...s, room: 1, breakfast: true, negative: true, bath: 2 };
-  assert.equal(soundFor(dark, act(dark, 'fix'), 'fix'), 'developed');
+  const dark = { ...s, room: 1, breakfast: true, negative: true, mirrors: [3, 3, 0] };
+  assert.equal(soundFor(dark, act(dark, 'mirror2'), 'mirror2'), 'developed');
   assert.equal(soundFor(dark, act(dark, 'breakfast'), 'breakfast'), 'door');
 });

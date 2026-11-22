@@ -1,3 +1,5 @@
+import { tr } from './language.ts';
+import { RoomAwe } from './room-awe';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { InteractionEffects, type SceneReaction } from './interaction-effects';
 import { createWorld } from './world';
@@ -13,11 +15,13 @@ type Props = {
   onReactionEnd: (serial: number) => void;
   onFinaleReady: () => void;
   onNisse: () => void;
+  onRoomReady: () => void;
   reduced: boolean;
   pan: number;
   close: boolean;
   markers: boolean;
   active: boolean;
+  covered: boolean;
   onPick: (id: ObjectId) => void;
   onPan: (amount: number) => void;
   onFocus: (x: number) => void;
@@ -29,7 +33,7 @@ export function PaintedScene(props: Props) {
   const world = useRef<ReturnType<typeof createWorld> | null>(null);
   const live = useRef(props);
   live.current = props;
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
   const [ready, setReady] = useState(false);
   useEffect(() => {
     try {
@@ -40,25 +44,38 @@ export function PaintedScene(props: Props) {
           if (live.current.active) live.current.onPick(id);
         },
         (delta) => live.current.onPan(delta),
-        setReady,
+        (value) => {
+          setReady(value);
+          if (value) live.current.onRoomReady();
+        },
         () => live.current.onFinaleReady(),
       );
     } catch {
-      setError('Rummet kunne ikke åbnes. Slå WebGL til, og genindlæs siden.');
+      setError(true);
     }
     return () => {
       world.current?.dispose();
     };
   }, []);
   useEffect(() => {
-    world.current?.update(props.game, props.reduced, props.pan, props.close, portrait);
-  }, [props.game, props.reduced, props.pan, props.close, props.active, portrait]);
+    world.current?.update(
+      props.game,
+      props.reduced,
+      props.pan,
+      props.close,
+      portrait,
+      props.covered,
+    );
+  }, [props.game, props.reduced, props.pan, props.close, props.active, portrait, props.covered]);
   const location = roomView(props.game.room, portrait);
   return (
     <div className="painted-viewport" aria-busy={!props.active}>
       <canvas
         ref={canvas}
-        aria-label="Et rum, du kan udforske. Træk forsigtigt for at se dig omkring, eller brug Tab til at finde genstandene."
+        aria-label={tr(
+          'Et rum, du kan udforske. Træk forsigtigt for at se dig omkring, eller brug Tab til at finde genstandene.',
+          'Explore the room. Drag gently to look around, or use Tab to find objects.',
+        )}
       />
       <div
         ref={stage}
@@ -92,11 +109,14 @@ export function PaintedScene(props: Props) {
             >
               <span aria-hidden="true">{spot.mark ?? '✧'}</span>
               <small>
-                {spot.id === 'attic' && props.game.plate ? 'Til loftet — åbent' : spot.name}
+                {spot.id === 'attic' && props.game.plate
+                  ? tr('Til loftet — åbent', 'To the attic — open')
+                  : spot.name}
               </small>
             </button>
           ))}
-        <RoomLife view={location} />
+        <RoomAwe view={location} awake={props.game.revealed} />
+        <RoomLife view={location} awake={props.game.revealed} />
         <HouseNisse
           key={String(props.reduced)}
           portrait={portrait}
@@ -115,17 +135,28 @@ export function PaintedScene(props: Props) {
           onFinish={props.onReactionEnd}
         />
       </div>
+      <SceneStatus ready={ready} error={error} />
+    </div>
+  );
+}
+
+function SceneStatus({ ready, error }: { ready: boolean; error: boolean }) {
+  return (
+    <>
       {!ready && !error && (
         <div className="scene-loading" aria-live="polite">
-          Tænder lys i huset…
+          {tr('Tænder lys i huset…', 'Lighting the lamps…')}
         </div>
       )}
       {error && (
         <p className="render-error" role="alert">
-          {error}
-          <button onClick={() => window.location.reload()}>Genindlæs</button>
+          {tr(
+            'Rummet kunne ikke åbnes. Slå WebGL til, og genindlæs siden.',
+            'This room couldn’t open. Enable WebGL and reload the page.',
+          )}
+          <button onClick={() => window.location.reload()}>{tr('Genindlæs', 'Reload')}</button>
         </p>
       )}
-    </div>
+    </>
   );
 }
