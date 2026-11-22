@@ -70,7 +70,7 @@ export function darkroomPuzzle(scene: Scene, view: RoomView) {
   };
 }
 function portraitFrame(scene: Scene, view: RoomView) {
-  const [x, y, w, h] = view.portrait ? [40.1, 30.6, 34, 16.6] : [48.6, 25, 19.9, 29];
+  const [x, y, w, h] = view.portrait ? [40.1, 30.6, 34, 16.6] : [49.9, 24.4, 18.5, 29.5];
   const center = position(view, x! + w! / 2, y! + h! / 2, -0.12);
   const width = (view.width * w!) / 100;
   const height = (view.height * h!) / 100;
@@ -157,7 +157,7 @@ export function atticPuzzle(scene: Scene, view: RoomView) {
     setEnabled(enabled: boolean) {
       light.setEnabled(enabled);
     },
-    tick(s: Game, _time: number, reduced: boolean, dt: number) {
+    tick(s: Game, time: number, reduced: boolean, dt: number) {
       frame.backing.isVisible = s.revealed;
       frame.photo.isVisible = s.revealed;
       frame.hinges.forEach((h) => h.setEnabled(s.revealed));
@@ -168,6 +168,7 @@ export function atticPuzzle(scene: Scene, view: RoomView) {
       light.setEnabled(s.inserted && s.room === 2);
       spot.isVisible = s.inserted && !s.revealed;
       beam.isVisible = s.inserted;
+      beamMaterial.alpha = 0.038 + Math.sin(time * 1.3) * 0.006;
       const end = frame.center.add(
         new Vector3((s.horizontal - 1) * 0.38, (s.vertical - 2) * 0.32, -0.06),
       );

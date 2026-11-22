@@ -22,11 +22,9 @@ export function paintedMaterial(scene: Scene, name: string, url: string, onReady
 export function paintedRoom(scene: Scene, view: RoomView, invalidate: () => void) {
   const art = MeshBuilder.CreatePlane(view.name, { width: view.width, height: view.height }, scene);
   art.material = paintedMaterial(scene, view.name, view.art, invalidate);
-  if (view.room === 0) {
-    const mat = art.material as StandardMaterial;
-    mat.disableLighting = true;
-    mat.emissiveColor = Color3.White();
-  }
+  const mat = art.material as StandardMaterial;
+  mat.disableLighting = true;
+  mat.emissiveColor = Color3.White();
   art.isPickable = false;
   const targets = view.spots.map((spot) => {
     const mesh = MeshBuilder.CreatePlane(
@@ -78,58 +76,4 @@ export function glyphMaterial(scene: Scene, name: string, text: string) {
   const m = glowMaterial(scene, name, '#ffffff');
   m.diffuseTexture = t;
   return m;
-}
-export function foregroundLayer(scene: Scene, view: RoomView, invalidate: () => void) {
-  const mesh = MeshBuilder.CreatePlane(
-    'foreground timber and cloth',
-    { width: view.width, height: view.height },
-    scene,
-  );
-  mesh.position.z = -0.28;
-  mesh.scaling.setAll(view.portrait ? 0.983 : 0.97);
-  mesh.isPickable = false;
-  const material = new StandardMaterial('foreground depth', scene);
-  material.emissiveColor = new Color3(0.22, 0.22, 0.22);
-  material.specularColor = Color3.Black();
-  material.maxSimultaneousLights = 5;
-  const texture = new DynamicTexture(
-    'foreground cutout',
-    { width: view.portrait ? 1024 : 2048, height: view.portrait ? 2048 : 1024 },
-    scene,
-    true,
-  );
-  texture.hasAlpha = true;
-  material.diffuseTexture = texture;
-  material.useAlphaFromDiffuseTexture = true;
-  mesh.material = material;
-  const image = new Image();
-  image.onload = () => {
-    if (scene.isDisposed) return;
-    const c = texture.getContext() as CanvasRenderingContext2D;
-    const size = texture.getSize();
-    c.clearRect(0, 0, size.width, size.height);
-    c.save();
-    c.beginPath();
-    [
-      [0, 0.87],
-      [0.3, 0.87],
-      [0.36, 0.81],
-      [0.67, 0.81],
-      [0.74, 0.87],
-      [1, 0.87],
-      [1, 1],
-      [0, 1],
-    ].forEach(([x, y], i) => {
-      if (i) c.lineTo(x! * size.width, y! * size.height);
-      else c.moveTo(x! * size.width, y! * size.height);
-    });
-    c.closePath();
-    c.clip();
-    c.drawImage(image, 0, 0, size.width, size.height);
-    c.restore();
-    texture.update();
-    invalidate();
-  };
-  image.src = view.art;
-  return mesh;
 }

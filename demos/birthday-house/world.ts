@@ -8,7 +8,7 @@ import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
 import { PointerEventTypes } from '@babylonjs/core/Events/pointerEvents';
 import { roomView, type ObjectId, type RoomView } from './locations';
 import { initialState, type Game } from './game';
-import { paintedRoom, foregroundLayer, glowMaterial } from './engine-art';
+import { paintedRoom, glowMaterial } from './engine-art';
 import { roomLighting } from './engine-light';
 import { darkroomPuzzle, atticPuzzle } from './engine-puzzles';
 import { breakfastPuzzle } from './breakfast-effects';
@@ -16,7 +16,6 @@ import { breakfastPuzzle } from './breakfast-effects';
 function bundle(scene: Scene, view: RoomView, invalidate: () => void) {
   const start = scene.meshes.length;
   paintedRoom(scene, view, invalidate);
-  if (view.room !== 0) foregroundLayer(scene, view, invalidate);
   const lighting = roomLighting(scene, view);
   const puzzle: {
     tick: (state: Game, time: number, reduced: boolean, dt: number) => void;

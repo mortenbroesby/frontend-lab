@@ -1,10 +1,10 @@
 import portraitBreakfast from './art/breakfast-clean-portrait.png';
-import portraitDarkroom from './art/darkroom-portrait.jpg';
-import portraitAttic from './art/attic-portrait.jpg';
+import portraitDarkroom from './art/darkroom-clean-portrait.png';
+import portraitAttic from './art/attic-clean-portrait.png';
 const portraitArt = [portraitBreakfast, portraitDarkroom, portraitAttic];
 import breakfast from './art/breakfast-clean.png';
-import darkroom from './art/darkroom.jpg';
-import attic from './art/attic.jpg';
+import darkroom from './art/darkroom-clean.png';
+import attic from './art/attic-clean.png';
 export type ObjectId =
   | 'note'
   | 'bun'

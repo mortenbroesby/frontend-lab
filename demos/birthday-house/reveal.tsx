@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import { birthday } from './birthday';
 export function Reveal({ onClose, replay }: { onClose: () => void; replay: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -14,6 +14,13 @@ export function Reveal({ onClose, replay }: { onClose: () => void; replay: () =>
         <h1>{birthday.greeting}</h1>
         <figure>
           <img src={birthday.photo} alt={birthday.alt} />
+          <span className="photo-stardust" aria-hidden="true">
+            {Array.from({ length: 8 }, (_, i) => (
+              <i key={i} style={{ '--star': i } as CSSProperties}>
+                ✦
+              </i>
+            ))}
+          </span>
           <figcaption>Et lille lys, gemt til dig.</figcaption>
         </figure>
         <p>{birthday.message}</p>

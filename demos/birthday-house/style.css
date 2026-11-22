@@ -1000,3 +1000,92 @@ body:has(.birthday-house) {
     box-shadow: 0 0 70px #bc813b34;
   }
 }
+
+/* Small, local movements keep the puzzles tactile without covering the artwork. */
+.camera-finder {
+  position: relative;
+  transition: box-shadow 450ms ease;
+}
+.camera-finder > div {
+  transition:
+    filter 180ms ease,
+    color 400ms ease;
+}
+.camera-finder.is-sharp {
+  box-shadow:
+    inset 0 0 35px #e3bf6d33,
+    0 0 18px #a77c4326;
+  color: #fff0c0;
+}
+.camera-finder.is-sharp::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, #ffe9b72b 48%, transparent 65%);
+  animation: lens-glint 900ms ease-out both;
+  pointer-events: none;
+}
+.brass-dial {
+  position: relative;
+}
+.dial-hand {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  transition: transform 380ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+.dial-hand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(50% - 1.5px);
+  width: 3px;
+  height: 12px;
+  background: #50351b;
+  border-radius: 2px;
+  box-shadow: 1px 0 #ffefb8;
+}
+.reveal figure {
+  position: relative;
+}
+.photo-stardust {
+  position: absolute;
+  inset: -25px;
+  pointer-events: none;
+}
+.photo-stardust i {
+  position: absolute;
+  left: calc(5% + var(--star) * 13%);
+  bottom: 5%;
+  font:
+    normal 10px Georgia,
+    serif;
+  color: #efd39b;
+  text-shadow: 0 0 8px #dab369;
+  opacity: 0;
+  animation: photo-mote 11s ease-in-out infinite;
+  animation-delay: calc(var(--star) * -1.4s);
+}
+@keyframes lens-glint {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes photo-mote {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  25%,
+  55% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate(12px, -190px) scale(0.1);
+    opacity: 0;
+  }
+}

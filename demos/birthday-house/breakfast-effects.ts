@@ -4,8 +4,11 @@ import type { Scene } from '@babylonjs/core/scene';
 import type { RoomView } from './locations';
 import type { Game } from './game';
 import { position, glowMaterial, softTexture } from './engine-art';
+import { breakfastDoor } from './engine-door';
 
 export function breakfastPuzzle(scene: Scene, view: RoomView) {
+  const door = breakfastDoor(scene, view);
+  const charge = [0, 0, 0];
   const material = glowMaterial(scene, 'awakened amber lenses', '#ffba53');
   material.diffuseTexture = softTexture(scene, 'soft cabinet light');
   material.useAlphaFromDiffuseTexture = true;
@@ -51,9 +54,14 @@ export function breakfastPuzzle(scene: Scene, view: RoomView) {
   steam.material = steamMaterial;
   steam.isPickable = false;
   return {
-    tick(s: Game, time: number, reduced: boolean) {
+    tick(s: Game, time: number, reduced: boolean, dt: number) {
+      door.tick(s.breakfast, dt);
       lights.forEach((m, i) => {
-        m.isVisible = s.sequence.length > i;
+        const lit = s.sequence.length > i;
+        charge[i]! += ((lit ? 1 : 0) - charge[i]!) * (1 - Math.exp(-dt / 180));
+        m.isVisible = lit;
+        m.visibility = charge[i]!;
+        m.scaling.setAll(0.65 + charge[i]! * 0.35 + Math.sin(time * 2 + i) * 0.035);
       });
       steamMaterial.setFloat('time', reduced ? 0 : time);
     },

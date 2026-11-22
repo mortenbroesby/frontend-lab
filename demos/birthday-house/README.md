@@ -49,7 +49,7 @@ The game is in Danish, including its clues, hints, accessible labels, entrance a
 
 ## Rendering
 
-The modeled 3D room has been removed at the user's request. Babylon.js 9.36.0 presents clean, lossless 2D breakfast artwork without relighting or a duplicate foreground crop. Gentle candle glows, coffee steam, dust and cabinet lights provide subtle motion. The darkroom and attic retain their painted depth layers, developing-water shader, traveling plate, projector beam and hinged reveal. All rooms use framed cameras rather than free walking.
+The modeled 3D room has been removed at the user's request. Babylon.js 9.36.0 presents clean, lossless 2D artwork in all three rooms without relighting or a duplicate foreground crop. Gentle candle glows, coffee steam, dust and cabinet lights provide subtle motion. The darkroom and attic use newly refined compositions without duplicated foreground layers. Their developing-water shader, traveling plate, gently breathing projector beam and hinged photo reveal remain. The breakfast door swings on a real hinge after the cabinet puzzle, revealing a glimpse of the darkroom. Cabinet lights charge softly, the camera glints when focused, brass dial needles turn, and a few golden motes surround the final photograph. All rooms use framed cameras rather than free walking.
 
 A little illustrated husnisse sits on the breakfast-room windowsill. He peeks out and bows with a little lantern stardust when tapped or activated with the keyboard. This optional encounter never gates a puzzle.
 

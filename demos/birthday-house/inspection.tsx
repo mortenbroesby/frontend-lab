@@ -177,7 +177,7 @@ function Camera({ game, perform }: Props) {
   const sharp = focus === 7;
   return (
     <>
-      <div className="camera-finder">
+      <div className={`camera-finder ${sharp ? 'is-sharp' : ''}`}>
         <div style={{ filter: `blur(${Math.abs(7 - focus) * 1.5}px)` }}>
           ✦ &nbsp; ✦<br />✦<br />✦<br />✦
         </div>
@@ -241,14 +241,23 @@ function Lantern({ game, perform }: Props) {
   );
 }
 function Dial({ label, value, turn }: { label: string; value: number; turn: () => void }) {
+  const [ticks, setTicks] = useState(value);
   return (
     <label>
       {label}
       <button
         className="brass-dial"
         aria-label={`${label} drejeskive: ${['I', 'II', 'III', 'IV'][value]}`}
-        onClick={turn}
+        onClick={() => {
+          setTicks((count) => count + 1);
+          turn();
+        }}
       >
+        <i
+          className="dial-hand"
+          aria-hidden="true"
+          style={{ transform: `rotate(${ticks * 90}deg)` }}
+        />
         <span>{['I', 'II', 'III', 'IV'][value]}</span>
       </button>
       <small>Drej ét hak</small>
