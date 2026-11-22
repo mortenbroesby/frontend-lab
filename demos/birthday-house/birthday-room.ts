@@ -8,6 +8,7 @@ import type { Scene } from '@babylonjs/core/scene';
 import type { FreeCamera } from '@babylonjs/core/Cameras/freeCamera';
 import type { Game } from './game';
 import type { RoomView } from './locations';
+import { windowLandscape, warmDetails } from './room-atmosphere';
 import { keepsakes } from './room-textiles';
 import { modelTools } from './room-model';
 import { architecture, windowAndDoor, garland, tableSetting, flowers } from './room-furnishings';
@@ -34,6 +35,8 @@ export function birthdayRoom(scene: Scene, view: RoomView) {
   const t = modelTools(scene);
   const { w, top } = architecture(t, view.portrait);
   const door = windowAndDoor(t, view.portrait);
+  const mist = windowLandscape(t, view.portrait);
+  const glow = warmDetails(t, w, top);
   const flags = garland(t, w, top);
   const { flameAt, width } = tableSetting(t, view.portrait);
   flowers(t, -width * 0.16);
@@ -49,6 +52,7 @@ export function birthdayRoom(scene: Scene, view: RoomView) {
     flameMaterial,
     'cake',
   );
+  glow.addIncludedOnlyMesh(flame);
   const candle = new PointLight('candle lighting the table', flameAt.clone(), scene);
   candle.diffuse = Color3.FromHexString('#ffba72');
   candle.range = 11;
@@ -62,11 +66,11 @@ export function birthdayRoom(scene: Scene, view: RoomView) {
     scene,
   );
   moon.diffuse = Color3.FromHexString('#97c6f2');
-  moon.intensity = 0.65;
+  moon.intensity = 0.48;
   moon.range = 20;
   const fill = new PointLight('warm ceiling bounce', new Vector3(1, top - 1, -2), scene);
-  fill.diffuse = Color3.FromHexString('#ffe0b3');
-  fill.intensity = 0.38;
+  fill.diffuse = Color3.FromHexString('#ffd0a0');
+  fill.intensity = 0.46;
   fill.range = 20;
   const shadow = new ShadowGenerator(1024, moon);
   shadow.usePercentageCloserFiltering = true;
@@ -75,6 +79,8 @@ export function birthdayRoom(scene: Scene, view: RoomView) {
   const candleShadow = new ShadowGenerator(512, candle);
   candleShadow.usePoissonSampling = true;
   candleShadow.bias = 0.005;
+  candleShadow.setDarkness(0.22);
+  shadow.setDarkness(0.18);
   t.casters
     .filter((m) => !m.name.includes('wall') && !m.name.includes('floorboard'))
     .forEach((m) => shadow.addShadowCaster(m));
@@ -85,10 +91,12 @@ export function birthdayRoom(scene: Scene, view: RoomView) {
   let angle = 0;
   return {
     enable(enabled: boolean) {
+      glow.isEnabled = enabled;
       meshes.forEach((m) => m.setEnabled(enabled));
       [moon, candle, fill].forEach((l) => l.setEnabled(enabled));
     },
     tick(s: Game, time: number, reduced: boolean, dt: number) {
+      mist.setFloat('time', reduced ? 0 : time);
       const flicker = reduced ? 1 : 1 + Math.sin(time * 4.3) * 0.055 + Math.sin(time * 9.1) * 0.025;
       candle.intensity = 0.9 * flicker;
       flame.scaling.y = flicker;

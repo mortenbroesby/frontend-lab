@@ -37,10 +37,6 @@ export function windowAndDoor(t: ModelTools, tall: boolean) {
   const { box, palette: p } = t;
   const wx = tall ? -2.2 : -4.5;
   const wy = tall ? 2.2 : 1.1;
-  const sky = t.material('blue hour glass', '#537d98', 0.65);
-  sky.emissiveColor.set(0.22, 0.35, 0.48);
-  sky.disableLighting = true;
-  box('blue hour window', [2.05, 3.15, 0.12], [wx, wy, 2.62], sky, 'window');
   for (const x of [-1.1, 0, 1.1])
     box('window mullion', [0.1, 3.45, 0.24], [wx + x, wy, 2.4], p.wood, 'window');
   for (const y of [-1.65, 0, 1.65])
