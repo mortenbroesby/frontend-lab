@@ -136,7 +136,7 @@ const tableActions: Partial<Record<ObjectId, Action>> = { bun: 'bun', cake: 'cak
 export function Inspection(props: Props) {
   if (props.id === 'lamp')
     return (
-      <PaperDialog title={tr('Nissens lygte', 'The elf’s lantern')} onClose={props.onClose}>
+      <PaperDialog title={tr('Messinglygten', 'The brass lantern')} onClose={props.onClose}>
         <WickPuzzle game={props.game} perform={props.perform} onClose={props.onClose} />
       </PaperDialog>
     );
@@ -298,8 +298,8 @@ function Lantern({ game, perform }: Props) {
       {!game.wickLit && (
         <p className="quiet">
           {tr(
-            'Nissen venter ved sin lygte. Hent lys hos ham.',
-            'The elf is waiting by his lantern. Bring back a light from him.',
+            'Tænd vægen i messinglygten på loftet.',
+            'Light the wick in the attic’s brass lantern.',
           )}
         </p>
       )}

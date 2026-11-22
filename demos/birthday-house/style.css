@@ -1137,3 +1137,18 @@ body:has(.birthday-house) {
     transform: scale(1.08);
   }
 }
+
+.wick-symbols {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+.wick-symbols button {
+  display: grid;
+  gap: 0.2em;
+  min-width: 64px;
+}
+.wick-symbols span {
+  font-size: larger;
+}

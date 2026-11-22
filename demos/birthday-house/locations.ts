@@ -106,7 +106,7 @@ const locations: RoomData[] = [
       { id: 'projector', name: ['Tryllelygten', 'The magic lantern'], x: 39, y: 64 },
       { id: 'frame', name: ['Skodderne med solen', 'The sun shutters'], x: 59, y: 40 },
       { id: 'letter', name: ['De tre breve', 'The three letters'], x: 62, y: 77, mark: '✉' },
-      { id: 'lamp', name: ['Nissens lygte', 'The elf’s lantern'], x: 78, y: 60 },
+      { id: 'lamp', name: ['Messinglygten', 'The brass lantern'], x: 78, y: 60 },
       { id: 'window', name: ['Vinduet i den blå time', 'The twilight window'], x: 27, y: 35 },
     ],
   },

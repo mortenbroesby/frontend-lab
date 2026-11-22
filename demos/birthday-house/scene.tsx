@@ -6,7 +6,6 @@ import { createWorld } from './world';
 import { roomView, type ObjectId } from './locations';
 import type { Game } from './game';
 import { usePortrait } from './viewport';
-import { DoorGuide, lanternKeeper } from './nisse';
 import { RoomLife } from './room-life';
 
 type Props = {
@@ -94,9 +93,6 @@ export function PaintedScene(props: Props) {
                 onClick={() => props.onPick(spot.id)}
                 onFocus={() => props.onFocus(panToSpot(canvas.current!, location, spot.x))}
               >
-                {spot.id === 'lamp' && (
-                  <img className="keeper-at-work" src={lanternKeeper} alt="" />
-                )}
                 <span aria-hidden="true">{spot.mark ?? '✧'}</span>
                 <small>
                   {routeOpen ? tr('Til loftet — åbent', 'To the attic — open') : spot.name}
@@ -104,9 +100,6 @@ export function PaintedScene(props: Props) {
               </button>
             );
           })}
-        {ready && location.room === 0 && (
-          <DoorGuide open={props.game.breakfast} portrait={portrait} />
-        )}
         <RoomAwe view={location} awake={props.game.revealed} />
         <RoomLife view={location} awake={props.game.revealed} />
         <InteractionEffects

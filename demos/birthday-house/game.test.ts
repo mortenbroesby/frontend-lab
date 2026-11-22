@@ -93,11 +93,11 @@ test('after development, darkroom hints guide the player to the newly opened att
   assert.match(hint(act(s, 'attic'), 2), /Sæt den fremkaldte plade/);
 });
 
-test('the elf’s wick requires an inserted plate and stays lit on a return visit', () => {
+test('the lantern wick requires an inserted plate and stays lit on a return visit', () => {
   const attic = { ...initialState(), room: 2, breakfast: true, plate: true };
   assert.equal(act(attic, 'lightwick').wickLit, false);
   const inserted = act(attic, 'insert');
-  assert.match(hint(inserted), /Nissen/);
+  assert.match(hint(inserted), /messinglygten/i);
   assert.doesNotMatch(hint(inserted), /solen/i);
   assert.match(hint(inserted, 2), /Vælg solen/);
   const lit = act(inserted, 'lightwick');

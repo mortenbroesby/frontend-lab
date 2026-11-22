@@ -46,13 +46,13 @@ function atticFeedback(s: Game, action: Action) {
     );
   if (action === 'insert')
     return tr(
-      'Pladen er på plads. Find nissens lygte.',
-      'The plate is in place. Find the elf’s lantern.',
+      'Pladen er på plads. Find messinglygten.',
+      'The plate is in place. Find the brass lantern.',
     );
   if (action === 'project')
     return s.wickLit
       ? tr('Se på stjernerne på glaspladen igen.', 'Look again at the stars on your glass plate.')
-      : tr('Lyset mangler. Se efter nissens lygte.', 'It needs light. Look for the elf’s lantern.');
+      : tr('Lyset mangler. Se efter messinglygten.', 'It needs light. Look for the brass lantern.');
   return tr('Et sagte klik. Lyset flytter sig.', 'A soft click. The light shifts.');
 }
 const actionMessages: Partial<Record<Action, [danish: string, english: string]>> = {

@@ -138,14 +138,14 @@ const hints = {
     ],
   ],
   wick: [
-    ['Nissen venter ved sin lille lygte.', 'The house elf is waiting by his little lantern.'],
+    ['Se efter messinglygten på loftet.', 'Look for the brass lantern in the attic.'],
     [
-      'Se efter mærket på skodderne. Kan du finde det på nissens lygte?',
-      'Look for the mark on the shutters. Can you find it on the elf’s lantern?',
+      'Se efter mærket på skodderne. Kan du finde det på messinglygten?',
+      'Look for the mark on the shutters. Can you find it on the brass lantern?',
     ],
     [
-      'Vælg solen på nissens lygte for at tænde vægen.',
-      'Choose the sun on the elf’s lantern to light the wick.',
+      'Vælg solen på messinglygten for at tænde vægen.',
+      'Choose the sun on the brass lantern to light the wick.',
     ],
   ],
   dials: [

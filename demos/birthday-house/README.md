@@ -40,7 +40,7 @@ The birthday custom of paper Dannebrog flags in buns and on cakes is described b
 2. Inspect the darkroom camera. Its maker’s mark is VII; focus the lens at 7 and recover the glass plate.
 3. Read the photographer’s recipe. Dip the plate in the moon bath, then the rain bath, then the star bath. Watch the plate travel between the trays and reveal its constellation.
 4. Revisit breakfast and return. The plate and discovered notes remain in the notebook. The staircase glows and shows “Til loftet — åbent” once the plate is developed, even with glimmers hidden. Hints in this room point to the staircase. Take the attic stairs.
-5. Insert the plate into the magic lantern. Visit the nisse at his lantern. Look at the attic shutters and choose their symbol, the sun, to light the wick. Return to the projector. Set the horizontal wheel to II and the vertical wheel to III. A real spotlight and translucent light volume move across the shutters. Release the light; the engine turns the shutters on their hinges to reveal the photograph.
+5. Insert the plate into the magic lantern. Inspect the brass lantern. Look at the attic shutters and choose their symbol, the sun, to light the wick. Return to the projector. Set the horizontal wheel to II and the vertical wheel to III. A real spotlight and translucent light volume move across the shutters. Release the light; the engine turns the shutters on their hinges to reveal the photograph.
 6. Open the birthday message, close it, revisit another room, return, and reopen it. Replay clears doors, discoveries, plate, lights, dials and shutters.
 
 State tests cover gating, discovery, wrong answers, plate retention, alignment, reset, cinematic ordering and sound-cue selection. Browser verification covers the complete journey, camera slider keyboard access, focus inside native dialogs, backtracking, replay and desktop/phone layouts. Browser audio probes check gesture-based startup, silent mute, hidden-page suspension, resumption and unavailable-audio fallback. Offline waveform and live lifecycle checks cover finite unclipped samples, bounded voice scheduling, cancellation on replay/unmute and disposal. Restarting during the finale is checked separately. A phone-sized desktop browser is emulation, not real-device iPhone Safari testing; waveform checks are not a human listening review.
@@ -71,8 +71,6 @@ The layout uses dynamic viewport height and safe-area insets. The fullscreen con
 
 References: [WebKit's open iPhone fullscreen issue](https://bugs.webkit.org/show_bug.cgi?id=206854), [Chrome's iPhone Home Screen instructions](https://support.google.com/chrome/answer/9658361?co=GENIE.Platform%3DiOS&hl=en), and [Apple's web-app instructions](https://support.apple.com/guide/iphone/turn-a-website-into-an-app-iphea86e5236/ios). Real-device iPhone acceptance is still required.
 
-## The nisse and the final portrait
-
-The house nisse guides the player to the breakfast room door and meets them again in the attic. His lantern carries the light for the magic projector. When Kasper’s portrait appears, the nisse briefly takes off his hat and bows.
+## The final portrait
 
 Room navigation fades out before switching, waits for the destination to render, and then fades in. Cached rooms follow the same transition. Reset cancels any pending move. The full portrait sits inside a tightly fitted gold frame against a blurred photo backdrop; it retains its natural aspect ratio without pale side bars. Sound can be muted inside the native photo dialog. The birthday melody is documented in [music-sources.md](./music-sources.md).

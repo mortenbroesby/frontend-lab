@@ -17,5 +17,5 @@
 - Keep the living village, constellation development and paced cinematic photo reveal. Replay must reset both visual and musical progress.
 
 - Room changes must fade out smoothly, wait for the next scene to be ready, then reveal it without flashing artwork, loading overlays or camera jumps. Preserve this alongside all existing requirements.
-- The nisse guides the player to the darkroom and keeps the attic lantern. Preserve the three darkroom dipping baths as their own puzzle. At the attic lantern the player matches the symbol on the shutters. The nisse briefly takes off his hat and bows at the portrait reveal. Keep the puzzle playable without sound or time pressure.
+- Preserve the three darkroom dipping baths and the separate attic lantern puzzle. Players can discover the symbol on the shutters without sound or time pressure.
 - The final Kasper portrait should sit tightly inside a classic gold painting frame with no pale side bars, against a rich atmospheric backdrop. Preserve the complete photo and a reachable sound control.

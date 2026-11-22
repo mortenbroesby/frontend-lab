@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { Action, Game } from './game';
 import { tr } from './language';
-import { lanternKeeper } from './nisse';
 
 export function WickPuzzle({
   game,
@@ -15,7 +14,6 @@ export function WickPuzzle({
   const [miss, setMiss] = useState(false);
   return (
     <>
-      <img className="wick-keeper" src={lanternKeeper} alt="" />
       <p>
         {game.wickLit
           ? tr(
@@ -24,12 +22,12 @@ export function WickPuzzle({
             )
           : game.inserted
             ? tr(
-                '“Min flamme tænder kun én væge.” Nissen peger på skodderne. “Hvilket tegn har du set dér?”',
-                '“My flame will light just one wick.” The elf points to the shutters. “Which mark did you see there?”',
+                'Tre tegn er ridset ind i messingen. Vælg det tegn, du så på skodderne.',
+                'Three marks are etched into the brass. Choose the one you saw on the shutters.',
               )
             : tr(
-                '“Først billedet, så lyset.” Nissen venter, mens du sætter pladen i tryllelygten.',
-                '“First the picture, then the light.” The elf waits while you fit the plate into the projector.',
+                'Sæt først glaspladen i tryllelygten. Så kan du tænde vægen.',
+                'Fit the glass plate into the projector first. Then you can light the wick.',
               )}
       </p>
       {game.inserted && !game.wickLit && (
