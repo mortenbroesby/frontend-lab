@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { currentLanguage, selectLanguage } from './language.ts';
-import { initialState, act, hint } from './game.ts';
+import { initialState, act, hint, beamDistance } from './game.ts';
 
 test('clues gate the three-room journey and survive backtracking', () => {
   let s = initialState();
@@ -118,4 +118,15 @@ test('puzzle hints follow the selected language without resetting progress', () 
   } finally {
     selectLanguage(previous);
   }
+});
+
+test('a missed beam keeps the dial positions and gets closer as the light approaches the sun', () => {
+  let game = { ...initialState(), room: 2, inserted: true, wickLit: true };
+  assert.equal(beamDistance(game), 3);
+  game = act(act(game, 'horizontal'), 'vertical');
+  assert.equal(beamDistance(game), 1);
+  assert.deepEqual(act(game, 'project'), game);
+  game = act(game, 'vertical');
+  assert.equal(beamDistance(game), 0);
+  assert.equal(act(game, 'project').revealed, true);
 });
