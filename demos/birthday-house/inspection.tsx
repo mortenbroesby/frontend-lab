@@ -2,7 +2,7 @@ import { tr } from './language.ts';
 import { WickPuzzle } from './wick-puzzle';
 import { usePortrait } from './viewport';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import type { Game, Action } from './game';
+import { projectorAligned, type Game, type Action } from './game';
 import { roomView, type ObjectId } from './locations';
 
 type Props = {
@@ -151,7 +151,11 @@ export function Inspection(props: Props) {
     );
   if (props.id === 'projector')
     return (
-      <PaperDialog title={tr('Tryllelygten', 'The magic lantern')} onClose={props.onClose}>
+      <PaperDialog
+        className={props.game.inserted ? 'projector-controls' : ''}
+        title={tr('Tryllelygten', 'The magic lantern')}
+        onClose={props.onClose}
+      >
         <Lantern {...props} />
       </PaperDialog>
     );
@@ -278,10 +282,8 @@ function Lantern({ game, perform }: Props) {
     );
   return (
     <>
-      <p>
-        {tr('Følg stjernerne:', 'Follow the stars:')}{' '}
-        <strong>{tr('Vandret II (2)', 'Horizontal II (2)')}</strong>,{' '}
-        <strong>{tr('Lodret III (3)', 'Vertical III (3)')}</strong>.
+      <p className="projector-readout" role="status" data-lit={game.wickLit}>
+        {aimingMessage(game)}
       </p>
       <div className="brass-dials">
         <Dial
@@ -295,18 +297,40 @@ function Lantern({ game, perform }: Props) {
           turn={() => perform('vertical', true)}
         />
       </div>
-      {!game.wickLit && (
-        <p className="quiet">
-          {tr(
-            'Tænd vægen i messinglygten på loftet.',
-            'Light the wick in the attic’s brass lantern.',
-          )}
-        </p>
-      )}
-      <button className="ink-button" disabled={!game.wickLit} onClick={() => perform('project')}>
+      <button
+        className="ink-button"
+        disabled={!game.wickLit || !projectorAligned(game)}
+        onClick={() => perform('project')}
+      >
         {tr('Slip lyset fri', 'Release the light')}
       </button>
     </>
+  );
+}
+function aimingMessage(game: Game) {
+  if (!game.wickLit)
+    return tr(
+      'Vægen er slukket. Tænd den i messinglygten på loftet.',
+      'The wick is out. Light it in the attic’s brass lantern.',
+    );
+  if (projectorAligned(game))
+    return tr(
+      'Lyset rammer solen. Slip lyset fri for at åbne skodderne.',
+      'The light is on the sun. Release it to open the shutters.',
+    );
+  if (game.horizontal === 1)
+    return tr(
+      'Vandret passer. Drej den lodrette skive til III.',
+      'Horizontally aligned. Turn the vertical dial to III.',
+    );
+  if (game.vertical === 2)
+    return tr(
+      'Lodret passer. Drej den vandrette skive til II.',
+      'Vertically aligned. Turn the horizontal dial to II.',
+    );
+  return tr(
+    'Ram solen på skodderne med lyset. Glaspladen viser vandret II og lodret III.',
+    'Aim the light at the sun on the shutters. The plate shows horizontal II and vertical III.',
   );
 }
 function Dial({ label, value, turn }: { label: string; value: number; turn: () => void }) {

@@ -90,7 +90,7 @@ export default function Demo() {
             onRoomReady={passage.ready}
             reduced={false}
             pan={pan}
-            close={!!overlay}
+            close={![null, 'projector'].includes(overlay)}
             markers={markers}
             covered={reveal}
             active={(!game.revealed || finaleReady) && !passage.busy}

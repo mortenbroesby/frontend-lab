@@ -132,7 +132,7 @@ export function atticPuzzle(scene: Scene, view: RoomView) {
       spot.isVisible = s.wickLit && !s.revealed;
       beam.isVisible = s.wickLit;
       beamMaterial.alpha =
-        0.038 +
+        0.14 +
         Math.sin(time * 1.3) * 0.006 +
         (s.revealed ? moment.gather * (1 - moment.warmth) * 0.1 : 0);
       stars.forEach((star, i) => {
@@ -146,7 +146,7 @@ export function atticPuzzle(scene: Scene, view: RoomView) {
         star.rotation.z = time * 0.4 + i;
       });
       const end = frame.center.add(
-        new Vector3((s.horizontal - 1) * 0.38, (s.vertical - 2) * 0.32, -0.06),
+        new Vector3((s.horizontal - 1) * 0.68, (s.vertical - 2) * 0.55, -0.06),
       );
       spot.position = end;
       light.direction = end.subtract(source).normalize();

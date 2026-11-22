@@ -48,14 +48,16 @@ function darkroom(s: Game, action: Action): Game {
   const bath = action === order[s.bath] ? s.bath + 1 : s.bath;
   return { ...s, bath, plate: bath === 3 };
 }
+export function projectorAligned(s: Game) {
+  return s.horizontal === 1 && s.vertical === 2;
+}
 function attic(s: Game, action: Action): Game {
   if (action === 'insert' && s.plate) return { ...s, inserted: true };
   if (!s.inserted) return s;
   if (action === 'lightwick') return { ...s, wickLit: true };
   if (action === 'horizontal') return { ...s, horizontal: (s.horizontal + 1) % 4 };
   if (action === 'vertical') return { ...s, vertical: (s.vertical + 1) % 4 };
-  if (action === 'project' && s.wickLit && s.horizontal === 1 && s.vertical === 2)
-    return { ...s, revealed: true };
+  if (action === 'project' && s.wickLit && projectorAligned(s)) return { ...s, revealed: true };
   return s;
 }
 export function act(s: Game, action: Action): Game {

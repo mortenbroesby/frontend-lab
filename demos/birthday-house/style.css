@@ -1152,3 +1152,69 @@ body:has(.birthday-house) {
 .wick-symbols span {
   font-size: larger;
 }
+
+/* Keep the shutters visible while the player operates the projector. */
+dialog.projector-controls {
+  bottom: max(12px, env(safe-area-inset-bottom));
+  left: max(12px, env(safe-area-inset-left));
+  right: auto;
+  width: min(315px, calc(100% - 24px));
+  padding: 14px 18px;
+}
+.projector-controls::backdrop {
+  background: transparent;
+}
+.projector-controls .paper-eyebrow,
+.projector-controls .brass-dials small {
+  display: none;
+}
+.projector-controls h2 {
+  margin: 0 26px 6px 0;
+  font-size: 21px;
+}
+.projector-controls .projector-readout {
+  margin: 4px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.projector-controls .brass-dial {
+  width: 54px;
+  height: 54px;
+  margin: 3px auto;
+}
+.projector-controls .ink-button {
+  margin-top: 4px;
+}
+.projector-controls .ink-button:disabled {
+  opacity: 0.55;
+}
+.birthday-house:has(.projector-readout[data-lit='true']) [data-object='frame']::after {
+  content: '☀';
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px dashed #ffdf92;
+  border-radius: 50%;
+  color: white;
+  text-shadow: 0 1px 3px #39230a;
+  box-shadow: 0 0 0 1px #523c21;
+  pointer-events: none;
+}
+@media (orientation: portrait) {
+  dialog.projector-controls {
+    left: 12px;
+    right: 12px;
+    margin-inline: auto;
+  }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  dialog.projector-controls {
+    width: min(34vw, 295px);
+    max-height: 92svh;
+  }
+}
