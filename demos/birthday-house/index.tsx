@@ -9,6 +9,8 @@ import { Inspection, PaperDialog } from './inspection';
 import { Journal } from './journal';
 import { Reveal } from './reveal';
 import { initialState, act, hint, type Action } from './game';
+import { reactionFor, type Reaction } from './reactions';
+import type { SceneReaction } from './interaction-effects';
 import { feedback } from './content';
 import { locations, type ObjectId } from './locations';
 import './style.css';
@@ -28,25 +30,32 @@ export default function Demo() {
   const [markers, setMarkers] = useState(false);
   const [hintLevel, setHintLevel] = useState(0);
   const [note, setNote] = useState('');
+  const [reaction, setReaction] = useState<SceneReaction | null>(null);
+  function reactTo(next: Reaction) {
+    setReaction((previous) => ({ ...next, serial: (previous?.serial ?? 0) + 1 }));
+  }
   const [reduced, setReduced] = useState(
     () => matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
   function perform(action: Action, keep = false) {
     const next = act(game, action);
     setGame(next);
+    const response = reactionFor(game, next);
+    if (response) reactTo(response);
     if (!keep) setOverlay(null);
     if (action === 'readnote' || action === 'readrecipe') {
-      setNote('Kept in your notebook.');
+      setNote('Gemt i din notesbog.');
       return;
     }
     setNote(feedback(game, next, action));
     if (next.room !== game.room) {
       setPan(0.5);
       setHintLevel(0);
+      setReaction(null);
     }
   }
   function pick(id: ObjectId) {
-    if (!started) return;
+    reactTo({ object: id, kind: 'touch' });
     if (game.room === 0 && (id === 'bun' || id === 'cake' || id === 'cup')) {
       perform(id);
       return;
@@ -65,6 +74,7 @@ export default function Demo() {
   }
   function restart() {
     setGame(initialState());
+    setReaction(null);
     setOverlay(null);
     setReveal(false);
     setNote('');
@@ -74,11 +84,15 @@ export default function Demo() {
   const close = () => setOverlay(null);
   const panBy = (delta: number) => setPan((value) => Math.min(1, Math.max(0, value + delta)));
   return (
-    <main className={`birthday-house ${reduced ? 'motion-off' : ''}`}>
+    <main className={`birthday-house ${reduced ? 'motion-off' : 'motion-on'}`}>
       {started && (
-        <Suspense fallback={<div className="scene-loading">Lighting the house…</div>}>
+        <Suspense fallback={<div className="scene-loading">Tænder lys i huset…</div>}>
           <PaintedScene
             game={game}
+            reaction={reaction}
+            onReactionEnd={(serial) =>
+              setReaction((current) => clearFinishedReaction(current, serial))
+            }
             reduced={reduced}
             pan={pan}
             close={!!overlay}
@@ -93,19 +107,23 @@ export default function Demo() {
         </Suspense>
       )}
       <header className={`house-header ${started ? '' : 'title-header'}`}>
-        {started && (
-          <div className="wordmark">
-            THE BIRTHDAY HOUSE
-            <span>{locations[game.room]!.name}</span>
-          </div>
-        )}
-        <DisplayControls reduced={reduced} onMotion={() => setReduced(!reduced)} />
+        <div className="wordmark" hidden={!started}>
+          FØDSELSDAGSHUSET
+          <span>{locations[game.room]!.name}</span>
+        </div>
+        <DisplayControls
+          reduced={reduced}
+          onMotion={() => {
+            setReaction(null);
+            setReduced(!reduced);
+          }}
+        />
       </header>
       {!started ? (
         <SplashScreen
           onStart={() => {
             setStarted(true);
-            setNote('The invitation is waiting.');
+            setNote('Invitationen venter.');
           }}
         />
       ) : (
@@ -155,24 +173,28 @@ function Overlays({
   if (overlay === 'journal') return <Journal game={game} onClose={close} />;
   if (overlay === 'hint')
     return (
-      <PaperDialog title="A little nudge" onClose={close}>
+      <PaperDialog title="Et lille vink" onClose={close}>
         <p>{hint(game, hintLevel)}</p>
         <button className="ink-button" onClick={nextHint} disabled={hintLevel === 2}>
-          A clearer hint
+          Et tydeligere vink
         </button>
       </PaperDialog>
     );
   if (overlay === 'restart')
     return (
-      <PaperDialog title="Begin another little adventure?" onClose={close}>
-        <p>The rooms and your notebook will return to how you found them.</p>
+      <PaperDialog title="Klar til et nyt lille eventyr?" onClose={close}>
+        <p>Rummene og notesbogen bliver som ved begyndelsen.</p>
         <button className="ink-button" onClick={restart}>
-          Start again
+          Begynd forfra
         </button>
         <button className="text-button" onClick={close}>
-          Keep exploring
+          Fortsæt på opdagelse
         </button>
       </PaperDialog>
     );
   return <Inspection id={overlay} game={game} onClose={close} perform={perform} />;
+}
+
+function clearFinishedReaction(current: SceneReaction | null, serial: number) {
+  return current?.serial === serial ? null : current;
 }

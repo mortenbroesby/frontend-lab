@@ -109,7 +109,7 @@ body:has(.birthday-house) {
   font-size: 10px;
   letter-spacing: 0.05em;
 }
-.header-actions button:last-child {
+.header-actions .fullscreen-control {
   font-size: 21px;
   padding: 4px;
   line-height: 1;
@@ -872,4 +872,131 @@ body:has(.birthday-house) {
 }
 .house-header .paper-dialog {
   pointer-events: auto;
+}
+
+.interaction-fx {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  z-index: 4;
+  pointer-events: none;
+  animation: interaction-life 780ms linear both;
+}
+.interaction-ring {
+  position: absolute;
+  left: -22px;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #ffe3a5;
+  border-radius: 50%;
+  box-shadow:
+    0 0 16px #f4c57766,
+    inset 0 0 12px #f4c57733;
+  animation: interaction-ring 680ms ease-out both;
+}
+.interaction-fx i {
+  position: absolute;
+  left: -4px;
+  top: -6px;
+  font:
+    normal 12px Georgia,
+    serif;
+  color: #ffe0a0;
+  text-shadow: 0 0 8px #ffb943;
+  animation: interaction-spark 780ms ease-out both;
+}
+.fx-complete {
+  animation-duration: 1100ms;
+}
+.fx-complete .interaction-ring {
+  animation-duration: 1000ms;
+  width: 76px;
+  height: 76px;
+  left: -38px;
+  top: -38px;
+  box-shadow:
+    0 0 35px #efc47866,
+    inset 0 0 24px #f4c57744;
+}
+.fx-complete i {
+  animation-duration: 1100ms;
+  font-size: 15px;
+}
+.fx-collect .interaction-ring {
+  border-color: #f4edcd;
+}
+.motion-on .paper-dialog[open] {
+  animation: paper-arrive 220ms ease-out both;
+}
+.motion-on .reveal-card {
+  animation: memory-arrive 800ms ease-out both;
+}
+.motion-on .reveal img {
+  animation: memory-light 1300ms ease-out both;
+}
+.motion-on button:active {
+  scale: 0.97;
+}
+@keyframes interaction-life {
+  0%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes interaction-ring {
+  from {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+@keyframes interaction-spark {
+  from {
+    transform: rotate(var(--spark-angle)) translateY(-8px) rotate(calc(-1 * var(--spark-angle)))
+      scale(0.45);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  to {
+    transform: rotate(var(--spark-angle)) translateY(calc(-1 * var(--spark-distance)))
+      rotate(calc(-1 * var(--spark-angle))) scale(0.2);
+    opacity: 0;
+  }
+}
+@keyframes paper-arrive {
+  from {
+    opacity: 0;
+    translate: 0 7px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes memory-arrive {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes memory-light {
+  from {
+    box-shadow: 0 0 100px #e6bb7777;
+  }
+  to {
+    box-shadow: 0 0 70px #bc813b34;
+  }
 }

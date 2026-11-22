@@ -1,28 +1,28 @@
 import type { Action, Game } from './game';
 import { locations } from './locations';
 function breakfastFeedback(s: Game) {
-  if (s.breakfast) return 'Three lights. The darkroom unlocks.';
+  if (s.breakfast) return 'Tre lys. Døren til mørkekammeret går op.';
   return s.sequence.length
-    ? `Next: the ${['buns', 'cake', 'coffee cup'][s.sequence.length]}.`
-    : 'The cabinet is waiting. Buns → cake → coffee. Your lights are safe.';
+    ? `Næste: ${['bollerne', 'kagen', 'kaffekoppen'][s.sequence.length]}.`
+    : 'Skabet venter. Boller → kage → kaffe. Dine lys bliver ved med at lyse.';
 }
 function darkroomFeedback(s: Game) {
-  if (s.plate) return 'Two stars across. Three rising. The attic awaits.';
-  if (!s.negative) return 'First, take the glass plate from the camera.';
+  if (s.plate) return 'To stjerner vandret. Tre lodret. Loftet venter.';
+  if (!s.negative) return 'Tag først glaspladen fra kameraet.';
   return s.bath
-    ? `Next: the ${s.bath === 1 ? 'rain' : 'star'} bath.`
-    : 'Start with the moon bath → rain → star. Progress is safe.';
+    ? `Næste: ${s.bath === 1 ? 'regnbadet' : 'stjernebadet'}.`
+    : 'Begynd med månebadet → regn → stjerne. Intet går tabt.';
 }
 function atticFeedback(s: Game, action: Action) {
-  if (s.revealed) return 'A memory, kept for you.';
-  if (action === 'insert') return 'The lantern wakes.';
-  if (action === 'project') return 'Still asleep. Horizontal II (2), vertical III (3).';
-  return 'A quiet click. The light shifts.';
+  if (s.revealed) return 'Et minde, gemt til dig.';
+  if (action === 'insert') return 'Lygten vågner.';
+  if (action === 'project') return 'Stadig i dvale. Vandret II (2), lodret III (3).';
+  return 'Et sagte klik. Lyset flytter sig.';
 }
 export function feedback(before: Game, after: Game, action: Action) {
   if (after.room !== before.room) return locations[after.room]!.subtitle;
-  if (action === 'darkroom') return 'Still locked. Wake the three cabinet lights.';
-  if (action === 'attic') return 'Develop the glass plate to open the attic.';
-  if (action === 'takeplate') return 'Glass plate found. Try the moon bath.';
+  if (action === 'darkroom') return 'Stadig låst. Tænd skabets tre små lys.';
+  if (action === 'attic') return 'Fremkald glaspladen for at åbne døren til loftet.';
+  if (action === 'takeplate') return 'Glaspladen er fundet. Prøv månebadet.';
   return [breakfastFeedback, darkroomFeedback, atticFeedback][after.room]!(after, action);
 }

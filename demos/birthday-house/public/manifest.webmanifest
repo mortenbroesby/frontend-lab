@@ -1,6 +1,7 @@
 {
-  "name": "The Birthday House",
-  "short_name": "Birthday House",
+  "name": "Fødselsdagshuset",
+  "short_name": "Fødselsdagshuset",
+  "lang": "da",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { InteractionEffects, type SceneReaction } from './interaction-effects';
 import { createWorld } from './world';
 import { roomView, type ObjectId } from './locations';
 import type { Game } from './game';
@@ -6,6 +7,8 @@ import { usePortrait } from './viewport';
 
 type Props = {
   game: Game;
+  reaction: SceneReaction | null;
+  onReactionEnd: (serial: number) => void;
   reduced: boolean;
   pan: number;
   close: boolean;
@@ -34,7 +37,7 @@ export function PaintedScene(props: Props) {
         setReady,
       );
     } catch {
-      setError('The room could not start. Enable WebGL, then reload this page.');
+      setError('Rummet kunne ikke åbnes. Slå WebGL til, og genindlæs siden.');
     }
     return () => {
       world.current?.dispose();
@@ -48,7 +51,7 @@ export function PaintedScene(props: Props) {
     <div className="painted-viewport">
       <canvas
         ref={canvas}
-        aria-label="An interactive room. Drag gently to look around, or use Tab to explore the objects."
+        aria-label="Et rum, du kan udforske. Træk forsigtigt for at se dig omkring, eller brug Tab til at finde genstandene."
       />
       <div
         ref={stage}
@@ -83,16 +86,22 @@ export function PaintedScene(props: Props) {
               <small>{spot.name}</small>
             </button>
           ))}
+        <InteractionEffects
+          reaction={props.reaction}
+          view={location}
+          reduced={props.reduced}
+          onFinish={props.onReactionEnd}
+        />
       </div>
       {!ready && !error && (
         <div className="scene-loading" aria-live="polite">
-          Lighting the house…
+          Tænder lys i huset…
         </div>
       )}
       {error && (
         <p className="render-error" role="alert">
           {error}
-          <button onClick={() => window.location.reload()}>Reload</button>
+          <button onClick={() => window.location.reload()}>Genindlæs</button>
         </p>
       )}
     </div>

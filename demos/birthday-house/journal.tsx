@@ -2,49 +2,47 @@ import type { Game } from './game';
 import { PaperDialog } from './inspection';
 export function Journal({ game, onClose }: { game: Game; onClose: () => void }) {
   return (
-    <PaperDialog title="Things worth keeping" onClose={onClose} className="notebook">
+    <PaperDialog title="Det, vi gemmer" onClose={onClose} className="notebook">
       {!game.note && !game.negative && (
-        <p>
-          The pages are waiting. Explore the house; anything you discover will find a home here.
-        </p>
+        <p>Siderne venter. Gå på opdagelse — dine fund får en plads her.</p>
       )}
       {game.note && (
         <section>
-          <h3>The invitation</h3>
+          <h3>Invitationen</h3>
           <p>
-            “Begin with what rises before dawn. Then touch the thing that holds a wish. End with
-            what chases sleep away.”
+            “Begynd med det, der hæver før daggry. Rør så ved det, der bærer et ønske. Slut med det,
+            der jager søvnen væk.”
           </p>
         </section>
       )}
       {game.recipe && (
         <section>
-          <h3>The photographer’s verse</h3>
+          <h3>Fotografens vers</h3>
           <p>
-            “Moon wakes the silver. Rain stills its dreaming. A star keeps the memory, long after
-            morning.”
+            “Månen vækker sølvet. Regnen giver drømmen ro. Stjernen gemmer mindet, længe efter
+            morgen.”
           </p>
         </section>
       )}
       {game.negative && (
         <section>
-          <h3>{game.plate ? 'The developed glass plate' : 'A sleeping memory'}</h3>
+          <h3>{game.plate ? 'Den fremkaldte glasplade' : 'Et sovende minde'}</h3>
           {game.plate ? (
             <div className="glass-clue">
-              <span>Horizon &nbsp; ✦ — ✦</span>
+              <span>Vandret &nbsp; ✦ — ✦</span>
               <span>
-                Sky &nbsp; ✦<br />
+                Lodret &nbsp; ✦<br />
                 　　　 ✦<br />
                 　　　 ✦
               </span>
             </div>
           ) : (
-            <p>A cool, dark glass plate. Its image has yet to be developed.</p>
+            <p>En kølig, mørk glasplade. Billedet venter på at blive fremkaldt.</p>
           )}
         </section>
       )}
       <button className="ink-button" onClick={onClose}>
-        Close notebook
+        Luk notesbogen
       </button>
     </PaperDialog>
   );

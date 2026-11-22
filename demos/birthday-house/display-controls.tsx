@@ -4,6 +4,7 @@ import { PaperDialog } from './inspection';
 export function DisplayControls({ reduced, onMotion }: { reduced: boolean; onMotion: () => void }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [help, setHelp] = useState(false);
+  const [screenAvailable, setScreenAvailable] = useState(() => !!document.fullscreenEnabled);
   useEffect(() => {
     const changed = () => setFullscreen(!!document.fullscreenElement);
     document.addEventListener('fullscreenchange', changed);
@@ -18,6 +19,7 @@ export function DisplayControls({ reduced, onMotion }: { reduced: boolean; onMot
       if (document.fullscreenElement) await document.exitFullscreen();
       else await document.documentElement.requestFullscreen();
     } catch {
+      setScreenAvailable(false);
       setHelp(true);
     }
   }
@@ -30,34 +32,47 @@ export function DisplayControls({ reduced, onMotion }: { reduced: boolean; onMot
         <button
           onClick={onMotion}
           aria-pressed={reduced}
-          aria-label="Reduce motion"
-          title={reduced ? 'Stillness' : 'Living light'}
+          aria-label="Begræns bevægelse"
+          title={reduced ? 'Stilhed' : 'Levende lys'}
         >
-          {reduced ? 'Stillness' : 'Living light'}
+          {reduced ? 'Stilhed' : 'Levende lys'}
         </button>
-        <button
-          onClick={() => void toggleScreen()}
-          aria-label={fullscreen ? 'Exit full screen' : 'Enter full screen'}
-          title="Full screen"
-        >
-          ⛶
-        </button>
+        {screenAvailable ? (
+          <button
+            className="fullscreen-control"
+            onClick={() => void toggleScreen()}
+            aria-label={fullscreen ? 'Forlad fuld skærm' : 'Åbn fuld skærm'}
+            title="Fuld skærm"
+          >
+            ⛶
+          </button>
+        ) : (
+          !appMode && (
+            <button
+              onClick={() => setHelp(true)}
+              aria-label="Sådan åbner du appvisning"
+              title="Vejledning til hjemmeskærmen"
+            >
+              Appvisning
+            </button>
+          )
+        )}
       </div>
       {help && (
-        <PaperDialog title="Play without browser bars" onClose={() => setHelp(false)}>
+        <PaperDialog title="Spil uden browserens bjælker" onClose={() => setHelp(false)}>
           {appMode ? (
-            <p>You’re already in app view.</p>
+            <p>Du er allerede i appvisning.</p>
           ) : (
             <>
-              <p>This browser cannot expand the game to fullscreen.</p>
+              <p>Denne browser kan ikke åbne spillet i fuld skærm.</p>
               <p>
-                On iPhone: Share → Add to Home Screen. Enable “Open as Web App” if offered, then
-                launch the new icon.
+                På iPhone: Del → Føj til hjemmeskærm. Slå “Åbn som webapp” til, hvis muligheden
+                vises. Åbn derefter spillet via det nye ikon.
               </p>
             </>
           )}
           <button className="ink-button" onClick={() => setHelp(false)}>
-            Keep playing
+            Spil videre
           </button>
         </PaperDialog>
       )}

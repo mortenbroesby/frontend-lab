@@ -28,10 +28,10 @@ export function PaperDialog({
   }, []);
   return (
     <dialog ref={ref} className={`paper-dialog ${className}`} onCancel={onClose}>
-      <button className="paper-close" onClick={onClose} aria-label="Back to the room">
+      <button className="paper-close" onClick={onClose} aria-label="Tilbage til rummet">
         ×
       </button>
-      <p className="paper-eyebrow">A CLOSER LOOK</p>
+      <p className="paper-eyebrow">SE LIDT NÆRMERE</p>
       <h2>{title}</h2>
       {children}
     </dialog>
@@ -39,56 +39,56 @@ export function PaperDialog({
 }
 const stories: Partial<Record<ObjectId, { title: string; copy: string }>> = {
   note: {
-    title: 'An invitation, in familiar handwriting',
-    copy: '“Buns, then cake, then coffee. A little birthday ritual.” Your lights stay lit if you try the wrong thing.',
+    title: 'En invitation med en velkendt håndskrift',
+    copy: '“Boller, så kage, så kaffe. Et lille fødselsdagsritual.” Lysene slukker ikke, hvis du prøver forkert.',
   },
   bun: {
-    title: 'Still warm from the oven',
-    copy: 'Warm buns. A tiny brass seal beneath the plate.',
+    title: 'Stadig lune fra ovnen',
+    copy: 'Lune boller. Et lille messingsegl under tallerkenen.',
   },
   cake: {
-    title: 'A wish, waiting to be made',
-    copy: 'A candle, a wish, and a brass seal beneath the cake.',
+    title: 'Et ønske, der venter',
+    copy: 'Et lys, et ønske og et messingsegl under kagen.',
   },
   cup: {
-    title: 'One cup, kept warm',
-    copy: 'Warm coffee. One last brass seal under the saucer.',
+    title: 'En kop, holdt varm',
+    copy: 'Varm kaffe. Det sidste messingsegl ligger under underkoppen.',
   },
   cabinet: {
-    title: 'The cabinet of little lights',
-    copy: 'Three sleeping lights. Buns → cake → coffee wakes them.',
+    title: 'Skabet med de små lys',
+    copy: 'Tre sovende lys. Boller → kage → kaffe vækker dem.',
   },
   recipe: {
-    title: 'A method for remembering',
-    copy: '1. Moon wakes. 2. Rain stills. 3. Star keeps. Try the baths in that order; your progress is safe.',
+    title: 'En opskrift på minder',
+    copy: '1. Månen vækker. 2. Regnen giver ro. 3. Stjernen gemmer. Prøv badene i den rækkefølge. Intet går tabt.',
   },
   develop: {
-    title: 'The moon bath',
-    copy: 'The first bath. Moon wakes the silver.',
+    title: 'Månebadet',
+    copy: 'Det første bad. Månen vækker sølvet.',
   },
   stop: {
-    title: 'The rain bath',
-    copy: 'The second bath. Rain stills the image.',
+    title: 'Regnbadet',
+    copy: 'Det andet bad. Regnen giver billedet ro.',
   },
   fix: {
-    title: 'The star bath',
-    copy: 'The last bath. Star keeps the memory.',
+    title: 'Stjernebadet',
+    copy: 'Det sidste bad. Stjernen bevarer mindet.',
   },
   frame: {
-    title: 'The sleeping sun',
-    copy: 'A sleeping sun. Aim the magic lantern here.',
+    title: 'Den sovende sol',
+    copy: 'En sovende sol. Ret tryllelygten herhen.',
   },
   letter: {
-    title: 'Three wishes, and one promise',
-    copy: '“May there always be a light in the window, and someone beside you.”',
+    title: 'Tre ønsker og ét løfte',
+    copy: '“Må der altid være lys i vinduet og nogen ved din side.”',
   },
   window: {
-    title: 'The world, holding its breath',
-    copy: 'Blue hour. One warm window across the water.',
+    title: 'Verden holder vejret',
+    copy: 'Den blå time. Et varmt lys i vinduet på den anden side af vandet.',
   },
   lamp: {
-    title: 'A garden made of glass',
-    copy: 'Rose glass, mended with gold. Still glowing.',
+    title: 'En have af glas',
+    copy: 'Rosenfarvet glas, repareret med guld. Lyser endnu.',
   },
 };
 const tableActions: Partial<Record<ObjectId, Action>> = { bun: 'bun', cake: 'cake', cup: 'cup' };
@@ -100,13 +100,13 @@ const bathActions: Partial<Record<ObjectId, Action>> = {
 export function Inspection(props: Props) {
   if (props.id === 'camera')
     return (
-      <PaperDialog title="The photographer’s last exposure" onClose={props.onClose}>
+      <PaperDialog title="Fotografens sidste billede" onClose={props.onClose}>
         <Camera {...props} />
       </PaperDialog>
     );
   if (props.id === 'projector')
     return (
-      <PaperDialog title="The magic lantern" onClose={props.onClose}>
+      <PaperDialog title="Tryllelygten" onClose={props.onClose}>
         <Lantern {...props} />
       </PaperDialog>
     );
@@ -128,7 +128,7 @@ function DetailImage({ id, room }: { id: ObjectId; room: number }) {
     <div
       className="detail-painting"
       role="img"
-      aria-label="A painted detail of the object"
+      aria-label="En malet detalje af genstanden"
       style={{
         backgroundImage: `url(${location.art})`,
         backgroundPosition: `${spot?.x ?? 50}% ${spot?.y ?? 50}%`,
@@ -142,33 +142,33 @@ function InspectionActions({ id, game, perform, onClose }: Props) {
   if (table)
     return (
       <button className="ink-button" onClick={() => perform(table)}>
-        Touch the brass seal
+        Rør ved messingseglet
       </button>
     );
   if (bath)
     return (
       <>
         <button className="ink-button" disabled={!game.negative} onClick={() => perform(bath)}>
-          Lower the glass plate
+          Sænk glaspladen
         </button>
-        {!game.negative && <p className="quiet">Find the glass plate in the camera.</p>}
+        {!game.negative && <p className="quiet">Find glaspladen i kameraet.</p>}
       </>
     );
   if (id === 'note')
     return (
       <button className="ink-button" onClick={() => perform('readnote')}>
-        Keep the invitation in your notebook
+        Gem invitationen i notesbogen
       </button>
     );
   if (id === 'recipe')
     return (
       <button className="ink-button" onClick={() => perform('readrecipe')}>
-        Copy the verse into your notebook
+        Gem verset i notesbogen
       </button>
     );
   return (
     <button className="ink-button" onClick={onClose}>
-      Return to the room
+      Tilbage til rummet
     </button>
   );
 }
@@ -183,12 +183,12 @@ function Camera({ game, perform }: Props) {
         </div>
       </div>
       <p>
-        Focus on <strong>VII (7)</strong>. Let the stars settle.
+        Stil skarpt på <strong>VII (7)</strong>. Lad stjernerne falde til ro.
       </p>
       <label className="focus-control">
-        Focus ring · {['0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][focus]}
+        Fokusring · {['0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][focus]}
         <input
-          aria-label="Camera focus ring"
+          aria-label="Kameraets fokusring"
           type="range"
           min="0"
           max="10"
@@ -198,14 +198,14 @@ function Camera({ game, perform }: Props) {
         />
       </label>
       <p className="quiet" role="status">
-        {sharp ? 'Sharp. The catch releases.' : 'Turn to VII (7).'}
+        {sharp ? 'Skarpt. Låsen går op.' : 'Drej til VII (7).'}
       </p>
       <button
         className="ink-button"
         disabled={!sharp || game.negative}
         onClick={() => perform('takeplate')}
       >
-        {game.negative ? 'The glass plate is in your notebook' : 'Take the glass plate'}
+        {game.negative ? 'Glaspladen ligger i din notesbog' : 'Tag glaspladen'}
       </button>
     </>
   );
@@ -215,27 +215,27 @@ function Lantern({ game, perform }: Props) {
     return (
       <>
         <DetailImage id="projector" room={2} />
-        <p>A slot for your glass plate. A light waiting to wake.</p>
+        <p>En sprække til glaspladen. Et lys, der venter på at vågne.</p>
         <button
           className="ink-button"
           disabled={!game.plate}
           onClick={() => perform('insert', true)}
         >
-          Slide in the developed plate
+          Sæt den fremkaldte plade i
         </button>
       </>
     );
   return (
     <>
       <p>
-        Match the stars: <strong>Horizontal II (2)</strong>, <strong>Vertical III (3)</strong>.
+        Følg stjernerne: <strong>Vandret II (2)</strong>, <strong>Lodret III (3)</strong>.
       </p>
       <div className="brass-dials">
-        <Dial label="Horizontal" value={game.horizontal} turn={() => perform('horizontal', true)} />
-        <Dial label="Vertical" value={game.vertical} turn={() => perform('vertical', true)} />
+        <Dial label="Vandret" value={game.horizontal} turn={() => perform('horizontal', true)} />
+        <Dial label="Lodret" value={game.vertical} turn={() => perform('vertical', true)} />
       </div>
       <button className="ink-button" onClick={() => perform('project')}>
-        Release the light
+        Slip lyset fri
       </button>
     </>
   );
@@ -246,12 +246,12 @@ function Dial({ label, value, turn }: { label: string; value: number; turn: () =
       {label}
       <button
         className="brass-dial"
-        aria-label={`${label} dial: ${['I', 'II', 'III', 'IV'][value]}`}
+        aria-label={`${label} drejeskive: ${['I', 'II', 'III', 'IV'][value]}`}
         onClick={turn}
       >
         <span>{['I', 'II', 'III', 'IV'][value]}</span>
       </button>
-      <small>Turn one notch</small>
+      <small>Drej ét hak</small>
     </label>
   );
 }

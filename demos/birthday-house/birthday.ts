@@ -1,8 +1,8 @@
 import photo from './birthday-photo.jpg';
 export const birthday = {
   photo,
-  alt: 'A joyful family moment in an autumn woodland, decorated with Danish birthday flags.',
+  alt: 'Et glad familieøjeblik i efterårsskoven, pyntet med dannebrogsflag.',
   greeting: 'Tillykke med fødselsdagen!',
   message:
-    'Some people turn ordinary moments into memories worth keeping. You are one of them. Here’s to another year of little adventures, warm mornings, and finding our way home together.',
+    'Du gør hverdagens små øjeblikke til minder, vi gemmer. Må det næste år byde på lune morgener, små eventyr og vejen hjem sammen.',
 };

@@ -64,26 +64,26 @@ export function act(s: Game, action: Action): Game {
 export function hint(s: Game, level = 0) {
   const clues = !s.breakfast
     ? [
-        'There is a sealed invitation beside the flowers. Someone has left you a little ritual.',
-        'What rises before dawn? What is served with a wish? What chases sleep away?',
-        'Touch the buns, then the cake, then the coffee cup.',
+        'Ved blomsterne ligger en invitation. Nogen har gemt et lille ritual til dig.',
+        'Hvad hæver før daggry? Hvad serveres med et ønske? Hvad jager søvnen væk?',
+        'Rør ved bollerne, så kagen og til sidst kaffekoppen.',
       ]
     : !s.negative
       ? [
-          'The photographer has left a camera ready for one last exposure.',
-          'Look through the bellows camera. Turn its focus ring until the stars become sharp.',
-          'Set the camera’s focus ring to VII and take the glass plate.',
+          'Fotografens kamera står klar til ét sidste billede.',
+          'Kig gennem bælgkameraet. Drej fokusringen, til stjernerne står skarpt.',
+          'Stil kameraets fokusring på VII, og tag glaspladen.',
         ]
       : !s.plate
         ? [
-            'The parchment on the wall remembers the photographer’s method.',
-            'Moon wakes silver. Rain stills it. A star keeps it forever.',
-            'Lower the plate into the moon bath, then the rain bath, then the star bath.',
+            'Papiret på væggen gemmer fotografens opskrift.',
+            'Månen vækker sølvet. Regnen giver ro. Stjernen gemmer det for altid.',
+            'Sænk pladen i månebadet, så regnbadet og til sidst stjernebadet.',
           ]
         : [
-            'Your developed plate carries two constellations. Perhaps the magic lantern can read them.',
-            'The horizontal constellation has two stars. The vertical one has three.',
-            'Insert the plate into the lantern. Set horizontal II, vertical III, then release the light.',
+            'Din glasplade viser to stjernebilleder. Måske kan tryllelygten læse dem.',
+            'Det vandrette stjernebillede har to stjerner. Det lodrette har tre.',
+            'Sæt pladen i lygten. Vælg vandret II og lodret III, og slip lyset fri.',
           ];
   return clues[Math.min(level, 2)]!;
 }

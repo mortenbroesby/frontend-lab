@@ -45,9 +45,13 @@ State tests cover gating, discovery, wrong answers, plate retention, alignment a
 
 </details>
 
+The game is in Danish, including its clues, hints, accessible labels, entrance and final greeting.
+
 ## Rendering
 
 The modeled 3D room has been removed at the user's request. Babylon.js 9.36.0 presents clean, lossless 2D breakfast artwork without relighting or a duplicate foreground crop. Gentle candle glows, coffee steam, dust and cabinet lights provide subtle motion. The darkroom and attic retain their painted depth layers, developing-water shader, traveling plate, projector beam and hinged reveal. All rooms use framed cameras rather than free walking.
+
+Object taps create brief warm ripples; discoveries sparkle and completed puzzles receive a brighter glow. Dialogs and the final photograph arrive gently. Stillness disables these animations. Wrong answers and repeated discoveries do not celebrate progress.
 
 The separate entrance loads first; Start Game loads the renderer on demand. The toolbar uses compact icons with accessible labels, and object feedback is brief. Durable art and interaction direction is recorded in this demo's `AGENTS.md`.
 
@@ -57,6 +61,6 @@ The final Fallow review has no dead-code findings, duplication, or cyclomatic/co
 
 ## iPhone display behavior
 
-The layout uses dynamic viewport height and safe-area insets. The fullscreen control checks browser capability and handles rejected requests. Where unsupported, it explains Share → Add to Home Screen → Open as Web App (if offered). The manifest requests standalone display and includes an app icon; there is no offline service worker. Opening a temporary tunnel from the Home Screen still requires that tunnel to remain online. App view is not a promise of hardware fullscreen on every iPhone.
+The layout uses dynamic viewport height and safe-area insets. The fullscreen control checks browser capability and handles rejected requests. Where unsupported, a clearly labeled App view button replaces the fullscreen icon and explains Share → Add to Home Screen → Open as Web App (if offered). The manifest requests standalone display and includes an app icon; there is no offline service worker. Opening a temporary tunnel from the Home Screen still requires that tunnel to remain online. App view is not a promise of hardware fullscreen on every iPhone.
 
 References: [WebKit's open iPhone fullscreen issue](https://bugs.webkit.org/show_bug.cgi?id=206854), [Chrome's iPhone Home Screen instructions](https://support.google.com/chrome/answer/9658361?co=GENIE.Platform%3DiOS&hl=en), and [Apple's web-app instructions](https://support.apple.com/guide/iphone/turn-a-website-into-an-app-iphea86e5236/ios). Real-device iPhone acceptance is still required.

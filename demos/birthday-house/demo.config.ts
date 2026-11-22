@@ -1,9 +1,9 @@
 import type { DemoDefinition } from '@lab/demo-kit/types';
 
 export default {
-  title: 'Birthday House',
+  title: 'Fødselsdagshuset',
   tracks: ['experimental-projects'],
-  description: 'A three-room birthday mystery in blue hour, built in Babylon.js.',
+  description: 'Et hyggeligt fødselsdagsmysterium i tre rum — bygget med Babylon.js.',
   author: 'Lab examples',
   explore: {
     file: 'birthday.ts',
