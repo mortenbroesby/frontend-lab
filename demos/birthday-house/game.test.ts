@@ -12,18 +12,11 @@ test('clues gate the three-room journey and survive backtracking', () => {
   assert.equal(s.breakfast, true);
   s = act(s, 'darkroom');
   assert.equal(s.room, 1);
-  assert.equal(act(s, 'mirror2').plate, false);
+  assert.equal(act(s, 'fix').plate, false);
   s = act(s, 'takeplate');
-  for (const action of [
-    'mirror0',
-    'mirror0',
-    'mirror0',
-    'mirror1',
-    'mirror1',
-    'mirror1',
-    'mirror2',
-  ] as const)
-    s = act(s, action);
+  s = act(s, 'develop');
+  s = act(s, 'stop');
+  s = act(s, 'fix');
   assert.equal(s.plate, true);
   s = act(s, 'breakfast');
   assert.equal(s.plate, true);
@@ -32,19 +25,21 @@ test('clues gate the three-room journey and survive backtracking', () => {
   assert.equal(act(s, 'project').revealed, false);
   s = act(act(s, 'insert'), 'horizontal');
   s = act(act(s, 'vertical'), 'vertical');
+  assert.equal(act(s, 'project').revealed, false);
+  s = act(s, 'lightwick');
   s = act(s, 'project');
   assert.equal(s.revealed, true);
   assert.deepEqual(initialState(), {
     room: 0,
     sequence: [],
     breakfast: false,
-    mirrors: [0, 0, 0],
-    nisseGift: false,
+    bath: 0,
     plate: false,
     negative: false,
     note: false,
     recipe: false,
     inserted: false,
+    wickLit: false,
     horizontal: 0,
     vertical: 0,
     revealed: false,
@@ -59,11 +54,11 @@ test('incorrect choices preserve progress without skipping solutions', () => {
   assert.equal(act(act(s, 'bun'), 'cup').breakfast, false);
   let dark = act(act(act(act(s, 'bun'), 'cake'), 'cup'), 'darkroom');
   dark = act(dark, 'takeplate');
-  dark = act(dark, 'mirror2');
-  assert.equal(dark.plate, false);
-  assert.deepEqual(dark.mirrors, [0, 0, 1]);
-  dark = act(dark, 'mirror0');
-  assert.deepEqual(dark.mirrors, [1, 0, 1]);
+  dark = act(act(dark, 'develop'), 'fix');
+  assert.equal(dark.bath, 1);
+  dark = act(dark, 'stop');
+  assert.equal(dark.bath, 2);
+  assert.equal(act(dark, 'develop').bath, 2);
   assert.equal(dark.plate, false);
 });
 
@@ -74,9 +69,9 @@ test('the notebook only records discovered clues and an exposed plate is require
   s = act(s, 'readnote');
   assert.equal(s.note, true);
   for (const action of ['bun', 'cake', 'cup', 'darkroom'] as const) s = act(s, action);
-  for (const action of ['mirror0', 'mirror1', 'mirror2'] as const) s = act(s, action);
+  for (const action of ['develop', 'stop', 'fix'] as const) s = act(s, action);
   assert.equal(s.plate, false);
-  assert.deepEqual(s.mirrors, [0, 0, 0]);
+  assert.equal(s.bath, 0);
   s = act(s, 'readrecipe');
   s = act(s, 'takeplate');
   s = act(s, 'breakfast');
@@ -87,37 +82,29 @@ test('the notebook only records discovered clues and an exposed plate is require
 
 test('after development, darkroom hints guide the player to the newly opened attic', () => {
   let s = initialState();
-  for (const action of [
-    'bun',
-    'cake',
-    'cup',
-    'darkroom',
-    'takeplate',
-    'mirror0',
-    'mirror0',
-    'mirror0',
-    'mirror1',
-    'mirror1',
-    'mirror1',
-  ] as const)
+  for (const action of ['bun', 'cake', 'cup', 'darkroom', 'takeplate', 'develop', 'stop'] as const)
     s = act(s, action);
   assert.equal(act(s, 'attic').room, 1);
-  assert.match(hint(s, 2), /Spejl 3/);
-  s = act(s, 'mirror2');
+  assert.match(hint(s, 2), /stjernebadet/);
+  s = act(s, 'fix');
   assert.match(hint(s), /Trappen til højre er åben/);
   assert.match(hint(s, 2), /Til loftet/);
   assert.equal(act(s, 'attic').room, 2);
-  assert.match(hint(act(s, 'attic'), 2), /vandret II/);
+  assert.match(hint(act(s, 'attic'), 2), /Sæt den fremkaldte plade/);
 });
 
-test('the optional cup reward never gates the journey and resets with a new game', () => {
-  const s = initialState();
-  const rewarded = act(s, 'nissegift');
-  assert.equal(rewarded.nisseGift, true);
-  assert.equal(rewarded.breakfast, false);
-  assert.equal(rewarded.plate, false);
-  assert.equal(act(rewarded, 'attic').room, 0);
-  assert.equal(initialState().nisseGift, false);
+test('the elf’s wick requires an inserted plate and stays lit on a return visit', () => {
+  const attic = { ...initialState(), room: 2, breakfast: true, plate: true };
+  assert.equal(act(attic, 'lightwick').wickLit, false);
+  const inserted = act(attic, 'insert');
+  assert.match(hint(inserted), /Nissen/);
+  assert.doesNotMatch(hint(inserted), /solen/i);
+  assert.match(hint(inserted, 2), /Vælg solen/);
+  const lit = act(inserted, 'lightwick');
+  assert.equal(act(lit, 'project').revealed, false);
+  const returned = act(act(lit, 'darkroom'), 'attic');
+  assert.equal(returned.wickLit, true);
+  assert.match(hint(returned, 2), /vandret II/);
 });
 
 test('puzzle hints follow the selected language without resetting progress', () => {

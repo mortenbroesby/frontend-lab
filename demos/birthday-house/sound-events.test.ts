@@ -12,8 +12,10 @@ test('musical milestones happen on earned progress, not repeated or wrong choice
   assert.equal(storyProgress(after), 1);
   assert.equal(soundFor(after, act(after, 'cup'), 'cup'), 'touch');
   const attic = { ...after, room: 2, plate: true, inserted: true, horizontal: 1, vertical: 2 };
-  const end = act(attic, 'project');
-  assert.equal(soundFor(attic, end, 'project'), 'finale');
+  const lit = act(attic, 'lightwick');
+  assert.equal(soundFor(attic, lit, 'lightwick'), 'progress');
+  const end = act(lit, 'project');
+  assert.equal(soundFor(lit, end, 'project'), 'finale');
   assert.equal(storyProgress(end), 3);
   assert.equal(soundFor(end, act(end, 'project'), 'project'), 'brass');
   assert.equal(storyProgress(initialState()), 0);
@@ -21,7 +23,7 @@ test('musical milestones happen on earned progress, not repeated or wrong choice
 test('doors, paper, and developing baths have distinct tactile sounds', () => {
   const s = initialState();
   assert.equal(soundFor(s, act(s, 'readnote'), 'readnote'), 'paper');
-  const dark = { ...s, room: 1, breakfast: true, negative: true, mirrors: [3, 3, 0] };
-  assert.equal(soundFor(dark, act(dark, 'mirror2'), 'mirror2'), 'developed');
+  const dark = { ...s, room: 1, breakfast: true, negative: true, bath: 2 };
+  assert.equal(soundFor(dark, act(dark, 'fix'), 'fix'), 'developed');
   assert.equal(soundFor(dark, act(dark, 'breakfast'), 'breakfast'), 'door');
 });

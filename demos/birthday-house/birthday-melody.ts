@@ -49,16 +49,3 @@ export const birthdayMelody: readonly MelodyNote[] = [
   [65, 1],
   [0, 0.5],
 ];
-
-// Original short reward motif for the nisse's optional cup game.
-export const nisseMelody: readonly MelodyNote[] = [
-  [74, 0.5],
-  [77, 0.5],
-  [81, 1],
-  [79, 0.5],
-  [77, 0.5],
-  [74, 1.5],
-  [69, 0.5],
-  [72, 0.5],
-  [74, 2],
-];

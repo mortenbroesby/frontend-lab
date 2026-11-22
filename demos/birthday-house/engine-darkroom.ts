@@ -6,7 +6,6 @@ import type { RoomView } from './locations';
 import type { Game } from './game';
 import { position, glyphMaterial, glowMaterial, softTexture } from './engine-art';
 import { magicStars } from './engine-stars';
-import { connectedMirrors } from './mini-games';
 import { developmentAt } from './moments';
 
 function water(scene: Scene, view: RoomView) {
@@ -75,7 +74,7 @@ export function darkroomPuzzle(scene: Scene, view: RoomView) {
       const moment = developmentAt(age);
       plate.material = moment.etched ? developed : blank;
       haloMaterial.alpha = moment.glow * 0.24;
-      const bath = connectedMirrors(s.mirrors);
+      const bath = s.bath;
       const x = [18, view.portrait ? 23 : 29, 49.5, view.portrait ? 74 : 71][bath]!;
       const surface = view.portrait ? 77 : 79;
       const y = bath ? surface - moment.rise * 9 : 60;

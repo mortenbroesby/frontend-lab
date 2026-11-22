@@ -1,6 +1,7 @@
 import { tr } from './language';
 import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import { birthday } from './birthday';
+import bow from './art/nisse-bow.webp';
 import './reveal.css';
 
 export function Reveal({
@@ -54,6 +55,11 @@ export function Reveal({
               ))}
             </span>
           </span>
+          <img
+            className="portrait-nisse"
+            src={bow}
+            alt={tr('Nissen tager huen af og bukker.', 'The elf doffs his hat and bows.')}
+          />
           <figcaption>
             {tr('Et lille lys, gemt til dig.', 'A little light, saved for you.')}
           </figcaption>

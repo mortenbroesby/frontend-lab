@@ -1,6 +1,5 @@
 import { tr } from './language';
 import { instantAction, useHouseRound } from './use-house-round';
-import { CupTrick } from './cup-trick';
 import { lazy, Suspense, useState } from 'react';
 import { GameHUD } from './hud';
 import { DisplayControls } from './display-controls';
@@ -17,7 +16,7 @@ import { initialState, hint, type Action } from './game';
 import { getLocation, type ObjectId } from './locations';
 import './style.css';
 
-type Overlay = ObjectId | 'nisse' | 'journal' | 'hint' | 'restart' | null;
+type Overlay = ObjectId | 'journal' | 'hint' | 'restart' | null;
 export default function Demo() {
   const [started, setStarted] = useState(false);
   const [overlay, setOverlay] = useState<Overlay>(null);
@@ -89,10 +88,6 @@ export default function Demo() {
               setNote(tr('Et minde, gemt til dig.', 'A memory saved for you.'));
             }}
             onRoomReady={passage.ready}
-            onNisse={() => {
-              audio.play('nisse');
-              setOverlay('nisse');
-            }}
             reduced={false}
             pan={pan}
             close={!!overlay}
@@ -155,7 +150,7 @@ function Overlays({
   nextHint,
   restart,
 }: {
-  overlay: Exclude<Overlay, 'nisse'>;
+  overlay: Overlay;
   game: ReturnType<typeof initialState>;
   close: () => void;
   perform: (a: Action, keep?: boolean) => void;
@@ -260,24 +255,15 @@ function HouseDialogs({
 }) {
   return (
     <>
-      {overlay === 'nisse' ? (
-        <CupTrick
-          won={game.nisseGift}
-          onClose={close}
-          onSound={() => audio.play('nisse')}
-          onWin={() => perform('nissegift', true)}
-        />
-      ) : (
-        <Overlays
-          overlay={overlay}
-          game={game}
-          close={close}
-          perform={perform}
-          hintLevel={hintLevel}
-          nextHint={nextHint}
-          restart={restart}
-        />
-      )}
+      <Overlays
+        overlay={overlay}
+        game={game}
+        close={close}
+        perform={perform}
+        hintLevel={hintLevel}
+        nextHint={nextHint}
+        restart={restart}
+      />
       {reveal && (
         <Reveal
           onClose={closeReveal}

@@ -25,10 +25,13 @@ test('feedback celebrates earned progress, not wrong or repeated choices', () =>
 });
 
 test('later discoveries and completion point to their actual room objects', () => {
-  const dark = { ...initialState(), room: 1, breakfast: true, negative: true, mirrors: [3, 3, 0] };
-  assert.deepEqual(reactionFor(dark, act(dark, 'mirror2')), { object: 'fix', kind: 'complete' });
+  const dark = { ...initialState(), room: 1, breakfast: true, negative: true, bath: 2 };
+  assert.deepEqual(reactionFor(dark, act(dark, 'fix')), { object: 'fix', kind: 'complete' });
   const attic = { ...dark, room: 2, plate: true, inserted: true, horizontal: 1, vertical: 2 };
-  assert.deepEqual(reactionFor(attic, act(attic, 'project')), {
+  const lit = act(attic, 'lightwick');
+  assert.deepEqual(reactionFor(attic, lit), { object: 'lamp', kind: 'progress' });
+  assert.equal(reactionFor(lit, act(lit, 'lightwick')), null);
+  assert.deepEqual(reactionFor(lit, act(lit, 'project')), {
     object: 'frame',
     kind: 'complete',
   });

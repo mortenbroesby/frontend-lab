@@ -1,5 +1,5 @@
 import { tr } from './language.ts';
-import { StarLantern } from './star-lantern';
+import { WickPuzzle } from './wick-puzzle';
 import { usePortrait } from './viewport';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { Game, Action } from './game';
@@ -83,8 +83,8 @@ function storyFor(id: ObjectId) {
     recipe: {
       title: tr('En opskrift på minder', 'A recipe for memories'),
       copy: tr(
-        'Tre spejle låner nissens lys. Op, hen og ned — til stjernerne vågner i glaspladen.',
-        'Three mirrors borrow the elf’s light. Up, across and down, until the stars wake in the glass plate.',
+        'Månen vækker sølvet. Regnen giver det ro. Stjernen gemmer billedet.',
+        'The moon wakes the silver. The rain settles it. The star keeps the picture safe.',
       ),
     },
     develop: {
@@ -129,26 +129,15 @@ function storyFor(id: ObjectId) {
         'The blue hour. A warm light in a window across the water.',
       ),
     },
-    lamp: {
-      title: tr('En have af glas', 'A garden of glass'),
-      copy: tr(
-        'Rosenfarvet glas, repareret med guld. Lyser endnu.',
-        'Rose-tinted glass mended with gold. It still glows.',
-      ),
-    },
   };
   return stories[id];
 }
 const tableActions: Partial<Record<ObjectId, Action>> = { bun: 'bun', cake: 'cake', cup: 'cup' };
 export function Inspection(props: Props) {
-  if (['develop', 'stop', 'fix'].includes(props.id))
+  if (props.id === 'lamp')
     return (
-      <PaperDialog
-        title={tr('Nissens stjernelygte', 'The elf’s star lantern')}
-        className="lantern-game"
-        onClose={props.onClose}
-      >
-        <StarLantern game={props.game} perform={props.perform} onClose={props.onClose} />
+      <PaperDialog title={tr('Nissens lygte', 'The elf’s lantern')} onClose={props.onClose}>
+        <WickPuzzle game={props.game} perform={props.perform} onClose={props.onClose} />
       </PaperDialog>
     );
   if (props.id === 'camera')
@@ -176,7 +165,7 @@ function StoryInspection(props: Props) {
     <PaperDialog title={story.title} onClose={props.onClose}>
       {props.game.room !== 0 && <DetailImage id={props.id} room={props.game.room} />}
       <p>{story.copy}</p>
-      <InspectionActions id={props.id} perform={props.perform} onClose={props.onClose} />
+      <InspectionActions {...props} />
     </PaperDialog>
   );
 }
@@ -196,7 +185,20 @@ function DetailImage({ id, room }: { id: ObjectId; room: number }) {
     />
   );
 }
-function InspectionActions({ id, perform, onClose }: Pick<Props, 'id' | 'perform' | 'onClose'>) {
+function InspectionActions({ id, game, perform, onClose }: Props) {
+  if (id === 'develop' || id === 'stop' || id === 'fix')
+    return (
+      <>
+        <button className="ink-button" disabled={!game.negative} onClick={() => perform(id)}>
+          {tr('Sænk glaspladen', 'Lower the glass plate')}
+        </button>
+        {!game.negative && (
+          <p className="quiet">
+            {tr('Find glaspladen i kameraet.', 'Find the glass plate in the camera.')}
+          </p>
+        )}
+      </>
+    );
   const table = tableActions[id];
   if (table)
     return (
@@ -293,7 +295,15 @@ function Lantern({ game, perform }: Props) {
           turn={() => perform('vertical', true)}
         />
       </div>
-      <button className="ink-button" onClick={() => perform('project')}>
+      {!game.wickLit && (
+        <p className="quiet">
+          {tr(
+            'Nissen venter ved sin lygte. Hent lys hos ham.',
+            'The elf is waiting by his lantern. Bring back a light from him.',
+          )}
+        </p>
+      )}
+      <button className="ink-button" disabled={!game.wickLit} onClick={() => perform('project')}>
         {tr('Slip lyset fri', 'Release the light')}
       </button>
     </>

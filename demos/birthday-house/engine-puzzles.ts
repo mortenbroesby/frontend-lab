@@ -128,9 +128,9 @@ export function atticPuzzle(scene: Scene, view: RoomView) {
       angle += (target - angle) * (reduced ? 1 : 1 - Math.exp(-dt / 420));
       frame.hinges[0]!.rotation.y = angle;
       frame.hinges[1]!.rotation.y = -angle;
-      light.setEnabled(s.inserted && s.room === 2);
-      spot.isVisible = s.inserted && !s.revealed;
-      beam.isVisible = s.inserted;
+      light.setEnabled(s.wickLit && s.room === 2);
+      spot.isVisible = s.wickLit && !s.revealed;
+      beam.isVisible = s.wickLit;
       beamMaterial.alpha =
         0.038 +
         Math.sin(time * 1.3) * 0.006 +

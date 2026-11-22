@@ -488,7 +488,7 @@ body:has(.birthday-house) {
   margin: 0 auto 20px;
   max-width: 360px;
 }
-.reveal img {
+.reveal .portrait-frame img {
   width: 100%;
   max-height: 34svh;
   object-fit: contain;
@@ -925,7 +925,7 @@ body:has(.birthday-house) {
 .motion-on .reveal-card {
   animation: memory-arrive 800ms ease-out both;
 }
-.motion-on .reveal img {
+.motion-on .reveal .portrait-frame img {
   animation: memory-light 1300ms ease-out both;
 }
 .motion-on button:active {

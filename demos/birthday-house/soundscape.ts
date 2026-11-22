@@ -1,21 +1,11 @@
 import { createVoices } from './sound-voices';
-import { birthdayMelody, nisseMelody } from './birthday-melody';
+import { birthdayMelody } from './birthday-melody';
 import { createMelodyPlayer } from './sound-melody';
 
 export type SoundCue =
-  | 'touch'
-  | 'paper'
-  | 'brass'
-  | 'water'
-  | 'door'
-  | 'nisse'
-  | 'progress'
-  | 'developed'
-  | 'finale'
-  | 'birthday'
-  | 'bonus';
+  'touch' | 'paper' | 'brass' | 'water' | 'door' | 'progress' | 'developed' | 'finale' | 'birthday';
 
-const milestones = new Set<SoundCue>(['birthday', 'bonus', 'finale', 'developed', 'progress']);
+const milestones = new Set<SoundCue>(['birthday', 'finale', 'developed', 'progress']);
 const chords = [
   [50, 57, 60, 64],
   [53, 60, 64, 67],
@@ -128,9 +118,8 @@ export function createSoundscape(context: AudioContext) {
     lastCue = at;
     switch (cue) {
       case 'birthday':
-      case 'bonus':
         renew();
-        featured.start(cue === 'birthday' ? birthdayMelody : nisseMelody, at + 0.08);
+        featured.start(birthdayMelody, at + 0.08);
         schedule();
         break;
       case 'paper':
@@ -151,9 +140,6 @@ export function createSoundscape(context: AudioContext) {
         synth.rustle(at, 0.9, 0.13, 280, -0.45);
         synth.tone(110, at + 0.05, 0.5, 0.05);
         synth.rustle(at + 0.55, 0.1, 0.12, 500);
-        break;
-      case 'nisse':
-        chime([81, 76, 79], at, 0.18, 0.05);
         break;
       case 'progress':
         chime([62, 69, 74], at, 0.16);

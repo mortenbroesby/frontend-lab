@@ -32,16 +32,10 @@ export function Journal({ game, onClose }: { game: Game; onClose: () => void }) 
           <h3>{tr('Fotografens vers', 'The photographer’s verse')}</h3>
           <p>
             {tr(
-              '“Tre spejle låner nissens lys. Lad det vandre op, hen og ned til glaspladen.”',
-              '“Three mirrors borrow the elf’s light. Let it travel up, across and down to the glass plate.”',
+              '“Månen vækker sølvet. Regnen giver ro. Stjernen bevarer mindet.”',
+              '“The moon wakes the silver. The rain settles it. The star keeps the memory.”',
             )}
           </p>
-        </section>
-      )}
-      {game.nisseGift && (
-        <section>
-          <h3>{tr('Nissens messingknap', 'The elf’s brass button')}</h3>
-          <p>{tr('Et lille minde fra hans koptrick.', 'A little keepsake from his cup trick.')}</p>
         </section>
       )}
       {game.negative && <PlateEntry developed={game.plate} />}

@@ -28,19 +28,31 @@ function darkroomFeedback(s: Game) {
       'Tag først glaspladen fra kameraet.',
       'First, take the glass plate out of the camera.',
     );
-  return tr(
-    'Drej spejlene, så nissens lys finder glaspladen.',
-    'Turn the mirrors to guide the elf’s light onto the glass plate.',
-  );
+  return [
+    tr('Begynd med månebadet.', 'Begin with the moon bath.'),
+    tr('Månen lyser. Prøv nu regnbadet.', 'The moon glows. Try the rain bath next.'),
+    tr(
+      'Regnen falder til ro. Nu mangler kun stjernebadet.',
+      'The rain settles. Only the star bath remains.',
+    ),
+  ][s.bath]!;
 }
 function atticFeedback(s: Game, action: Action) {
   if (s.revealed) return tr('Lyset samler sig…', 'The light is gathering…');
-  if (action === 'insert') return tr('Lygten vågner.', 'The lantern stirs.');
-  if (action === 'project')
+  if (action === 'lightwick')
     return tr(
-      'Stadig i dvale. Vandret II (2), lodret III (3).',
-      'Still asleep. Horizontal II (2), vertical III (3).',
+      'Vægen brænder. Tilbage til tryllelygten.',
+      'The wick is lit. Return to the magic lantern.',
     );
+  if (action === 'insert')
+    return tr(
+      'Pladen er på plads. Find nissens lygte.',
+      'The plate is in place. Find the elf’s lantern.',
+    );
+  if (action === 'project')
+    return s.wickLit
+      ? tr('Se på stjernerne på glaspladen igen.', 'Look again at the stars on your glass plate.')
+      : tr('Lyset mangler. Se efter nissens lygte.', 'It needs light. Look for the elf’s lantern.');
   return tr('Et sagte klik. Lyset flytter sig.', 'A soft click. The light shifts.');
 }
 const actionMessages: Partial<Record<Action, [danish: string, english: string]>> = {
@@ -53,12 +65,8 @@ const actionMessages: Partial<Record<Action, [danish: string, english: string]>>
     'Develop the glass plate to open the attic door.',
   ],
   takeplate: [
-    'Glaspladen er fundet. Nissens stjernelygte venter ved badene.',
-    'You found the glass plate. The elf’s star lantern is waiting by the trays.',
-  ],
-  nissegift: [
-    'Nissens messingknap er din. En lille ekstramelodi følger med.',
-    'The elf’s brass button is yours, along with a little tune.',
+    'Glaspladen er fundet. Prøv månebadet.',
+    'You found the glass plate. Try the moon bath.',
   ],
 };
 export function feedback(before: Game, after: Game, action: Action) {

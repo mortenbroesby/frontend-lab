@@ -6,7 +6,7 @@ import { createWorld } from './world';
 import { roomView, type ObjectId } from './locations';
 import type { Game } from './game';
 import { usePortrait } from './viewport';
-import { HouseNisse } from './nisse';
+import { DoorGuide, lanternKeeper } from './nisse';
 import { RoomLife } from './room-life';
 
 type Props = {
@@ -14,7 +14,6 @@ type Props = {
   reaction: SceneReaction | null;
   onReactionEnd: (serial: number) => void;
   onFinaleReady: () => void;
-  onNisse: () => void;
   onRoomReady: () => void;
   reduced: boolean;
   pan: number;
@@ -82,52 +81,34 @@ export function PaintedScene(props: Props) {
         className={`painted-stage ${props.markers ? 'show-markers' : ''} ${props.game.room === 0 ? 'breakfast-stage' : ''}`}
       >
         {props.active &&
-          location.spots.map((spot) => (
-            <button
-              key={spot.id}
-              data-object={spot.id}
-              data-route-open={spot.id === 'attic' && props.game.plate}
-              className={`room-spot ${spot.mark ? 'spot-special' : ''}`}
-              style={{ left: `${spot.x}%`, top: `${spot.y}%` } as CSSProperties}
-              aria-label={spot.name}
-              onClick={() => props.onPick(spot.id)}
-              onFocus={() => {
-                const ratio = canvas.current!.clientWidth / canvas.current!.clientHeight;
-                const range = Math.max(
-                  0,
-                  (location.width - Math.max(location.height, location.width / ratio) * ratio) / 2,
-                );
-                props.onFocus(
-                  range
-                    ? Math.min(
-                        1,
-                        Math.max(0, 0.5 + ((spot.x / 100 - 0.5) * location.width) / 2 / range),
-                      )
-                    : 0.5,
-                );
-              }}
-            >
-              <span aria-hidden="true">{spot.mark ?? '✧'}</span>
-              <small>
-                {spot.id === 'attic' && props.game.plate
-                  ? tr('Til loftet — åbent', 'To the attic — open')
-                  : spot.name}
-              </small>
-            </button>
-          ))}
+          location.spots.map((spot) => {
+            const routeOpen = spot.id === 'attic' && props.game.plate;
+            return (
+              <button
+                key={spot.id}
+                data-object={spot.id}
+                data-route-open={routeOpen}
+                className={`room-spot ${spot.mark ? 'spot-special' : ''}`}
+                style={{ left: `${spot.x}%`, top: `${spot.y}%` } as CSSProperties}
+                aria-label={spot.name}
+                onClick={() => props.onPick(spot.id)}
+                onFocus={() => props.onFocus(panToSpot(canvas.current!, location, spot.x))}
+              >
+                {spot.id === 'lamp' && (
+                  <img className="keeper-at-work" src={lanternKeeper} alt="" />
+                )}
+                <span aria-hidden="true">{spot.mark ?? '✧'}</span>
+                <small>
+                  {routeOpen ? tr('Til loftet — åbent', 'To the attic — open') : spot.name}
+                </small>
+              </button>
+            );
+          })}
+        {ready && location.room === 0 && (
+          <DoorGuide open={props.game.breakfast} portrait={portrait} />
+        )}
         <RoomAwe view={location} awake={props.game.revealed} />
         <RoomLife view={location} awake={props.game.revealed} />
-        <HouseNisse
-          key={String(props.reduced)}
-          portrait={portrait}
-          reduced={props.reduced}
-          visible={ready}
-          room={props.game.room}
-          progress={
-            Number(props.game.breakfast) + Number(props.game.plate) + Number(props.game.revealed)
-          }
-          onGreet={props.onNisse}
-        />
         <InteractionEffects
           reaction={props.reaction}
           view={location}
@@ -138,6 +119,12 @@ export function PaintedScene(props: Props) {
       <SceneStatus ready={ready} error={error} />
     </div>
   );
+}
+
+function panToSpot(canvas: HTMLCanvasElement, view: ReturnType<typeof roomView>, x: number) {
+  const ratio = canvas.clientWidth / canvas.clientHeight;
+  const range = Math.max(0, (view.width - Math.max(view.height, view.width / ratio) * ratio) / 2);
+  return range ? Math.min(1, Math.max(0, 0.5 + ((x / 100 - 0.5) * view.width) / (2 * range))) : 0.5;
 }
 
 function SceneStatus({ ready, error }: { ready: boolean; error: boolean }) {

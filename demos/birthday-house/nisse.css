@@ -1,184 +1,93 @@
-.nisse-perch {
+.door-guide,
+.keeper-at-work,
+.portrait-nisse {
   position: absolute;
-  width: 6.5%;
-  min-width: 48px;
-  max-width: 88px;
-  transform: translate(-50%, -100%);
-  z-index: 2;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 3px #20130480);
+  user-select: none;
 }
-.birthday-house .house-nisse {
-  display: block;
-  width: 100%;
-  min-height: 60px;
-  padding: 0;
-  border: 0;
-  background: none;
-  pointer-events: auto;
-  -webkit-tap-highlight-color: transparent;
-  border-radius: 40%;
-}
-.house-nisse img {
-  display: block;
-  width: 100%;
-  transform-origin: 50% 92%;
-  filter: drop-shadow(0 3px 3px #07161280);
-}
-.nisse-breathe {
-  display: block;
-  transform-origin: 50% 92%;
-}
-.motion-on .nisse-breathe {
-  animation: nisse-peek 12s ease-in-out infinite;
-}
-.motion-on .nisse-greeting {
-  animation: nisse-bow 1100ms ease-in-out both;
-}
-.nisse-wisps {
-  position: absolute;
-  inset: 0;
+.door-guide {
+  height: 15%;
   pointer-events: none;
+  transform: translate(-50%, -82%);
 }
-.nisse-wisps i {
-  position: absolute;
-  left: 78%;
-  top: 80%;
-  color: #ffe0a0;
-  font:
-    normal 12px Georgia,
-    serif;
-  text-shadow: 0 0 7px #eab35d;
-  opacity: 0;
+.door-guide[data-leaving='true'] {
+  animation: guide-departs 1.8s ease-in forwards;
 }
-.motion-on .nisse-firefly {
-  animation: nisse-drift 9s ease-in-out infinite;
-  animation-delay: calc(var(--wisp) * -1.8s);
-}
-.motion-on .nisse-star {
-  animation: nisse-spark 1200ms ease-out both;
-  animation-delay: calc(var(--wisp) * 55ms);
-}
-.nisse-status {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-@keyframes nisse-peek {
-  0%,
-  68%,
-  100% {
-    transform: rotate(0deg) translateY(0);
+@keyframes guide-departs {
+  0% {
+    transform: translate(-50%, -82%);
   }
-  76%,
-  88% {
-    transform: rotate(-5deg) translateY(-2px);
-  }
-  82% {
-    transform: rotate(-3deg) translateY(-3px);
-  }
-}
-@keyframes nisse-bow {
-  0%,
-  100% {
-    transform: rotate(0deg) scaleY(1);
-  }
-  28% {
-    transform: rotate(9deg) scaleY(0.88);
-  }
-  58% {
-    transform: rotate(-6deg) scaleY(1.04);
-  }
-  78% {
-    transform: rotate(3deg) scaleY(0.98);
-  }
-}
-@keyframes nisse-drift {
-  0%,
-  100% {
-    opacity: 0;
-    transform: translate(0, 0) scale(0.5);
-  }
-  30%,
-  60% {
-    opacity: 0.65;
-  }
-  80% {
-    opacity: 0;
-    transform: translate(calc((var(--wisp) - 2) * 16px), -65px) scale(1);
-  }
-}
-@keyframes nisse-spark {
-  from {
-    opacity: 0;
-    transform: translate(0, 0) scale(0.3);
-  }
-  25% {
-    opacity: 0.9;
-  }
-  to {
-    opacity: 0;
-    transform: translate(calc((var(--wisp) - 2) * 22px), calc(-35px - var(--wisp) * 8px))
-      rotate(55deg) scale(0.25);
-  }
-}
-.nisse-trinket {
-  position: absolute;
-  bottom: 0;
-  left: 12%;
-  width: 9px;
-  height: 9px;
-  border: 1px solid #d9bd7d;
-  border-radius: 50%;
-  background: radial-gradient(circle, #f4d494, #79512d);
-  color: #644224;
-  font:
-    normal 7px/7px Georgia,
-    serif;
-  text-align: center;
-  box-shadow: 1px 2px 2px #09241b99;
-  pointer-events: none;
-}
-.nisse-prank {
-  animation: nisse-trick 2400ms ease-in-out both;
-}
-.nisse-celebrate {
-  animation: nisse-delight 1800ms ease-in-out both;
-}
-.nisse-chapter-0 {
-  animation: none;
-}
-@keyframes nisse-trick {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0);
-  }
-  22% {
-    transform: translate(9px, -12px) rotate(110deg);
+  24% {
+    transform: translate(-18%, -88%);
   }
   48% {
-    transform: translate(17px, -36px) rotate(300deg);
+    transform: translate(10%, -82%);
   }
-  66% {
-    transform: translate(28px, -30px) rotate(480deg);
+  72% {
+    opacity: 1;
+    transform: translate(38%, -88%) scale(0.9);
   }
-  84% {
-    transform: translate(18px, -3px) rotate(640deg);
+  100% {
+    opacity: 0;
+    transform: translate(68%, -86%) scale(0.82);
   }
 }
-@keyframes nisse-delight {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0);
-  }
-  25% {
-    transform: translateY(-5px) rotate(-5deg);
+.keeper-at-work {
+  height: clamp(60px, 14svh, 125px);
+  right: 46%;
+  bottom: 42%;
+}
+.portrait-painting {
+  position: relative;
+}
+.portrait-nisse {
+  right: -10%;
+  bottom: 1.4em;
+  height: 25%;
+  pointer-events: none;
+  transform-origin: 50% 95%;
+  animation: nisse-bows 1.6s ease-in-out both;
+}
+@keyframes nisse-bows {
+  0% {
+    opacity: 0;
+    transform: rotate(-6deg);
   }
   45% {
-    transform: translateY(0) rotate(4deg);
+    opacity: 1;
+    transform: rotate(5deg);
   }
-  68% {
-    transform: translateY(-3px) rotate(-3deg);
+  100% {
+    transform: rotate(0deg);
   }
+}
+@media (prefers-reduced-motion: reduce) {
+  .door-guide[data-leaving='true'] {
+    animation: none;
+    opacity: 0;
+  }
+  .portrait-nisse {
+    animation: none;
+  }
+}
+.wick-keeper {
+  display: block;
+  width: min(32%, 115px);
+  margin: 0 auto;
+}
+.wick-symbols {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+.wick-symbols button {
+  display: grid;
+  gap: 0.2em;
+  min-width: 64px;
+}
+.wick-symbols span {
+  font-size: larger;
 }

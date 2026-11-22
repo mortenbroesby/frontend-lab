@@ -15,6 +15,6 @@
     "check": "npm run typecheck && npm run build",
     "build": "vite build --config ../../gallery/vite.demo.config.ts",
     "preview": "vite preview --config ../../gallery/vite.demo.config.ts --host 127.0.0.1",
-    "test": "node --test game.test.ts reactions.test.ts moments.test.ts sound-events.test.ts mini-games.test.ts sound-melody.test.ts birthday-melody.test.ts"
+    "test": "node --test game.test.ts reactions.test.ts moments.test.ts sound-events.test.ts sound-melody.test.ts birthday-melody.test.ts"
   }
 }
