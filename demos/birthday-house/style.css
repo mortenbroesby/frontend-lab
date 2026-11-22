@@ -1,0 +1,747 @@
+body:has(.birthday-house) {
+  margin: 0;
+  background: #101a20;
+}
+.birthday-house {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: clip;
+  color: #fff0d4;
+  background: #10232b;
+  font:
+    16px/1.55 Georgia,
+    'Times New Roman',
+    serif;
+}
+.birthday-house * {
+  box-sizing: border-box;
+}
+.birthday-house button {
+  font:
+    12px/1.4 system-ui,
+    sans-serif;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  color: inherit;
+}
+.birthday-house button:focus-visible {
+  outline: 2px solid #ffe0a0;
+  outline-offset: 5px;
+}
+.birthday-house button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.birthday-house h1,
+.birthday-house h2,
+.birthday-house p {
+  margin: 0;
+}
+.painted-viewport,
+.painted-viewport canvas,
+.edge-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.painted-viewport {
+  overflow: clip;
+}
+.painted-viewport canvas {
+  touch-action: none;
+  outline: none;
+}
+.painted-stage {
+  position: absolute;
+  pointer-events: none;
+}
+.edge-shade {
+  pointer-events: none;
+  background:
+    linear-gradient(#07101999, transparent 19%, transparent 82%, #080d16ae),
+    radial-gradient(ellipse at 50% 48%, transparent 48%, #07121d35);
+  z-index: 2;
+}
+.house-header {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 24px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  gap: 15px;
+}
+.wordmark {
+  font:
+    10px/1.7 system-ui,
+    sans-serif;
+  letter-spacing: 0.25em;
+  text-shadow: 0 2px 12px #000;
+}
+.wordmark span {
+  display: block;
+  letter-spacing: 0.03em;
+  font:
+    italic 15px/1.7 Georgia,
+    serif;
+  color: #efddc1;
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+.header-actions button {
+  border: 1px solid #d9bc8050;
+  background: #14232b99;
+  backdrop-filter: blur(8px);
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+.header-actions button:last-child {
+  font-size: 21px;
+  padding: 4px;
+  line-height: 1;
+}
+.birthday-house .eyebrow {
+  font:
+    10px/1.5 system-ui,
+    sans-serif;
+  letter-spacing: 0.26em;
+  color: #efd19b;
+}
+.invitation {
+  position: absolute;
+  z-index: 3;
+  left: 7%;
+  top: 27%;
+  padding: 35px 45px 40px 0;
+  max-width: 620px;
+  text-shadow: 0 2px 16px #000;
+}
+.invitation:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -90px -110px -80px -150px;
+  background: radial-gradient(ellipse, #08131ddc 5%, #0b1523ac 45%, transparent 70%);
+  pointer-events: none;
+}
+.invitation h1 {
+  font:
+    normal clamp(48px, 5.5vw, 82px)/1.05 Georgia,
+    serif;
+  letter-spacing: -0.045em;
+  margin: 18px 0 24px;
+}
+.invitation > p:not(.eyebrow) {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #f0dfc4;
+}
+.gold-button {
+  border: 1px solid #f0d292;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #d5ac67, #efcf8b);
+  color: #342313 !important;
+  padding: 14px 23px;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 20px #0003;
+}
+.invitation .gold-button {
+  display: block;
+  margin: 30px 0 17px;
+  width: 210px;
+  text-align: left;
+}
+.gold-button span {
+  float: right;
+}
+.invitation small {
+  font:
+    11px system-ui,
+    sans-serif;
+  color: #e1d3bd;
+}
+.birthday-house .room-spot {
+  position: absolute;
+  pointer-events: auto;
+  width: 8%;
+  height: 12%;
+  min-width: 56px;
+  min-height: 56px;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  z-index: 3;
+}
+.room-spot span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  font-size: 17px;
+  font-family: Georgia, serif;
+  border: 1px solid #ffe3ad80;
+  border-radius: 50%;
+  background: #3a251a66;
+  box-shadow: 0 0 20px #fbd07b44;
+  opacity: 0.48;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  text-shadow: 0 0 7px #ffb85b;
+}
+.room-spot.spot-special span {
+  opacity: 0.8;
+}
+.room-spot small {
+  position: absolute;
+  top: 74%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 6px 12px;
+  background: #101e26e8;
+  color: #ffe8bd;
+  font:
+    11px/1.4 system-ui,
+    sans-serif;
+  border: 1px solid #eac48466;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+}
+.room-spot:hover span,
+.room-spot:focus-visible span,
+.show-markers .room-spot span {
+  opacity: 1;
+  transform: scale(1.15);
+}
+.room-spot:hover small,
+.room-spot:focus-visible small,
+.show-markers .room-spot small {
+  opacity: 1;
+}
+.room-spot:focus-visible {
+  outline-offset: -14px !important;
+  border-radius: 50%;
+}
+.game-toolbar {
+  position: absolute;
+  z-index: 5;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid #ddbb7655;
+  background: #101b25dc;
+  backdrop-filter: blur(18px);
+  border-radius: 8px;
+  box-shadow: 0 5px 30px #0004;
+  white-space: nowrap;
+}
+.game-toolbar button {
+  position: relative;
+  border: 0;
+  background: transparent;
+  padding: 9px 17px;
+  color: #f5e4c5;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+.game-toolbar button + button {
+  border-left: 1px solid #b9a07833;
+}
+.game-toolbar button span {
+  font:
+    18px Georgia,
+    serif;
+  margin-right: 8px;
+  color: #e2bd77;
+  vertical-align: middle;
+}
+.game-toolbar i {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 5px;
+  height: 5px;
+  background: #ffd58a;
+  border-radius: 50%;
+  box-shadow: 0 0 9px #ffd58a;
+}
+.whisper {
+  position: absolute;
+  z-index: 4;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 620px;
+  width: max-content;
+  text-align: center;
+  padding: 12px 24px;
+  color: #f7e7c8;
+  background: radial-gradient(ellipse, #0c1727ed, #0c1727bd 60%, transparent);
+  font-style: italic;
+  text-shadow: 0 1px 5px #000;
+  animation: whisper-in 0.5s ease both;
+  pointer-events: none;
+}
+
+.paper-dialog {
+  position: fixed;
+  left: auto;
+  right: 4vw;
+  top: auto;
+  bottom: 13vh;
+  margin: 0;
+  width: min(410px, calc(100vw - 30px));
+  max-height: 78svh;
+  overflow: auto;
+  border: 1px solid #bca16d;
+  border-radius: 4px;
+  padding: 31px 30px 28px;
+  background: radial-gradient(ellipse at top left, #f9eed6, #dfc89f);
+  color: #3e3025;
+  box-shadow: 0 15px 100px #0008;
+  font:
+    16px/1.6 Georgia,
+    serif;
+}
+.paper-dialog::backdrop {
+  background: #07132235;
+}
+.paper-dialog .paper-close {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  border: 0;
+  background: transparent;
+  font-size: 25px;
+  color: #6c4b2d;
+}
+.paper-eyebrow {
+  font:
+    9px system-ui,
+    sans-serif;
+  letter-spacing: 0.2em;
+  color: #81613e;
+  margin-bottom: 10px !important;
+}
+.paper-dialog h2 {
+  font:
+    normal 29px/1.15 Georgia,
+    serif;
+  letter-spacing: -0.025em;
+  margin: 7px 0 18px;
+}
+.paper-dialog p {
+  margin: 14px 0;
+}
+.paper-dialog .ink-button {
+  display: block;
+  width: 100%;
+  border: 1px solid #79603f;
+  border-radius: 3px;
+  background: #283b3d;
+  color: #f9e8c6;
+  padding: 12px 16px;
+  margin-top: 20px;
+  font-size: 12px;
+}
+.paper-dialog button:focus-visible {
+  outline-color: #744e23;
+}
+.paper-dialog .quiet {
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+  color: #785c3d;
+}
+.detail-painting {
+  height: 145px;
+  background-size: 300% auto;
+  border: 3px double #9c7948;
+  box-shadow: inset 0 0 30px #3b271744;
+  margin: 10px 0 16px;
+}
+.text-button {
+  display: block;
+  margin: 10px auto 0;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+}
+.paper-dialog h3 {
+  font:
+    normal 20px Georgia,
+    serif;
+  margin: 20px 0 10px;
+}
+.notebook section + section {
+  border-top: 1px solid #98774a55;
+  margin-top: 20px;
+  padding-top: 5px;
+}
+.glass-clue {
+  background: #152c3c;
+  color: #ecd7ae;
+  border: 5px ridge #9b784d;
+  padding: 18px;
+  text-align: center;
+  font:
+    18px/1.6 Georgia,
+    serif;
+  box-shadow: inset 0 0 25px #0008;
+}
+.glass-clue span {
+  display: block;
+  margin: 8px;
+}
+.camera-finder {
+  border: 10px ridge #8f6b3f;
+  background: radial-gradient(ellipse, #1d3f50, #061119);
+  height: 170px;
+  color: #f5dc9c;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  text-align: center;
+  font:
+    20px/1.1 Georgia,
+    serif;
+  box-shadow: inset 0 0 40px #0008;
+}
+.focus-control {
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+  display: block;
+}
+.focus-control input {
+  display: block;
+  width: 100%;
+  height: 44px;
+  accent-color: #765522;
+}
+.brass-dials {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 8px 0;
+}
+.brass-dials label {
+  text-align: center;
+  font:
+    12px system-ui,
+    sans-serif;
+}
+.brass-dial {
+  display: grid;
+  place-items: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #be985b 32%,
+    #e8c580 34%,
+    #704d2b 38%,
+    #c59d5e 45%,
+    #8b622e 64%,
+    #edd598 67%,
+    #926c37 72%
+  );
+  border: 2px solid #6f502d;
+  box-shadow: 0 4px 8px #4c321b33;
+  margin: 12px 0;
+  color: #2c261d !important;
+  font:
+    24px Georgia,
+    serif !important;
+}
+.brass-dials small {
+  font-size: 10px;
+  color: #775a38;
+}
+.reveal-invitation {
+  position: absolute;
+  z-index: 5;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px !important;
+}
+.birthday-house .reveal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  border: 0;
+  color: #f4e8d1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  overflow: auto;
+  background: #07131bed;
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 30px;
+}
+.reveal::backdrop {
+  background: #07131bf5;
+}
+.birthday-house .reveal:not([open]) {
+  display: none;
+}
+.reveal-card {
+  max-width: 640px;
+  text-align: center;
+}
+.reveal h1 {
+  font:
+    normal clamp(32px, 4vw, 50px)/1.13 Georgia,
+    serif;
+  margin: 15px 0 24px;
+}
+.reveal figure {
+  margin: 0 auto 20px;
+  max-width: 360px;
+}
+.reveal img {
+  width: 100%;
+  max-height: 34svh;
+  object-fit: contain;
+  background: #e9d9b6;
+  padding: 12px;
+  border: 8px ridge #a9824b;
+  box-shadow: 0 0 70px #bc813b34;
+}
+.reveal figcaption {
+  font-style: italic;
+  font-size: 12px;
+  color: #bfad8a;
+  margin-top: 9px;
+}
+.reveal-card > p:not(.eyebrow) {
+  max-width: 490px;
+  margin: 0 auto 25px;
+  color: #e2d9c7;
+  font-size: 18px;
+}
+.reveal-card > div {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.reveal button {
+  border: 1px solid #c5a46c;
+  background: #1d3036;
+  padding: 12px 18px;
+  border-radius: 3px;
+}
+.room-transition {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background: #111d28;
+  pointer-events: none;
+  animation: arrive 0.8s ease both;
+}
+.render-error {
+  position: absolute;
+  z-index: 20;
+  top: 20%;
+  left: 10%;
+  right: 10%;
+  padding: 30px;
+  background: #14252f;
+}
+.render-error button {
+  display: block;
+  color: white;
+  background: #243d40;
+  border: 1px solid #cfb475;
+  margin: 20px 0 0;
+  padding: 10px 20px;
+}
+@keyframes arrive {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes whisper-in {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.motion-off * {
+  animation-duration: 1ms !important;
+  transition-duration: 0s !important;
+}
+
+@media (max-width: 700px) {
+  .house-header {
+    padding: 18px 16px;
+  }
+  .wordmark {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+  .wordmark span {
+    font-size: 12px;
+  }
+  .header-actions {
+    gap: 5px;
+  }
+  .header-actions button {
+    padding: 6px 9px;
+    font-size: 8px;
+  }
+  .invitation {
+    left: 25px;
+    right: 15px;
+    top: 27%;
+    padding: 0;
+  }
+  .invitation h1 {
+    font-size: 53px;
+  }
+  .invitation > p:not(.eyebrow) {
+    font-size: 16px;
+  }
+  .invitation:before {
+    inset: -90px -80px -100px -100px;
+  }
+  .game-toolbar {
+    bottom: max(16px, env(safe-area-inset-bottom));
+    padding: 3px 5px;
+    width: calc(100% - 28px);
+    justify-content: space-around;
+  }
+  .game-toolbar button {
+    padding: 8px;
+    font-size: 9px;
+    min-width: 34px;
+    min-height: 48px;
+  }
+  .game-toolbar button span {
+    display: block;
+    margin: 0 0 3px;
+    font-size: 18px;
+  }
+  .game-toolbar button + button {
+    border-left: 0;
+  }
+
+  .whisper {
+    bottom: 94px;
+    max-width: calc(100% - 28px);
+    font-size: 14px;
+    padding: 13px 18px;
+  }
+  .paper-dialog {
+    right: 12px;
+    bottom: 14px;
+    width: calc(100% - 24px);
+    max-height: 80svh;
+    padding: 28px 24px 25px;
+  }
+  .paper-dialog h2 {
+    font-size: 27px;
+  }
+  .paper-dialog p {
+    font-size: 15px;
+  }
+  .detail-painting {
+    height: 120px;
+  }
+  .room-spot small {
+    font-size: 10px;
+  }
+  .room-spot {
+    width: 5% !important;
+    height: 10% !important;
+  }
+  .reveal-invitation {
+    top: 90px;
+    max-width: 90%;
+    white-space: nowrap;
+  }
+  .reveal h1 {
+    font-size: 35px;
+  }
+  .reveal-card > p:not(.eyebrow) {
+    font-size: 16px;
+  }
+  .birthday-house .reveal {
+    padding: 25px 20px;
+  }
+}
+@media (max-height: 550px) {
+  .invitation {
+    top: 20%;
+  }
+  .invitation h1 {
+    font-size: 43px;
+    margin: 10px 0;
+  }
+  .invitation .gold-button {
+    margin: 15px 0;
+  }
+  .paper-dialog {
+    bottom: 12px;
+    max-height: 91svh;
+  }
+  .game-toolbar {
+    bottom: 10px;
+  }
+  .whisper {
+    bottom: 78px;
+  }
+  .house-header {
+    padding-top: 12px;
+  }
+}
+.scene-loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 14px 24px;
+  border: 1px solid #bc9a5b55;
+  border-radius: 4px;
+  background: #14232be8;
+  color: #efd4a1;
+  font:
+    italic 16px Georgia,
+    serif;
+  z-index: 5;
+}
