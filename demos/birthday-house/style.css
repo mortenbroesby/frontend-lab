@@ -1089,3 +1089,20 @@ body:has(.birthday-house) {
     opacity: 0;
   }
 }
+.house-controls {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  pointer-events: auto;
+}
+.birthday-house .sound-control {
+  display: grid;
+  place-items: center;
+  border: 1px solid #ead9b33b;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: #10222bba;
+  color: #f1dec0;
+}

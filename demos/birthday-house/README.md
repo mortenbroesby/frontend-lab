@@ -1,6 +1,6 @@
 # The Birthday House
 
-A full-screen birthday adventure in three connected rooms. A dedicated cottage entrance screen leads into polished 2D rooms with restrained animated layers. The birthday table, photographic darkroom and attic share the original Birthday Portrait’s blue-hour light, timber, flowers and amber lamps. Room art has separate wide and portrait compositions. The main room uses clean lossless PNG artwork; the darkroom and attic retain their existing illustrations. The original game and its port 4498 remain independent.
+A full-screen birthday adventure in three connected rooms. A dedicated cottage entrance screen leads into polished 2D rooms with restrained animated layers. The birthday table, photographic darkroom and attic share the original Birthday Portrait’s blue-hour light, timber, flowers and amber lamps. Room art has separate wide and portrait compositions. All three rooms use clean lossless PNG artwork. The original game and its port 4498 remain independent.
 
 ## Run and personalise
 
@@ -41,7 +41,7 @@ The birthday custom of paper Dannebrog flags in buns and on cakes is described b
 5. Insert the plate into the magic lantern. Set the horizontal wheel to II and the vertical wheel to III. A real spotlight and translucent light volume move across the shutters. Release the light; the engine turns the shutters on their hinges to reveal the photograph.
 6. Open the birthday message, close it, revisit another room, return, and reopen it. Replay clears doors, discoveries, plate, lights, dials and shutters.
 
-State tests cover gating, discovery, wrong answers, plate retention, alignment and reset. Browser verification covers the complete journey, camera slider keyboard access, focus inside native dialogs, backtracking, replay and desktop/phone layouts. A phone-sized desktop browser is emulation, not real-device iPhone Safari testing.
+State tests cover gating, discovery, wrong answers, plate retention, alignment, reset, cinematic ordering and sound-cue selection. Browser verification covers the complete journey, camera slider keyboard access, focus inside native dialogs, backtracking, replay and desktop/phone layouts. Browser audio probes check gesture-based startup, silent mute, hidden-page suspension, resumption and unavailable-audio fallback. Offline waveform and live lifecycle checks cover finite unclipped samples, bounded voice scheduling, cancellation on replay/unmute and disposal. Restarting during the finale is checked separately. A phone-sized desktop browser is emulation, not real-device iPhone Safari testing; waveform checks are not a human listening review.
 
 </details>
 
@@ -51,7 +51,11 @@ The game is in Danish, including its clues, hints, accessible labels, entrance a
 
 The modeled 3D room has been removed at the user's request. Babylon.js 9.36.0 presents clean, lossless 2D artwork in all three rooms without relighting or a duplicate foreground crop. Gentle candle glows, coffee steam, dust and cabinet lights provide subtle motion. The darkroom and attic use newly refined compositions without duplicated foreground layers. Their developing-water shader, traveling plate, gently breathing projector beam and hinged photo reveal remain. The breakfast door swings on a real hinge after the cabinet puzzle, revealing a glimpse of the darkroom. Cabinet lights charge softly, the camera glints when focused, brass dial needles turn, and a few golden motes surround the final photograph. All rooms use framed cameras rather than free walking.
 
-A little illustrated husnisse sits on the breakfast-room windowsill. He peeks out and bows with a little lantern stardust when tapped or activated with the keyboard. This optional encounter never gates a puzzle.
+A little illustrated husnisse appears in each room, celebrates discoveries and plays with a brass button when tapped or activated with the keyboard. This optional encounter never gates a puzzle.
+
+Clouds, window lights, rain and a tiny lantern-bearing passerby bring the village to life. Foreground ivy, curtain folds and soft moving shadows add restrained depth. The final developing bath lifts a constellation from the water; the attic finale dims the room, gathers stars and sends them toward the opening photograph over a 6.5-second sequence. The photo action appears after that sequence.
+
+An original procedural Web Audio soundscape starts with the Start spillet gesture. Soft chords, sparse melody and filtered weather evolve with each room and discovery; paper, brass, water, doors and the nisse have quiet interaction sounds. A compact speaker button mutes or resumes sound. Hidden pages suspend audio and rendering; replay resets musical progress. The game remains playable when audio is unavailable or blocked, with a retry control for blocked playback. No external audio assets or network audio requests are needed.
 
 Object taps create brief warm ripples; discoveries sparkle and completed puzzles receive a brighter glow. Dialogs and the final photograph arrive gently. Wrong answers and repeated discoveries do not celebrate progress.
 

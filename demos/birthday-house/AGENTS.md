@@ -12,3 +12,6 @@
 
 - When a door opens or unlocks, visibly show it open in the room artwork or rendered scene; a message or clickable hotspot alone is not enough.
 - Bring the darkroom and attic artwork up to the main room’s clean, polished standard in both portrait and landscape. Replace malformed props, grain and other AI-generated artifacts while preserving puzzle clarity and the cozy, mysterious atmosphere.
+
+- Preserve the evolving original soundscape, gesture-based start, mute control and suspension while hidden. Sound enriches the experience but never gates progress.
+- Keep the living village, optional mischievous nisse, constellation development and paced cinematic photo reveal. Replay must reset both visual and musical progress.

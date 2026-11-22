@@ -1,6 +1,9 @@
 import { lazy, Suspense, useState } from 'react';
 import { GameHUD } from './hud';
 import { DisplayControls } from './display-controls';
+import { SoundControl } from './sound-control';
+import { useSoundscape } from './use-soundscape';
+import { soundFor } from './sound-events';
 import { SplashScreen } from './splash';
 const PaintedScene = lazy(() =>
   import('./scene').then((module) => ({ default: module.PaintedScene })),
@@ -23,9 +26,11 @@ const doors: Partial<Record<ObjectId, Action>> = {
 };
 export default function Demo() {
   const [game, setGame] = useState(initialState);
+  const audio = useSoundscape(game);
   const [started, setStarted] = useState(false);
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [reveal, setReveal] = useState(false);
+  const [finaleReady, setFinaleReady] = useState(false);
   const [pan, setPan] = useState(0.5);
   const [markers, setMarkers] = useState(false);
   const [hintLevel, setHintLevel] = useState(0);
@@ -36,6 +41,7 @@ export default function Demo() {
   }
   function perform(action: Action, keep = false) {
     const next = act(game, action);
+    audio.play(soundFor(game, next, action));
     setGame(next);
     const response = reactionFor(game, next);
     if (response) reactTo(response);
@@ -62,10 +68,11 @@ export default function Demo() {
       perform(door);
       return;
     }
-    if (id === 'frame' && game.revealed) {
+    if (id === 'frame' && finaleReady) {
       setReveal(true);
       return;
     }
+    audio.play('touch');
     setOverlay(id);
     setNote('');
   }
@@ -74,6 +81,7 @@ export default function Demo() {
     setReaction(null);
     setOverlay(null);
     setReveal(false);
+    setFinaleReady(false);
     setNote('');
     setPan(0.5);
     setHintLevel(0);
@@ -90,11 +98,16 @@ export default function Demo() {
             onReactionEnd={(serial) =>
               setReaction((current) => clearFinishedReaction(current, serial))
             }
+            onFinaleReady={() => {
+              setFinaleReady(true);
+              setNote('Et minde, gemt til dig.');
+            }}
+            onNisse={() => audio.play('nisse')}
             reduced={false}
             pan={pan}
             close={!!overlay}
             markers={markers}
-            active={started}
+            active={!game.revealed || finaleReady}
             onPick={pick}
             onPan={panBy}
             onFocus={(x) => setPan(x)}
@@ -103,16 +116,11 @@ export default function Demo() {
           <div className="room-transition" key={game.room} />
         </Suspense>
       )}
-      <header className={`house-header ${started ? '' : 'title-header'}`}>
-        <div className="wordmark" hidden={!started}>
-          FØDSELSDAGSHUSET
-          <span>{locations[game.room]!.name}</span>
-        </div>
-        <DisplayControls />
-      </header>
+      <HouseHeader started={started} room={game.room} audio={audio} />
       {!started ? (
         <SplashScreen
           onStart={() => {
+            void audio.start();
             setStarted(true);
             setNote('Invitationen venter.');
           }}
@@ -122,7 +130,7 @@ export default function Demo() {
           note={note}
           markers={markers}
           hasPlate={game.negative}
-          revealed={game.revealed}
+          revealed={finaleReady}
           openJournal={() => setOverlay('journal')}
           openHint={() => setOverlay('hint')}
           openRestart={() => setOverlay('restart')}
@@ -188,4 +196,32 @@ function Overlays({
 
 function clearFinishedReaction(current: SceneReaction | null, serial: number) {
   return current?.serial === serial ? null : current;
+}
+
+function HouseHeader({
+  started,
+  room,
+  audio,
+}: {
+  started: boolean;
+  room: number;
+  audio: ReturnType<typeof useSoundscape>;
+}) {
+  return (
+    <header className={`house-header ${started ? '' : 'title-header'}`}>
+      <div className="wordmark" hidden={!started}>
+        FØDSELSDAGSHUSET
+        <span>{locations[room]!.name}</span>
+      </div>
+      <div className="house-controls">
+        <SoundControl
+          muted={audio.muted}
+          blocked={audio.blocked}
+          unavailable={audio.unavailable}
+          onToggle={audio.toggle}
+        />
+        <DisplayControls />
+      </div>
+    </header>
+  );
 }

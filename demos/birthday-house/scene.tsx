@@ -5,11 +5,14 @@ import { roomView, type ObjectId } from './locations';
 import type { Game } from './game';
 import { usePortrait } from './viewport';
 import { HouseNisse } from './nisse';
+import { RoomLife } from './room-life';
 
 type Props = {
   game: Game;
   reaction: SceneReaction | null;
   onReactionEnd: (serial: number) => void;
+  onFinaleReady: () => void;
+  onNisse: () => void;
   reduced: boolean;
   pan: number;
   close: boolean;
@@ -33,9 +36,12 @@ export function PaintedScene(props: Props) {
       world.current = createWorld(
         canvas.current!,
         stage.current!,
-        (id) => live.current.onPick(id),
+        (id) => {
+          if (live.current.active) live.current.onPick(id);
+        },
         (delta) => live.current.onPan(delta),
         setReady,
+        () => live.current.onFinaleReady(),
       );
     } catch {
       setError('Rummet kunne ikke åbnes. Slå WebGL til, og genindlæs siden.');
@@ -49,7 +55,7 @@ export function PaintedScene(props: Props) {
   }, [props.game, props.reduced, props.pan, props.close, props.active, portrait]);
   const location = roomView(props.game.room, portrait);
   return (
-    <div className="painted-viewport">
+    <div className="painted-viewport" aria-busy={!props.active}>
       <canvas
         ref={canvas}
         aria-label="Et rum, du kan udforske. Træk forsigtigt for at se dig omkring, eller brug Tab til at finde genstandene."
@@ -87,11 +93,17 @@ export function PaintedScene(props: Props) {
               <small>{spot.name}</small>
             </button>
           ))}
+        <RoomLife view={location} />
         <HouseNisse
           key={String(props.reduced)}
           portrait={portrait}
           reduced={props.reduced}
-          visible={ready && props.game.room === 0}
+          visible={ready}
+          room={props.game.room}
+          progress={
+            Number(props.game.breakfast) + Number(props.game.plate) + Number(props.game.revealed)
+          }
+          onGreet={props.onNisse}
         />
         <InteractionEffects
           reaction={props.reaction}

@@ -10,7 +10,8 @@ import { roomView, type ObjectId, type RoomView } from './locations';
 import { initialState, type Game } from './game';
 import { paintedRoom, glowMaterial } from './engine-art';
 import { roomLighting } from './engine-light';
-import { darkroomPuzzle, atticPuzzle } from './engine-puzzles';
+import { atticPuzzle } from './engine-puzzles';
+import { darkroomPuzzle } from './engine-darkroom';
 import { breakfastPuzzle } from './breakfast-effects';
 
 function bundle(scene: Scene, view: RoomView, invalidate: () => void) {
@@ -18,7 +19,7 @@ function bundle(scene: Scene, view: RoomView, invalidate: () => void) {
   paintedRoom(scene, view, invalidate);
   const lighting = roomLighting(scene, view);
   const puzzle: {
-    tick: (state: Game, time: number, reduced: boolean, dt: number) => void;
+    tick: (state: Game, time: number, reduced: boolean, dt: number, finaleTime: number) => void;
     setEnabled?: (enabled: boolean) => void;
   } = [breakfastPuzzle, darkroomPuzzle, atticPuzzle][view.room]!(scene, view);
   const meshes = scene.meshes.slice(start);
@@ -28,9 +29,9 @@ function bundle(scene: Scene, view: RoomView, invalidate: () => void) {
       lighting.setEnabled(enabled);
       puzzle.setEnabled?.(enabled);
     },
-    tick(s: Game, time: number, reduced: boolean, dt: number) {
+    tick(s: Game, time: number, reduced: boolean, dt: number, finaleTime: number) {
       lighting.tick(time, reduced);
-      puzzle.tick(s, time, reduced, dt);
+      puzzle.tick(s, time, reduced, dt, finaleTime);
     },
   };
 }
@@ -103,6 +104,7 @@ export function createWorld(
   onPick: (id: ObjectId) => void,
   onPan: (delta: number) => void,
   onReady: (ready: boolean) => void,
+  onFinaleReady: () => void,
 ) {
   const engine = new Engine(canvas, true, { stencil: false, powerPreference: 'low-power' });
   engine.setHardwareScalingLevel(1 / Math.min(window.devicePixelRatio, 2));
@@ -122,8 +124,10 @@ export function createWorld(
   let renderedReady = false;
   let waitingForRoom = true;
   let settleUntil = performance.now() + 1800;
-  let lastFrame = 0;
+  let lastFrame = performance.now();
   let game = initialState();
+  let finaleTime = 0;
+  let finaleNotified = false;
   let reduced = false;
   let pan = 0.5;
   let close = false;
@@ -145,6 +149,10 @@ export function createWorld(
     invalidate();
   };
   window.addEventListener('resize', resize);
+  const resumeClock = () => {
+    lastFrame = performance.now();
+  };
+  document.addEventListener('visibilitychange', resumeClock);
   function positionCamera(view: RoomView, dt: number) {
     const ratio = canvas.clientWidth / canvas.clientHeight;
     const visibleHeight = Math.max(view.height, view.width / ratio) / (close ? 1.12 : 1);
@@ -162,13 +170,21 @@ export function createWorld(
   function render(now: number) {
     if (document.hidden || now - lastFrame < 32) return;
     if (reduced && !dirty && now > settleUntil && renderedReady) return;
-    const dt = Math.min(now - lastFrame, 100);
+    const elapsed = now - lastFrame;
+    const dt = Math.min(elapsed, 100);
     lastFrame = now;
     dirty = false;
     const view = roomView(game.room, portrait);
     positionCamera(view, dt);
     projectStage(canvas, stage, camera, view);
-    active?.tick(game, now / 1000, reduced, dt);
+    finaleTime = game.revealed ? Math.min(6500, finaleTime + elapsed) : 0;
+    if (finaleTime >= 6500 && !finaleNotified) {
+      finaleNotified = true;
+      onFinaleReady();
+    }
+    stage.style.setProperty('--look-x', `${pointer.state.x * 35}px`);
+    stage.style.setProperty('--look-y', `${pointer.state.y * 35}px`);
+    active?.tick(game, now / 1000, reduced, dt, finaleTime);
     if (!reduced)
       motes.forEach((m, i) => {
         m.position.y += dt * 0.00004 * (1 + (i % 3));
@@ -185,6 +201,7 @@ export function createWorld(
   return {
     update(next: Game, reduce: boolean, nextPan: number, inspect: boolean, tall: boolean) {
       game = next;
+      if (!next.revealed) finaleNotified = false;
       reduced = reduce;
       pan = nextPan;
       close = inspect;
@@ -202,6 +219,7 @@ export function createWorld(
     dispose() {
       pointer.dispose();
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', resumeClock);
       scene.dispose();
       engine.dispose();
     },

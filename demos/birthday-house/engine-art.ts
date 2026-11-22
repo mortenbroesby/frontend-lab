@@ -63,17 +63,19 @@ export function softTexture(scene: Scene, name: string) {
 export function glyphMaterial(scene: Scene, name: string, text: string) {
   const t = new DynamicTexture(name, { width: 256, height: 256 }, scene, false);
   const c = t.getContext() as CanvasRenderingContext2D;
-  c.fillStyle = '#152e3e';
+  c.fillStyle = '#183d4bc4';
   c.fillRect(0, 0, 256, 256);
-  c.strokeStyle = '#bca16c';
-  c.lineWidth = 8;
+  c.strokeStyle = '#d2c79b9c';
+  c.lineWidth = 3;
   c.strokeRect(7, 7, 242, 242);
   c.fillStyle = '#ffdfa1';
   c.font = '36px Georgia';
   c.textAlign = 'center';
   text.split('\n').forEach((line, i) => c.fillText(line, 128, 70 + i * 48));
   t.update();
+  t.hasAlpha = true;
   const m = glowMaterial(scene, name, '#ffffff');
+  m.useAlphaFromDiffuseTexture = true;
   m.diffuseTexture = t;
   return m;
 }

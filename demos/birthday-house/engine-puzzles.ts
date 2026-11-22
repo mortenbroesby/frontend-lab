@@ -1,7 +1,6 @@
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
-import { ShaderMaterial } from '@babylonjs/core/Materials/shaderMaterial';
 import { Texture } from '@babylonjs/core/Materials/Textures/texture';
 import { SpotLight } from '@babylonjs/core/Lights/spotLight';
 import { Color3 } from '@babylonjs/core/Maths/math.color';
@@ -10,65 +9,10 @@ import type { Scene } from '@babylonjs/core/scene';
 import type { RoomView } from './locations';
 import type { Game } from './game';
 import { birthday } from './birthday';
-import { position, glowMaterial, softTexture, glyphMaterial, paintedMaterial } from './engine-art';
+import { magicStars } from './engine-stars';
+import { finaleAt } from './moments';
+import { position, glowMaterial, softTexture, paintedMaterial } from './engine-art';
 
-function water(scene: Scene, view: RoomView) {
-  const shader = new ShaderMaterial(
-    'silver water',
-    scene,
-    {
-      vertexSource:
-        'precision highp float;attribute vec3 position;attribute vec2 uv;uniform mat4 worldViewProjection;varying vec2 vUV;void main(){vUV=uv;gl_Position=worldViewProjection*vec4(position,1.0);}',
-      fragmentSource:
-        'precision highp float;varying vec2 vUV;uniform float time;void main(){vec2 p=vUV-0.5;float r=length(p*vec2(1.,2.));float wave=sin(r*55.-time*2.4)+sin(vUV.x*27.+vUV.y*16.+time);float rim=smoothstep(0.,.12,vUV.x)*smoothstep(1.,.88,vUV.x)*smoothstep(0.,.2,vUV.y)*smoothstep(1.,.8,vUV.y);float shine=pow(max(0.,wave*.5),6.);gl_FragColor=vec4(.85,.48,.25,(.025+shine*.22)*rim);}',
-    },
-    {
-      attributes: ['position', 'uv'],
-      uniforms: ['worldViewProjection', 'time'],
-      needAlphaBlending: true,
-    },
-  );
-  const y = view.portrait ? 76.6 : 79;
-  const surfaces = [view.portrait ? 23 : 29, 49.5, view.portrait ? 74 : 71].map((x) => {
-    const m = MeshBuilder.CreatePlane(
-      'rippling developing bath',
-      { width: view.width * 0.17, height: view.height * 0.042 },
-      scene,
-    );
-    m.position = position(view, x, y, -0.06);
-    m.material = shader;
-    m.isPickable = false;
-    return m;
-  });
-  return { surfaces, shader };
-}
-export function darkroomPuzzle(scene: Scene, view: RoomView) {
-  const baths = water(scene, view);
-  const plate = MeshBuilder.CreatePlane(
-    'the travelling glass plate',
-    { width: view.width * 0.1, height: view.height * 0.055 },
-    scene,
-  );
-  const blank = glyphMaterial(scene, 'undeveloped silver', '☾');
-  const developed = glyphMaterial(scene, 'constellation plate', '✦ — ✦\n✦\n✦ ✦');
-  plate.material = blank;
-  plate.position = position(view, 18, 60, -0.12);
-  plate.isPickable = false;
-  return {
-    tick(s: Game, time: number, reduced: boolean, dt: number) {
-      baths.shader.setFloat('time', reduced ? 0 : time);
-      plate.isVisible = s.negative;
-      plate.material = s.plate ? developed : blank;
-      const x = [18, view.portrait ? 23 : 29, 49.5, view.portrait ? 74 : 71][s.bath]!;
-      const y = s.bath ? (view.portrait ? 77 : 79) : 60;
-      plate.position = Vector3.Lerp(
-        plate.position,
-        position(view, x, y, -0.12),
-        reduced ? 1 : 1 - Math.exp(-dt / 240),
-      );
-    },
-  };
-}
 function portraitFrame(scene: Scene, view: RoomView) {
   const [x, y, w, h] = view.portrait ? [40.1, 30.6, 34, 16.6] : [49.9, 24.4, 18.5, 29.5];
   const center = position(view, x! + w! / 2, y! + h! / 2, -0.12);
@@ -78,6 +22,7 @@ function portraitFrame(scene: Scene, view: RoomView) {
   backing.position = center;
   backing.material = glowMaterial(scene, 'dark velvet', '#10202a');
   backing.isPickable = false;
+  backing.renderingGroupId = 2;
   const photo = MeshBuilder.CreatePlane(
     'your birthday photograph',
     { width: width * 0.92, height: height * 0.92 },
@@ -85,6 +30,7 @@ function portraitFrame(scene: Scene, view: RoomView) {
   );
   photo.position = center.add(new Vector3(0, 0, -0.02));
   photo.isPickable = false;
+  photo.renderingGroupId = 2;
   const pm = paintedMaterial(scene, 'photograph', birthday.photo);
   pm.emissiveColor = new Color3(0.5, 0.5, 0.5);
   photo.material = pm;
@@ -106,6 +52,7 @@ function portraitFrame(scene: Scene, view: RoomView) {
     shutter.parent = pivot;
     shutter.position.x = (-side * width) / 4;
     shutter.isPickable = false;
+    shutter.renderingGroupId = 2;
     const mat = paintedMaterial(scene, 'shutter paint', view.art);
     const t = mat.diffuseTexture as Texture;
     t.uScale = w! / 200;
@@ -119,6 +66,18 @@ function portraitFrame(scene: Scene, view: RoomView) {
 }
 export function atticPuzzle(scene: Scene, view: RoomView) {
   const frame = portraitFrame(scene, view);
+  const stars = magicStars(scene, 18);
+  const shade = MeshBuilder.CreatePlane(
+    'cinematic room shade',
+    { width: view.width * 1.05, height: view.height * 1.05 },
+    scene,
+  );
+  shade.position.z = -0.01;
+  shade.renderingGroupId = 1;
+  shade.isPickable = false;
+  const shadeMaterial = glowMaterial(scene, 'quiet before the memory', '#06111a');
+  shadeMaterial.alpha = 0;
+  shade.material = shadeMaterial;
   const source = position(view, view.portrait ? 45 : 44, view.portrait ? 56 : 58, -1.2);
   const light = new SpotLight(
     'the magic lantern beam',
@@ -137,6 +96,7 @@ export function atticPuzzle(scene: Scene, view: RoomView) {
   m.useAlphaFromDiffuseTexture = true;
   spot.material = m;
   spot.isPickable = false;
+  spot.renderingGroupId = 2;
   const beamMaterial = glowMaterial(scene, 'light made visible', '#ffe1a0');
   beamMaterial.alpha = 0.045;
   beamMaterial.disableDepthWrite = true;
@@ -151,24 +111,40 @@ export function atticPuzzle(scene: Scene, view: RoomView) {
     scene,
   );
   beam.material = beamMaterial;
+  beam.renderingGroupId = 2;
   beam.isPickable = false;
   let angle = 0;
   return {
     setEnabled(enabled: boolean) {
       light.setEnabled(enabled);
     },
-    tick(s: Game, time: number, reduced: boolean, dt: number) {
+    tick(s: Game, time: number, reduced: boolean, dt: number, finaleTime: number) {
+      const moment = finaleAt(finaleTime);
+      shadeMaterial.alpha = s.revealed ? moment.shade : 0;
       frame.backing.isVisible = s.revealed;
-      frame.photo.isVisible = s.revealed;
+      frame.photo.isVisible = s.revealed && moment.open > 0;
       frame.hinges.forEach((h) => h.setEnabled(s.revealed));
-      const target = s.revealed ? 1.95 : 0;
+      const target = s.revealed ? moment.open * 1.95 : 0;
       angle += (target - angle) * (reduced ? 1 : 1 - Math.exp(-dt / 420));
       frame.hinges[0]!.rotation.y = angle;
       frame.hinges[1]!.rotation.y = -angle;
       light.setEnabled(s.inserted && s.room === 2);
       spot.isVisible = s.inserted && !s.revealed;
       beam.isVisible = s.inserted;
-      beamMaterial.alpha = 0.038 + Math.sin(time * 1.3) * 0.006;
+      beamMaterial.alpha =
+        0.038 +
+        Math.sin(time * 1.3) * 0.006 +
+        (s.revealed ? moment.gather * (1 - moment.warmth) * 0.1 : 0);
+      stars.forEach((star, i) => {
+        const flight = Math.min(1, Math.max(0, (moment.travel - i * 0.009) / 0.84));
+        star.isVisible = s.revealed && moment.gather > 0 && !moment.ready;
+        star.visibility = moment.gather * (1 - flight);
+        star.position = Vector3.Lerp(source, frame.center, flight);
+        star.position.x += Math.sin(i * 2.4 + time) * 0.25 * (1 - flight);
+        star.position.y +=
+          Math.cos(i * 2.4 + time) * 0.2 * (1 - flight) + Math.sin(flight * Math.PI) * 0.45;
+        star.rotation.z = time * 0.4 + i;
+      });
       const end = frame.center.add(
         new Vector3((s.horizontal - 1) * 0.38, (s.vertical - 2) * 0.32, -0.06),
       );

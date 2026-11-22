@@ -123,3 +123,62 @@
       rotate(55deg) scale(0.25);
   }
 }
+.nisse-trinket {
+  position: absolute;
+  bottom: 0;
+  left: 12%;
+  width: 9px;
+  height: 9px;
+  border: 1px solid #d9bd7d;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f4d494, #79512d);
+  color: #644224;
+  font:
+    normal 7px/7px Georgia,
+    serif;
+  text-align: center;
+  box-shadow: 1px 2px 2px #09241b99;
+  pointer-events: none;
+}
+.nisse-prank {
+  animation: nisse-trick 2400ms ease-in-out both;
+}
+.nisse-celebrate {
+  animation: nisse-delight 1800ms ease-in-out both;
+}
+.nisse-chapter-0 {
+  animation: none;
+}
+@keyframes nisse-trick {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  22% {
+    transform: translate(9px, -12px) rotate(110deg);
+  }
+  48% {
+    transform: translate(17px, -36px) rotate(300deg);
+  }
+  66% {
+    transform: translate(28px, -30px) rotate(480deg);
+  }
+  84% {
+    transform: translate(18px, -3px) rotate(640deg);
+  }
+}
+@keyframes nisse-delight {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  25% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+  45% {
+    transform: translateY(0) rotate(4deg);
+  }
+  68% {
+    transform: translateY(-3px) rotate(-3deg);
+  }
+}

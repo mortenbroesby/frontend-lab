@@ -14,7 +14,7 @@ function darkroomFeedback(s: Game) {
     : 'Begynd med månebadet → regn → stjerne. Intet går tabt.';
 }
 function atticFeedback(s: Game, action: Action) {
-  if (s.revealed) return 'Et minde, gemt til dig.';
+  if (s.revealed) return 'Lyset samler sig…';
   if (action === 'insert') return 'Lygten vågner.';
   if (action === 'project') return 'Stadig i dvale. Vandret II (2), lodret III (3).';
   return 'Et sagte klik. Lyset flytter sig.';

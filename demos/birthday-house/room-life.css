@@ -1,0 +1,126 @@
+.room-life {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1;
+}
+.village-clouds {
+  animation: village-clouds 34s ease-in-out infinite alternate;
+}
+.village-light {
+  animation: village-light 19s ease-in-out infinite;
+  animation-delay: calc(var(--house) * -3.2s);
+}
+.village-walker {
+  animation: village-walk 32s linear infinite;
+}
+.window-drizzle {
+  animation: window-drizzle 5s linear infinite;
+}
+.foreground-sprig {
+  translate: calc(var(--look-x, 0px) * -0.3) calc(var(--look-y, 0px) * -0.2);
+  filter: drop-shadow(1px 2px 1px #0c211c88);
+}
+.sprig-sway {
+  transform-origin: 0 0;
+  animation: sprig-sway 11s ease-in-out infinite alternate;
+}
+@keyframes village-clouds {
+  from {
+    transform: translateX(-2px);
+  }
+  to {
+    transform: translateX(3px);
+  }
+}
+@keyframes village-light {
+  0%,
+  15%,
+  100% {
+    opacity: 0.07;
+  }
+  32%,
+  78% {
+    opacity: 0.75;
+  }
+}
+@keyframes village-walk {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(calc(var(--crossing) * 0.5), -0.3px);
+  }
+  100% {
+    transform: translate(var(--crossing), 0);
+    opacity: 0;
+  }
+}
+@keyframes window-drizzle {
+  from {
+    transform: translateY(-1px);
+    opacity: 0;
+  }
+  25%,
+  70% {
+    opacity: 0.65;
+  }
+  to {
+    transform: translateY(4px);
+    opacity: 0;
+  }
+}
+@keyframes sprig-sway {
+  from {
+    transform: rotate(-2deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+.lamplight-on-timber {
+  animation: timber-light 8s ease-in-out infinite alternate;
+}
+.leaf-shadow {
+  transform-origin: 98px 4px;
+  animation: leaf-shadow 11s ease-in-out infinite alternate;
+}
+.curtain-folds {
+  animation: curtain-breathe 13s ease-in-out infinite alternate;
+}
+@keyframes timber-light {
+  from {
+    opacity: 0.5;
+    transform: translateX(-0.3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0.3px);
+  }
+}
+@keyframes leaf-shadow {
+  from {
+    transform: rotate(-3deg) translateX(0.2px);
+  }
+  to {
+    transform: rotate(2deg) translateX(-0.2px);
+  }
+}
+@keyframes curtain-breathe {
+  from {
+    transform: translateX(-0.15px);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateX(0.15px);
+    opacity: 0.8;
+  }
+}
