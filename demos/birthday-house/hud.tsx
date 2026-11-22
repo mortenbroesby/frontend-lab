@@ -1,3 +1,4 @@
+import { tr } from './language.ts';
 type Props = {
   note: string;
   markers: boolean;
@@ -28,31 +29,35 @@ export function GameHUD({
         </p>
       )}
       <footer className="game-toolbar">
-        <button onClick={() => openJournal()} aria-label="Notesbog">
+        <button onClick={() => openJournal()} aria-label={tr('Notesbog', 'Notebook')}>
           <span aria-hidden="true">✧</span>
-          <small>Notesbog</small>
+          <small>{tr('Notesbog', 'Notebook')}</small>
           {hasPlate && <i />}
         </button>
         <button
           onClick={() => toggleMarkers()}
           aria-pressed={markers}
-          aria-label={markers ? 'Skjul glimt' : 'Vis glimt'}
+          aria-label={
+            markers ? tr('Skjul glimt', 'Hide glimmers') : tr('Vis glimt', 'Show glimmers')
+          }
         >
           <span aria-hidden="true">◉</span>
-          <small>{markers ? 'Skjul glimt' : 'Vis glimt'}</small>
+          <small>
+            {markers ? tr('Skjul glimt', 'Hide glimmers') : tr('Vis glimt', 'Show glimmers')}
+          </small>
         </button>
         <button onClick={() => openHint()} aria-label="Hint">
           <span aria-hidden="true">?</span>
           <small>Hint</small>
         </button>
-        <button onClick={() => openRestart()} aria-label="Begynd forfra">
+        <button onClick={() => openRestart()} aria-label={tr('Begynd forfra', 'Start over')}>
           <span aria-hidden="true">↻</span>
-          <small>Begynd forfra</small>
+          <small>{tr('Begynd forfra', 'Start over')}</small>
         </button>
       </footer>
       {revealed && (
         <button className="reveal-invitation gold-button" onClick={() => openReveal()}>
-          Et minde, gemt til dig →
+          {tr('Et minde, gemt til dig →', 'A memory saved for you →')}
         </button>
       )}
     </>

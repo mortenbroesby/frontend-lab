@@ -1,3 +1,4 @@
+import { tr } from './language';
 export function SoundControl({
   muted,
   blocked,
@@ -10,12 +11,12 @@ export function SoundControl({
   onToggle: () => void;
 }) {
   const label = unavailable
-    ? 'Lyd er ikke tilgængelig'
+    ? tr('Lyd er ikke tilgængelig', 'Sound unavailable')
     : blocked
-      ? 'Start lyden'
+      ? tr('Start lyden', 'Start sound')
       : muted
-        ? 'Slå lyden til'
-        : 'Slå lyden fra';
+        ? tr('Slå lyden til', 'Unmute sound')
+        : tr('Slå lyden fra', 'Mute sound');
   return (
     <button
       className="sound-control"

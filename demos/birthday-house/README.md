@@ -37,8 +37,8 @@ The birthday custom of paper Dannebrog flags in buns and on cakes is described b
 <summary>Journey and verification steps (spoilers)</summary>
 
 1. Find the invitation beside the flowers. Its riddle describes buns → cake → coffee. Touch each object directly in the scene. Lights wake in the cabinet, unlocking the darkroom. A wrong choice preserves the lights you have already earned and gently names the next step.
-2. Inspect the darkroom camera. Its maker’s mark is VII; focus the lens at 7 and recover the glass plate. Developing baths cannot work without it.
-3. Find the wall recipe. Moon → rain → star corresponds to the three baths. The engine animates the plate between trays, then reveals two horizontal and three vertical stars. Wrong choices preserve completed baths and suggest the next one.
+2. Inspect the darkroom camera. Its maker’s mark is VII; focus the lens at 7 and recover the glass plate. The nisse’s lantern puzzle cannot work without it.
+3. Open Nissens stjernelygte at the baths. Turn mirror 1 three times, mirror 2 three times and mirror 3 once. The beam travels up, across and down onto the plate; each connected mirror locks in place. Hint shows the target angles. Progress survives closing the puzzle. The resulting plate reveals two horizontal and three vertical stars. This replaces the old bath-order sequence.
 4. Revisit breakfast and return. The plate and discovered notes remain in the notebook. The staircase glows and shows “Til loftet — åbent” once the plate is developed, even with glimmers hidden. Hints in this room point to the staircase. Take the attic stairs.
 5. Insert the plate into the magic lantern. Set the horizontal wheel to II and the vertical wheel to III. A real spotlight and translucent light volume move across the shutters. Release the light; the engine turns the shutters on their hinges to reveal the photograph.
 6. Open the birthday message, close it, revisit another room, return, and reopen it. Replay clears doors, discoveries, plate, lights, dials and shutters.
@@ -47,7 +47,7 @@ State tests cover gating, discovery, wrong answers, plate retention, alignment, 
 
 </details>
 
-The game is in Danish, including its clues, hints, accessible labels, entrance and final greeting.
+The selected language applies to clues, hints, accessible labels, the entrance and the final greeting.
 
 ## Rendering
 
@@ -55,7 +55,7 @@ The modeled 3D room has been removed at the user's request. Babylon.js 9.36.0 pr
 
 A little illustrated husnisse appears in each room, celebrates discoveries and plays with a brass button when tapped or activated with the keyboard. This optional encounter never gates a puzzle.
 
-Clouds, window lights, rain and a tiny lantern-bearing passerby bring the village to life. Foreground ivy, curtain folds and soft moving shadows add restrained depth. The final developing bath lifts a constellation from the water; the attic finale dims the room, gathers stars and sends them toward the opening photograph over a 6.5-second sequence. The photo action appears after that sequence.
+Clouds, window lights, rain and a tiny lantern-bearing passerby bring the village to life. Foreground ivy, curtain folds and soft moving shadows add restrained depth. The completed lantern puzzle lifts a constellation from the water; the attic finale dims the room, dissolves the ceiling into a star field with an aurora and shooting stars, wakes the village windows, gathers stars and sends them toward the opening photograph over a 6.5-second sequence. The photo action appears after that sequence.
 
 An original procedural Web Audio soundscape starts with the Start spillet gesture. Soft chords, sparse melody and filtered weather evolve with each room and discovery; paper, brass, water, doors and the nisse have quiet interaction sounds. A compact speaker button mutes or resumes sound. Hidden pages suspend audio and rendering; replay resets musical progress. The game remains playable when audio is unavailable or blocked, with a retry control for blocked playback. No external audio assets or network audio requests are needed.
 
@@ -72,3 +72,9 @@ The final Fallow review has no dead-code findings, duplication, or cyclomatic/co
 The layout uses dynamic viewport height and safe-area insets. The fullscreen control checks browser capability and handles rejected requests. Where unsupported, a clearly labeled App view button replaces the fullscreen icon and explains Share → Add to Home Screen → Open as Web App (if offered). The manifest requests standalone display and includes an app icon; there is no offline service worker. Opening a temporary tunnel from the Home Screen still requires that tunnel to remain online. App view is not a promise of hardware fullscreen on every iPhone.
 
 References: [WebKit's open iPhone fullscreen issue](https://bugs.webkit.org/show_bug.cgi?id=206854), [Chrome's iPhone Home Screen instructions](https://support.google.com/chrome/answer/9658361?co=GENIE.Platform%3DiOS&hl=en), and [Apple's web-app instructions](https://support.apple.com/guide/iphone/turn-a-website-into-an-app-iphea86e5236/ios). Real-device iPhone acceptance is still required.
+
+## Nisse games and the final portrait
+
+The mandatory mirror game develops the plate and opens the attic. The optional cup trick is available by greeting the nisse in any room. Watch the marked cup, follow three gentle swaps, and find the button twice. Mistakes do not erase a won round; there is no countdown. Leaving the tab during a shuffle restarts its demonstration fairly. The reward is a notebook keepsake and an original bonus melody; no essential clue or room depends on it.
+
+Room navigation fades out before switching, waits for the destination to render, and then fades in. Cached rooms follow the same transition. Reset cancels any pending move. The full portrait sits inside a tightly fitted gold frame against a blurred photo backdrop; it retains its natural aspect ratio without pale side bars. Sound can be muted inside the native photo dialog. The birthday melody is documented in [music-sources.md](./music-sources.md).
